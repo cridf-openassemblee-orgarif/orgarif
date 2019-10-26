@@ -1,0 +1,59 @@
+{
+  "fluentMethods": true,
+  "clientRootFolder": "",
+  "relationships": [
+    {
+      "relationshipName": "organisme",
+      "otherEntityName": "organisme",
+      "relationshipType": "many-to-one",
+      "relationshipValidateRules": ["required"],
+      "otherEntityField": "nom",
+      "otherEntityRelationshipName": "instance"
+    },
+    {
+      "relationshipName": "representant",
+      "otherEntityName": "representant",
+      "relationshipType": "one-to-many",
+      "otherEntityRelationshipName": "representantInstance"
+    },
+    {
+      "relationshipName": "suppleant",
+      "otherEntityName": "representant",
+      "relationshipType": "one-to-many",
+      "otherEntityRelationshipName": "suppleantInstance"
+    },
+    {
+      "relationshipName": "deliberation",
+      "otherEntityName": "deliberation",
+      "relationshipType": "many-to-many",
+      "otherEntityField": "label",
+      "ownerSide": true,
+      "otherEntityRelationshipName": "instance"
+    }
+  ],
+  "fields": [
+    {
+      "fieldName": "nom",
+      "fieldType": "String",
+      "fieldValidateRules": ["required"]
+    },
+    {
+      "fieldName": "nombreRepresentants",
+      "fieldType": "Integer",
+      "fieldValidateRules": ["required"]
+    },
+    {
+      "fieldName": "nombreSuppleants",
+      "fieldType": "Integer",
+      "fieldValidateRules": ["required"]
+    }
+  ],
+  "changelogDate": "20190109194933",
+  "dto": "no",
+  "searchEngine": "elasticsearch",
+  "service": "no",
+  "entityTableName": "instance",
+  "databaseType": "sql",
+  "jpaMetamodelFiltering": false,
+  "pagination": "pagination"
+}

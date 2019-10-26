@@ -1,0 +1,92 @@
+{
+  "fluentMethods": true,
+  "clientRootFolder": "",
+  "relationships": [
+    {
+      "relationshipName": "natureJuridique",
+      "otherEntityName": "natureJuridique",
+      "relationshipType": "many-to-one",
+      "relationshipValidateRules": ["required"],
+      "otherEntityField": "label",
+      "otherEntityRelationshipName": "organisme"
+    },
+    {
+      "relationshipName": "secteur",
+      "otherEntityName": "secteur",
+      "relationshipType": "many-to-one",
+      "relationshipValidateRules": ["required"],
+      "otherEntityField": "label",
+      "otherEntityRelationshipName": "organisme"
+    },
+    {
+      "relationshipName": "typeStructure",
+      "otherEntityName": "typeStructure",
+      "relationshipType": "many-to-one",
+      "otherEntityField": "label",
+      "otherEntityRelationshipName": "organisme"
+    },
+    {
+      "relationshipName": "instance",
+      "otherEntityName": "instance",
+      "relationshipType": "one-to-many",
+      "otherEntityRelationshipName": "organisme"
+    },
+    {
+      "relationshipName": "representant",
+      "otherEntityName": "representant",
+      "relationshipType": "one-to-many",
+      "otherEntityRelationshipName": "representantOrganisme"
+    },
+    {
+      "relationshipName": "suppleant",
+      "otherEntityName": "representant",
+      "relationshipType": "one-to-many",
+      "otherEntityRelationshipName": "suppleantOrganisme"
+    },
+    {
+      "relationshipName": "deliberation",
+      "otherEntityName": "deliberation",
+      "relationshipType": "many-to-many",
+      "otherEntityField": "label",
+      "ownerSide": true,
+      "otherEntityRelationshipName": "organisme"
+    }
+  ],
+  "fields": [
+    {
+      "fieldName": "nom",
+      "fieldType": "String",
+      "fieldValidateRules": ["required"]
+    },
+    {
+      "fieldName": "nombreRepresentants",
+      "fieldType": "Integer",
+      "fieldValidateRules": ["required"]
+    },
+    {
+      "fieldName": "nombreSuppleants",
+      "fieldType": "Integer",
+      "fieldValidateRules": ["required"]
+    },
+    {
+      "fieldName": "creationDate",
+      "fieldType": "Instant"
+    },
+    {
+      "fieldName": "lastModificationDate",
+      "fieldType": "Instant"
+    },
+    {
+      "fieldName": "partageRepresentants",
+      "fieldType": "Boolean"
+    }
+  ],
+  "changelogDate": "20190109165336",
+  "dto": "no",
+  "searchEngine": "elasticsearch",
+  "service": "no",
+  "entityTableName": "organisme",
+  "databaseType": "sql",
+  "jpaMetamodelFiltering": false,
+  "pagination": "pagination"
+}
