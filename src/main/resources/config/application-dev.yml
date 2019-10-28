@@ -13,6 +13,10 @@
 # http://docs.spring.io/spring-boot/docs/current/reference/html/common-application-properties.html
 # ===================================================================
 
+orgarif:
+  doSynchronizeElus: true
+  elusSynchronizationUrl: http://127.0.0.1:8081/api/publicdata/v2/elus
+
 logging:
   level:
     ROOT: DEBUG
