@@ -14,6 +14,10 @@
 # http://docs.spring.io/spring-boot/docs/current/reference/html/common-application-properties.html
 # ===================================================================
 
+orgarif:
+  doSynchronizeElus:
+  elusSynchronizationUrl:
+
 management:
   endpoints:
     web:
