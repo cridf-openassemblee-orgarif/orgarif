@@ -1,0 +1,42 @@
+<?xml version="1.0" encoding="utf-8"?>
+<databaseChangeLog
+    xmlns="http://www.liquibase.org/xml/ns/dbchangelog"
+    xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+    xsi:schemaLocation="http://www.liquibase.org/xml/ns/dbchangelog http://www.liquibase.org/xml/ns/dbchangelog/dbchangelog-3.6.xsd">
+    <!--
+        Added the constraints for entity Representant.
+    -->
+    <changeSet id="20191009194933-2" author="jhipster">
+        
+        <addForeignKeyConstraint baseColumnNames="elu_id"
+                                 baseTableName="representant"
+                                 constraintName="fk_representant_elu_id"
+                                 referencedColumnNames="id"
+                                 referencedTableName="elu"/>
+
+        <addForeignKeyConstraint baseColumnNames="representant_organisme_id"
+                                 baseTableName="representant"
+                                 constraintName="fk_representant_representant_organisme_id"
+                                 referencedColumnNames="id"
+                                 referencedTableName="organisme"/>
+
+        <addForeignKeyConstraint baseColumnNames="suppleant_organisme_id"
+                                 baseTableName="representant"
+                                 constraintName="fk_representant_suppleant_organisme_id"
+                                 referencedColumnNames="id"
+                                 referencedTableName="organisme"/>
+
+        <addForeignKeyConstraint baseColumnNames="representant_instance_id"
+                                 baseTableName="representant"
+                                 constraintName="fk_representant_representant_instance_id"
+                                 referencedColumnNames="id"
+                                 referencedTableName="instance"/>
+
+        <addForeignKeyConstraint baseColumnNames="suppleant_instance_id"
+                                 baseTableName="representant"
+                                 constraintName="fk_representant_suppleant_instance_id"
+                                 referencedColumnNames="id"
+                                 referencedTableName="instance"/>
+
+    </changeSet>
+</databaseChangeLog>

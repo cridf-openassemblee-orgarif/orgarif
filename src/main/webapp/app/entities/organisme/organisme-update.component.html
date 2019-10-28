@@ -1,0 +1,121 @@
+<div class="row justify-content-center">
+    <div class="col-8">
+        <form name="editForm" role="form" novalidate (ngSubmit)="save()" [formGroup]="editForm">
+            <h2 id="jhi-organisme-heading">Create or edit a Organisme</h2>
+            <div>
+                <jhi-alert-error></jhi-alert-error>
+                <div class="form-group" [hidden]="!editForm.get('id').value">
+                    <label for="id">ID</label>
+                    <input type="text" class="form-control" id="id" name="id" formControlName="id"
+                        readonly />
+                </div>
+                <div class="form-group">
+                    <label class="form-control-label" for="field_nom">Nom</label>
+                    <input type="text" class="form-control" name="nom" id="field_nom"
+                           formControlName="nom"/>
+                    <div *ngIf="editForm.get('nom').invalid && (editForm.get('nom').dirty || editForm.get('nom').touched)">
+                        <small class="form-text text-danger"
+                               *ngIf="editForm.get('nom').errors.required">
+                        This field is required.
+                        </small>
+                    </div>
+                </div>
+                <div class="form-group">
+                    <label class="form-control-label" for="field_nombreRepresentants">Nombre Representants</label>
+                    <input type="number" class="form-control" name="nombreRepresentants" id="field_nombreRepresentants"
+                           formControlName="nombreRepresentants"/>
+                    <div *ngIf="editForm.get('nombreRepresentants').invalid && (editForm.get('nombreRepresentants').dirty || editForm.get('nombreRepresentants').touched)">
+                        <small class="form-text text-danger"
+                               *ngIf="editForm.get('nombreRepresentants').errors.required">
+                        This field is required.
+                        </small>
+                        <small class="form-text text-danger"
+                            [hidden]="!editForm.get('nombreRepresentants')?.errors?.number">
+                            This field should be a number.
+                        </small>
+                    </div>
+                </div>
+                <div class="form-group">
+                    <label class="form-control-label" for="field_nombreSuppleants">Nombre Suppleants</label>
+                    <input type="number" class="form-control" name="nombreSuppleants" id="field_nombreSuppleants"
+                           formControlName="nombreSuppleants"/>
+                    <div *ngIf="editForm.get('nombreSuppleants').invalid && (editForm.get('nombreSuppleants').dirty || editForm.get('nombreSuppleants').touched)">
+                        <small class="form-text text-danger"
+                               *ngIf="editForm.get('nombreSuppleants').errors.required">
+                        This field is required.
+                        </small>
+                        <small class="form-text text-danger"
+                            [hidden]="!editForm.get('nombreSuppleants')?.errors?.number">
+                            This field should be a number.
+                        </small>
+                    </div>
+                </div>
+                <div class="form-group">
+                    <label class="form-control-label" for="field_creationDate">Creation Date</label>
+                    <div class="d-flex">
+                        <input id="field_creationDate" type="datetime-local" class="form-control" name="creationDate" formControlName="creationDate" placeholder="YYYY-MM-DD HH:mm"/>
+                    </div>
+                </div>
+                <div class="form-group">
+                    <label class="form-control-label" for="field_lastModificationDate">Last Modification Date</label>
+                    <div class="d-flex">
+                        <input id="field_lastModificationDate" type="datetime-local" class="form-control" name="lastModificationDate" formControlName="lastModificationDate" placeholder="YYYY-MM-DD HH:mm"/>
+                    </div>
+                </div>
+                <div class="form-group">
+                    <label class="form-control-label" for="field_partageRepresentants">Partage Representants</label>
+                    <input type="checkbox" class="form-control" name="partageRepresentants" id="field_partageRepresentants"
+                           formControlName="partageRepresentants"/>
+                </div>
+
+                <div class="form-group">
+                    <label class="form-control-label" for="field_natureJuridique">Nature Juridique</label>
+                    <select class="form-control" id="field_natureJuridique" name="natureJuridique" formControlName="natureJuridique">
+                        <option *ngIf="!editForm.get('natureJuridique').value" [ngValue]="null" selected></option>
+                        <option [ngValue]="natureJuridiqueOption.id === editForm.get('natureJuridique').value?.id ? editForm.get('natureJuridique').value : natureJuridiqueOption" *ngFor="let natureJuridiqueOption of naturejuridiques; trackBy: trackNatureJuridiqueById">{{natureJuridiqueOption.label}}</option>
+                    </select>
+                </div>
+                <div *ngIf="editForm.get('natureJuridique').invalid && (editForm.get('natureJuridique').dirty || editForm.get('natureJuridique').touched)">
+                    <small class="form-text text-danger"
+                           *ngIf="editForm.get('natureJuridique').errors.required">
+                        This field is required.
+                    </small>
+                </div>
+                <div class="form-group">
+                    <label class="form-control-label" for="field_secteur">Secteur</label>
+                    <select class="form-control" id="field_secteur" name="secteur" formControlName="secteur">
+                        <option *ngIf="!editForm.get('secteur').value" [ngValue]="null" selected></option>
+                        <option [ngValue]="secteurOption.id === editForm.get('secteur').value?.id ? editForm.get('secteur').value : secteurOption" *ngFor="let secteurOption of secteurs; trackBy: trackSecteurById">{{secteurOption.label}}</option>
+                    </select>
+                </div>
+                <div *ngIf="editForm.get('secteur').invalid && (editForm.get('secteur').dirty || editForm.get('secteur').touched)">
+                    <small class="form-text text-danger"
+                           *ngIf="editForm.get('secteur').errors.required">
+                        This field is required.
+                    </small>
+                </div>
+                <div class="form-group">
+                    <label class="form-control-label" for="field_typeStructure">Type Structure</label>
+                    <select class="form-control" id="field_typeStructure" name="typeStructure" formControlName="typeStructure">
+                        <option [ngValue]="null"></option>
+                        <option [ngValue]="typeStructureOption.id === editForm.get('typeStructure').value?.id ? editForm.get('typeStructure').value : typeStructureOption" *ngFor="let typeStructureOption of typestructures; trackBy: trackTypeStructureById">{{typeStructureOption.label}}</option>
+                    </select>
+                </div>
+                <div class="form-group">
+                    <label for="field_deliberations">Deliberation</label>
+                    <select class="form-control" id="field_deliberations" multiple name="deliberations" formControlName="deliberations">
+                        <option [ngValue]="getSelected(editForm.get('deliberations').value, deliberationOption)" *ngFor="let deliberationOption of deliberations; trackBy: trackDeliberationById">{{deliberationOption.label}}</option>
+                    </select>
+                </div>
+            </div>
+            <div>
+                <button type="button" id="cancel-save" class="btn btn-secondary"  (click)="previousState()">
+                    <fa-icon [icon]="'ban'"></fa-icon>&nbsp;<span>Cancel</span>
+                </button>
+                <button type="submit" id="save-entity" [disabled]="editForm.invalid || isSaving" class="btn btn-primary">
+                    <fa-icon [icon]="'save'"></fa-icon>&nbsp;<span>Save</span>
+                </button>
+            </div>
+        </form>
+    </div>
+</div>

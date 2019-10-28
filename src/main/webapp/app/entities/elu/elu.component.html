@@ -1,0 +1,89 @@
+<div>
+    <h2 id="page-heading">
+        <span>Elus</span>
+        <button id="jh-create-entity" class="btn btn-primary float-right jh-create-entity create-elu" [routerLink]="['/elu/new']">
+            <fa-icon [icon]="'plus'"></fa-icon>
+            <span class="hidden-sm-down" >
+            Create a new Elu
+            </span>
+        </button>
+    </h2>
+    <jhi-alert-error></jhi-alert-error>
+    <jhi-alert></jhi-alert>
+    <div class="row">
+        <div class="col-sm-12">
+            <form name="searchForm" class="form-inline">
+                <div class="input-group w-100 mt-3">
+                    <input type="text" class="form-control" [(ngModel)]="currentSearch" id="currentSearch" name="currentSearch" placeholder="Query">
+                    <button class="input-group-append btn btn-info" (click)="search(currentSearch)">
+                        <fa-icon [icon]="'search'"></fa-icon>
+                    </button>
+                    <button class="input-group-append btn btn-danger" (click)="clear()" *ngIf="currentSearch">
+                        <fa-icon [icon]="'trash-alt'"></fa-icon>
+                    </button>
+                </div>
+            </form>
+        </div>
+    </div>
+    <br/>
+    <div class="alert alert-warning" *ngIf="elus?.length === 0">
+        <span>No elus found</span>
+    </div>
+    <div class="table-responsive" *ngIf="elus?.length > 0">
+        <table class="table table-striped" aria-describedby="page-heading">
+            <thead>
+            <tr>
+            <th scope="col" ><span>ID</span></th>
+            <th scope="col" ><span>Source Id</span></th>
+            <th scope="col" ><span>Source Uid</span></th>
+            <th scope="col" ><span>Civilite</span></th>
+            <th scope="col" ><span>Nom</span></th>
+            <th scope="col" ><span>Prenom</span></th>
+            <th scope="col" ><span>Groupe Politique</span></th>
+            <th scope="col" ><span>Groupe Politique Court</span></th>
+            <th scope="col" ><span>Image</span></th>
+            <th scope="col" ><span>Actif</span></th>
+            <th scope="col"></th>
+            </tr>
+            </thead>
+            <tbody>
+            <tr *ngFor="let elu of elus ;trackBy: trackId">
+                <td><a [routerLink]="['/elu', elu.id, 'view' ]">{{elu.id}}</a></td>
+                <td>{{elu.sourceId}}</td>
+                <td>{{elu.sourceUid}}</td>
+                <td>{{elu.civilite}}</td>
+                <td>{{elu.nom}}</td>
+                <td>{{elu.prenom}}</td>
+                <td>{{elu.groupePolitique}}</td>
+                <td>{{elu.groupePolitiqueCourt}}</td>
+                <td>{{elu.image}}</td>
+                <td>{{elu.actif}}</td>
+                <td class="text-right">
+                    <div class="btn-group">
+                        <button type="submit"
+                                [routerLink]="['/elu', elu.id, 'view' ]"
+                                class="btn btn-info btn-sm">
+                            <fa-icon [icon]="'eye'"></fa-icon>
+                            <span class="d-none d-md-inline">View</span>
+                        </button>
+                        <button type="submit"
+                                [routerLink]="['/elu', elu.id, 'edit']"
+                                class="btn btn-primary btn-sm">
+                            <fa-icon [icon]="'pencil-alt'"></fa-icon>
+                            <span class="d-none d-md-inline">Edit</span>
+                        </button>
+                        <button type="submit"
+                                [routerLink]="['/elu', { outlets: { popup: elu.id + '/delete'} }]"
+                                replaceUrl="true"
+                                queryParamsHandling="merge"
+                                class="btn btn-danger btn-sm">
+                            <fa-icon [icon]="'times'"></fa-icon>
+                            <span class="d-none d-md-inline">Delete</span>
+                        </button>
+                    </div>
+                </td>
+            </tr>
+            </tbody>
+        </table>
+    </div>
+</div>

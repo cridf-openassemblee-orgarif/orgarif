@@ -1,0 +1,59 @@
+<div class="row justify-content-center">
+    <div class="col-8">
+        <div *ngIf="elu">
+            <h2><span>Elu</span> {{elu.id}}</h2>
+            <hr>
+            <jhi-alert-error></jhi-alert-error>
+            <dl class="row-md jh-entity-details">
+                <dt><span>Source Id</span></dt>
+                <dd>
+                    <span>{{elu.sourceId}}</span>
+                </dd>
+                <dt><span>Source Uid</span></dt>
+                <dd>
+                    <span>{{elu.sourceUid}}</span>
+                </dd>
+                <dt><span>Civilite</span></dt>
+                <dd>
+                    <span>{{elu.civilite}}</span>
+                </dd>
+                <dt><span>Nom</span></dt>
+                <dd>
+                    <span>{{elu.nom}}</span>
+                </dd>
+                <dt><span>Prenom</span></dt>
+                <dd>
+                    <span>{{elu.prenom}}</span>
+                </dd>
+                <dt><span>Groupe Politique</span></dt>
+                <dd>
+                    <span>{{elu.groupePolitique}}</span>
+                </dd>
+                <dt><span>Groupe Politique Court</span></dt>
+                <dd>
+                    <span>{{elu.groupePolitiqueCourt}}</span>
+                </dd>
+                <dt><span>Image</span></dt>
+                <dd>
+                    <span>{{elu.image}}</span>
+                </dd>
+                <dt><span>Actif</span></dt>
+                <dd>
+                    <span>{{elu.actif}}</span>
+                </dd>
+            </dl>
+
+            <button type="submit"
+                    (click)="previousState()"
+                    class="btn btn-info">
+                <fa-icon [icon]="'arrow-left'"></fa-icon>&nbsp;<span> Back</span>
+            </button>
+
+            <button type="button"
+                    [routerLink]="['/elu', elu.id, 'edit']"
+                    class="btn btn-primary">
+                <fa-icon [icon]="'pencil-alt'"></fa-icon>&nbsp;<span> Edit</span>
+            </button>
+        </div>
+    </div>
+</div>

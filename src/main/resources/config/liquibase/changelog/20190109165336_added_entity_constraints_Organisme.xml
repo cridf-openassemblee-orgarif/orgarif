@@ -1,0 +1,42 @@
+<?xml version="1.0" encoding="utf-8"?>
+<databaseChangeLog
+    xmlns="http://www.liquibase.org/xml/ns/dbchangelog"
+    xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+    xsi:schemaLocation="http://www.liquibase.org/xml/ns/dbchangelog http://www.liquibase.org/xml/ns/dbchangelog/dbchangelog-3.6.xsd">
+    <!--
+        Added the constraints for entity Organisme.
+    -->
+    <changeSet id="20190109165336-2" author="jhipster">
+        
+        <addForeignKeyConstraint baseColumnNames="nature_juridique_id"
+                                 baseTableName="organisme"
+                                 constraintName="fk_organisme_nature_juridique_id"
+                                 referencedColumnNames="id"
+                                 referencedTableName="nature_juridique"/>
+
+        <addForeignKeyConstraint baseColumnNames="secteur_id"
+                                 baseTableName="organisme"
+                                 constraintName="fk_organisme_secteur_id"
+                                 referencedColumnNames="id"
+                                 referencedTableName="secteur"/>
+
+        <addForeignKeyConstraint baseColumnNames="type_structure_id"
+                                 baseTableName="organisme"
+                                 constraintName="fk_organisme_type_structure_id"
+                                 referencedColumnNames="id"
+                                 referencedTableName="type_structure"/>
+
+        <addForeignKeyConstraint baseColumnNames="organisme_id"
+                                 baseTableName="organisme_deliberation"
+                                 constraintName="fk_organisme_deliberation_organisme_id"
+                                 referencedColumnNames="id"
+                                 referencedTableName="organisme"/>
+
+        <addForeignKeyConstraint baseColumnNames="deliberation_id"
+                                 baseTableName="organisme_deliberation"
+                                 constraintName="fk_organisme_deliberation_deliberation_id"
+                                 referencedColumnNames="id"
+                                 referencedTableName="deliberation"/>
+        
+    </changeSet>
+</databaseChangeLog>

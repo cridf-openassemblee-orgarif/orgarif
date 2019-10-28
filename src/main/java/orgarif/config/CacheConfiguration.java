@@ -44,6 +44,24 @@ public class CacheConfiguration {
             createCache(cm, orgarif.domain.User.class.getName() + ".authorities");
             createCache(cm, orgarif.domain.PersistentToken.class.getName());
             createCache(cm, orgarif.domain.User.class.getName() + ".persistentTokens");
+            createCache(cm, orgarif.domain.NatureJuridique.class.getName());
+            createCache(cm, orgarif.domain.Secteur.class.getName());
+            createCache(cm, orgarif.domain.TypeStructure.class.getName());
+            createCache(cm, orgarif.domain.Deliberation.class.getName());
+            createCache(cm, orgarif.domain.Deliberation.class.getName() + ".organismes");
+            createCache(cm, orgarif.domain.Deliberation.class.getName() + ".instances");
+            createCache(cm, orgarif.domain.Elu.class.getName());
+            createCache(cm, orgarif.domain.Elu.class.getName() + ".representants");
+            createCache(cm, orgarif.domain.Representant.class.getName());
+            createCache(cm, orgarif.domain.Instance.class.getName());
+            createCache(cm, orgarif.domain.Instance.class.getName() + ".representants");
+            createCache(cm, orgarif.domain.Instance.class.getName() + ".suppleants");
+            createCache(cm, orgarif.domain.Instance.class.getName() + ".deliberations");
+            createCache(cm, orgarif.domain.Organisme.class.getName());
+            createCache(cm, orgarif.domain.Organisme.class.getName() + ".instances");
+            createCache(cm, orgarif.domain.Organisme.class.getName() + ".representants");
+            createCache(cm, orgarif.domain.Organisme.class.getName() + ".suppleants");
+            createCache(cm, orgarif.domain.Organisme.class.getName() + ".deliberations");
             // jhipster-needle-ehcache-add-entry
         };
     }

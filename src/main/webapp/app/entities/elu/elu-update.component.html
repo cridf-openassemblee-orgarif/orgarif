@@ -1,0 +1,83 @@
+<div class="row justify-content-center">
+    <div class="col-8">
+        <form name="editForm" role="form" novalidate (ngSubmit)="save()" [formGroup]="editForm">
+            <h2 id="jhi-elu-heading">Create or edit a Elu</h2>
+            <div>
+                <jhi-alert-error></jhi-alert-error>
+                <div class="form-group" [hidden]="!editForm.get('id').value">
+                    <label for="id">ID</label>
+                    <input type="text" class="form-control" id="id" name="id" formControlName="id"
+                        readonly />
+                </div>
+                <div class="form-group">
+                    <label class="form-control-label" for="field_sourceId">Source Id</label>
+                    <input type="text" class="form-control" name="sourceId" id="field_sourceId"
+                           formControlName="sourceId"/>
+                    <div *ngIf="editForm.get('sourceId').invalid && (editForm.get('sourceId').dirty || editForm.get('sourceId').touched)">
+                        <small class="form-text text-danger"
+                               *ngIf="editForm.get('sourceId').errors.required">
+                        This field is required.
+                        </small>
+                    </div>
+                </div>
+                <div class="form-group">
+                    <label class="form-control-label" for="field_sourceUid">Source Uid</label>
+                    <input type="text" class="form-control" name="sourceUid" id="field_sourceUid"
+                           formControlName="sourceUid"/>
+                    <div *ngIf="editForm.get('sourceUid').invalid && (editForm.get('sourceUid').dirty || editForm.get('sourceUid').touched)">
+                        <small class="form-text text-danger"
+                               *ngIf="editForm.get('sourceUid').errors.required">
+                        This field is required.
+                        </small>
+                    </div>
+                </div>
+                <div class="form-group">
+                    <label class="form-control-label" for="field_civilite">Civilite</label>
+                    <select class="form-control" name="civilite" formControlName="civilite" id="field_civilite">
+                        <option value="M">M</option>
+                        <option value="MME">MME</option>
+                    </select>
+                </div>
+                <div class="form-group">
+                    <label class="form-control-label" for="field_nom">Nom</label>
+                    <input type="text" class="form-control" name="nom" id="field_nom"
+                           formControlName="nom"/>
+                </div>
+                <div class="form-group">
+                    <label class="form-control-label" for="field_prenom">Prenom</label>
+                    <input type="text" class="form-control" name="prenom" id="field_prenom"
+                           formControlName="prenom"/>
+                </div>
+                <div class="form-group">
+                    <label class="form-control-label" for="field_groupePolitique">Groupe Politique</label>
+                    <input type="text" class="form-control" name="groupePolitique" id="field_groupePolitique"
+                           formControlName="groupePolitique"/>
+                </div>
+                <div class="form-group">
+                    <label class="form-control-label" for="field_groupePolitiqueCourt">Groupe Politique Court</label>
+                    <input type="text" class="form-control" name="groupePolitiqueCourt" id="field_groupePolitiqueCourt"
+                           formControlName="groupePolitiqueCourt"/>
+                </div>
+                <div class="form-group">
+                    <label class="form-control-label" for="field_image">Image</label>
+                    <input type="text" class="form-control" name="image" id="field_image"
+                           formControlName="image"/>
+                </div>
+                <div class="form-group">
+                    <label class="form-control-label" for="field_actif">Actif</label>
+                    <input type="checkbox" class="form-control" name="actif" id="field_actif"
+                           formControlName="actif"/>
+                </div>
+
+            </div>
+            <div>
+                <button type="button" id="cancel-save" class="btn btn-secondary"  (click)="previousState()">
+                    <fa-icon [icon]="'ban'"></fa-icon>&nbsp;<span>Cancel</span>
+                </button>
+                <button type="submit" id="save-entity" [disabled]="editForm.invalid || isSaving" class="btn btn-primary">
+                    <fa-icon [icon]="'save'"></fa-icon>&nbsp;<span>Save</span>
+                </button>
+            </div>
+        </form>
+    </div>
+</div>
