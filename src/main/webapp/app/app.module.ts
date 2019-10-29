@@ -1,6 +1,9 @@
 import { NgModule } from '@angular/core';
 import { BrowserModule } from '@angular/platform-browser';
+import { OrgarifOrganismeBlockModule } from 'app/components/organisme-block.module';
 import { OrgarifCoreModule } from 'app/core/core.module';
+import { OrgarifListModule } from 'app/list/list.module';
+import { OrgarifSaisieModule } from 'app/saisie/saisie.module';
 import { OrgarifSharedModule } from 'app/shared/shared.module';
 import { OrgarifAppRoutingModule } from './app-routing.module';
 import { OrgarifEntityModule } from './entities/entity.module';
@@ -15,6 +18,10 @@ import './vendor';
 
 @NgModule({
   imports: [
+    OrgarifOrganismeBlockModule,
+    OrgarifListModule,
+    OrgarifSaisieModule,
+
     BrowserModule,
     OrgarifSharedModule,
     OrgarifCoreModule,
