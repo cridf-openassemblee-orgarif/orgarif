@@ -13,9 +13,16 @@ import { NavbarComponent } from './layouts/navbar/navbar.component';
 import { FooterComponent } from './layouts/footer/footer.component';
 import { PageRibbonComponent } from './layouts/profiles/page-ribbon.component';
 import { ErrorComponent } from './layouts/error/error.component';
+import { OrgarifOrganismeBlockModule } from 'app/components/organisme-block.module';
+import { OrgarifListModule } from 'app/list/list.module';
+import { OrgarifSaisieModule } from 'app/saisie/saisie.module';
 
 @NgModule({
   imports: [
+    OrgarifOrganismeBlockModule,
+    OrgarifListModule,
+    OrgarifSaisieModule,
+
     BrowserModule,
     OrgarifSharedModule,
     OrgarifCoreModule,
