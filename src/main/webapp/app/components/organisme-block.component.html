@@ -1,0 +1,39 @@
+<div class="organisme-block">
+  <div class="header">
+    <h2>{{ organisme.nom }}</h2>
+    <p class="nature-juridique">{{ organisme.natureJuridique.label }}</p>
+  </div>
+  <div class="content">
+    <!--        <div class="edit-icon">-->
+    <!--      <fa-icon icon="pen"></fa-icon>-->
+    <!--        </div>-->
+    <div class="content-block first">
+      <p class="secteur">{{ organisme.secteur.label }}</p>
+      <p class="nombre-representants">{{ organisme.nombreRepresentants }} réprésentants</p>
+    </div>
+    <div class="content-block">
+      <h3>Délibérations</h3>
+      <p *ngFor="let d of organisme.deliberations" class="deliberation">{{ d.label }} du {{ d.date * 1000 | date: 'd/M/yy' }}</p>
+    </div>
+    <div *ngIf="organisme.representants && organisme.representants.length > 0" class="content-block">
+      <h3>Représentants</h3>
+      <p *ngFor="let r of organisme.representants" class="representants">
+        {{ r.civilite }}
+        {{ r.prenom }}
+        {{ r.nom }}
+        <!--                    ({{ r.groupePolitique }})-->
+      </p>
+    </div>
+    <div *ngFor="let i of organisme.instances" class="content-block">
+      <h3>{{ i.nom }}</h3>
+      <div *ngIf="i.representants && i.representants.length > 0">
+        <p *ngFor="let r of i.representants" class="representants">
+          {{ r.civilite }}
+          {{ r.prenom }}
+          {{ r.nom }}
+          <!--                        ({{ r.groupePolitique }})-->
+        </p>
+      </div>
+    </div>
+  </div>
+</div>

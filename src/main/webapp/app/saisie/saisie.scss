@@ -1,0 +1,78 @@
+@import '../shared/constants/vars';
+
+$label-height: 24px;
+$representants-label-height: 32px;
+
+.saisie-component {
+  .saisie-form {
+    padding: 10px 40px;
+
+    .instance-tabulation {
+      margin-left: 2px;
+      border-left: 2px solid $clear-grey;
+      padding-left: 6px;
+    }
+
+    h3 {
+      font-size: 20px;
+      margin: 8px 0 0 0;
+    }
+    .suppleants-label {
+      //line-height: 32px;
+      //margin: 8px 0 0 0;
+    }
+
+    .button-block {
+      margin-top: 20px;
+    }
+
+    .partage-representants {
+      height: 30px;
+
+      label {
+        padding-left: 10px;
+      }
+    }
+
+    .form-group {
+      margin-bottom: 4px;
+
+      label {
+        margin-bottom: 0;
+      }
+    }
+
+    .representants-organisme-label {
+      font-size: 20px;
+      margin-top: $label-height;
+      height: $representants-label-height;
+    }
+
+    .ng-select.representants-select ::ng-deep {
+      .ng-value-container {
+        flex: 1;
+        overflow: hidden;
+      }
+
+      .ng-value {
+        width: 100%;
+        overflow: hidden;
+      }
+    }
+
+    .ng-select.representants-select.ng-select-disabled ::ng-deep {
+      .ng-select-container {
+        background: $disabled-grey;
+      }
+    }
+  }
+
+  .derniers-organismes {
+    padding: 10px 40px;
+    background: $background-grey;
+
+    .organisme {
+      margin: 10px 0;
+    }
+  }
+}
