@@ -40,6 +40,7 @@
             <th scope="col"  jhiSortBy="creationDate"><span>Creation Date</span> <fa-icon [icon]="'sort'"></fa-icon></th>
             <th scope="col"  jhiSortBy="lastModificationDate"><span>Last Modification Date</span> <fa-icon [icon]="'sort'"></fa-icon></th>
             <th scope="col"  jhiSortBy="partageRepresentants"><span>Partage Representants</span> <fa-icon [icon]="'sort'"></fa-icon></th>
+            <th scope="col"  jhiSortBy="uid"><span>Uid</span> <fa-icon [icon]="'sort'"></fa-icon></th>
             <th scope="col"  jhiSortBy="natureJuridique.label"><span>Nature Juridique</span> <fa-icon [icon]="'sort'"></fa-icon></th>
             <th scope="col"  jhiSortBy="secteur.label"><span>Secteur</span> <fa-icon [icon]="'sort'"></fa-icon></th>
             <th scope="col"  jhiSortBy="typeStructure.label"><span>Type Structure</span> <fa-icon [icon]="'sort'"></fa-icon></th>
@@ -55,6 +56,7 @@
                 <td>{{organisme.creationDate | date:'medium'}}</td>
                 <td>{{organisme.lastModificationDate | date:'medium'}}</td>
                 <td>{{organisme.partageRepresentants}}</td>
+                <td>{{organisme.uid}}</td>
                 <td>
                     <div *ngIf="organisme.natureJuridique">
                         <a [routerLink]="['/nature-juridique', organisme.natureJuridique?.id, 'view' ]" >{{organisme.natureJuridique?.label}}</a>

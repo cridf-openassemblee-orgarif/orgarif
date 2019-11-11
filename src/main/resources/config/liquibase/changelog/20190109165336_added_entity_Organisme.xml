@@ -34,6 +34,9 @@
             <column name="partage_representants" type="boolean">
                 <constraints nullable="true" />
             </column>
+            <column name="uid" type="${uuidType}">
+                <constraints nullable="true" unique="true" uniqueConstraintName="ux_organisme_uid" />
+            </column>
             <column name="nature_juridique_id" type="bigint">
                 <constraints nullable="false" />
             </column>
@@ -85,6 +88,7 @@
             <column name="creation_date" type="datetime"/>
             <column name="last_modification_date" type="datetime"/>
             <column name="partage_representants" type="boolean"/>
+            <column name="uid" type="string"/>
             <column name="nature_juridique_id" type="numeric"/>
             <column name="secteur_id" type="numeric"/>
             <!-- jhipster-needle-liquibase-add-loadcolumn - JHipster (and/or extensions) can add load columns here, do not remove-->

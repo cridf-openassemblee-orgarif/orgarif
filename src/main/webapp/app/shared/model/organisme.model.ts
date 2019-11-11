@@ -14,6 +14,7 @@ export interface IOrganisme {
   creationDate?: Moment;
   lastModificationDate?: Moment;
   partageRepresentants?: boolean;
+  uid?: string;
   natureJuridique?: INatureJuridique;
   secteur?: ISecteur;
   typeStructure?: ITypeStructure;
@@ -32,6 +33,7 @@ export class Organisme implements IOrganisme {
     public creationDate?: Moment,
     public lastModificationDate?: Moment,
     public partageRepresentants?: boolean,
+    public uid?: string,
     public natureJuridique?: INatureJuridique,
     public secteur?: ISecteur,
     public typeStructure?: ITypeStructure,

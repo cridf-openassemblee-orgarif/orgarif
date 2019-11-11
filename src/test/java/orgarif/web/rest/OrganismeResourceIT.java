@@ -30,6 +30,7 @@ import java.time.temporal.ChronoUnit;
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
+import java.util.UUID;
 
 import static orgarif.web.rest.TestUtil.createFormattingConversionService;
 import static org.assertj.core.api.Assertions.assertThat;
@@ -62,6 +63,9 @@ public class OrganismeResourceIT {
 
     private static final Boolean DEFAULT_PARTAGE_REPRESENTANTS = false;
     private static final Boolean UPDATED_PARTAGE_REPRESENTANTS = true;
+
+    private static final UUID DEFAULT_UID = UUID.randomUUID();
+    private static final UUID UPDATED_UID = UUID.randomUUID();
 
     @Autowired
     private OrganismeRepository organismeRepository;
@@ -121,7 +125,8 @@ public class OrganismeResourceIT {
             .nombreSuppleants(DEFAULT_NOMBRE_SUPPLEANTS)
             .creationDate(DEFAULT_CREATION_DATE)
             .lastModificationDate(DEFAULT_LAST_MODIFICATION_DATE)
-            .partageRepresentants(DEFAULT_PARTAGE_REPRESENTANTS);
+            .partageRepresentants(DEFAULT_PARTAGE_REPRESENTANTS)
+            .uid(DEFAULT_UID);
         // Add required entity
         NatureJuridique natureJuridique;
         if (TestUtil.findAll(em, NatureJuridique.class).isEmpty()) {
@@ -157,7 +162,8 @@ public class OrganismeResourceIT {
             .nombreSuppleants(UPDATED_NOMBRE_SUPPLEANTS)
             .creationDate(UPDATED_CREATION_DATE)
             .lastModificationDate(UPDATED_LAST_MODIFICATION_DATE)
-            .partageRepresentants(UPDATED_PARTAGE_REPRESENTANTS);
+            .partageRepresentants(UPDATED_PARTAGE_REPRESENTANTS)
+            .uid(UPDATED_UID);
         // Add required entity
         NatureJuridique natureJuridique;
         if (TestUtil.findAll(em, NatureJuridique.class).isEmpty()) {
@@ -207,6 +213,7 @@ public class OrganismeResourceIT {
         assertThat(testOrganisme.getCreationDate()).isEqualTo(DEFAULT_CREATION_DATE);
         assertThat(testOrganisme.getLastModificationDate()).isEqualTo(DEFAULT_LAST_MODIFICATION_DATE);
         assertThat(testOrganisme.isPartageRepresentants()).isEqualTo(DEFAULT_PARTAGE_REPRESENTANTS);
+        assertThat(testOrganisme.getUid()).isEqualTo(DEFAULT_UID);
 
         // Validate the Organisme in Elasticsearch
         verify(mockOrganismeSearchRepository, times(1)).save(testOrganisme);
@@ -305,7 +312,8 @@ public class OrganismeResourceIT {
             .andExpect(jsonPath("$.[*].nombreSuppleants").value(hasItem(DEFAULT_NOMBRE_SUPPLEANTS)))
             .andExpect(jsonPath("$.[*].creationDate").value(hasItem(DEFAULT_CREATION_DATE.toString())))
             .andExpect(jsonPath("$.[*].lastModificationDate").value(hasItem(DEFAULT_LAST_MODIFICATION_DATE.toString())))
-            .andExpect(jsonPath("$.[*].partageRepresentants").value(hasItem(DEFAULT_PARTAGE_REPRESENTANTS.booleanValue())));
+            .andExpect(jsonPath("$.[*].partageRepresentants").value(hasItem(DEFAULT_PARTAGE_REPRESENTANTS.booleanValue())))
+            .andExpect(jsonPath("$.[*].uid").value(hasItem(DEFAULT_UID.toString())));
     }
     
     @SuppressWarnings({"unchecked"})
@@ -357,7 +365,8 @@ public class OrganismeResourceIT {
             .andExpect(jsonPath("$.nombreSuppleants").value(DEFAULT_NOMBRE_SUPPLEANTS))
             .andExpect(jsonPath("$.creationDate").value(DEFAULT_CREATION_DATE.toString()))
             .andExpect(jsonPath("$.lastModificationDate").value(DEFAULT_LAST_MODIFICATION_DATE.toString()))
-            .andExpect(jsonPath("$.partageRepresentants").value(DEFAULT_PARTAGE_REPRESENTANTS.booleanValue()));
+            .andExpect(jsonPath("$.partageRepresentants").value(DEFAULT_PARTAGE_REPRESENTANTS.booleanValue()))
+            .andExpect(jsonPath("$.uid").value(DEFAULT_UID.toString()));
     }
 
     @Test
@@ -386,7 +395,8 @@ public class OrganismeResourceIT {
             .nombreSuppleants(UPDATED_NOMBRE_SUPPLEANTS)
             .creationDate(UPDATED_CREATION_DATE)
             .lastModificationDate(UPDATED_LAST_MODIFICATION_DATE)
-            .partageRepresentants(UPDATED_PARTAGE_REPRESENTANTS);
+            .partageRepresentants(UPDATED_PARTAGE_REPRESENTANTS)
+            .uid(UPDATED_UID);
 
         restOrganismeMockMvc.perform(put("/api/organismes")
             .contentType(TestUtil.APPLICATION_JSON_UTF8)
@@ -403,6 +413,7 @@ public class OrganismeResourceIT {
         assertThat(testOrganisme.getCreationDate()).isEqualTo(UPDATED_CREATION_DATE);
         assertThat(testOrganisme.getLastModificationDate()).isEqualTo(UPDATED_LAST_MODIFICATION_DATE);
         assertThat(testOrganisme.isPartageRepresentants()).isEqualTo(UPDATED_PARTAGE_REPRESENTANTS);
+        assertThat(testOrganisme.getUid()).isEqualTo(UPDATED_UID);
 
         // Validate the Organisme in Elasticsearch
         verify(mockOrganismeSearchRepository, times(1)).save(testOrganisme);
@@ -467,7 +478,8 @@ public class OrganismeResourceIT {
             .andExpect(jsonPath("$.[*].nombreSuppleants").value(hasItem(DEFAULT_NOMBRE_SUPPLEANTS)))
             .andExpect(jsonPath("$.[*].creationDate").value(hasItem(DEFAULT_CREATION_DATE.toString())))
             .andExpect(jsonPath("$.[*].lastModificationDate").value(hasItem(DEFAULT_LAST_MODIFICATION_DATE.toString())))
-            .andExpect(jsonPath("$.[*].partageRepresentants").value(hasItem(DEFAULT_PARTAGE_REPRESENTANTS.booleanValue())));
+            .andExpect(jsonPath("$.[*].partageRepresentants").value(hasItem(DEFAULT_PARTAGE_REPRESENTANTS.booleanValue())))
+            .andExpect(jsonPath("$.[*].uid").value(hasItem(DEFAULT_UID.toString())));
     }
 
     @Test

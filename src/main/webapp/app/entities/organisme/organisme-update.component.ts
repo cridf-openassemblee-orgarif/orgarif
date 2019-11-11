@@ -43,6 +43,7 @@ export class OrganismeUpdateComponent implements OnInit {
     creationDate: [],
     lastModificationDate: [],
     partageRepresentants: [],
+    uid: [null, []],
     natureJuridique: [null, Validators.required],
     secteur: [null, Validators.required],
     typeStructure: [],
@@ -104,6 +105,7 @@ export class OrganismeUpdateComponent implements OnInit {
       creationDate: organisme.creationDate != null ? organisme.creationDate.format(DATE_TIME_FORMAT) : null,
       lastModificationDate: organisme.lastModificationDate != null ? organisme.lastModificationDate.format(DATE_TIME_FORMAT) : null,
       partageRepresentants: organisme.partageRepresentants,
+      uid: organisme.uid,
       natureJuridique: organisme.natureJuridique,
       secteur: organisme.secteur,
       typeStructure: organisme.typeStructure,
@@ -139,6 +141,7 @@ export class OrganismeUpdateComponent implements OnInit {
           ? moment(this.editForm.get(['lastModificationDate']).value, DATE_TIME_FORMAT)
           : undefined,
       partageRepresentants: this.editForm.get(['partageRepresentants']).value,
+      uid: this.editForm.get(['uid']).value,
       natureJuridique: this.editForm.get(['natureJuridique']).value,
       secteur: this.editForm.get(['secteur']).value,
       typeStructure: this.editForm.get(['typeStructure']).value,

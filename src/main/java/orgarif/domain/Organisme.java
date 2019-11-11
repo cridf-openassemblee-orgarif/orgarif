@@ -2,6 +2,7 @@ package orgarif.domain;
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import org.hibernate.annotations.Cache;
 import org.hibernate.annotations.CacheConcurrencyStrategy;
+import org.hibernate.annotations.Type;
 
 import javax.persistence.*;
 import javax.validation.constraints.*;
@@ -11,6 +12,7 @@ import java.io.Serializable;
 import java.time.Instant;
 import java.util.HashSet;
 import java.util.Set;
+import java.util.UUID;
 
 /**
  * A Organisme.
@@ -48,6 +50,11 @@ public class Organisme implements Serializable {
 
     @Column(name = "partage_representants")
     private Boolean partageRepresentants;
+
+    
+    @Type(type = "uuid-char")
+    @Column(name = "uid", length = 36, unique = true)
+    private UUID uid;
 
     @ManyToOne(optional = false)
     @NotNull
@@ -167,6 +174,19 @@ public class Organisme implements Serializable {
 
     public void setPartageRepresentants(Boolean partageRepresentants) {
         this.partageRepresentants = partageRepresentants;
+    }
+
+    public UUID getUid() {
+        return uid;
+    }
+
+    public Organisme uid(UUID uid) {
+        this.uid = uid;
+        return this;
+    }
+
+    public void setUid(UUID uid) {
+        this.uid = uid;
     }
 
     public NatureJuridique getNatureJuridique() {
@@ -335,6 +355,7 @@ public class Organisme implements Serializable {
             ", creationDate='" + getCreationDate() + "'" +
             ", lastModificationDate='" + getLastModificationDate() + "'" +
             ", partageRepresentants='" + isPartageRepresentants() + "'" +
+            ", uid='" + getUid() + "'" +
             "}";
     }
 }

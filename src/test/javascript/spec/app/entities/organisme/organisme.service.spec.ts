@@ -24,7 +24,7 @@ describe('Service Tests', () => {
       httpMock = injector.get(HttpTestingController);
       currentDate = moment();
 
-      elemDefault = new Organisme(0, 'AAAAAAA', 0, 0, currentDate, currentDate, false);
+      elemDefault = new Organisme(0, 'AAAAAAA', 0, 0, currentDate, currentDate, false, 'AAAAAAA');
     });
 
     describe('Service methods', () => {
@@ -79,7 +79,8 @@ describe('Service Tests', () => {
             nombreSuppleants: 1,
             creationDate: currentDate.format(DATE_TIME_FORMAT),
             lastModificationDate: currentDate.format(DATE_TIME_FORMAT),
-            partageRepresentants: true
+            partageRepresentants: true,
+            uid: 'BBBBBB'
           },
           elemDefault
         );
@@ -108,7 +109,8 @@ describe('Service Tests', () => {
             nombreSuppleants: 1,
             creationDate: currentDate.format(DATE_TIME_FORMAT),
             lastModificationDate: currentDate.format(DATE_TIME_FORMAT),
-            partageRepresentants: true
+            partageRepresentants: true,
+            uid: 'BBBBBB'
           },
           elemDefault
         );
