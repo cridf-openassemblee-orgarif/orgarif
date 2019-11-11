@@ -33,7 +33,7 @@ import static org.elasticsearch.index.query.QueryBuilders.*;
 /**
  * REST controller for managing {@link orgarif.domain.Organisme}.
  */
-@RestController
+//@RestController
 @RequestMapping("/api")
 @Transactional
 public class OrganismeResource {

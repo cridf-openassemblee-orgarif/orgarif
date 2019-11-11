@@ -3,6 +3,7 @@ package orgarif.web.rest;
 import orgarif.domain.NatureJuridique;
 import orgarif.repository.NatureJuridiqueRepository;
 import orgarif.repository.search.NatureJuridiqueSearchRepository;
+import orgarif.service.AuditTrailService;
 import orgarif.web.rest.errors.BadRequestAlertException;
 
 import io.github.jhipster.web.util.HeaderUtil;
@@ -43,9 +44,12 @@ public class NatureJuridiqueResource {
 
     private final NatureJuridiqueSearchRepository natureJuridiqueSearchRepository;
 
-    public NatureJuridiqueResource(NatureJuridiqueRepository natureJuridiqueRepository, NatureJuridiqueSearchRepository natureJuridiqueSearchRepository) {
+    private final AuditTrailService auditTrailService;
+
+    public NatureJuridiqueResource(NatureJuridiqueRepository natureJuridiqueRepository, NatureJuridiqueSearchRepository natureJuridiqueSearchRepository, AuditTrailService auditTrailService) {
         this.natureJuridiqueRepository = natureJuridiqueRepository;
         this.natureJuridiqueSearchRepository = natureJuridiqueSearchRepository;
+        this.auditTrailService = auditTrailService;
     }
 
     /**
@@ -63,6 +67,7 @@ public class NatureJuridiqueResource {
         }
         NatureJuridique result = natureJuridiqueRepository.save(natureJuridique);
         natureJuridiqueSearchRepository.save(result);
+        auditTrailService.logCreation(result, result.getId());
         return ResponseEntity.created(new URI("/api/nature-juridiques/" + result.getId()))
             .headers(HeaderUtil.createEntityCreationAlert(applicationName, false, ENTITY_NAME, result.getId().toString()))
             .body(result);
@@ -85,6 +90,7 @@ public class NatureJuridiqueResource {
         }
         NatureJuridique result = natureJuridiqueRepository.save(natureJuridique);
         natureJuridiqueSearchRepository.save(result);
+        auditTrailService.logUpdate(result, result.getId());
         return ResponseEntity.ok()
             .headers(HeaderUtil.createEntityUpdateAlert(applicationName, false, ENTITY_NAME, natureJuridique.getId().toString()))
             .body(result);
@@ -125,6 +131,7 @@ public class NatureJuridiqueResource {
         log.debug("REST request to delete NatureJuridique : {}", id);
         natureJuridiqueRepository.deleteById(id);
         natureJuridiqueSearchRepository.deleteById(id);
+        auditTrailService.logDeletion(NatureJuridique.class, id);
         return ResponseEntity.noContent().headers(HeaderUtil.createEntityDeletionAlert(applicationName, false, ENTITY_NAME, id.toString())).build();
     }
 
