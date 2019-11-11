@@ -1,8 +1,6 @@
 import { HttpErrorResponse, HttpResponse } from '@angular/common/http';
 import { Component, OnInit, ViewChild } from '@angular/core';
 import { FormBuilder } from '@angular/forms';
-import { DeliberationService } from 'app/entities/deliberation/deliberation.service';
-import { EluService } from 'app/entities/elu/elu.service';
 import { NatureJuridiqueService } from 'app/entities/nature-juridique/nature-juridique.service';
 import { SecteurService } from 'app/entities/secteur/secteur.service';
 import { TypeStructureService } from 'app/entities/type-structure/type-structure.service';
@@ -63,9 +61,7 @@ export class SaisieComponent implements OnInit {
     protected natureJuridiqueService: NatureJuridiqueService,
     protected typeStructureService: TypeStructureService,
     protected secteurService: SecteurService,
-    protected eluService: EluService,
     protected listService: ListService,
-    protected deliberationService: DeliberationService,
     protected fb: FormBuilder,
     protected completerService: CompleterService
   ) {}
