@@ -62,6 +62,7 @@ public class CacheConfiguration {
             createCache(cm, orgarif.domain.Organisme.class.getName() + ".representants");
             createCache(cm, orgarif.domain.Organisme.class.getName() + ".suppleants");
             createCache(cm, orgarif.domain.Organisme.class.getName() + ".deliberations");
+            createCache(cm, orgarif.domain.AuditTrail.class.getName());
             // jhipster-needle-ehcache-add-entry
         };
     }
