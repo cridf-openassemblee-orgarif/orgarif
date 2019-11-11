@@ -17,8 +17,6 @@ import { IRepresentant } from 'app/shared/model/representant.model';
 import { NatureJuridiqueService } from 'app/entities/nature-juridique/nature-juridique.service';
 import { TypeStructureService } from 'app/entities/type-structure/type-structure.service';
 import { SecteurService } from 'app/entities/secteur/secteur.service';
-import { EluService } from 'app/entities/elu/elu.service';
-import { DeliberationService } from 'app/entities/deliberation/deliberation.service';
 
 interface SaisieInput {
   nom: string;
@@ -63,9 +61,7 @@ export class SaisieComponent implements OnInit {
     protected natureJuridiqueService: NatureJuridiqueService,
     protected typeStructureService: TypeStructureService,
     protected secteurService: SecteurService,
-    protected eluService: EluService,
     protected listService: ListService,
-    protected deliberationService: DeliberationService,
     protected fb: FormBuilder,
     protected completerService: CompleterService
   ) {}
@@ -119,7 +115,7 @@ export class SaisieComponent implements OnInit {
         filter((mayBeOk: HttpResponse<IElu[]>) => mayBeOk.ok),
         map((response: HttpResponse<IElu[]>) => response.body)
       )
-      .subscribe((res:  IElu[]) => (this.elus = res), (res: HttpErrorResponse) => this.onError(res.message));
+      .subscribe((res: IElu[]) => (this.elus = res), (res: HttpErrorResponse) => this.onError(res.message));
     this.updateLists();
     this.resetInput();
   }
