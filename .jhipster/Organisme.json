@@ -79,6 +79,11 @@
     {
       "fieldName": "partageRepresentants",
       "fieldType": "Boolean"
+    },
+    {
+      "fieldName": "uid",
+      "fieldType": "UUID",
+      "fieldValidateRules": ["unique"]
     }
   ],
   "changelogDate": "20190109165336",
