@@ -3,6 +3,7 @@ package orgarif.web.rest;
 import orgarif.domain.TypeStructure;
 import orgarif.repository.TypeStructureRepository;
 import orgarif.repository.search.TypeStructureSearchRepository;
+import orgarif.service.AuditTrailService;
 import orgarif.web.rest.errors.BadRequestAlertException;
 
 import io.github.jhipster.web.util.HeaderUtil;
@@ -42,9 +43,12 @@ public class TypeStructureResource {
 
     private final TypeStructureSearchRepository typeStructureSearchRepository;
 
-    public TypeStructureResource(TypeStructureRepository typeStructureRepository, TypeStructureSearchRepository typeStructureSearchRepository) {
+    private final AuditTrailService auditTrailService;
+
+    public TypeStructureResource(TypeStructureRepository typeStructureRepository, TypeStructureSearchRepository typeStructureSearchRepository, AuditTrailService auditTrailService) {
         this.typeStructureRepository = typeStructureRepository;
         this.typeStructureSearchRepository = typeStructureSearchRepository;
+        this.auditTrailService = auditTrailService;
     }
 
     /**
@@ -62,6 +66,7 @@ public class TypeStructureResource {
         }
         TypeStructure result = typeStructureRepository.save(typeStructure);
         typeStructureSearchRepository.save(result);
+        auditTrailService.logCreation(result, result.getId());
         return ResponseEntity.created(new URI("/api/type-structures/" + result.getId()))
             .headers(HeaderUtil.createEntityCreationAlert(applicationName, false, ENTITY_NAME, result.getId().toString()))
             .body(result);
@@ -84,6 +89,7 @@ public class TypeStructureResource {
         }
         TypeStructure result = typeStructureRepository.save(typeStructure);
         typeStructureSearchRepository.save(result);
+        auditTrailService.logUpdate(result, result.getId());
         return ResponseEntity.ok()
             .headers(HeaderUtil.createEntityUpdateAlert(applicationName, false, ENTITY_NAME, typeStructure.getId().toString()))
             .body(result);
@@ -125,6 +131,7 @@ public class TypeStructureResource {
         log.debug("REST request to delete TypeStructure : {}", id);
         typeStructureRepository.deleteById(id);
         typeStructureSearchRepository.deleteById(id);
+        auditTrailService.logDeletion(TypeStructure.class, id);
         return ResponseEntity.noContent().headers(HeaderUtil.createEntityDeletionAlert(applicationName, false, ENTITY_NAME, id.toString())).build();
     }
 

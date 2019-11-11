@@ -4,6 +4,7 @@ import orgarif.OrgarifApp;
 import orgarif.domain.Secteur;
 import orgarif.repository.SecteurRepository;
 import orgarif.repository.search.SecteurSearchRepository;
+import orgarif.service.AuditTrailService;
 import orgarif.web.rest.errors.ExceptionTranslator;
 
 import org.junit.jupiter.api.BeforeEach;
@@ -52,6 +53,9 @@ public class SecteurResourceIT {
     private SecteurSearchRepository mockSecteurSearchRepository;
 
     @Autowired
+    private AuditTrailService auditTrailService;
+
+    @Autowired
     private MappingJackson2HttpMessageConverter jacksonMessageConverter;
 
     @Autowired
@@ -73,7 +77,7 @@ public class SecteurResourceIT {
     @BeforeEach
     public void setup() {
         MockitoAnnotations.initMocks(this);
-        final SecteurResource secteurResource = new SecteurResource(secteurRepository, mockSecteurSearchRepository);
+        final SecteurResource secteurResource = new SecteurResource(secteurRepository, mockSecteurSearchRepository, auditTrailService);
         this.restSecteurMockMvc = MockMvcBuilders.standaloneSetup(secteurResource)
             .setCustomArgumentResolvers(pageableArgumentResolver)
             .setControllerAdvice(exceptionTranslator)
@@ -185,7 +189,7 @@ public class SecteurResourceIT {
             .andExpect(jsonPath("$.[*].id").value(hasItem(secteur.getId().intValue())))
             .andExpect(jsonPath("$.[*].label").value(hasItem(DEFAULT_LABEL)));
     }
-    
+
     @Test
     @Transactional
     public void getSecteur() throws Exception {
