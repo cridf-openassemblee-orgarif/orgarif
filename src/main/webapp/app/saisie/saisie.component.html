@@ -2,77 +2,164 @@
   <div>
     <form name="editForm" role="form" novalidate (ngSubmit)="save()" #editForm="ngForm" class="saisie-form">
       <h2 id="jhi-organisme-heading">Nouvel organisme</h2>
-      <div>
-        <div class="form-group">
+      <div class="row">
+        <div class="form-group col-md-12">
           <label class="form-control-label" for="field_nom">Nom</label>
           <input type="text" class="form-control" name="nom" id="field_nom" [(ngModel)]="input.nom" #nomInput />
         </div>
-        <div class="row">
-          <div class="form-group col-md-6">
-            <label class="form-control-label" for="field_natureJuridique">Nature Juridique</label>
-            <select class="form-control" id="field_natureJuridique" name="natureJuridique" [(ngModel)]="input.natureJuridique">
-              <option *ngIf="!input.natureJuridique" [ngValue]="null" selected></option>
-              <option
-                [ngValue]="natureJuridiqueOption.id === input.natureJuridique?.id ? input.natureJuridique : natureJuridiqueOption"
-                *ngFor="let natureJuridiqueOption of natureJuridiques; trackBy: trackById"
-              >
-                {{ natureJuridiqueOption.label }}
-              </option>
-            </select>
+      </div>
+      <div class="row">
+        <div class="form-group col-md-4">
+          <label class="form-control-label" for="field_Secteur">Secteur</label>
+          <select class="form-control" id="field_Secteur" name="secteur" [(ngModel)]="input.secteur">
+            <option *ngIf="!input.secteur" [ngValue]="null" selected></option>
+            <option
+              [ngValue]="secteurOption.id === input.secteur?.id ? input.secteur : secteurOption"
+              *ngFor="let secteurOption of secteurs; trackBy: trackById"
+            >
+              {{ secteurOption.label }}
+            </option>
+          </select>
+        </div>
+        <div class="form-group col-md-4">
+          <label class="form-control-label" for="field_natureJuridique">Nature Juridique</label>
+          <select class="form-control" id="field_natureJuridique" name="natureJuridique" [(ngModel)]="input.natureJuridique">
+            <option *ngIf="!input.natureJuridique" [ngValue]="null" selected></option>
+            <option
+              [ngValue]="natureJuridiqueOption.id === input.natureJuridique?.id ? input.natureJuridique : natureJuridiqueOption"
+              *ngFor="let natureJuridiqueOption of natureJuridiques; trackBy: trackById"
+            >
+              {{ natureJuridiqueOption.label }}
+            </option>
+          </select>
+        </div>
+        <div class="form-group col-md-4">
+          <label class="form-control-label" for="field_typeStructure">Type de structure</label>
+          <select class="form-control" id="field_typeStructure" name="typeStructure" [(ngModel)]="input.typeStructure">
+            <option *ngIf="!input.typeStructure" [ngValue]="null" selected></option>
+            <option
+              [ngValue]="typeStructureOption.id === input.typeStructure?.id ? input.typeStructure : typeStructureOption"
+              *ngFor="let typeStructureOption of typeStructures; trackBy: trackById"
+            >
+              {{ typeStructureOption.label }}
+            </option>
+          </select>
+        </div>
+      </div>
+      <div class="row">
+        <div class="form-group col-md-12">
+          <label class="form-control-label" for="field_Instances">Instances</label>
+          <input
+            type="text"
+            class="form-control"
+            id="field_Instances"
+            name="instances"
+            [(ngModel)]="input.instancesAsString"
+            (input)="updateInstances()"
+          />
+        </div>
+      </div>
+      <div>
+        <div class="row" *ngIf="input.instances.length === 0">
+          <div class="form-group col-md-4">
+            <label for="representants">Représentants</label>
+            <!--FIXME bindLabel needed ?-->
+            <ng-select
+              id="representants"
+              name="representants"
+              class="representants-select"
+              [disabled]="input.instances.length !== 0 && !input.partageRepresentants"
+              [multiple]="true"
+              [(ngModel)]="input.representants"
+            >
+              <ng-option *ngFor="let elu of elus" [value]="elu.id">
+                <!--                                    {{ elu.civilite }}-->
+                {{ elu.prenom }}
+                {{ elu.nom }}
+                ({{ elu.groupePolitiqueCourt }})
+              </ng-option>
+            </ng-select>
           </div>
-          <div class="form-group col-md-6">
-            <label class="form-control-label" for="field_typeStructure">Type de structure</label>
-            <select class="form-control" id="field_typeStructure" name="typeStructure" [(ngModel)]="input.typeStructure">
-              <option *ngIf="!input.typeStructure" [ngValue]="null" selected></option>
-              <option
-                [ngValue]="typeStructureOption.id === input.typeStructure?.id ? input.typeStructure : typeStructureOption"
-                *ngFor="let typeStructureOption of typeStructures; trackBy: trackById"
-              >
-                {{ typeStructureOption.label }}
-              </option>
-            </select>
+          <div class="form-group col-md-4">
+            <label for="representants">Suppléants</label>
+            <!--FIXME bindLabel needed ?-->
+            <ng-select
+              id="suppleants"
+              name="suppleants"
+              class="representants-select"
+              [disabled]="input.instances.length !== 0 && !input.partageRepresentants"
+              [multiple]="true"
+              [(ngModel)]="input.suppleants"
+            >
+              <ng-option *ngFor="let elu of elus" [value]="elu.id">
+                <!--                                    {{ elu.civilite }}-->
+                {{ elu.prenom }}
+                {{ elu.nom }}
+                ({{ elu.groupePolitiqueCourt }})
+              </ng-option>
+            </ng-select>
           </div>
         </div>
-        <div class="row">
-          <div class="form-group col-md-6">
-            <label class="form-control-label" for="field_Secteur">Secteur</label>
-            <select class="form-control" id="field_Secteur" name="secteur" [(ngModel)]="input.secteur">
-              <option *ngIf="!input.secteur" [ngValue]="null" selected></option>
-              <option
-                [ngValue]="secteurOption.id === input.secteur?.id ? input.secteur : secteurOption"
-                *ngFor="let secteurOption of secteurs; trackBy: trackById"
-              >
-                {{ secteurOption.label }}
-              </option>
-            </select>
+        <div class="row" *ngIf="input.instances.length === 0">
+          <div class="form-group col-md-4">
+            <label class="form-control-label" for="field_DeliberationLabel">Délibération</label>
+            <ng2-completer
+              inputClass="form-control"
+              inputId="field_DeliberationLabel"
+              name="deliberationLabel"
+              [(ngModel)]="input.deliberation.label"
+              [datasource]="deliberationsDataService"
+              [minSearchLength]="2"
+              (selected)="deliberationSelected($event)"
+              textSearching="Recherche..."
+            ></ng2-completer>
+            <!--                                [disabled]="input.instances.length !== 0"-->
+          </div>
+          <div class="form-group col-md-4">
+            <label class="form-control-label" for="field_DeliberationDate">Date</label>
+            <div class="input-group" *ngIf="!input.deliberation.id">
+              <input
+                id="field_DeliberationDate"
+                type="text"
+                class="form-control"
+                name="deliberationDate"
+                ngbDatepicker
+                #dateDp="ngbDatepicker"
+                [(ngModel)]="input.deliberation.date"
+              />
+              <!--                                    [disabled]="input.instances.length !== 0"-->
+              <span class="input-group-append">
+                <button type="button" class="btn btn-secondary" (click)="dateDp.toggle()">
+                  <fa-icon [icon]="'calendar-alt'"></fa-icon>
+                </button>
+              </span>
+            </div>
+            <div class="input-group" *ngIf="input.deliberation.id">
+              <input type="text" class="form-control" disabled value="{{ input.deliberation.date.valueOf() * 1000 | date: 'd/M/yy' }}" />
+              <span class="input-group-append">
+                <button type="button" class="btn btn-secondary">
+                  <fa-icon [icon]="'calendar-alt'"></fa-icon>
+                </button>
+              </span>
+            </div>
           </div>
         </div>
-        <div class="row">
-          <div class="form-group col-md-12">
-            <label class="form-control-label" for="field_Instances">Instances</label>
-            <input
-              type="text"
-              class="form-control"
-              id="field_Instances"
-              name="instances"
-              [(ngModel)]="input.instancesAsString"
-              (input)="updateInstances()"
-            />
-          </div>
-        </div>
-        <div>
-          <div class="row" *ngIf="input.instances.length === 0">
-            <div class="form-group col-md-6">
-              <label for="representants">Représentants</label>
+      </div>
+      <div *ngFor="let instance of input.instances; let i = index">
+        <h3>{{ instance }}</h3>
+        <div class="instance-tabulation">
+          <div class="row" *ngIf="!input.partageRepresentants || i === 0">
+            <div class="form-group col-md-4">
+              <label [attr.for]="'instancesRepresentants-' + i"> Représentants </label>
               <!--FIXME bindLabel needed ?-->
               <ng-select
-                id="representants"
-                name="representants"
+                id="instancesRepresentants-{{ i }}"
+                name="instancesRepresentants-{{ i }}"
                 class="representants-select"
-                [disabled]="input.instances.length !== 0 && !input.partageRepresentants"
                 [multiple]="true"
-                [(ngModel)]="input.representants"
+                [(ngModel)]="input.instancesRepresentants[i]"
               >
+                <!--                                [disabled]="input.partageRepresentants"-->
                 <ng-option *ngFor="let elu of elus" [value]="elu.id">
                   <!--                                    {{ elu.civilite }}-->
                   {{ elu.prenom }}
@@ -81,17 +168,17 @@
                 </ng-option>
               </ng-select>
             </div>
-            <div class="form-group col-md-6">
-              <label for="representants">Suppléants</label>
+            <div class="form-group col-md-4">
+              <label [attr.for]="'instancesSuppleants-' + i">Suppléants</label>
               <!--FIXME bindLabel needed ?-->
               <ng-select
-                id="suppleants"
-                name="suppleants"
+                id="instancesSuppleants-{{ i }}"
+                name="instancesSuppleants-{{ i }}"
                 class="representants-select"
-                [disabled]="input.instances.length !== 0 && !input.partageRepresentants"
                 [multiple]="true"
-                [(ngModel)]="input.suppleants"
+                [(ngModel)]="input.instancesSuppleants[i]"
               >
+                <!--                                [disabled]="input.partageRepresentants"-->
                 <ng-option *ngFor="let elu of elus" [value]="elu.id">
                   <!--                                    {{ elu.civilite }}-->
                   {{ elu.prenom }}
@@ -101,42 +188,56 @@
               </ng-select>
             </div>
           </div>
-          <div class="row" *ngIf="input.instances.length === 0">
-            <div class="form-group col-md-6">
-              <label class="form-control-label" for="field_DeliberationLabel">Délibération</label>
+          <div class="row">
+            <div *ngIf="i === 0" class="partage-representants col-md-12">
+              <input
+                type="checkbox"
+                id="partageRepresentants"
+                [(ngModel)]="input.partageRepresentants"
+                [ngModelOptions]="{ standalone: true }"
+              />
+              <label for="partageRepresentants">Partage des réprésentants entre instances</label>
+            </div>
+          </div>
+          <div class="row">
+            <div class="form-group col-md-4">
+              <label class="form-control-label" [attr.for]="'instancesDeliberationLabel-' + i">Délibération</label>
               <ng2-completer
                 inputClass="form-control"
-                inputId="field_DeliberationLabel"
-                name="deliberationLabel"
-                [(ngModel)]="input.deliberation.label"
+                inputId="instancesDeliberationLabel-{{ i }}"
+                name="instancesDeliberationLabel-{{ i }}"
+                [(ngModel)]="input.instancesDeliberations[i].label"
                 [datasource]="deliberationsDataService"
                 [minSearchLength]="2"
-                (selected)="deliberationSelected($event)"
+                (selected)="instanceDeliberationSelected($event, i)"
                 textSearching="Recherche..."
               ></ng2-completer>
-              <!--                                [disabled]="input.instances.length !== 0"-->
             </div>
-            <div class="form-group col-md-6">
-              <label class="form-control-label" for="field_DeliberationDate">Date</label>
-              <div class="input-group" *ngIf="!input.deliberation.id">
+            <div class="form-group col-md-4">
+              <label class="form-control-label" [attr.for]="'instancesDeliberationDate-' + i">Date</label>
+              <div class="input-group" *ngIf="!input.instancesDeliberations[i].id">
                 <input
-                  id="field_DeliberationDate"
+                  id="instancesDeliberationDate-{{ i }}"
                   type="text"
                   class="form-control"
-                  name="deliberationDate"
+                  name="instancesDeliberationDate-{{ i }}"
                   ngbDatepicker
                   #dateDp="ngbDatepicker"
-                  [(ngModel)]="input.deliberation.date"
+                  [(ngModel)]="input.instancesDeliberations[i].date"
                 />
-                <!--                                    [disabled]="input.instances.length !== 0"-->
                 <span class="input-group-append">
                   <button type="button" class="btn btn-secondary" (click)="dateDp.toggle()">
                     <fa-icon [icon]="'calendar-alt'"></fa-icon>
                   </button>
                 </span>
               </div>
-              <div class="input-group" *ngIf="input.deliberation.id">
-                <input type="text" class="form-control" disabled value="{{ input.deliberation.date.valueOf() * 1000 | date: 'd/M/yy' }}" />
+              <div class="input-group" *ngIf="input.instancesDeliberations[i].id">
+                <input
+                  type="text"
+                  class="form-control"
+                  disabled
+                  value="{{ input.instancesDeliberations[i].date.valueOf() * 1000 | date: 'd/M/yy' }}"
+                />
                 <span class="input-group-append">
                   <button type="button" class="btn btn-secondary">
                     <fa-icon [icon]="'calendar-alt'"></fa-icon>
@@ -146,114 +247,11 @@
             </div>
           </div>
         </div>
-        <div *ngFor="let instance of input.instances; let i = index">
-          <h3>{{ instance }}</h3>
-          <div class="instance-tabulation">
-            <div class="row" *ngIf="!input.partageRepresentants || i === 0">
-              <div class="form-group col-md-6">
-                <label [attr.for]="'instancesRepresentants-' + i"> Représentants </label>
-                <!--FIXME bindLabel needed ?-->
-                <ng-select
-                  id="instancesRepresentants-{{ i }}"
-                  name="instancesRepresentants-{{ i }}"
-                  class="representants-select"
-                  [multiple]="true"
-                  [(ngModel)]="input.instancesRepresentants[i]"
-                >
-                  <!--                                [disabled]="input.partageRepresentants"-->
-                  <ng-option *ngFor="let elu of elus" [value]="elu.id">
-                    <!--                                    {{ elu.civilite }}-->
-                    {{ elu.prenom }}
-                    {{ elu.nom }}
-                    ({{ elu.groupePolitiqueCourt }})
-                  </ng-option>
-                </ng-select>
-              </div>
-              <div class="form-group col-md-6">
-                <label [attr.for]="'instancesSuppleants-' + i">Suppléants</label>
-                <!--FIXME bindLabel needed ?-->
-                <ng-select
-                  id="instancesSuppleants-{{ i }}"
-                  name="instancesSuppleants-{{ i }}"
-                  class="representants-select"
-                  [multiple]="true"
-                  [(ngModel)]="input.instancesSuppleants[i]"
-                >
-                  <!--                                [disabled]="input.partageRepresentants"-->
-                  <ng-option *ngFor="let elu of elus" [value]="elu.id">
-                    <!--                                    {{ elu.civilite }}-->
-                    {{ elu.prenom }}
-                    {{ elu.nom }}
-                    ({{ elu.groupePolitiqueCourt }})
-                  </ng-option>
-                </ng-select>
-              </div>
-            </div>
-            <div class="row">
-              <div *ngIf="i === 0" class="partage-representants col-md-12">
-                <input
-                  type="checkbox"
-                  id="partageRepresentants"
-                  [(ngModel)]="input.partageRepresentants"
-                  [ngModelOptions]="{ standalone: true }"
-                />
-                <label for="partageRepresentants">Partage des réprésentants entre instances</label>
-              </div>
-            </div>
-            <div class="row">
-              <div class="form-group col-md-6">
-                <label class="form-control-label" [attr.for]="'instancesDeliberationLabel-' + i">Délibération</label>
-                <ng2-completer
-                  inputClass="form-control"
-                  inputId="instancesDeliberationLabel-{{ i }}"
-                  name="instancesDeliberationLabel-{{ i }}"
-                  [(ngModel)]="input.instancesDeliberations[i].label"
-                  [datasource]="deliberationsDataService"
-                  [minSearchLength]="2"
-                  (selected)="instanceDeliberationSelected($event, i)"
-                  textSearching="Recherche..."
-                ></ng2-completer>
-              </div>
-              <div class="form-group col-md-6">
-                <label class="form-control-label" [attr.for]="'instancesDeliberationDate-' + i">Date</label>
-                <div class="input-group" *ngIf="!input.instancesDeliberations[i].id">
-                  <input
-                    id="instancesDeliberationDate-{{ i }}"
-                    type="text"
-                    class="form-control"
-                    name="instancesDeliberationDate-{{ i }}"
-                    ngbDatepicker
-                    #dateDp="ngbDatepicker"
-                    [(ngModel)]="input.instancesDeliberations[i].date"
-                  />
-                  <span class="input-group-append">
-                    <button type="button" class="btn btn-secondary" (click)="dateDp.toggle()">
-                      <fa-icon [icon]="'calendar-alt'"></fa-icon>
-                    </button>
-                  </span>
-                </div>
-                <div class="input-group" *ngIf="input.instancesDeliberations[i].id">
-                  <input
-                    type="text"
-                    class="form-control"
-                    disabled
-                    value="{{ input.instancesDeliberations[i].date.valueOf() * 1000 | date: 'd/M/yy' }}"
-                  />
-                  <span class="input-group-append">
-                    <button type="button" class="btn btn-secondary">
-                      <fa-icon [icon]="'calendar-alt'"></fa-icon>
-                    </button>
-                  </span>
-                </div>
-              </div>
-            </div>
-          </div>
-        </div>
       </div>
       <jhi-alert-error></jhi-alert-error>
       <div class="button-block">
         <button type="submit" id="save-entity" [disabled]="editForm.form.invalid || isSaving" class="btn btn-primary">
-          <fa-icon [icon]="'save'"></fa-icon>&nbsp;<span>Save</span>
+          <fa-icon [icon]="'save'"></fa-icon>&nbsp;<span>Enregistrer</span>
         </button>
       </div>
     </form>
@@ -262,55 +260,6 @@
     <h2>Derniers organismes</h2>
     <div *ngFor="let organisme of organismes" class="organisme">
       <jhi-orgarif-organisme-block [organisme]="organisme"></jhi-orgarif-organisme-block>
-    </div>
-  </div>
-  <div class="col-12" style="display: none">
-    <div class="input-form">
-      <form name="editForm" role="form" novalidate (ngSubmit)="save()">
-        <div class="clearfix">
-          <div style="float: left; width: 10%; margin: 2px"></div>
-          <div style="float: left">
-            <h2>Nouvel organisme :</h2>
-          </div>
-        </div>
-        <div>
-          <div style="float: left; width: 10%; margin: 2px"></div>
-          <!--                    <div style="float: left; width: 15%; margin: 2px;">-->
-          <!--                        <label for="name">Nom</label>-->
-          <!--                        <input type="text" class="form-control" id="name" name="name" [(ngModel)]="input.nom"/>-->
-          <!--                    </div>-->
-          <div style="float: left; width: 15%; margin: 2px">
-            <!--                        <label for="instances">Instances</label>-->
-          </div>
-          <!--                    <div style="float: left; width: 15%; margin: 2px;"-->
-          <!--                         *ngFor="let i of objectKeys(representants); let i = index">-->
-          <!--                        <label for="item-{{index}}">Représentants {{i}}</label>-->
-          <!--                        &lt;!&ndash;FIXME bindLabel needed ?&ndash;&gt;-->
-          <!--                        <ng-select-->
-          <!--                            name="representants"-->
-          <!--                            [items]="elus"-->
-          <!--                            [multiple]="true"-->
-          <!--                            bindLabel="name"-->
-          <!--                            [closeOnSelect]="false"-->
-          <!--                            bindValue="id"-->
-          <!--                            [(ngModel)]="selectedPeople[i]">-->
-          <!--                            <ng-template let-item="item" let-item$="item$" let-index="index">-->
-          <!--                                <input id="item-{{index}}" type="checkbox" [ngModel]="item$.selected"/> {{item.name}}-->
-          <!--                            </ng-template>-->
-          <!--                        </ng-select>-->
-          <!--                    </div>-->
-          <!--                    <div style="float: left; width: 15%; margin: 2px;">-->
-          <!--                        <label for="typeStructure">Type de structure</label>-->
-          <!--                        <input type="text" class="form-control" id="typeStructure" name="typeStructure"-->
-          <!--                               [(ngModel)]="input.typeStructure"/>-->
-          <!--                    </div>-->
-          <div class="clearfix">
-            <div style="float: left; width: 10%; margin: 2px"></div>
-            <!-- TODO check submit needed -->
-            <button class="btn btn-info" type="submit">Enregistrer</button>
-          </div>
-        </div>
-      </form>
     </div>
   </div>
 </div>
