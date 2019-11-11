@@ -3,6 +3,7 @@ package orgarif.web.rest;
 import orgarif.domain.Secteur;
 import orgarif.repository.SecteurRepository;
 import orgarif.repository.search.SecteurSearchRepository;
+import orgarif.service.AuditTrailService;
 import orgarif.web.rest.errors.BadRequestAlertException;
 
 import io.github.jhipster.web.util.HeaderUtil;
@@ -42,9 +43,12 @@ public class SecteurResource {
 
     private final SecteurSearchRepository secteurSearchRepository;
 
-    public SecteurResource(SecteurRepository secteurRepository, SecteurSearchRepository secteurSearchRepository) {
+    private final AuditTrailService auditTrailService;
+
+    public SecteurResource(SecteurRepository secteurRepository, SecteurSearchRepository secteurSearchRepository, AuditTrailService auditTrailService) {
         this.secteurRepository = secteurRepository;
         this.secteurSearchRepository = secteurSearchRepository;
+        this.auditTrailService = auditTrailService;
     }
 
     /**
@@ -62,6 +66,7 @@ public class SecteurResource {
         }
         Secteur result = secteurRepository.save(secteur);
         secteurSearchRepository.save(result);
+        auditTrailService.logCreation(result, result.getId());
         return ResponseEntity.created(new URI("/api/secteurs/" + result.getId()))
             .headers(HeaderUtil.createEntityCreationAlert(applicationName, false, ENTITY_NAME, result.getId().toString()))
             .body(result);
@@ -84,6 +89,7 @@ public class SecteurResource {
         }
         Secteur result = secteurRepository.save(secteur);
         secteurSearchRepository.save(result);
+        auditTrailService.logUpdate(result, result.getId());
         return ResponseEntity.ok()
             .headers(HeaderUtil.createEntityUpdateAlert(applicationName, false, ENTITY_NAME, secteur.getId().toString()))
             .body(result);
@@ -125,6 +131,7 @@ public class SecteurResource {
         log.debug("REST request to delete Secteur : {}", id);
         secteurRepository.deleteById(id);
         secteurSearchRepository.deleteById(id);
+        auditTrailService.logDeletion(Secteur.class, id);
         return ResponseEntity.noContent().headers(HeaderUtil.createEntityDeletionAlert(applicationName, false, ENTITY_NAME, id.toString())).build();
     }
 
