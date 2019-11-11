@@ -37,7 +37,7 @@
             <column name="date" type="datetime">
                 <constraints nullable="true" />
             </column>
-            <column name="details" type="varchar(255)">
+            <column name="details" type="text">
                 <constraints nullable="true" />
             </column>
             <column name="reason" type="varchar(255)">
