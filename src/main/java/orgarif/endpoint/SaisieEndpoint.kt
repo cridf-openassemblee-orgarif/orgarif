@@ -11,6 +11,7 @@ import orgarif.domain.Deliberation
 import orgarif.domain.Organisme
 import orgarif.repository.DeliberationRepository
 import orgarif.repository.search.DeliberationSearchRepository
+import orgarif.service.AuditTrailService
 import orgarif.service.SaisieService
 import orgarif.web.rest.errors.BadRequestAlertException
 import java.net.URI
@@ -24,7 +25,8 @@ import javax.validation.Valid
 open class SaisieEndpoint(@Value("\${jhipster.clientApp.name}") val applicationName: String,
                           val saisieService: SaisieService,
                           val deliberationRepository: DeliberationRepository,
-                          val deliberationSearchRepository: DeliberationSearchRepository) {
+                          val deliberationSearchRepository: DeliberationSearchRepository,
+                          val auditTrailService: AuditTrailService) {
 
     private val log = LoggerFactory.getLogger(SaisieEndpoint::class.java)
 
@@ -39,6 +41,7 @@ open class SaisieEndpoint(@Value("\${jhipster.clientApp.name}") val applicationN
             throw BadRequestAlertException("A new organisme cannot already have an ID", ENTITY_NAME, "idexists")
         }
         val result = saisieService.saveSaisie(organisme)
+        auditTrailService.logCreation(result, result.id)
         return ResponseEntity.created(URI("/api/organismes/" + result.id!!))
             .headers(HeaderUtil.createEntityCreationAlert(applicationName, false, ENTITY_NAME, result.id!!.toString()))
             .body(result)
@@ -47,17 +50,17 @@ open class SaisieEndpoint(@Value("\${jhipster.clientApp.name}") val applicationN
     /**
      * `PUT  /saisie` : Update organisme.
      */
-    @PutMapping
-    open fun updateOrganisme(@Valid @RequestBody organisme: Organisme): ResponseEntity<Organisme> {
-        log.debug("REST request to update Organisme : {}", organisme)
-        if (organisme.id == null) {
-            throw BadRequestAlertException("Invalid id", ENTITY_NAME, "idnull")
-        }
-        val result = saisieService.saveSaisie(organisme)
-        return ResponseEntity.ok()
-            .headers(HeaderUtil.createEntityUpdateAlert(applicationName, false, ENTITY_NAME, organisme.id!!.toString()))
-            .body(result)
-    }
+//    @PutMapping
+//    open fun updateOrganisme(@Valid @RequestBody organisme: Organisme): ResponseEntity<Organisme> {
+//        log.debug("REST request to update Organisme : {}", organisme)
+//        if (organisme.id == null) {
+//            throw BadRequestAlertException("Invalid id", ENTITY_NAME, "idnull")
+//        }
+//        val result = saisieService.saveSaisie(organisme)
+//        return ResponseEntity.ok()
+//            .headers(HeaderUtil.createEntityUpdateAlert(applicationName, false, ENTITY_NAME, organisme.id!!.toString()))
+//            .body(result)
+//    }
 
     @GetMapping("/last-deliberations")
     open fun getLastDeliberations(): ResponseEntity<List<Deliberation>> {

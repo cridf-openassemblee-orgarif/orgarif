@@ -28,11 +28,11 @@ open class SaisieService(val organismeRepository: OrganismeRepository,
                          val deliberationSearchRepository: DeliberationSearchRepository,
                          val dateService: DateService) {
 
-    private val log = LoggerFactory.getLogger(SaisieService::class.java)
+    private val logger = LoggerFactory.getLogger(SaisieService::class.java)
 
     @Transactional
     open fun saveSaisie(organisme: Organisme): Organisme {
-        log.debug("Request to save Organisme : {}", organisme)
+        logger.debug("Request to save Organisme : {}", organisme)
         if (organisme.creationDate != null) {
             throw NotImplementedError()
         }
