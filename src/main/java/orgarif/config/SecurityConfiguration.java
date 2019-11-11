@@ -1,12 +1,9 @@
 package orgarif.config;
 
-import orgarif.security.*;
-
 import io.github.jhipster.config.JHipsterProperties;
-import io.github.jhipster.security.*;
-
-import org.springframework.beans.factory.BeanInitializationException;
-import org.springframework.beans.factory.InitializingBean;
+import io.github.jhipster.security.AjaxAuthenticationFailureHandler;
+import io.github.jhipster.security.AjaxAuthenticationSuccessHandler;
+import io.github.jhipster.security.AjaxLogoutSuccessHandler;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Import;
 import org.springframework.http.HttpMethod;
@@ -23,6 +20,7 @@ import org.springframework.security.web.csrf.CsrfFilter;
 import org.springframework.security.web.header.writers.ReferrerPolicyHeaderWriter;
 import org.springframework.web.filter.CorsFilter;
 import org.zalando.problem.spring.web.advice.security.SecurityProblemSupport;
+import orgarif.security.AuthoritiesConstants;
 
 @EnableWebSecurity
 @EnableGlobalMethodSecurity(prePostEnabled = true, securedEnabled = true)
@@ -67,6 +65,7 @@ public class SecurityConfiguration extends WebSecurityConfigurerAdapter {
     public void configure(WebSecurity web) {
         web.ignoring()
             .antMatchers(HttpMethod.OPTIONS, "/**")
+            .antMatchers("/remote-api/**")
             .antMatchers("/app/**/*.{js,html}")
             .antMatchers("/i18n/**")
             .antMatchers("/content/**")

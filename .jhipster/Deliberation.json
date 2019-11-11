@@ -1,0 +1,44 @@
+{
+  "fluentMethods": true,
+  "clientRootFolder": "",
+  "relationships": [
+    {
+      "relationshipName": "organisme",
+      "otherEntityName": "organisme",
+      "relationshipType": "many-to-many",
+      "ownerSide": false,
+      "otherEntityRelationshipName": "deliberation"
+    },
+    {
+      "relationshipName": "instance",
+      "otherEntityName": "instance",
+      "relationshipType": "many-to-many",
+      "ownerSide": false,
+      "otherEntityRelationshipName": "deliberation"
+    }
+  ],
+  "fields": [
+    {
+      "fieldName": "label",
+      "fieldType": "String",
+      "fieldValidateRules": ["required", "unique"]
+    },
+    {
+      "fieldName": "date",
+      "fieldType": "Instant",
+      "fieldValidateRules": ["required"]
+    },
+    {
+      "fieldName": "creationDate",
+      "fieldType": "Instant"
+    }
+  ],
+  "changelogDate": "20190913181152",
+  "dto": "no",
+  "searchEngine": "elasticsearch",
+  "service": "no",
+  "entityTableName": "deliberation",
+  "databaseType": "sql",
+  "jpaMetamodelFiltering": false,
+  "pagination": "pagination"
+}

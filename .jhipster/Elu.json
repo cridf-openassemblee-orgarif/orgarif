@@ -1,0 +1,62 @@
+{
+  "fluentMethods": true,
+  "clientRootFolder": "",
+  "relationships": [
+    {
+      "relationshipName": "representant",
+      "otherEntityName": "representant",
+      "relationshipType": "one-to-many",
+      "ownerSide": false,
+      "otherEntityRelationshipName": "elu"
+    }
+  ],
+  "fields": [
+    {
+      "fieldName": "sourceId",
+      "fieldType": "String",
+      "fieldValidateRules": ["required", "unique"]
+    },
+    {
+      "fieldName": "sourceUid",
+      "fieldType": "String",
+      "fieldValidateRules": ["required", "unique"]
+    },
+    {
+      "fieldName": "civilite",
+      "fieldType": "Civilite",
+      "fieldValues": "M,MME"
+    },
+    {
+      "fieldName": "nom",
+      "fieldType": "String"
+    },
+    {
+      "fieldName": "prenom",
+      "fieldType": "String"
+    },
+    {
+      "fieldName": "groupePolitique",
+      "fieldType": "String"
+    },
+    {
+      "fieldName": "groupePolitiqueCourt",
+      "fieldType": "String"
+    },
+    {
+      "fieldName": "image",
+      "fieldType": "String"
+    },
+    {
+      "fieldName": "actif",
+      "fieldType": "Boolean"
+    }
+  ],
+  "changelogDate": "20190803063156",
+  "dto": "no",
+  "searchEngine": "elasticsearch",
+  "service": "no",
+  "entityTableName": "elu",
+  "databaseType": "sql",
+  "jpaMetamodelFiltering": false,
+  "pagination": "no"
+}

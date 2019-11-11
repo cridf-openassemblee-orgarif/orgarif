@@ -1,0 +1,30 @@
+<?xml version="1.0" encoding="utf-8"?>
+<databaseChangeLog
+    xmlns="http://www.liquibase.org/xml/ns/dbchangelog"
+    xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+    xsi:schemaLocation="http://www.liquibase.org/xml/ns/dbchangelog http://www.liquibase.org/xml/ns/dbchangelog/dbchangelog-3.6.xsd">
+    <!--
+        Added the constraints for entity Instance.
+    -->
+    <changeSet id="20190109194933-2" author="jhipster">
+        
+        <addForeignKeyConstraint baseColumnNames="organisme_id"
+                                 baseTableName="instance"
+                                 constraintName="fk_instance_organisme_id"
+                                 referencedColumnNames="id"
+                                 referencedTableName="organisme"/>
+
+        <addForeignKeyConstraint baseColumnNames="instance_id"
+                                 baseTableName="instance_deliberation"
+                                 constraintName="fk_instance_deliberation_instance_id"
+                                 referencedColumnNames="id"
+                                 referencedTableName="instance"/>
+
+        <addForeignKeyConstraint baseColumnNames="deliberation_id"
+                                 baseTableName="instance_deliberation"
+                                 constraintName="fk_instance_deliberation_deliberation_id"
+                                 referencedColumnNames="id"
+                                 referencedTableName="deliberation"/>
+        
+    </changeSet>
+</databaseChangeLog>

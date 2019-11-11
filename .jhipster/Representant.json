@@ -1,0 +1,57 @@
+{
+  "fluentMethods": true,
+  "clientRootFolder": "",
+  "relationships": [
+    {
+      "relationshipName": "elu",
+      "otherEntityName": "elu",
+      "relationshipType": "many-to-one",
+      "relationshipValidateRules": ["required"],
+      "otherEntityField": "id",
+      "otherEntityRelationshipName": "representation"
+    },
+    {
+      "relationshipName": "representantOrganisme",
+      "otherEntityName": "organisme",
+      "relationshipType": "many-to-one",
+      "otherEntityField": "nom",
+      "otherEntityRelationshipName": "representant"
+    },
+    {
+      "relationshipName": "suppleantOrganisme",
+      "otherEntityName": "organisme",
+      "relationshipType": "many-to-one",
+      "otherEntityField": "nom",
+      "otherEntityRelationshipName": "suppleant"
+    },
+    {
+      "relationshipName": "representantInstance",
+      "otherEntityName": "instance",
+      "relationshipType": "many-to-one",
+      "otherEntityField": "nom",
+      "otherEntityRelationshipName": "representant"
+    },
+    {
+      "relationshipName": "suppleantInstance",
+      "otherEntityName": "instance",
+      "relationshipType": "many-to-one",
+      "otherEntityField": "nom",
+      "otherEntityRelationshipName": "suppleant"
+    }
+  ],
+  "fields": [
+    {
+      "fieldName": "position",
+      "fieldType": "Integer",
+      "fieldValidateRules": ["required"]
+    }
+  ],
+  "changelogDate": "20191009194933",
+  "dto": "no",
+  "searchEngine": "elasticsearch",
+  "service": "no",
+  "entityTableName": "representant",
+  "databaseType": "sql",
+  "jpaMetamodelFiltering": false,
+  "pagination": "pagination"
+}

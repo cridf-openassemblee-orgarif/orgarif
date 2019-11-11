@@ -2,6 +2,8 @@
 Developement Ribbon
 ========================================================================== */
 .ribbon {
+  display: none;
+
   background-color: rgba(170, 0, 0, 0.5);
   left: -3.5em;
   -moz-transform: rotate(-45deg);
