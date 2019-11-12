@@ -16,6 +16,6 @@ export class NgbDateMomentAdapter extends NgbDateAdapter<Moment> {
   }
 
   toModel(date: NgbDateStruct): Moment {
-    return date ? moment(date.year + '-' + date.month + '-' + date.day, 'YYYY-MM-DD') : null;
+    return date ? moment(date.day + '/' + date.month + '/' + date.year, 'DD/MM/YYYY') : null;
   }
 }
