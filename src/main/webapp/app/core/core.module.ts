@@ -10,7 +10,7 @@ import { NgJhipsterModule } from 'ng-jhipster';
 import locale from '@angular/common/locales/en';
 
 import * as moment from 'moment';
-import { NgbDateAdapter, NgbDatepickerConfig } from '@ng-bootstrap/ng-bootstrap';
+import { NgbDateAdapter, NgbDateParserFormatter, NgbDatepickerConfig } from '@ng-bootstrap/ng-bootstrap';
 import { NgbDateMomentAdapter } from 'app/shared/util/datepicker-adapter';
 
 import { AuthExpiredInterceptor } from 'app/blocks/interceptor/auth-expired.interceptor';
@@ -18,6 +18,7 @@ import { ErrorHandlerInterceptor } from 'app/blocks/interceptor/errorhandler.int
 import { NotificationInterceptor } from 'app/blocks/interceptor/notification.interceptor';
 
 import { fontAwesomeIcons } from './icons/font-awesome-icons';
+import { NgbDateFRParserFormatter } from 'app/shared/util/NgbDateCustomParserFormatter';
 
 @NgModule({
   imports: [
@@ -37,6 +38,7 @@ import { fontAwesomeIcons } from './icons/font-awesome-icons';
       useValue: 'en'
     },
     { provide: NgbDateAdapter, useClass: NgbDateMomentAdapter },
+    { provide: NgbDateParserFormatter, useClass: NgbDateFRParserFormatter },
     DatePipe,
     {
       provide: HTTP_INTERCEPTORS,
