@@ -4,11 +4,12 @@ import locale from '@angular/common/locales/en';
 import { LOCALE_ID, NgModule } from '@angular/core';
 import { Title } from '@angular/platform-browser';
 import { FaIconLibrary } from '@fortawesome/angular-fontawesome';
-import { NgbDateAdapter, NgbDatepickerConfig } from '@ng-bootstrap/ng-bootstrap';
+import { NgbDateAdapter, NgbDateParserFormatter, NgbDatepickerConfig } from '@ng-bootstrap/ng-bootstrap';
 import { AuthExpiredInterceptor } from 'app/blocks/interceptor/auth-expired.interceptor';
 import { ErrorHandlerInterceptor } from 'app/blocks/interceptor/errorhandler.interceptor';
 import { NotificationInterceptor } from 'app/blocks/interceptor/notification.interceptor';
 import { NgbDateMomentAdapter } from 'app/shared/util/datepicker-adapter';
+import { NgbDateFRParserFormatter } from 'app/shared/util/NgbDateCustomParserFormatter';
 import * as moment from 'moment';
 import { NgJhipsterModule } from 'ng-jhipster';
 import { CookieService } from 'ngx-cookie-service';
@@ -33,6 +34,7 @@ import { fontAwesomeIcons } from './icons/font-awesome-icons';
       useValue: 'en',
     },
     { provide: NgbDateAdapter, useClass: NgbDateMomentAdapter },
+    { provide: NgbDateParserFormatter, useClass: NgbDateFRParserFormatter },
     DatePipe,
     {
       provide: HTTP_INTERCEPTORS,

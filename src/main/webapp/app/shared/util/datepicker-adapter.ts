@@ -18,6 +18,6 @@ export class NgbDateMomentAdapter extends NgbDateAdapter<Moment> {
 
   toModel(date: NgbDateStruct): Moment {
     // ! after null can be removed after https://github.com/ng-bootstrap/ng-bootstrap/issues/1544 is resolved
-    return date ? moment(date.year + '-' + date.month + '-' + date.day, 'YYYY-MM-DD') : null!;
+    return date ? moment(date.day + '/' + date.month + '/' + date.year, 'DD/MM/YYYY') : null!;
   }
 }
