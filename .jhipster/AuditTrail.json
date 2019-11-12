@@ -1,0 +1,53 @@
+{
+    "fields": [
+        {
+            "fieldId": 1,
+            "fieldName": "entity",
+            "fieldType": "String"
+        },
+        {
+            "fieldId": 2,
+            "fieldName": "entityId",
+            "fieldType": "Long"
+        },
+        {
+            "fieldId": 3,
+            "fieldName": "parentEntity",
+            "fieldType": "String"
+        },
+        {
+            "fieldId": 4,
+            "fieldName": "parentEntityId",
+            "fieldType": "Long"
+        },
+        {
+            "fieldId": 5,
+            "fieldName": "action",
+            "fieldType": "AuditTrailAction",
+            "fieldValues": "CREATE, UPDATE, CLOSE, DELETE"
+        },
+        {
+            "fieldId": 6,
+            "fieldName": "user",
+            "fieldType": "String"
+        },
+        {
+            "fieldId": 7,
+            "fieldName": "date",
+            "fieldType": "Instant"
+        },
+        {
+            "fieldId": 8,
+            "fieldName": "details",
+            "fieldType": "String"
+        },
+        {
+            "fieldId": 9,
+            "fieldName": "reason",
+            "fieldType": "String"
+        }
+    ],
+    "changelogDate": "201609115111820",
+    "dto": "no",
+    "pagination": "pagination"
+}

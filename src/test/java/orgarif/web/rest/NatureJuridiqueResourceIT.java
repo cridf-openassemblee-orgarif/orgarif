@@ -4,6 +4,7 @@ import orgarif.OrgarifApp;
 import orgarif.domain.NatureJuridique;
 import orgarif.repository.NatureJuridiqueRepository;
 import orgarif.repository.search.NatureJuridiqueSearchRepository;
+import orgarif.service.AuditTrailService;
 import orgarif.web.rest.errors.ExceptionTranslator;
 
 import org.junit.jupiter.api.BeforeEach;
@@ -52,6 +53,9 @@ public class NatureJuridiqueResourceIT {
     private NatureJuridiqueSearchRepository mockNatureJuridiqueSearchRepository;
 
     @Autowired
+    private AuditTrailService auditTrailService;
+
+    @Autowired
     private MappingJackson2HttpMessageConverter jacksonMessageConverter;
 
     @Autowired
@@ -73,7 +77,7 @@ public class NatureJuridiqueResourceIT {
     @BeforeEach
     public void setup() {
         MockitoAnnotations.initMocks(this);
-        final NatureJuridiqueResource natureJuridiqueResource = new NatureJuridiqueResource(natureJuridiqueRepository, mockNatureJuridiqueSearchRepository);
+        final NatureJuridiqueResource natureJuridiqueResource = new NatureJuridiqueResource(natureJuridiqueRepository, mockNatureJuridiqueSearchRepository, auditTrailService);
         this.restNatureJuridiqueMockMvc = MockMvcBuilders.standaloneSetup(natureJuridiqueResource)
             .setCustomArgumentResolvers(pageableArgumentResolver)
             .setControllerAdvice(exceptionTranslator)
@@ -185,7 +189,7 @@ public class NatureJuridiqueResourceIT {
             .andExpect(jsonPath("$.[*].id").value(hasItem(natureJuridique.getId().intValue())))
             .andExpect(jsonPath("$.[*].label").value(hasItem(DEFAULT_LABEL)));
     }
-    
+
     @Test
     @Transactional
     public void getNatureJuridique() throws Exception {

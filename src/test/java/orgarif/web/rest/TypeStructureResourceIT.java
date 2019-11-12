@@ -4,6 +4,7 @@ import orgarif.OrgarifApp;
 import orgarif.domain.TypeStructure;
 import orgarif.repository.TypeStructureRepository;
 import orgarif.repository.search.TypeStructureSearchRepository;
+import orgarif.service.AuditTrailService;
 import orgarif.web.rest.errors.ExceptionTranslator;
 
 import org.junit.jupiter.api.BeforeEach;
@@ -52,6 +53,9 @@ public class TypeStructureResourceIT {
     private TypeStructureSearchRepository mockTypeStructureSearchRepository;
 
     @Autowired
+    private AuditTrailService auditTrailService;
+
+    @Autowired
     private MappingJackson2HttpMessageConverter jacksonMessageConverter;
 
     @Autowired
@@ -73,7 +77,7 @@ public class TypeStructureResourceIT {
     @BeforeEach
     public void setup() {
         MockitoAnnotations.initMocks(this);
-        final TypeStructureResource typeStructureResource = new TypeStructureResource(typeStructureRepository, mockTypeStructureSearchRepository);
+        final TypeStructureResource typeStructureResource = new TypeStructureResource(typeStructureRepository, mockTypeStructureSearchRepository, auditTrailService);
         this.restTypeStructureMockMvc = MockMvcBuilders.standaloneSetup(typeStructureResource)
             .setCustomArgumentResolvers(pageableArgumentResolver)
             .setControllerAdvice(exceptionTranslator)
@@ -185,7 +189,7 @@ public class TypeStructureResourceIT {
             .andExpect(jsonPath("$.[*].id").value(hasItem(typeStructure.getId().intValue())))
             .andExpect(jsonPath("$.[*].label").value(hasItem(DEFAULT_LABEL)));
     }
-    
+
     @Test
     @Transactional
     public void getTypeStructure() throws Exception {
