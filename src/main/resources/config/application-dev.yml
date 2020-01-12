@@ -15,7 +15,7 @@
 
 orgarif:
   doSynchronizeElus: true
-  elusSynchronizationUrl: http://127.0.0.1:8081/api/publicdata/v2/elus
+  elusSynchronizationUrl: http://127.0.0.1:8081/api/publicdata/v2/elu
 
 logging:
   level:
