@@ -15,7 +15,7 @@
 
 orgarif:
   doSynchronizeElus: true
-  elusSynchronizationUrl: http://127.0.0.1:8081/api/publicdata/v2/elu
+  elusSynchronizationUrl: http://127.0.0.1:8080/api/publicdata/v2/elus
 
 logging:
   level:
@@ -83,7 +83,7 @@ spring:
     cache: false
 
 server:
-  port: 8080
+  port: 8081
 
 # ===================================================================
 # JHipster specific properties
