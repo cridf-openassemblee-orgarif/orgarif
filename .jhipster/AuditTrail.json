@@ -1,53 +1,53 @@
 {
+    "fluentMethods": true,
+    "clientRootFolder": "",
+    "relationships": [],
     "fields": [
         {
-            "fieldId": 1,
             "fieldName": "entity",
             "fieldType": "String"
         },
         {
-            "fieldId": 2,
             "fieldName": "entityId",
             "fieldType": "Long"
         },
         {
-            "fieldId": 3,
             "fieldName": "parentEntity",
             "fieldType": "String"
         },
         {
-            "fieldId": 4,
             "fieldName": "parentEntityId",
             "fieldType": "Long"
         },
         {
-            "fieldId": 5,
             "fieldName": "action",
             "fieldType": "AuditTrailAction",
-            "fieldValues": "CREATE, UPDATE, CLOSE, DELETE"
+            "fieldValues": "CREATE,UPDATE,CLOSE,DELETE"
         },
         {
-            "fieldId": 6,
             "fieldName": "user",
             "fieldType": "String"
         },
         {
-            "fieldId": 7,
             "fieldName": "date",
             "fieldType": "Instant"
         },
         {
-            "fieldId": 8,
             "fieldName": "details",
             "fieldType": "String"
         },
         {
-            "fieldId": 9,
-            "fieldName": "reason",
+            "fieldName": "updateDescription",
             "fieldType": "String"
         }
     ],
-    "changelogDate": "201609115111820",
+    "changelogDate": "20201018215614",
     "dto": "no",
-    "pagination": "pagination"
+    "searchEngine": "elasticsearch",
+    "service": "no",
+    "entityTableName": "audit_trail",
+    "databaseType": "sql",
+    "readOnly": false,
+    "jpaMetamodelFiltering": false,
+    "pagination": "no"
 }
