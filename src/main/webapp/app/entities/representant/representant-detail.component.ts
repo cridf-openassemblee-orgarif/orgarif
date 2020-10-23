@@ -5,20 +5,18 @@ import { IRepresentant } from 'app/shared/model/representant.model';
 
 @Component({
   selector: 'jhi-representant-detail',
-  templateUrl: './representant-detail.component.html'
+  templateUrl: './representant-detail.component.html',
 })
 export class RepresentantDetailComponent implements OnInit {
-  representant: IRepresentant;
+  representant: IRepresentant | null = null;
 
   constructor(protected activatedRoute: ActivatedRoute) {}
 
-  ngOnInit() {
-    this.activatedRoute.data.subscribe(({ representant }) => {
-      this.representant = representant;
-    });
+  ngOnInit(): void {
+    this.activatedRoute.data.subscribe(({ representant }) => (this.representant = representant));
   }
 
-  previousState() {
+  previousState(): void {
     window.history.back();
   }
 }

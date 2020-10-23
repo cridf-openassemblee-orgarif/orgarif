@@ -1,12 +1,10 @@
 import { Component, OnInit } from '@angular/core';
-// eslint-disable-next-line @typescript-eslint/no-unused-vars
-import { HttpResponse, HttpErrorResponse } from '@angular/common/http';
+import { HttpResponse } from '@angular/common/http';
 // eslint-disable-next-line @typescript-eslint/no-unused-vars
 import { FormBuilder, Validators } from '@angular/forms';
 import { ActivatedRoute } from '@angular/router';
 import { Observable } from 'rxjs';
-import { filter, map } from 'rxjs/operators';
-import { JhiAlertService } from 'ng-jhipster';
+
 import { IRepresentant, Representant } from 'app/shared/model/representant.model';
 import { RepresentantService } from './representant.service';
 import { IElu } from 'app/shared/model/elu.model';
@@ -16,18 +14,17 @@ import { OrganismeService } from 'app/entities/organisme/organisme.service';
 import { IInstance } from 'app/shared/model/instance.model';
 import { InstanceService } from 'app/entities/instance/instance.service';
 
+type SelectableEntity = IElu | IOrganisme | IInstance;
+
 @Component({
   selector: 'jhi-representant-update',
-  templateUrl: './representant-update.component.html'
+  templateUrl: './representant-update.component.html',
 })
 export class RepresentantUpdateComponent implements OnInit {
-  isSaving: boolean;
-
-  elus: IElu[];
-
-  organismes: IOrganisme[];
-
-  instances: IInstance[];
+  isSaving = false;
+  elus: IElu[] = [];
+  organismes: IOrganisme[] = [];
+  instances: IInstance[] = [];
 
   editForm = this.fb.group({
     id: [],
@@ -36,11 +33,10 @@ export class RepresentantUpdateComponent implements OnInit {
     representantOrganisme: [],
     suppleantOrganisme: [],
     representantInstance: [],
-    suppleantInstance: []
+    suppleantInstance: [],
   });
 
   constructor(
-    protected jhiAlertService: JhiAlertService,
     protected representantService: RepresentantService,
     protected eluService: EluService,
     protected organismeService: OrganismeService,
@@ -49,35 +45,19 @@ export class RepresentantUpdateComponent implements OnInit {
     private fb: FormBuilder
   ) {}
 
-  ngOnInit() {
-    this.isSaving = false;
+  ngOnInit(): void {
     this.activatedRoute.data.subscribe(({ representant }) => {
       this.updateForm(representant);
+
+      this.eluService.query().subscribe((res: HttpResponse<IElu[]>) => (this.elus = res.body || []));
+
+      this.organismeService.query().subscribe((res: HttpResponse<IOrganisme[]>) => (this.organismes = res.body || []));
+
+      this.instanceService.query().subscribe((res: HttpResponse<IInstance[]>) => (this.instances = res.body || []));
     });
-    this.eluService
-      .query()
-      .pipe(
-        filter((mayBeOk: HttpResponse<IElu[]>) => mayBeOk.ok),
-        map((response: HttpResponse<IElu[]>) => response.body)
-      )
-      .subscribe((res: IElu[]) => (this.elus = res), (res: HttpErrorResponse) => this.onError(res.message));
-    this.organismeService
-      .query()
-      .pipe(
-        filter((mayBeOk: HttpResponse<IOrganisme[]>) => mayBeOk.ok),
-        map((response: HttpResponse<IOrganisme[]>) => response.body)
-      )
-      .subscribe((res: IOrganisme[]) => (this.organismes = res), (res: HttpErrorResponse) => this.onError(res.message));
-    this.instanceService
-      .query()
-      .pipe(
-        filter((mayBeOk: HttpResponse<IInstance[]>) => mayBeOk.ok),
-        map((response: HttpResponse<IInstance[]>) => response.body)
-      )
-      .subscribe((res: IInstance[]) => (this.instances = res), (res: HttpErrorResponse) => this.onError(res.message));
   }
 
-  updateForm(representant: IRepresentant) {
+  updateForm(representant: IRepresentant): void {
     this.editForm.patchValue({
       id: representant.id,
       position: representant.position,
@@ -85,15 +65,15 @@ export class RepresentantUpdateComponent implements OnInit {
       representantOrganisme: representant.representantOrganisme,
       suppleantOrganisme: representant.suppleantOrganisme,
       representantInstance: representant.representantInstance,
-      suppleantInstance: representant.suppleantInstance
+      suppleantInstance: representant.suppleantInstance,
     });
   }
 
-  previousState() {
+  previousState(): void {
     window.history.back();
   }
 
-  save() {
+  save(): void {
     this.isSaving = true;
     const representant = this.createFromForm();
     if (representant.id !== undefined) {
@@ -106,41 +86,33 @@ export class RepresentantUpdateComponent implements OnInit {
   private createFromForm(): IRepresentant {
     return {
       ...new Representant(),
-      id: this.editForm.get(['id']).value,
-      position: this.editForm.get(['position']).value,
-      elu: this.editForm.get(['elu']).value,
-      representantOrganisme: this.editForm.get(['representantOrganisme']).value,
-      suppleantOrganisme: this.editForm.get(['suppleantOrganisme']).value,
-      representantInstance: this.editForm.get(['representantInstance']).value,
-      suppleantInstance: this.editForm.get(['suppleantInstance']).value
+      id: this.editForm.get(['id'])!.value,
+      position: this.editForm.get(['position'])!.value,
+      elu: this.editForm.get(['elu'])!.value,
+      representantOrganisme: this.editForm.get(['representantOrganisme'])!.value,
+      suppleantOrganisme: this.editForm.get(['suppleantOrganisme'])!.value,
+      representantInstance: this.editForm.get(['representantInstance'])!.value,
+      suppleantInstance: this.editForm.get(['suppleantInstance'])!.value,
     };
   }
 
-  protected subscribeToSaveResponse(result: Observable<HttpResponse<IRepresentant>>) {
-    result.subscribe(() => this.onSaveSuccess(), () => this.onSaveError());
+  protected subscribeToSaveResponse(result: Observable<HttpResponse<IRepresentant>>): void {
+    result.subscribe(
+      () => this.onSaveSuccess(),
+      () => this.onSaveError()
+    );
   }
 
-  protected onSaveSuccess() {
+  protected onSaveSuccess(): void {
     this.isSaving = false;
     this.previousState();
   }
 
-  protected onSaveError() {
+  protected onSaveError(): void {
     this.isSaving = false;
   }
-  protected onError(errorMessage: string) {
-    this.jhiAlertService.error(errorMessage, null, null);
-  }
 
-  trackEluById(index: number, item: IElu) {
-    return item.id;
-  }
-
-  trackOrganismeById(index: number, item: IOrganisme) {
-    return item.id;
-  }
-
-  trackInstanceById(index: number, item: IInstance) {
+  trackById(index: number, item: SelectableEntity): any {
     return item.id;
   }
 }

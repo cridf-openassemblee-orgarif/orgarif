@@ -1,4 +1,5 @@
 package orgarif.domain;
+
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import org.hibernate.annotations.Cache;
 import org.hibernate.annotations.CacheConcurrencyStrategy;
@@ -19,7 +20,7 @@ import java.util.UUID;
  */
 @Entity
 @Table(name = "organisme")
-@Cache(usage = CacheConcurrencyStrategy.NONSTRICT_READ_WRITE)
+@Cache(usage = CacheConcurrencyStrategy.READ_WRITE)
 @org.springframework.data.elasticsearch.annotations.Document(indexName = "organisme")
 public class Organisme implements Serializable {
 
@@ -27,7 +28,6 @@ public class Organisme implements Serializable {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    @org.springframework.data.elasticsearch.annotations.Field(type = FieldType.Keyword)
     private Long id;
 
     @NotNull
@@ -58,38 +58,38 @@ public class Organisme implements Serializable {
 
     @ManyToOne(optional = false)
     @NotNull
-    @JsonIgnoreProperties("organismes")
+    @JsonIgnoreProperties(value = "organismes", allowSetters = true)
     private NatureJuridique natureJuridique;
 
     @ManyToOne(optional = false)
     @NotNull
-    @JsonIgnoreProperties("organismes")
+    @JsonIgnoreProperties(value = "organismes", allowSetters = true)
     private Secteur secteur;
 
     @ManyToOne
-    @JsonIgnoreProperties("organismes")
+    @JsonIgnoreProperties(value = "organismes", allowSetters = true)
     private TypeStructure typeStructure;
 
     @OneToMany(mappedBy = "organisme")
-    @Cache(usage = CacheConcurrencyStrategy.NONSTRICT_READ_WRITE)
+    @Cache(usage = CacheConcurrencyStrategy.READ_WRITE)
     private Set<Instance> instances = new HashSet<>();
 
     @OneToMany(mappedBy = "representantOrganisme")
-    @Cache(usage = CacheConcurrencyStrategy.NONSTRICT_READ_WRITE)
+    @Cache(usage = CacheConcurrencyStrategy.READ_WRITE)
     private Set<Representant> representants = new HashSet<>();
 
     @OneToMany(mappedBy = "suppleantOrganisme")
-    @Cache(usage = CacheConcurrencyStrategy.NONSTRICT_READ_WRITE)
+    @Cache(usage = CacheConcurrencyStrategy.READ_WRITE)
     private Set<Representant> suppleants = new HashSet<>();
 
     @ManyToMany
-    @Cache(usage = CacheConcurrencyStrategy.NONSTRICT_READ_WRITE)
+    @Cache(usage = CacheConcurrencyStrategy.READ_WRITE)
     @JoinTable(name = "organisme_deliberation",
                joinColumns = @JoinColumn(name = "organisme_id", referencedColumnName = "id"),
                inverseJoinColumns = @JoinColumn(name = "deliberation_id", referencedColumnName = "id"))
     private Set<Deliberation> deliberations = new HashSet<>();
 
-    // jhipster-needle-entity-add-field - JHipster will add fields here, do not remove
+    // jhipster-needle-entity-add-field - JHipster will add fields here
     public Long getId() {
         return id;
     }
@@ -327,7 +327,7 @@ public class Organisme implements Serializable {
     public void setDeliberations(Set<Deliberation> deliberations) {
         this.deliberations = deliberations;
     }
-    // jhipster-needle-entity-add-getters-setters - JHipster will add getters and setters here, do not remove
+    // jhipster-needle-entity-add-getters-setters - JHipster will add getters and setters here
 
     @Override
     public boolean equals(Object o) {
@@ -345,6 +345,7 @@ public class Organisme implements Serializable {
         return 31;
     }
 
+    // prettier-ignore
     @Override
     public String toString() {
         return "Organisme{" +

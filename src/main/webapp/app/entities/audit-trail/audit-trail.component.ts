@@ -1,159 +1,75 @@
 import { Component, OnInit, OnDestroy } from '@angular/core';
-import { HttpHeaders, HttpResponse } from '@angular/common/http';
-import { ActivatedRoute, Router } from '@angular/router';
+import { HttpResponse } from '@angular/common/http';
+import { ActivatedRoute } from '@angular/router';
 import { Subscription } from 'rxjs';
-// eslint-disable-next-line @typescript-eslint/no-unused-vars
-import { filter, map } from 'rxjs/operators';
-import { JhiEventManager, JhiParseLinks } from 'ng-jhipster';
+import { JhiEventManager } from 'ng-jhipster';
+import { NgbModal } from '@ng-bootstrap/ng-bootstrap';
 
 import { IAuditTrail } from 'app/shared/model/audit-trail.model';
-import { AccountService } from 'app/core/auth/account.service';
-
-import { ITEMS_PER_PAGE } from 'app/shared/constants/pagination.constants';
 import { AuditTrailService } from './audit-trail.service';
+import { AuditTrailDeleteDialogComponent } from './audit-trail-delete-dialog.component';
 
 @Component({
   selector: 'jhi-audit-trail',
-  templateUrl: './audit-trail.component.html'
+  templateUrl: './audit-trail.component.html',
 })
 export class AuditTrailComponent implements OnInit, OnDestroy {
-  currentAccount: any;
-  auditTrails: IAuditTrail[];
-  error: any;
-  success: any;
-  eventSubscriber: Subscription;
+  auditTrails?: IAuditTrail[];
+  eventSubscriber?: Subscription;
   currentSearch: string;
-  routeData: any;
-  links: any;
-  totalItems: any;
-  itemsPerPage: any;
-  page: any;
-  predicate: any;
-  previousPage: any;
-  reverse: any;
 
   constructor(
     protected auditTrailService: AuditTrailService,
-    protected parseLinks: JhiParseLinks,
-    protected accountService: AccountService,
-    protected activatedRoute: ActivatedRoute,
-    protected router: Router,
-    protected eventManager: JhiEventManager
+    protected eventManager: JhiEventManager,
+    protected modalService: NgbModal,
+    protected activatedRoute: ActivatedRoute
   ) {
-    this.itemsPerPage = ITEMS_PER_PAGE;
-    this.routeData = this.activatedRoute.data.subscribe(data => {
-      this.page = data.pagingParams.page;
-      this.previousPage = data.pagingParams.page;
-      this.reverse = data.pagingParams.ascending;
-      this.predicate = data.pagingParams.predicate;
-    });
     this.currentSearch =
       this.activatedRoute.snapshot && this.activatedRoute.snapshot.queryParams['search']
         ? this.activatedRoute.snapshot.queryParams['search']
         : '';
   }
 
-  loadAll() {
+  loadAll(): void {
     if (this.currentSearch) {
       this.auditTrailService
         .search({
-          page: this.page - 1,
           query: this.currentSearch,
-          size: this.itemsPerPage,
-          sort: this.sort()
         })
-        .subscribe((res: HttpResponse<IAuditTrail[]>) => this.paginateAuditTrails(res.body, res.headers));
+        .subscribe((res: HttpResponse<IAuditTrail[]>) => (this.auditTrails = res.body || []));
       return;
     }
-    this.auditTrailService
-      .query({
-        page: this.page - 1,
-        size: this.itemsPerPage,
-        sort: this.sort()
-      })
-      .subscribe((res: HttpResponse<IAuditTrail[]>) => this.paginateAuditTrails(res.body, res.headers));
+
+    this.auditTrailService.query().subscribe((res: HttpResponse<IAuditTrail[]>) => (this.auditTrails = res.body || []));
   }
 
-  loadPage(page: number) {
-    if (page !== this.previousPage) {
-      this.previousPage = page;
-      this.transition();
-    }
-  }
-
-  transition() {
-    this.router.navigate(['/audit-trail'], {
-      queryParams: {
-        page: this.page,
-        size: this.itemsPerPage,
-        search: this.currentSearch,
-        sort: this.predicate + ',' + (this.reverse ? 'asc' : 'desc')
-      }
-    });
-    this.loadAll();
-  }
-
-  clear() {
-    this.page = 0;
-    this.currentSearch = '';
-    this.router.navigate([
-      '/audit-trail',
-      {
-        page: this.page,
-        sort: this.predicate + ',' + (this.reverse ? 'asc' : 'desc')
-      }
-    ]);
-    this.loadAll();
-  }
-
-  search(query) {
-    if (!query) {
-      return this.clear();
-    }
-    this.page = 0;
+  search(query: string): void {
     this.currentSearch = query;
-    this.router.navigate([
-      '/audit-trail',
-      {
-        search: this.currentSearch,
-        page: this.page,
-        sort: this.predicate + ',' + (this.reverse ? 'asc' : 'desc')
-      }
-    ]);
     this.loadAll();
   }
 
-  ngOnInit() {
+  ngOnInit(): void {
     this.loadAll();
-    this.accountService.identity().subscribe(account => {
-      this.currentAccount = account;
-    });
     this.registerChangeInAuditTrails();
   }
 
-  ngOnDestroy() {
-    this.eventManager.destroy(this.eventSubscriber);
-  }
-
-  trackId(index: number, item: IAuditTrail) {
-    return item.id;
-  }
-
-  registerChangeInAuditTrails() {
-    this.eventSubscriber = this.eventManager.subscribe('auditTrailListModification', response => this.loadAll());
-  }
-
-  sort() {
-    const result = [this.predicate + ',' + (this.reverse ? 'asc' : 'desc')];
-    if (this.predicate !== 'id') {
-      result.push('id');
+  ngOnDestroy(): void {
+    if (this.eventSubscriber) {
+      this.eventManager.destroy(this.eventSubscriber);
     }
-    return result;
   }
 
-  protected paginateAuditTrails(data: IAuditTrail[], headers: HttpHeaders) {
-    this.links = this.parseLinks.parse(headers.get('link'));
-    this.totalItems = parseInt(headers.get('X-Total-Count'), 10);
-    this.auditTrails = data;
+  trackId(index: number, item: IAuditTrail): number {
+    // eslint-disable-next-line @typescript-eslint/no-unnecessary-type-assertion
+    return item.id!;
+  }
+
+  registerChangeInAuditTrails(): void {
+    this.eventSubscriber = this.eventManager.subscribe('auditTrailListModification', () => this.loadAll());
+  }
+
+  delete(auditTrail: IAuditTrail): void {
+    const modalRef = this.modalService.open(AuditTrailDeleteDialogComponent, { size: 'lg', backdrop: 'static' });
+    modalRef.componentInstance.auditTrail = auditTrail;
   }
 }

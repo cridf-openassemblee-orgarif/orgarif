@@ -4,29 +4,27 @@ import orgarif.OrgarifApp;
 import orgarif.domain.TypeStructure;
 import orgarif.repository.TypeStructureRepository;
 import orgarif.repository.search.TypeStructureSearchRepository;
-import orgarif.web.rest.errors.ExceptionTranslator;
 
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
-import org.mockito.MockitoAnnotations;
+import org.mockito.Mock;
+import org.junit.jupiter.api.extension.ExtendWith;
+import org.mockito.junit.jupiter.MockitoExtension;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.boot.test.autoconfigure.web.servlet.AutoConfigureMockMvc;
 import org.springframework.boot.test.context.SpringBootTest;
-import org.springframework.data.web.PageableHandlerMethodArgumentResolver;
 import org.springframework.http.MediaType;
-import org.springframework.http.converter.json.MappingJackson2HttpMessageConverter;
+import org.springframework.security.test.context.support.WithMockUser;
 import org.springframework.test.web.servlet.MockMvc;
-import org.springframework.test.web.servlet.setup.MockMvcBuilders;
 import org.springframework.transaction.annotation.Transactional;
-import org.springframework.validation.Validator;
-
 import javax.persistence.EntityManager;
 import java.util.Collections;
 import java.util.List;
 
-import static orgarif.web.rest.TestUtil.createFormattingConversionService;
 import static org.assertj.core.api.Assertions.assertThat;
 import static org.elasticsearch.index.query.QueryBuilders.queryStringQuery;
 import static org.hamcrest.Matchers.hasItem;
+import static org.springframework.security.test.web.servlet.request.SecurityMockMvcRequestPostProcessors.csrf;
 import static org.mockito.Mockito.*;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.*;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.*;
@@ -35,6 +33,9 @@ import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.
  * Integration tests for the {@link TypeStructureResource} REST controller.
  */
 @SpringBootTest(classes = OrgarifApp.class)
+@ExtendWith(MockitoExtension.class)
+@AutoConfigureMockMvc
+@WithMockUser
 public class TypeStructureResourceIT {
 
     private static final String DEFAULT_LABEL = "AAAAAAAAAA";
@@ -52,35 +53,12 @@ public class TypeStructureResourceIT {
     private TypeStructureSearchRepository mockTypeStructureSearchRepository;
 
     @Autowired
-    private MappingJackson2HttpMessageConverter jacksonMessageConverter;
-
-    @Autowired
-    private PageableHandlerMethodArgumentResolver pageableArgumentResolver;
-
-    @Autowired
-    private ExceptionTranslator exceptionTranslator;
-
-    @Autowired
     private EntityManager em;
 
     @Autowired
-    private Validator validator;
-
     private MockMvc restTypeStructureMockMvc;
 
     private TypeStructure typeStructure;
-
-    @BeforeEach
-    public void setup() {
-        MockitoAnnotations.initMocks(this);
-        final TypeStructureResource typeStructureResource = new TypeStructureResource(typeStructureRepository, mockTypeStructureSearchRepository);
-        this.restTypeStructureMockMvc = MockMvcBuilders.standaloneSetup(typeStructureResource)
-            .setCustomArgumentResolvers(pageableArgumentResolver)
-            .setControllerAdvice(exceptionTranslator)
-            .setConversionService(createFormattingConversionService())
-            .setMessageConverters(jacksonMessageConverter)
-            .setValidator(validator).build();
-    }
 
     /**
      * Create an entity for this test.
@@ -114,10 +92,9 @@ public class TypeStructureResourceIT {
     @Transactional
     public void createTypeStructure() throws Exception {
         int databaseSizeBeforeCreate = typeStructureRepository.findAll().size();
-
         // Create the TypeStructure
-        restTypeStructureMockMvc.perform(post("/api/type-structures")
-            .contentType(TestUtil.APPLICATION_JSON_UTF8)
+        restTypeStructureMockMvc.perform(post("/api/type-structures").with(csrf())
+            .contentType(MediaType.APPLICATION_JSON)
             .content(TestUtil.convertObjectToJsonBytes(typeStructure)))
             .andExpect(status().isCreated());
 
@@ -140,8 +117,8 @@ public class TypeStructureResourceIT {
         typeStructure.setId(1L);
 
         // An entity with an existing ID cannot be created, so this API call must fail
-        restTypeStructureMockMvc.perform(post("/api/type-structures")
-            .contentType(TestUtil.APPLICATION_JSON_UTF8)
+        restTypeStructureMockMvc.perform(post("/api/type-structures").with(csrf())
+            .contentType(MediaType.APPLICATION_JSON)
             .content(TestUtil.convertObjectToJsonBytes(typeStructure)))
             .andExpect(status().isBadRequest());
 
@@ -163,8 +140,9 @@ public class TypeStructureResourceIT {
 
         // Create the TypeStructure, which fails.
 
-        restTypeStructureMockMvc.perform(post("/api/type-structures")
-            .contentType(TestUtil.APPLICATION_JSON_UTF8)
+
+        restTypeStructureMockMvc.perform(post("/api/type-structures").with(csrf())
+            .contentType(MediaType.APPLICATION_JSON)
             .content(TestUtil.convertObjectToJsonBytes(typeStructure)))
             .andExpect(status().isBadRequest());
 
@@ -181,7 +159,7 @@ public class TypeStructureResourceIT {
         // Get all the typeStructureList
         restTypeStructureMockMvc.perform(get("/api/type-structures?sort=id,desc"))
             .andExpect(status().isOk())
-            .andExpect(content().contentType(MediaType.APPLICATION_JSON_UTF8_VALUE))
+            .andExpect(content().contentType(MediaType.APPLICATION_JSON_VALUE))
             .andExpect(jsonPath("$.[*].id").value(hasItem(typeStructure.getId().intValue())))
             .andExpect(jsonPath("$.[*].label").value(hasItem(DEFAULT_LABEL)));
     }
@@ -195,11 +173,10 @@ public class TypeStructureResourceIT {
         // Get the typeStructure
         restTypeStructureMockMvc.perform(get("/api/type-structures/{id}", typeStructure.getId()))
             .andExpect(status().isOk())
-            .andExpect(content().contentType(MediaType.APPLICATION_JSON_UTF8_VALUE))
+            .andExpect(content().contentType(MediaType.APPLICATION_JSON_VALUE))
             .andExpect(jsonPath("$.id").value(typeStructure.getId().intValue()))
             .andExpect(jsonPath("$.label").value(DEFAULT_LABEL));
     }
-
     @Test
     @Transactional
     public void getNonExistingTypeStructure() throws Exception {
@@ -223,8 +200,8 @@ public class TypeStructureResourceIT {
         updatedTypeStructure
             .label(UPDATED_LABEL);
 
-        restTypeStructureMockMvc.perform(put("/api/type-structures")
-            .contentType(TestUtil.APPLICATION_JSON_UTF8)
+        restTypeStructureMockMvc.perform(put("/api/type-structures").with(csrf())
+            .contentType(MediaType.APPLICATION_JSON)
             .content(TestUtil.convertObjectToJsonBytes(updatedTypeStructure)))
             .andExpect(status().isOk());
 
@@ -243,11 +220,9 @@ public class TypeStructureResourceIT {
     public void updateNonExistingTypeStructure() throws Exception {
         int databaseSizeBeforeUpdate = typeStructureRepository.findAll().size();
 
-        // Create the TypeStructure
-
         // If the entity doesn't have an ID, it will throw BadRequestAlertException
-        restTypeStructureMockMvc.perform(put("/api/type-structures")
-            .contentType(TestUtil.APPLICATION_JSON_UTF8)
+        restTypeStructureMockMvc.perform(put("/api/type-structures").with(csrf())
+            .contentType(MediaType.APPLICATION_JSON)
             .content(TestUtil.convertObjectToJsonBytes(typeStructure)))
             .andExpect(status().isBadRequest());
 
@@ -268,8 +243,8 @@ public class TypeStructureResourceIT {
         int databaseSizeBeforeDelete = typeStructureRepository.findAll().size();
 
         // Delete the typeStructure
-        restTypeStructureMockMvc.perform(delete("/api/type-structures/{id}", typeStructure.getId())
-            .accept(TestUtil.APPLICATION_JSON_UTF8))
+        restTypeStructureMockMvc.perform(delete("/api/type-structures/{id}", typeStructure.getId()).with(csrf())
+            .accept(MediaType.APPLICATION_JSON))
             .andExpect(status().isNoContent());
 
         // Validate the database contains one less item
@@ -283,30 +258,17 @@ public class TypeStructureResourceIT {
     @Test
     @Transactional
     public void searchTypeStructure() throws Exception {
+        // Configure the mock search repository
         // Initialize the database
         typeStructureRepository.saveAndFlush(typeStructure);
         when(mockTypeStructureSearchRepository.search(queryStringQuery("id:" + typeStructure.getId())))
             .thenReturn(Collections.singletonList(typeStructure));
+
         // Search the typeStructure
         restTypeStructureMockMvc.perform(get("/api/_search/type-structures?query=id:" + typeStructure.getId()))
             .andExpect(status().isOk())
-            .andExpect(content().contentType(MediaType.APPLICATION_JSON_UTF8_VALUE))
+            .andExpect(content().contentType(MediaType.APPLICATION_JSON_VALUE))
             .andExpect(jsonPath("$.[*].id").value(hasItem(typeStructure.getId().intValue())))
             .andExpect(jsonPath("$.[*].label").value(hasItem(DEFAULT_LABEL)));
-    }
-
-    @Test
-    @Transactional
-    public void equalsVerifier() throws Exception {
-        TestUtil.equalsVerifier(TypeStructure.class);
-        TypeStructure typeStructure1 = new TypeStructure();
-        typeStructure1.setId(1L);
-        TypeStructure typeStructure2 = new TypeStructure();
-        typeStructure2.setId(typeStructure1.getId());
-        assertThat(typeStructure1).isEqualTo(typeStructure2);
-        typeStructure2.setId(2L);
-        assertThat(typeStructure1).isNotEqualTo(typeStructure2);
-        typeStructure1.setId(null);
-        assertThat(typeStructure1).isNotEqualTo(typeStructure2);
     }
 }

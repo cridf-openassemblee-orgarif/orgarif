@@ -18,7 +18,7 @@ describe('Component Tests', () => {
       TestBed.configureTestingModule({
         imports: [OrgarifTestModule],
         declarations: [AuditTrailUpdateComponent],
-        providers: [FormBuilder]
+        providers: [FormBuilder],
       })
         .overrideTemplate(AuditTrailUpdateComponent, '')
         .compileComponents();

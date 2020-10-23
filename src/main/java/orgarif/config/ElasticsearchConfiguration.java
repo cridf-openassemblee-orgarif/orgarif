@@ -15,8 +15,11 @@ import org.springframework.data.elasticsearch.core.ElasticsearchOperations;
 import org.springframework.data.elasticsearch.core.EntityMapper;
 import org.springframework.data.elasticsearch.core.convert.ElasticsearchConverter;
 import org.springframework.data.elasticsearch.core.mapping.SimpleElasticsearchMappingContext;
+import org.springframework.data.mapping.MappingException;
 
 import java.io.IOException;
+import java.util.HashMap;
+import java.util.Map;
 
 @Configuration
 @EnableConfigurationProperties(ElasticsearchProperties.class)
@@ -35,14 +38,14 @@ public class ElasticsearchConfiguration {
 
     @Bean
     @Primary
-    public ElasticsearchOperations elasticsearchTemplate(final JestClient jestClient,
-                                                         final ElasticsearchConverter elasticsearchConverter,
-                                                         final SimpleElasticsearchMappingContext simpleElasticsearchMappingContext,
-                                                         EntityMapper mapper) {
+    public ElasticsearchOperations elasticsearchTemplate(JestClient jestClient,
+                                                         ElasticsearchConverter elasticsearchConverter,
+                                                         SimpleElasticsearchMappingContext mappingContext,
+                                                         EntityMapper entityMapper) {
         return new JestElasticsearchTemplate(
             jestClient,
             elasticsearchConverter,
-            new DefaultJestResultsMapper(simpleElasticsearchMappingContext, mapper));
+            new DefaultJestResultsMapper(mappingContext, entityMapper));
     }
 
     public class CustomEntityMapper implements EntityMapper {
@@ -66,6 +69,24 @@ public class ElasticsearchConfiguration {
         @Override
         public <T> T mapToObject(String source, Class<T> clazz) throws IOException {
             return objectMapper.readValue(source, clazz);
+        }
+
+        @Override
+        public Map<String, Object> mapObject(Object source) {
+            try {
+                return objectMapper.readValue(mapToString(source), HashMap.class);
+            } catch (IOException e) {
+                throw new MappingException(e.getMessage(), e);
+            }
+        }
+
+        @Override
+        public <T> T readObject(Map<String, Object> source, Class<T> targetType) {
+            try {
+                return mapToObject(mapToString(source), targetType);
+            } catch (IOException e) {
+                throw new MappingException(e.getMessage(), e);
+            }
         }
     }
 

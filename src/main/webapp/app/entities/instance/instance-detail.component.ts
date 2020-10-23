@@ -5,20 +5,18 @@ import { IInstance } from 'app/shared/model/instance.model';
 
 @Component({
   selector: 'jhi-instance-detail',
-  templateUrl: './instance-detail.component.html'
+  templateUrl: './instance-detail.component.html',
 })
 export class InstanceDetailComponent implements OnInit {
-  instance: IInstance;
+  instance: IInstance | null = null;
 
   constructor(protected activatedRoute: ActivatedRoute) {}
 
-  ngOnInit() {
-    this.activatedRoute.data.subscribe(({ instance }) => {
-      this.instance = instance;
-    });
+  ngOnInit(): void {
+    this.activatedRoute.data.subscribe(({ instance }) => (this.instance = instance));
   }
 
-  previousState() {
+  previousState(): void {
     window.history.back();
   }
 }

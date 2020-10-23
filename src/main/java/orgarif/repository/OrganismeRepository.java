@@ -1,5 +1,7 @@
 package orgarif.repository;
+
 import orgarif.domain.Organisme;
+
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.data.jpa.repository.*;
@@ -24,5 +26,4 @@ public interface OrganismeRepository extends JpaRepository<Organisme, Long> {
 
     @Query("select organisme from Organisme organisme left join fetch organisme.deliberations where organisme.id =:id")
     Optional<Organisme> findOneWithEagerRelationships(@Param("id") Long id);
-
 }

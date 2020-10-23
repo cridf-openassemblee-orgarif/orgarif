@@ -5,20 +5,12 @@ import { OrgarifSharedModule } from 'app/shared/shared.module';
 import { SecteurComponent } from './secteur.component';
 import { SecteurDetailComponent } from './secteur-detail.component';
 import { SecteurUpdateComponent } from './secteur-update.component';
-import { SecteurDeletePopupComponent, SecteurDeleteDialogComponent } from './secteur-delete-dialog.component';
-import { secteurRoute, secteurPopupRoute } from './secteur.route';
-
-const ENTITY_STATES = [...secteurRoute, ...secteurPopupRoute];
+import { SecteurDeleteDialogComponent } from './secteur-delete-dialog.component';
+import { secteurRoute } from './secteur.route';
 
 @NgModule({
-  imports: [OrgarifSharedModule, RouterModule.forChild(ENTITY_STATES)],
-  declarations: [
-    SecteurComponent,
-    SecteurDetailComponent,
-    SecteurUpdateComponent,
-    SecteurDeleteDialogComponent,
-    SecteurDeletePopupComponent
-  ],
-  entryComponents: [SecteurDeleteDialogComponent]
+  imports: [OrgarifSharedModule, RouterModule.forChild(secteurRoute)],
+  declarations: [SecteurComponent, SecteurDetailComponent, SecteurUpdateComponent, SecteurDeleteDialogComponent],
+  entryComponents: [SecteurDeleteDialogComponent],
 })
 export class OrgarifSecteurModule {}

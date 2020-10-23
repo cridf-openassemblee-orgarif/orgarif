@@ -1,27 +1,33 @@
 import { Injectable } from '@angular/core';
 import { HttpResponse } from '@angular/common/http';
-import { Resolve, ActivatedRouteSnapshot, RouterStateSnapshot, Routes } from '@angular/router';
+import { Resolve, ActivatedRouteSnapshot, Routes, Router } from '@angular/router';
+import { Observable, of, EMPTY } from 'rxjs';
+import { flatMap } from 'rxjs/operators';
+
+import { Authority } from 'app/shared/constants/authority.constants';
 import { UserRouteAccessService } from 'app/core/auth/user-route-access-service';
-import { Observable, of } from 'rxjs';
-import { filter, map } from 'rxjs/operators';
-import { Secteur } from 'app/shared/model/secteur.model';
+import { ISecteur, Secteur } from 'app/shared/model/secteur.model';
 import { SecteurService } from './secteur.service';
 import { SecteurComponent } from './secteur.component';
 import { SecteurDetailComponent } from './secteur-detail.component';
 import { SecteurUpdateComponent } from './secteur-update.component';
-import { SecteurDeletePopupComponent } from './secteur-delete-dialog.component';
-import { ISecteur } from 'app/shared/model/secteur.model';
 
 @Injectable({ providedIn: 'root' })
 export class SecteurResolve implements Resolve<ISecteur> {
-  constructor(private service: SecteurService) {}
+  constructor(private service: SecteurService, private router: Router) {}
 
-  resolve(route: ActivatedRouteSnapshot, state: RouterStateSnapshot): Observable<ISecteur> {
+  resolve(route: ActivatedRouteSnapshot): Observable<ISecteur> | Observable<never> {
     const id = route.params['id'];
     if (id) {
       return this.service.find(id).pipe(
-        filter((response: HttpResponse<Secteur>) => response.ok),
-        map((secteur: HttpResponse<Secteur>) => secteur.body)
+        flatMap((secteur: HttpResponse<Secteur>) => {
+          if (secteur.body) {
+            return of(secteur.body);
+          } else {
+            this.router.navigate(['404']);
+            return EMPTY;
+          }
+        })
       );
     }
     return of(new Secteur());
@@ -33,61 +39,45 @@ export const secteurRoute: Routes = [
     path: '',
     component: SecteurComponent,
     data: {
-      authorities: ['ROLE_USER'],
-      pageTitle: 'Secteurs'
+      authorities: [Authority.USER],
+      pageTitle: 'Secteurs',
     },
-    canActivate: [UserRouteAccessService]
+    canActivate: [UserRouteAccessService],
   },
   {
     path: ':id/view',
     component: SecteurDetailComponent,
     resolve: {
-      secteur: SecteurResolve
+      secteur: SecteurResolve,
     },
     data: {
-      authorities: ['ROLE_USER'],
-      pageTitle: 'Secteurs'
+      authorities: [Authority.USER],
+      pageTitle: 'Secteurs',
     },
-    canActivate: [UserRouteAccessService]
+    canActivate: [UserRouteAccessService],
   },
   {
     path: 'new',
     component: SecteurUpdateComponent,
     resolve: {
-      secteur: SecteurResolve
+      secteur: SecteurResolve,
     },
     data: {
-      authorities: ['ROLE_USER'],
-      pageTitle: 'Secteurs'
+      authorities: [Authority.USER],
+      pageTitle: 'Secteurs',
     },
-    canActivate: [UserRouteAccessService]
+    canActivate: [UserRouteAccessService],
   },
   {
     path: ':id/edit',
     component: SecteurUpdateComponent,
     resolve: {
-      secteur: SecteurResolve
+      secteur: SecteurResolve,
     },
     data: {
-      authorities: ['ROLE_USER'],
-      pageTitle: 'Secteurs'
-    },
-    canActivate: [UserRouteAccessService]
-  }
-];
-
-export const secteurPopupRoute: Routes = [
-  {
-    path: ':id/delete',
-    component: SecteurDeletePopupComponent,
-    resolve: {
-      secteur: SecteurResolve
-    },
-    data: {
-      authorities: ['ROLE_USER'],
-      pageTitle: 'Secteurs'
+      authorities: [Authority.USER],
+      pageTitle: 'Secteurs',
     },
     canActivate: [UserRouteAccessService],
-    outlet: 'popup'
-  }
+  },
 ];

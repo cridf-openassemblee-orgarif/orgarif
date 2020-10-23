@@ -1,13 +1,11 @@
 import { Injectable } from '@angular/core';
 import { HttpClient, HttpResponse } from '@angular/common/http';
 import { Observable } from 'rxjs';
-import * as moment from 'moment';
-// eslint-disable-next-line @typescript-eslint/no-unused-vars
-import { DATE_FORMAT } from 'app/shared/constants/input.constants';
 import { map } from 'rxjs/operators';
+import * as moment from 'moment';
 
 import { SERVER_API_URL } from 'app/app.constants';
-import { createRequestOption } from 'app/shared/util/request-util';
+import { createRequestOption, SearchWithPagination } from 'app/shared/util/request-util';
 import { IDeliberation } from 'app/shared/model/deliberation.model';
 
 type EntityResponseType = HttpResponse<IDeliberation>;
@@ -47,11 +45,11 @@ export class DeliberationService {
       .pipe(map((res: EntityArrayResponseType) => this.convertDateArrayFromServer(res)));
   }
 
-  delete(id: number): Observable<HttpResponse<any>> {
-    return this.http.delete<any>(`${this.resourceUrl}/${id}`, { observe: 'response' });
+  delete(id: number): Observable<HttpResponse<{}>> {
+    return this.http.delete(`${this.resourceUrl}/${id}`, { observe: 'response' });
   }
 
-  search(req?: any): Observable<EntityArrayResponseType> {
+  search(req: SearchWithPagination): Observable<EntityArrayResponseType> {
     const options = createRequestOption(req);
     return this.http
       .get<IDeliberation[]>(this.resourceSearchUrl, { params: options, observe: 'response' })
@@ -60,16 +58,16 @@ export class DeliberationService {
 
   protected convertDateFromClient(deliberation: IDeliberation): IDeliberation {
     const copy: IDeliberation = Object.assign({}, deliberation, {
-      date: deliberation.date != null && deliberation.date.isValid() ? deliberation.date.toJSON() : null,
-      creationDate: deliberation.creationDate != null && deliberation.creationDate.isValid() ? deliberation.creationDate.toJSON() : null
+      date: deliberation.date && deliberation.date.isValid() ? deliberation.date.toJSON() : undefined,
+      creationDate: deliberation.creationDate && deliberation.creationDate.isValid() ? deliberation.creationDate.toJSON() : undefined,
     });
     return copy;
   }
 
   protected convertDateFromServer(res: EntityResponseType): EntityResponseType {
     if (res.body) {
-      res.body.date = res.body.date != null ? moment(res.body.date) : null;
-      res.body.creationDate = res.body.creationDate != null ? moment(res.body.creationDate) : null;
+      res.body.date = res.body.date ? moment(res.body.date) : undefined;
+      res.body.creationDate = res.body.creationDate ? moment(res.body.creationDate) : undefined;
     }
     return res;
   }
@@ -77,8 +75,8 @@ export class DeliberationService {
   protected convertDateArrayFromServer(res: EntityArrayResponseType): EntityArrayResponseType {
     if (res.body) {
       res.body.forEach((deliberation: IDeliberation) => {
-        deliberation.date = deliberation.date != null ? moment(deliberation.date) : null;
-        deliberation.creationDate = deliberation.creationDate != null ? moment(deliberation.creationDate) : null;
+        deliberation.date = deliberation.date ? moment(deliberation.date) : undefined;
+        deliberation.creationDate = deliberation.creationDate ? moment(deliberation.creationDate) : undefined;
       });
     }
     return res;

@@ -1,6 +1,6 @@
 import { ComponentFixture, TestBed, async, inject, fakeAsync, tick } from '@angular/core/testing';
-import { of } from 'rxjs';
 import { HttpHeaders, HttpResponse } from '@angular/common/http';
+import { of } from 'rxjs';
 
 import { OrgarifTestModule } from '../../../test.module';
 import { UserManagementComponent } from 'app/admin/user-management/user-management.component';
@@ -16,7 +16,7 @@ describe('Component Tests', () => {
     beforeEach(async(() => {
       TestBed.configureTestingModule({
         imports: [OrgarifTestModule],
-        declarations: [UserManagementComponent]
+        declarations: [UserManagementComponent],
       })
         .overrideTemplate(UserManagementComponent, '')
         .compileComponents();
@@ -38,7 +38,7 @@ describe('Component Tests', () => {
             of(
               new HttpResponse({
                 body: [new User(123)],
-                headers
+                headers,
               })
             )
           );
@@ -49,7 +49,7 @@ describe('Component Tests', () => {
 
           // THEN
           expect(service.query).toHaveBeenCalled();
-          expect(comp.users[0]).toEqual(jasmine.objectContaining({ id: 123 }));
+          expect(comp.users && comp.users[0]).toEqual(jasmine.objectContaining({ id: 123 }));
         })
       ));
     });
@@ -65,7 +65,7 @@ describe('Component Tests', () => {
             of(
               new HttpResponse({
                 body: [user],
-                headers
+                headers,
               })
             )
           );
@@ -76,9 +76,9 @@ describe('Component Tests', () => {
           tick(); // simulate async
 
           // THEN
-          expect(service.update).toHaveBeenCalledWith(user);
+          expect(service.update).toHaveBeenCalledWith({ ...user, activated: true });
           expect(service.query).toHaveBeenCalled();
-          expect(comp.users[0]).toEqual(jasmine.objectContaining({ id: 123 }));
+          expect(comp.users && comp.users[0]).toEqual(jasmine.objectContaining({ id: 123 }));
         })
       ));
     });

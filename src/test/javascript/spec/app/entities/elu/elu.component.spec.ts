@@ -17,7 +17,6 @@ describe('Component Tests', () => {
       TestBed.configureTestingModule({
         imports: [OrgarifTestModule],
         declarations: [EluComponent],
-        providers: []
       })
         .overrideTemplate(EluComponent, '')
         .compileComponents();
@@ -34,7 +33,7 @@ describe('Component Tests', () => {
         of(
           new HttpResponse({
             body: [new Elu(123)],
-            headers
+            headers,
           })
         )
       );
@@ -44,7 +43,7 @@ describe('Component Tests', () => {
 
       // THEN
       expect(service.query).toHaveBeenCalled();
-      expect(comp.elus[0]).toEqual(jasmine.objectContaining({ id: 123 }));
+      expect(comp.elus && comp.elus[0]).toEqual(jasmine.objectContaining({ id: 123 }));
     });
   });
 });

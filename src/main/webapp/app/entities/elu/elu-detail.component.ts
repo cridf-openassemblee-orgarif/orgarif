@@ -5,20 +5,18 @@ import { IElu } from 'app/shared/model/elu.model';
 
 @Component({
   selector: 'jhi-elu-detail',
-  templateUrl: './elu-detail.component.html'
+  templateUrl: './elu-detail.component.html',
 })
 export class EluDetailComponent implements OnInit {
-  elu: IElu;
+  elu: IElu | null = null;
 
   constructor(protected activatedRoute: ActivatedRoute) {}
 
-  ngOnInit() {
-    this.activatedRoute.data.subscribe(({ elu }) => {
-      this.elu = elu;
-    });
+  ngOnInit(): void {
+    this.activatedRoute.data.subscribe(({ elu }) => (this.elu = elu));
   }
 
-  previousState() {
+  previousState(): void {
     window.history.back();
   }
 }

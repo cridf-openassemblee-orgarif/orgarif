@@ -3,7 +3,7 @@
     "promptValues": {
       "packageName": "orgarif"
     },
-    "jhipsterVersion": "6.4.1",
+    "jhipsterVersion": "6.10.4",
     "applicationType": "monolith",
     "baseName": "orgarif",
     "packageName": "orgarif",
@@ -33,6 +33,8 @@
     "enableTranslation": false,
     "embeddableLaunchScript": false,
     "clientTheme": "none",
-    "blueprints": []
+    "blueprints": [],
+    "creationTimestamp": 1603057583936,
+    "lastLiquibaseTimestamp": 1603058174000
   }
 }

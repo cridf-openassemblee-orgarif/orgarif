@@ -1,58 +1,61 @@
 <div class="row justify-content-center">
     <div class="col-8">
         <div *ngIf="auditTrail">
-            <h2><span>Audit Trail</span> {{auditTrail.id}}</h2>
+            <h2><span>Audit Trail</span> {{ auditTrail.id }}</h2>
+
             <hr>
+
             <jhi-alert-error></jhi-alert-error>
+
             <dl class="row-md jh-entity-details">
                 <dt><span>Entity</span></dt>
                 <dd>
-                    <span>{{auditTrail.entity}}</span>
+                    <span>{{ auditTrail.entity }}</span>
                 </dd>
                 <dt><span>Entity Id</span></dt>
                 <dd>
-                    <span>{{auditTrail.entityId}}</span>
+                    <span>{{ auditTrail.entityId }}</span>
                 </dd>
                 <dt><span>Parent Entity</span></dt>
                 <dd>
-                    <span>{{auditTrail.parentEntity}}</span>
+                    <span>{{ auditTrail.parentEntity }}</span>
                 </dd>
                 <dt><span>Parent Entity Id</span></dt>
                 <dd>
-                    <span>{{auditTrail.parentEntityId}}</span>
+                    <span>{{ auditTrail.parentEntityId }}</span>
                 </dd>
                 <dt><span>Action</span></dt>
                 <dd>
-                    <span>{{auditTrail.action}}</span>
+                    <span>{{ auditTrail.action }}</span>
                 </dd>
                 <dt><span>User</span></dt>
                 <dd>
-                    <span>{{auditTrail.user}}</span>
+                    <span>{{ auditTrail.user }}</span>
                 </dd>
                 <dt><span>Date</span></dt>
                 <dd>
-                    <span>{{auditTrail.date}}</span>
+                    <span>{{ auditTrail.date }}</span>
                 </dd>
                 <dt><span>Details</span></dt>
                 <dd>
-                    <span>{{auditTrail.details}}</span>
+                    <span>{{ auditTrail.details }}</span>
                 </dd>
-                <dt><span>Reason</span></dt>
+                <dt><span>Update Description</span></dt>
                 <dd>
-                    <span>{{auditTrail.reason}}</span>
+                    <span>{{ auditTrail.updateDescription }}</span>
                 </dd>
             </dl>
 
             <button type="submit"
                     (click)="previousState()"
                     class="btn btn-info">
-                <fa-icon [icon]="'arrow-left'"></fa-icon>&nbsp;<span> Back</span>
+                <fa-icon icon="arrow-left"></fa-icon>&nbsp;<span>Back</span>
             </button>
 
             <button type="button"
                     [routerLink]="['/audit-trail', auditTrail.id, 'edit']"
                     class="btn btn-primary">
-                <fa-icon [icon]="'pencil-alt'"></fa-icon>&nbsp;<span> Edit</span>
+                <fa-icon icon="pencil-alt"></fa-icon>&nbsp;<span>Edit</span>
             </button>
         </div>
     </div>

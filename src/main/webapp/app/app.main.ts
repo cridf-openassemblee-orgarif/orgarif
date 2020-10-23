@@ -1,3 +1,4 @@
+import './polyfills';
 import { platformBrowserDynamic } from '@angular/platform-browser-dynamic';
 import { ProdConfig } from './blocks/config/prod.config';
 import { OrgarifAppModule } from './app.module';
@@ -11,5 +12,5 @@ if (module['hot']) {
 platformBrowserDynamic()
   .bootstrapModule(OrgarifAppModule, { preserveWhitespaces: true })
   // eslint-disable-next-line no-console
-  .then(success => console.log('Application started'))
+  .then(() => console.log('Application started'))
   .catch(err => console.error(err));

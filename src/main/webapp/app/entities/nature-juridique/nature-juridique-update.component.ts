@@ -1,23 +1,23 @@
 import { Component, OnInit } from '@angular/core';
-// eslint-disable-next-line @typescript-eslint/no-unused-vars
-import { HttpResponse, HttpErrorResponse } from '@angular/common/http';
+import { HttpResponse } from '@angular/common/http';
 // eslint-disable-next-line @typescript-eslint/no-unused-vars
 import { FormBuilder, Validators } from '@angular/forms';
 import { ActivatedRoute } from '@angular/router';
 import { Observable } from 'rxjs';
+
 import { INatureJuridique, NatureJuridique } from 'app/shared/model/nature-juridique.model';
 import { NatureJuridiqueService } from './nature-juridique.service';
 
 @Component({
   selector: 'jhi-nature-juridique-update',
-  templateUrl: './nature-juridique-update.component.html'
+  templateUrl: './nature-juridique-update.component.html',
 })
 export class NatureJuridiqueUpdateComponent implements OnInit {
-  isSaving: boolean;
+  isSaving = false;
 
   editForm = this.fb.group({
     id: [],
-    label: [null, [Validators.required]]
+    label: [null, [Validators.required]],
   });
 
   constructor(
@@ -26,25 +26,24 @@ export class NatureJuridiqueUpdateComponent implements OnInit {
     private fb: FormBuilder
   ) {}
 
-  ngOnInit() {
-    this.isSaving = false;
+  ngOnInit(): void {
     this.activatedRoute.data.subscribe(({ natureJuridique }) => {
       this.updateForm(natureJuridique);
     });
   }
 
-  updateForm(natureJuridique: INatureJuridique) {
+  updateForm(natureJuridique: INatureJuridique): void {
     this.editForm.patchValue({
       id: natureJuridique.id,
-      label: natureJuridique.label
+      label: natureJuridique.label,
     });
   }
 
-  previousState() {
+  previousState(): void {
     window.history.back();
   }
 
-  save() {
+  save(): void {
     this.isSaving = true;
     const natureJuridique = this.createFromForm();
     if (natureJuridique.id !== undefined) {
@@ -57,21 +56,24 @@ export class NatureJuridiqueUpdateComponent implements OnInit {
   private createFromForm(): INatureJuridique {
     return {
       ...new NatureJuridique(),
-      id: this.editForm.get(['id']).value,
-      label: this.editForm.get(['label']).value
+      id: this.editForm.get(['id'])!.value,
+      label: this.editForm.get(['label'])!.value,
     };
   }
 
-  protected subscribeToSaveResponse(result: Observable<HttpResponse<INatureJuridique>>) {
-    result.subscribe(() => this.onSaveSuccess(), () => this.onSaveError());
+  protected subscribeToSaveResponse(result: Observable<HttpResponse<INatureJuridique>>): void {
+    result.subscribe(
+      () => this.onSaveSuccess(),
+      () => this.onSaveError()
+    );
   }
 
-  protected onSaveSuccess() {
+  protected onSaveSuccess(): void {
     this.isSaving = false;
     this.previousState();
   }
 
-  protected onSaveError() {
+  protected onSaveError(): void {
     this.isSaving = false;
   }
 }

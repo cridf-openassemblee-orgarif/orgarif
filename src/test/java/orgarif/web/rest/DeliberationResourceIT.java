@@ -4,33 +4,31 @@ import orgarif.OrgarifApp;
 import orgarif.domain.Deliberation;
 import orgarif.repository.DeliberationRepository;
 import orgarif.repository.search.DeliberationSearchRepository;
-import orgarif.web.rest.errors.ExceptionTranslator;
 
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
-import org.mockito.MockitoAnnotations;
+import org.mockito.Mock;
+import org.junit.jupiter.api.extension.ExtendWith;
+import org.mockito.junit.jupiter.MockitoExtension;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.boot.test.autoconfigure.web.servlet.AutoConfigureMockMvc;
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.data.domain.PageImpl;
 import org.springframework.data.domain.PageRequest;
-import org.springframework.data.web.PageableHandlerMethodArgumentResolver;
 import org.springframework.http.MediaType;
-import org.springframework.http.converter.json.MappingJackson2HttpMessageConverter;
+import org.springframework.security.test.context.support.WithMockUser;
 import org.springframework.test.web.servlet.MockMvc;
-import org.springframework.test.web.servlet.setup.MockMvcBuilders;
 import org.springframework.transaction.annotation.Transactional;
-import org.springframework.validation.Validator;
-
 import javax.persistence.EntityManager;
 import java.time.Instant;
 import java.time.temporal.ChronoUnit;
 import java.util.Collections;
 import java.util.List;
 
-import static orgarif.web.rest.TestUtil.createFormattingConversionService;
 import static org.assertj.core.api.Assertions.assertThat;
 import static org.elasticsearch.index.query.QueryBuilders.queryStringQuery;
 import static org.hamcrest.Matchers.hasItem;
+import static org.springframework.security.test.web.servlet.request.SecurityMockMvcRequestPostProcessors.csrf;
 import static org.mockito.Mockito.*;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.*;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.*;
@@ -39,6 +37,9 @@ import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.
  * Integration tests for the {@link DeliberationResource} REST controller.
  */
 @SpringBootTest(classes = OrgarifApp.class)
+@ExtendWith(MockitoExtension.class)
+@AutoConfigureMockMvc
+@WithMockUser
 public class DeliberationResourceIT {
 
     private static final String DEFAULT_LABEL = "AAAAAAAAAA";
@@ -62,35 +63,12 @@ public class DeliberationResourceIT {
     private DeliberationSearchRepository mockDeliberationSearchRepository;
 
     @Autowired
-    private MappingJackson2HttpMessageConverter jacksonMessageConverter;
-
-    @Autowired
-    private PageableHandlerMethodArgumentResolver pageableArgumentResolver;
-
-    @Autowired
-    private ExceptionTranslator exceptionTranslator;
-
-    @Autowired
     private EntityManager em;
 
     @Autowired
-    private Validator validator;
-
     private MockMvc restDeliberationMockMvc;
 
     private Deliberation deliberation;
-
-    @BeforeEach
-    public void setup() {
-        MockitoAnnotations.initMocks(this);
-        final DeliberationResource deliberationResource = new DeliberationResource(deliberationRepository, mockDeliberationSearchRepository);
-        this.restDeliberationMockMvc = MockMvcBuilders.standaloneSetup(deliberationResource)
-            .setCustomArgumentResolvers(pageableArgumentResolver)
-            .setControllerAdvice(exceptionTranslator)
-            .setConversionService(createFormattingConversionService())
-            .setMessageConverters(jacksonMessageConverter)
-            .setValidator(validator).build();
-    }
 
     /**
      * Create an entity for this test.
@@ -128,10 +106,9 @@ public class DeliberationResourceIT {
     @Transactional
     public void createDeliberation() throws Exception {
         int databaseSizeBeforeCreate = deliberationRepository.findAll().size();
-
         // Create the Deliberation
-        restDeliberationMockMvc.perform(post("/api/deliberations")
-            .contentType(TestUtil.APPLICATION_JSON_UTF8)
+        restDeliberationMockMvc.perform(post("/api/deliberations").with(csrf())
+            .contentType(MediaType.APPLICATION_JSON)
             .content(TestUtil.convertObjectToJsonBytes(deliberation)))
             .andExpect(status().isCreated());
 
@@ -156,8 +133,8 @@ public class DeliberationResourceIT {
         deliberation.setId(1L);
 
         // An entity with an existing ID cannot be created, so this API call must fail
-        restDeliberationMockMvc.perform(post("/api/deliberations")
-            .contentType(TestUtil.APPLICATION_JSON_UTF8)
+        restDeliberationMockMvc.perform(post("/api/deliberations").with(csrf())
+            .contentType(MediaType.APPLICATION_JSON)
             .content(TestUtil.convertObjectToJsonBytes(deliberation)))
             .andExpect(status().isBadRequest());
 
@@ -179,8 +156,9 @@ public class DeliberationResourceIT {
 
         // Create the Deliberation, which fails.
 
-        restDeliberationMockMvc.perform(post("/api/deliberations")
-            .contentType(TestUtil.APPLICATION_JSON_UTF8)
+
+        restDeliberationMockMvc.perform(post("/api/deliberations").with(csrf())
+            .contentType(MediaType.APPLICATION_JSON)
             .content(TestUtil.convertObjectToJsonBytes(deliberation)))
             .andExpect(status().isBadRequest());
 
@@ -197,8 +175,9 @@ public class DeliberationResourceIT {
 
         // Create the Deliberation, which fails.
 
-        restDeliberationMockMvc.perform(post("/api/deliberations")
-            .contentType(TestUtil.APPLICATION_JSON_UTF8)
+
+        restDeliberationMockMvc.perform(post("/api/deliberations").with(csrf())
+            .contentType(MediaType.APPLICATION_JSON)
             .content(TestUtil.convertObjectToJsonBytes(deliberation)))
             .andExpect(status().isBadRequest());
 
@@ -215,7 +194,7 @@ public class DeliberationResourceIT {
         // Get all the deliberationList
         restDeliberationMockMvc.perform(get("/api/deliberations?sort=id,desc"))
             .andExpect(status().isOk())
-            .andExpect(content().contentType(MediaType.APPLICATION_JSON_UTF8_VALUE))
+            .andExpect(content().contentType(MediaType.APPLICATION_JSON_VALUE))
             .andExpect(jsonPath("$.[*].id").value(hasItem(deliberation.getId().intValue())))
             .andExpect(jsonPath("$.[*].label").value(hasItem(DEFAULT_LABEL)))
             .andExpect(jsonPath("$.[*].date").value(hasItem(DEFAULT_DATE.toString())))
@@ -231,13 +210,12 @@ public class DeliberationResourceIT {
         // Get the deliberation
         restDeliberationMockMvc.perform(get("/api/deliberations/{id}", deliberation.getId()))
             .andExpect(status().isOk())
-            .andExpect(content().contentType(MediaType.APPLICATION_JSON_UTF8_VALUE))
+            .andExpect(content().contentType(MediaType.APPLICATION_JSON_VALUE))
             .andExpect(jsonPath("$.id").value(deliberation.getId().intValue()))
             .andExpect(jsonPath("$.label").value(DEFAULT_LABEL))
             .andExpect(jsonPath("$.date").value(DEFAULT_DATE.toString()))
             .andExpect(jsonPath("$.creationDate").value(DEFAULT_CREATION_DATE.toString()));
     }
-
     @Test
     @Transactional
     public void getNonExistingDeliberation() throws Exception {
@@ -263,8 +241,8 @@ public class DeliberationResourceIT {
             .date(UPDATED_DATE)
             .creationDate(UPDATED_CREATION_DATE);
 
-        restDeliberationMockMvc.perform(put("/api/deliberations")
-            .contentType(TestUtil.APPLICATION_JSON_UTF8)
+        restDeliberationMockMvc.perform(put("/api/deliberations").with(csrf())
+            .contentType(MediaType.APPLICATION_JSON)
             .content(TestUtil.convertObjectToJsonBytes(updatedDeliberation)))
             .andExpect(status().isOk());
 
@@ -285,11 +263,9 @@ public class DeliberationResourceIT {
     public void updateNonExistingDeliberation() throws Exception {
         int databaseSizeBeforeUpdate = deliberationRepository.findAll().size();
 
-        // Create the Deliberation
-
         // If the entity doesn't have an ID, it will throw BadRequestAlertException
-        restDeliberationMockMvc.perform(put("/api/deliberations")
-            .contentType(TestUtil.APPLICATION_JSON_UTF8)
+        restDeliberationMockMvc.perform(put("/api/deliberations").with(csrf())
+            .contentType(MediaType.APPLICATION_JSON)
             .content(TestUtil.convertObjectToJsonBytes(deliberation)))
             .andExpect(status().isBadRequest());
 
@@ -310,8 +286,8 @@ public class DeliberationResourceIT {
         int databaseSizeBeforeDelete = deliberationRepository.findAll().size();
 
         // Delete the deliberation
-        restDeliberationMockMvc.perform(delete("/api/deliberations/{id}", deliberation.getId())
-            .accept(TestUtil.APPLICATION_JSON_UTF8))
+        restDeliberationMockMvc.perform(delete("/api/deliberations/{id}", deliberation.getId()).with(csrf())
+            .accept(MediaType.APPLICATION_JSON))
             .andExpect(status().isNoContent());
 
         // Validate the database contains one less item
@@ -325,32 +301,19 @@ public class DeliberationResourceIT {
     @Test
     @Transactional
     public void searchDeliberation() throws Exception {
+        // Configure the mock search repository
         // Initialize the database
         deliberationRepository.saveAndFlush(deliberation);
         when(mockDeliberationSearchRepository.search(queryStringQuery("id:" + deliberation.getId()), PageRequest.of(0, 20)))
             .thenReturn(new PageImpl<>(Collections.singletonList(deliberation), PageRequest.of(0, 1), 1));
+
         // Search the deliberation
         restDeliberationMockMvc.perform(get("/api/_search/deliberations?query=id:" + deliberation.getId()))
             .andExpect(status().isOk())
-            .andExpect(content().contentType(MediaType.APPLICATION_JSON_UTF8_VALUE))
+            .andExpect(content().contentType(MediaType.APPLICATION_JSON_VALUE))
             .andExpect(jsonPath("$.[*].id").value(hasItem(deliberation.getId().intValue())))
             .andExpect(jsonPath("$.[*].label").value(hasItem(DEFAULT_LABEL)))
             .andExpect(jsonPath("$.[*].date").value(hasItem(DEFAULT_DATE.toString())))
             .andExpect(jsonPath("$.[*].creationDate").value(hasItem(DEFAULT_CREATION_DATE.toString())));
-    }
-
-    @Test
-    @Transactional
-    public void equalsVerifier() throws Exception {
-        TestUtil.equalsVerifier(Deliberation.class);
-        Deliberation deliberation1 = new Deliberation();
-        deliberation1.setId(1L);
-        Deliberation deliberation2 = new Deliberation();
-        deliberation2.setId(deliberation1.getId());
-        assertThat(deliberation1).isEqualTo(deliberation2);
-        deliberation2.setId(2L);
-        assertThat(deliberation1).isNotEqualTo(deliberation2);
-        deliberation1.setId(null);
-        assertThat(deliberation1).isNotEqualTo(deliberation2);
     }
 }

@@ -1,53 +1,53 @@
 {
-    "fluentMethods": true,
-    "clientRootFolder": "",
-    "relationships": [],
-    "fields": [
-        {
-            "fieldName": "entity",
-            "fieldType": "String"
-        },
-        {
-            "fieldName": "entityId",
-            "fieldType": "Long"
-        },
-        {
-            "fieldName": "parentEntity",
-            "fieldType": "String"
-        },
-        {
-            "fieldName": "parentEntityId",
-            "fieldType": "Long"
-        },
-        {
-            "fieldName": "action",
-            "fieldType": "AuditTrailAction",
-            "fieldValues": "CREATE,UPDATE,CLOSE,DELETE"
-        },
-        {
-            "fieldName": "user",
-            "fieldType": "String"
-        },
-        {
-            "fieldName": "date",
-            "fieldType": "Instant"
-        },
-        {
-            "fieldName": "details",
-            "fieldType": "String"
-        },
-        {
-            "fieldName": "updateDescription",
-            "fieldType": "String"
-        }
-    ],
-    "changelogDate": "20201018215614",
-    "dto": "no",
-    "searchEngine": "elasticsearch",
-    "service": "no",
-    "entityTableName": "audit_trail",
-    "databaseType": "sql",
-    "readOnly": false,
-    "jpaMetamodelFiltering": false,
-    "pagination": "no"
+  "fluentMethods": true,
+  "clientRootFolder": "",
+  "relationships": [],
+  "fields": [
+    {
+      "fieldName": "entity",
+      "fieldType": "String"
+    },
+    {
+      "fieldName": "entityId",
+      "fieldType": "Long"
+    },
+    {
+      "fieldName": "parentEntity",
+      "fieldType": "String"
+    },
+    {
+      "fieldName": "parentEntityId",
+      "fieldType": "Long"
+    },
+    {
+      "fieldName": "action",
+      "fieldType": "AuditTrailAction",
+      "fieldValues": "CREATE,UPDATE,CLOSE,DELETE"
+    },
+    {
+      "fieldName": "user",
+      "fieldType": "String"
+    },
+    {
+      "fieldName": "date",
+      "fieldType": "Instant"
+    },
+    {
+      "fieldName": "details",
+      "fieldType": "String"
+    },
+    {
+      "fieldName": "updateDescription",
+      "fieldType": "String"
+    }
+  ],
+  "changelogDate": "20201018215614",
+  "dto": "no",
+  "searchEngine": "elasticsearch",
+  "service": "no",
+  "entityTableName": "audit_trail",
+  "databaseType": "sql",
+  "readOnly": false,
+  "jpaMetamodelFiltering": false,
+  "pagination": "no"
 }

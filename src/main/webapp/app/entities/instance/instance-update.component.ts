@@ -1,12 +1,10 @@
 import { Component, OnInit } from '@angular/core';
-// eslint-disable-next-line @typescript-eslint/no-unused-vars
-import { HttpResponse, HttpErrorResponse } from '@angular/common/http';
+import { HttpResponse } from '@angular/common/http';
 // eslint-disable-next-line @typescript-eslint/no-unused-vars
 import { FormBuilder, Validators } from '@angular/forms';
 import { ActivatedRoute } from '@angular/router';
 import { Observable } from 'rxjs';
-import { filter, map } from 'rxjs/operators';
-import { JhiAlertService } from 'ng-jhipster';
+
 import { IInstance, Instance } from 'app/shared/model/instance.model';
 import { InstanceService } from './instance.service';
 import { IOrganisme } from 'app/shared/model/organisme.model';
@@ -14,16 +12,16 @@ import { OrganismeService } from 'app/entities/organisme/organisme.service';
 import { IDeliberation } from 'app/shared/model/deliberation.model';
 import { DeliberationService } from 'app/entities/deliberation/deliberation.service';
 
+type SelectableEntity = IOrganisme | IDeliberation;
+
 @Component({
   selector: 'jhi-instance-update',
-  templateUrl: './instance-update.component.html'
+  templateUrl: './instance-update.component.html',
 })
 export class InstanceUpdateComponent implements OnInit {
-  isSaving: boolean;
-
-  organismes: IOrganisme[];
-
-  deliberations: IDeliberation[];
+  isSaving = false;
+  organismes: IOrganisme[] = [];
+  deliberations: IDeliberation[] = [];
 
   editForm = this.fb.group({
     id: [],
@@ -31,11 +29,10 @@ export class InstanceUpdateComponent implements OnInit {
     nombreRepresentants: [null, [Validators.required]],
     nombreSuppleants: [null, [Validators.required]],
     organisme: [null, Validators.required],
-    deliberations: []
+    deliberations: [],
   });
 
   constructor(
-    protected jhiAlertService: JhiAlertService,
     protected instanceService: InstanceService,
     protected organismeService: OrganismeService,
     protected deliberationService: DeliberationService,
@@ -43,43 +40,32 @@ export class InstanceUpdateComponent implements OnInit {
     private fb: FormBuilder
   ) {}
 
-  ngOnInit() {
-    this.isSaving = false;
+  ngOnInit(): void {
     this.activatedRoute.data.subscribe(({ instance }) => {
       this.updateForm(instance);
+
+      this.organismeService.query().subscribe((res: HttpResponse<IOrganisme[]>) => (this.organismes = res.body || []));
+
+      this.deliberationService.query().subscribe((res: HttpResponse<IDeliberation[]>) => (this.deliberations = res.body || []));
     });
-    this.organismeService
-      .query()
-      .pipe(
-        filter((mayBeOk: HttpResponse<IOrganisme[]>) => mayBeOk.ok),
-        map((response: HttpResponse<IOrganisme[]>) => response.body)
-      )
-      .subscribe((res: IOrganisme[]) => (this.organismes = res), (res: HttpErrorResponse) => this.onError(res.message));
-    this.deliberationService
-      .query()
-      .pipe(
-        filter((mayBeOk: HttpResponse<IDeliberation[]>) => mayBeOk.ok),
-        map((response: HttpResponse<IDeliberation[]>) => response.body)
-      )
-      .subscribe((res: IDeliberation[]) => (this.deliberations = res), (res: HttpErrorResponse) => this.onError(res.message));
   }
 
-  updateForm(instance: IInstance) {
+  updateForm(instance: IInstance): void {
     this.editForm.patchValue({
       id: instance.id,
       nom: instance.nom,
       nombreRepresentants: instance.nombreRepresentants,
       nombreSuppleants: instance.nombreSuppleants,
       organisme: instance.organisme,
-      deliberations: instance.deliberations
+      deliberations: instance.deliberations,
     });
   }
 
-  previousState() {
+  previousState(): void {
     window.history.back();
   }
 
-  save() {
+  save(): void {
     this.isSaving = true;
     const instance = this.createFromForm();
     if (instance.id !== undefined) {
@@ -92,40 +78,36 @@ export class InstanceUpdateComponent implements OnInit {
   private createFromForm(): IInstance {
     return {
       ...new Instance(),
-      id: this.editForm.get(['id']).value,
-      nom: this.editForm.get(['nom']).value,
-      nombreRepresentants: this.editForm.get(['nombreRepresentants']).value,
-      nombreSuppleants: this.editForm.get(['nombreSuppleants']).value,
-      organisme: this.editForm.get(['organisme']).value,
-      deliberations: this.editForm.get(['deliberations']).value
+      id: this.editForm.get(['id'])!.value,
+      nom: this.editForm.get(['nom'])!.value,
+      nombreRepresentants: this.editForm.get(['nombreRepresentants'])!.value,
+      nombreSuppleants: this.editForm.get(['nombreSuppleants'])!.value,
+      organisme: this.editForm.get(['organisme'])!.value,
+      deliberations: this.editForm.get(['deliberations'])!.value,
     };
   }
 
-  protected subscribeToSaveResponse(result: Observable<HttpResponse<IInstance>>) {
-    result.subscribe(() => this.onSaveSuccess(), () => this.onSaveError());
+  protected subscribeToSaveResponse(result: Observable<HttpResponse<IInstance>>): void {
+    result.subscribe(
+      () => this.onSaveSuccess(),
+      () => this.onSaveError()
+    );
   }
 
-  protected onSaveSuccess() {
+  protected onSaveSuccess(): void {
     this.isSaving = false;
     this.previousState();
   }
 
-  protected onSaveError() {
+  protected onSaveError(): void {
     this.isSaving = false;
   }
-  protected onError(errorMessage: string) {
-    this.jhiAlertService.error(errorMessage, null, null);
-  }
 
-  trackOrganismeById(index: number, item: IOrganisme) {
+  trackById(index: number, item: SelectableEntity): any {
     return item.id;
   }
 
-  trackDeliberationById(index: number, item: IDeliberation) {
-    return item.id;
-  }
-
-  getSelected(selectedVals: any[], option: any) {
+  getSelected(selectedVals: IDeliberation[], option: IDeliberation): IDeliberation {
     if (selectedVals) {
       for (let i = 0; i < selectedVals.length; i++) {
         if (option.id === selectedVals[i].id) {

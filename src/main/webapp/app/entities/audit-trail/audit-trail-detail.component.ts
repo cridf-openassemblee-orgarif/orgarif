@@ -5,20 +5,18 @@ import { IAuditTrail } from 'app/shared/model/audit-trail.model';
 
 @Component({
   selector: 'jhi-audit-trail-detail',
-  templateUrl: './audit-trail-detail.component.html'
+  templateUrl: './audit-trail-detail.component.html',
 })
 export class AuditTrailDetailComponent implements OnInit {
-  auditTrail: IAuditTrail;
+  auditTrail: IAuditTrail | null = null;
 
   constructor(protected activatedRoute: ActivatedRoute) {}
 
-  ngOnInit() {
-    this.activatedRoute.data.subscribe(({ auditTrail }) => {
-      this.auditTrail = auditTrail;
-    });
+  ngOnInit(): void {
+    this.activatedRoute.data.subscribe(({ auditTrail }) => (this.auditTrail = auditTrail));
   }
 
-  previousState() {
+  previousState(): void {
     window.history.back();
   }
 }

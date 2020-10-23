@@ -1,4 +1,5 @@
 package orgarif.domain;
+
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import org.hibernate.annotations.Cache;
 import org.hibernate.annotations.CacheConcurrencyStrategy;
@@ -14,7 +15,7 @@ import java.io.Serializable;
  */
 @Entity
 @Table(name = "representant")
-@Cache(usage = CacheConcurrencyStrategy.NONSTRICT_READ_WRITE)
+@Cache(usage = CacheConcurrencyStrategy.READ_WRITE)
 @org.springframework.data.elasticsearch.annotations.Document(indexName = "representant")
 public class Representant implements Serializable {
 
@@ -22,7 +23,6 @@ public class Representant implements Serializable {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    @org.springframework.data.elasticsearch.annotations.Field(type = FieldType.Keyword)
     private Long id;
 
     @NotNull
@@ -31,26 +31,26 @@ public class Representant implements Serializable {
 
     @ManyToOne(optional = false)
     @NotNull
-    @JsonIgnoreProperties("representations")
+    @JsonIgnoreProperties(value = "representants", allowSetters = true)
     private Elu elu;
 
     @ManyToOne
-    @JsonIgnoreProperties("representants")
+    @JsonIgnoreProperties(value = "representants", allowSetters = true)
     private Organisme representantOrganisme;
 
     @ManyToOne
-    @JsonIgnoreProperties("suppleants")
+    @JsonIgnoreProperties(value = "suppleants", allowSetters = true)
     private Organisme suppleantOrganisme;
 
     @ManyToOne
-    @JsonIgnoreProperties("representants")
+    @JsonIgnoreProperties(value = "representants", allowSetters = true)
     private Instance representantInstance;
 
     @ManyToOne
-    @JsonIgnoreProperties("suppleants")
+    @JsonIgnoreProperties(value = "suppleants", allowSetters = true)
     private Instance suppleantInstance;
 
-    // jhipster-needle-entity-add-field - JHipster will add fields here, do not remove
+    // jhipster-needle-entity-add-field - JHipster will add fields here
     public Long getId() {
         return id;
     }
@@ -136,7 +136,7 @@ public class Representant implements Serializable {
     public void setSuppleantInstance(Instance instance) {
         this.suppleantInstance = instance;
     }
-    // jhipster-needle-entity-add-getters-setters - JHipster will add getters and setters here, do not remove
+    // jhipster-needle-entity-add-getters-setters - JHipster will add getters and setters here
 
     @Override
     public boolean equals(Object o) {
@@ -154,6 +154,7 @@ public class Representant implements Serializable {
         return 31;
     }
 
+    // prettier-ignore
     @Override
     public String toString() {
         return "Representant{" +

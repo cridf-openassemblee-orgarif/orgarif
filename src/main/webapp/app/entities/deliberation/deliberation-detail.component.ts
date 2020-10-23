@@ -5,20 +5,18 @@ import { IDeliberation } from 'app/shared/model/deliberation.model';
 
 @Component({
   selector: 'jhi-deliberation-detail',
-  templateUrl: './deliberation-detail.component.html'
+  templateUrl: './deliberation-detail.component.html',
 })
 export class DeliberationDetailComponent implements OnInit {
-  deliberation: IDeliberation;
+  deliberation: IDeliberation | null = null;
 
   constructor(protected activatedRoute: ActivatedRoute) {}
 
-  ngOnInit() {
-    this.activatedRoute.data.subscribe(({ deliberation }) => {
-      this.deliberation = deliberation;
-    });
+  ngOnInit(): void {
+    this.activatedRoute.data.subscribe(({ deliberation }) => (this.deliberation = deliberation));
   }
 
-  previousState() {
+  previousState(): void {
     window.history.back();
   }
 }

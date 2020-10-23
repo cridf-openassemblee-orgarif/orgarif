@@ -2,29 +2,27 @@ import { Component, OnInit, OnDestroy } from '@angular/core';
 import { HttpResponse } from '@angular/common/http';
 import { ActivatedRoute } from '@angular/router';
 import { Subscription } from 'rxjs';
-// eslint-disable-next-line @typescript-eslint/no-unused-vars
-import { filter, map } from 'rxjs/operators';
 import { JhiEventManager } from 'ng-jhipster';
+import { NgbModal } from '@ng-bootstrap/ng-bootstrap';
 
 import { ITypeStructure } from 'app/shared/model/type-structure.model';
-import { AccountService } from 'app/core/auth/account.service';
 import { TypeStructureService } from './type-structure.service';
+import { TypeStructureDeleteDialogComponent } from './type-structure-delete-dialog.component';
 
 @Component({
   selector: 'jhi-type-structure',
-  templateUrl: './type-structure.component.html'
+  templateUrl: './type-structure.component.html',
 })
 export class TypeStructureComponent implements OnInit, OnDestroy {
-  typeStructures: ITypeStructure[];
-  currentAccount: any;
-  eventSubscriber: Subscription;
+  typeStructures?: ITypeStructure[];
+  eventSubscriber?: Subscription;
   currentSearch: string;
 
   constructor(
     protected typeStructureService: TypeStructureService,
     protected eventManager: JhiEventManager,
-    protected activatedRoute: ActivatedRoute,
-    protected accountService: AccountService
+    protected modalService: NgbModal,
+    protected activatedRoute: ActivatedRoute
   ) {
     this.currentSearch =
       this.activatedRoute.snapshot && this.activatedRoute.snapshot.queryParams['search']
@@ -32,61 +30,46 @@ export class TypeStructureComponent implements OnInit, OnDestroy {
         : '';
   }
 
-  loadAll() {
+  loadAll(): void {
     if (this.currentSearch) {
       this.typeStructureService
         .search({
-          query: this.currentSearch
+          query: this.currentSearch,
         })
-        .pipe(
-          filter((res: HttpResponse<ITypeStructure[]>) => res.ok),
-          map((res: HttpResponse<ITypeStructure[]>) => res.body)
-        )
-        .subscribe((res: ITypeStructure[]) => (this.typeStructures = res));
+        .subscribe((res: HttpResponse<ITypeStructure[]>) => (this.typeStructures = res.body || []));
       return;
     }
-    this.typeStructureService
-      .query()
-      .pipe(
-        filter((res: HttpResponse<ITypeStructure[]>) => res.ok),
-        map((res: HttpResponse<ITypeStructure[]>) => res.body)
-      )
-      .subscribe((res: ITypeStructure[]) => {
-        this.typeStructures = res;
-        this.currentSearch = '';
-      });
+
+    this.typeStructureService.query().subscribe((res: HttpResponse<ITypeStructure[]>) => (this.typeStructures = res.body || []));
   }
 
-  search(query) {
-    if (!query) {
-      return this.clear();
-    }
+  search(query: string): void {
     this.currentSearch = query;
     this.loadAll();
   }
 
-  clear() {
-    this.currentSearch = '';
+  ngOnInit(): void {
     this.loadAll();
-  }
-
-  ngOnInit() {
-    this.loadAll();
-    this.accountService.identity().subscribe(account => {
-      this.currentAccount = account;
-    });
     this.registerChangeInTypeStructures();
   }
 
-  ngOnDestroy() {
-    this.eventManager.destroy(this.eventSubscriber);
+  ngOnDestroy(): void {
+    if (this.eventSubscriber) {
+      this.eventManager.destroy(this.eventSubscriber);
+    }
   }
 
-  trackId(index: number, item: ITypeStructure) {
-    return item.id;
+  trackId(index: number, item: ITypeStructure): number {
+    // eslint-disable-next-line @typescript-eslint/no-unnecessary-type-assertion
+    return item.id!;
   }
 
-  registerChangeInTypeStructures() {
-    this.eventSubscriber = this.eventManager.subscribe('typeStructureListModification', response => this.loadAll());
+  registerChangeInTypeStructures(): void {
+    this.eventSubscriber = this.eventManager.subscribe('typeStructureListModification', () => this.loadAll());
+  }
+
+  delete(typeStructure: ITypeStructure): void {
+    const modalRef = this.modalService.open(TypeStructureDeleteDialogComponent, { size: 'lg', backdrop: 'static' });
+    modalRef.componentInstance.typeStructure = typeStructure;
   }
 }

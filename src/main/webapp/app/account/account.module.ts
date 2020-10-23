@@ -23,7 +23,7 @@ import { accountState } from './account.route';
     PasswordResetInitComponent,
     PasswordResetFinishComponent,
     SessionsComponent,
-    SettingsComponent
-  ]
+    SettingsComponent,
+  ],
 })
-export class OrgarifAccountModule {}
+export class AccountModule {}

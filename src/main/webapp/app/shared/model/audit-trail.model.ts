@@ -11,7 +11,7 @@ export interface IAuditTrail {
   user?: string;
   date?: Moment;
   details?: string;
-  reason?: string;
+  updateDescription?: string;
 }
 
 export class AuditTrail implements IAuditTrail {
@@ -25,6 +25,6 @@ export class AuditTrail implements IAuditTrail {
     public user?: string,
     public date?: Moment,
     public details?: string,
-    public reason?: string
+    public updateDescription?: string
   ) {}
 }

@@ -10,13 +10,19 @@ import io.github.jhipster.config.JHipsterProperties;
 
 import org.springframework.boot.autoconfigure.cache.JCacheManagerCustomizer;
 import org.springframework.boot.autoconfigure.orm.jpa.HibernatePropertiesCustomizer;
+import org.springframework.boot.info.BuildProperties;
+import org.springframework.boot.info.GitProperties;
+import org.springframework.cache.interceptor.KeyGenerator;
+import org.springframework.beans.factory.annotation.Autowired;
+import io.github.jhipster.config.cache.PrefixedKeyGenerator;
 import org.springframework.cache.annotation.EnableCaching;
 import org.springframework.context.annotation.*;
 
 @Configuration
 @EnableCaching
 public class CacheConfiguration {
-
+    private GitProperties gitProperties;
+    private BuildProperties buildProperties;
     private final javax.cache.configuration.Configuration<Object, Object> jcacheConfiguration;
 
     public CacheConfiguration(JHipsterProperties jHipsterProperties) {
@@ -44,24 +50,24 @@ public class CacheConfiguration {
             createCache(cm, orgarif.domain.User.class.getName() + ".authorities");
             createCache(cm, orgarif.domain.PersistentToken.class.getName());
             createCache(cm, orgarif.domain.User.class.getName() + ".persistentTokens");
-            createCache(cm, orgarif.domain.NatureJuridique.class.getName());
-            createCache(cm, orgarif.domain.Secteur.class.getName());
-            createCache(cm, orgarif.domain.TypeStructure.class.getName());
-            createCache(cm, orgarif.domain.Deliberation.class.getName());
-            createCache(cm, orgarif.domain.Deliberation.class.getName() + ".organismes");
-            createCache(cm, orgarif.domain.Deliberation.class.getName() + ".instances");
-            createCache(cm, orgarif.domain.Elu.class.getName());
-            createCache(cm, orgarif.domain.Elu.class.getName() + ".representants");
-            createCache(cm, orgarif.domain.Representant.class.getName());
-            createCache(cm, orgarif.domain.Instance.class.getName());
-            createCache(cm, orgarif.domain.Instance.class.getName() + ".representants");
-            createCache(cm, orgarif.domain.Instance.class.getName() + ".suppleants");
-            createCache(cm, orgarif.domain.Instance.class.getName() + ".deliberations");
             createCache(cm, orgarif.domain.Organisme.class.getName());
             createCache(cm, orgarif.domain.Organisme.class.getName() + ".instances");
             createCache(cm, orgarif.domain.Organisme.class.getName() + ".representants");
             createCache(cm, orgarif.domain.Organisme.class.getName() + ".suppleants");
             createCache(cm, orgarif.domain.Organisme.class.getName() + ".deliberations");
+            createCache(cm, orgarif.domain.Instance.class.getName());
+            createCache(cm, orgarif.domain.Instance.class.getName() + ".representants");
+            createCache(cm, orgarif.domain.Instance.class.getName() + ".suppleants");
+            createCache(cm, orgarif.domain.Instance.class.getName() + ".deliberations");
+            createCache(cm, orgarif.domain.NatureJuridique.class.getName());
+            createCache(cm, orgarif.domain.Secteur.class.getName());
+            createCache(cm, orgarif.domain.Elu.class.getName());
+            createCache(cm, orgarif.domain.Elu.class.getName() + ".representants");
+            createCache(cm, orgarif.domain.Deliberation.class.getName());
+            createCache(cm, orgarif.domain.Deliberation.class.getName() + ".organismes");
+            createCache(cm, orgarif.domain.Deliberation.class.getName() + ".instances");
+            createCache(cm, orgarif.domain.TypeStructure.class.getName());
+            createCache(cm, orgarif.domain.Representant.class.getName());
             createCache(cm, orgarif.domain.AuditTrail.class.getName());
             // jhipster-needle-ehcache-add-entry
         };
@@ -69,10 +75,23 @@ public class CacheConfiguration {
 
     private void createCache(javax.cache.CacheManager cm, String cacheName) {
         javax.cache.Cache<Object, Object> cache = cm.getCache(cacheName);
-        if (cache != null) {
-            cm.destroyCache(cacheName);
+        if (cache == null) {
+            cm.createCache(cacheName, jcacheConfiguration);
         }
-        cm.createCache(cacheName, jcacheConfiguration);
     }
 
+    @Autowired(required = false)
+    public void setGitProperties(GitProperties gitProperties) {
+        this.gitProperties = gitProperties;
+    }
+
+    @Autowired(required = false)
+    public void setBuildProperties(BuildProperties buildProperties) {
+        this.buildProperties = buildProperties;
+    }
+
+    @Bean
+    public KeyGenerator keyGenerator() {
+        return new PrefixedKeyGenerator(this.gitProperties, this.buildProperties);
+    }
 }

@@ -5,20 +5,18 @@ import { ISecteur } from 'app/shared/model/secteur.model';
 
 @Component({
   selector: 'jhi-secteur-detail',
-  templateUrl: './secteur-detail.component.html'
+  templateUrl: './secteur-detail.component.html',
 })
 export class SecteurDetailComponent implements OnInit {
-  secteur: ISecteur;
+  secteur: ISecteur | null = null;
 
   constructor(protected activatedRoute: ActivatedRoute) {}
 
-  ngOnInit() {
-    this.activatedRoute.data.subscribe(({ secteur }) => {
-      this.secteur = secteur;
-    });
+  ngOnInit(): void {
+    this.activatedRoute.data.subscribe(({ secteur }) => (this.secteur = secteur));
   }
 
-  previousState() {
+  previousState(): void {
     window.history.back();
   }
 }

@@ -1,7 +1,7 @@
 version: '2'
 services:
   orgarif-mysql:
-    image: mysql:8.0.17
+    image: mysql:8.0.20
     # volumes:
     #     - ~/volumes/jhipster/orgarif/mysql/:/var/lib/mysql/
     environment:

@@ -1,4 +1,5 @@
 package orgarif.domain;
+
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import org.hibernate.annotations.Cache;
 import org.hibernate.annotations.CacheConcurrencyStrategy;
@@ -16,7 +17,7 @@ import java.util.Set;
  */
 @Entity
 @Table(name = "instance")
-@Cache(usage = CacheConcurrencyStrategy.NONSTRICT_READ_WRITE)
+@Cache(usage = CacheConcurrencyStrategy.READ_WRITE)
 @org.springframework.data.elasticsearch.annotations.Document(indexName = "instance")
 public class Instance implements Serializable {
 
@@ -24,7 +25,6 @@ public class Instance implements Serializable {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    @org.springframework.data.elasticsearch.annotations.Field(type = FieldType.Keyword)
     private Long id;
 
     @NotNull
@@ -41,25 +41,25 @@ public class Instance implements Serializable {
 
     @ManyToOne(optional = false)
     @NotNull
-    @JsonIgnoreProperties("instances")
+    @JsonIgnoreProperties(value = "instances", allowSetters = true)
     private Organisme organisme;
 
     @OneToMany(mappedBy = "representantInstance")
-    @Cache(usage = CacheConcurrencyStrategy.NONSTRICT_READ_WRITE)
+    @Cache(usage = CacheConcurrencyStrategy.READ_WRITE)
     private Set<Representant> representants = new HashSet<>();
 
     @OneToMany(mappedBy = "suppleantInstance")
-    @Cache(usage = CacheConcurrencyStrategy.NONSTRICT_READ_WRITE)
+    @Cache(usage = CacheConcurrencyStrategy.READ_WRITE)
     private Set<Representant> suppleants = new HashSet<>();
 
     @ManyToMany
-    @Cache(usage = CacheConcurrencyStrategy.NONSTRICT_READ_WRITE)
+    @Cache(usage = CacheConcurrencyStrategy.READ_WRITE)
     @JoinTable(name = "instance_deliberation",
                joinColumns = @JoinColumn(name = "instance_id", referencedColumnName = "id"),
                inverseJoinColumns = @JoinColumn(name = "deliberation_id", referencedColumnName = "id"))
     private Set<Deliberation> deliberations = new HashSet<>();
 
-    // jhipster-needle-entity-add-field - JHipster will add fields here, do not remove
+    // jhipster-needle-entity-add-field - JHipster will add fields here
     public Long getId() {
         return id;
     }
@@ -194,7 +194,7 @@ public class Instance implements Serializable {
     public void setDeliberations(Set<Deliberation> deliberations) {
         this.deliberations = deliberations;
     }
-    // jhipster-needle-entity-add-getters-setters - JHipster will add getters and setters here, do not remove
+    // jhipster-needle-entity-add-getters-setters - JHipster will add getters and setters here
 
     @Override
     public boolean equals(Object o) {
@@ -212,6 +212,7 @@ public class Instance implements Serializable {
         return 31;
     }
 
+    // prettier-ignore
     @Override
     public String toString() {
         return "Instance{" +

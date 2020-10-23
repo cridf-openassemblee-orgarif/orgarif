@@ -4,29 +4,27 @@ import orgarif.OrgarifApp;
 import orgarif.domain.Secteur;
 import orgarif.repository.SecteurRepository;
 import orgarif.repository.search.SecteurSearchRepository;
-import orgarif.web.rest.errors.ExceptionTranslator;
 
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
-import org.mockito.MockitoAnnotations;
+import org.mockito.Mock;
+import org.junit.jupiter.api.extension.ExtendWith;
+import org.mockito.junit.jupiter.MockitoExtension;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.boot.test.autoconfigure.web.servlet.AutoConfigureMockMvc;
 import org.springframework.boot.test.context.SpringBootTest;
-import org.springframework.data.web.PageableHandlerMethodArgumentResolver;
 import org.springframework.http.MediaType;
-import org.springframework.http.converter.json.MappingJackson2HttpMessageConverter;
+import org.springframework.security.test.context.support.WithMockUser;
 import org.springframework.test.web.servlet.MockMvc;
-import org.springframework.test.web.servlet.setup.MockMvcBuilders;
 import org.springframework.transaction.annotation.Transactional;
-import org.springframework.validation.Validator;
-
 import javax.persistence.EntityManager;
 import java.util.Collections;
 import java.util.List;
 
-import static orgarif.web.rest.TestUtil.createFormattingConversionService;
 import static org.assertj.core.api.Assertions.assertThat;
 import static org.elasticsearch.index.query.QueryBuilders.queryStringQuery;
 import static org.hamcrest.Matchers.hasItem;
+import static org.springframework.security.test.web.servlet.request.SecurityMockMvcRequestPostProcessors.csrf;
 import static org.mockito.Mockito.*;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.*;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.*;
@@ -35,6 +33,9 @@ import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.
  * Integration tests for the {@link SecteurResource} REST controller.
  */
 @SpringBootTest(classes = OrgarifApp.class)
+@ExtendWith(MockitoExtension.class)
+@AutoConfigureMockMvc
+@WithMockUser
 public class SecteurResourceIT {
 
     private static final String DEFAULT_LABEL = "AAAAAAAAAA";
@@ -52,35 +53,12 @@ public class SecteurResourceIT {
     private SecteurSearchRepository mockSecteurSearchRepository;
 
     @Autowired
-    private MappingJackson2HttpMessageConverter jacksonMessageConverter;
-
-    @Autowired
-    private PageableHandlerMethodArgumentResolver pageableArgumentResolver;
-
-    @Autowired
-    private ExceptionTranslator exceptionTranslator;
-
-    @Autowired
     private EntityManager em;
 
     @Autowired
-    private Validator validator;
-
     private MockMvc restSecteurMockMvc;
 
     private Secteur secteur;
-
-    @BeforeEach
-    public void setup() {
-        MockitoAnnotations.initMocks(this);
-        final SecteurResource secteurResource = new SecteurResource(secteurRepository, mockSecteurSearchRepository);
-        this.restSecteurMockMvc = MockMvcBuilders.standaloneSetup(secteurResource)
-            .setCustomArgumentResolvers(pageableArgumentResolver)
-            .setControllerAdvice(exceptionTranslator)
-            .setConversionService(createFormattingConversionService())
-            .setMessageConverters(jacksonMessageConverter)
-            .setValidator(validator).build();
-    }
 
     /**
      * Create an entity for this test.
@@ -114,10 +92,9 @@ public class SecteurResourceIT {
     @Transactional
     public void createSecteur() throws Exception {
         int databaseSizeBeforeCreate = secteurRepository.findAll().size();
-
         // Create the Secteur
-        restSecteurMockMvc.perform(post("/api/secteurs")
-            .contentType(TestUtil.APPLICATION_JSON_UTF8)
+        restSecteurMockMvc.perform(post("/api/secteurs").with(csrf())
+            .contentType(MediaType.APPLICATION_JSON)
             .content(TestUtil.convertObjectToJsonBytes(secteur)))
             .andExpect(status().isCreated());
 
@@ -140,8 +117,8 @@ public class SecteurResourceIT {
         secteur.setId(1L);
 
         // An entity with an existing ID cannot be created, so this API call must fail
-        restSecteurMockMvc.perform(post("/api/secteurs")
-            .contentType(TestUtil.APPLICATION_JSON_UTF8)
+        restSecteurMockMvc.perform(post("/api/secteurs").with(csrf())
+            .contentType(MediaType.APPLICATION_JSON)
             .content(TestUtil.convertObjectToJsonBytes(secteur)))
             .andExpect(status().isBadRequest());
 
@@ -163,8 +140,9 @@ public class SecteurResourceIT {
 
         // Create the Secteur, which fails.
 
-        restSecteurMockMvc.perform(post("/api/secteurs")
-            .contentType(TestUtil.APPLICATION_JSON_UTF8)
+
+        restSecteurMockMvc.perform(post("/api/secteurs").with(csrf())
+            .contentType(MediaType.APPLICATION_JSON)
             .content(TestUtil.convertObjectToJsonBytes(secteur)))
             .andExpect(status().isBadRequest());
 
@@ -181,7 +159,7 @@ public class SecteurResourceIT {
         // Get all the secteurList
         restSecteurMockMvc.perform(get("/api/secteurs?sort=id,desc"))
             .andExpect(status().isOk())
-            .andExpect(content().contentType(MediaType.APPLICATION_JSON_UTF8_VALUE))
+            .andExpect(content().contentType(MediaType.APPLICATION_JSON_VALUE))
             .andExpect(jsonPath("$.[*].id").value(hasItem(secteur.getId().intValue())))
             .andExpect(jsonPath("$.[*].label").value(hasItem(DEFAULT_LABEL)));
     }
@@ -195,11 +173,10 @@ public class SecteurResourceIT {
         // Get the secteur
         restSecteurMockMvc.perform(get("/api/secteurs/{id}", secteur.getId()))
             .andExpect(status().isOk())
-            .andExpect(content().contentType(MediaType.APPLICATION_JSON_UTF8_VALUE))
+            .andExpect(content().contentType(MediaType.APPLICATION_JSON_VALUE))
             .andExpect(jsonPath("$.id").value(secteur.getId().intValue()))
             .andExpect(jsonPath("$.label").value(DEFAULT_LABEL));
     }
-
     @Test
     @Transactional
     public void getNonExistingSecteur() throws Exception {
@@ -223,8 +200,8 @@ public class SecteurResourceIT {
         updatedSecteur
             .label(UPDATED_LABEL);
 
-        restSecteurMockMvc.perform(put("/api/secteurs")
-            .contentType(TestUtil.APPLICATION_JSON_UTF8)
+        restSecteurMockMvc.perform(put("/api/secteurs").with(csrf())
+            .contentType(MediaType.APPLICATION_JSON)
             .content(TestUtil.convertObjectToJsonBytes(updatedSecteur)))
             .andExpect(status().isOk());
 
@@ -243,11 +220,9 @@ public class SecteurResourceIT {
     public void updateNonExistingSecteur() throws Exception {
         int databaseSizeBeforeUpdate = secteurRepository.findAll().size();
 
-        // Create the Secteur
-
         // If the entity doesn't have an ID, it will throw BadRequestAlertException
-        restSecteurMockMvc.perform(put("/api/secteurs")
-            .contentType(TestUtil.APPLICATION_JSON_UTF8)
+        restSecteurMockMvc.perform(put("/api/secteurs").with(csrf())
+            .contentType(MediaType.APPLICATION_JSON)
             .content(TestUtil.convertObjectToJsonBytes(secteur)))
             .andExpect(status().isBadRequest());
 
@@ -268,8 +243,8 @@ public class SecteurResourceIT {
         int databaseSizeBeforeDelete = secteurRepository.findAll().size();
 
         // Delete the secteur
-        restSecteurMockMvc.perform(delete("/api/secteurs/{id}", secteur.getId())
-            .accept(TestUtil.APPLICATION_JSON_UTF8))
+        restSecteurMockMvc.perform(delete("/api/secteurs/{id}", secteur.getId()).with(csrf())
+            .accept(MediaType.APPLICATION_JSON))
             .andExpect(status().isNoContent());
 
         // Validate the database contains one less item
@@ -283,30 +258,17 @@ public class SecteurResourceIT {
     @Test
     @Transactional
     public void searchSecteur() throws Exception {
+        // Configure the mock search repository
         // Initialize the database
         secteurRepository.saveAndFlush(secteur);
         when(mockSecteurSearchRepository.search(queryStringQuery("id:" + secteur.getId())))
             .thenReturn(Collections.singletonList(secteur));
+
         // Search the secteur
         restSecteurMockMvc.perform(get("/api/_search/secteurs?query=id:" + secteur.getId()))
             .andExpect(status().isOk())
-            .andExpect(content().contentType(MediaType.APPLICATION_JSON_UTF8_VALUE))
+            .andExpect(content().contentType(MediaType.APPLICATION_JSON_VALUE))
             .andExpect(jsonPath("$.[*].id").value(hasItem(secteur.getId().intValue())))
             .andExpect(jsonPath("$.[*].label").value(hasItem(DEFAULT_LABEL)));
-    }
-
-    @Test
-    @Transactional
-    public void equalsVerifier() throws Exception {
-        TestUtil.equalsVerifier(Secteur.class);
-        Secteur secteur1 = new Secteur();
-        secteur1.setId(1L);
-        Secteur secteur2 = new Secteur();
-        secteur2.setId(secteur1.getId());
-        assertThat(secteur1).isEqualTo(secteur2);
-        secteur2.setId(2L);
-        assertThat(secteur1).isNotEqualTo(secteur2);
-        secteur1.setId(null);
-        assertThat(secteur1).isNotEqualTo(secteur2);
     }
 }

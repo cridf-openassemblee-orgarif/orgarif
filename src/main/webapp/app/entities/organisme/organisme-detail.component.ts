@@ -5,20 +5,18 @@ import { IOrganisme } from 'app/shared/model/organisme.model';
 
 @Component({
   selector: 'jhi-organisme-detail',
-  templateUrl: './organisme-detail.component.html'
+  templateUrl: './organisme-detail.component.html',
 })
 export class OrganismeDetailComponent implements OnInit {
-  organisme: IOrganisme;
+  organisme: IOrganisme | null = null;
 
   constructor(protected activatedRoute: ActivatedRoute) {}
 
-  ngOnInit() {
-    this.activatedRoute.data.subscribe(({ organisme }) => {
-      this.organisme = organisme;
-    });
+  ngOnInit(): void {
+    this.activatedRoute.data.subscribe(({ organisme }) => (this.organisme = organisme));
   }
 
-  previousState() {
+  previousState(): void {
     window.history.back();
   }
 }

@@ -11,12 +11,12 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.http.ResponseEntity;
+import org.springframework.transaction.annotation.Transactional;
 import org.springframework.web.bind.annotation.*;
 
 import javax.validation.Valid;
 import java.net.URI;
 import java.net.URISyntaxException;
-
 import java.util.List;
 import java.util.Optional;
 import java.util.stream.Collectors;
@@ -29,6 +29,7 @@ import static org.elasticsearch.index.query.QueryBuilders.*;
  */
 @RestController
 @RequestMapping("/api")
+@Transactional
 public class TypeStructureResource {
 
     private final Logger log = LoggerFactory.getLogger(TypeStructureResource.class);
@@ -92,7 +93,6 @@ public class TypeStructureResource {
     /**
      * {@code GET  /type-structures} : get all the typeStructures.
      *
-
      * @return the {@link ResponseEntity} with status {@code 200 (OK)} and the list of typeStructures in body.
      */
     @GetMapping("/type-structures")
@@ -140,6 +140,6 @@ public class TypeStructureResource {
         log.debug("REST request to search TypeStructures for query {}", query);
         return StreamSupport
             .stream(typeStructureSearchRepository.search(queryStringQuery(query)).spliterator(), false)
-            .collect(Collectors.toList());
+        .collect(Collectors.toList());
     }
 }

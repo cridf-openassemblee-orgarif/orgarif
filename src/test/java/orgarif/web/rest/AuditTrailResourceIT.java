@@ -4,33 +4,29 @@ import orgarif.OrgarifApp;
 import orgarif.domain.AuditTrail;
 import orgarif.repository.AuditTrailRepository;
 import orgarif.repository.search.AuditTrailSearchRepository;
-import orgarif.web.rest.errors.ExceptionTranslator;
 
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
-import org.mockito.MockitoAnnotations;
+import org.mockito.Mock;
+import org.junit.jupiter.api.extension.ExtendWith;
+import org.mockito.junit.jupiter.MockitoExtension;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.boot.test.autoconfigure.web.servlet.AutoConfigureMockMvc;
 import org.springframework.boot.test.context.SpringBootTest;
-import org.springframework.data.domain.PageImpl;
-import org.springframework.data.domain.PageRequest;
-import org.springframework.data.web.PageableHandlerMethodArgumentResolver;
 import org.springframework.http.MediaType;
-import org.springframework.http.converter.json.MappingJackson2HttpMessageConverter;
+import org.springframework.security.test.context.support.WithMockUser;
 import org.springframework.test.web.servlet.MockMvc;
-import org.springframework.test.web.servlet.setup.MockMvcBuilders;
 import org.springframework.transaction.annotation.Transactional;
-import org.springframework.validation.Validator;
-
 import javax.persistence.EntityManager;
 import java.time.Instant;
 import java.time.temporal.ChronoUnit;
 import java.util.Collections;
 import java.util.List;
 
-import static orgarif.web.rest.TestUtil.createFormattingConversionService;
 import static org.assertj.core.api.Assertions.assertThat;
 import static org.elasticsearch.index.query.QueryBuilders.queryStringQuery;
 import static org.hamcrest.Matchers.hasItem;
+import static org.springframework.security.test.web.servlet.request.SecurityMockMvcRequestPostProcessors.csrf;
 import static org.mockito.Mockito.*;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.*;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.*;
@@ -40,6 +36,9 @@ import orgarif.domain.enumeration.AuditTrailAction;
  * Integration tests for the {@link AuditTrailResource} REST controller.
  */
 @SpringBootTest(classes = OrgarifApp.class)
+@ExtendWith(MockitoExtension.class)
+@AutoConfigureMockMvc
+@WithMockUser
 public class AuditTrailResourceIT {
 
     private static final String DEFAULT_ENTITY = "AAAAAAAAAA";
@@ -66,8 +65,8 @@ public class AuditTrailResourceIT {
     private static final String DEFAULT_DETAILS = "AAAAAAAAAA";
     private static final String UPDATED_DETAILS = "BBBBBBBBBB";
 
-    private static final String DEFAULT_REASON = "AAAAAAAAAA";
-    private static final String UPDATED_REASON = "BBBBBBBBBB";
+    private static final String DEFAULT_UPDATE_DESCRIPTION = "AAAAAAAAAA";
+    private static final String UPDATED_UPDATE_DESCRIPTION = "BBBBBBBBBB";
 
     @Autowired
     private AuditTrailRepository auditTrailRepository;
@@ -81,35 +80,12 @@ public class AuditTrailResourceIT {
     private AuditTrailSearchRepository mockAuditTrailSearchRepository;
 
     @Autowired
-    private MappingJackson2HttpMessageConverter jacksonMessageConverter;
-
-    @Autowired
-    private PageableHandlerMethodArgumentResolver pageableArgumentResolver;
-
-    @Autowired
-    private ExceptionTranslator exceptionTranslator;
-
-    @Autowired
     private EntityManager em;
 
     @Autowired
-    private Validator validator;
-
     private MockMvc restAuditTrailMockMvc;
 
     private AuditTrail auditTrail;
-
-    @BeforeEach
-    public void setup() {
-        MockitoAnnotations.initMocks(this);
-        final AuditTrailResource auditTrailResource = new AuditTrailResource(auditTrailRepository, mockAuditTrailSearchRepository);
-        this.restAuditTrailMockMvc = MockMvcBuilders.standaloneSetup(auditTrailResource)
-            .setCustomArgumentResolvers(pageableArgumentResolver)
-            .setControllerAdvice(exceptionTranslator)
-            .setConversionService(createFormattingConversionService())
-            .setMessageConverters(jacksonMessageConverter)
-            .setValidator(validator).build();
-    }
 
     /**
      * Create an entity for this test.
@@ -118,16 +94,16 @@ public class AuditTrailResourceIT {
      * if they test an entity which requires the current entity.
      */
     public static AuditTrail createEntity(EntityManager em) {
-        AuditTrail auditTrail = new AuditTrail();
-        auditTrail.setEntity(DEFAULT_ENTITY);
-        auditTrail.setEntityId(DEFAULT_ENTITY_ID);
-        auditTrail.setParentEntity(DEFAULT_PARENT_ENTITY);
-        auditTrail.setParentEntityId(DEFAULT_PARENT_ENTITY_ID);
-        auditTrail.setAction(DEFAULT_ACTION);
-        auditTrail.setUser(DEFAULT_USER);
-        auditTrail.setDate(DEFAULT_DATE);
-        auditTrail.setDetails(DEFAULT_DETAILS);
-        auditTrail.setReason(DEFAULT_REASON);
+        AuditTrail auditTrail = new AuditTrail()
+            .entity(DEFAULT_ENTITY)
+            .entityId(DEFAULT_ENTITY_ID)
+            .parentEntity(DEFAULT_PARENT_ENTITY)
+            .parentEntityId(DEFAULT_PARENT_ENTITY_ID)
+            .action(DEFAULT_ACTION)
+            .user(DEFAULT_USER)
+            .date(DEFAULT_DATE)
+            .details(DEFAULT_DETAILS)
+            .updateDescription(DEFAULT_UPDATE_DESCRIPTION);
         return auditTrail;
     }
     /**
@@ -137,16 +113,16 @@ public class AuditTrailResourceIT {
      * if they test an entity which requires the current entity.
      */
     public static AuditTrail createUpdatedEntity(EntityManager em) {
-        AuditTrail auditTrail = new AuditTrail();
-        auditTrail.setEntity(UPDATED_ENTITY);
-        auditTrail.setEntityId(UPDATED_ENTITY_ID);
-        auditTrail.setParentEntity(UPDATED_PARENT_ENTITY);
-        auditTrail.setParentEntityId(UPDATED_PARENT_ENTITY_ID);
-        auditTrail.setAction(UPDATED_ACTION);
-        auditTrail.setUser(UPDATED_USER);
-        auditTrail.setDate(UPDATED_DATE);
-        auditTrail.setDetails(UPDATED_DETAILS);
-        auditTrail.setReason(UPDATED_REASON);
+        AuditTrail auditTrail = new AuditTrail()
+            .entity(UPDATED_ENTITY)
+            .entityId(UPDATED_ENTITY_ID)
+            .parentEntity(UPDATED_PARENT_ENTITY)
+            .parentEntityId(UPDATED_PARENT_ENTITY_ID)
+            .action(UPDATED_ACTION)
+            .user(UPDATED_USER)
+            .date(UPDATED_DATE)
+            .details(UPDATED_DETAILS)
+            .updateDescription(UPDATED_UPDATE_DESCRIPTION);
         return auditTrail;
     }
 
@@ -159,10 +135,9 @@ public class AuditTrailResourceIT {
     @Transactional
     public void createAuditTrail() throws Exception {
         int databaseSizeBeforeCreate = auditTrailRepository.findAll().size();
-
         // Create the AuditTrail
-        restAuditTrailMockMvc.perform(post("/api/audit-trails")
-            .contentType(TestUtil.APPLICATION_JSON_UTF8)
+        restAuditTrailMockMvc.perform(post("/api/audit-trails").with(csrf())
+            .contentType(MediaType.APPLICATION_JSON)
             .content(TestUtil.convertObjectToJsonBytes(auditTrail)))
             .andExpect(status().isCreated());
 
@@ -178,7 +153,7 @@ public class AuditTrailResourceIT {
         assertThat(testAuditTrail.getUser()).isEqualTo(DEFAULT_USER);
         assertThat(testAuditTrail.getDate()).isEqualTo(DEFAULT_DATE);
         assertThat(testAuditTrail.getDetails()).isEqualTo(DEFAULT_DETAILS);
-        assertThat(testAuditTrail.getReason()).isEqualTo(DEFAULT_REASON);
+        assertThat(testAuditTrail.getUpdateDescription()).isEqualTo(DEFAULT_UPDATE_DESCRIPTION);
 
         // Validate the AuditTrail in Elasticsearch
         verify(mockAuditTrailSearchRepository, times(1)).save(testAuditTrail);
@@ -193,8 +168,8 @@ public class AuditTrailResourceIT {
         auditTrail.setId(1L);
 
         // An entity with an existing ID cannot be created, so this API call must fail
-        restAuditTrailMockMvc.perform(post("/api/audit-trails")
-            .contentType(TestUtil.APPLICATION_JSON_UTF8)
+        restAuditTrailMockMvc.perform(post("/api/audit-trails").with(csrf())
+            .contentType(MediaType.APPLICATION_JSON)
             .content(TestUtil.convertObjectToJsonBytes(auditTrail)))
             .andExpect(status().isBadRequest());
 
@@ -216,7 +191,7 @@ public class AuditTrailResourceIT {
         // Get all the auditTrailList
         restAuditTrailMockMvc.perform(get("/api/audit-trails?sort=id,desc"))
             .andExpect(status().isOk())
-            .andExpect(content().contentType(MediaType.APPLICATION_JSON_UTF8_VALUE))
+            .andExpect(content().contentType(MediaType.APPLICATION_JSON_VALUE))
             .andExpect(jsonPath("$.[*].id").value(hasItem(auditTrail.getId().intValue())))
             .andExpect(jsonPath("$.[*].entity").value(hasItem(DEFAULT_ENTITY)))
             .andExpect(jsonPath("$.[*].entityId").value(hasItem(DEFAULT_ENTITY_ID.intValue())))
@@ -226,7 +201,7 @@ public class AuditTrailResourceIT {
             .andExpect(jsonPath("$.[*].user").value(hasItem(DEFAULT_USER)))
             .andExpect(jsonPath("$.[*].date").value(hasItem(DEFAULT_DATE.toString())))
             .andExpect(jsonPath("$.[*].details").value(hasItem(DEFAULT_DETAILS)))
-            .andExpect(jsonPath("$.[*].reason").value(hasItem(DEFAULT_REASON)));
+            .andExpect(jsonPath("$.[*].updateDescription").value(hasItem(DEFAULT_UPDATE_DESCRIPTION)));
     }
     
     @Test
@@ -238,7 +213,7 @@ public class AuditTrailResourceIT {
         // Get the auditTrail
         restAuditTrailMockMvc.perform(get("/api/audit-trails/{id}", auditTrail.getId()))
             .andExpect(status().isOk())
-            .andExpect(content().contentType(MediaType.APPLICATION_JSON_UTF8_VALUE))
+            .andExpect(content().contentType(MediaType.APPLICATION_JSON_VALUE))
             .andExpect(jsonPath("$.id").value(auditTrail.getId().intValue()))
             .andExpect(jsonPath("$.entity").value(DEFAULT_ENTITY))
             .andExpect(jsonPath("$.entityId").value(DEFAULT_ENTITY_ID.intValue()))
@@ -248,9 +223,8 @@ public class AuditTrailResourceIT {
             .andExpect(jsonPath("$.user").value(DEFAULT_USER))
             .andExpect(jsonPath("$.date").value(DEFAULT_DATE.toString()))
             .andExpect(jsonPath("$.details").value(DEFAULT_DETAILS))
-            .andExpect(jsonPath("$.reason").value(DEFAULT_REASON));
+            .andExpect(jsonPath("$.updateDescription").value(DEFAULT_UPDATE_DESCRIPTION));
     }
-
     @Test
     @Transactional
     public void getNonExistingAuditTrail() throws Exception {
@@ -271,18 +245,19 @@ public class AuditTrailResourceIT {
         AuditTrail updatedAuditTrail = auditTrailRepository.findById(auditTrail.getId()).get();
         // Disconnect from session so that the updates on updatedAuditTrail are not directly saved in db
         em.detach(updatedAuditTrail);
-        updatedAuditTrail.setEntity(UPDATED_ENTITY);
-        updatedAuditTrail.setEntityId(UPDATED_ENTITY_ID);
-        updatedAuditTrail.setParentEntity(UPDATED_PARENT_ENTITY);
-        updatedAuditTrail.setParentEntityId(UPDATED_PARENT_ENTITY_ID);
-        updatedAuditTrail.setAction(UPDATED_ACTION);
-        updatedAuditTrail.setUser(UPDATED_USER);
-        updatedAuditTrail.setDate(UPDATED_DATE);
-        updatedAuditTrail.setDetails(UPDATED_DETAILS);
-        updatedAuditTrail.setReason(UPDATED_REASON);
+        updatedAuditTrail
+            .entity(UPDATED_ENTITY)
+            .entityId(UPDATED_ENTITY_ID)
+            .parentEntity(UPDATED_PARENT_ENTITY)
+            .parentEntityId(UPDATED_PARENT_ENTITY_ID)
+            .action(UPDATED_ACTION)
+            .user(UPDATED_USER)
+            .date(UPDATED_DATE)
+            .details(UPDATED_DETAILS)
+            .updateDescription(UPDATED_UPDATE_DESCRIPTION);
 
-        restAuditTrailMockMvc.perform(put("/api/audit-trails")
-            .contentType(TestUtil.APPLICATION_JSON_UTF8)
+        restAuditTrailMockMvc.perform(put("/api/audit-trails").with(csrf())
+            .contentType(MediaType.APPLICATION_JSON)
             .content(TestUtil.convertObjectToJsonBytes(updatedAuditTrail)))
             .andExpect(status().isOk());
 
@@ -298,7 +273,7 @@ public class AuditTrailResourceIT {
         assertThat(testAuditTrail.getUser()).isEqualTo(UPDATED_USER);
         assertThat(testAuditTrail.getDate()).isEqualTo(UPDATED_DATE);
         assertThat(testAuditTrail.getDetails()).isEqualTo(UPDATED_DETAILS);
-        assertThat(testAuditTrail.getReason()).isEqualTo(UPDATED_REASON);
+        assertThat(testAuditTrail.getUpdateDescription()).isEqualTo(UPDATED_UPDATE_DESCRIPTION);
 
         // Validate the AuditTrail in Elasticsearch
         verify(mockAuditTrailSearchRepository, times(1)).save(testAuditTrail);
@@ -309,11 +284,9 @@ public class AuditTrailResourceIT {
     public void updateNonExistingAuditTrail() throws Exception {
         int databaseSizeBeforeUpdate = auditTrailRepository.findAll().size();
 
-        // Create the AuditTrail
-
         // If the entity doesn't have an ID, it will throw BadRequestAlertException
-        restAuditTrailMockMvc.perform(put("/api/audit-trails")
-            .contentType(TestUtil.APPLICATION_JSON_UTF8)
+        restAuditTrailMockMvc.perform(put("/api/audit-trails").with(csrf())
+            .contentType(MediaType.APPLICATION_JSON)
             .content(TestUtil.convertObjectToJsonBytes(auditTrail)))
             .andExpect(status().isBadRequest());
 
@@ -334,8 +307,8 @@ public class AuditTrailResourceIT {
         int databaseSizeBeforeDelete = auditTrailRepository.findAll().size();
 
         // Delete the auditTrail
-        restAuditTrailMockMvc.perform(delete("/api/audit-trails/{id}", auditTrail.getId())
-            .accept(TestUtil.APPLICATION_JSON_UTF8))
+        restAuditTrailMockMvc.perform(delete("/api/audit-trails/{id}", auditTrail.getId()).with(csrf())
+            .accept(MediaType.APPLICATION_JSON))
             .andExpect(status().isNoContent());
 
         // Validate the database contains one less item
@@ -349,14 +322,16 @@ public class AuditTrailResourceIT {
     @Test
     @Transactional
     public void searchAuditTrail() throws Exception {
+        // Configure the mock search repository
         // Initialize the database
         auditTrailRepository.saveAndFlush(auditTrail);
-        when(mockAuditTrailSearchRepository.search(queryStringQuery("id:" + auditTrail.getId()), PageRequest.of(0, 20)))
-            .thenReturn(new PageImpl<>(Collections.singletonList(auditTrail), PageRequest.of(0, 1), 1));
+        when(mockAuditTrailSearchRepository.search(queryStringQuery("id:" + auditTrail.getId())))
+            .thenReturn(Collections.singletonList(auditTrail));
+
         // Search the auditTrail
         restAuditTrailMockMvc.perform(get("/api/_search/audit-trails?query=id:" + auditTrail.getId()))
             .andExpect(status().isOk())
-            .andExpect(content().contentType(MediaType.APPLICATION_JSON_UTF8_VALUE))
+            .andExpect(content().contentType(MediaType.APPLICATION_JSON_VALUE))
             .andExpect(jsonPath("$.[*].id").value(hasItem(auditTrail.getId().intValue())))
             .andExpect(jsonPath("$.[*].entity").value(hasItem(DEFAULT_ENTITY)))
             .andExpect(jsonPath("$.[*].entityId").value(hasItem(DEFAULT_ENTITY_ID.intValue())))
@@ -366,21 +341,6 @@ public class AuditTrailResourceIT {
             .andExpect(jsonPath("$.[*].user").value(hasItem(DEFAULT_USER)))
             .andExpect(jsonPath("$.[*].date").value(hasItem(DEFAULT_DATE.toString())))
             .andExpect(jsonPath("$.[*].details").value(hasItem(DEFAULT_DETAILS)))
-            .andExpect(jsonPath("$.[*].reason").value(hasItem(DEFAULT_REASON)));
-    }
-
-    @Test
-    @Transactional
-    public void equalsVerifier() throws Exception {
-        TestUtil.equalsVerifier(AuditTrail.class);
-        AuditTrail auditTrail1 = new AuditTrail();
-        auditTrail1.setId(1L);
-        AuditTrail auditTrail2 = new AuditTrail();
-        auditTrail2.setId(auditTrail1.getId());
-        assertThat(auditTrail1).isEqualTo(auditTrail2);
-        auditTrail2.setId(2L);
-        assertThat(auditTrail1).isNotEqualTo(auditTrail2);
-        auditTrail1.setId(null);
-        assertThat(auditTrail1).isNotEqualTo(auditTrail2);
+            .andExpect(jsonPath("$.[*].updateDescription").value(hasItem(DEFAULT_UPDATE_DESCRIPTION)));
     }
 }

@@ -6,24 +6,21 @@ import orgarif.domain.NatureJuridique;
 import orgarif.domain.Secteur;
 import orgarif.repository.OrganismeRepository;
 import orgarif.repository.search.OrganismeSearchRepository;
-import orgarif.web.rest.errors.ExceptionTranslator;
 
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.mockito.Mock;
-import org.mockito.MockitoAnnotations;
+import org.junit.jupiter.api.extension.ExtendWith;
+import org.mockito.junit.jupiter.MockitoExtension;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.boot.test.autoconfigure.web.servlet.AutoConfigureMockMvc;
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.data.domain.PageImpl;
 import org.springframework.data.domain.PageRequest;
-import org.springframework.data.web.PageableHandlerMethodArgumentResolver;
 import org.springframework.http.MediaType;
-import org.springframework.http.converter.json.MappingJackson2HttpMessageConverter;
+import org.springframework.security.test.context.support.WithMockUser;
 import org.springframework.test.web.servlet.MockMvc;
-import org.springframework.test.web.servlet.setup.MockMvcBuilders;
 import org.springframework.transaction.annotation.Transactional;
-import org.springframework.validation.Validator;
-
 import javax.persistence.EntityManager;
 import java.time.Instant;
 import java.time.temporal.ChronoUnit;
@@ -32,10 +29,10 @@ import java.util.Collections;
 import java.util.List;
 import java.util.UUID;
 
-import static orgarif.web.rest.TestUtil.createFormattingConversionService;
 import static org.assertj.core.api.Assertions.assertThat;
 import static org.elasticsearch.index.query.QueryBuilders.queryStringQuery;
 import static org.hamcrest.Matchers.hasItem;
+import static org.springframework.security.test.web.servlet.request.SecurityMockMvcRequestPostProcessors.csrf;
 import static org.mockito.Mockito.*;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.*;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.*;
@@ -44,6 +41,9 @@ import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.
  * Integration tests for the {@link OrganismeResource} REST controller.
  */
 @SpringBootTest(classes = OrgarifApp.class)
+@ExtendWith(MockitoExtension.class)
+@AutoConfigureMockMvc
+@WithMockUser
 public class OrganismeResourceIT {
 
     private static final String DEFAULT_NOM = "AAAAAAAAAA";
@@ -82,35 +82,12 @@ public class OrganismeResourceIT {
     private OrganismeSearchRepository mockOrganismeSearchRepository;
 
     @Autowired
-    private MappingJackson2HttpMessageConverter jacksonMessageConverter;
-
-    @Autowired
-    private PageableHandlerMethodArgumentResolver pageableArgumentResolver;
-
-    @Autowired
-    private ExceptionTranslator exceptionTranslator;
-
-    @Autowired
     private EntityManager em;
 
     @Autowired
-    private Validator validator;
-
     private MockMvc restOrganismeMockMvc;
 
     private Organisme organisme;
-
-    @BeforeEach
-    public void setup() {
-        MockitoAnnotations.initMocks(this);
-        final OrganismeResource organismeResource = new OrganismeResource(organismeRepository, mockOrganismeSearchRepository);
-        this.restOrganismeMockMvc = MockMvcBuilders.standaloneSetup(organismeResource)
-            .setCustomArgumentResolvers(pageableArgumentResolver)
-            .setControllerAdvice(exceptionTranslator)
-            .setConversionService(createFormattingConversionService())
-            .setMessageConverters(jacksonMessageConverter)
-            .setValidator(validator).build();
-    }
 
     /**
      * Create an entity for this test.
@@ -196,10 +173,9 @@ public class OrganismeResourceIT {
     @Transactional
     public void createOrganisme() throws Exception {
         int databaseSizeBeforeCreate = organismeRepository.findAll().size();
-
         // Create the Organisme
-        restOrganismeMockMvc.perform(post("/api/organismes")
-            .contentType(TestUtil.APPLICATION_JSON_UTF8)
+        restOrganismeMockMvc.perform(post("/api/organismes").with(csrf())
+            .contentType(MediaType.APPLICATION_JSON)
             .content(TestUtil.convertObjectToJsonBytes(organisme)))
             .andExpect(status().isCreated());
 
@@ -228,8 +204,8 @@ public class OrganismeResourceIT {
         organisme.setId(1L);
 
         // An entity with an existing ID cannot be created, so this API call must fail
-        restOrganismeMockMvc.perform(post("/api/organismes")
-            .contentType(TestUtil.APPLICATION_JSON_UTF8)
+        restOrganismeMockMvc.perform(post("/api/organismes").with(csrf())
+            .contentType(MediaType.APPLICATION_JSON)
             .content(TestUtil.convertObjectToJsonBytes(organisme)))
             .andExpect(status().isBadRequest());
 
@@ -251,8 +227,9 @@ public class OrganismeResourceIT {
 
         // Create the Organisme, which fails.
 
-        restOrganismeMockMvc.perform(post("/api/organismes")
-            .contentType(TestUtil.APPLICATION_JSON_UTF8)
+
+        restOrganismeMockMvc.perform(post("/api/organismes").with(csrf())
+            .contentType(MediaType.APPLICATION_JSON)
             .content(TestUtil.convertObjectToJsonBytes(organisme)))
             .andExpect(status().isBadRequest());
 
@@ -269,8 +246,9 @@ public class OrganismeResourceIT {
 
         // Create the Organisme, which fails.
 
-        restOrganismeMockMvc.perform(post("/api/organismes")
-            .contentType(TestUtil.APPLICATION_JSON_UTF8)
+
+        restOrganismeMockMvc.perform(post("/api/organismes").with(csrf())
+            .contentType(MediaType.APPLICATION_JSON)
             .content(TestUtil.convertObjectToJsonBytes(organisme)))
             .andExpect(status().isBadRequest());
 
@@ -287,8 +265,9 @@ public class OrganismeResourceIT {
 
         // Create the Organisme, which fails.
 
-        restOrganismeMockMvc.perform(post("/api/organismes")
-            .contentType(TestUtil.APPLICATION_JSON_UTF8)
+
+        restOrganismeMockMvc.perform(post("/api/organismes").with(csrf())
+            .contentType(MediaType.APPLICATION_JSON)
             .content(TestUtil.convertObjectToJsonBytes(organisme)))
             .andExpect(status().isBadRequest());
 
@@ -305,7 +284,7 @@ public class OrganismeResourceIT {
         // Get all the organismeList
         restOrganismeMockMvc.perform(get("/api/organismes?sort=id,desc"))
             .andExpect(status().isOk())
-            .andExpect(content().contentType(MediaType.APPLICATION_JSON_UTF8_VALUE))
+            .andExpect(content().contentType(MediaType.APPLICATION_JSON_VALUE))
             .andExpect(jsonPath("$.[*].id").value(hasItem(organisme.getId().intValue())))
             .andExpect(jsonPath("$.[*].nom").value(hasItem(DEFAULT_NOM)))
             .andExpect(jsonPath("$.[*].nombreRepresentants").value(hasItem(DEFAULT_NOMBRE_REPRESENTANTS)))
@@ -318,35 +297,22 @@ public class OrganismeResourceIT {
     
     @SuppressWarnings({"unchecked"})
     public void getAllOrganismesWithEagerRelationshipsIsEnabled() throws Exception {
-        OrganismeResource organismeResource = new OrganismeResource(organismeRepositoryMock, mockOrganismeSearchRepository);
         when(organismeRepositoryMock.findAllWithEagerRelationships(any())).thenReturn(new PageImpl(new ArrayList<>()));
 
-        MockMvc restOrganismeMockMvc = MockMvcBuilders.standaloneSetup(organismeResource)
-            .setCustomArgumentResolvers(pageableArgumentResolver)
-            .setControllerAdvice(exceptionTranslator)
-            .setConversionService(createFormattingConversionService())
-            .setMessageConverters(jacksonMessageConverter).build();
-
         restOrganismeMockMvc.perform(get("/api/organismes?eagerload=true"))
-        .andExpect(status().isOk());
+            .andExpect(status().isOk());
 
         verify(organismeRepositoryMock, times(1)).findAllWithEagerRelationships(any());
     }
 
     @SuppressWarnings({"unchecked"})
     public void getAllOrganismesWithEagerRelationshipsIsNotEnabled() throws Exception {
-        OrganismeResource organismeResource = new OrganismeResource(organismeRepositoryMock, mockOrganismeSearchRepository);
-            when(organismeRepositoryMock.findAllWithEagerRelationships(any())).thenReturn(new PageImpl(new ArrayList<>()));
-            MockMvc restOrganismeMockMvc = MockMvcBuilders.standaloneSetup(organismeResource)
-            .setCustomArgumentResolvers(pageableArgumentResolver)
-            .setControllerAdvice(exceptionTranslator)
-            .setConversionService(createFormattingConversionService())
-            .setMessageConverters(jacksonMessageConverter).build();
+        when(organismeRepositoryMock.findAllWithEagerRelationships(any())).thenReturn(new PageImpl(new ArrayList<>()));
 
         restOrganismeMockMvc.perform(get("/api/organismes?eagerload=true"))
-        .andExpect(status().isOk());
+            .andExpect(status().isOk());
 
-            verify(organismeRepositoryMock, times(1)).findAllWithEagerRelationships(any());
+        verify(organismeRepositoryMock, times(1)).findAllWithEagerRelationships(any());
     }
 
     @Test
@@ -358,7 +324,7 @@ public class OrganismeResourceIT {
         // Get the organisme
         restOrganismeMockMvc.perform(get("/api/organismes/{id}", organisme.getId()))
             .andExpect(status().isOk())
-            .andExpect(content().contentType(MediaType.APPLICATION_JSON_UTF8_VALUE))
+            .andExpect(content().contentType(MediaType.APPLICATION_JSON_VALUE))
             .andExpect(jsonPath("$.id").value(organisme.getId().intValue()))
             .andExpect(jsonPath("$.nom").value(DEFAULT_NOM))
             .andExpect(jsonPath("$.nombreRepresentants").value(DEFAULT_NOMBRE_REPRESENTANTS))
@@ -368,7 +334,6 @@ public class OrganismeResourceIT {
             .andExpect(jsonPath("$.partageRepresentants").value(DEFAULT_PARTAGE_REPRESENTANTS.booleanValue()))
             .andExpect(jsonPath("$.uid").value(DEFAULT_UID.toString()));
     }
-
     @Test
     @Transactional
     public void getNonExistingOrganisme() throws Exception {
@@ -398,8 +363,8 @@ public class OrganismeResourceIT {
             .partageRepresentants(UPDATED_PARTAGE_REPRESENTANTS)
             .uid(UPDATED_UID);
 
-        restOrganismeMockMvc.perform(put("/api/organismes")
-            .contentType(TestUtil.APPLICATION_JSON_UTF8)
+        restOrganismeMockMvc.perform(put("/api/organismes").with(csrf())
+            .contentType(MediaType.APPLICATION_JSON)
             .content(TestUtil.convertObjectToJsonBytes(updatedOrganisme)))
             .andExpect(status().isOk());
 
@@ -424,11 +389,9 @@ public class OrganismeResourceIT {
     public void updateNonExistingOrganisme() throws Exception {
         int databaseSizeBeforeUpdate = organismeRepository.findAll().size();
 
-        // Create the Organisme
-
         // If the entity doesn't have an ID, it will throw BadRequestAlertException
-        restOrganismeMockMvc.perform(put("/api/organismes")
-            .contentType(TestUtil.APPLICATION_JSON_UTF8)
+        restOrganismeMockMvc.perform(put("/api/organismes").with(csrf())
+            .contentType(MediaType.APPLICATION_JSON)
             .content(TestUtil.convertObjectToJsonBytes(organisme)))
             .andExpect(status().isBadRequest());
 
@@ -449,8 +412,8 @@ public class OrganismeResourceIT {
         int databaseSizeBeforeDelete = organismeRepository.findAll().size();
 
         // Delete the organisme
-        restOrganismeMockMvc.perform(delete("/api/organismes/{id}", organisme.getId())
-            .accept(TestUtil.APPLICATION_JSON_UTF8))
+        restOrganismeMockMvc.perform(delete("/api/organismes/{id}", organisme.getId()).with(csrf())
+            .accept(MediaType.APPLICATION_JSON))
             .andExpect(status().isNoContent());
 
         // Validate the database contains one less item
@@ -464,14 +427,16 @@ public class OrganismeResourceIT {
     @Test
     @Transactional
     public void searchOrganisme() throws Exception {
+        // Configure the mock search repository
         // Initialize the database
         organismeRepository.saveAndFlush(organisme);
         when(mockOrganismeSearchRepository.search(queryStringQuery("id:" + organisme.getId()), PageRequest.of(0, 20)))
             .thenReturn(new PageImpl<>(Collections.singletonList(organisme), PageRequest.of(0, 1), 1));
+
         // Search the organisme
         restOrganismeMockMvc.perform(get("/api/_search/organismes?query=id:" + organisme.getId()))
             .andExpect(status().isOk())
-            .andExpect(content().contentType(MediaType.APPLICATION_JSON_UTF8_VALUE))
+            .andExpect(content().contentType(MediaType.APPLICATION_JSON_VALUE))
             .andExpect(jsonPath("$.[*].id").value(hasItem(organisme.getId().intValue())))
             .andExpect(jsonPath("$.[*].nom").value(hasItem(DEFAULT_NOM)))
             .andExpect(jsonPath("$.[*].nombreRepresentants").value(hasItem(DEFAULT_NOMBRE_REPRESENTANTS)))
@@ -480,20 +445,5 @@ public class OrganismeResourceIT {
             .andExpect(jsonPath("$.[*].lastModificationDate").value(hasItem(DEFAULT_LAST_MODIFICATION_DATE.toString())))
             .andExpect(jsonPath("$.[*].partageRepresentants").value(hasItem(DEFAULT_PARTAGE_REPRESENTANTS.booleanValue())))
             .andExpect(jsonPath("$.[*].uid").value(hasItem(DEFAULT_UID.toString())));
-    }
-
-    @Test
-    @Transactional
-    public void equalsVerifier() throws Exception {
-        TestUtil.equalsVerifier(Organisme.class);
-        Organisme organisme1 = new Organisme();
-        organisme1.setId(1L);
-        Organisme organisme2 = new Organisme();
-        organisme2.setId(organisme1.getId());
-        assertThat(organisme1).isEqualTo(organisme2);
-        organisme2.setId(2L);
-        assertThat(organisme1).isNotEqualTo(organisme2);
-        organisme1.setId(null);
-        assertThat(organisme1).isNotEqualTo(organisme2);
     }
 }

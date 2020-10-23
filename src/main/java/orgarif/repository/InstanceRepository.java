@@ -1,5 +1,7 @@
 package orgarif.repository;
+
 import orgarif.domain.Instance;
+
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.data.jpa.repository.*;
@@ -24,5 +26,4 @@ public interface InstanceRepository extends JpaRepository<Instance, Long> {
 
     @Query("select instance from Instance instance left join fetch instance.deliberations where instance.id =:id")
     Optional<Instance> findOneWithEagerRelationships(@Param("id") Long id);
-
 }

@@ -3,6 +3,7 @@ package orgarif.repository.search;
 import orgarif.domain.User;
 import org.springframework.data.elasticsearch.repository.ElasticsearchRepository;
 
+
 /**
  * Spring Data Elasticsearch repository for the User entity.
  */

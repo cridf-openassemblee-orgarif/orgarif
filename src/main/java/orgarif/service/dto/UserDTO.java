@@ -5,9 +5,6 @@ import orgarif.config.Constants;
 import orgarif.domain.Authority;
 import orgarif.domain.User;
 
-import javax.validation.constraints.Email;
-import javax.validation.constraints.NotBlank;
-
 import javax.validation.constraints.*;
 import java.time.Instant;
 import java.util.Set;
@@ -179,6 +176,7 @@ public class UserDTO {
         this.authorities = authorities;
     }
 
+    // prettier-ignore
     @Override
     public String toString() {
         return "UserDTO{" +

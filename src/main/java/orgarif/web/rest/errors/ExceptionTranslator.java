@@ -1,19 +1,25 @@
 package orgarif.web.rest.errors;
 
+import io.github.jhipster.config.JHipsterConstants;
 import io.github.jhipster.web.util.HeaderUtil;
 
+import org.apache.commons.lang3.StringUtils;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.dao.ConcurrencyFailureException;
+import org.springframework.dao.DataAccessException;
 import org.springframework.http.ResponseEntity;
+import org.springframework.http.converter.HttpMessageConversionException;
 import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.MethodArgumentNotValidException;
 import org.springframework.web.bind.annotation.ControllerAdvice;
 import org.springframework.web.bind.annotation.ExceptionHandler;
 import org.springframework.web.context.request.NativeWebRequest;
+import org.springframework.core.env.Environment;
 import org.zalando.problem.DefaultProblem;
 import org.zalando.problem.Problem;
 import org.zalando.problem.ProblemBuilder;
 import org.zalando.problem.Status;
+import org.zalando.problem.StatusType;
 import org.zalando.problem.spring.web.advice.ProblemHandling;
 import org.zalando.problem.spring.web.advice.security.SecurityAdviceTrait;
 import org.zalando.problem.violations.ConstraintViolationProblem;
@@ -21,8 +27,11 @@ import org.zalando.problem.violations.ConstraintViolationProblem;
 import javax.annotation.Nonnull;
 import javax.annotation.Nullable;
 import javax.servlet.http.HttpServletRequest;
+import java.net.URI;
+import java.util.Arrays;
+import java.util.Collection;
 import java.util.List;
-import java.util.NoSuchElementException;
+import java.util.Optional;
 import java.util.stream.Collectors;
 
 /**
@@ -39,6 +48,12 @@ public class ExceptionTranslator implements ProblemHandling, SecurityAdviceTrait
 
     @Value("${jhipster.clientApp.name}")
     private String applicationName;
+
+    private final Environment env;
+
+    public ExceptionTranslator(Environment env) {
+        this.env = env;
+    }
 
     /**
      * Post-process the Problem payload to add the message key for the front-end if needed.
@@ -93,21 +108,13 @@ public class ExceptionTranslator implements ProblemHandling, SecurityAdviceTrait
     }
 
     @ExceptionHandler
-    public ResponseEntity<Problem> handleNoSuchElementException(NoSuchElementException ex, NativeWebRequest request) {
-        Problem problem = Problem.builder()
-            .withStatus(Status.NOT_FOUND)
-            .with(MESSAGE_KEY, ErrorConstants.ENTITY_NOT_FOUND_TYPE)
-            .build();
-        return create(ex, problem, request);
-    }
-    @ExceptionHandler
-    public ResponseEntity<Problem> handleEmailAreadyUsedException(orgarif.service.EmailAlreadyUsedException ex, NativeWebRequest request) {
+    public ResponseEntity<Problem> handleEmailAlreadyUsedException(orgarif.service.EmailAlreadyUsedException ex, NativeWebRequest request) {
         EmailAlreadyUsedException problem = new EmailAlreadyUsedException();
         return create(problem, request, HeaderUtil.createFailureAlert(applicationName,  false, problem.getEntityName(), problem.getErrorKey(), problem.getMessage()));
     }
 
     @ExceptionHandler
-    public ResponseEntity<Problem> handleUsernameAreadyUsedException(orgarif.service.UsernameAlreadyUsedException ex, NativeWebRequest request) {
+    public ResponseEntity<Problem> handleUsernameAlreadyUsedException(orgarif.service.UsernameAlreadyUsedException ex, NativeWebRequest request) {
         LoginAlreadyUsedException problem = new LoginAlreadyUsedException();
         return create(problem, request, HeaderUtil.createFailureAlert(applicationName,  false, problem.getEntityName(), problem.getErrorKey(), problem.getMessage()));
     }
@@ -116,6 +123,7 @@ public class ExceptionTranslator implements ProblemHandling, SecurityAdviceTrait
     public ResponseEntity<Problem> handleInvalidPasswordException(orgarif.service.InvalidPasswordException ex, NativeWebRequest request) {
         return create(new InvalidPasswordException(), request);
     }
+
     @ExceptionHandler
     public ResponseEntity<Problem> handleBadRequestAlertException(BadRequestAlertException ex, NativeWebRequest request) {
         return create(ex, request, HeaderUtil.createFailureAlert(applicationName, false, ex.getEntityName(), ex.getErrorKey(), ex.getMessage()));
@@ -128,5 +136,65 @@ public class ExceptionTranslator implements ProblemHandling, SecurityAdviceTrait
             .with(MESSAGE_KEY, ErrorConstants.ERR_CONCURRENCY_FAILURE)
             .build();
         return create(ex, problem, request);
+    }
+
+    @Override
+    public ProblemBuilder prepare(final Throwable throwable, final StatusType status, final URI type) {
+        
+        Collection<String> activeProfiles = Arrays.asList(env.getActiveProfiles());
+
+        if (activeProfiles.contains(JHipsterConstants.SPRING_PROFILE_PRODUCTION)) {
+            if (throwable instanceof HttpMessageConversionException) {
+                return Problem.builder()
+                    .withType(type)
+                    .withTitle(status.getReasonPhrase())
+                    .withStatus(status)
+                    .withDetail("Unable to convert http message")
+                    .withCause(Optional.ofNullable(throwable.getCause())
+                        .filter(cause -> isCausalChainsEnabled())
+                        .map(this::toProblem)
+                        .orElse(null));
+            }
+    
+            if (throwable instanceof DataAccessException) {
+                return Problem.builder()
+                    .withType(type)
+                    .withTitle(status.getReasonPhrase())
+                    .withStatus(status)
+                    .withDetail("Failure during data access")
+                    .withCause(Optional.ofNullable(throwable.getCause())
+                        .filter(cause -> isCausalChainsEnabled())
+                        .map(this::toProblem)
+                        .orElse(null));
+            }
+    
+            if (containsPackageName(throwable.getMessage())) {
+                return Problem.builder()
+                    .withType(type)
+                    .withTitle(status.getReasonPhrase())
+                    .withStatus(status)
+                    .withDetail("Unexpected runtime exception")
+                    .withCause(Optional.ofNullable(throwable.getCause())
+                        .filter(cause -> isCausalChainsEnabled())
+                        .map(this::toProblem)
+                        .orElse(null));
+            }
+        }
+
+        return Problem.builder()
+            .withType(type)
+            .withTitle(status.getReasonPhrase())
+            .withStatus(status)
+            .withDetail(throwable.getMessage())
+            .withCause(Optional.ofNullable(throwable.getCause())
+                .filter(cause -> isCausalChainsEnabled())
+                .map(this::toProblem)
+                .orElse(null));
+    }
+
+    private boolean containsPackageName(String message) {
+
+        // This list is for sure not complete
+        return StringUtils.containsAny(message, "org.", "java.", "net.", "javax.", "com.", "io.", "de.", "orgarif");
     }
 }

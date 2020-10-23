@@ -1,4 +1,5 @@
 package orgarif.domain;
+
 import org.hibernate.annotations.Cache;
 import org.hibernate.annotations.CacheConcurrencyStrategy;
 
@@ -15,7 +16,7 @@ import orgarif.domain.enumeration.AuditTrailAction;
  */
 @Entity
 @Table(name = "audit_trail")
-@Cache(usage = CacheConcurrencyStrategy.NONSTRICT_READ_WRITE)
+@Cache(usage = CacheConcurrencyStrategy.READ_WRITE)
 @org.springframework.data.elasticsearch.annotations.Document(indexName = "audittrail")
 public class AuditTrail implements Serializable {
 
@@ -23,7 +24,6 @@ public class AuditTrail implements Serializable {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    @org.springframework.data.elasticsearch.annotations.Field(type = FieldType.Keyword)
     private Long id;
 
     @Column(name = "entity")
@@ -51,10 +51,10 @@ public class AuditTrail implements Serializable {
     @Column(name = "details")
     private String details;
 
-    @Column(name = "reason")
-    private String reason;
+    @Column(name = "update_description")
+    private String updateDescription;
 
-    // jhipster-needle-entity-add-field - JHipster will add fields here, do not remove
+    // jhipster-needle-entity-add-field - JHipster will add fields here
     public Long getId() {
         return id;
     }
@@ -67,12 +67,22 @@ public class AuditTrail implements Serializable {
         return entity;
     }
 
+    public AuditTrail entity(String entity) {
+        this.entity = entity;
+        return this;
+    }
+
     public void setEntity(String entity) {
         this.entity = entity;
     }
 
     public Long getEntityId() {
         return entityId;
+    }
+
+    public AuditTrail entityId(Long entityId) {
+        this.entityId = entityId;
+        return this;
     }
 
     public void setEntityId(Long entityId) {
@@ -83,12 +93,22 @@ public class AuditTrail implements Serializable {
         return parentEntity;
     }
 
+    public AuditTrail parentEntity(String parentEntity) {
+        this.parentEntity = parentEntity;
+        return this;
+    }
+
     public void setParentEntity(String parentEntity) {
         this.parentEntity = parentEntity;
     }
 
     public Long getParentEntityId() {
         return parentEntityId;
+    }
+
+    public AuditTrail parentEntityId(Long parentEntityId) {
+        this.parentEntityId = parentEntityId;
+        return this;
     }
 
     public void setParentEntityId(Long parentEntityId) {
@@ -99,12 +119,22 @@ public class AuditTrail implements Serializable {
         return action;
     }
 
+    public AuditTrail action(AuditTrailAction action) {
+        this.action = action;
+        return this;
+    }
+
     public void setAction(AuditTrailAction action) {
         this.action = action;
     }
 
     public String getUser() {
         return user;
+    }
+
+    public AuditTrail user(String user) {
+        this.user = user;
+        return this;
     }
 
     public void setUser(String user) {
@@ -115,6 +145,11 @@ public class AuditTrail implements Serializable {
         return date;
     }
 
+    public AuditTrail date(Instant date) {
+        this.date = date;
+        return this;
+    }
+
     public void setDate(Instant date) {
         this.date = date;
     }
@@ -123,18 +158,28 @@ public class AuditTrail implements Serializable {
         return details;
     }
 
+    public AuditTrail details(String details) {
+        this.details = details;
+        return this;
+    }
+
     public void setDetails(String details) {
         this.details = details;
     }
 
-    public String getReason() {
-        return reason;
+    public String getUpdateDescription() {
+        return updateDescription;
     }
 
-    public void setReason(String reason) {
-        this.reason = reason;
+    public AuditTrail updateDescription(String updateDescription) {
+        this.updateDescription = updateDescription;
+        return this;
     }
-    // jhipster-needle-entity-add-getters-setters - JHipster will add getters and setters here, do not remove
+
+    public void setUpdateDescription(String updateDescription) {
+        this.updateDescription = updateDescription;
+    }
+    // jhipster-needle-entity-add-getters-setters - JHipster will add getters and setters here
 
     @Override
     public boolean equals(Object o) {
@@ -152,6 +197,7 @@ public class AuditTrail implements Serializable {
         return 31;
     }
 
+    // prettier-ignore
     @Override
     public String toString() {
         return "AuditTrail{" +
@@ -164,7 +210,7 @@ public class AuditTrail implements Serializable {
             ", user='" + getUser() + "'" +
             ", date='" + getDate() + "'" +
             ", details='" + getDetails() + "'" +
-            ", reason='" + getReason() + "'" +
+            ", updateDescription='" + getUpdateDescription() + "'" +
             "}";
     }
 }

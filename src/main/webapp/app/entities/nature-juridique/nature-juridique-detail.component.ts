@@ -5,20 +5,18 @@ import { INatureJuridique } from 'app/shared/model/nature-juridique.model';
 
 @Component({
   selector: 'jhi-nature-juridique-detail',
-  templateUrl: './nature-juridique-detail.component.html'
+  templateUrl: './nature-juridique-detail.component.html',
 })
 export class NatureJuridiqueDetailComponent implements OnInit {
-  natureJuridique: INatureJuridique;
+  natureJuridique: INatureJuridique | null = null;
 
   constructor(protected activatedRoute: ActivatedRoute) {}
 
-  ngOnInit() {
-    this.activatedRoute.data.subscribe(({ natureJuridique }) => {
-      this.natureJuridique = natureJuridique;
-    });
+  ngOnInit(): void {
+    this.activatedRoute.data.subscribe(({ natureJuridique }) => (this.natureJuridique = natureJuridique));
   }
 
-  previousState() {
+  previousState(): void {
     window.history.back();
   }
 }

@@ -1,27 +1,33 @@
 import { Injectable } from '@angular/core';
 import { HttpResponse } from '@angular/common/http';
-import { Resolve, ActivatedRouteSnapshot, RouterStateSnapshot, Routes } from '@angular/router';
+import { Resolve, ActivatedRouteSnapshot, Routes, Router } from '@angular/router';
+import { Observable, of, EMPTY } from 'rxjs';
+import { flatMap } from 'rxjs/operators';
+
+import { Authority } from 'app/shared/constants/authority.constants';
 import { UserRouteAccessService } from 'app/core/auth/user-route-access-service';
-import { Observable, of } from 'rxjs';
-import { filter, map } from 'rxjs/operators';
-import { NatureJuridique } from 'app/shared/model/nature-juridique.model';
+import { INatureJuridique, NatureJuridique } from 'app/shared/model/nature-juridique.model';
 import { NatureJuridiqueService } from './nature-juridique.service';
 import { NatureJuridiqueComponent } from './nature-juridique.component';
 import { NatureJuridiqueDetailComponent } from './nature-juridique-detail.component';
 import { NatureJuridiqueUpdateComponent } from './nature-juridique-update.component';
-import { NatureJuridiqueDeletePopupComponent } from './nature-juridique-delete-dialog.component';
-import { INatureJuridique } from 'app/shared/model/nature-juridique.model';
 
 @Injectable({ providedIn: 'root' })
 export class NatureJuridiqueResolve implements Resolve<INatureJuridique> {
-  constructor(private service: NatureJuridiqueService) {}
+  constructor(private service: NatureJuridiqueService, private router: Router) {}
 
-  resolve(route: ActivatedRouteSnapshot, state: RouterStateSnapshot): Observable<INatureJuridique> {
+  resolve(route: ActivatedRouteSnapshot): Observable<INatureJuridique> | Observable<never> {
     const id = route.params['id'];
     if (id) {
       return this.service.find(id).pipe(
-        filter((response: HttpResponse<NatureJuridique>) => response.ok),
-        map((natureJuridique: HttpResponse<NatureJuridique>) => natureJuridique.body)
+        flatMap((natureJuridique: HttpResponse<NatureJuridique>) => {
+          if (natureJuridique.body) {
+            return of(natureJuridique.body);
+          } else {
+            this.router.navigate(['404']);
+            return EMPTY;
+          }
+        })
       );
     }
     return of(new NatureJuridique());
@@ -33,61 +39,45 @@ export const natureJuridiqueRoute: Routes = [
     path: '',
     component: NatureJuridiqueComponent,
     data: {
-      authorities: ['ROLE_USER'],
-      pageTitle: 'NatureJuridiques'
+      authorities: [Authority.USER],
+      pageTitle: 'NatureJuridiques',
     },
-    canActivate: [UserRouteAccessService]
+    canActivate: [UserRouteAccessService],
   },
   {
     path: ':id/view',
     component: NatureJuridiqueDetailComponent,
     resolve: {
-      natureJuridique: NatureJuridiqueResolve
+      natureJuridique: NatureJuridiqueResolve,
     },
     data: {
-      authorities: ['ROLE_USER'],
-      pageTitle: 'NatureJuridiques'
+      authorities: [Authority.USER],
+      pageTitle: 'NatureJuridiques',
     },
-    canActivate: [UserRouteAccessService]
+    canActivate: [UserRouteAccessService],
   },
   {
     path: 'new',
     component: NatureJuridiqueUpdateComponent,
     resolve: {
-      natureJuridique: NatureJuridiqueResolve
+      natureJuridique: NatureJuridiqueResolve,
     },
     data: {
-      authorities: ['ROLE_USER'],
-      pageTitle: 'NatureJuridiques'
+      authorities: [Authority.USER],
+      pageTitle: 'NatureJuridiques',
     },
-    canActivate: [UserRouteAccessService]
+    canActivate: [UserRouteAccessService],
   },
   {
     path: ':id/edit',
     component: NatureJuridiqueUpdateComponent,
     resolve: {
-      natureJuridique: NatureJuridiqueResolve
+      natureJuridique: NatureJuridiqueResolve,
     },
     data: {
-      authorities: ['ROLE_USER'],
-      pageTitle: 'NatureJuridiques'
-    },
-    canActivate: [UserRouteAccessService]
-  }
-];
-
-export const natureJuridiquePopupRoute: Routes = [
-  {
-    path: ':id/delete',
-    component: NatureJuridiqueDeletePopupComponent,
-    resolve: {
-      natureJuridique: NatureJuridiqueResolve
-    },
-    data: {
-      authorities: ['ROLE_USER'],
-      pageTitle: 'NatureJuridiques'
+      authorities: [Authority.USER],
+      pageTitle: 'NatureJuridiques',
     },
     canActivate: [UserRouteAccessService],
-    outlet: 'popup'
-  }
+  },
 ];
