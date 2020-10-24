@@ -28,6 +28,7 @@
     "ngx-cookie-service": "3.0.4",
     "ngx-infinite-scroll": "9.0.0",
     "ngx-webstorage": "5.0.0",
+    "prettier-plugin-organize-imports": "^1.1.1",
     "rxjs": "6.5.5",
     "swagger-ui-dist": "3.25.1",
     "tslib": "2.0.0",
