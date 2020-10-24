@@ -19,9 +19,9 @@ orgarif:
 
 logging:
   level:
-    ROOT: DEBUG
-    io.github.jhipster: DEBUG
-    orgarif: DEBUG
+    ROOT: INFO
+    io.github.jhipster: INFO
+    orgarif: INFO
 
 management:
   health:
