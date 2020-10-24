@@ -101,7 +101,7 @@
           </div>
         </div>
         <div class="row" *ngIf="input.instances.length === 0">
-          <div class="form-group col-md-4">
+          <div class="form-group col-md-4" *ngIf="deliberationsDataService">
             <label class="form-control-label" for="field_DeliberationLabel">Délibération</label>
             <ng2-completer
               inputClass="form-control"
@@ -135,7 +135,7 @@
               </span>
             </div>
             <div class="input-group" *ngIf="input.deliberation.id">
-              <input type="text" class="form-control" disabled value="{{ input.deliberation.date.valueOf() * 1000 | date: 'd/M/yy' }}" />
+              <input type="text" class="form-control" disabled value="{{ input.deliberation.date | date: 'd/M/yy' }}" />
               <span class="input-group-append">
                 <button type="button" class="btn btn-secondary">
                   <fa-icon [icon]="'calendar-alt'"></fa-icon>
@@ -200,7 +200,7 @@
             </div>
           </div>
           <div class="row">
-            <div class="form-group col-md-4">
+            <div class="form-group col-md-4" *ngIf="deliberationsDataService">
               <label class="form-control-label" [attr.for]="'instancesDeliberationLabel-' + i">Délibération</label>
               <ng2-completer
                 inputClass="form-control"
@@ -232,12 +232,7 @@
                 </span>
               </div>
               <div class="input-group" *ngIf="input.instancesDeliberations[i].id">
-                <input
-                  type="text"
-                  class="form-control"
-                  disabled
-                  value="{{ input.instancesDeliberations[i].date.valueOf() * 1000 | date: 'd/M/yy' }}"
-                />
+                <input type="text" class="form-control" disabled value="{{ input.instancesDeliberations[i].date | date: 'd/M/yy' }}" />
                 <span class="input-group-append">
                   <button type="button" class="btn btn-secondary">
                     <fa-icon [icon]="'calendar-alt'"></fa-icon>

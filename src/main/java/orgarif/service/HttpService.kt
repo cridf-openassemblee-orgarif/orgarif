@@ -17,20 +17,12 @@ open class HttpService(val okHttpClient: OkHttpClient) {
         ACCEPT("Accept")
     }
 
-    // FIXMENOW mauvaise idée ? par rapport aux logs
-    enum class ResponseCode {
-        CODE_200, OTHER
-    }
-
     data class EmptyResponse(val code: Int)
 
     data class StringResponse(val code: Int, val body: String?)
 
     data class BytesResponse(val code: Int, val bytes: ByteArray?)
 
-//    data class InputStreamResponse(val code: Int, val inputStream: InputStream?)
-
-    // FIXMENOW faire un getString et un getBytes
     open fun getString(url: String,
                        vararg headers: Pair<Header, String>): StringResponse =
         get(url, *headers).use {
@@ -45,14 +37,7 @@ open class HttpService(val okHttpClient: OkHttpClient) {
             BytesResponse(it.code(), it.body()?.bytes())
         }
 
-//    fun getInputStream(url: String,
-//                       vararg headers: Pair<Header, String>): InputStreamResponse =
-//            get(url, *headers).use {
-//                // bytes() calls close()
-//                InputStreamResponse(it.code(), InputStream(it.body()?.byteStream()))
-//            }
-
-    private fun get(url: String, vararg headers: Pair<Header, String>): Response {
+    open fun get(url: String, vararg headers: Pair<Header, String>): Response {
         val requestBuilder = Request.Builder()
         requestBuilder.url(url)
         headers.forEach { requestBuilder.addHeader(it.first.header, it.second) }

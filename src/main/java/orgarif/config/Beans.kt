@@ -11,7 +11,6 @@ import orgarif.domain.EluJacksonMixin
 import orgarif.domain.Representant
 import orgarif.domain.RepresentantJacksonMixin
 
-
 // FIXME lui trouver un nom
 @Configuration
 open class Beans {

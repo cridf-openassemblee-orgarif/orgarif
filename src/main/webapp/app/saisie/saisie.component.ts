@@ -1,4 +1,4 @@
-import { HttpErrorResponse, HttpResponse } from '@angular/common/http';
+import { HttpResponse } from '@angular/common/http';
 import { Component, OnInit, ViewChild } from '@angular/core';
 import { FormBuilder } from '@angular/forms';
 import { NatureJuridiqueService } from 'app/entities/nature-juridique/nature-juridique.service';
@@ -16,7 +16,6 @@ import { ISecteur } from 'app/shared/model/secteur.model';
 import { ITypeStructure } from 'app/shared/model/type-structure.model';
 import { JhiAlertService } from 'ng-jhipster';
 import { CompleterData, CompleterItem, CompleterService } from 'ng2-completer';
-import { filter, map } from 'rxjs/operators';
 
 interface SaisieInput {
   nom: string;
@@ -40,15 +39,15 @@ interface SaisieInput {
   styleUrls: ['saisie.scss'],
 })
 export class SaisieComponent implements OnInit {
-  natureJuridiques: INatureJuridique[];
-  typeStructures: ITypeStructure[];
-  secteurs: ISecteur[];
-  elus: IElu[];
-  organismes: IOrganisme[];
-  deliberations: IDeliberation[];
-  deliberationsDataService: CompleterData;
+  natureJuridiques: INatureJuridique[] = [];
+  typeStructures: ITypeStructure[] = [];
+  secteurs: ISecteur[] = [];
+  elus: IElu[] = [];
+  organismes: IOrganisme[] = [];
+  deliberations: IDeliberation[] = [];
+  deliberationsDataService: CompleterData | undefined;
 
-  input: SaisieInput;
+  input: SaisieInput = this.emptyInput();
 
   isSaving = false;
 
@@ -66,8 +65,8 @@ export class SaisieComponent implements OnInit {
     protected completerService: CompleterService
   ) {}
 
-  resetInput() {
-    this.input = {
+  emptyInput(): SaisieInput {
+    return {
       nom: '',
       natureJuridique: undefined,
       secteur: undefined,
@@ -86,79 +85,25 @@ export class SaisieComponent implements OnInit {
     };
   }
 
-  ngOnInit() {
+  ngOnInit(): void {
     this.isSaving = false;
-    this.natureJuridiqueService
-      .query()
-      .pipe(
-        filter((mayBeOk: HttpResponse<INatureJuridique[]>) => mayBeOk.ok),
-        map((response: HttpResponse<INatureJuridique[]>) => response.body)
-      )
-      .subscribe(
-        (res: INatureJuridique[]) => (this.natureJuridiques = res),
-        (res: HttpErrorResponse) => this.onError(res.message)
-      );
-    this.typeStructureService
-      .query()
-      .pipe(
-        filter((mayBeOk: HttpResponse<ITypeStructure[]>) => mayBeOk.ok),
-        map((response: HttpResponse<ITypeStructure[]>) => response.body)
-      )
-      .subscribe(
-        (res: ITypeStructure[]) => (this.typeStructures = res),
-        (res: HttpErrorResponse) => this.onError(res.message)
-      );
-    this.secteurService
-      .query()
-      .pipe(
-        filter((mayBeOk: HttpResponse<ISecteur[]>) => mayBeOk.ok),
-        map((response: HttpResponse<ISecteur[]>) => response.body)
-      )
-      .subscribe(
-        (res: ISecteur[]) => (this.secteurs = res),
-        (res: HttpErrorResponse) => this.onError(res.message)
-      );
-    this.listService
-      .getElus()
-      .pipe(
-        filter((mayBeOk: HttpResponse<IElu[]>) => mayBeOk.ok),
-        map((response: HttpResponse<IElu[]>) => response.body)
-      )
-      .subscribe(
-        (res: IElu[]) => (this.elus = res),
-        (res: HttpErrorResponse) => this.onError(res.message)
-      );
+    this.natureJuridiqueService.query().subscribe((res: HttpResponse<INatureJuridique[]>) => (this.natureJuridiques = res.body ?? []));
+    this.typeStructureService.query().subscribe((res: HttpResponse<ITypeStructure[]>) => (this.typeStructures = res.body ?? []));
+    this.secteurService.query().subscribe((res: HttpResponse<ISecteur[]>) => (this.secteurs = res.body ?? []));
+    this.listService.getElus().subscribe(elus => (this.elus = elus));
     this.updateLists();
-    this.resetInput();
+    this.input = this.emptyInput();
   }
 
-  updateLists() {
-    this.listService
-      .lastOrganismes()
-      .pipe(
-        filter((mayBeOk: HttpResponse<IOrganisme[]>) => mayBeOk.ok),
-        map((response: HttpResponse<IOrganisme[]>) => response.body)
-      )
-      .subscribe(
-        (res: IOrganisme[]) => (this.organismes = res),
-        (res: HttpErrorResponse) => this.onError(res.message)
-      );
-    this.saisieService
-      .lastDeliberations()
-      .pipe(
-        filter((mayBeOk: HttpResponse<IDeliberation[]>) => mayBeOk.ok),
-        map((response: HttpResponse<IDeliberation[]>) => response.body)
-      )
-      .subscribe(
-        (res: IDeliberation[]) => {
-          this.deliberations = res;
-          this.deliberationsDataService = this.completerService.local(this.deliberations, 'label', 'label');
-        },
-        (res: HttpErrorResponse) => this.onError(res.message)
-      );
+  updateLists(): void {
+    this.listService.getLastOrganismes().subscribe((organismes: IOrganisme[]) => (this.organismes = organismes));
+    this.saisieService.lastDeliberations().subscribe((res: HttpResponse<IDeliberation[]>) => {
+      this.deliberations = res.body ?? [];
+      this.deliberationsDataService = this.completerService.local(this.deliberations, 'label', 'label');
+    });
   }
 
-  updateInstances() {
+  updateInstances(): void {
     this.input.instances = this.input.instancesAsString
       .split(',')
       .map(i => i.trim())
@@ -176,15 +121,15 @@ export class SaisieComponent implements OnInit {
     });
   }
 
-  deliberationSelected(deliberation: CompleterItem) {
+  deliberationSelected(deliberation: CompleterItem): void {
     this.input.deliberation = deliberation.originalObject;
   }
 
-  instanceDeliberationSelected(deliberation: CompleterItem, i: number) {
+  instanceDeliberationSelected(deliberation: CompleterItem, i: number): void {
     this.input.instancesDeliberations[i] = deliberation.originalObject;
   }
 
-  save() {
+  save(): void {
     this.isSaving = true;
     const hasInstances = this.input.instances.length !== 0;
     const partageRepresentants = this.input.partageRepresentants;
@@ -211,15 +156,15 @@ export class SaisieComponent implements OnInit {
     const nombreSuppleants = organismeSuppleants.length;
 
     const organisme: IOrganisme = {
-      id: null,
+      id: undefined,
       nom: this.input.nom,
 
       nombreRepresentants,
       nombreSuppleants,
       partageRepresentants,
 
-      creationDate: null,
-      lastModificationDate: null,
+      creationDate: undefined,
+      lastModificationDate: undefined,
 
       natureJuridique: this.input.natureJuridique,
       secteur: this.input.secteur,
@@ -257,10 +202,7 @@ export class SaisieComponent implements OnInit {
         return instance;
       }),
     };
-    this.saisieService.create(organisme).subscribe(
-      () => this.onSaveSuccess(),
-      () => this.onSaveError()
-    );
+    this.saisieService.create(organisme).subscribe(() => this.onSaveSuccess());
   }
 
   protected representants(elus: IElu[]): IRepresentant[] {
@@ -272,22 +214,14 @@ export class SaisieComponent implements OnInit {
     }));
   }
 
-  protected onSaveSuccess() {
+  protected onSaveSuccess(): void {
     this.isSaving = false;
     this.updateLists();
-    this.resetInput();
+    this.input = this.emptyInput();
     this.nomInput.nativeElement.focus();
   }
 
-  protected onSaveError() {
-    this.isSaving = false;
-  }
-
-  protected onError(errorMessage: string) {
-    this.jhiAlertService.error(errorMessage, null, null);
-  }
-
-  trackById(index: number, item: INatureJuridique | ITypeStructure | ISecteur) {
+  trackById(index: number, item: INatureJuridique | ITypeStructure | ISecteur): number | undefined {
     return item.id;
   }
 }

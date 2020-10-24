@@ -1,67 +1,70 @@
 <div class="organisme-block">
-  <div class="header">
-    <h2>{{ organisme.nom }}</h2>
-    <p class="nature-juridique">Nature juridique : {{ organisme.natureJuridique.label }}</p>
-  </div>
-  <div class="content">
-    <!--        <div class="edit-icon">-->
-    <!--      <fa-icon icon="pen"></fa-icon>-->
-    <!--        </div>-->
-    <div class="content-block flex-block-1 first">
-      <p class="secteur">Secteur : {{ organisme.secteur.label }}</p>
-      <p class="secteur">Type de structure : {{ organisme.typeStructure.label }}</p>
-      <p class="nombre-representants">{{ organisme.nombreRepresentants }} réprésentants</p>
+  <div *ngIf="!organisme">Chargement</div>
+  <div *ngIf="organisme">
+    <div class="header">
+      <h2>{{ organisme.nom }}</h2>
+      <p class="nature-juridique">Nature juridique : {{ organisme.natureJuridique?.label }}</p>
     </div>
-    <div *ngIf="organisme.representants && organisme.representants.length > 0" class="content-block flex-block-2">
-      <h3>Représentants / suppléants</h3>
-      <div style="display: flex">
-        <div class="content-block flex-block-1 first">
-          <p *ngFor="let r of organisme.representants" class="representants">
-            {{ r.elu.civilite }}
-            {{ r.elu.prenom }}
-            {{ r.elu.nom }}
-          </p>
-        </div>
-        <div class="content-block flex-block-1">
-          <p *ngFor="let r of organisme.suppleants" class="representants">
-            {{ r.elu.civilite }}
-            {{ r.elu.prenom }}
-            {{ r.elu.nom }}
-          </p>
-        </div>
+    <div class="content">
+      <!--        <div class="edit-icon">-->
+      <!--      <fa-icon icon="pen"></fa-icon>-->
+      <!--        </div>-->
+      <div class="content-block flex-block-1 first">
+        <p class="secteur">Secteur : {{ organisme.secteur?.label }}</p>
+        <p class="secteur">Type de structure : {{ organisme.typeStructure?.label }}</p>
+        <p class="nombre-representants">{{ organisme.nombreRepresentants }} réprésentants</p>
       </div>
-    </div>
-    <div *ngIf="organisme.instances.length === 0" class="content-block flex-block-1">
-      <h3>Délibérations</h3>
-      <p *ngFor="let d of organisme.deliberations" class="deliberation">{{ d.label }} du {{ d.date * 1000 | date: 'd/M/yy' }}</p>
-    </div>
-    <div *ngFor="let i of organisme.instances" class="content-block flex-block-3">
-      <h3>{{ i.nom }}</h3>
-      <div style="display: flex">
-        <div class="content-block flex-block-2 first">
-          <h4>Représentants / suppléants</h4>
-          <div style="display: flex">
-            <div class="content-block flex-block-1 first">
-              <p *ngFor="let r of i.representants" class="representants">
-                {{ r.elu.civilite }}
-                {{ r.elu.prenom }}
-                {{ r.elu.nom }}
-                <!--                        ({{ r.groupePolitique }})-->
-              </p>
-            </div>
-            <div class="content-block flex-block-1">
-              <p *ngFor="let r of i.suppleants" class="representants">
-                {{ r.elu.civilite }}
-                {{ r.elu.prenom }}
-                {{ r.elu.nom }}
-                <!--                    ({{ r.groupePolitique }})-->
-              </p>
-            </div>
+      <div *ngIf="organisme.representants && organisme.representants.length > 0" class="content-block flex-block-2">
+        <h3>Représentants / suppléants</h3>
+        <div style="display: flex">
+          <div class="content-block flex-block-1 first">
+            <p *ngFor="let r of organisme.representants" class="representants">
+              {{ r.elu?.civilite }}
+              {{ r.elu?.prenom }}
+              {{ r.elu?.nom }}
+            </p>
+          </div>
+          <div class="content-block flex-block-1">
+            <p *ngFor="let r of organisme.suppleants" class="representants">
+              {{ r.elu?.civilite }}
+              {{ r.elu?.prenom }}
+              {{ r.elu?.nom }}
+            </p>
           </div>
         </div>
-        <div class="content-block flex-block-1">
-          <h4>Délibérations</h4>
-          <p *ngFor="let d of i.deliberations" class="representants">{{ d.label }} du {{ d.date * 1000 | date: 'd/M/yy' }}</p>
+      </div>
+      <div *ngIf="organisme.instances?.length === 0" class="content-block flex-block-1">
+        <h3>Délibérations</h3>
+        <p *ngFor="let d of organisme.deliberations" class="deliberation">{{ d.label }} du {{ d.date | date: 'd/M/yy' }}</p>
+      </div>
+      <div *ngFor="let i of organisme.instances" class="content-block flex-block-3">
+        <h3>{{ i.nom }}</h3>
+        <div style="display: flex">
+          <div class="content-block flex-block-2 first">
+            <h4>Représentants / suppléants</h4>
+            <div style="display: flex">
+              <div class="content-block flex-block-1 first">
+                <p *ngFor="let r of i.representants" class="representants">
+                  {{ r.elu?.civilite }}
+                  {{ r.elu?.prenom }}
+                  {{ r.elu?.nom }}
+                  <!--                        ({{ r.groupePolitique }})-->
+                </p>
+              </div>
+              <div class="content-block flex-block-1">
+                <p *ngFor="let r of i.suppleants" class="representants">
+                  {{ r.elu?.civilite }}
+                  {{ r.elu?.prenom }}
+                  {{ r.elu?.nom }}
+                  <!--                    ({{ r.groupePolitique }})-->
+                </p>
+              </div>
+            </div>
+          </div>
+          <div class="content-block flex-block-1">
+            <h4>Délibérations</h4>
+            <p *ngFor="let d of i.deliberations" class="representants">{{ d.label }} du {{ d.date | date: 'd/M/yy' }}</p>
+          </div>
         </div>
       </div>
     </div>

@@ -7,16 +7,16 @@ import { IOrganisme } from 'app/shared/model/organisme.model';
   styleUrls: ['organisme-block.scss'],
 })
 export class OrganismeBlockComponent {
-  _organisme: IOrganisme;
+  _organisme: IOrganisme | undefined;
 
   @Input()
   // TODO dans la liste des lol : IOrganisme plantera le compilo ici...
   // mais Organisme semble marcher
-  set organisme(organisme: any) {
+  set organisme(organisme: IOrganisme | undefined) {
     this._organisme = organisme;
   }
 
-  get organisme() {
+  get organisme(): IOrganisme | undefined {
     return this._organisme;
   }
 }

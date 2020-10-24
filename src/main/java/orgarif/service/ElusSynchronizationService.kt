@@ -6,7 +6,6 @@ import org.slf4j.LoggerFactory
 import org.springframework.beans.factory.annotation.Value
 import org.springframework.core.task.AsyncTaskExecutor
 import org.springframework.stereotype.Service
-import orgarif.service.HttpService
 import orgarif.domain.Elu
 import orgarif.domain.enumeration.Civilite
 import orgarif.repository.EluRepository

@@ -19,10 +19,6 @@ export class SaisieService {
     return this.http.post<IOrganisme>(this.resourceUrl, organisme, { observe: 'response' });
   }
 
-  update(organisme: IOrganisme): Observable<EntityResponseType> {
-    return this.http.put<IOrganisme>(this.resourceUrl, organisme, { observe: 'response' });
-  }
-
   lastDeliberations(): Observable<EntityArrayResponseType> {
     return this.http.get<IDeliberation[]>(this.resourceUrl + '/last-deliberations', { observe: 'response' });
   }
