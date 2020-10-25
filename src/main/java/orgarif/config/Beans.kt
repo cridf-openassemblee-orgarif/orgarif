@@ -10,6 +10,8 @@ import orgarif.domain.Elu
 import orgarif.domain.EluJacksonMixin
 import orgarif.domain.Representant
 import orgarif.domain.RepresentantJacksonMixin
+import orgarif.serialization.InstantSerializer
+import java.time.Instant
 
 // FIXME lui trouver un nom
 @Configuration
@@ -24,6 +26,7 @@ open class Beans {
     open fun jackson2ObjectMapperBuilder(): Jackson2ObjectMapperBuilder {
         val module = JavaTimeModule()
 //        module.addDeserializer(LocalDate::class.java, JSR310LocalDateDeserializer.INSTANCE)
+        module.addSerializer(Instant::class.java, InstantSerializer())
         return Jackson2ObjectMapperBuilder().modulesToInstall(module, KotlinModule())
             // mixins https://stackoverflow.com/questions/7421474/how-can-i-tell-jackson-to-ignore-a-property-for-which-i-dont-have-control-over
             .mixIn(Elu::class.java, EluJacksonMixin::class.java)
