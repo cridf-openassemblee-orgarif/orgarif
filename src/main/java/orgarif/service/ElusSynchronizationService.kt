@@ -6,6 +6,7 @@ import org.slf4j.LoggerFactory
 import org.springframework.beans.factory.annotation.Value
 import org.springframework.core.task.AsyncTaskExecutor
 import org.springframework.stereotype.Service
+import orgarif.config.DevElasticSearchFixInitializingBean
 import orgarif.domain.Elu
 import orgarif.domain.enumeration.Civilite
 import orgarif.repository.EluRepository
@@ -19,6 +20,8 @@ open class ElusSynchronizationService(@Value("\${orgarif.doSynchronizeElus}")
                                       val httpService: HttpService,
                                       val objectMapper: ObjectMapper,
                                       val eluRepository: EluRepository) {
+
+    private val log = LoggerFactory.getLogger(ElusSynchronizationService::class.java)
 
     init {
         if (doSynchronizeElus) {
@@ -47,6 +50,7 @@ open class ElusSynchronizationService(@Value("\${orgarif.doSynchronizeElus}")
     data class Data(val elus: List<PublicElu>)
 
     open fun sync() {
+        log.info("Synchronize elus avec SIGER")
         val elusJons = try {
             httpService
                 .getString(elusSynchronizationUrl)
