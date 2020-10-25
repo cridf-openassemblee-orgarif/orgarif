@@ -58,7 +58,7 @@ spring:
         prepStmtCacheSqlLimit: 2048
         useServerPrepStmts: true
   jpa:
-    show-sql: true
+    show-sql: false
   data:
     elasticsearch:
       properties:
