@@ -1,22 +1,21 @@
-import { Component, OnInit } from '@angular/core';
 import { HttpResponse } from '@angular/common/http';
+import { Component, OnInit } from '@angular/core';
 // eslint-disable-next-line @typescript-eslint/no-unused-vars
 import { FormBuilder, Validators } from '@angular/forms';
 import { ActivatedRoute } from '@angular/router';
-import { Observable } from 'rxjs';
-import * as moment from 'moment';
-import { DATE_TIME_FORMAT } from 'app/shared/constants/input.constants';
-
-import { IOrganisme, Organisme } from 'app/shared/model/organisme.model';
-import { OrganismeService } from './organisme.service';
-import { INatureJuridique } from 'app/shared/model/nature-juridique.model';
-import { NatureJuridiqueService } from 'app/entities/nature-juridique/nature-juridique.service';
-import { ISecteur } from 'app/shared/model/secteur.model';
-import { SecteurService } from 'app/entities/secteur/secteur.service';
-import { ITypeStructure } from 'app/shared/model/type-structure.model';
-import { TypeStructureService } from 'app/entities/type-structure/type-structure.service';
-import { IDeliberation } from 'app/shared/model/deliberation.model';
 import { DeliberationService } from 'app/entities/deliberation/deliberation.service';
+import { NatureJuridiqueService } from 'app/entities/nature-juridique/nature-juridique.service';
+import { SecteurService } from 'app/entities/secteur/secteur.service';
+import { TypeStructureService } from 'app/entities/type-structure/type-structure.service';
+import { DATE_TIME_FORMAT } from 'app/shared/constants/input.constants';
+import { IDeliberation } from 'app/shared/model/deliberation.model';
+import { INatureJuridique } from 'app/shared/model/nature-juridique.model';
+import { IOrganisme, Organisme } from 'app/shared/model/organisme.model';
+import { ISecteur } from 'app/shared/model/secteur.model';
+import { ITypeStructure } from 'app/shared/model/type-structure.model';
+import * as moment from 'moment';
+import { Observable } from 'rxjs';
+import { OrganismeService } from './organisme.service';
 
 type SelectableEntity = INatureJuridique | ISecteur | ITypeStructure | IDeliberation;
 

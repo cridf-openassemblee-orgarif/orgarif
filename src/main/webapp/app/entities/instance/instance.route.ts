@@ -1,16 +1,15 @@
-import { Injectable } from '@angular/core';
 import { HttpResponse } from '@angular/common/http';
-import { Resolve, ActivatedRouteSnapshot, Routes, Router } from '@angular/router';
-import { Observable, of, EMPTY } from 'rxjs';
-import { flatMap } from 'rxjs/operators';
-
-import { Authority } from 'app/shared/constants/authority.constants';
+import { Injectable } from '@angular/core';
+import { ActivatedRouteSnapshot, Resolve, Router, Routes } from '@angular/router';
 import { UserRouteAccessService } from 'app/core/auth/user-route-access-service';
+import { Authority } from 'app/shared/constants/authority.constants';
 import { IInstance, Instance } from 'app/shared/model/instance.model';
-import { InstanceService } from './instance.service';
-import { InstanceComponent } from './instance.component';
+import { EMPTY, Observable, of } from 'rxjs';
+import { flatMap } from 'rxjs/operators';
 import { InstanceDetailComponent } from './instance-detail.component';
 import { InstanceUpdateComponent } from './instance-update.component';
+import { InstanceComponent } from './instance.component';
+import { InstanceService } from './instance.service';
 
 @Injectable({ providedIn: 'root' })
 export class InstanceResolve implements Resolve<IInstance> {

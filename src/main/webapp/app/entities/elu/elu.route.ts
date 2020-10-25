@@ -1,16 +1,15 @@
-import { Injectable } from '@angular/core';
 import { HttpResponse } from '@angular/common/http';
-import { Resolve, ActivatedRouteSnapshot, Routes, Router } from '@angular/router';
-import { Observable, of, EMPTY } from 'rxjs';
-import { flatMap } from 'rxjs/operators';
-
-import { Authority } from 'app/shared/constants/authority.constants';
+import { Injectable } from '@angular/core';
+import { ActivatedRouteSnapshot, Resolve, Router, Routes } from '@angular/router';
 import { UserRouteAccessService } from 'app/core/auth/user-route-access-service';
-import { IElu, Elu } from 'app/shared/model/elu.model';
-import { EluService } from './elu.service';
-import { EluComponent } from './elu.component';
+import { Authority } from 'app/shared/constants/authority.constants';
+import { Elu, IElu } from 'app/shared/model/elu.model';
+import { EMPTY, Observable, of } from 'rxjs';
+import { flatMap } from 'rxjs/operators';
 import { EluDetailComponent } from './elu-detail.component';
 import { EluUpdateComponent } from './elu-update.component';
+import { EluComponent } from './elu.component';
+import { EluService } from './elu.service';
 
 @Injectable({ providedIn: 'root' })
 export class EluResolve implements Resolve<IElu> {

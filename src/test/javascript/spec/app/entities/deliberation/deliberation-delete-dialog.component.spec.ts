@@ -1,13 +1,12 @@
-import { ComponentFixture, TestBed, inject, fakeAsync, tick } from '@angular/core/testing';
+import { ComponentFixture, fakeAsync, inject, TestBed, tick } from '@angular/core/testing';
 import { NgbActiveModal } from '@ng-bootstrap/ng-bootstrap';
-import { of } from 'rxjs';
-import { JhiEventManager } from 'ng-jhipster';
-
-import { OrgarifTestModule } from '../../../test.module';
-import { MockEventManager } from '../../../helpers/mock-event-manager.service';
-import { MockActiveModal } from '../../../helpers/mock-active-modal.service';
 import { DeliberationDeleteDialogComponent } from 'app/entities/deliberation/deliberation-delete-dialog.component';
 import { DeliberationService } from 'app/entities/deliberation/deliberation.service';
+import { JhiEventManager } from 'ng-jhipster';
+import { of } from 'rxjs';
+import { MockActiveModal } from '../../../helpers/mock-active-modal.service';
+import { MockEventManager } from '../../../helpers/mock-event-manager.service';
+import { OrgarifTestModule } from '../../../test.module';
 
 describe('Component Tests', () => {
   describe('Deliberation Management Delete Component', () => {

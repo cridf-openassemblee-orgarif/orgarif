@@ -1,15 +1,14 @@
-import { Component, OnInit, OnDestroy } from '@angular/core';
-import { HttpResponse, HttpHeaders } from '@angular/common/http';
+import { HttpHeaders, HttpResponse } from '@angular/common/http';
+import { Component, OnDestroy, OnInit } from '@angular/core';
+import { ActivatedRoute, Data, ParamMap, Router } from '@angular/router';
 import { NgbModal } from '@ng-bootstrap/ng-bootstrap';
-import { Subscription, combineLatest } from 'rxjs';
-import { ActivatedRoute, ParamMap, Router, Data } from '@angular/router';
-import { JhiEventManager } from 'ng-jhipster';
-
-import { ITEMS_PER_PAGE } from 'app/shared/constants/pagination.constants';
 import { AccountService } from 'app/core/auth/account.service';
 import { Account } from 'app/core/user/account.model';
-import { UserService } from 'app/core/user/user.service';
 import { User } from 'app/core/user/user.model';
+import { UserService } from 'app/core/user/user.service';
+import { ITEMS_PER_PAGE } from 'app/shared/constants/pagination.constants';
+import { JhiEventManager } from 'ng-jhipster';
+import { combineLatest, Subscription } from 'rxjs';
 import { UserManagementDeleteDialogComponent } from './user-management-delete-dialog.component';
 
 @Component({

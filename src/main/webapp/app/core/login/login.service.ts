@@ -1,10 +1,9 @@
 import { Injectable } from '@angular/core';
-import { Observable } from 'rxjs';
-import { flatMap } from 'rxjs/operators';
-
-import { Account } from 'app/core/user/account.model';
 import { AccountService } from 'app/core/auth/account.service';
 import { AuthServerProvider, LOGOUT_URL } from 'app/core/auth/auth-session.service';
+import { Account } from 'app/core/user/account.model';
+import { Observable } from 'rxjs';
+import { flatMap } from 'rxjs/operators';
 import { Login } from './login.model';
 
 @Injectable({ providedIn: 'root' })

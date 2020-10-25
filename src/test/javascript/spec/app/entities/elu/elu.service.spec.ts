@@ -1,7 +1,7 @@
-import { TestBed, getTestBed } from '@angular/core/testing';
 import { HttpClientTestingModule, HttpTestingController } from '@angular/common/http/testing';
+import { getTestBed, TestBed } from '@angular/core/testing';
 import { EluService } from 'app/entities/elu/elu.service';
-import { IElu, Elu } from 'app/shared/model/elu.model';
+import { Elu, IElu } from 'app/shared/model/elu.model';
 import { Civilite } from 'app/shared/model/enumerations/civilite.model';
 
 describe('Service Tests', () => {

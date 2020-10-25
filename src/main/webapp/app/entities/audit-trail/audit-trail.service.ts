@@ -1,12 +1,11 @@
-import { Injectable } from '@angular/core';
 import { HttpClient, HttpResponse } from '@angular/common/http';
+import { Injectable } from '@angular/core';
+import { SERVER_API_URL } from 'app/app.constants';
+import { IAuditTrail } from 'app/shared/model/audit-trail.model';
+import { createRequestOption, Search } from 'app/shared/util/request-util';
+import * as moment from 'moment';
 import { Observable } from 'rxjs';
 import { map } from 'rxjs/operators';
-import * as moment from 'moment';
-
-import { SERVER_API_URL } from 'app/app.constants';
-import { createRequestOption, Search } from 'app/shared/util/request-util';
-import { IAuditTrail } from 'app/shared/model/audit-trail.model';
 
 type EntityResponseType = HttpResponse<IAuditTrail>;
 type EntityArrayResponseType = HttpResponse<IAuditTrail[]>;

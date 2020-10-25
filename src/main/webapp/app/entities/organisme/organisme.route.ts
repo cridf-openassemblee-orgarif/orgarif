@@ -1,16 +1,15 @@
-import { Injectable } from '@angular/core';
 import { HttpResponse } from '@angular/common/http';
-import { Resolve, ActivatedRouteSnapshot, Routes, Router } from '@angular/router';
-import { Observable, of, EMPTY } from 'rxjs';
-import { flatMap } from 'rxjs/operators';
-
-import { Authority } from 'app/shared/constants/authority.constants';
+import { Injectable } from '@angular/core';
+import { ActivatedRouteSnapshot, Resolve, Router, Routes } from '@angular/router';
 import { UserRouteAccessService } from 'app/core/auth/user-route-access-service';
+import { Authority } from 'app/shared/constants/authority.constants';
 import { IOrganisme, Organisme } from 'app/shared/model/organisme.model';
-import { OrganismeService } from './organisme.service';
-import { OrganismeComponent } from './organisme.component';
+import { EMPTY, Observable, of } from 'rxjs';
+import { flatMap } from 'rxjs/operators';
 import { OrganismeDetailComponent } from './organisme-detail.component';
 import { OrganismeUpdateComponent } from './organisme-update.component';
+import { OrganismeComponent } from './organisme.component';
+import { OrganismeService } from './organisme.service';
 
 @Injectable({ providedIn: 'root' })
 export class OrganismeResolve implements Resolve<IOrganisme> {

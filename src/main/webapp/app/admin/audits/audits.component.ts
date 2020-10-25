@@ -1,10 +1,9 @@
-import { Component, OnInit } from '@angular/core';
-import { HttpResponse, HttpHeaders } from '@angular/common/http';
 import { DatePipe } from '@angular/common';
-import { ActivatedRoute, ParamMap, Router, Data } from '@angular/router';
-import { combineLatest } from 'rxjs';
-
+import { HttpHeaders, HttpResponse } from '@angular/common/http';
+import { Component, OnInit } from '@angular/core';
+import { ActivatedRoute, Data, ParamMap, Router } from '@angular/router';
 import { ITEMS_PER_PAGE } from 'app/shared/constants/pagination.constants';
+import { combineLatest } from 'rxjs';
 import { Audit } from './audit.model';
 import { AuditsService } from './audits.service';
 

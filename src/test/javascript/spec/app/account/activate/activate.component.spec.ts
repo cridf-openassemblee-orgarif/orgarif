@@ -1,11 +1,10 @@
-import { TestBed, async, tick, fakeAsync, inject } from '@angular/core/testing';
+import { async, fakeAsync, inject, TestBed, tick } from '@angular/core/testing';
 import { ActivatedRoute } from '@angular/router';
-import { of, throwError } from 'rxjs';
-
-import { OrgarifTestModule } from '../../../test.module';
-import { MockActivatedRoute } from '../../../helpers/mock-route.service';
-import { ActivateService } from 'app/account/activate/activate.service';
 import { ActivateComponent } from 'app/account/activate/activate.component';
+import { ActivateService } from 'app/account/activate/activate.service';
+import { of, throwError } from 'rxjs';
+import { MockActivatedRoute } from '../../../helpers/mock-route.service';
+import { OrgarifTestModule } from '../../../test.module';
 
 describe('Component Tests', () => {
   describe('ActivateComponent', () => {

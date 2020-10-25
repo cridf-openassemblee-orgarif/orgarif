@@ -1,6 +1,6 @@
-import { Moment } from 'moment';
-import { IOrganisme } from 'app/shared/model/organisme.model';
 import { IInstance } from 'app/shared/model/instance.model';
+import { IOrganisme } from 'app/shared/model/organisme.model';
+import { Moment } from 'moment';
 
 export interface IDeliberation {
   id?: number;

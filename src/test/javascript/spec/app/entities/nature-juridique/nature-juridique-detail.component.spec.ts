@@ -1,10 +1,9 @@
 import { ComponentFixture, TestBed } from '@angular/core/testing';
 import { ActivatedRoute } from '@angular/router';
-import { of } from 'rxjs';
-
-import { OrgarifTestModule } from '../../../test.module';
 import { NatureJuridiqueDetailComponent } from 'app/entities/nature-juridique/nature-juridique-detail.component';
 import { NatureJuridique } from 'app/shared/model/nature-juridique.model';
+import { of } from 'rxjs';
+import { OrgarifTestModule } from '../../../test.module';
 
 describe('Component Tests', () => {
   describe('NatureJuridique Management Detail Component', () => {

@@ -1,12 +1,11 @@
-import { ComponentFixture, TestBed, inject, tick, fakeAsync } from '@angular/core/testing';
-import { of, throwError } from 'rxjs';
-
-import { OrgarifTestModule } from '../../../test.module';
+import { ComponentFixture, fakeAsync, inject, TestBed, tick } from '@angular/core/testing';
 import { Session } from 'app/account/sessions/session.model';
 import { SessionsComponent } from 'app/account/sessions/sessions.component';
 import { SessionsService } from 'app/account/sessions/sessions.service';
-import { MockAccountService } from '../../../helpers/mock-account.service';
 import { AccountService } from 'app/core/auth/account.service';
+import { of, throwError } from 'rxjs';
+import { MockAccountService } from '../../../helpers/mock-account.service';
+import { OrgarifTestModule } from '../../../test.module';
 
 describe('Component Tests', () => {
   let sessions: Session[];

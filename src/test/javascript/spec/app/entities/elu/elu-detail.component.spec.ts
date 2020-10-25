@@ -1,10 +1,9 @@
 import { ComponentFixture, TestBed } from '@angular/core/testing';
 import { ActivatedRoute } from '@angular/router';
-import { of } from 'rxjs';
-
-import { OrgarifTestModule } from '../../../test.module';
 import { EluDetailComponent } from 'app/entities/elu/elu-detail.component';
 import { Elu } from 'app/shared/model/elu.model';
+import { of } from 'rxjs';
+import { OrgarifTestModule } from '../../../test.module';
 
 describe('Component Tests', () => {
   describe('Elu Management Detail Component', () => {

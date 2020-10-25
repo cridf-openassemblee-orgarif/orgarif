@@ -1,16 +1,15 @@
-import { Injectable } from '@angular/core';
 import { HttpResponse } from '@angular/common/http';
-import { Resolve, ActivatedRouteSnapshot, Routes, Router } from '@angular/router';
-import { Observable, of, EMPTY } from 'rxjs';
-import { flatMap } from 'rxjs/operators';
-
-import { Authority } from 'app/shared/constants/authority.constants';
+import { Injectable } from '@angular/core';
+import { ActivatedRouteSnapshot, Resolve, Router, Routes } from '@angular/router';
 import { UserRouteAccessService } from 'app/core/auth/user-route-access-service';
-import { IAuditTrail, AuditTrail } from 'app/shared/model/audit-trail.model';
-import { AuditTrailService } from './audit-trail.service';
-import { AuditTrailComponent } from './audit-trail.component';
+import { Authority } from 'app/shared/constants/authority.constants';
+import { AuditTrail, IAuditTrail } from 'app/shared/model/audit-trail.model';
+import { EMPTY, Observable, of } from 'rxjs';
+import { flatMap } from 'rxjs/operators';
 import { AuditTrailDetailComponent } from './audit-trail-detail.component';
 import { AuditTrailUpdateComponent } from './audit-trail-update.component';
+import { AuditTrailComponent } from './audit-trail.component';
+import { AuditTrailService } from './audit-trail.service';
 
 @Injectable({ providedIn: 'root' })
 export class AuditTrailResolve implements Resolve<IAuditTrail> {

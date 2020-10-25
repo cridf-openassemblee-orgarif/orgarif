@@ -1,88 +1,126 @@
 <div class="row justify-content-center">
-    <div class="col-8">
-        <form name="editForm" role="form" novalidate (ngSubmit)="save()" [formGroup]="editForm">
-            <h2 id="jhi-representant-heading">Create or edit a Representant</h2>
+  <div class="col-8">
+    <form name="editForm" role="form" novalidate (ngSubmit)="save()" [formGroup]="editForm">
+      <h2 id="jhi-representant-heading">Create or edit a Representant</h2>
 
-            <div>
-                <jhi-alert-error></jhi-alert-error>
+      <div>
+        <jhi-alert-error></jhi-alert-error>
 
-                <div class="form-group" [hidden]="!editForm.get('id')!.value">
-                    <label for="id">ID</label>
-                    <input type="text" class="form-control" id="id" name="id" formControlName="id" readonly />
-                </div>
+        <div class="form-group" [hidden]="!editForm.get('id')!.value">
+          <label for="id">ID</label>
+          <input type="text" class="form-control" id="id" name="id" formControlName="id" readonly />
+        </div>
 
-                <div class="form-group">
-                    <label class="form-control-label" for="field_position">Position</label>
-                    <input type="number" class="form-control" name="position" id="field_position"
-                           formControlName="position"/>
-                    <div *ngIf="editForm.get('position')!.invalid && (editForm.get('position')!.dirty || editForm.get('position')!.touched)">
-                        <small class="form-text text-danger"
-                               *ngIf="editForm.get('position')?.errors?.required">
-                        This field is required.
-                        </small>
-                        <small class="form-text text-danger"
-                            [hidden]="!editForm.get('position')?.errors?.number">
-                            This field should be a number.
-                        </small>
-                    </div>
-                </div>
+        <div class="form-group">
+          <label class="form-control-label" for="field_position">Position</label>
+          <input type="number" class="form-control" name="position" id="field_position" formControlName="position" />
+          <div *ngIf="editForm.get('position')!.invalid && (editForm.get('position')!.dirty || editForm.get('position')!.touched)">
+            <small class="form-text text-danger" *ngIf="editForm.get('position')?.errors?.required"> This field is required. </small>
+            <small class="form-text text-danger" [hidden]="!editForm.get('position')?.errors?.number">
+              This field should be a number.
+            </small>
+          </div>
+        </div>
 
-                <div class="form-group">
-                    <label class="form-control-label" for="field_elu">Elu</label>
-                    <select class="form-control" id="field_elu" name="elu" formControlName="elu">
-                        <option *ngIf="!editForm.get('elu')!.value" [ngValue]="null" selected></option>
-                        <option [ngValue]="eluOption.id === editForm.get('elu')!.value?.id ? editForm.get('elu')!.value : eluOption" *ngFor="let eluOption of elus; trackBy: trackById">{{ eluOption.id }}</option>
-                    </select>
-                </div>
-                <div *ngIf="editForm.get('elu')!.invalid && (editForm.get('elu')!.dirty || editForm.get('elu')!.touched)">
-                    <small class="form-text text-danger"
-                           *ngIf="editForm.get('elu')?.errors?.required">
-                        This field is required.
-                    </small>
-                </div>
+        <div class="form-group">
+          <label class="form-control-label" for="field_elu">Elu</label>
+          <select class="form-control" id="field_elu" name="elu" formControlName="elu">
+            <option *ngIf="!editForm.get('elu')!.value" [ngValue]="null" selected></option>
+            <option
+              [ngValue]="eluOption.id === editForm.get('elu')!.value?.id ? editForm.get('elu')!.value : eluOption"
+              *ngFor="let eluOption of elus; trackBy: trackById"
+            >
+              {{ eluOption.id }}
+            </option>
+          </select>
+        </div>
+        <div *ngIf="editForm.get('elu')!.invalid && (editForm.get('elu')!.dirty || editForm.get('elu')!.touched)">
+          <small class="form-text text-danger" *ngIf="editForm.get('elu')?.errors?.required"> This field is required. </small>
+        </div>
 
-                <div class="form-group">
-                    <label class="form-control-label" for="field_representantOrganisme">Representant Organisme</label>
-                    <select class="form-control" id="field_representantOrganisme" name="representantOrganisme" formControlName="representantOrganisme">
-                        <option [ngValue]="null"></option>
-                        <option [ngValue]="organismeOption.id === editForm.get('representantOrganisme')!.value?.id ? editForm.get('representantOrganisme')!.value : organismeOption" *ngFor="let organismeOption of organismes; trackBy: trackById">{{ organismeOption.nom }}</option>
-                    </select>
-                </div>
+        <div class="form-group">
+          <label class="form-control-label" for="field_representantOrganisme">Representant Organisme</label>
+          <select
+            class="form-control"
+            id="field_representantOrganisme"
+            name="representantOrganisme"
+            formControlName="representantOrganisme"
+          >
+            <option [ngValue]="null"></option>
+            <option
+              [ngValue]="
+                organismeOption.id === editForm.get('representantOrganisme')!.value?.id
+                  ? editForm.get('representantOrganisme')!.value
+                  : organismeOption
+              "
+              *ngFor="let organismeOption of organismes; trackBy: trackById"
+            >
+              {{ organismeOption.nom }}
+            </option>
+          </select>
+        </div>
 
-                <div class="form-group">
-                    <label class="form-control-label" for="field_suppleantOrganisme">Suppleant Organisme</label>
-                    <select class="form-control" id="field_suppleantOrganisme" name="suppleantOrganisme" formControlName="suppleantOrganisme">
-                        <option [ngValue]="null"></option>
-                        <option [ngValue]="organismeOption.id === editForm.get('suppleantOrganisme')!.value?.id ? editForm.get('suppleantOrganisme')!.value : organismeOption" *ngFor="let organismeOption of organismes; trackBy: trackById">{{ organismeOption.nom }}</option>
-                    </select>
-                </div>
+        <div class="form-group">
+          <label class="form-control-label" for="field_suppleantOrganisme">Suppleant Organisme</label>
+          <select class="form-control" id="field_suppleantOrganisme" name="suppleantOrganisme" formControlName="suppleantOrganisme">
+            <option [ngValue]="null"></option>
+            <option
+              [ngValue]="
+                organismeOption.id === editForm.get('suppleantOrganisme')!.value?.id
+                  ? editForm.get('suppleantOrganisme')!.value
+                  : organismeOption
+              "
+              *ngFor="let organismeOption of organismes; trackBy: trackById"
+            >
+              {{ organismeOption.nom }}
+            </option>
+          </select>
+        </div>
 
-                <div class="form-group">
-                    <label class="form-control-label" for="field_representantInstance">Representant Instance</label>
-                    <select class="form-control" id="field_representantInstance" name="representantInstance" formControlName="representantInstance">
-                        <option [ngValue]="null"></option>
-                        <option [ngValue]="instanceOption.id === editForm.get('representantInstance')!.value?.id ? editForm.get('representantInstance')!.value : instanceOption" *ngFor="let instanceOption of instances; trackBy: trackById">{{ instanceOption.nom }}</option>
-                    </select>
-                </div>
+        <div class="form-group">
+          <label class="form-control-label" for="field_representantInstance">Representant Instance</label>
+          <select class="form-control" id="field_representantInstance" name="representantInstance" formControlName="representantInstance">
+            <option [ngValue]="null"></option>
+            <option
+              [ngValue]="
+                instanceOption.id === editForm.get('representantInstance')!.value?.id
+                  ? editForm.get('representantInstance')!.value
+                  : instanceOption
+              "
+              *ngFor="let instanceOption of instances; trackBy: trackById"
+            >
+              {{ instanceOption.nom }}
+            </option>
+          </select>
+        </div>
 
-                <div class="form-group">
-                    <label class="form-control-label" for="field_suppleantInstance">Suppleant Instance</label>
-                    <select class="form-control" id="field_suppleantInstance" name="suppleantInstance" formControlName="suppleantInstance">
-                        <option [ngValue]="null"></option>
-                        <option [ngValue]="instanceOption.id === editForm.get('suppleantInstance')!.value?.id ? editForm.get('suppleantInstance')!.value : instanceOption" *ngFor="let instanceOption of instances; trackBy: trackById">{{ instanceOption.nom }}</option>
-                    </select>
-                </div>
-            </div>
+        <div class="form-group">
+          <label class="form-control-label" for="field_suppleantInstance">Suppleant Instance</label>
+          <select class="form-control" id="field_suppleantInstance" name="suppleantInstance" formControlName="suppleantInstance">
+            <option [ngValue]="null"></option>
+            <option
+              [ngValue]="
+                instanceOption.id === editForm.get('suppleantInstance')!.value?.id
+                  ? editForm.get('suppleantInstance')!.value
+                  : instanceOption
+              "
+              *ngFor="let instanceOption of instances; trackBy: trackById"
+            >
+              {{ instanceOption.nom }}
+            </option>
+          </select>
+        </div>
+      </div>
 
-            <div>
-                <button type="button" id="cancel-save" class="btn btn-secondary" (click)="previousState()">
-                    <fa-icon icon="ban"></fa-icon>&nbsp;<span>Cancel</span>
-                </button>
+      <div>
+        <button type="button" id="cancel-save" class="btn btn-secondary" (click)="previousState()">
+          <fa-icon icon="ban"></fa-icon>&nbsp;<span>Cancel</span>
+        </button>
 
-                <button type="submit" id="save-entity" [disabled]="editForm.invalid || isSaving" class="btn btn-primary">
-                    <fa-icon icon="save"></fa-icon>&nbsp;<span>Save</span>
-                </button>
-            </div>
-        </form>
-    </div>
+        <button type="submit" id="save-entity" [disabled]="editForm.invalid || isSaving" class="btn btn-primary">
+          <fa-icon icon="save"></fa-icon>&nbsp;<span>Save</span>
+        </button>
+      </div>
+    </form>
+  </div>
 </div>

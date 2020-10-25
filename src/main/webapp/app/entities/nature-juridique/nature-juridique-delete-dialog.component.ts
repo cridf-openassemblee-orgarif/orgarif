@@ -1,8 +1,7 @@
 import { Component } from '@angular/core';
 import { NgbActiveModal } from '@ng-bootstrap/ng-bootstrap';
-import { JhiEventManager } from 'ng-jhipster';
-
 import { INatureJuridique } from 'app/shared/model/nature-juridique.model';
+import { JhiEventManager } from 'ng-jhipster';
 import { NatureJuridiqueService } from './nature-juridique.service';
 
 @Component({

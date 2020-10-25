@@ -1,119 +1,130 @@
 <div>
-    <h2 id="page-heading">
-        <span>Representants</span>
+  <h2 id="page-heading">
+    <span>Representants</span>
 
-        <button id="jh-create-entity" class="btn btn-primary float-right jh-create-entity create-representant" [routerLink]="['/representant/new']">
-            <fa-icon icon="plus"></fa-icon>
-            <span class="hidden-sm-down">
-            Create a new Representant
-            </span>
-        </button>
-    </h2>
+    <button
+      id="jh-create-entity"
+      class="btn btn-primary float-right jh-create-entity create-representant"
+      [routerLink]="['/representant/new']"
+    >
+      <fa-icon icon="plus"></fa-icon>
+      <span class="hidden-sm-down"> Create a new Representant </span>
+    </button>
+  </h2>
 
-    <jhi-alert-error></jhi-alert-error>
+  <jhi-alert-error></jhi-alert-error>
 
-    <jhi-alert></jhi-alert>
+  <jhi-alert></jhi-alert>
 
-    <div class="row">
-        <div class="col-sm-12">
-            <form name="searchForm" class="form-inline">
-                <div class="input-group w-100 mt-3">
-                    <input type="text" class="form-control" [(ngModel)]="currentSearch" id="currentSearch" name="currentSearch" placeholder="Query">
+  <div class="row">
+    <div class="col-sm-12">
+      <form name="searchForm" class="form-inline">
+        <div class="input-group w-100 mt-3">
+          <input type="text" class="form-control" [(ngModel)]="currentSearch" id="currentSearch" name="currentSearch" placeholder="Query" />
 
-                    <button class="input-group-append btn btn-info" (click)="search(currentSearch)">
-                        <fa-icon icon="search"></fa-icon>
-                    </button>
+          <button class="input-group-append btn btn-info" (click)="search(currentSearch)">
+            <fa-icon icon="search"></fa-icon>
+          </button>
 
-                    <button class="input-group-append btn btn-danger" (click)="search('')" *ngIf="currentSearch">
-                        <fa-icon icon="trash-alt"></fa-icon>
-                    </button>
-                </div>
-            </form>
+          <button class="input-group-append btn btn-danger" (click)="search('')" *ngIf="currentSearch">
+            <fa-icon icon="trash-alt"></fa-icon>
+          </button>
         </div>
+      </form>
+    </div>
+  </div>
+
+  <div class="alert alert-warning" id="no-result" *ngIf="representants?.length === 0">
+    <span>No representants found</span>
+  </div>
+
+  <div class="table-responsive" id="entities" *ngIf="representants && representants.length > 0">
+    <table class="table table-striped" aria-describedby="page-heading">
+      <thead>
+        <tr jhiSort [(predicate)]="predicate" [(ascending)]="ascending" [callback]="loadPage.bind(this)">
+          <th scope="col" jhiSortBy="id"><span>ID</span> <fa-icon icon="sort"></fa-icon></th>
+          <th scope="col" jhiSortBy="position"><span>Position</span> <fa-icon icon="sort"></fa-icon></th>
+          <th scope="col" jhiSortBy="elu.id"><span>Elu</span> <fa-icon icon="sort"></fa-icon></th>
+          <th scope="col" jhiSortBy="representantOrganisme.nom"><span>Representant Organisme</span> <fa-icon icon="sort"></fa-icon></th>
+          <th scope="col" jhiSortBy="suppleantOrganisme.nom"><span>Suppleant Organisme</span> <fa-icon icon="sort"></fa-icon></th>
+          <th scope="col" jhiSortBy="representantInstance.nom"><span>Representant Instance</span> <fa-icon icon="sort"></fa-icon></th>
+          <th scope="col" jhiSortBy="suppleantInstance.nom"><span>Suppleant Instance</span> <fa-icon icon="sort"></fa-icon></th>
+          <th scope="col"></th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr *ngFor="let representant of representants; trackBy: trackId">
+          <td>
+            <a [routerLink]="['/representant', representant.id, 'view']">{{ representant.id }}</a>
+          </td>
+          <td>{{ representant.position }}</td>
+          <td>
+            <div *ngIf="representant.elu">
+              <a [routerLink]="['/elu', representant.elu?.id, 'view']">{{ representant.elu?.id }}</a>
+            </div>
+          </td>
+          <td>
+            <div *ngIf="representant.representantOrganisme">
+              <a [routerLink]="['/organisme', representant.representantOrganisme?.id, 'view']">{{
+                representant.representantOrganisme?.nom
+              }}</a>
+            </div>
+          </td>
+          <td>
+            <div *ngIf="representant.suppleantOrganisme">
+              <a [routerLink]="['/organisme', representant.suppleantOrganisme?.id, 'view']">{{ representant.suppleantOrganisme?.nom }}</a>
+            </div>
+          </td>
+          <td>
+            <div *ngIf="representant.representantInstance">
+              <a [routerLink]="['/instance', representant.representantInstance?.id, 'view']">{{
+                representant.representantInstance?.nom
+              }}</a>
+            </div>
+          </td>
+          <td>
+            <div *ngIf="representant.suppleantInstance">
+              <a [routerLink]="['/instance', representant.suppleantInstance?.id, 'view']">{{ representant.suppleantInstance?.nom }}</a>
+            </div>
+          </td>
+          <td class="text-right">
+            <div class="btn-group">
+              <button type="submit" [routerLink]="['/representant', representant.id, 'view']" class="btn btn-info btn-sm">
+                <fa-icon icon="eye"></fa-icon>
+                <span class="d-none d-md-inline">View</span>
+              </button>
+
+              <button type="submit" [routerLink]="['/representant', representant.id, 'edit']" class="btn btn-primary btn-sm">
+                <fa-icon icon="pencil-alt"></fa-icon>
+                <span class="d-none d-md-inline">Edit</span>
+              </button>
+
+              <button type="submit" (click)="delete(representant)" class="btn btn-danger btn-sm">
+                <fa-icon icon="times"></fa-icon>
+                <span class="d-none d-md-inline">Delete</span>
+              </button>
+            </div>
+          </td>
+        </tr>
+      </tbody>
+    </table>
+  </div>
+
+  <div *ngIf="representants && representants.length > 0">
+    <div class="row justify-content-center">
+      <jhi-item-count [page]="page" [total]="totalItems" [itemsPerPage]="itemsPerPage"></jhi-item-count>
     </div>
 
-    <div class="alert alert-warning" id="no-result" *ngIf="representants?.length === 0">
-        <span>No representants found</span>
+    <div class="row justify-content-center">
+      <ngb-pagination
+        [collectionSize]="totalItems"
+        [(page)]="ngbPaginationPage"
+        [pageSize]="itemsPerPage"
+        [maxSize]="5"
+        [rotate]="true"
+        [boundaryLinks]="true"
+        (pageChange)="loadPage($event)"
+      ></ngb-pagination>
     </div>
-
-    <div class="table-responsive" id="entities" *ngIf="representants && representants.length > 0">
-        <table class="table table-striped" aria-describedby="page-heading">
-            <thead>
-                <tr jhiSort [(predicate)]="predicate" [(ascending)]="ascending" [callback]="loadPage.bind(this)">
-                    <th scope="col"  jhiSortBy="id"><span>ID</span> <fa-icon icon="sort"></fa-icon></th>
-                    <th scope="col"  jhiSortBy="position"><span>Position</span> <fa-icon icon="sort"></fa-icon></th>
-                    <th scope="col"  jhiSortBy="elu.id"><span>Elu</span> <fa-icon icon="sort"></fa-icon></th>
-                    <th scope="col"  jhiSortBy="representantOrganisme.nom"><span>Representant Organisme</span> <fa-icon icon="sort"></fa-icon></th>
-                    <th scope="col"  jhiSortBy="suppleantOrganisme.nom"><span>Suppleant Organisme</span> <fa-icon icon="sort"></fa-icon></th>
-                    <th scope="col"  jhiSortBy="representantInstance.nom"><span>Representant Instance</span> <fa-icon icon="sort"></fa-icon></th>
-                    <th scope="col"  jhiSortBy="suppleantInstance.nom"><span>Suppleant Instance</span> <fa-icon icon="sort"></fa-icon></th>
-                    <th scope="col"></th>
-                </tr>
-            </thead>
-            <tbody>
-                <tr *ngFor="let representant of representants ;trackBy: trackId">
-                    <td><a [routerLink]="['/representant', representant.id, 'view']">{{ representant.id }}</a></td>
-                    <td>{{ representant.position }}</td>
-                    <td>
-                        <div *ngIf="representant.elu">
-                            <a [routerLink]="['/elu', representant.elu?.id, 'view']" >{{ representant.elu?.id }}</a>
-                        </div>
-                    </td>
-                    <td>
-                        <div *ngIf="representant.representantOrganisme">
-                            <a [routerLink]="['/organisme', representant.representantOrganisme?.id, 'view']" >{{ representant.representantOrganisme?.nom }}</a>
-                        </div>
-                    </td>
-                    <td>
-                        <div *ngIf="representant.suppleantOrganisme">
-                            <a [routerLink]="['/organisme', representant.suppleantOrganisme?.id, 'view']" >{{ representant.suppleantOrganisme?.nom }}</a>
-                        </div>
-                    </td>
-                    <td>
-                        <div *ngIf="representant.representantInstance">
-                            <a [routerLink]="['/instance', representant.representantInstance?.id, 'view']" >{{ representant.representantInstance?.nom }}</a>
-                        </div>
-                    </td>
-                    <td>
-                        <div *ngIf="representant.suppleantInstance">
-                            <a [routerLink]="['/instance', representant.suppleantInstance?.id, 'view']" >{{ representant.suppleantInstance?.nom }}</a>
-                        </div>
-                    </td>
-                    <td class="text-right">
-                        <div class="btn-group">
-                            <button type="submit"
-                                    [routerLink]="['/representant', representant.id, 'view']"
-                                    class="btn btn-info btn-sm">
-                                <fa-icon icon="eye"></fa-icon>
-                                <span class="d-none d-md-inline">View</span>
-                            </button>
-
-                            <button type="submit"
-                                    [routerLink]="['/representant', representant.id, 'edit']"
-                                    class="btn btn-primary btn-sm">
-                                <fa-icon icon="pencil-alt"></fa-icon>
-                                <span class="d-none d-md-inline">Edit</span>
-                            </button>
-
-                            <button type="submit" (click)="delete(representant)"
-                                    class="btn btn-danger btn-sm">
-                                <fa-icon icon="times"></fa-icon>
-                                <span class="d-none d-md-inline">Delete</span>
-                            </button>
-                        </div>
-                    </td>
-                </tr>
-            </tbody>
-        </table>
-    </div>
-
-    <div *ngIf="representants && representants.length > 0">
-        <div class="row justify-content-center">
-            <jhi-item-count [page]="page" [total]="totalItems" [itemsPerPage]="itemsPerPage"></jhi-item-count>
-        </div>
-
-        <div class="row justify-content-center">
-            <ngb-pagination [collectionSize]="totalItems" [(page)]="ngbPaginationPage" [pageSize]="itemsPerPage" [maxSize]="5" [rotate]="true" [boundaryLinks]="true" (pageChange)="loadPage($event)"></ngb-pagination>
-        </div>
-    </div>
+  </div>
 </div>

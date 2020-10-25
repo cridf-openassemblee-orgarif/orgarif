@@ -1,9 +1,8 @@
 import { Component } from '@angular/core';
 import { NgbActiveModal } from '@ng-bootstrap/ng-bootstrap';
-import { JhiEventManager } from 'ng-jhipster';
-
 import { User } from 'app/core/user/user.model';
 import { UserService } from 'app/core/user/user.service';
+import { JhiEventManager } from 'ng-jhipster';
 
 @Component({
   selector: 'jhi-user-mgmt-delete-dialog',

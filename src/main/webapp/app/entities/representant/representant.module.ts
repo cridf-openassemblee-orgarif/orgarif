@@ -1,11 +1,10 @@
 import { NgModule } from '@angular/core';
 import { RouterModule } from '@angular/router';
-
 import { OrgarifSharedModule } from 'app/shared/shared.module';
-import { RepresentantComponent } from './representant.component';
+import { RepresentantDeleteDialogComponent } from './representant-delete-dialog.component';
 import { RepresentantDetailComponent } from './representant-detail.component';
 import { RepresentantUpdateComponent } from './representant-update.component';
-import { RepresentantDeleteDialogComponent } from './representant-delete-dialog.component';
+import { RepresentantComponent } from './representant.component';
 import { representantRoute } from './representant.route';
 
 @NgModule({

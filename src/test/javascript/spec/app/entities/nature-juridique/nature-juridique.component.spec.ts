@@ -1,11 +1,10 @@
-import { ComponentFixture, TestBed } from '@angular/core/testing';
-import { of } from 'rxjs';
 import { HttpHeaders, HttpResponse } from '@angular/common/http';
-
-import { OrgarifTestModule } from '../../../test.module';
+import { ComponentFixture, TestBed } from '@angular/core/testing';
 import { NatureJuridiqueComponent } from 'app/entities/nature-juridique/nature-juridique.component';
 import { NatureJuridiqueService } from 'app/entities/nature-juridique/nature-juridique.service';
 import { NatureJuridique } from 'app/shared/model/nature-juridique.model';
+import { of } from 'rxjs';
+import { OrgarifTestModule } from '../../../test.module';
 
 describe('Component Tests', () => {
   describe('NatureJuridique Management Component', () => {

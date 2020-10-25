@@ -1,11 +1,10 @@
-import { Component, OnInit } from '@angular/core';
 import { HttpResponse } from '@angular/common/http';
+import { Component, OnInit } from '@angular/core';
 // eslint-disable-next-line @typescript-eslint/no-unused-vars
 import { FormBuilder, Validators } from '@angular/forms';
 import { ActivatedRoute } from '@angular/router';
+import { Elu, IElu } from 'app/shared/model/elu.model';
 import { Observable } from 'rxjs';
-
-import { IElu, Elu } from 'app/shared/model/elu.model';
 import { EluService } from './elu.service';
 
 @Component({

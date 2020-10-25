@@ -1,8 +1,7 @@
 import { Component } from '@angular/core';
 import { NgbActiveModal } from '@ng-bootstrap/ng-bootstrap';
-import { JhiEventManager } from 'ng-jhipster';
-
 import { IInstance } from 'app/shared/model/instance.model';
+import { JhiEventManager } from 'ng-jhipster';
 import { InstanceService } from './instance.service';
 
 @Component({

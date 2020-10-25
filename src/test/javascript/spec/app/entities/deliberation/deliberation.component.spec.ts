@@ -1,12 +1,11 @@
-import { ComponentFixture, TestBed } from '@angular/core/testing';
-import { of } from 'rxjs';
 import { HttpHeaders, HttpResponse } from '@angular/common/http';
+import { ComponentFixture, TestBed } from '@angular/core/testing';
 import { ActivatedRoute, convertToParamMap } from '@angular/router';
-
-import { OrgarifTestModule } from '../../../test.module';
 import { DeliberationComponent } from 'app/entities/deliberation/deliberation.component';
 import { DeliberationService } from 'app/entities/deliberation/deliberation.service';
 import { Deliberation } from 'app/shared/model/deliberation.model';
+import { of } from 'rxjs';
+import { OrgarifTestModule } from '../../../test.module';
 
 describe('Component Tests', () => {
   describe('Deliberation Management Component', () => {

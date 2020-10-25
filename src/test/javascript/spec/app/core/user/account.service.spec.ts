@@ -1,14 +1,13 @@
-import { Router } from '@angular/router';
 import { HttpClientTestingModule, HttpTestingController } from '@angular/common/http/testing';
 import { TestBed } from '@angular/core/testing';
-import { JhiDateUtils } from 'ng-jhipster';
-import { NgxWebstorageModule } from 'ngx-webstorage';
-
+import { Router } from '@angular/router';
 import { SERVER_API_URL } from 'app/app.constants';
 import { AccountService } from 'app/core/auth/account.service';
+import { StateStorageService } from 'app/core/auth/state-storage.service';
 import { Account } from 'app/core/user/account.model';
 import { Authority } from 'app/shared/constants/authority.constants';
-import { StateStorageService } from 'app/core/auth/state-storage.service';
+import { JhiDateUtils } from 'ng-jhipster';
+import { NgxWebstorageModule } from 'ngx-webstorage';
 import { MockRouter } from '../../../helpers/mock-route.service';
 import { MockStateStorageService } from '../../../helpers/mock-state-storage.service';
 

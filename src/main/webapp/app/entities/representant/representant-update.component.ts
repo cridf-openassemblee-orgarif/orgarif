@@ -1,18 +1,17 @@
-import { Component, OnInit } from '@angular/core';
 import { HttpResponse } from '@angular/common/http';
+import { Component, OnInit } from '@angular/core';
 // eslint-disable-next-line @typescript-eslint/no-unused-vars
 import { FormBuilder, Validators } from '@angular/forms';
 import { ActivatedRoute } from '@angular/router';
-import { Observable } from 'rxjs';
-
-import { IRepresentant, Representant } from 'app/shared/model/representant.model';
-import { RepresentantService } from './representant.service';
-import { IElu } from 'app/shared/model/elu.model';
 import { EluService } from 'app/entities/elu/elu.service';
-import { IOrganisme } from 'app/shared/model/organisme.model';
-import { OrganismeService } from 'app/entities/organisme/organisme.service';
-import { IInstance } from 'app/shared/model/instance.model';
 import { InstanceService } from 'app/entities/instance/instance.service';
+import { OrganismeService } from 'app/entities/organisme/organisme.service';
+import { IElu } from 'app/shared/model/elu.model';
+import { IInstance } from 'app/shared/model/instance.model';
+import { IOrganisme } from 'app/shared/model/organisme.model';
+import { IRepresentant, Representant } from 'app/shared/model/representant.model';
+import { Observable } from 'rxjs';
+import { RepresentantService } from './representant.service';
 
 type SelectableEntity = IElu | IOrganisme | IInstance;
 

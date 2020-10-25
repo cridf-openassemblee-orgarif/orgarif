@@ -1,16 +1,15 @@
-import { Injectable } from '@angular/core';
 import { HttpResponse } from '@angular/common/http';
-import { Resolve, ActivatedRouteSnapshot, Routes, Router } from '@angular/router';
-import { Observable, of, EMPTY } from 'rxjs';
-import { flatMap } from 'rxjs/operators';
-
-import { Authority } from 'app/shared/constants/authority.constants';
+import { Injectable } from '@angular/core';
+import { ActivatedRouteSnapshot, Resolve, Router, Routes } from '@angular/router';
 import { UserRouteAccessService } from 'app/core/auth/user-route-access-service';
+import { Authority } from 'app/shared/constants/authority.constants';
 import { ITypeStructure, TypeStructure } from 'app/shared/model/type-structure.model';
-import { TypeStructureService } from './type-structure.service';
-import { TypeStructureComponent } from './type-structure.component';
+import { EMPTY, Observable, of } from 'rxjs';
+import { flatMap } from 'rxjs/operators';
 import { TypeStructureDetailComponent } from './type-structure-detail.component';
 import { TypeStructureUpdateComponent } from './type-structure-update.component';
+import { TypeStructureComponent } from './type-structure.component';
+import { TypeStructureService } from './type-structure.service';
 
 @Injectable({ providedIn: 'root' })
 export class TypeStructureResolve implements Resolve<ITypeStructure> {

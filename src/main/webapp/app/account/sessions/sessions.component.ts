@@ -1,9 +1,8 @@
 import { Component, OnInit } from '@angular/core';
-
 import { AccountService } from 'app/core/auth/account.service';
+import { Account } from 'app/core/user/account.model';
 import { Session } from './session.model';
 import { SessionsService } from './sessions.service';
-import { Account } from 'app/core/user/account.model';
 
 @Component({
   selector: 'jhi-sessions',

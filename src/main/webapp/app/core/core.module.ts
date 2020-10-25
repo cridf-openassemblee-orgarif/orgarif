@@ -1,21 +1,18 @@
-import { NgModule, LOCALE_ID } from '@angular/core';
 import { DatePipe, registerLocaleData } from '@angular/common';
 import { HttpClientModule, HTTP_INTERCEPTORS } from '@angular/common/http';
+import locale from '@angular/common/locales/en';
+import { LOCALE_ID, NgModule } from '@angular/core';
 import { Title } from '@angular/platform-browser';
 import { FaIconLibrary } from '@fortawesome/angular-fontawesome';
-import { CookieService } from 'ngx-cookie-service';
-import { NgxWebstorageModule } from 'ngx-webstorage';
-import { NgJhipsterModule } from 'ng-jhipster';
-import locale from '@angular/common/locales/en';
-
-import * as moment from 'moment';
 import { NgbDateAdapter, NgbDatepickerConfig } from '@ng-bootstrap/ng-bootstrap';
-import { NgbDateMomentAdapter } from 'app/shared/util/datepicker-adapter';
-
 import { AuthExpiredInterceptor } from 'app/blocks/interceptor/auth-expired.interceptor';
 import { ErrorHandlerInterceptor } from 'app/blocks/interceptor/errorhandler.interceptor';
 import { NotificationInterceptor } from 'app/blocks/interceptor/notification.interceptor';
-
+import { NgbDateMomentAdapter } from 'app/shared/util/datepicker-adapter';
+import * as moment from 'moment';
+import { NgJhipsterModule } from 'ng-jhipster';
+import { CookieService } from 'ngx-cookie-service';
+import { NgxWebstorageModule } from 'ngx-webstorage';
 import { fontAwesomeIcons } from './icons/font-awesome-icons';
 
 @NgModule({

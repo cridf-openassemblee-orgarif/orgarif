@@ -1,6 +1,5 @@
 import { Component, OnInit } from '@angular/core';
 import { ActivatedRoute } from '@angular/router';
-
 import { IElu } from 'app/shared/model/elu.model';
 
 @Component({

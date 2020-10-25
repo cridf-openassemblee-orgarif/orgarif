@@ -1,13 +1,12 @@
-import { Component, OnInit, OnDestroy } from '@angular/core';
 import { HttpResponse } from '@angular/common/http';
+import { Component, OnDestroy, OnInit } from '@angular/core';
 import { ActivatedRoute } from '@angular/router';
-import { Subscription } from 'rxjs';
-import { JhiEventManager } from 'ng-jhipster';
 import { NgbModal } from '@ng-bootstrap/ng-bootstrap';
-
 import { ISecteur } from 'app/shared/model/secteur.model';
-import { SecteurService } from './secteur.service';
+import { JhiEventManager } from 'ng-jhipster';
+import { Subscription } from 'rxjs';
 import { SecteurDeleteDialogComponent } from './secteur-delete-dialog.component';
+import { SecteurService } from './secteur.service';
 
 @Component({
   selector: 'jhi-secteur',

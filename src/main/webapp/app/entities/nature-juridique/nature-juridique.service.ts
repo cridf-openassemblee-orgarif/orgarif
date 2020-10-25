@@ -1,10 +1,9 @@
-import { Injectable } from '@angular/core';
 import { HttpClient, HttpResponse } from '@angular/common/http';
-import { Observable } from 'rxjs';
-
+import { Injectable } from '@angular/core';
 import { SERVER_API_URL } from 'app/app.constants';
-import { createRequestOption, Search } from 'app/shared/util/request-util';
 import { INatureJuridique } from 'app/shared/model/nature-juridique.model';
+import { createRequestOption, Search } from 'app/shared/util/request-util';
+import { Observable } from 'rxjs';
 
 type EntityResponseType = HttpResponse<INatureJuridique>;
 type EntityArrayResponseType = HttpResponse<INatureJuridique[]>;

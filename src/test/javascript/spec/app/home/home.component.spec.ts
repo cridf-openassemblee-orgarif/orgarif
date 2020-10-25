@@ -1,9 +1,8 @@
-import { ComponentFixture, TestBed, async } from '@angular/core/testing';
-
-import { OrgarifTestModule } from '../../test.module';
-import { HomeComponent } from 'app/home/home.component';
+import { async, ComponentFixture, TestBed } from '@angular/core/testing';
 import { AccountService } from 'app/core/auth/account.service';
 import { LoginModalService } from 'app/core/login/login-modal.service';
+import { HomeComponent } from 'app/home/home.component';
+import { OrgarifTestModule } from '../../test.module';
 
 describe('Component Tests', () => {
   describe('Home Component', () => {

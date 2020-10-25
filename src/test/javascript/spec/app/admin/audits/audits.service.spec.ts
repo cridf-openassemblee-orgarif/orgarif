@@ -1,9 +1,8 @@
-import { TestBed } from '@angular/core/testing';
+import { HttpErrorResponse, HttpResponse } from '@angular/common/http';
 import { HttpClientTestingModule, HttpTestingController } from '@angular/common/http/testing';
-import { HttpResponse, HttpErrorResponse } from '@angular/common/http';
-
-import { AuditsService, AuditsQuery } from 'app/admin/audits/audits.service';
+import { TestBed } from '@angular/core/testing';
 import { Audit } from 'app/admin/audits/audit.model';
+import { AuditsQuery, AuditsService } from 'app/admin/audits/audits.service';
 import { SERVER_API_URL } from 'app/app.constants';
 
 describe('Service Tests', () => {

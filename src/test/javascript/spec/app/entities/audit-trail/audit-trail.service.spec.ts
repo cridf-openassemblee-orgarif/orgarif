@@ -1,10 +1,10 @@
-import { TestBed, getTestBed } from '@angular/core/testing';
 import { HttpClientTestingModule, HttpTestingController } from '@angular/common/http/testing';
-import * as moment from 'moment';
-import { DATE_TIME_FORMAT } from 'app/shared/constants/input.constants';
+import { getTestBed, TestBed } from '@angular/core/testing';
 import { AuditTrailService } from 'app/entities/audit-trail/audit-trail.service';
-import { IAuditTrail, AuditTrail } from 'app/shared/model/audit-trail.model';
+import { DATE_TIME_FORMAT } from 'app/shared/constants/input.constants';
+import { AuditTrail, IAuditTrail } from 'app/shared/model/audit-trail.model';
 import { AuditTrailAction } from 'app/shared/model/enumerations/audit-trail-action.model';
+import * as moment from 'moment';
 
 describe('Service Tests', () => {
   describe('AuditTrail Service', () => {

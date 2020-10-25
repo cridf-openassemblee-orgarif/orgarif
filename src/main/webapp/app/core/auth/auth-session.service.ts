@@ -1,10 +1,9 @@
-import { Injectable } from '@angular/core';
 import { HttpClient, HttpHeaders } from '@angular/common/http';
-import { Observable } from 'rxjs';
-import { map } from 'rxjs/operators';
-
+import { Injectable } from '@angular/core';
 import { SERVER_API_URL } from 'app/app.constants';
 import { Login } from 'app/core/login/login.model';
+import { Observable } from 'rxjs';
+import { map } from 'rxjs/operators';
 
 export const LOGOUT_URL = SERVER_API_URL + 'api/logout';
 

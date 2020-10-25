@@ -1,5 +1,4 @@
 import { Route } from '@angular/router';
-
 import { MetricsComponent } from './metrics.component';
 
 export const metricsRoute: Route = {

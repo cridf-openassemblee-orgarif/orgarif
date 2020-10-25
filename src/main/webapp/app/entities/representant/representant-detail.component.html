@@ -1,60 +1,58 @@
 <div class="row justify-content-center">
-    <div class="col-8">
-        <div *ngIf="representant">
-            <h2><span>Representant</span> {{ representant.id }}</h2>
+  <div class="col-8">
+    <div *ngIf="representant">
+      <h2><span>Representant</span> {{ representant.id }}</h2>
 
-            <hr>
+      <hr />
 
-            <jhi-alert-error></jhi-alert-error>
+      <jhi-alert-error></jhi-alert-error>
 
-            <dl class="row-md jh-entity-details">
-                <dt><span>Position</span></dt>
-                <dd>
-                    <span>{{ representant.position }}</span>
-                </dd>
-                <dt><span>Elu</span></dt>
-                <dd>
-                    <div *ngIf="representant.elu">
-                        <a [routerLink]="['/elu', representant.elu?.id, 'view']">{{ representant.elu?.id }}</a>
-                    </div>
-                </dd>
-                <dt><span>Representant Organisme</span></dt>
-                <dd>
-                    <div *ngIf="representant.representantOrganisme">
-                        <a [routerLink]="['/organisme', representant.representantOrganisme?.id, 'view']">{{ representant.representantOrganisme?.nom }}</a>
-                    </div>
-                </dd>
-                <dt><span>Suppleant Organisme</span></dt>
-                <dd>
-                    <div *ngIf="representant.suppleantOrganisme">
-                        <a [routerLink]="['/organisme', representant.suppleantOrganisme?.id, 'view']">{{ representant.suppleantOrganisme?.nom }}</a>
-                    </div>
-                </dd>
-                <dt><span>Representant Instance</span></dt>
-                <dd>
-                    <div *ngIf="representant.representantInstance">
-                        <a [routerLink]="['/instance', representant.representantInstance?.id, 'view']">{{ representant.representantInstance?.nom }}</a>
-                    </div>
-                </dd>
-                <dt><span>Suppleant Instance</span></dt>
-                <dd>
-                    <div *ngIf="representant.suppleantInstance">
-                        <a [routerLink]="['/instance', representant.suppleantInstance?.id, 'view']">{{ representant.suppleantInstance?.nom }}</a>
-                    </div>
-                </dd>
-            </dl>
+      <dl class="row-md jh-entity-details">
+        <dt><span>Position</span></dt>
+        <dd>
+          <span>{{ representant.position }}</span>
+        </dd>
+        <dt><span>Elu</span></dt>
+        <dd>
+          <div *ngIf="representant.elu">
+            <a [routerLink]="['/elu', representant.elu?.id, 'view']">{{ representant.elu?.id }}</a>
+          </div>
+        </dd>
+        <dt><span>Representant Organisme</span></dt>
+        <dd>
+          <div *ngIf="representant.representantOrganisme">
+            <a [routerLink]="['/organisme', representant.representantOrganisme?.id, 'view']">{{
+              representant.representantOrganisme?.nom
+            }}</a>
+          </div>
+        </dd>
+        <dt><span>Suppleant Organisme</span></dt>
+        <dd>
+          <div *ngIf="representant.suppleantOrganisme">
+            <a [routerLink]="['/organisme', representant.suppleantOrganisme?.id, 'view']">{{ representant.suppleantOrganisme?.nom }}</a>
+          </div>
+        </dd>
+        <dt><span>Representant Instance</span></dt>
+        <dd>
+          <div *ngIf="representant.representantInstance">
+            <a [routerLink]="['/instance', representant.representantInstance?.id, 'view']">{{ representant.representantInstance?.nom }}</a>
+          </div>
+        </dd>
+        <dt><span>Suppleant Instance</span></dt>
+        <dd>
+          <div *ngIf="representant.suppleantInstance">
+            <a [routerLink]="['/instance', representant.suppleantInstance?.id, 'view']">{{ representant.suppleantInstance?.nom }}</a>
+          </div>
+        </dd>
+      </dl>
 
-            <button type="submit"
-                    (click)="previousState()"
-                    class="btn btn-info">
-                <fa-icon icon="arrow-left"></fa-icon>&nbsp;<span>Back</span>
-            </button>
+      <button type="submit" (click)="previousState()" class="btn btn-info">
+        <fa-icon icon="arrow-left"></fa-icon>&nbsp;<span>Back</span>
+      </button>
 
-            <button type="button"
-                    [routerLink]="['/representant', representant.id, 'edit']"
-                    class="btn btn-primary">
-                <fa-icon icon="pencil-alt"></fa-icon>&nbsp;<span>Edit</span>
-            </button>
-        </div>
+      <button type="button" [routerLink]="['/representant', representant.id, 'edit']" class="btn btn-primary">
+        <fa-icon icon="pencil-alt"></fa-icon>&nbsp;<span>Edit</span>
+      </button>
     </div>
+  </div>
 </div>

@@ -1,10 +1,10 @@
-import { Moment } from 'moment';
+import { IDeliberation } from 'app/shared/model/deliberation.model';
+import { IInstance } from 'app/shared/model/instance.model';
 import { INatureJuridique } from 'app/shared/model/nature-juridique.model';
+import { IRepresentant } from 'app/shared/model/representant.model';
 import { ISecteur } from 'app/shared/model/secteur.model';
 import { ITypeStructure } from 'app/shared/model/type-structure.model';
-import { IInstance } from 'app/shared/model/instance.model';
-import { IRepresentant } from 'app/shared/model/representant.model';
-import { IDeliberation } from 'app/shared/model/deliberation.model';
+import { Moment } from 'moment';
 
 export interface IOrganisme {
   id?: number;

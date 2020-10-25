@@ -1,8 +1,7 @@
 import { Component } from '@angular/core';
 import { NgbActiveModal } from '@ng-bootstrap/ng-bootstrap';
-import { JhiEventManager } from 'ng-jhipster';
-
 import { ISecteur } from 'app/shared/model/secteur.model';
+import { JhiEventManager } from 'ng-jhipster';
 import { SecteurService } from './secteur.service';
 
 @Component({

@@ -1,12 +1,11 @@
-import { ComponentFixture, TestBed, async } from '@angular/core/testing';
+import { async, ComponentFixture, TestBed } from '@angular/core/testing';
 import { FormBuilder } from '@angular/forms';
-import { throwError, of } from 'rxjs';
-
-import { OrgarifTestModule } from '../../../test.module';
+import { SettingsComponent } from 'app/account/settings/settings.component';
 import { AccountService } from 'app/core/auth/account.service';
 import { Account } from 'app/core/user/account.model';
-import { SettingsComponent } from 'app/account/settings/settings.component';
+import { of, throwError } from 'rxjs';
 import { MockAccountService } from '../../../helpers/mock-account.service';
+import { OrgarifTestModule } from '../../../test.module';
 
 describe('Component Tests', () => {
   describe('SettingsComponent', () => {

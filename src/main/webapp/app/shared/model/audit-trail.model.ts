@@ -1,5 +1,5 @@
-import { Moment } from 'moment';
 import { AuditTrailAction } from 'app/shared/model/enumerations/audit-trail-action.model';
+import { Moment } from 'moment';
 
 export interface IAuditTrail {
   id?: number;

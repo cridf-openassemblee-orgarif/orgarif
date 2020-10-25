@@ -1,12 +1,11 @@
-import { ComponentFixture, TestBed, fakeAsync, tick } from '@angular/core/testing';
 import { HttpResponse } from '@angular/common/http';
+import { ComponentFixture, fakeAsync, TestBed, tick } from '@angular/core/testing';
 import { FormBuilder } from '@angular/forms';
-import { of } from 'rxjs';
-
-import { OrgarifTestModule } from '../../../test.module';
 import { TypeStructureUpdateComponent } from 'app/entities/type-structure/type-structure-update.component';
 import { TypeStructureService } from 'app/entities/type-structure/type-structure.service';
 import { TypeStructure } from 'app/shared/model/type-structure.model';
+import { of } from 'rxjs';
+import { OrgarifTestModule } from '../../../test.module';
 
 describe('Component Tests', () => {
   describe('TypeStructure Management Update Component', () => {

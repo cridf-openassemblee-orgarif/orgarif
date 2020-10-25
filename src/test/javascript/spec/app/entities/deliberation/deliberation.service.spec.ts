@@ -1,9 +1,9 @@
-import { TestBed, getTestBed } from '@angular/core/testing';
 import { HttpClientTestingModule, HttpTestingController } from '@angular/common/http/testing';
-import * as moment from 'moment';
-import { DATE_TIME_FORMAT } from 'app/shared/constants/input.constants';
+import { getTestBed, TestBed } from '@angular/core/testing';
 import { DeliberationService } from 'app/entities/deliberation/deliberation.service';
-import { IDeliberation, Deliberation } from 'app/shared/model/deliberation.model';
+import { DATE_TIME_FORMAT } from 'app/shared/constants/input.constants';
+import { Deliberation, IDeliberation } from 'app/shared/model/deliberation.model';
+import * as moment from 'moment';
 
 describe('Service Tests', () => {
   describe('Deliberation Service', () => {

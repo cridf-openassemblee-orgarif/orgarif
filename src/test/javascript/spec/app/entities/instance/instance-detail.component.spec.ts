@@ -1,10 +1,9 @@
 import { ComponentFixture, TestBed } from '@angular/core/testing';
 import { ActivatedRoute } from '@angular/router';
-import { of } from 'rxjs';
-
-import { OrgarifTestModule } from '../../../test.module';
 import { InstanceDetailComponent } from 'app/entities/instance/instance-detail.component';
 import { Instance } from 'app/shared/model/instance.model';
+import { of } from 'rxjs';
+import { OrgarifTestModule } from '../../../test.module';
 
 describe('Component Tests', () => {
   describe('Instance Management Detail Component', () => {

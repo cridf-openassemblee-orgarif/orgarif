@@ -1,9 +1,8 @@
-import { Injectable } from '@angular/core';
 import { HttpClient, HttpParams, HttpResponse } from '@angular/common/http';
-import { Observable } from 'rxjs';
-
-import { createRequestOption, Pagination } from 'app/shared/util/request-util';
+import { Injectable } from '@angular/core';
 import { SERVER_API_URL } from 'app/app.constants';
+import { createRequestOption, Pagination } from 'app/shared/util/request-util';
+import { Observable } from 'rxjs';
 import { Audit } from './audit.model';
 
 export interface AuditsQuery extends Pagination {

@@ -1,13 +1,12 @@
-import { Component, OnInit, OnDestroy } from '@angular/core';
 import { HttpResponse } from '@angular/common/http';
+import { Component, OnDestroy, OnInit } from '@angular/core';
 import { ActivatedRoute } from '@angular/router';
-import { Subscription } from 'rxjs';
-import { JhiEventManager } from 'ng-jhipster';
 import { NgbModal } from '@ng-bootstrap/ng-bootstrap';
-
 import { IElu } from 'app/shared/model/elu.model';
-import { EluService } from './elu.service';
+import { JhiEventManager } from 'ng-jhipster';
+import { Subscription } from 'rxjs';
 import { EluDeleteDialogComponent } from './elu-delete-dialog.component';
+import { EluService } from './elu.service';
 
 @Component({
   selector: 'jhi-elu',

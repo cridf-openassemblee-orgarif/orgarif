@@ -1,7 +1,7 @@
 import Spy = jasmine.Spy;
 
-import { SpyObject } from './spyobject';
 import { LoginModalService } from 'app/core/login/login-modal.service';
+import { SpyObject } from './spyobject';
 
 export class MockLoginModalService extends SpyObject {
   open: Spy;

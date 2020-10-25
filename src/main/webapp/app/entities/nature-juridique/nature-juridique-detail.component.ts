@@ -1,6 +1,5 @@
 import { Component, OnInit } from '@angular/core';
 import { ActivatedRoute } from '@angular/router';
-
 import { INatureJuridique } from 'app/shared/model/nature-juridique.model';
 
 @Component({

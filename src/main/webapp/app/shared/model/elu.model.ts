@@ -1,5 +1,5 @@
-import { IRepresentant } from 'app/shared/model/representant.model';
 import { Civilite } from 'app/shared/model/enumerations/civilite.model';
+import { IRepresentant } from 'app/shared/model/representant.model';
 
 export interface IElu {
   id?: number;

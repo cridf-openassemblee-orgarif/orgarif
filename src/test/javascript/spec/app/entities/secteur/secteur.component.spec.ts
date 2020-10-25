@@ -1,11 +1,10 @@
-import { ComponentFixture, TestBed } from '@angular/core/testing';
-import { of } from 'rxjs';
 import { HttpHeaders, HttpResponse } from '@angular/common/http';
-
-import { OrgarifTestModule } from '../../../test.module';
+import { ComponentFixture, TestBed } from '@angular/core/testing';
 import { SecteurComponent } from 'app/entities/secteur/secteur.component';
 import { SecteurService } from 'app/entities/secteur/secteur.service';
 import { Secteur } from 'app/shared/model/secteur.model';
+import { of } from 'rxjs';
+import { OrgarifTestModule } from '../../../test.module';
 
 describe('Component Tests', () => {
   describe('Secteur Management Component', () => {

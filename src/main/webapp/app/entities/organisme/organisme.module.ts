@@ -1,11 +1,10 @@
 import { NgModule } from '@angular/core';
 import { RouterModule } from '@angular/router';
-
 import { OrgarifSharedModule } from 'app/shared/shared.module';
-import { OrganismeComponent } from './organisme.component';
+import { OrganismeDeleteDialogComponent } from './organisme-delete-dialog.component';
 import { OrganismeDetailComponent } from './organisme-detail.component';
 import { OrganismeUpdateComponent } from './organisme-update.component';
-import { OrganismeDeleteDialogComponent } from './organisme-delete-dialog.component';
+import { OrganismeComponent } from './organisme.component';
 import { organismeRoute } from './organisme.route';
 
 @NgModule({

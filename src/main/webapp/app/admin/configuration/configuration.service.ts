@@ -1,9 +1,8 @@
-import { Injectable } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
+import { Injectable } from '@angular/core';
+import { SERVER_API_URL } from 'app/app.constants';
 import { Observable } from 'rxjs';
 import { map } from 'rxjs/operators';
-
-import { SERVER_API_URL } from 'app/app.constants';
 
 export interface ConfigProps {
   contexts: Contexts;

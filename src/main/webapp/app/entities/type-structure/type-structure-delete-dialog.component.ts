@@ -1,8 +1,7 @@
 import { Component } from '@angular/core';
 import { NgbActiveModal } from '@ng-bootstrap/ng-bootstrap';
-import { JhiEventManager } from 'ng-jhipster';
-
 import { ITypeStructure } from 'app/shared/model/type-structure.model';
+import { JhiEventManager } from 'ng-jhipster';
 import { TypeStructureService } from './type-structure.service';
 
 @Component({

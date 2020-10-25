@@ -1,6 +1,5 @@
 import { Component, OnInit } from '@angular/core';
 import { ActivatedRoute } from '@angular/router';
-
 import { IRepresentant } from 'app/shared/model/representant.model';
 
 @Component({

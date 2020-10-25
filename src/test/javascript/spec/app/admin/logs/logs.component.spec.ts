@@ -1,10 +1,9 @@
-import { ComponentFixture, TestBed, async } from '@angular/core/testing';
-import { of } from 'rxjs';
-
-import { OrgarifTestModule } from '../../../test.module';
+import { async, ComponentFixture, TestBed } from '@angular/core/testing';
+import { Log } from 'app/admin/logs/log.model';
 import { LogsComponent } from 'app/admin/logs/logs.component';
 import { LogsService } from 'app/admin/logs/logs.service';
-import { Log } from 'app/admin/logs/log.model';
+import { of } from 'rxjs';
+import { OrgarifTestModule } from '../../../test.module';
 
 describe('Component Tests', () => {
   describe('LogsComponent', () => {

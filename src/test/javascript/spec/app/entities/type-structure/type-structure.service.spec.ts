@@ -1,5 +1,5 @@
-import { TestBed, getTestBed } from '@angular/core/testing';
 import { HttpClientTestingModule, HttpTestingController } from '@angular/common/http/testing';
+import { getTestBed, TestBed } from '@angular/core/testing';
 import { TypeStructureService } from 'app/entities/type-structure/type-structure.service';
 import { ITypeStructure, TypeStructure } from 'app/shared/model/type-structure.model';
 

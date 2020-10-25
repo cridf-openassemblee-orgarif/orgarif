@@ -1,8 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { ActivatedRoute } from '@angular/router';
-import { flatMap } from 'rxjs/operators';
-
 import { LoginModalService } from 'app/core/login/login-modal.service';
+import { flatMap } from 'rxjs/operators';
 import { ActivateService } from './activate.service';
 
 @Component({

@@ -1,12 +1,11 @@
-import { Injectable } from '@angular/core';
 import { HttpClient, HttpResponse } from '@angular/common/http';
+import { Injectable } from '@angular/core';
+import { SERVER_API_URL } from 'app/app.constants';
+import { IDeliberation } from 'app/shared/model/deliberation.model';
+import { createRequestOption, SearchWithPagination } from 'app/shared/util/request-util';
+import * as moment from 'moment';
 import { Observable } from 'rxjs';
 import { map } from 'rxjs/operators';
-import * as moment from 'moment';
-
-import { SERVER_API_URL } from 'app/app.constants';
-import { createRequestOption, SearchWithPagination } from 'app/shared/util/request-util';
-import { IDeliberation } from 'app/shared/model/deliberation.model';
 
 type EntityResponseType = HttpResponse<IDeliberation>;
 type EntityArrayResponseType = HttpResponse<IDeliberation[]>;

@@ -1,6 +1,5 @@
 import { Component, OnInit } from '@angular/core';
 import { ActivatedRoute } from '@angular/router';
-
 import { IDeliberation } from 'app/shared/model/deliberation.model';
 
 @Component({

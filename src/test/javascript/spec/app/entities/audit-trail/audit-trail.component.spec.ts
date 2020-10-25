@@ -1,11 +1,10 @@
-import { ComponentFixture, TestBed } from '@angular/core/testing';
-import { of } from 'rxjs';
 import { HttpHeaders, HttpResponse } from '@angular/common/http';
-
-import { OrgarifTestModule } from '../../../test.module';
+import { ComponentFixture, TestBed } from '@angular/core/testing';
 import { AuditTrailComponent } from 'app/entities/audit-trail/audit-trail.component';
 import { AuditTrailService } from 'app/entities/audit-trail/audit-trail.service';
 import { AuditTrail } from 'app/shared/model/audit-trail.model';
+import { of } from 'rxjs';
+import { OrgarifTestModule } from '../../../test.module';
 
 describe('Component Tests', () => {
   describe('AuditTrail Management Component', () => {

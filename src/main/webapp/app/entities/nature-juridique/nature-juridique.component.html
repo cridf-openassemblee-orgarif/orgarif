@@ -1,79 +1,78 @@
 <div>
-    <h2 id="page-heading">
-        <span>Nature Juridiques</span>
+  <h2 id="page-heading">
+    <span>Nature Juridiques</span>
 
-        <button id="jh-create-entity" class="btn btn-primary float-right jh-create-entity create-nature-juridique" [routerLink]="['/nature-juridique/new']">
-            <fa-icon icon="plus"></fa-icon>
-            <span class="hidden-sm-down">
-            Create a new Nature Juridique
-            </span>
-        </button>
-    </h2>
+    <button
+      id="jh-create-entity"
+      class="btn btn-primary float-right jh-create-entity create-nature-juridique"
+      [routerLink]="['/nature-juridique/new']"
+    >
+      <fa-icon icon="plus"></fa-icon>
+      <span class="hidden-sm-down"> Create a new Nature Juridique </span>
+    </button>
+  </h2>
 
-    <jhi-alert-error></jhi-alert-error>
+  <jhi-alert-error></jhi-alert-error>
 
-    <jhi-alert></jhi-alert>
+  <jhi-alert></jhi-alert>
 
-    <div class="row">
-        <div class="col-sm-12">
-            <form name="searchForm" class="form-inline">
-                <div class="input-group w-100 mt-3">
-                    <input type="text" class="form-control" [(ngModel)]="currentSearch" id="currentSearch" name="currentSearch" placeholder="Query">
+  <div class="row">
+    <div class="col-sm-12">
+      <form name="searchForm" class="form-inline">
+        <div class="input-group w-100 mt-3">
+          <input type="text" class="form-control" [(ngModel)]="currentSearch" id="currentSearch" name="currentSearch" placeholder="Query" />
 
-                    <button class="input-group-append btn btn-info" (click)="search(currentSearch)">
-                        <fa-icon icon="search"></fa-icon>
-                    </button>
+          <button class="input-group-append btn btn-info" (click)="search(currentSearch)">
+            <fa-icon icon="search"></fa-icon>
+          </button>
 
-                    <button class="input-group-append btn btn-danger" (click)="search('')" *ngIf="currentSearch">
-                        <fa-icon icon="trash-alt"></fa-icon>
-                    </button>
-                </div>
-            </form>
+          <button class="input-group-append btn btn-danger" (click)="search('')" *ngIf="currentSearch">
+            <fa-icon icon="trash-alt"></fa-icon>
+          </button>
         </div>
+      </form>
     </div>
+  </div>
 
-    <div class="alert alert-warning" id="no-result" *ngIf="natureJuridiques?.length === 0">
-        <span>No natureJuridiques found</span>
-    </div>
+  <div class="alert alert-warning" id="no-result" *ngIf="natureJuridiques?.length === 0">
+    <span>No natureJuridiques found</span>
+  </div>
 
-    <div class="table-responsive" id="entities" *ngIf="natureJuridiques && natureJuridiques.length > 0">
-        <table class="table table-striped" aria-describedby="page-heading">
-            <thead>
-                <tr>
-                    <th scope="col" ><span>ID</span></th>
-                    <th scope="col" ><span>Label</span></th>
-                    <th scope="col"></th>
-                </tr>
-            </thead>
-            <tbody>
-                <tr *ngFor="let natureJuridique of natureJuridiques ;trackBy: trackId">
-                    <td><a [routerLink]="['/nature-juridique', natureJuridique.id, 'view']">{{ natureJuridique.id }}</a></td>
-                    <td>{{ natureJuridique.label }}</td>
-                    <td class="text-right">
-                        <div class="btn-group">
-                            <button type="submit"
-                                    [routerLink]="['/nature-juridique', natureJuridique.id, 'view']"
-                                    class="btn btn-info btn-sm">
-                                <fa-icon icon="eye"></fa-icon>
-                                <span class="d-none d-md-inline">View</span>
-                            </button>
+  <div class="table-responsive" id="entities" *ngIf="natureJuridiques && natureJuridiques.length > 0">
+    <table class="table table-striped" aria-describedby="page-heading">
+      <thead>
+        <tr>
+          <th scope="col"><span>ID</span></th>
+          <th scope="col"><span>Label</span></th>
+          <th scope="col"></th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr *ngFor="let natureJuridique of natureJuridiques; trackBy: trackId">
+          <td>
+            <a [routerLink]="['/nature-juridique', natureJuridique.id, 'view']">{{ natureJuridique.id }}</a>
+          </td>
+          <td>{{ natureJuridique.label }}</td>
+          <td class="text-right">
+            <div class="btn-group">
+              <button type="submit" [routerLink]="['/nature-juridique', natureJuridique.id, 'view']" class="btn btn-info btn-sm">
+                <fa-icon icon="eye"></fa-icon>
+                <span class="d-none d-md-inline">View</span>
+              </button>
 
-                            <button type="submit"
-                                    [routerLink]="['/nature-juridique', natureJuridique.id, 'edit']"
-                                    class="btn btn-primary btn-sm">
-                                <fa-icon icon="pencil-alt"></fa-icon>
-                                <span class="d-none d-md-inline">Edit</span>
-                            </button>
+              <button type="submit" [routerLink]="['/nature-juridique', natureJuridique.id, 'edit']" class="btn btn-primary btn-sm">
+                <fa-icon icon="pencil-alt"></fa-icon>
+                <span class="d-none d-md-inline">Edit</span>
+              </button>
 
-                            <button type="submit" (click)="delete(natureJuridique)"
-                                    class="btn btn-danger btn-sm">
-                                <fa-icon icon="times"></fa-icon>
-                                <span class="d-none d-md-inline">Delete</span>
-                            </button>
-                        </div>
-                    </td>
-                </tr>
-            </tbody>
-        </table>
-    </div>
+              <button type="submit" (click)="delete(natureJuridique)" class="btn btn-danger btn-sm">
+                <fa-icon icon="times"></fa-icon>
+                <span class="d-none d-md-inline">Delete</span>
+              </button>
+            </div>
+          </td>
+        </tr>
+      </tbody>
+    </table>
+  </div>
 </div>

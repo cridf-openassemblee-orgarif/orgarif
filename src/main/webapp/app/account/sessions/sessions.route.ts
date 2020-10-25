@@ -1,7 +1,6 @@
 import { Route } from '@angular/router';
-
-import { Authority } from 'app/shared/constants/authority.constants';
 import { UserRouteAccessService } from 'app/core/auth/user-route-access-service';
+import { Authority } from 'app/shared/constants/authority.constants';
 import { SessionsComponent } from './sessions.component';
 
 export const sessionsRoute: Route = {

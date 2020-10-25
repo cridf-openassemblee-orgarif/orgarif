@@ -1,11 +1,10 @@
-import { ComponentFixture, TestBed, async } from '@angular/core/testing';
+import { async, ComponentFixture, TestBed } from '@angular/core/testing';
 import { ActivatedRoute } from '@angular/router';
-import { of } from 'rxjs';
-
-import { Authority } from 'app/shared/constants/authority.constants';
-import { OrgarifTestModule } from '../../../test.module';
 import { UserManagementDetailComponent } from 'app/admin/user-management/user-management-detail.component';
 import { User } from 'app/core/user/user.model';
+import { Authority } from 'app/shared/constants/authority.constants';
+import { of } from 'rxjs';
+import { OrgarifTestModule } from '../../../test.module';
 
 describe('Component Tests', () => {
   describe('User Management Detail Component', () => {

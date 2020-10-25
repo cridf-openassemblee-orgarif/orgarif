@@ -1,6 +1,6 @@
 import { IElu } from 'app/shared/model/elu.model';
-import { IOrganisme } from 'app/shared/model/organisme.model';
 import { IInstance } from 'app/shared/model/instance.model';
+import { IOrganisme } from 'app/shared/model/organisme.model';
 
 export interface IRepresentant {
   id?: number;

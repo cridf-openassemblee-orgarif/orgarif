@@ -1,8 +1,7 @@
 import { Component } from '@angular/core';
 import { NgbActiveModal } from '@ng-bootstrap/ng-bootstrap';
-import { JhiEventManager } from 'ng-jhipster';
-
 import { IAuditTrail } from 'app/shared/model/audit-trail.model';
+import { JhiEventManager } from 'ng-jhipster';
 import { AuditTrailService } from './audit-trail.service';
 
 @Component({

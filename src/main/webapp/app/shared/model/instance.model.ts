@@ -1,6 +1,6 @@
+import { IDeliberation } from 'app/shared/model/deliberation.model';
 import { IOrganisme } from 'app/shared/model/organisme.model';
 import { IRepresentant } from 'app/shared/model/representant.model';
-import { IDeliberation } from 'app/shared/model/deliberation.model';
 
 export interface IInstance {
   id?: number;

@@ -1,12 +1,11 @@
-import { ComponentFixture, TestBed, fakeAsync, tick } from '@angular/core/testing';
 import { HttpResponse } from '@angular/common/http';
+import { ComponentFixture, fakeAsync, TestBed, tick } from '@angular/core/testing';
 import { FormBuilder } from '@angular/forms';
-import { of } from 'rxjs';
-
-import { OrgarifTestModule } from '../../../test.module';
 import { NatureJuridiqueUpdateComponent } from 'app/entities/nature-juridique/nature-juridique-update.component';
 import { NatureJuridiqueService } from 'app/entities/nature-juridique/nature-juridique.service';
 import { NatureJuridique } from 'app/shared/model/nature-juridique.model';
+import { of } from 'rxjs';
+import { OrgarifTestModule } from '../../../test.module';
 
 describe('Component Tests', () => {
   describe('NatureJuridique Management Update Component', () => {

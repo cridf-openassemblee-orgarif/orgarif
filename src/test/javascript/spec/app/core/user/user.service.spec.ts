@@ -1,12 +1,11 @@
-import { TestBed } from '@angular/core/testing';
 import { HttpErrorResponse } from '@angular/common/http';
 import { HttpClientTestingModule, HttpTestingController } from '@angular/common/http/testing';
-import { JhiDateUtils } from 'ng-jhipster';
-
-import { Authority } from 'app/shared/constants/authority.constants';
-import { UserService } from 'app/core/user/user.service';
-import { User } from 'app/core/user/user.model';
+import { TestBed } from '@angular/core/testing';
 import { SERVER_API_URL } from 'app/app.constants';
+import { User } from 'app/core/user/user.model';
+import { UserService } from 'app/core/user/user.service';
+import { Authority } from 'app/shared/constants/authority.constants';
+import { JhiDateUtils } from 'ng-jhipster';
 
 describe('Service Tests', () => {
   describe('User Service', () => {

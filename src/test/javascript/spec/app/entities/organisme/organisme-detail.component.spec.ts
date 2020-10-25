@@ -1,10 +1,9 @@
 import { ComponentFixture, TestBed } from '@angular/core/testing';
 import { ActivatedRoute } from '@angular/router';
-import { of } from 'rxjs';
-
-import { OrgarifTestModule } from '../../../test.module';
 import { OrganismeDetailComponent } from 'app/entities/organisme/organisme-detail.component';
 import { Organisme } from 'app/shared/model/organisme.model';
+import { of } from 'rxjs';
+import { OrgarifTestModule } from '../../../test.module';
 
 describe('Component Tests', () => {
   describe('Organisme Management Detail Component', () => {

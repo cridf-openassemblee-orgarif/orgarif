@@ -1,10 +1,9 @@
-import { ComponentFixture, TestBed, async } from '@angular/core/testing';
 import { HttpErrorResponse, HttpHeaders } from '@angular/common/http';
-import { JhiAlertService, JhiEventManager } from 'ng-jhipster';
-
-import { OrgarifTestModule } from '../../../test.module';
+import { async, ComponentFixture, TestBed } from '@angular/core/testing';
 import { AlertErrorComponent } from 'app/shared/alert/alert-error.component';
+import { JhiAlertService, JhiEventManager } from 'ng-jhipster';
 import { MockAlertService } from '../../../helpers/mock-alert.service';
+import { OrgarifTestModule } from '../../../test.module';
 
 describe('Component Tests', () => {
   describe('Alert Error Component', () => {

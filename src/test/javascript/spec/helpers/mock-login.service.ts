@@ -1,8 +1,7 @@
 import Spy = jasmine.Spy;
-import { of } from 'rxjs';
-
-import { SpyObject } from './spyobject';
 import { LoginService } from 'app/core/login/login.service';
+import { of } from 'rxjs';
+import { SpyObject } from './spyobject';
 
 export class MockLoginService extends SpyObject {
   loginSpy: Spy;

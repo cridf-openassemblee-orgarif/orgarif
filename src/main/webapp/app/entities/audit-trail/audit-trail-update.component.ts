@@ -1,13 +1,12 @@
-import { Component, OnInit } from '@angular/core';
 import { HttpResponse } from '@angular/common/http';
+import { Component, OnInit } from '@angular/core';
 // eslint-disable-next-line @typescript-eslint/no-unused-vars
-import { FormBuilder, Validators } from '@angular/forms';
+import { FormBuilder } from '@angular/forms';
 import { ActivatedRoute } from '@angular/router';
-import { Observable } from 'rxjs';
-import * as moment from 'moment';
 import { DATE_TIME_FORMAT } from 'app/shared/constants/input.constants';
-
-import { IAuditTrail, AuditTrail } from 'app/shared/model/audit-trail.model';
+import { AuditTrail, IAuditTrail } from 'app/shared/model/audit-trail.model';
+import * as moment from 'moment';
+import { Observable } from 'rxjs';
 import { AuditTrailService } from './audit-trail.service';
 
 @Component({

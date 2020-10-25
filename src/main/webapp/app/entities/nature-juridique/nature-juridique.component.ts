@@ -1,13 +1,12 @@
-import { Component, OnInit, OnDestroy } from '@angular/core';
 import { HttpResponse } from '@angular/common/http';
+import { Component, OnDestroy, OnInit } from '@angular/core';
 import { ActivatedRoute } from '@angular/router';
-import { Subscription } from 'rxjs';
-import { JhiEventManager } from 'ng-jhipster';
 import { NgbModal } from '@ng-bootstrap/ng-bootstrap';
-
 import { INatureJuridique } from 'app/shared/model/nature-juridique.model';
-import { NatureJuridiqueService } from './nature-juridique.service';
+import { JhiEventManager } from 'ng-jhipster';
+import { Subscription } from 'rxjs';
 import { NatureJuridiqueDeleteDialogComponent } from './nature-juridique-delete-dialog.component';
+import { NatureJuridiqueService } from './nature-juridique.service';
 
 @Component({
   selector: 'jhi-nature-juridique',

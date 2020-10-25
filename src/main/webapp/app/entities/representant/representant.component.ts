@@ -1,15 +1,13 @@
-import { Component, OnInit, OnDestroy } from '@angular/core';
 import { HttpHeaders, HttpResponse } from '@angular/common/http';
-import { ActivatedRoute, ParamMap, Router, Data } from '@angular/router';
-import { Subscription, combineLatest } from 'rxjs';
-import { JhiEventManager } from 'ng-jhipster';
+import { Component, OnDestroy, OnInit } from '@angular/core';
+import { ActivatedRoute, Data, ParamMap, Router } from '@angular/router';
 import { NgbModal } from '@ng-bootstrap/ng-bootstrap';
-
-import { IRepresentant } from 'app/shared/model/representant.model';
-
 import { ITEMS_PER_PAGE } from 'app/shared/constants/pagination.constants';
-import { RepresentantService } from './representant.service';
+import { IRepresentant } from 'app/shared/model/representant.model';
+import { JhiEventManager } from 'ng-jhipster';
+import { combineLatest, Subscription } from 'rxjs';
 import { RepresentantDeleteDialogComponent } from './representant-delete-dialog.component';
+import { RepresentantService } from './representant.service';
 
 @Component({
   selector: 'jhi-representant',

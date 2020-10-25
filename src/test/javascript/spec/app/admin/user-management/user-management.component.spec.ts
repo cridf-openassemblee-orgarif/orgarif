@@ -1,11 +1,10 @@
-import { ComponentFixture, TestBed, async, inject, fakeAsync, tick } from '@angular/core/testing';
 import { HttpHeaders, HttpResponse } from '@angular/common/http';
-import { of } from 'rxjs';
-
-import { OrgarifTestModule } from '../../../test.module';
+import { async, ComponentFixture, fakeAsync, inject, TestBed, tick } from '@angular/core/testing';
 import { UserManagementComponent } from 'app/admin/user-management/user-management.component';
-import { UserService } from 'app/core/user/user.service';
 import { User } from 'app/core/user/user.model';
+import { UserService } from 'app/core/user/user.service';
+import { of } from 'rxjs';
+import { OrgarifTestModule } from '../../../test.module';
 
 describe('Component Tests', () => {
   describe('User Management Component', () => {

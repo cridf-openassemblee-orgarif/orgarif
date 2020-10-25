@@ -1,14 +1,13 @@
-import { ComponentFixture, TestBed, async, inject, fakeAsync, tick } from '@angular/core/testing';
+import { async, ComponentFixture, fakeAsync, inject, TestBed, tick } from '@angular/core/testing';
 import { FormBuilder } from '@angular/forms';
 import { Router } from '@angular/router';
 import { NgbActiveModal } from '@ng-bootstrap/ng-bootstrap';
-
 import { LoginService } from 'app/core/login/login.service';
 import { LoginModalComponent } from 'app/shared/login/login.component';
-import { OrgarifTestModule } from '../../../test.module';
+import { MockActiveModal } from '../../../helpers/mock-active-modal.service';
 import { MockLoginService } from '../../../helpers/mock-login.service';
 import { MockRouter } from '../../../helpers/mock-route.service';
-import { MockActiveModal } from '../../../helpers/mock-active-modal.service';
+import { OrgarifTestModule } from '../../../test.module';
 
 describe('Component Tests', () => {
   describe('LoginComponent', () => {

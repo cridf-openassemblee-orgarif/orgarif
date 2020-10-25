@@ -1,13 +1,12 @@
-import { Component, OnInit, OnDestroy } from '@angular/core';
 import { HttpResponse } from '@angular/common/http';
+import { Component, OnDestroy, OnInit } from '@angular/core';
 import { ActivatedRoute } from '@angular/router';
-import { Subscription } from 'rxjs';
-import { JhiEventManager } from 'ng-jhipster';
 import { NgbModal } from '@ng-bootstrap/ng-bootstrap';
-
 import { ITypeStructure } from 'app/shared/model/type-structure.model';
-import { TypeStructureService } from './type-structure.service';
+import { JhiEventManager } from 'ng-jhipster';
+import { Subscription } from 'rxjs';
 import { TypeStructureDeleteDialogComponent } from './type-structure-delete-dialog.component';
+import { TypeStructureService } from './type-structure.service';
 
 @Component({
   selector: 'jhi-type-structure',

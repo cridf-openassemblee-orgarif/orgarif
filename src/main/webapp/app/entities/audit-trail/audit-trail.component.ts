@@ -1,13 +1,12 @@
-import { Component, OnInit, OnDestroy } from '@angular/core';
 import { HttpResponse } from '@angular/common/http';
+import { Component, OnDestroy, OnInit } from '@angular/core';
 import { ActivatedRoute } from '@angular/router';
-import { Subscription } from 'rxjs';
-import { JhiEventManager } from 'ng-jhipster';
 import { NgbModal } from '@ng-bootstrap/ng-bootstrap';
-
 import { IAuditTrail } from 'app/shared/model/audit-trail.model';
-import { AuditTrailService } from './audit-trail.service';
+import { JhiEventManager } from 'ng-jhipster';
+import { Subscription } from 'rxjs';
 import { AuditTrailDeleteDialogComponent } from './audit-trail-delete-dialog.component';
+import { AuditTrailService } from './audit-trail.service';
 
 @Component({
   selector: 'jhi-audit-trail',

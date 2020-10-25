@@ -1,11 +1,10 @@
-import { ComponentFixture, TestBed, async } from '@angular/core/testing';
-import { of } from 'rxjs';
-
-import { OrgarifTestModule } from '../../../test.module';
-import { ProfileInfo } from 'app/layouts/profiles/profile-info.model';
-import { NavbarComponent } from 'app/layouts/navbar/navbar.component';
+import { async, ComponentFixture, TestBed } from '@angular/core/testing';
 import { AccountService } from 'app/core/auth/account.service';
+import { NavbarComponent } from 'app/layouts/navbar/navbar.component';
+import { ProfileInfo } from 'app/layouts/profiles/profile-info.model';
 import { ProfileService } from 'app/layouts/profiles/profile.service';
+import { of } from 'rxjs';
+import { OrgarifTestModule } from '../../../test.module';
 
 describe('Component Tests', () => {
   describe('Navbar Component', () => {

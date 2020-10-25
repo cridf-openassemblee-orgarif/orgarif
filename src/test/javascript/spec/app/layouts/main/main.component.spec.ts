@@ -1,11 +1,10 @@
 import { async, ComponentFixture, TestBed } from '@angular/core/testing';
-import { Router, RouterEvent, NavigationEnd } from '@angular/router';
 import { Title } from '@angular/platform-browser';
-import { Subject } from 'rxjs';
-
+import { NavigationEnd, Router, RouterEvent } from '@angular/router';
 import { MainComponent } from 'app/layouts/main/main.component';
-import { OrgarifTestModule } from '../../../test.module';
+import { Subject } from 'rxjs';
 import { MockRouter } from '../../../helpers/mock-route.service';
+import { OrgarifTestModule } from '../../../test.module';
 
 describe('Component Tests', () => {
   describe('MainComponent', () => {

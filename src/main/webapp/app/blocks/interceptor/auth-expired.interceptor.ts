@@ -1,12 +1,11 @@
+import { HttpErrorResponse, HttpEvent, HttpHandler, HttpInterceptor, HttpRequest } from '@angular/common/http';
 import { Injectable } from '@angular/core';
-import { HttpInterceptor, HttpRequest, HttpHandler, HttpEvent, HttpErrorResponse } from '@angular/common/http';
+import { Router } from '@angular/router';
+import { StateStorageService } from 'app/core/auth/state-storage.service';
+import { LoginModalService } from 'app/core/login/login-modal.service';
+import { LoginService } from 'app/core/login/login.service';
 import { Observable } from 'rxjs';
 import { tap } from 'rxjs/operators';
-import { Router } from '@angular/router';
-
-import { LoginService } from 'app/core/login/login.service';
-import { LoginModalService } from 'app/core/login/login-modal.service';
-import { StateStorageService } from 'app/core/auth/state-storage.service';
 
 @Injectable()
 export class AuthExpiredInterceptor implements HttpInterceptor {

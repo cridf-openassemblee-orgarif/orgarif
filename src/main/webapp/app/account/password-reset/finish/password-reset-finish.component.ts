@@ -1,7 +1,6 @@
-import { Component, OnInit, AfterViewInit, ElementRef, ViewChild } from '@angular/core';
+import { AfterViewInit, Component, ElementRef, OnInit, ViewChild } from '@angular/core';
 import { FormBuilder, Validators } from '@angular/forms';
 import { ActivatedRoute } from '@angular/router';
-
 import { LoginModalService } from 'app/core/login/login-modal.service';
 import { PasswordResetFinishService } from './password-reset-finish.service';
 

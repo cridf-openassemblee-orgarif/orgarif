@@ -1,10 +1,9 @@
 import { ComponentFixture, TestBed } from '@angular/core/testing';
 import { ActivatedRoute } from '@angular/router';
-import { of } from 'rxjs';
-
-import { OrgarifTestModule } from '../../../test.module';
 import { TypeStructureDetailComponent } from 'app/entities/type-structure/type-structure-detail.component';
 import { TypeStructure } from 'app/shared/model/type-structure.model';
+import { of } from 'rxjs';
+import { OrgarifTestModule } from '../../../test.module';
 
 describe('Component Tests', () => {
   describe('TypeStructure Management Detail Component', () => {

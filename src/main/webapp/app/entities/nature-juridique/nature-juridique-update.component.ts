@@ -1,11 +1,10 @@
-import { Component, OnInit } from '@angular/core';
 import { HttpResponse } from '@angular/common/http';
+import { Component, OnInit } from '@angular/core';
 // eslint-disable-next-line @typescript-eslint/no-unused-vars
 import { FormBuilder, Validators } from '@angular/forms';
 import { ActivatedRoute } from '@angular/router';
-import { Observable } from 'rxjs';
-
 import { INatureJuridique, NatureJuridique } from 'app/shared/model/nature-juridique.model';
+import { Observable } from 'rxjs';
 import { NatureJuridiqueService } from './nature-juridique.service';
 
 @Component({

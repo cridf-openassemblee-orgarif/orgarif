@@ -1,16 +1,15 @@
-import { Injectable } from '@angular/core';
 import { HttpResponse } from '@angular/common/http';
-import { Resolve, ActivatedRouteSnapshot, Routes, Router } from '@angular/router';
-import { Observable, of, EMPTY } from 'rxjs';
-import { flatMap } from 'rxjs/operators';
-
-import { Authority } from 'app/shared/constants/authority.constants';
+import { Injectable } from '@angular/core';
+import { ActivatedRouteSnapshot, Resolve, Router, Routes } from '@angular/router';
 import { UserRouteAccessService } from 'app/core/auth/user-route-access-service';
+import { Authority } from 'app/shared/constants/authority.constants';
 import { ISecteur, Secteur } from 'app/shared/model/secteur.model';
-import { SecteurService } from './secteur.service';
-import { SecteurComponent } from './secteur.component';
+import { EMPTY, Observable, of } from 'rxjs';
+import { flatMap } from 'rxjs/operators';
 import { SecteurDetailComponent } from './secteur-detail.component';
 import { SecteurUpdateComponent } from './secteur-update.component';
+import { SecteurComponent } from './secteur.component';
+import { SecteurService } from './secteur.service';
 
 @Injectable({ providedIn: 'root' })
 export class SecteurResolve implements Resolve<ISecteur> {

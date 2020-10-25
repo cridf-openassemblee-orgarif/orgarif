@@ -1,8 +1,7 @@
 import { Component } from '@angular/core';
 import { NgbActiveModal } from '@ng-bootstrap/ng-bootstrap';
-import { JhiEventManager } from 'ng-jhipster';
-
 import { IElu } from 'app/shared/model/elu.model';
+import { JhiEventManager } from 'ng-jhipster';
 import { EluService } from './elu.service';
 
 @Component({

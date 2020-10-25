@@ -1,16 +1,15 @@
-import { Injectable } from '@angular/core';
 import { HttpResponse } from '@angular/common/http';
-import { Resolve, ActivatedRouteSnapshot, Routes, Router } from '@angular/router';
-import { Observable, of, EMPTY } from 'rxjs';
-import { flatMap } from 'rxjs/operators';
-
-import { Authority } from 'app/shared/constants/authority.constants';
+import { Injectable } from '@angular/core';
+import { ActivatedRouteSnapshot, Resolve, Router, Routes } from '@angular/router';
 import { UserRouteAccessService } from 'app/core/auth/user-route-access-service';
+import { Authority } from 'app/shared/constants/authority.constants';
 import { INatureJuridique, NatureJuridique } from 'app/shared/model/nature-juridique.model';
-import { NatureJuridiqueService } from './nature-juridique.service';
-import { NatureJuridiqueComponent } from './nature-juridique.component';
+import { EMPTY, Observable, of } from 'rxjs';
+import { flatMap } from 'rxjs/operators';
 import { NatureJuridiqueDetailComponent } from './nature-juridique-detail.component';
 import { NatureJuridiqueUpdateComponent } from './nature-juridique-update.component';
+import { NatureJuridiqueComponent } from './nature-juridique.component';
+import { NatureJuridiqueService } from './nature-juridique.service';
 
 @Injectable({ providedIn: 'root' })
 export class NatureJuridiqueResolve implements Resolve<INatureJuridique> {

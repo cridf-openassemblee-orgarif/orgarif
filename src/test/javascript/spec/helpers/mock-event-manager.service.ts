@@ -1,6 +1,5 @@
 import Spy = jasmine.Spy;
 import { JhiEventManager } from 'ng-jhipster';
-
 import { SpyObject } from './spyobject';
 
 export class MockEventManager extends SpyObject {

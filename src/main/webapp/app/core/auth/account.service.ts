@@ -1,12 +1,11 @@
+import { HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { Router } from '@angular/router';
-import { HttpClient } from '@angular/common/http';
-import { Observable, ReplaySubject, of } from 'rxjs';
-import { shareReplay, tap, catchError } from 'rxjs/operators';
-import { StateStorageService } from 'app/core/auth/state-storage.service';
-
 import { SERVER_API_URL } from 'app/app.constants';
+import { StateStorageService } from 'app/core/auth/state-storage.service';
 import { Account } from 'app/core/user/account.model';
+import { Observable, of, ReplaySubject } from 'rxjs';
+import { catchError, shareReplay, tap } from 'rxjs/operators';
 
 @Injectable({ providedIn: 'root' })
 export class AccountService {

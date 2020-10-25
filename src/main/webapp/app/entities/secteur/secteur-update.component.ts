@@ -1,11 +1,10 @@
-import { Component, OnInit } from '@angular/core';
 import { HttpResponse } from '@angular/common/http';
+import { Component, OnInit } from '@angular/core';
 // eslint-disable-next-line @typescript-eslint/no-unused-vars
 import { FormBuilder, Validators } from '@angular/forms';
 import { ActivatedRoute } from '@angular/router';
-import { Observable } from 'rxjs';
-
 import { ISecteur, Secteur } from 'app/shared/model/secteur.model';
+import { Observable } from 'rxjs';
 import { SecteurService } from './secteur.service';
 
 @Component({

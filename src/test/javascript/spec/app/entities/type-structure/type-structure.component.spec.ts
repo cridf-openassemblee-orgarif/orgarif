@@ -1,11 +1,10 @@
-import { ComponentFixture, TestBed } from '@angular/core/testing';
-import { of } from 'rxjs';
 import { HttpHeaders, HttpResponse } from '@angular/common/http';
-
-import { OrgarifTestModule } from '../../../test.module';
+import { ComponentFixture, TestBed } from '@angular/core/testing';
 import { TypeStructureComponent } from 'app/entities/type-structure/type-structure.component';
 import { TypeStructureService } from 'app/entities/type-structure/type-structure.service';
 import { TypeStructure } from 'app/shared/model/type-structure.model';
+import { of } from 'rxjs';
+import { OrgarifTestModule } from '../../../test.module';
 
 describe('Component Tests', () => {
   describe('TypeStructure Management Component', () => {

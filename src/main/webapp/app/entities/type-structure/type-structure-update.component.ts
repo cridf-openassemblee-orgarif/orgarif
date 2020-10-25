@@ -1,11 +1,10 @@
-import { Component, OnInit } from '@angular/core';
 import { HttpResponse } from '@angular/common/http';
+import { Component, OnInit } from '@angular/core';
 // eslint-disable-next-line @typescript-eslint/no-unused-vars
 import { FormBuilder, Validators } from '@angular/forms';
 import { ActivatedRoute } from '@angular/router';
-import { Observable } from 'rxjs';
-
 import { ITypeStructure, TypeStructure } from 'app/shared/model/type-structure.model';
+import { Observable } from 'rxjs';
 import { TypeStructureService } from './type-structure.service';
 
 @Component({

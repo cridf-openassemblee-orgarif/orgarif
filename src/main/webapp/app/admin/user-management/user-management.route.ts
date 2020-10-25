@@ -1,12 +1,11 @@
 import { Injectable } from '@angular/core';
-import { Resolve, ActivatedRouteSnapshot, Routes } from '@angular/router';
-import { Observable, of } from 'rxjs';
-
-import { User, IUser } from 'app/core/user/user.model';
+import { ActivatedRouteSnapshot, Resolve, Routes } from '@angular/router';
+import { IUser, User } from 'app/core/user/user.model';
 import { UserService } from 'app/core/user/user.service';
-import { UserManagementComponent } from './user-management.component';
+import { Observable, of } from 'rxjs';
 import { UserManagementDetailComponent } from './user-management-detail.component';
 import { UserManagementUpdateComponent } from './user-management-update.component';
+import { UserManagementComponent } from './user-management.component';
 
 @Injectable({ providedIn: 'root' })
 export class UserManagementResolve implements Resolve<IUser> {

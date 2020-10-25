@@ -1,5 +1,5 @@
-import { TestBed, getTestBed } from '@angular/core/testing';
 import { HttpClientTestingModule, HttpTestingController } from '@angular/common/http/testing';
+import { getTestBed, TestBed } from '@angular/core/testing';
 import { SecteurService } from 'app/entities/secteur/secteur.service';
 import { ISecteur, Secteur } from 'app/shared/model/secteur.model';
 

@@ -1,12 +1,11 @@
-import { ComponentFixture, TestBed, fakeAsync, tick } from '@angular/core/testing';
 import { HttpResponse } from '@angular/common/http';
+import { ComponentFixture, fakeAsync, TestBed, tick } from '@angular/core/testing';
 import { FormBuilder } from '@angular/forms';
-import { of } from 'rxjs';
-
-import { OrgarifTestModule } from '../../../test.module';
 import { AuditTrailUpdateComponent } from 'app/entities/audit-trail/audit-trail-update.component';
 import { AuditTrailService } from 'app/entities/audit-trail/audit-trail.service';
 import { AuditTrail } from 'app/shared/model/audit-trail.model';
+import { of } from 'rxjs';
+import { OrgarifTestModule } from '../../../test.module';
 
 describe('Component Tests', () => {
   describe('AuditTrail Management Update Component', () => {

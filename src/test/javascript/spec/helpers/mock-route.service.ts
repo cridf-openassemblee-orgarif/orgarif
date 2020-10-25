@@ -1,7 +1,6 @@
 import Spy = jasmine.Spy;
-import { ActivatedRoute, Router, RouterEvent, Data, Params } from '@angular/router';
+import { ActivatedRoute, Data, Params, Router, RouterEvent } from '@angular/router';
 import { Observable, ReplaySubject } from 'rxjs';
-
 import { SpyObject } from './spyobject';
 
 export class MockActivatedRoute extends ActivatedRoute {

@@ -1,50 +1,47 @@
 <div class="row justify-content-center">
-    <div class="col-8">
-        <div *ngIf="instance">
-            <h2><span>Instance</span> {{ instance.id }}</h2>
+  <div class="col-8">
+    <div *ngIf="instance">
+      <h2><span>Instance</span> {{ instance.id }}</h2>
 
-            <hr>
+      <hr />
 
-            <jhi-alert-error></jhi-alert-error>
+      <jhi-alert-error></jhi-alert-error>
 
-            <dl class="row-md jh-entity-details">
-                <dt><span>Nom</span></dt>
-                <dd>
-                    <span>{{ instance.nom }}</span>
-                </dd>
-                <dt><span>Nombre Representants</span></dt>
-                <dd>
-                    <span>{{ instance.nombreRepresentants }}</span>
-                </dd>
-                <dt><span>Nombre Suppleants</span></dt>
-                <dd>
-                    <span>{{ instance.nombreSuppleants }}</span>
-                </dd>
-                <dt><span>Organisme</span></dt>
-                <dd>
-                    <div *ngIf="instance.organisme">
-                        <a [routerLink]="['/organisme', instance.organisme?.id, 'view']">{{ instance.organisme?.nom }}</a>
-                    </div>
-                </dd>
-                <dt><span>Deliberation</span></dt>
-                <dd>
-                    <span *ngFor="let deliberation of instance.deliberations; let last = last">
-                        <a [routerLink]="['/deliberation', deliberation?.id, 'view']">{{ deliberation.label }}</a>{{ last ? '' : ', ' }}
-                    </span>
-                </dd>
-            </dl>
+      <dl class="row-md jh-entity-details">
+        <dt><span>Nom</span></dt>
+        <dd>
+          <span>{{ instance.nom }}</span>
+        </dd>
+        <dt><span>Nombre Representants</span></dt>
+        <dd>
+          <span>{{ instance.nombreRepresentants }}</span>
+        </dd>
+        <dt><span>Nombre Suppleants</span></dt>
+        <dd>
+          <span>{{ instance.nombreSuppleants }}</span>
+        </dd>
+        <dt><span>Organisme</span></dt>
+        <dd>
+          <div *ngIf="instance.organisme">
+            <a [routerLink]="['/organisme', instance.organisme?.id, 'view']">{{ instance.organisme?.nom }}</a>
+          </div>
+        </dd>
+        <dt><span>Deliberation</span></dt>
+        <dd>
+          <span *ngFor="let deliberation of instance.deliberations; let last = last">
+            <a [routerLink]="['/deliberation', deliberation?.id, 'view']">{{ deliberation.label }}</a
+            >{{ last ? '' : ', ' }}
+          </span>
+        </dd>
+      </dl>
 
-            <button type="submit"
-                    (click)="previousState()"
-                    class="btn btn-info">
-                <fa-icon icon="arrow-left"></fa-icon>&nbsp;<span>Back</span>
-            </button>
+      <button type="submit" (click)="previousState()" class="btn btn-info">
+        <fa-icon icon="arrow-left"></fa-icon>&nbsp;<span>Back</span>
+      </button>
 
-            <button type="button"
-                    [routerLink]="['/instance', instance.id, 'edit']"
-                    class="btn btn-primary">
-                <fa-icon icon="pencil-alt"></fa-icon>&nbsp;<span>Edit</span>
-            </button>
-        </div>
+      <button type="button" [routerLink]="['/instance', instance.id, 'edit']" class="btn btn-primary">
+        <fa-icon icon="pencil-alt"></fa-icon>&nbsp;<span>Edit</span>
+      </button>
     </div>
+  </div>
 </div>

@@ -1,13 +1,12 @@
 import { ElementRef } from '@angular/core';
-import { ComponentFixture, TestBed, inject, tick, fakeAsync } from '@angular/core/testing';
+import { ComponentFixture, fakeAsync, inject, TestBed, tick } from '@angular/core/testing';
 import { FormBuilder } from '@angular/forms';
 import { ActivatedRoute } from '@angular/router';
-import { of, throwError } from 'rxjs';
-
-import { OrgarifTestModule } from '../../../../test.module';
 import { PasswordResetFinishComponent } from 'app/account/password-reset/finish/password-reset-finish.component';
 import { PasswordResetFinishService } from 'app/account/password-reset/finish/password-reset-finish.service';
+import { of, throwError } from 'rxjs';
 import { MockActivatedRoute } from '../../../../helpers/mock-route.service';
+import { OrgarifTestModule } from '../../../../test.module';
 
 describe('Component Tests', () => {
   describe('PasswordResetFinishComponent', () => {
