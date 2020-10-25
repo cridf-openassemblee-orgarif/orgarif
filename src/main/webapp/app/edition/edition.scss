@@ -1,0 +1,11 @@
+@import '../shared/constants/vars';
+
+.edition-component {
+  .natures-block {
+    margin: 20px 0;
+    display: flex;
+    > div {
+      flex: 1;
+    }
+  }
+}

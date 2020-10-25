@@ -7,7 +7,6 @@ import org.springframework.stereotype.Service
 open class HttpService(val okHttpClient: OkHttpClient) {
 
     enum class RequestBodyType(val mediaType: MediaType) {
-        // FIXMENOW constant MediaType
         JSON(MediaType.parse("application/json; charset=utf-8")!!),
         FORM(MediaType.parse("application/x-www-form-urlencoded")!!)
     }
@@ -70,17 +69,6 @@ open class HttpService(val okHttpClient: OkHttpClient) {
             // bytes() calls close()
             BytesResponse(it.code(), it.body()?.bytes())
         }
-
-    // FIXMENOW statuer sur le retour de l'inputstream, globalement pr close la response, il faudrait créer un nouvel
-    // inputstream, ce qui tue intérêt na ?
-//    fun postAndReturnInputStream(url: String,
-//                                 body: String,
-//                                 requestBodyType: RequestBodyType,
-//                                 vararg headers: Pair<Header, String>): InputStreamResponse =
-//            post(url, body, requestBodyType, *headers).let {
-//                // bytes() calls close()
-//                InputStreamResponse(it.code(), it.body()?.byteStream())
-//            }
 
     private fun doPost(url: String,
                        body: String,

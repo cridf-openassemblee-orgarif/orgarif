@@ -3,6 +3,7 @@
   <div *ngIf="organisme">
     <div class="header">
       <h2>{{ organisme.nom }}</h2>
+      <a [routerLink]="['/edition', organisme.id]">Éditer</a>
       <p class="nature-juridique">Nature juridique : {{ organisme.natureJuridique?.label }}</p>
     </div>
     <div class="content">
@@ -17,19 +18,11 @@
       <div *ngIf="organisme.representants && organisme.representants.length > 0" class="content-block flex-block-2">
         <h3>Représentants / suppléants</h3>
         <div style="display: flex">
-          <div class="content-block flex-block-1 first">
-            <p *ngFor="let r of organisme.representants" class="representants">
-              {{ r.elu?.civilite }}
-              {{ r.elu?.prenom }}
-              {{ r.elu?.nom }}
-            </p>
+          <div class="content-block flex-block-1 first" *ngIf="organisme.representants">
+            <jhi-orgarif-representants-block [representants]="organisme.representants"></jhi-orgarif-representants-block>
           </div>
-          <div class="content-block flex-block-1">
-            <p *ngFor="let r of organisme.suppleants" class="representants">
-              {{ r.elu?.civilite }}
-              {{ r.elu?.prenom }}
-              {{ r.elu?.nom }}
-            </p>
+          <div class="content-block flex-block-1" *ngIf="organisme.suppleants">
+            <jhi-orgarif-representants-block [representants]="organisme.suppleants"></jhi-orgarif-representants-block>
           </div>
         </div>
       </div>
@@ -43,21 +36,11 @@
           <div class="content-block flex-block-2 first">
             <h4>Représentants / suppléants</h4>
             <div style="display: flex">
-              <div class="content-block flex-block-1 first">
-                <p *ngFor="let r of i.representants" class="representants">
-                  {{ r.elu?.civilite }}
-                  {{ r.elu?.prenom }}
-                  {{ r.elu?.nom }}
-                  <!--                        ({{ r.groupePolitique }})-->
-                </p>
+              <div class="content-block flex-block-1 first" *ngIf="i.representants">
+                <jhi-orgarif-representants-block [representants]="i.representants"></jhi-orgarif-representants-block>
               </div>
-              <div class="content-block flex-block-1">
-                <p *ngFor="let r of i.suppleants" class="representants">
-                  {{ r.elu?.civilite }}
-                  {{ r.elu?.prenom }}
-                  {{ r.elu?.nom }}
-                  <!--                    ({{ r.groupePolitique }})-->
-                </p>
+              <div class="content-block flex-block-1" *ngIf="i.suppleants">
+                <jhi-orgarif-representants-block [representants]="i.suppleants"></jhi-orgarif-representants-block>
               </div>
             </div>
           </div>

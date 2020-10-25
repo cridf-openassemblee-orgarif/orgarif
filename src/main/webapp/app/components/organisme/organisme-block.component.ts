@@ -1,5 +1,5 @@
 import { Component, Input } from '@angular/core';
-import { IOrganisme } from 'app/shared/model/organisme.model';
+import { IOrganisme } from '../../shared/model/organisme.model';
 
 @Component({
   selector: 'jhi-orgarif-organisme-block',
@@ -7,16 +7,15 @@ import { IOrganisme } from 'app/shared/model/organisme.model';
   styleUrls: ['organisme-block.scss'],
 })
 export class OrganismeBlockComponent {
-  _organisme: IOrganisme | undefined;
+  // TODO-lazy-init
+  private _organisme: IOrganisme = null!;
 
   @Input()
-  // TODO dans la liste des lol : IOrganisme plantera le compilo ici...
-  // mais Organisme semble marcher
-  set organisme(organisme: IOrganisme | undefined) {
+  set organisme(organisme: IOrganisme) {
     this._organisme = organisme;
   }
 
-  get organisme(): IOrganisme | undefined {
+  get organisme(): IOrganisme {
     return this._organisme;
   }
 }

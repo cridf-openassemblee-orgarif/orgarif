@@ -10,27 +10,28 @@ import org.springframework.transaction.annotation.Transactional
 import orgarif.domain.Organisme
 import orgarif.repository.EluRepository
 import orgarif.repository.OrganismeRepository
+import java.util.*
 
 @Service
 open class ListService(val organismeRepository: OrganismeRepository,
                        val eluRepository: EluRepository) {
 
     @Transactional
-    open fun get(id: Long): Organisme {
+    open fun get(id: Long): Optional<Organisme> {
         val optional = organismeRepository.findById(id)
-        if (optional.isEmpty) {
-            throw IllegalStateException()
+        optional.ifPresent {
+            optional.get().apply {
+                Hibernate.initialize(representants)
+                Hibernate.initialize(suppleants)
+                Hibernate.initialize(deliberations)
+                instances.forEach { i ->
+                    Hibernate.initialize(i.representants)
+                    Hibernate.initialize(i.suppleants)
+                    Hibernate.initialize(i.deliberations)
+                }
+            }
         }
-        val organisme = optional.get()
-        Hibernate.initialize(organisme.representants)
-        Hibernate.initialize(organisme.suppleants)
-        Hibernate.initialize(organisme.deliberations)
-        organisme.instances.forEach { i ->
-            Hibernate.initialize(i.representants)
-            Hibernate.initialize(i.suppleants)
-            Hibernate.initialize(i.deliberations)
-        }
-        return organisme
+        return optional
     }
 
     @Transactional

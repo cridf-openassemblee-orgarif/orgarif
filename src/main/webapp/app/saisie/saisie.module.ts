@@ -1,7 +1,7 @@
 import { NgModule } from '@angular/core';
 import { RouterModule } from '@angular/router';
 import { NgSelectModule } from '@ng-select/ng-select';
-import { OrgarifOrganismeBlockModule } from 'app/components/organisme-block.module';
+import { OrgarifOrganismeBlockModule } from 'app/components/organisme/organisme-block.module';
 import { SaisieComponent } from 'app/saisie/saisie.component';
 import { SAISIE_ROUTE } from 'app/saisie/saisie.route';
 import { OrgarifSharedModule } from 'app/shared/shared.module';

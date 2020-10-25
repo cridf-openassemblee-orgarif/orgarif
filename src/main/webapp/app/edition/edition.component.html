@@ -1,0 +1,19 @@
+<div class="edition-component">
+  <div *ngIf="!organisme">Chargement</div>
+  <div *ngIf="organisme">
+    <h1>
+      {{ organisme.nom }}
+    </h1>
+    <div class="natures-block">
+      <div>{{ organisme.secteur?.label }}</div>
+      <div>{{ organisme.natureJuridique?.label }}</div>
+      <div>{{ organisme.typeStructure?.label }}</div>
+    </div>
+    <div *ngIf="organisme.representants">
+      <jhi-orgarif-representants-block [representants]="organisme.representants"></jhi-orgarif-representants-block>
+    </div>
+    <h2 *ngFor="let instance of organisme.instances">
+      {{ instance.nom }}
+    </h2>
+  </div>
+</div>
