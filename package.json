@@ -94,7 +94,7 @@
     "node": ">=12.16.1"
   },
   "scripts": {
-    "prettier:format": "prettier --write \"{,src/**/}*.{md,json,ts,css,scss,yml}\"",
+    "prettier:format": "prettier --write \"{,src/**/}*.{md,json,ts,css,scss,yml,html}\"",
     "lint": "eslint . --ext .js,.ts",
     "lint:fix": "npm run lint -- --fix",
     "ngc": "ngc -p tsconfig.app.json",
