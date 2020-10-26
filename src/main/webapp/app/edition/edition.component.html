@@ -4,16 +4,35 @@
     <h1>
       {{ organisme.nom }}
     </h1>
-    <div class="natures-block">
-      <div>{{ organisme.secteur?.label }}</div>
-      <div>{{ organisme.natureJuridique?.label }}</div>
-      <div>{{ organisme.typeStructure?.label }}</div>
+    <div class="natures-container">
+      <div class="natures-block">{{ organisme.secteur?.label }}</div>
+      <div class="natures-block">{{ organisme.natureJuridique?.label }}</div>
+      <div class="natures-block">{{ organisme.typeStructure?.label }}</div>
     </div>
-    <div *ngIf="organisme.representants">
-      <jhi-orgarif-representants-block [representants]="organisme.representants"></jhi-orgarif-representants-block>
+    <div class="representants-container">
+      <div *ngIf="organisme.representants && organisme.representants.length !==0" class="representants">
+        <h3>Représentants</h3>
+        <jhi-orgarif-representants-block [representants]="organisme.representants" [editMode]="true"></jhi-orgarif-representants-block>
+      </div>
+      <div *ngIf="organisme.suppleants && organisme.suppleants.length !==0" class="representants">
+        <h3>Suppléants</h3>
+        <jhi-orgarif-representants-block [representants]="organisme.suppleants" [editMode]="true"></jhi-orgarif-representants-block>
+      </div>
     </div>
-    <h2 *ngFor="let instance of organisme.instances">
-      {{ instance.nom }}
-    </h2>
+    <div *ngFor="let instance of organisme.instances">
+      <h2>{{ instance.nom }}</h2>
+      <div class="representants-container">
+        <div *ngIf="instance.representants && instance.representants.length !==0" class="representants">
+          <h3>Représentants</h3>
+          <jhi-orgarif-representants-block [representants]="instance.representants" [editMode]="true"></jhi-orgarif-representants-block>
+        </div>
+        <div *ngIf="instance.suppleants && instance.suppleants.length !==0" class="representants">
+          <h3>Suppléants</h3>
+          <div *ngIf="instance.suppleants">
+            <jhi-orgarif-representants-block [representants]="instance.suppleants" [editMode]="true"></jhi-orgarif-representants-block>
+          </div>
+        </div>
+      </div>
+    </div>
   </div>
 </div>

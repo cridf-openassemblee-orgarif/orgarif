@@ -1,11 +1,19 @@
 @import '../shared/constants/vars';
 
 .edition-component {
-  .natures-block {
+  .natures-container {
     margin: 20px 0;
     display: flex;
-    > div {
+
+    .natures-block {
       flex: 1;
+    }
+  }
+
+  .representants-container {
+    display: flex;
+    .representants {
+      padding: 0 20px;
     }
   }
 }

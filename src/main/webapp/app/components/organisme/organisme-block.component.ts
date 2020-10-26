@@ -8,14 +8,6 @@ import { IOrganisme } from '../../shared/model/organisme.model';
 })
 export class OrganismeBlockComponent {
   // TODO-lazy-init
-  private _organisme: IOrganisme = null!;
-
   @Input()
-  set organisme(organisme: IOrganisme) {
-    this._organisme = organisme;
-  }
-
-  get organisme(): IOrganisme {
-    return this._organisme;
-  }
+  public organisme: IOrganisme = null!;
 }

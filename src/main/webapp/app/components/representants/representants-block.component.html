@@ -1,3 +1,13 @@
 <div class="representants-block">
-  <div *ngFor="let r of representants">{{ r.elu?.civilite }} {{ r?.elu?.prenom }} {{ r?.elu?.nom }}</div>
+  <div *ngFor="let r of representants" class="representant">
+    <div class="buttons" *ngIf="editMode">
+      <div (click)="up(r)" *ngIf="r.position !== 0" class="button">
+        <fa-icon icon="sort-up" class="icon-up"></fa-icon>
+      </div>
+      <div (click)="down(r)" *ngIf="r.position !== representants.length - 1" class="button">
+        <fa-icon icon="sort-down" class="icon-down"></fa-icon>
+      </div>
+    </div>
+    <div class="name">{{ r.elu?.civilite }} {{ r.elu?.prenom }} {{ r.elu?.nom }}</div>
+  </div>
 </div>

@@ -20,7 +20,8 @@ open class AuditTrailService(val auditTrailRepository: AuditTrailRepository,
 
     private val logger = LoggerFactory.getLogger(AuditTrailService::class.java)
 
-    open fun <T : Serializable> logCreation(entity: T, id: Long) {
+    open fun <T : Serializable> logCreation(entity: T,
+                                            id: Long) {
         logAuditTrail<Serializable, Serializable>(CREATE, entity.javaClass, id, entity, null, null, null)
     }
 
@@ -30,22 +31,33 @@ open class AuditTrailService(val auditTrailRepository: AuditTrailRepository,
         logAuditTrail<Serializable, P>(CREATE, entity.javaClass, id, entity, parentEntityClass, parentId, null)
     }
 
-    open fun <T : Serializable> logUpdate(entity: T, id: Long) {
+    open fun <T : Serializable> logUpdate(entity: T,
+                                          id: Long) {
         logAuditTrail<Serializable, Serializable>(UPDATE, entity.javaClass, id, entity, null, null, null)
     }
 
-    open fun <T : Serializable, P : Serializable> logUpdate(entity: T, id: Long,
+    open fun <T : Serializable> logUpdate(entity: T,
+                                          id: Long,
+                                          updateDescription: String) {
+        logAuditTrail<Serializable, Serializable>(UPDATE, entity.javaClass, id, entity, null, null, updateDescription)
+    }
+
+    open fun <T : Serializable, P : Serializable> logUpdate(entity: T,
+                                                            id: Long,
                                                             parentEntityClass: Class<P>?,
                                                             parentId: Long?) {
         logAuditTrail<Serializable, P>(UPDATE, entity.javaClass, id, entity, parentEntityClass, parentId, null)
     }
 
-    open fun <T : Serializable> logDeletion(entityClass: Class<T>, id: Long) {
+    open fun <T : Serializable> logDeletion(entityClass: Class<T>,
+                                            id: Long) {
         logAuditTrail<T, Serializable>(DELETE, entityClass, id, null, null, null, null)
     }
 
-    open fun <T : Serializable, P : Serializable> logDeletion(entityClass: Class<T>, id: Long,
-                                                              parentEntityClass: Class<P>, parentId: Long?) {
+    open fun <T : Serializable, P : Serializable> logDeletion(entityClass: Class<T>,
+                                                              id: Long,
+                                                              parentEntityClass: Class<P>,
+                                                              parentId: Long?) {
         logAuditTrail(DELETE, entityClass, id, null, parentEntityClass, parentId, null)
     }
 

@@ -73,4 +73,6 @@ export const fontAwesomeIcons = [
   faTrashAlt,
   // jhipster-needle-add-icon-import
   faAsterisk,
+  faSortUp,
+  faSortDown,
 ];
