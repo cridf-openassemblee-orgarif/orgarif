@@ -43,9 +43,9 @@ open class EditionEndpoint(@Value("\${jhipster.clientApp.name}") val application
     }
 
     @PutMapping("/deleteRepresentant")
-    open fun deleteRepresentant(@Valid @RequestBody representantId: Long): ResponseEntity<List<Representant>> {
-        val newRepresentants = editionService.deleteRepresentant(representantId)
-        auditTrailService.logUpdate(representantId, representantId, "Delete représentant")
+    open fun deleteRepresentant(@Valid @RequestBody representant: Representant): ResponseEntity<List<Representant>> {
+        val newRepresentants = editionService.deleteRepresentant(representant)
+        auditTrailService.logDeletion(Representant::class.java, representant.id)
         return ResponseEntity.ok().body(newRepresentants)
     }
 

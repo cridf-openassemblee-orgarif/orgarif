@@ -38,4 +38,10 @@ export class EditionService {
       )
       .pipe(map((res: HttpResponse<IRepresentant[]>) => res.body!));
   }
+
+  delete(representant: IRepresentant): Observable<IRepresentant[]> {
+    return this.http
+      .put<IRepresentant[]>(`${this.resourceUrl}/deleteRepresentant`, representant, { observe: 'response' })
+      .pipe(map((res: HttpResponse<IRepresentant[]>) => res.body!));
+  }
 }

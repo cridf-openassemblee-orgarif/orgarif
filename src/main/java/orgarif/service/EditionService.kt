@@ -4,9 +4,7 @@ import org.hibernate.Hibernate
 import org.slf4j.LoggerFactory
 import org.springframework.stereotype.Service
 import org.springframework.transaction.annotation.Transactional
-import orgarif.domain.Elu
-import orgarif.domain.Representant
-import orgarif.domain.RepresentantOrSuppleant
+import orgarif.domain.*
 import orgarif.repository.InstanceRepository
 import orgarif.repository.OrganismeRepository
 import orgarif.repository.RepresentantRepository
@@ -22,10 +20,17 @@ open class EditionService(val organismeRepository: OrganismeRepository,
 
     @Transactional
     open fun moveRepresentant(representant: Representant, newPosition: Int): List<Representant> {
-        val list = getList(representant)
-        list.remove(representant)
-        list.add(newPosition, representant)
-        list.forEachIndexed { index, representant ->
+        val representants = getOrganisme(representant)
+            .let { getRepresentants(it.first, it.second) }
+            .let { representantsToList(it) }
+        representants.remove(representant)
+        representants.add(newPosition, representant)
+        saveAndUpdatePositions(representants)
+        return representants
+    }
+
+    open fun saveAndUpdatePositions(representants: List<Representant>) {
+        representants.forEachIndexed { index, representant ->
             if (index != representant.position) {
                 representant.position = index
                 representantRepository.save(representant)
@@ -33,24 +38,44 @@ open class EditionService(val organismeRepository: OrganismeRepository,
             Hibernate.initialize(representant.representantOrganisme)
             Hibernate.initialize(representant.suppleantOrganisme)
         }
+    }
+
+    private fun getOrganisme(representant: Representant): Pair<HasRepresentants, RepresentantOrSuppleant> =
+        representant.representantOrganisme?.let { organismeRepository.getOne(it.id) }?.let { it to RepresentantOrSuppleant.representant }
+            ?: representant.suppleantOrganisme?.let { organismeRepository.getOne(it.id) }?.let { it to RepresentantOrSuppleant.suppleant }
+            ?: representant.representantInstance?.let { instanceRepository.getOne(it.id) }?.let { it to RepresentantOrSuppleant.representant }
+            ?: representant.suppleantInstance?.let { instanceRepository.getOne(it.id) }?.let { it to RepresentantOrSuppleant.suppleant }
+            ?: throw IllegalStateException()
+
+    private fun getRepresentants(organismeOrInstance: HasRepresentants, representantOrSuppleant: RepresentantOrSuppleant) =
+        when (representantOrSuppleant) {
+            RepresentantOrSuppleant.representant -> organismeOrInstance.representants
+            RepresentantOrSuppleant.suppleant -> organismeOrInstance.suppleants
+        }
+
+    private fun representantsToList(representants: Set<Representant>) = representants
+        .toList()
+        .sortedBy { it.position }
+        .toMutableList()
+
+    @Transactional
+    open fun deleteRepresentant(representant: Representant): List<Representant> {
+        val (organismeOrInstance, representantOrSuppleant) = getOrganisme(representant)
+        val representants = getRepresentants(organismeOrInstance, representantOrSuppleant)
+        representantRepository.delete(representant)
+        representants.remove(representant)
+        saveOrganismeOrInstance(organismeOrInstance)
+        val list = representantsToList(representants)
+        saveAndUpdatePositions(list)
         return list
     }
 
-    private fun getList(representant: Representant) =
-        let {
-            representant.representantOrganisme?.let { organismeRepository.getOne(it.id) }?.representants
-                ?: representant.suppleantOrganisme?.let { organismeRepository.getOne(it.id) }?.suppleants
-                ?: representant.representantInstance?.let { instanceRepository.getOne(it.id) }?.representants
-                ?: representant.suppleantInstance?.let { instanceRepository.getOne(it.id) }?.suppleants
-                ?: throw IllegalStateException()
+    // is necessary for cache
+    open fun saveOrganismeOrInstance(organismeOrInstance: HasRepresentants) {
+        when (organismeOrInstance) {
+            is Organisme -> organismeRepository.save(organismeOrInstance)
+            is Instance -> instanceRepository.save(organismeOrInstance)
         }
-            .toList()
-            .sortedBy { it.position }
-            .toMutableList()
-
-    @Transactional
-    open fun deleteRepresentant(representantId: Long): List<Representant> {
-        TODO()
     }
 
     @Transactional
@@ -76,31 +101,12 @@ open class EditionService(val organismeRepository: OrganismeRepository,
                 }
             }
         }
-        val representants = getList(r)
+        val organismeOrInstance = organisme ?: instance ?: throw RuntimeException()
+        val representants = getRepresentants(organismeOrInstance, representantOrSuppleant)
         r.position = representants.size
         representantRepository.save(r)
-        representants += r
-        // is necessary for cache
-        organisme?.let {
-            when (representantOrSuppleant) {
-                RepresentantOrSuppleant.representant -> {
-                    it.representants = representants.toSet()
-                }
-                RepresentantOrSuppleant.suppleant -> {
-                    it.suppleants = representants.toSet()
-                }
-            }
-        }
-        instance?.let {
-            when (representantOrSuppleant) {
-                RepresentantOrSuppleant.representant -> {
-                    it.representants = representants.toSet()
-                }
-                RepresentantOrSuppleant.suppleant -> {
-                    it.suppleants = representants.toSet()
-                }
-            }
-        }
-        return representants
+        representants.add(r)
+        saveOrganismeOrInstance(organismeOrInstance)
+        return representantsToList(representants)
     }
 }

@@ -48,4 +48,10 @@ export class RepresentantsBlockComponent {
   updateRepresentants(r: IRepresentant[]) {
     this.representants = r;
   }
+
+  delete(r: IRepresentant) {
+    this.editionService.delete(r).subscribe(res => {
+      this.representants = res;
+    });
+  }
 }

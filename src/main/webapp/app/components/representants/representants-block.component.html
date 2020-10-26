@@ -8,13 +8,15 @@
         <fa-icon icon="sort-down" class="icon-down"></fa-icon>
       </div>
     </div>
-    <div class="name">{{ r.elu?.civilite }} {{ r.elu?.prenom }} {{ r.elu?.nom }}</div>
+    <div class="name">{{ r.elu?.prenom }} {{ r.elu?.nom }} ({{ r.elu?.groupePolitiqueCourt }})</div>
+    <div (click)="delete(r)" class="delete" *ngIf="editMode">✕</div>
   </div>
   <div *ngIf="editMode">
     <jhi-orgarif-add-representant-block
       [elus]="elus"
       [representants]="representants"
       [organismeId]="organismeId"
+      [instanceId]="instanceId"
       [representantOrSuppleant]="representantOrSuppleant!"
       (representantsUpdate)="updateRepresentants($event)"
     ></jhi-orgarif-add-representant-block>

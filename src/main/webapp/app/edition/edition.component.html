@@ -9,8 +9,8 @@
       <div class="natures-block">{{ organisme.natureJuridique?.label }}</div>
       <div class="natures-block">{{ organisme.typeStructure?.label }}</div>
     </div>
-    <div class="representants-container">
-      <div *ngIf="organisme.representants && organisme.representants.length !== 0" class="representants">
+    <div class="representants-container" *ngIf="!organisme.instances || organisme.instances.length === 0">
+      <div *ngIf="organisme.representants" class="representants">
         <h3>Représentants</h3>
         <jhi-orgarif-representants-block
           [representants]="organisme.representants"
@@ -20,7 +20,7 @@
           [representantOrSuppleant]="'representant'"
         ></jhi-orgarif-representants-block>
       </div>
-      <div *ngIf="organisme.suppleants && organisme.suppleants.length !== 0" class="representants">
+      <div *ngIf="organisme.suppleants" class="representants">
         <h3>Suppléants</h3>
         <jhi-orgarif-representants-block
           [representants]="organisme.suppleants"
@@ -34,24 +34,24 @@
     <div *ngFor="let instance of organisme.instances">
       <h2>{{ instance.nom }}</h2>
       <div class="representants-container">
-        <div *ngIf="instance.representants && instance.representants.length !== 0" class="representants">
+        <div *ngIf="instance.representants" class="representants">
           <h3>Représentants</h3>
           <jhi-orgarif-representants-block
             [representants]="instance.representants"
             [editMode]="true"
             [elus]="elus"
-            [organismeId]="organisme.id"
+            [instanceId]="instance.id"
             [representantOrSuppleant]="'representant'"
           ></jhi-orgarif-representants-block>
         </div>
-        <div *ngIf="instance.suppleants && instance.suppleants.length !== 0" class="representants">
+        <div *ngIf="instance.suppleants" class="representants">
           <h3>Suppléants</h3>
           <div *ngIf="instance.suppleants">
             <jhi-orgarif-representants-block
               [representants]="instance.suppleants"
               [editMode]="true"
               [elus]="elus"
-              [organismeId]="organisme.id"
+              [instanceId]="instance.id"
               [representantOrSuppleant]="'suppleant'"
             ></jhi-orgarif-representants-block>
           </div>

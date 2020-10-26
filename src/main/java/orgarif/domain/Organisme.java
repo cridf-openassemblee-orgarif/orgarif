@@ -22,7 +22,7 @@ import java.util.UUID;
 @Table(name = "organisme")
 @Cache(usage = CacheConcurrencyStrategy.READ_WRITE)
 @org.springframework.data.elasticsearch.annotations.Document(indexName = "organisme")
-public class Organisme implements Serializable {
+public class Organisme implements HasRepresentants, Serializable {
 
     private static final long serialVersionUID = 1L;
 
@@ -51,7 +51,7 @@ public class Organisme implements Serializable {
     @Column(name = "partage_representants")
     private Boolean partageRepresentants;
 
-    
+
     @Type(type = "uuid-char")
     @Column(name = "uid", length = 36, unique = true)
     private UUID uid;
@@ -253,6 +253,7 @@ public class Organisme implements Serializable {
         this.instances = instances;
     }
 
+    @Override
     public Set<Representant> getRepresentants() {
         return representants;
     }
@@ -274,10 +275,12 @@ public class Organisme implements Serializable {
         return this;
     }
 
+    @Override
     public void setRepresentants(Set<Representant> representants) {
         this.representants = representants;
     }
 
+    @Override
     public Set<Representant> getSuppleants() {
         return suppleants;
     }
@@ -299,6 +302,7 @@ public class Organisme implements Serializable {
         return this;
     }
 
+    @Override
     public void setSuppleants(Set<Representant> representants) {
         this.suppleants = representants;
     }

@@ -19,7 +19,7 @@ import java.util.Set;
 @Table(name = "instance")
 @Cache(usage = CacheConcurrencyStrategy.READ_WRITE)
 @org.springframework.data.elasticsearch.annotations.Document(indexName = "instance")
-public class Instance implements Serializable {
+public class Instance implements HasRepresentants, Serializable {
 
     private static final long serialVersionUID = 1L;
 
@@ -120,6 +120,7 @@ public class Instance implements Serializable {
         this.organisme = organisme;
     }
 
+    @Override
     public Set<Representant> getRepresentants() {
         return representants;
     }
@@ -141,10 +142,12 @@ public class Instance implements Serializable {
         return this;
     }
 
+    @Override
     public void setRepresentants(Set<Representant> representants) {
         this.representants = representants;
     }
 
+    @Override
     public Set<Representant> getSuppleants() {
         return suppleants;
     }
@@ -166,6 +169,7 @@ public class Instance implements Serializable {
         return this;
     }
 
+    @Override
     public void setSuppleants(Set<Representant> representants) {
         this.suppleants = representants;
     }
