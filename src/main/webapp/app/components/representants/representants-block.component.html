@@ -10,4 +10,13 @@
     </div>
     <div class="name">{{ r.elu?.civilite }} {{ r.elu?.prenom }} {{ r.elu?.nom }}</div>
   </div>
+  <div *ngIf="editMode">
+    <jhi-orgarif-add-representant-block
+      [elus]="elus"
+      [representants]="representants"
+      [organismeId]="organismeId"
+      [representantOrSuppleant]="representantOrSuppleant!"
+      (representantsUpdate)="updateRepresentants($event)"
+    ></jhi-orgarif-add-representant-block>
+  </div>
 </div>

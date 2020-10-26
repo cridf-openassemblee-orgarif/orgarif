@@ -1,5 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { ActivatedRoute } from '@angular/router';
+import { IElu } from 'app/shared/model/elu.model';
 import { IOrganisme } from 'app/shared/model/organisme.model';
 import { JhiAlertService } from 'ng-jhipster';
 
@@ -9,13 +10,15 @@ import { JhiAlertService } from 'ng-jhipster';
   styleUrls: ['edition.scss'],
 })
 export class EditionComponent implements OnInit {
+  elus: IElu[] = [];
   organisme: IOrganisme | undefined;
 
   constructor(protected jhiAlertService: JhiAlertService, protected activatedRoute: ActivatedRoute) {}
 
   ngOnInit(): void {
-    this.activatedRoute.data.subscribe(({ organisme }) => {
-      this.organisme = organisme;
+    this.activatedRoute.data.subscribe(({ data }) => {
+      this.organisme = data.organisme;
+      this.elus = data.elus;
     });
   }
 

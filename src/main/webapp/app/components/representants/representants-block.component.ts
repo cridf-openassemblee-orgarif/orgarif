@@ -1,5 +1,7 @@
 import { Component, Input } from '@angular/core';
 import { EditionService } from 'app/edition/edition.service';
+import { Elu } from 'app/shared/model/elu.model';
+import { RepresentantOrSuppleant } from 'app/shared/model/misc.model';
 import { IRepresentant, Representant } from '../../shared/model/representant.model';
 
 @Component({
@@ -10,7 +12,16 @@ import { IRepresentant, Representant } from '../../shared/model/representant.mod
 export class RepresentantsBlockComponent {
   _representants: IRepresentant[] = [];
   @Input()
-  public editMode: Boolean = null!;
+  public editMode: Boolean = false!;
+  @Input()
+  public elus: Elu[] = [];
+  @Input()
+  public organismeId: number | undefined;
+  @Input()
+  public instanceId: number | undefined;
+  // TODO-lazy-init
+  @Input()
+  public representantOrSuppleant: RepresentantOrSuppleant | undefined;
 
   @Input()
   set representants(representants: IRepresentant[]) {
@@ -32,5 +43,9 @@ export class RepresentantsBlockComponent {
     this.editionService.moveRepresentant(representant, representant.position! + 1).subscribe(r => {
       this.representants = r;
     });
+  }
+
+  updateRepresentants(r: IRepresentant[]) {
+    this.representants = r;
   }
 }

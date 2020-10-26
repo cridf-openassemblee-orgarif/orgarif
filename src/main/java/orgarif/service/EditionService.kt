@@ -4,7 +4,9 @@ import org.hibernate.Hibernate
 import org.slf4j.LoggerFactory
 import org.springframework.stereotype.Service
 import org.springframework.transaction.annotation.Transactional
+import orgarif.domain.Elu
 import orgarif.domain.Representant
+import orgarif.domain.RepresentantOrSuppleant
 import orgarif.repository.InstanceRepository
 import orgarif.repository.OrganismeRepository
 import orgarif.repository.RepresentantRepository
@@ -45,4 +47,60 @@ open class EditionService(val organismeRepository: OrganismeRepository,
             .toList()
             .sortedBy { it.position }
             .toMutableList()
+
+    @Transactional
+    open fun deleteRepresentant(representantId: Long): List<Representant> {
+        TODO()
+    }
+
+    @Transactional
+    open fun addRepresentant(elu: Elu,
+                             organismeId: Long?,
+                             instanceId: Long?,
+                             representantOrSuppleant: RepresentantOrSuppleant): List<Representant> {
+        if ((organismeId == null && instanceId == null) || (organismeId != null && instanceId != null)) {
+            throw IllegalArgumentException()
+        }
+        val organisme = organismeId?.let { organismeRepository.getOne(it) }
+        val instance = instanceId?.let { instanceRepository.getOne(it) }
+        val r = Representant().apply {
+            this.elu = elu
+            when (representantOrSuppleant) {
+                RepresentantOrSuppleant.representant -> {
+                    representantOrganisme = organisme
+                    representantInstance = instance
+                }
+                RepresentantOrSuppleant.suppleant -> {
+                    suppleantOrganisme = organisme
+                    suppleantInstance = instance
+                }
+            }
+        }
+        val representants = getList(r)
+        r.position = representants.size
+        representantRepository.save(r)
+        representants += r
+        // is necessary for cache
+        organisme?.let {
+            when (representantOrSuppleant) {
+                RepresentantOrSuppleant.representant -> {
+                    it.representants = representants.toSet()
+                }
+                RepresentantOrSuppleant.suppleant -> {
+                    it.suppleants = representants.toSet()
+                }
+            }
+        }
+        instance?.let {
+            when (representantOrSuppleant) {
+                RepresentantOrSuppleant.representant -> {
+                    it.representants = representants.toSet()
+                }
+                RepresentantOrSuppleant.suppleant -> {
+                    it.suppleants = representants.toSet()
+                }
+            }
+        }
+        return representants
+    }
 }

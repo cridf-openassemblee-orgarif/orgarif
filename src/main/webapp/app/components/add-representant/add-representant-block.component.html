@@ -1,0 +1,15 @@
+<div class="add-representant-block">
+  <ng-select
+    id="representants"
+    name="representants"
+    class="representants-select"
+    (change)="addRepresentant($event)"
+    [(ngModel)]="representantId"
+  >
+    <ng-option *ngFor="let elu of displayElus" [value]="elu.id">
+      {{ elu.prenom }}
+      {{ elu.nom }}
+      ({{ elu.groupePolitiqueCourt }})
+    </ng-option>
+  </ng-select>
+</div>

@@ -7,8 +7,10 @@ import org.springframework.web.bind.annotation.PutMapping
 import org.springframework.web.bind.annotation.RequestBody
 import org.springframework.web.bind.annotation.RequestMapping
 import org.springframework.web.bind.annotation.RestController
+import orgarif.domain.Elu
 import orgarif.domain.Organisme
 import orgarif.domain.Representant
+import orgarif.domain.RepresentantOrSuppleant
 import orgarif.service.AuditTrailService
 import orgarif.service.EditionService
 import java.io.Serializable
@@ -25,14 +27,35 @@ open class EditionEndpoint(@Value("\${jhipster.clientApp.name}") val application
 
     private val log = LoggerFactory.getLogger(EditionEndpoint::class.java)
 
-    data class NewPosition(val representant: Representant,
-                           val newPosition: Int) : Serializable
+    data class RepresentantNewPosition(val representant: Representant,
+                                       val newPosition: Int) : Serializable
+
+    data class AddRepresentant(val elu: Elu,
+                               val organismeId: Long?,
+                               val instanceId: Long?,
+                               val representantOrSuppleant: RepresentantOrSuppleant) : Serializable
 
     @PutMapping("/moveRepresentant")
-    open fun moveRepresentant(@Valid @RequestBody newPosition: NewPosition): ResponseEntity<List<Representant>> {
-        val newReprentants = editionService.moveRepresentant(newPosition.representant, newPosition.newPosition)
+    open fun moveRepresentant(@Valid @RequestBody newPosition: RepresentantNewPosition): ResponseEntity<List<Representant>> {
+        val newRepresentants = editionService.moveRepresentant(newPosition.representant, newPosition.newPosition)
         auditTrailService.logUpdate(newPosition, newPosition.representant.id)
-        return ResponseEntity.ok().body(newReprentants)
+        return ResponseEntity.ok().body(newRepresentants)
+    }
+
+    @PutMapping("/deleteRepresentant")
+    open fun deleteRepresentant(@Valid @RequestBody representantId: Long): ResponseEntity<List<Representant>> {
+        val newRepresentants = editionService.deleteRepresentant(representantId)
+        auditTrailService.logUpdate(representantId, representantId, "Delete représentant")
+        return ResponseEntity.ok().body(newRepresentants)
+    }
+
+    @PutMapping("/addRepresentant")
+    open fun addRepresentant(@Valid @RequestBody addRepresentant: AddRepresentant): ResponseEntity<List<Representant>> {
+        val newRepresentants = editionService.addRepresentant(addRepresentant.elu,
+            addRepresentant.organismeId, addRepresentant.instanceId, addRepresentant.representantOrSuppleant)
+        val r = newRepresentants.last()
+        auditTrailService.logUpdate(addRepresentant, r.id)
+        return ResponseEntity.ok().body(newRepresentants)
     }
 
 }
