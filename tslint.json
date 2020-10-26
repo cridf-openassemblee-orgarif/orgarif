@@ -11,7 +11,6 @@
     "use-lifecycle-interface": true,
     "use-pipe-transform-interface": false,
     "component-class-suffix": true,
-    "directive-class-suffix": true,
-    "typedef": [true, "call-signature"]
+    "directive-class-suffix": true
   }
 }
