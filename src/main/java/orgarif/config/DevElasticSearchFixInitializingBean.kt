@@ -6,11 +6,17 @@ import org.slf4j.LoggerFactory
 import org.springframework.beans.factory.InitializingBean
 import org.springframework.core.env.Environment
 import org.springframework.stereotype.Component
+import orgarif.repository.DeliberationRepository
+import orgarif.repository.search.DeliberationSearchRepository
 import java.io.IOException
 import java.nio.file.Paths
+import javax.annotation.PostConstruct
 
 @Component
-class DevElasticSearchFixInitializingBean(val environment: Environment) : InitializingBean {
+class DevElasticSearchFixInitializingBean(
+    val environment: Environment,
+    val deliberationRepository: DeliberationRepository,
+    val deliberationSearchRepository: DeliberationSearchRepository) : InitializingBean {
 
     private val log = LoggerFactory.getLogger(DevElasticSearchFixInitializingBean::class.java)
 
@@ -27,6 +33,11 @@ class DevElasticSearchFixInitializingBean(val environment: Environment) : Initia
                 log.error("Couldn't delete elasticsearch indices dir", e)
             }
         }
+    }
+
+    @PostConstruct
+    fun init() {
+        deliberationSearchRepository.saveAll(deliberationRepository.findAll())
     }
 
 }

@@ -57,6 +57,10 @@
           </div>
         </div>
       </div>
+      <jhi-orgarif-add-deliberation-block></jhi-orgarif-add-deliberation-block>
     </div>
+    <jhi-orgarif-add-deliberation-block
+      *ngIf="!organisme.instances || organisme.instances.length === 0"
+    ></jhi-orgarif-add-deliberation-block>
   </div>
 </div>

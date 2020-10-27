@@ -32,9 +32,6 @@ open class SaisieEndpoint(@Value("\${jhipster.clientApp.name}") val applicationN
 
     private val ENTITY_NAME = "organisme"
 
-    /**
-     * `POST /saisie` : Saisie nouvel organisme, avec instances et représentants.
-     */
     @PostMapping
     open fun createOrganisme(@Valid @RequestBody organisme: Organisme): ResponseEntity<Organisme> {
         if (organisme.id != null) {
@@ -47,33 +44,12 @@ open class SaisieEndpoint(@Value("\${jhipster.clientApp.name}") val applicationN
             .body(result)
     }
 
-    /**
-     * `PUT  /saisie` : Update organisme.
-     */
-//    @PutMapping
-//    open fun updateOrganisme(@Valid @RequestBody organisme: Organisme): ResponseEntity<Organisme> {
-//        log.debug("REST request to update Organisme : {}", organisme)
-//        if (organisme.id == null) {
-//            throw BadRequestAlertException("Invalid id", ENTITY_NAME, "idnull")
-//        }
-//        val result = saisieService.saveSaisie(organisme)
-//        return ResponseEntity.ok()
-//            .headers(HeaderUtil.createEntityUpdateAlert(applicationName, false, ENTITY_NAME, organisme.id!!.toString()))
-//            .body(result)
-//    }
-
+    // TODO remove
     @GetMapping("/last-deliberations")
     open fun getLastDeliberations(): ResponseEntity<List<Deliberation>> {
         val page = deliberationRepository.findAll(PageRequest.of(0, 5,
             Sort.by(Sort.Direction.DESC, "creationDate")))
         return ResponseEntity.ok().body(page.content)
     }
-
-    // TODO remove ?
-//    @GetMapping("/search-deliberations/{searchToken}")
-//    fun searchDeliberation(@PathVariable searchToken: String): ResponseEntity<List<Deliberation>> {
-//        deliberationSearchRepository.search()
-//        return ResponseEntity.ok().body(page.content)
-//    }
 
 }

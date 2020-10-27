@@ -1,6 +1,7 @@
 import { NgModule } from '@angular/core';
 import { RouterModule } from '@angular/router';
 import { NgSelectModule } from '@ng-select/ng-select';
+import { OrgarifAddDeliberationBlockModule } from 'app/components/add-deliberation/add-deliberation-block.module';
 import { OrgarifOrganismeBlockModule } from 'app/components/organisme/organisme-block.module';
 import { OrgarifRepresentantsBlockModule } from 'app/components/representants/representants-block.module';
 import { EditionComponent } from 'app/edition/edition.component';
@@ -16,6 +17,7 @@ import { Ng2CompleterModule } from 'ng2-completer';
     RouterModule.forChild([EDITION_ROUTE]),
     OrgarifOrganismeBlockModule,
     OrgarifRepresentantsBlockModule,
+    OrgarifAddDeliberationBlockModule,
   ],
   declarations: [EditionComponent],
 })
