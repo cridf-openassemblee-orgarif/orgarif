@@ -1,0 +1,20 @@
+# Gradle
+/.gradle
+/build
+/lib-jooq/build
+/orgarif-client/.gradle
+/orgarif-client/build
+/orgarif-server/build
+
+# Intellj
+/.idea
+
+# NPM & Webpack
+/orgarif-client/webpack-assets.json
+/orgarif-client/npm-debug.log
+/orgarif-client/yarn-error.log
+/orgarif-client/node_modules
+/orgarif-client/webpack-stats.json
+/orgarif-client/webpack-prod-stats.json
+/orgarif-client/bundles
+/orgarif-client/.awcache

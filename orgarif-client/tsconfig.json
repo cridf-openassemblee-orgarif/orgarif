@@ -1,0 +1,25 @@
+{
+  "compilerOptions": {
+    "allowJs": true,
+    "sourceMap": true,
+    "noImplicitAny": true,
+    "moduleResolution": "node",
+    "module": "esnext",
+    "importHelpers": true,
+    "target": "es5",
+    "jsx": "react",
+    "strictNullChecks": true,
+    "lib": [
+      "es6",
+      "dom",
+      "es2017"
+    ],
+    "baseUrl": "./"
+  },
+  "awesomeTypescriptLoaderOptions": {
+    "useCache": true
+  },
+  "exclude": [
+    "node_modules"
+  ]
+}

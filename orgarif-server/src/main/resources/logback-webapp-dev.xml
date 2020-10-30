@@ -1,0 +1,23 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE configuration>
+<configuration>
+    <appender name="stdout" class="ch.qos.logback.core.ConsoleAppender">
+        <encoder name="enc" class="ch.qos.logback.core.encoder.LayoutWrappingEncoder">
+            <layout class="orgarif.utils.LogbackPatternLayout">
+                <pattern>%d{MM-dd HH:mm:ss} %-5level %-36logger{36} %m %userSession%n</pattern>
+            </layout>
+        </encoder>
+    </appender>
+
+    <root level="WARN">
+        <appender-ref ref="stdout"/>
+        <!--<appender-ref ref="sentry"/>-->
+    </root>
+
+    <logger name="orgarif" level="INFO"/>
+    <!--    <logger name="orgarif" level="TRACE"/>-->
+
+    <!-- Spring noise -->
+    <logger name="orgarif.error.ApplicationExceptionHandlerExceptionResolver" level="WARN"/>
+    <logger name="org.spring.aop.framework.CglibAopProxy" level="INFO"/>
+</configuration>
