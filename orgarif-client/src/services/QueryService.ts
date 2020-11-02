@@ -1,3 +1,4 @@
+import { QueryResult, useQuery } from 'react-query';
 import { appContext } from '../ApplicationContext';
 import {
   IsLoginAlreadyTakenQuery,
@@ -8,18 +9,22 @@ import {
 export class QueryService {
   public isLoginAlreadyTakenQuery = (
     query: IsLoginAlreadyTakenQuery
-  ): Promise<IsLoginAlreadyTakenQueryResponse> =>
-    this.query('IsLoginAlreadyTakenQuery', query);
+  ): QueryResult<IsLoginAlreadyTakenQueryResponse> =>
+    this.reactQuery('IsLoginAlreadyTakenQuery', query);
 
-  public listOrganismesQuery = (): Promise<ListOrganismesQueryResponse> =>
-    this.query('ListOrganismesQuery');
+  public listOrganismesQuery = (): QueryResult<ListOrganismesQueryResponse> =>
+    this.reactQuery('ListOrganismesQuery');
 
-  private query = <R>(queryName: string, query?: object): Promise<R> =>
-    appContext
-      .httpService()
-      .get('/query', {
-        ...query,
-        objectType: '.' + queryName,
-      })
-      .then((r) => r.body);
+  private reactQuery = <R>(queryName: string, query?: object): QueryResult<R> =>
+    useQuery(
+      query ?? queryName,
+      (queryName: string, query?: object): Promise<R> =>
+        appContext
+          .httpService()
+          .get('/query', {
+            ...query,
+            objectType: '.' + queryName,
+          })
+          .then((r) => r.body)
+    );
 }

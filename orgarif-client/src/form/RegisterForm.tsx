@@ -17,14 +17,15 @@ interface Props {
 export const RegisterForm = (props: Props) => {
   const [login, setLogin] = useState('');
   const [mailIsAlreadyTaken, setMailIsAlreadyTaken] = useState(false);
+  log("i'm here");
   useEffect(() => {
     if (login !== '') {
-      appContext
+      const result = appContext
         .queryService()
-        .isLoginAlreadyTakenQuery({ login })
-        .then((r) => {
-          setMailIsAlreadyTaken(r.alreadyTaken);
-        });
+        .isLoginAlreadyTakenQuery({ login });
+      if (result.data) {
+        setMailIsAlreadyTaken(result.data.alreadyTaken);
+      }
     }
   }, [login]);
   const loginOnChange = (event: ChangeEvent<HTMLInputElement>) =>
