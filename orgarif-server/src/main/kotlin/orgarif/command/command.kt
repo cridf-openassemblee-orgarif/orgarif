@@ -65,6 +65,10 @@ abstract class NeutralCommandHandler<C : Command, R : CommandResponse> : Command
     abstract fun handle(command: C): R
 }
 
+data class CreateOrganismeCommand(val nom: String) : Command()
+
+data class CreateOrganismeCommandResponse (val id: OrganismeId) : CommandResponse()
+
 // [doc] login as username|mail
 data class LoginCommand(val login: String,
                         val password: PlainStringPassword) : Command()
@@ -79,5 +83,3 @@ data class RegisterCommand(val mail: String,
 
 data class RegisterCommandResponse(val result: RegisterResult,
                                    val userinfos: UserInfos?) : CommandResponse()
-
-class TestCommand : Command()

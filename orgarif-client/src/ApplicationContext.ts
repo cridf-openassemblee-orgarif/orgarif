@@ -4,8 +4,17 @@ import { CsrfTokenService } from './services/CsrfTokenService';
 import { HttpService } from './services/HttpService';
 import { NotificationService } from './services/NotificationService';
 import { QueryService } from './services/QueryService';
+import { Actions } from './state/Actions';
 
 class ApplicationContext {
+  private actionsInstance: Actions;
+  public actions = () => {
+    if (!this.actionsInstance) {
+      this.actionsInstance = new Actions();
+    }
+    return this.actionsInstance;
+  };
+
   private csrfTokenServiceInstance: CsrfTokenService;
   public csrfTokenService = () => {
     if (!this.csrfTokenServiceInstance) {

@@ -29,9 +29,10 @@ class CommandController(
         val dateService: DateService,
         val randomService: RandomService,
         val transactionManager: PlatformTransactionManager,
+
+        val createOrganismeCommandHandler: CreateOrganismeCommandHandler,
         val loginCommandHandler: LoginCommandHandler,
         val registerCommandHandler: RegisterCommandHandler,
-        val testCommandHandler: TestCommandHandler
 ) {
 
     private val logger = KotlinLogging.logger {}
@@ -109,9 +110,9 @@ class CommandController(
 
     @Suppress("UNCHECKED_CAST")
     private fun handler(command: Command): CommandHandler<Command, CommandResponse> = when (command) {
+        is CreateOrganismeCommand -> createOrganismeCommandHandler
         is LoginCommand -> loginCommandHandler
         is RegisterCommand -> registerCommandHandler
-        is TestCommand -> testCommandHandler
     } as CommandHandler<Command, CommandResponse>
 
 }

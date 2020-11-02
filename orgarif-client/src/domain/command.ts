@@ -1,5 +1,14 @@
 import { UserInfos } from '../interfaces/user';
+import { OrganismeId } from './id';
 import { LoginResult, RegisterResult } from './user';
+
+export interface CreateOrganismeCommand {
+  nom: string;
+}
+
+export interface CreateOrganismeCommandResponse {
+  id: OrganismeId;
+}
 
 export interface LoginCommand {
   login: string;

@@ -1,24 +1,22 @@
 package orgarif.endpoint
 
+import org.springframework.web.bind.annotation.GetMapping
+import org.springframework.web.bind.annotation.RestController
 import orgarif.domain.AuthenticationLevel
 import orgarif.error.OrgarifSecurityException
 import orgarif.query.*
-import orgarif.query.mail.ExceptionQueryHandler
 import orgarif.query.mail.IsLoginAlreadyExistsQueryHandler
-import orgarif.query.mail.RuntimeExceptionQueryHandler
+import orgarif.query.mail.ListOrganismesQueryHandler
 import orgarif.repository.sql.UserDao
 import orgarif.service.user.UserSessionHelper
 import orgarif.utils.Serializer
-import org.springframework.web.bind.annotation.GetMapping
-import org.springframework.web.bind.annotation.RestController
 import java.net.URLDecoder
 import javax.servlet.http.HttpServletRequest
 
 @RestController
 class QueryController(
         val isLoginAlreadyExistsQueryHandler: IsLoginAlreadyExistsQueryHandler,
-        val exceptionQueryHandler: ExceptionQueryHandler,
-        val runtimeExceptionQueryHandler: RuntimeExceptionQueryHandler,
+        val listOrganismesQueryHandler: ListOrganismesQueryHandler,
 
         val userDao: UserDao) {
 
@@ -54,8 +52,7 @@ class QueryController(
     @Suppress("UNCHECKED_CAST")
     private fun handler(query: Query): QueryHandlerInterface<Query, QueryResponse> = when (query) {
         is IsLoginAlreadyTakenQuery -> isLoginAlreadyExistsQueryHandler
-        is ExceptionQuery -> exceptionQueryHandler
-        is RuntimeExceptionQuery -> runtimeExceptionQueryHandler
+        is ListOrganismesQuery -> listOrganismesQueryHandler
     } as QueryHandler<Query, QueryResponse>
 
 }

@@ -1,8 +1,8 @@
 package orgarif.query
 
+import Organisme
 import com.fasterxml.jackson.annotation.JsonTypeInfo
 import orgarif.domain.UserSession
-import java.time.Instant
 
 @JsonTypeInfo(use = JsonTypeInfo.Id.MINIMAL_CLASS, include = JsonTypeInfo.As.PROPERTY, property = "objectType")
 sealed class Query
@@ -36,7 +36,6 @@ data class IsLoginAlreadyTakenQuery(val login: String) : Query()
 
 data class IsLoginAlreadyTakenQueryResponse(val alreadyTaken: Boolean) : QueryResponse()
 
-data class ExceptionQuery(val i: Instant) : Query()
-class ExceptionQueryResponse : QueryResponse()
-class RuntimeExceptionQuery : Query()
-class RuntimeExceptionQueryResponse : QueryResponse()
+class ListOrganismesQuery : Query()
+
+data class ListOrganismesQueryResponse(val organismes: List<Organisme>) : QueryResponse()

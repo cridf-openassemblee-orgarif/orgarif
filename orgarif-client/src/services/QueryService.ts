@@ -1,8 +1,8 @@
 import { appContext } from '../ApplicationContext';
 import {
-  ExceptionQuery,
   IsLoginAlreadyTakenQuery,
   IsLoginAlreadyTakenQueryResponse,
+  ListOrganismesQueryResponse,
 } from '../domain/query';
 
 export class QueryService {
@@ -11,11 +11,8 @@ export class QueryService {
   ): Promise<IsLoginAlreadyTakenQueryResponse> =>
     this.query('IsLoginAlreadyTakenQuery', query);
 
-  public exceptionQuery = (query: ExceptionQuery): Promise<any> =>
-    this.query('ExceptionQuery', query);
-
-  public runtimeExceptionQuery = (): Promise<any> =>
-    this.query('RuntimeExceptionQuery');
+  public listOrganismesQuery = (): Promise<ListOrganismesQueryResponse> =>
+    this.query('ListOrganismesQuery');
 
   private query = <R>(queryName: string, query?: object): Promise<R> =>
     appContext

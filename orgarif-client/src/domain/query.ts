@@ -1,4 +1,4 @@
-import { Instant } from './time';
+import { Organisme } from './organisme';
 
 export interface IsLoginAlreadyTakenQuery {
   login: string;
@@ -8,6 +8,6 @@ export interface IsLoginAlreadyTakenQueryResponse {
   alreadyTaken: boolean;
 }
 
-export interface ExceptionQuery {
-  i: Instant;
+export interface ListOrganismesQueryResponse {
+  organismes: Organisme[];
 }

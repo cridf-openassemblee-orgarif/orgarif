@@ -1,6 +1,7 @@
 /** @jsx jsx */
 import { jsx } from '@emotion/core';
-import { ChangeEvent } from 'react';
+import { ChangeEvent, useEffect, useState } from 'react';
+import { appContext } from '../ApplicationContext';
 import { SimpleForm } from '../component/SimpleForm';
 
 export interface RegisterFormDto {
@@ -10,21 +11,31 @@ export interface RegisterFormDto {
 }
 
 interface Props {
-  onMailChange: (mail: string) => void;
-  displayMailIsAlreadyTaken: boolean;
   onSubmit: (dto: RegisterFormDto) => void;
 }
 
 export const RegisterForm = (props: Props) => {
-  const mailOnChange = (event: ChangeEvent<HTMLInputElement>) =>
-    props.onMailChange(event.target.value);
+  const [login, setLogin] = useState('');
+  const [mailIsAlreadyTaken, setMailIsAlreadyTaken] = useState(false);
+  useEffect(() => {
+    if (login !== '') {
+      appContext
+        .queryService()
+        .isLoginAlreadyTakenQuery({ login })
+        .then((r) => {
+          setMailIsAlreadyTaken(r.alreadyTaken);
+        });
+    }
+  }, [login]);
+  const loginOnChange = (event: ChangeEvent<HTMLInputElement>) =>
+    setLogin(event.target.value);
   return (
     <SimpleForm onSubmit={props.onSubmit}>
       <label>
         Email :
-        <input name="mail" onChange={mailOnChange} />
+        <input name="mail" onChange={loginOnChange} />
       </label>
-      {props.displayMailIsAlreadyTaken && <div>Email is already taken</div>}
+      {mailIsAlreadyTaken && <div>Email is already taken</div>}
       <label>
         Password :
         <input name="password" />

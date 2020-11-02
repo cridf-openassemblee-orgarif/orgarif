@@ -11,7 +11,6 @@ import orgarif.error.MailAlreadyRegisteredException
 import orgarif.jooq.generated.Tables.APP_USER
 import orgarif.jooq.generated.tables.records.AppUserRecord
 import orgarif.utils.toTypeId
-
 import java.time.Instant
 import java.time.ZoneOffset
 
