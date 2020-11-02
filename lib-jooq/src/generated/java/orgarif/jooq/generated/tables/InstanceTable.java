@@ -35,7 +35,7 @@ import orgarif.jooq.tools.jooq.CharToUUIDConverter;
 @SuppressWarnings({ "all", "unchecked", "rawtypes" })
 public class InstanceTable extends TableImpl<InstanceRecord> {
 
-    private static final long serialVersionUID = -839910090;
+    private static final long serialVersionUID = -1031521590;
 
     /**
      * The reference instance of <code>orgarif.instance</code>
@@ -115,7 +115,7 @@ public class InstanceTable extends TableImpl<InstanceRecord> {
 
     @Override
     public List<Index> getIndexes() {
-        return Arrays.<Index>asList(Indexes.INSTANCE_ORGANISME_ID);
+        return Arrays.<Index>asList(Indexes.INSTANCE_INSTANCE_ORGANISME_ID_IDX);
     }
 
     @Override

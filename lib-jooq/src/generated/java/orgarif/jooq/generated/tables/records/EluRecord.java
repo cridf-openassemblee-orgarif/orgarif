@@ -24,7 +24,7 @@ import orgarif.jooq.generated.tables.EluTable;
 @SuppressWarnings({ "all", "unchecked", "rawtypes" })
 public class EluRecord extends UpdatableRecordImpl<EluRecord> implements Record9<UUID, String, String, String, String, String, String, Boolean, LocalDateTime> {
 
-    private static final long serialVersionUID = -192390133;
+    private static final long serialVersionUID = -791737868;
 
     /**
      * Setter for <code>orgarif.elu.id</code>.
@@ -147,17 +147,17 @@ public class EluRecord extends UpdatableRecordImpl<EluRecord> implements Record9
     }
 
     /**
-     * Setter for <code>orgarif.elu.date</code>.
+     * Setter for <code>orgarif.elu.creation_date</code>.
      */
-    public void setDate(@Nonnull LocalDateTime value) {
+    public void setCreationDate(@Nonnull LocalDateTime value) {
         set(8, value);
     }
 
     /**
-     * Getter for <code>orgarif.elu.date</code>.
+     * Getter for <code>orgarif.elu.creation_date</code>.
      */
     @Nonnull
-    public LocalDateTime getDate() {
+    public LocalDateTime getCreationDate() {
         return (LocalDateTime) get(8);
     }
 
@@ -226,7 +226,7 @@ public class EluRecord extends UpdatableRecordImpl<EluRecord> implements Record9
 
     @Override
     public Field<LocalDateTime> field9() {
-        return EluTable.ELU.DATE;
+        return EluTable.ELU.CREATION_DATE;
     }
 
     @Override
@@ -280,7 +280,7 @@ public class EluRecord extends UpdatableRecordImpl<EluRecord> implements Record9
     @Override
     @Nonnull
     public LocalDateTime component9() {
-        return getDate();
+        return getCreationDate();
     }
 
     @Override
@@ -334,7 +334,7 @@ public class EluRecord extends UpdatableRecordImpl<EluRecord> implements Record9
     @Override
     @Nonnull
     public LocalDateTime value9() {
-        return getDate();
+        return getCreationDate();
     }
 
     @Override
@@ -387,7 +387,7 @@ public class EluRecord extends UpdatableRecordImpl<EluRecord> implements Record9
 
     @Override
     public EluRecord value9(@Nonnull LocalDateTime value) {
-        setDate(value);
+        setCreationDate(value);
         return this;
     }
 
@@ -419,7 +419,7 @@ public class EluRecord extends UpdatableRecordImpl<EluRecord> implements Record9
     /**
      * Create a detached, initialised EluRecord
      */
-    public EluRecord(@Nonnull UUID id, @Nonnull String civilite, @Nonnull String prenom, @Nonnull String nom, @Nonnull String groupePolitique, @Nonnull String groupePolitiqueCourt, @Nonnull String imageUrl, @Nonnull Boolean actif, @Nonnull LocalDateTime date) {
+    public EluRecord(@Nonnull UUID id, @Nonnull String civilite, @Nonnull String prenom, @Nonnull String nom, @Nonnull String groupePolitique, @Nonnull String groupePolitiqueCourt, @Nonnull String imageUrl, @Nonnull Boolean actif, @Nonnull LocalDateTime creationDate) {
         super(EluTable.ELU);
 
         set(0, id);
@@ -430,6 +430,6 @@ public class EluRecord extends UpdatableRecordImpl<EluRecord> implements Record9
         set(5, groupePolitiqueCourt);
         set(6, imageUrl);
         set(7, actif);
-        set(8, date);
+        set(8, creationDate);
     }
 }

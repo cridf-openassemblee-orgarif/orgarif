@@ -34,7 +34,7 @@ import orgarif.jooq.tools.jooq.CharToUUIDConverter;
 @SuppressWarnings({ "all", "unchecked", "rawtypes" })
 public class EluTable extends TableImpl<EluRecord> {
 
-    private static final long serialVersionUID = -880549214;
+    private static final long serialVersionUID = -1497926384;
 
     /**
      * The reference instance of <code>orgarif.elu</code>
@@ -90,9 +90,9 @@ public class EluTable extends TableImpl<EluRecord> {
     public final TableField<EluRecord, Boolean> ACTIF = createField(DSL.name("actif"), org.jooq.impl.SQLDataType.BOOLEAN.nullable(false), this, "");
 
     /**
-     * The column <code>orgarif.elu.date</code>.
+     * The column <code>orgarif.elu.creation_date</code>.
      */
-    public final TableField<EluRecord, LocalDateTime> DATE = createField(DSL.name("date"), org.jooq.impl.SQLDataType.LOCALDATETIME.nullable(false), this, "");
+    public final TableField<EluRecord, LocalDateTime> CREATION_DATE = createField(DSL.name("creation_date"), org.jooq.impl.SQLDataType.LOCALDATETIME.nullable(false), this, "");
 
     /**
      * Create a <code>orgarif.elu</code> table reference

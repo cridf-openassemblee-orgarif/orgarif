@@ -35,7 +35,7 @@ import orgarif.jooq.tools.jooq.CharToUUIDConverter;
 @SuppressWarnings({ "all", "unchecked", "rawtypes" })
 public class OrganismeDeliberationTable extends TableImpl<OrganismeDeliberationRecord> {
 
-    private static final long serialVersionUID = -2008455812;
+    private static final long serialVersionUID = -1734887095;
 
     /**
      * The reference instance of <code>orgarif.organisme_deliberation</code>
@@ -105,7 +105,7 @@ public class OrganismeDeliberationTable extends TableImpl<OrganismeDeliberationR
 
     @Override
     public List<Index> getIndexes() {
-        return Arrays.<Index>asList(Indexes.ORGANISME_DELIBERATION_DELIBERATION_ID, Indexes.ORGANISME_DELIBERATION_ORGANISME_ID);
+        return Arrays.<Index>asList(Indexes.ORGANISME_DELIBERATION_DELIBERATION_ID, Indexes.ORGANISME_DELIBERATION_ORGANISME_DELIBERATION_ORGANISME_ID_IDX);
     }
 
     @Override
