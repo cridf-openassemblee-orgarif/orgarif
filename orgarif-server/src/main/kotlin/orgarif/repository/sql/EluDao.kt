@@ -45,6 +45,12 @@ class EluDao(val jooq: DSLContext) {
                     .fetch()
                     .map(this::map)
 
+    fun delete(id: EluId) {
+        jooq.delete(ELU)
+                .where(ELU.ID.equal(id.rawId))
+                .execute()
+    }
+
     private fun map(r: EluRecord) = Record(
             r.id.toTypeId(),
             Civilite.valueOf(r.civilite),
