@@ -30,11 +30,11 @@ class InstanceDao(val jooq: DSLContext) {
         jooq.insertInto(INSTANCE).set(record).execute()
     }
 
-    fun fetch(id: InstanceId) =
+    fun fetchByOrganismeId(organismeId: OrganismeId) =
             jooq.selectFrom(INSTANCE)
-                    .where(INSTANCE.ID.equal(id.rawId))
-                    .fetchOne()
-                    ?.let(this::map)
+                    .where(INSTANCE.ORGANISME_ID.equal(organismeId.rawId))
+                    .fetch()
+                    .map(this::map)
 
     private fun map(r: InstanceRecord) = Record(
             r.id.toTypeId(),

@@ -3,38 +3,39 @@ package orgarif.repository.sql
 import org.jooq.DSLContext
 import org.springframework.stereotype.Repository
 import orgarif.domain.DeliberationId
+import orgarif.domain.InstanceId
 import orgarif.domain.OrganismeDeliberationId
 import orgarif.domain.OrganismeId
-import orgarif.jooq.generated.Tables
+import orgarif.jooq.generated.Tables.INSTANCE_DELIBERATION
 import orgarif.jooq.generated.Tables.ORGANISME_DELIBERATION
-import orgarif.jooq.generated.tables.records.OrganismeDeliberationRecord
+import orgarif.jooq.generated.tables.records.InstanceDeliberationRecord
 import orgarif.utils.toTypeId
 
 @Repository
-class OrganismeDeliberationDao(val jooq: DSLContext) {
+class InstanceDeliberationDao(val jooq: DSLContext) {
 
     data class Record(val id: OrganismeDeliberationId,
-                      val organismeId: OrganismeId,
+                      val instanceId: InstanceId,
                       val deliberationId: DeliberationId)
 
     fun insert(r: Record) {
-        val record = OrganismeDeliberationRecord().apply {
+        val record = InstanceDeliberationRecord().apply {
             id = r.id.rawId
-            organismeId = r.organismeId.rawId
+            instanceId = r.instanceId.rawId
             deliberationId = r.deliberationId.rawId
         }
         jooq.insertInto(ORGANISME_DELIBERATION).set(record).execute()
     }
 
-    fun fetchByOrganismeId(organismeId: OrganismeId) =
-            jooq.selectFrom(Tables.ORGANISME_DELIBERATION)
-                    .where(Tables.ORGANISME_DELIBERATION.ORGANISME_ID.equal(organismeId.rawId))
+    fun fetchByInstanceId(instanceId: InstanceId) =
+            jooq.selectFrom(INSTANCE_DELIBERATION)
+                    .where(INSTANCE_DELIBERATION.INSTANCE_ID.equal(instanceId.rawId))
                     .fetch()
                     .map(this::map)
 
-    private fun map(r: OrganismeDeliberationRecord) = Record(
+    private fun map(r: InstanceDeliberationRecord) = Record(
             r.id.toTypeId(),
-            r.organismeId.toTypeId(),
+            r.instanceId.toTypeId(),
             r.deliberationId.toTypeId())
 
 }

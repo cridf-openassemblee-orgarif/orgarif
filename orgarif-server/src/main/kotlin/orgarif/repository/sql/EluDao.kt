@@ -23,7 +23,7 @@ class EluDao(val jooq: DSLContext) {
                       val groupePolitiqueCourt: String,
                       val imageUrl: String,
                       val actif: Boolean,
-                      val date: Instant)
+                      val creationDate: Instant)
 
     fun insert(r: Record) {
         val record = EluRecord().apply {
@@ -35,7 +35,7 @@ class EluDao(val jooq: DSLContext) {
             groupePolitiqueCourt = r.groupePolitiqueCourt
             imageUrl = r.imageUrl
             actif = r.actif
-            date = r.date.atOffset(ZoneOffset.UTC).toLocalDateTime()
+            creationDate = r.creationDate.atOffset(ZoneOffset.UTC).toLocalDateTime()
         }
         jooq.insertInto(ELU).set(record).execute()
     }
@@ -60,6 +60,6 @@ class EluDao(val jooq: DSLContext) {
             r.groupePolitiqueCourt,
             r.imageUrl,
             r.actif,
-            r.date.toInstant(ZoneOffset.UTC))
+            r.creationDate.toInstant(ZoneOffset.UTC))
 
 }

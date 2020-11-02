@@ -6,6 +6,7 @@ import org.springframework.core.task.AsyncTaskExecutor
 import org.springframework.stereotype.Service
 import orgarif.domain.Civilite
 import orgarif.repository.sql.EluDao
+import orgarif.service.utils.InitialDataInjector
 import orgarif.utils.OrgarifStringUtils.deserializeUuid
 import orgarif.utils.Serializer.deserialize
 import orgarif.utils.toTypeId
@@ -20,7 +21,8 @@ open class ElusSynchronizationService(@Value("\${doSynchronizeElus}")
 
                                       val taskExecutor: AsyncTaskExecutor,
                                       val httpService: HttpService,
-                                      val dateService: DateService) {
+                                      val dateService: DateService,
+                                      val initialDataInjector: InitialDataInjector) {
 
     private val logger = KotlinLogging.logger {}
 
@@ -85,7 +87,7 @@ open class ElusSynchronizationService(@Value("\${doSynchronizeElus}")
                             groupePolitiqueCourt = r.groupePolitiqueCourt,
                             imageUrl = r.image,
                             actif = r.actif,
-                            date = now
+                            creationDate = now
                     )
                 }
         val existingElus = eluDao.fetchAll().associateBy { it.id }
@@ -94,7 +96,7 @@ open class ElusSynchronizationService(@Value("\${doSynchronizeElus}")
             if (existing == null) {
                 eluDao.insert(newElu)
                 InsertResult.insert
-            } else if (existing.copy(date = now) != newElu) {
+            } else if (existing.copy(creationDate = now) != newElu) {
                 eluDao.delete(existing.id)
                 eluDao.insert(newElu)
                 InsertResult.update
@@ -107,6 +109,7 @@ open class ElusSynchronizationService(@Value("\${doSynchronizeElus}")
                     "${r[InsertResult.update]?.size ?: 0} updates " +
                     "${r[InsertResult.unmodified]?.size ?: 0} unmodified "
         }
+        initialDataInjector.injectRepresentants()
         return newElus.size
     }
 

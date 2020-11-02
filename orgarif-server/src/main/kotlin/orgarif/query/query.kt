@@ -1,6 +1,6 @@
 package orgarif.query
 
-import Organisme
+import OrganismeInfos
 import com.fasterxml.jackson.annotation.JsonTypeInfo
 import orgarif.domain.UserSession
 
@@ -38,4 +38,4 @@ data class IsLoginAlreadyTakenQueryResponse(val alreadyTaken: Boolean) : QueryRe
 
 class ListOrganismesQuery : Query()
 
-data class ListOrganismesQueryResponse(val organismes: List<Organisme>) : QueryResponse()
+data class ListOrganismesQueryResponse(val organismes: List<OrganismeInfos>) : QueryResponse()

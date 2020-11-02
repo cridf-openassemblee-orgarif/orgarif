@@ -6,6 +6,7 @@ import orgarif.domain.DeliberationId
 import orgarif.jooq.generated.Tables.DELIBERATION
 import orgarif.jooq.generated.tables.records.DeliberationRecord
 import orgarif.utils.toTypeId
+import java.lang.IllegalArgumentException
 import java.time.Instant
 import java.time.LocalDate
 import java.time.ZoneOffset
@@ -34,6 +35,7 @@ class DeliberationDao(val jooq: DSLContext) {
                     .where(DELIBERATION.ID.equal(id.rawId))
                     .fetchOne()
                     ?.let(this::map)
+                    ?: throw IllegalArgumentException("$id")
 
     private fun map(r: DeliberationRecord) = Record(
             r.id.toTypeId(),
