@@ -6,9 +6,17 @@ package orgarif.jooq.generated;
 
 import orgarif.jooq.generated.tables.AppUserTable;
 import orgarif.jooq.generated.tables.CommandLogTable;
+import orgarif.jooq.generated.tables.DeliberationTable;
 import orgarif.jooq.generated.tables.DeploymentLogTable;
+import orgarif.jooq.generated.tables.EluTable;
+import orgarif.jooq.generated.tables.InstanceTable;
 import orgarif.jooq.generated.tables.MagicLinkTokenTable;
 import orgarif.jooq.generated.tables.MailLogTable;
+import orgarif.jooq.generated.tables.NatureJuridiqueTable;
+import orgarif.jooq.generated.tables.OrganismeDeliberationTable;
+import orgarif.jooq.generated.tables.OrganismeTable;
+import orgarif.jooq.generated.tables.SecteurTable;
+import orgarif.jooq.generated.tables.TypeStructureTable;
 import orgarif.jooq.generated.tables.UserSessionLogTable;
 
 
@@ -29,9 +37,24 @@ public class Tables {
     public static final CommandLogTable COMMAND_LOG = CommandLogTable.COMMAND_LOG;
 
     /**
+     * The table <code>orgarif.deliberation</code>.
+     */
+    public static final DeliberationTable DELIBERATION = DeliberationTable.DELIBERATION;
+
+    /**
      * The table <code>orgarif.deployment_log</code>.
      */
     public static final DeploymentLogTable DEPLOYMENT_LOG = DeploymentLogTable.DEPLOYMENT_LOG;
+
+    /**
+     * The table <code>orgarif.elu</code>.
+     */
+    public static final EluTable ELU = EluTable.ELU;
+
+    /**
+     * The table <code>orgarif.instance</code>.
+     */
+    public static final InstanceTable INSTANCE = InstanceTable.INSTANCE;
 
     /**
      * The table <code>orgarif.magic_link_token</code>.
@@ -42,6 +65,31 @@ public class Tables {
      * The table <code>orgarif.mail_log</code>.
      */
     public static final MailLogTable MAIL_LOG = MailLogTable.MAIL_LOG;
+
+    /**
+     * The table <code>orgarif.nature_juridique</code>.
+     */
+    public static final NatureJuridiqueTable NATURE_JURIDIQUE = NatureJuridiqueTable.NATURE_JURIDIQUE;
+
+    /**
+     * The table <code>orgarif.organisme</code>.
+     */
+    public static final OrganismeTable ORGANISME = OrganismeTable.ORGANISME;
+
+    /**
+     * The table <code>orgarif.organisme_deliberation</code>.
+     */
+    public static final OrganismeDeliberationTable ORGANISME_DELIBERATION = OrganismeDeliberationTable.ORGANISME_DELIBERATION;
+
+    /**
+     * The table <code>orgarif.secteur</code>.
+     */
+    public static final SecteurTable SECTEUR = SecteurTable.SECTEUR;
+
+    /**
+     * The table <code>orgarif.type_structure</code>.
+     */
+    public static final TypeStructureTable TYPE_STRUCTURE = TypeStructureTable.TYPE_STRUCTURE;
 
     /**
      * The table <code>orgarif.user_session_log</code>.

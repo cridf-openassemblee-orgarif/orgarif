@@ -10,8 +10,11 @@ import org.jooq.impl.Internal;
 
 import orgarif.jooq.generated.tables.AppUserTable;
 import orgarif.jooq.generated.tables.CommandLogTable;
+import orgarif.jooq.generated.tables.InstanceTable;
 import orgarif.jooq.generated.tables.MagicLinkTokenTable;
 import orgarif.jooq.generated.tables.MailLogTable;
+import orgarif.jooq.generated.tables.OrganismeDeliberationTable;
+import orgarif.jooq.generated.tables.OrganismeTable;
 import orgarif.jooq.generated.tables.UserSessionLogTable;
 
 
@@ -27,9 +30,15 @@ public class Indexes {
 
     public static final Index APP_USER_APP_USER_MAIL_IDX = Indexes0.APP_USER_APP_USER_MAIL_IDX;
     public static final Index APP_USER_APP_USER_USERNAME_IDX = Indexes0.APP_USER_APP_USER_USERNAME_IDX;
+    public static final Index ORGANISME_DELIBERATION_DELIBERATION_ID = Indexes0.ORGANISME_DELIBERATION_DELIBERATION_ID;
     public static final Index COMMAND_LOG_DEPLOYMENT_LOG_ID = Indexes0.COMMAND_LOG_DEPLOYMENT_LOG_ID;
     public static final Index MAIL_LOG_DEPLOYMENT_LOG_ID = Indexes0.MAIL_LOG_DEPLOYMENT_LOG_ID;
     public static final Index MAIL_LOG_MAIL_LOG_USER_ID_IDX = Indexes0.MAIL_LOG_MAIL_LOG_USER_ID_IDX;
+    public static final Index ORGANISME_NATURE_JURIDIQUE_ID = Indexes0.ORGANISME_NATURE_JURIDIQUE_ID;
+    public static final Index INSTANCE_ORGANISME_ID = Indexes0.INSTANCE_ORGANISME_ID;
+    public static final Index ORGANISME_DELIBERATION_ORGANISME_ID = Indexes0.ORGANISME_DELIBERATION_ORGANISME_ID;
+    public static final Index ORGANISME_SECTEUR_ID = Indexes0.ORGANISME_SECTEUR_ID;
+    public static final Index ORGANISME_TYPE_STRUCTURE_ID = Indexes0.ORGANISME_TYPE_STRUCTURE_ID;
     public static final Index COMMAND_LOG_USER_ID = Indexes0.COMMAND_LOG_USER_ID;
     public static final Index MAGIC_LINK_TOKEN_USER_ID = Indexes0.MAGIC_LINK_TOKEN_USER_ID;
     public static final Index USER_SESSION_LOG_USER_ID = Indexes0.USER_SESSION_LOG_USER_ID;
@@ -42,9 +51,15 @@ public class Indexes {
     private static class Indexes0 {
         public static Index APP_USER_APP_USER_MAIL_IDX = Internal.createIndex("app_user_mail_idx", AppUserTable.APP_USER, new OrderField[] { AppUserTable.APP_USER.MAIL }, false);
         public static Index APP_USER_APP_USER_USERNAME_IDX = Internal.createIndex("app_user_username_idx", AppUserTable.APP_USER, new OrderField[] { AppUserTable.APP_USER.USERNAME }, false);
+        public static Index ORGANISME_DELIBERATION_DELIBERATION_ID = Internal.createIndex("deliberation_id", OrganismeDeliberationTable.ORGANISME_DELIBERATION, new OrderField[] { OrganismeDeliberationTable.ORGANISME_DELIBERATION.DELIBERATION_ID }, false);
         public static Index COMMAND_LOG_DEPLOYMENT_LOG_ID = Internal.createIndex("deployment_log_id", CommandLogTable.COMMAND_LOG, new OrderField[] { CommandLogTable.COMMAND_LOG.DEPLOYMENT_LOG_ID }, false);
         public static Index MAIL_LOG_DEPLOYMENT_LOG_ID = Internal.createIndex("deployment_log_id", MailLogTable.MAIL_LOG, new OrderField[] { MailLogTable.MAIL_LOG.DEPLOYMENT_LOG_ID }, false);
         public static Index MAIL_LOG_MAIL_LOG_USER_ID_IDX = Internal.createIndex("mail_log_user_id_idx", MailLogTable.MAIL_LOG, new OrderField[] { MailLogTable.MAIL_LOG.USER_ID }, false);
+        public static Index ORGANISME_NATURE_JURIDIQUE_ID = Internal.createIndex("nature_juridique_id", OrganismeTable.ORGANISME, new OrderField[] { OrganismeTable.ORGANISME.NATURE_JURIDIQUE_ID }, false);
+        public static Index INSTANCE_ORGANISME_ID = Internal.createIndex("organisme_id", InstanceTable.INSTANCE, new OrderField[] { InstanceTable.INSTANCE.ORGANISME_ID }, false);
+        public static Index ORGANISME_DELIBERATION_ORGANISME_ID = Internal.createIndex("organisme_id", OrganismeDeliberationTable.ORGANISME_DELIBERATION, new OrderField[] { OrganismeDeliberationTable.ORGANISME_DELIBERATION.ORGANISME_ID }, false);
+        public static Index ORGANISME_SECTEUR_ID = Internal.createIndex("secteur_id", OrganismeTable.ORGANISME, new OrderField[] { OrganismeTable.ORGANISME.SECTEUR_ID }, false);
+        public static Index ORGANISME_TYPE_STRUCTURE_ID = Internal.createIndex("type_structure_id", OrganismeTable.ORGANISME, new OrderField[] { OrganismeTable.ORGANISME.TYPE_STRUCTURE_ID }, false);
         public static Index COMMAND_LOG_USER_ID = Internal.createIndex("user_id", CommandLogTable.COMMAND_LOG, new OrderField[] { CommandLogTable.COMMAND_LOG.USER_ID }, false);
         public static Index MAGIC_LINK_TOKEN_USER_ID = Internal.createIndex("user_id", MagicLinkTokenTable.MAGIC_LINK_TOKEN, new OrderField[] { MagicLinkTokenTable.MAGIC_LINK_TOKEN.USER_ID }, false);
         public static Index USER_SESSION_LOG_USER_ID = Internal.createIndex("user_id", UserSessionLogTable.USER_SESSION_LOG, new OrderField[] { UserSessionLogTable.USER_SESSION_LOG.USER_ID }, false);

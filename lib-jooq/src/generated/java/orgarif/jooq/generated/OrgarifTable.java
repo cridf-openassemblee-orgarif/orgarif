@@ -13,9 +13,17 @@ import org.jooq.impl.SchemaImpl;
 
 import orgarif.jooq.generated.tables.AppUserTable;
 import orgarif.jooq.generated.tables.CommandLogTable;
+import orgarif.jooq.generated.tables.DeliberationTable;
 import orgarif.jooq.generated.tables.DeploymentLogTable;
+import orgarif.jooq.generated.tables.EluTable;
+import orgarif.jooq.generated.tables.InstanceTable;
 import orgarif.jooq.generated.tables.MagicLinkTokenTable;
 import orgarif.jooq.generated.tables.MailLogTable;
+import orgarif.jooq.generated.tables.NatureJuridiqueTable;
+import orgarif.jooq.generated.tables.OrganismeDeliberationTable;
+import orgarif.jooq.generated.tables.OrganismeTable;
+import orgarif.jooq.generated.tables.SecteurTable;
+import orgarif.jooq.generated.tables.TypeStructureTable;
 import orgarif.jooq.generated.tables.UserSessionLogTable;
 
 
@@ -25,7 +33,7 @@ import orgarif.jooq.generated.tables.UserSessionLogTable;
 @SuppressWarnings({ "all", "unchecked", "rawtypes" })
 public class OrgarifTable extends SchemaImpl {
 
-    private static final long serialVersionUID = -1426383980;
+    private static final long serialVersionUID = -2146133558;
 
     /**
      * The reference instance of <code>orgarif</code>
@@ -43,9 +51,24 @@ public class OrgarifTable extends SchemaImpl {
     public final CommandLogTable COMMAND_LOG = CommandLogTable.COMMAND_LOG;
 
     /**
+     * The table <code>orgarif.deliberation</code>.
+     */
+    public final DeliberationTable DELIBERATION = DeliberationTable.DELIBERATION;
+
+    /**
      * The table <code>orgarif.deployment_log</code>.
      */
     public final DeploymentLogTable DEPLOYMENT_LOG = DeploymentLogTable.DEPLOYMENT_LOG;
+
+    /**
+     * The table <code>orgarif.elu</code>.
+     */
+    public final EluTable ELU = EluTable.ELU;
+
+    /**
+     * The table <code>orgarif.instance</code>.
+     */
+    public final InstanceTable INSTANCE = InstanceTable.INSTANCE;
 
     /**
      * The table <code>orgarif.magic_link_token</code>.
@@ -56,6 +79,31 @@ public class OrgarifTable extends SchemaImpl {
      * The table <code>orgarif.mail_log</code>.
      */
     public final MailLogTable MAIL_LOG = MailLogTable.MAIL_LOG;
+
+    /**
+     * The table <code>orgarif.nature_juridique</code>.
+     */
+    public final NatureJuridiqueTable NATURE_JURIDIQUE = NatureJuridiqueTable.NATURE_JURIDIQUE;
+
+    /**
+     * The table <code>orgarif.organisme</code>.
+     */
+    public final OrganismeTable ORGANISME = OrganismeTable.ORGANISME;
+
+    /**
+     * The table <code>orgarif.organisme_deliberation</code>.
+     */
+    public final OrganismeDeliberationTable ORGANISME_DELIBERATION = OrganismeDeliberationTable.ORGANISME_DELIBERATION;
+
+    /**
+     * The table <code>orgarif.secteur</code>.
+     */
+    public final SecteurTable SECTEUR = SecteurTable.SECTEUR;
+
+    /**
+     * The table <code>orgarif.type_structure</code>.
+     */
+    public final TypeStructureTable TYPE_STRUCTURE = TypeStructureTable.TYPE_STRUCTURE;
 
     /**
      * The table <code>orgarif.user_session_log</code>.
@@ -80,9 +128,17 @@ public class OrgarifTable extends SchemaImpl {
         return Arrays.<Table<?>>asList(
             AppUserTable.APP_USER,
             CommandLogTable.COMMAND_LOG,
+            DeliberationTable.DELIBERATION,
             DeploymentLogTable.DEPLOYMENT_LOG,
+            EluTable.ELU,
+            InstanceTable.INSTANCE,
             MagicLinkTokenTable.MAGIC_LINK_TOKEN,
             MailLogTable.MAIL_LOG,
+            NatureJuridiqueTable.NATURE_JURIDIQUE,
+            OrganismeTable.ORGANISME,
+            OrganismeDeliberationTable.ORGANISME_DELIBERATION,
+            SecteurTable.SECTEUR,
+            TypeStructureTable.TYPE_STRUCTURE,
             UserSessionLogTable.USER_SESSION_LOG);
     }
 }
