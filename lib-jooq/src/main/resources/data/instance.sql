@@ -8,3 +8,4 @@ CREATE TABLE instance
     FOREIGN KEY (organisme_id) REFERENCES organisme (id)
 );
 
+CREATE INDEX ON instance (organisme_id);

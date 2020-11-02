@@ -8,6 +8,6 @@ CREATE TABLE elu
     groupe_politique_court VARCHAR(255)         NOT NULL,
     image_url              VARCHAR(255)         NOT NULL,
     actif                  BOOLEAN              NOT NULL,
-    date                   TIMESTAMP            NOT NULL
+    creation_date          TIMESTAMP            NOT NULL
 );
 

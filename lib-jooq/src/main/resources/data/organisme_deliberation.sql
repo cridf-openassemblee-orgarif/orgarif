@@ -7,3 +7,4 @@ CREATE TABLE organisme_deliberation
     FOREIGN KEY (deliberation_id) REFERENCES deliberation (id)
 );
 
+CREATE INDEX ON organisme_deliberation (organisme_id);
