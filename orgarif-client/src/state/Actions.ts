@@ -7,8 +7,6 @@ import { assertUnreachable } from '../utils';
 import { state } from './state';
 
 export class Actions {
-  listOrganismes = () => appContext.queryService().listOrganismesQuery();
-
   register = (registerInput: RegisterFormDto) => {
     const registerCommand: RegisterCommand = {
       ...registerInput,

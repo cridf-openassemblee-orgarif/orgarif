@@ -10,7 +10,6 @@ import orgarif.domain.TypeStructureId
 import orgarif.jooq.generated.Tables.ORGANISME
 import orgarif.jooq.generated.tables.records.OrganismeRecord
 import orgarif.utils.toTypeId
-import java.lang.IllegalArgumentException
 import java.time.Instant
 import java.time.ZoneOffset
 
@@ -51,6 +50,10 @@ class OrganismeDao(val jooq: DSLContext) {
                     .where(ORGANISME.ID.equal(id.rawId))
                     .fetchOne()
                     ?.let(this::map)
+
+    fun fetch(id: OrganismeId) =
+            fetchOrNull(id)
+                    ?: throw IllegalArgumentException("$id")
 
     fun fetchAll() =
             jooq.selectFrom(ORGANISME)

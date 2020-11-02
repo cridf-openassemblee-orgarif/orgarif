@@ -10,12 +10,12 @@ typealias RepresentantInstanceInfos = RepresentantInstanceDao.Record
 
 typealias DeliberationInfos = DeliberationDao.Record
 
-data class FullInstance(val instanceInfos: InstanceInfos,
+data class FullInstance(val infos: InstanceInfos,
                         val deliberations: List<DeliberationInfos>,
                         val representants: List<RepresentantInstanceInfos>,
                         val suppleants: List<RepresentantInstanceInfos>)
 
-data class FullOrganisme(val organismeInfos: OrganismeInfos,
+data class FullOrganisme(val infos: OrganismeInfos,
                          val deliberations: List<DeliberationInfos>,
                          val representants: List<RepresentantOrganismeInfos>,
                          val suppleants: List<RepresentantOrganismeInfos>,

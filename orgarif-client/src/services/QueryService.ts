@@ -1,11 +1,18 @@
 import { appContext } from '../ApplicationContext';
 import {
+  GetOrganismeQuery,
+  GetOrganismeQueryResponse,
   IsLoginAlreadyTakenQuery,
   IsLoginAlreadyTakenQueryResponse,
   ListOrganismesQueryResponse,
 } from '../domain/query';
 
 export class QueryService {
+  public getOrganismeQuery = (
+    query: GetOrganismeQuery
+  ): Promise<GetOrganismeQueryResponse> =>
+    this.query('GetOrganismeQuery', query);
+
   public isLoginAlreadyTakenQuery = (
     query: IsLoginAlreadyTakenQuery
   ): Promise<IsLoginAlreadyTakenQueryResponse> =>

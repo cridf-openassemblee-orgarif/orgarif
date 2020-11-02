@@ -1,4 +1,13 @@
-import { Organisme } from './organisme';
+import { OrganismeId } from './id';
+import { FullOrganisme, OrganismeInfos } from './organisme';
+
+export interface GetOrganismeQuery {
+  id: OrganismeId;
+}
+
+export interface GetOrganismeQueryResponse {
+  organisme: FullOrganisme;
+}
 
 export interface IsLoginAlreadyTakenQuery {
   login: string;
@@ -9,5 +18,5 @@ export interface IsLoginAlreadyTakenQueryResponse {
 }
 
 export interface ListOrganismesQueryResponse {
-  organismes: Organisme[];
+  organismes: OrganismeInfos[];
 }

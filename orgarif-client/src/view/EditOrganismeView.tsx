@@ -1,32 +1,32 @@
 /** @jsx jsx */
 import { jsx } from '@emotion/core';
-import { useRecoilState } from 'recoil';
-import { SelectInput, SelectOption } from '../component/SelectInput';
+import { useEffect, useState } from 'react';
+import { appContext } from '../ApplicationContext';
+import { OrganismeComponent } from '../component/OrganismeComponent';
 import { MainContainer } from '../container/MainContainer';
+import { FullOrganisme } from '../domain/organisme';
+import { RouteLink } from '../routing/RouteLink';
 import { EditOrganismeRoute } from '../routing/routes';
-import { state } from '../state/state';
 
 export const EditOrganismeView = (props: {
   routeParams: EditOrganismeRoute;
 }) => {
-  const [userInfos] = useRecoilState(state.userInfos);
-  const [organismes] = useRecoilState(state.organismes);
-  const onChange = (event: React.ChangeEvent<{ value: string }>) => {
-    console.log(event.target.value);
-  };
-  const options: SelectOption[] = [
-    { value: undefined, label: 'rien' },
-    { value: 'test', label: 'test' },
-    { value: 'test2', label: 'test2' },
-  ];
+  const [organisme, setOrganisme] = useState<FullOrganisme | undefined>(
+    undefined
+  );
+  useEffect(() => {
+    appContext
+      .queryService()
+      .getOrganismeQuery({ id: props.routeParams.id })
+      .then((r) => {
+        setOrganisme(r.organisme);
+      });
+  }, []);
   return (
     <MainContainer>
-      <SelectInput
-        label={'test'}
-        value={options[0]}
-        options={options}
-        onChange={onChange}
-      />
+      <RouteLink route={{ name: 'ListOrganismesRoute' }}>list</RouteLink>
+      {!organisme && <div>Chargement...</div>}
+      {organisme && <OrganismeComponent organisme={organisme} />}
     </MainContainer>
   );
 };

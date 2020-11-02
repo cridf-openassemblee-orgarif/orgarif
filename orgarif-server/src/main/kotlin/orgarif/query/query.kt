@@ -1,7 +1,9 @@
 package orgarif.query
 
+import FullOrganisme
 import OrganismeInfos
 import com.fasterxml.jackson.annotation.JsonTypeInfo
+import orgarif.domain.OrganismeId
 import orgarif.domain.UserSession
 
 @JsonTypeInfo(use = JsonTypeInfo.Id.MINIMAL_CLASS, include = JsonTypeInfo.As.PROPERTY, property = "objectType")
@@ -31,6 +33,10 @@ abstract class LoggedInQueryHandler<Q : Query, R : QueryResponse> : QueryHandler
 
     abstract fun handle(query: Q, userSession: UserSession): R
 }
+
+data class GetOrganismeQuery(val id: OrganismeId) : Query()
+
+data class GetOrganismeQueryResponse(val organisme: FullOrganisme) : QueryResponse()
 
 data class IsLoginAlreadyTakenQuery(val login: String) : Query()
 

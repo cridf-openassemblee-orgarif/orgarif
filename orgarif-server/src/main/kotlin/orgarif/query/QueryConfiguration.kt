@@ -5,8 +5,9 @@ import orgarif.domain.AuthenticationLevel
 object QueryConfiguration {
 
     fun authenticationLevel(query: Query) = when (query) {
+        is GetOrganismeQuery -> AuthenticationLevel.neutral
         is IsLoginAlreadyTakenQuery -> AuthenticationLevel.neutral
-        is ListOrganismesQuery -> AuthenticationLevel.loggedIn
+        is ListOrganismesQuery -> AuthenticationLevel.neutral
     }
 
 }

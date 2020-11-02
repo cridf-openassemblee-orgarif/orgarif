@@ -7,6 +7,7 @@ import orgarif.error.OrgarifSecurityException
 import orgarif.query.*
 import orgarif.query.mail.IsLoginAlreadyExistsQueryHandler
 import orgarif.query.mail.ListOrganismesQueryHandler
+import orgarif.query.mail.GetOrganismeQueryHandler
 import orgarif.repository.sql.UserDao
 import orgarif.service.user.UserSessionHelper
 import orgarif.utils.Serializer
@@ -15,6 +16,7 @@ import javax.servlet.http.HttpServletRequest
 
 @RestController
 class QueryController(
+        val getOrganismeQueryHandler: GetOrganismeQueryHandler,
         val isLoginAlreadyExistsQueryHandler: IsLoginAlreadyExistsQueryHandler,
         val listOrganismesQueryHandler: ListOrganismesQueryHandler,
 
@@ -51,6 +53,7 @@ class QueryController(
 
     @Suppress("UNCHECKED_CAST")
     private fun handler(query: Query): QueryHandlerInterface<Query, QueryResponse> = when (query) {
+        is GetOrganismeQuery -> getOrganismeQueryHandler
         is IsLoginAlreadyTakenQuery -> isLoginAlreadyExistsQueryHandler
         is ListOrganismesQuery -> listOrganismesQueryHandler
     } as QueryHandler<Query, QueryResponse>

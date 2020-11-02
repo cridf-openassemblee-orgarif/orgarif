@@ -1,31 +1,45 @@
 /** @jsx jsx */
-import { jsx } from '@emotion/core';
+import { css, jsx } from '@emotion/core';
 import { useEffect, useState } from 'react';
-import { useRecoilState } from 'recoil';
 import { appContext } from '../ApplicationContext';
 import { MainContainer } from '../container/MainContainer';
 import { stringifyNominalString } from '../domain/nominal-class';
-import { state } from '../state/state';
+import { OrganismeInfos } from '../domain/organisme';
+import { RouteLink } from '../routing/RouteLink';
+import { colors } from '../styles/vars';
 
 export const ListOrganismesView = () => {
-  const [organismes, setOrganismes] = useRecoilState(state.organismes);
-  const [isLoading, setIsLoading] = useState(true);
+  const [organismes, setOrganismes] = useState<OrganismeInfos[] | undefined>(
+    undefined
+  );
   useEffect(() => {
     appContext
-      .actions()
-      .listOrganismes()
+      .queryService()
+      .listOrganismesQuery()
       .then((r) => {
         setOrganismes(r.organismes);
-        setIsLoading(false);
       });
   }, []);
   return (
     <MainContainer>
-      Liste des organismes
-      {isLoading && <div>Mise à jour de la liste</div>}
-      {organismes.map((o) => (
-        <div key={stringifyNominalString(o.id)}>{o.nom}</div>
-      ))}
+      <h1>Liste des organismes</h1>
+      {!organismes && <div>Chargement...</div>}
+      {organismes &&
+        organismes.map((o) => (
+          <div
+            key={stringifyNominalString(o.id)}
+            css={css`
+              background: ${colors.clearGrey};
+              margin: 2px 0;
+              padding: 4px;
+            `}
+          >
+            <h2>{o.nom}</h2>
+            <RouteLink route={{ name: 'EditOrganismeRoute', id: o.id }}>
+              edit
+            </RouteLink>
+          </div>
+        ))}
     </MainContainer>
   );
 };
