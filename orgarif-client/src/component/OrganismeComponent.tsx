@@ -3,6 +3,7 @@ import { css, jsx } from '@emotion/core';
 import { useRecoilState } from 'recoil';
 import { get, stringifyNominalString } from '../domain/nominal-class';
 import {
+  DeliberationInfos,
   FullInstance,
   FullOrganisme,
   RepresentantInfos,
@@ -41,41 +42,64 @@ const NombreRepresentants = (props: {
 const RepresentantsComponent = (props: {
   representants: RepresentantInfos[];
   suppleants: RepresentantInfos[];
-}) => (
-  <div
-    css={css`
-      display: flex;
-    `}
-  >
-    {props.representants.length !== 0 && (
-      <div
-        css={css`
-          padding: 0 20px;
-        `}
-      >
-        <h3>Représentants</h3>
-        {props.representants.map((r) => (
-          <EluComponent key={stringifyNominalString(r.id)} eluId={r.eluId} />
-        ))}
-      </div>
-    )}
-    {props.representants.length !== 0 && props.suppleants.length !== 0 && (
-      <Separator />
-    )}
-    {props.suppleants.length !== 0 && (
-      <div
-        css={css`
-          padding: 0 20px;
-        `}
-      >
-        <h3>Suppléants</h3>
-        {props.suppleants.map((r) => (
-          <EluComponent key={stringifyNominalString(r.id)} eluId={r.eluId} />
-        ))}
-      </div>
-    )}
-  </div>
-);
+}) => {
+  if (props.representants.length === 0 && props.suppleants.length === 0) {
+    return null;
+  }
+  return (
+    <div
+      css={css`
+        display: flex;
+      `}
+    >
+      {props.representants.length !== 0 && (
+        <div
+          css={css`
+            padding: 0 20px;
+          `}
+        >
+          <h3>Représentants</h3>
+          {props.representants.map((r) => (
+            <EluComponent key={stringifyNominalString(r.id)} eluId={r.eluId} />
+          ))}
+        </div>
+      )}
+      {props.representants.length !== 0 && props.suppleants.length !== 0 && (
+        <Separator />
+      )}
+      {props.suppleants.length !== 0 && (
+        <div
+          css={css`
+            padding: 0 20px;
+          `}
+        >
+          <h3>Suppléants</h3>
+          {props.suppleants.map((r) => (
+            <EluComponent key={stringifyNominalString(r.id)} eluId={r.eluId} />
+          ))}
+        </div>
+      )}
+    </div>
+  );
+};
+
+const DeliberationsComponent = (props: {
+  deliberations: DeliberationInfos[];
+}) => {
+  if (props.deliberations.length === 0) {
+    return null;
+  }
+  return (
+    <div>
+      <h3>Délibérations</h3>
+      {props.deliberations.map((d) => (
+        <div key={stringifyNominalString(d.id)}>
+          {d.libelle} du {d.deliberationDate}
+        </div>
+      ))}
+    </div>
+  );
+};
 
 const InstanceComponent = (props: { instance: FullInstance }) => (
   <div>
@@ -88,13 +112,13 @@ const InstanceComponent = (props: { instance: FullInstance }) => (
       representants={props.instance.representants}
       suppleants={props.instance.suppleants}
     />
+    <DeliberationsComponent deliberations={props.instance.deliberations} />
   </div>
 );
 
 export const OrganismeComponent = (props: { organisme: FullOrganisme }) => {
   const organisme = props.organisme;
   const [categories] = useRecoilState(state.organismeCategories);
-  console.log(props.organisme);
   return (
     <div
       css={css`
@@ -128,19 +152,15 @@ export const OrganismeComponent = (props: { organisme: FullOrganisme }) => {
           </p>
         )}
       </div>
-      <div>
-        <NombreRepresentants
-          nombreRepresentants={organisme.infos.nombreRepresentants}
-          nombreSuppleants={organisme.infos.nombreSuppleants}
-        />
-      </div>
-      {(organisme.representants.length !== 0 ||
-        organisme.suppleants.length !== 0) && (
-          <RepresentantsComponent
-            representants={organisme.representants}
-            suppleants={organisme.suppleants}
-          />
-        )}
+      <NombreRepresentants
+        nombreRepresentants={organisme.infos.nombreRepresentants}
+        nombreSuppleants={organisme.infos.nombreSuppleants}
+      />
+      <RepresentantsComponent
+        representants={organisme.representants}
+        suppleants={organisme.suppleants}
+      />
+      <DeliberationsComponent deliberations={organisme.deliberations} />
       {organisme.instances.length !== 0 && (
         <div>
           <h3>Instances</h3>

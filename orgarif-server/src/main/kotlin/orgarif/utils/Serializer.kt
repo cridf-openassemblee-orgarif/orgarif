@@ -14,6 +14,7 @@ import org.reflections.util.ClasspathHelper
 import org.reflections.util.ConfigurationBuilder
 import org.reflections.util.FilterBuilder
 import java.time.Instant
+import java.time.LocalDate
 import java.time.ZoneId
 import java.util.*
 import kotlin.jvm.internal.Reflection
@@ -36,6 +37,9 @@ object Serializer {
             addDeserializer(PlainStringPassword::class.java, PlainStringPasswordDeserializer())
 
             addSerializer(ReadableStackTraceSerializer())
+
+            addSerializer(LocalDateSerializer())
+            addDeserializer(LocalDate::class.java, LocalDateDeserializer())
 
             // TODO[serialization] gérer tous les null
             addSerializer(UuidSerializer())
