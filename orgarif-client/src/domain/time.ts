@@ -1,4 +1,4 @@
-import {NominalNumber, NominalString} from './nominal-class';
+import { NominalNumber, NominalString } from './nominal-class';
 
 export type Instant = NominalNumber<'Instant'>;
 

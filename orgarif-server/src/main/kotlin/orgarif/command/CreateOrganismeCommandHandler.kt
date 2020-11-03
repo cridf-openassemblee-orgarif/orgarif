@@ -6,14 +6,16 @@ import orgarif.domain.UserSession
 import orgarif.repository.sql.OrganismeDao
 import orgarif.service.DateService
 import orgarif.service.RandomService
+import javax.servlet.http.HttpServletRequest
+import javax.servlet.http.HttpServletResponse
 
 @Service
 class CreateOrganismeCommandHandler(val organismeDao: OrganismeDao,
                                     val randomService: RandomService,
                                     val dateService: DateService) :
-        LoggedInCommandHandler<CreateOrganismeCommand, CreateOrganismeCommandResponse>() {
+        NeutralCommandHandler<CreateOrganismeCommand, CreateOrganismeCommandResponse>() {
 
-    override fun handle(command: CreateOrganismeCommand, userSession: UserSession): CreateOrganismeCommandResponse {
+    override fun handle(command: CreateOrganismeCommand): CreateOrganismeCommandResponse {
         val organismeId = OrganismeId(randomService.randomUUID())
         val now = dateService.now()
         organismeDao.insert(OrganismeDao.Record(

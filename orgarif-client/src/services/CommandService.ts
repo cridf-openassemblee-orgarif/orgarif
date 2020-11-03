@@ -9,7 +9,7 @@ import {
 } from '../domain/command';
 
 export class CommandService {
-  public createOrganisme = (
+  public createOrganismeCommand = (
     command: CreateOrganismeCommand
   ): Promise<CreateOrganismeCommandResponse> =>
     this.command('CreateOrganismeCommand', command);

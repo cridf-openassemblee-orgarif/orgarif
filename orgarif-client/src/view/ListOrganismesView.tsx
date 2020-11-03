@@ -2,6 +2,8 @@
 import { css, jsx } from '@emotion/core';
 import { useEffect, useState } from 'react';
 import { appContext } from '../ApplicationContext';
+import { SimpleForm } from '../component/SimpleForm';
+import { TextInput } from '../component/TextInput';
 import { MainContainer } from '../container/MainContainer';
 import { stringifyNominalString } from '../domain/nominal-class';
 import { OrganismeInfos } from '../domain/organisme';
@@ -20,10 +22,30 @@ export const ListOrganismesView = () => {
         setOrganismes(r.organismes);
       });
   }, []);
+  const newOrganismeOnSubmit = (dto: { nom: string }) => {
+    appContext
+      .commandService()
+      .createOrganismeCommand(dto)
+      .then((r) => {
+        appContext.applicationHistory().goTo({
+          name: 'EditOrganismeRoute',
+          id: r.id,
+        });
+      });
+  };
   return (
     <MainContainer>
       <h1>Liste des organismes</h1>
       {!organismes && <div>Chargement...</div>}
+      <SimpleForm onSubmit={newOrganismeOnSubmit}>
+        <TextInput
+          name={'nom'}
+          label="Nouvel organisme"
+          onChange={() => {}}
+          initialValue=""
+        />
+        <button>ok</button>
+      </SimpleForm>
       {organismes &&
         organismes.map((o) => (
           <div

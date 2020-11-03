@@ -31,12 +31,15 @@ class OrganismeService(val organismeDao: OrganismeDao,
                     val representants = representantInstanceDao.fetchByInstanceId(it.id)
                             .groupBy { it.isSuppleant }
                             .mapValues { it.value.sortedBy { it.position } }
-                    FullInstance(it, deliberations, representants.getValue(false), representants.getValue(true))
+                    FullInstance(it,
+                            deliberations,
+                            representants[false] ?: emptyList(),
+                            representants[true] ?: emptyList())
                 }
         return FullOrganisme(organisme,
                 deliberations,
-                representants.getValue(false),
-                representants.getValue(true),
+                representants[false] ?: emptyList(),
+                representants[true] ?: emptyList(),
                 instances)
     }
 
