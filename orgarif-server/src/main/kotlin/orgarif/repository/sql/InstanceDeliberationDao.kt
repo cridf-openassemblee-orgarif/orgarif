@@ -24,7 +24,7 @@ class InstanceDeliberationDao(val jooq: DSLContext) {
             instanceId = r.instanceId.rawId
             deliberationId = r.deliberationId.rawId
         }
-        jooq.insertInto(ORGANISME_DELIBERATION).set(record).execute()
+        jooq.insertInto(INSTANCE_DELIBERATION).set(record).execute()
     }
 
     fun fetchByInstanceId(instanceId: InstanceId) =

@@ -8,8 +8,6 @@ import orgarif.jooq.generated.Tables.INSTANCE
 import orgarif.jooq.generated.tables.records.InstanceRecord
 import orgarif.utils.toTypeId
 
-import java.util.*
-
 @Repository
 class InstanceDao(val jooq: DSLContext) {
 
@@ -29,6 +27,12 @@ class InstanceDao(val jooq: DSLContext) {
         }
         jooq.insertInto(INSTANCE).set(record).execute()
     }
+
+    fun fetchOrNull(id: InstanceId) =
+            jooq.selectFrom(INSTANCE)
+                    .where(INSTANCE.ID.equal(id.rawId))
+                    .fetchOne()
+                    ?.let(this::map)
 
     fun fetchByOrganismeId(organismeId: OrganismeId) =
             jooq.selectFrom(INSTANCE)
