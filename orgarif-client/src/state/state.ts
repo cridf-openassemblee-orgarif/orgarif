@@ -7,4 +7,12 @@ export const state = {
     key: 'userState',
     default: applicationBootstrapData.userInfos,
   }),
+  organismeCategories: atom({
+    key: 'organismeCategories',
+    default: applicationBootstrapData.categories,
+  }),
+  elus: atom({
+    key: 'elus',
+    default: applicationBootstrapData.elus,
+  }),
 };

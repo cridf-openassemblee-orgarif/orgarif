@@ -31,20 +31,9 @@ export interface InstanceInfos {
   nombreSuppleants?: number;
 }
 
-export interface RepresentantOrganismeInfos {
+export interface RepresentantInfos {
   id: RepresentantId;
   eluId: EluId;
-  organismeId: OrganismeId;
-  position: number;
-  isSuppleant: boolean;
-  creationDate: Instant;
-  lastMotificationDate: Instant;
-}
-
-export interface RepresentantInstanceInfos {
-  id: RepresentantId;
-  eluId: EluId;
-  instanceId: InstanceId;
   position: number;
   isSuppleant: boolean;
   creationDate: Instant;
@@ -61,14 +50,14 @@ export interface DeliberationInfos {
 export interface FullInstance {
   infos: InstanceInfos;
   deliberations: DeliberationInfos[];
-  representants: RepresentantInstanceInfos[];
-  suppleants: RepresentantInstanceInfos[];
+  representants: RepresentantInfos[];
+  suppleants: RepresentantInfos[];
 }
 
 export interface FullOrganisme {
   infos: OrganismeInfos;
   deliberations: DeliberationInfos[];
-  representants: RepresentantOrganismeInfos[];
-  suppleants: RepresentantOrganismeInfos[];
+  representants: RepresentantInfos[];
+  suppleants: RepresentantInfos[];
   instances: FullInstance[];
 }

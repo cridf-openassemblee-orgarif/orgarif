@@ -2,20 +2,20 @@ package orgarif.controller
 
 import freemarker.ext.beans.BeansWrapperBuilder
 import freemarker.template.Configuration
-import orgarif.domain.ApplicationInitialData
+import org.springframework.beans.factory.annotation.Value
+import org.springframework.stereotype.Controller
+import org.springframework.web.bind.annotation.GetMapping
+import org.springframework.web.servlet.ModelAndView
+import orgarif.domain.ApplicationBootstrapData
+import orgarif.domain.OrganismeCategories
 import orgarif.domain.UserInfos
-import orgarif.repository.sql.UserDao
+import orgarif.repository.sql.*
 import orgarif.service.ApplicationInstance
 import orgarif.service.LocaleService
 import orgarif.service.user.MagicLinkTokenService
 import orgarif.service.user.UserService
 import orgarif.service.user.UserSessionHelper
-import orgarif.service.user.UserSessionService
 import orgarif.utils.Serializer.serialize
-import org.springframework.beans.factory.annotation.Value
-import org.springframework.stereotype.Controller
-import org.springframework.web.bind.annotation.GetMapping
-import org.springframework.web.servlet.ModelAndView
 import java.net.URLEncoder
 import javax.servlet.http.HttpServletRequest
 import javax.servlet.http.HttpServletResponse
@@ -25,6 +25,11 @@ class IndexController(@Value("\${webpack.bundle}") val webpackBundle: String,
                       @Value("\${webpack.vendorBundle}") val webpackVendorBundle: String,
 
                       val userDao: UserDao,
+                      val secteurDao: SecteurDao,
+                      val natureJuridiqueDao: NatureJuridiqueDao,
+                      val typeStructureDao: TypeStructureDao,
+                      val eluDao: EluDao,
+
                       val localeService: LocaleService,
                       val userService: UserService,
                       val applicationInstance: ApplicationInstance,
@@ -64,7 +69,14 @@ class IndexController(@Value("\${webpack.bundle}") val webpackBundle: String,
                     ?: throw IllegalStateException()
             UserInfos.fromUser(user)
         } else null
-        mav.model["bootstrapData"] = serialize(ApplicationInitialData(applicationInstance.env, userInfos))
+        val categories = let {
+            val secteurs = secteurDao.fetchAll().map { it.id to it.libelle }.toMap()
+            val natureJuridiques = natureJuridiqueDao.fetchAll().map { it.id to it.libelle }.toMap()
+            val typeStructures = typeStructureDao.fetchAll().map { it.id to it.libelle }.toMap()
+            OrganismeCategories(secteurs, natureJuridiques, typeStructures)
+        }
+        val elus = eluDao.fetchAll().associateBy { it.id }
+        mav.model["bootstrapData"] = serialize(ApplicationBootstrapData(applicationInstance.env, userInfos, categories, elus))
         mav.model["deploymentId"] = applicationInstance.deploymentId.rawId
         mav.model["gitRevisionLabel"] = applicationInstance.gitRevisionLabel
         val jsBundleHost = if (System.getenv("JS_BUNDLE_HOST") != null) {

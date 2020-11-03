@@ -3,7 +3,7 @@ import { Instant } from './time';
 
 export type Civilite = 'M' | 'Mme';
 
-interface Elu {
+export interface Elu {
   id: EluId;
   civilite: Civilite;
   prenom: string;

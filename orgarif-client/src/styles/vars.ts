@@ -10,8 +10,8 @@ export const fonts = {
 
 export const colors = {
   white: '#ffffff',
-  blue: 'blue',
   clearGrey: '#eeeeee',
+  grey: '#333333',
   popupGlasspanel: 'rgba(220, 220, 220, 0.85)',
   errorBackground: '#bd4641',
 };

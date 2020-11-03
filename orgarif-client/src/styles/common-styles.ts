@@ -28,4 +28,12 @@ export const globalStyles = css`
     font-size: 1.4rem;
     font-weight: normal;
   }
+  h3 {
+    font-size: 1.2rem;
+    font-weight: normal;
+  }
+  h3 {
+    font-size: 1.1rem;
+    font-weight: normal;
+  }
 `;

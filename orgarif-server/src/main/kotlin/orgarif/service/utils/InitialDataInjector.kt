@@ -82,8 +82,8 @@ class InitialDataInjector(@Value("\${injectFakeData}") val injectFakeData: Boole
                         id = fakeOrganisme2InstanceId1,
                         nom = "Instance 1",
                         organismeId = fakeOrganismeId2,
-                        nombreRepresentants = 3,
-                        nombreSuppleants = 3))
+                        nombreRepresentants = nombreRepresentants,
+                        nombreSuppleants = nombreRepresentants))
                 val deliberationId2 = deliberation("Délibération 1 instance 2 organisme 2")
                 instanceDeliberationDao.insert(InstanceDeliberationDao.Record(
                         id = OrganismeDeliberationId(randomService.randomUUID()),
@@ -94,8 +94,8 @@ class InitialDataInjector(@Value("\${injectFakeData}") val injectFakeData: Boole
                         id = fakeOrganisme2InstanceId2,
                         nom = "Instance 2",
                         organismeId = fakeOrganismeId2,
-                        nombreRepresentants = 3,
-                        nombreSuppleants = 3))
+                        nombreRepresentants = nombreRepresentants,
+                        nombreSuppleants = nombreRepresentants))
                 val deliberationId3 = deliberation("Délibération 1 instance 2 organisme 2")
                 instanceDeliberationDao.insert(InstanceDeliberationDao.Record(
                         id = OrganismeDeliberationId(randomService.randomUUID()),
@@ -123,9 +123,9 @@ class InitialDataInjector(@Value("\${injectFakeData}") val injectFakeData: Boole
                 instanceDao.insert(InstanceDao.Record(
                         id = fakeOrganisme3InstanceId1,
                         nom = "Instance 1",
-                        organismeId = fakeOrganismeId2,
-                        nombreRepresentants = 3,
-                        nombreSuppleants = 3))
+                        organismeId = fakeOrganismeId3,
+                        nombreRepresentants = null,
+                        nombreSuppleants = null))
                 val deliberationId2 = deliberation("Délibération 1 instance 2 organisme 3")
                 instanceDeliberationDao.insert(InstanceDeliberationDao.Record(
                         id = OrganismeDeliberationId(randomService.randomUUID()),
@@ -135,9 +135,9 @@ class InitialDataInjector(@Value("\${injectFakeData}") val injectFakeData: Boole
                 instanceDao.insert(InstanceDao.Record(
                         id = fakeOrganisme3InstanceId2,
                         nom = "Instance 2",
-                        organismeId = fakeOrganismeId2,
-                        nombreRepresentants = 3,
-                        nombreSuppleants = 3))
+                        organismeId = fakeOrganismeId3,
+                        nombreRepresentants = null,
+                        nombreSuppleants = null))
                 val deliberationId3 = deliberation("Délibération 1 instance 2 organisme 3")
                 instanceDeliberationDao.insert(InstanceDeliberationDao.Record(
                         id = OrganismeDeliberationId(randomService.randomUUID()),

@@ -28,10 +28,7 @@ export const getOrNull = <K extends OrgarifId, T>(
   key: K
 ): T | undefined => dict[key];
 
-export const getOrFailRenameMe = <K extends OrgarifId, T>(
-  dict: Dict<K, T>,
-  key: K
-): T => {
+export const get = <K extends OrgarifId, T>(dict: Dict<K, T>, key: K): T => {
   const r = getOrNull(dict, key);
   if (!r) {
     throw new Error(`Could not find item ${key}`);
