@@ -57,6 +57,10 @@ export const ListOrganismesView = () => {
             `}
           >
             <h2>{o.nom}</h2>
+            <RouteLink route={{ name: 'OrganismeRoute', id: o.id }}>
+              view
+            </RouteLink>
+            <br />
             <RouteLink route={{ name: 'EditOrganismeRoute', id: o.id }}>
               edit
             </RouteLink>

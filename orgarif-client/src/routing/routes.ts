@@ -3,6 +3,7 @@ import { OrganismeId } from '../domain/id';
 import { EditOrganismeView } from '../view/EditOrganismeView';
 import { ListOrganismesView } from '../view/ListOrganismesView';
 import { LoginView } from '../view/LoginView';
+import { OrganismeView } from '../view/OrganismeView';
 import { RegisterView } from '../view/RegisterView';
 import { RootView } from '../view/RootView';
 
@@ -10,6 +11,7 @@ export type Route =
   | EditOrganismeRoute
   | ListOrganismesRoute
   | LoginRoute
+  | OrganismeRoute
   | RegisterRoute
   | RootRoute;
 
@@ -38,6 +40,11 @@ export const routes: Record<Route['name'], RouteProps> = {
     component: LoginView,
     authenticationLevel: 'loggedOut',
   },
+  OrganismeRoute: {
+    path: '/organisme/:id',
+    component: OrganismeView,
+    authenticationLevel: 'loggedIn',
+  },
   RegisterRoute: {
     path: '/register',
     component: RegisterView,
@@ -61,6 +68,11 @@ interface ListOrganismesRoute {
 
 interface LoginRoute {
   name: 'LoginRoute';
+}
+
+interface OrganismeRoute {
+  name: 'OrganismeRoute';
+  id: OrganismeId;
 }
 
 interface RegisterRoute {

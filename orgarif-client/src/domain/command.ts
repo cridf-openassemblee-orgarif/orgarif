@@ -1,5 +1,5 @@
+import { LoginResult, RegisterResult, UserInfos } from '../domain/user';
 import { OrganismeId } from './id';
-import { LoginResult, RegisterResult, UserInfos } from './user';
 
 export interface CreateOrganismeCommand {
   nom: string;
