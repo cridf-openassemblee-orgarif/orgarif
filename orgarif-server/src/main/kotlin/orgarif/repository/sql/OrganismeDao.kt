@@ -57,6 +57,7 @@ class OrganismeDao(val jooq: DSLContext) {
 
     fun fetchAll() =
             jooq.selectFrom(ORGANISME)
+                    .orderBy(ORGANISME.CREATION_DATE.desc())
                     .fetch()
                     .map(this::map)
 
