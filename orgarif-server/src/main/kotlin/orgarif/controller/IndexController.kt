@@ -69,12 +69,8 @@ class IndexController(@Value("\${webpack.bundle}") val webpackBundle: String,
                     ?: throw IllegalStateException()
             UserInfos.fromUser(user)
         } else null
-        val categories = let {
-            val secteurs = secteurDao.fetchAll().map { it.id to it.libelle }.toMap()
-            val natureJuridiques = natureJuridiqueDao.fetchAll().map { it.id to it.libelle }.toMap()
-            val typeStructures = typeStructureDao.fetchAll().map { it.id to it.libelle }.toMap()
-            OrganismeCategories(secteurs, natureJuridiques, typeStructures)
-        }
+        val categories = OrganismeCategories(secteurDao.fetchAll(), natureJuridiqueDao.fetchAll(),
+                typeStructureDao.fetchAll())
         val elus = eluDao.fetchAll().associateBy { it.id }
         mav.model["bootstrapData"] = serialize(ApplicationBootstrapData(applicationInstance.env, userInfos, categories, elus))
         mav.model["deploymentId"] = applicationInstance.deploymentId.rawId

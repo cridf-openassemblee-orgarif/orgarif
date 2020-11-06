@@ -35,3 +35,11 @@ export const get = <K extends OrgarifId, T>(dict: Dict<K, T>, key: K): T => {
   }
   return r;
 };
+
+export const set = <K extends OrgarifId, T>(
+  dict: Dict<K, T>,
+  key: K,
+  value: T
+) => {
+  dict[key] = value;
+};

@@ -1,5 +1,10 @@
 import { LoginResult, RegisterResult, UserInfos } from '../domain/user';
-import { OrganismeId } from './id';
+import {
+  NatureJuridiqueId,
+  OrganismeId,
+  SecteurId,
+  TypeStructureId,
+} from './id';
 
 export interface CreateOrganismeCommand {
   nom: string;
@@ -28,4 +33,19 @@ export interface RegisterCommand {
 export interface RegisterCommandResponse {
   result: RegisterResult;
   userinfos?: UserInfos;
+}
+
+export interface UpdateOrganismeNatureJuridiqueCommand {
+  id: OrganismeId;
+  natureJuridiqueId: NatureJuridiqueId;
+}
+
+export interface UpdateOrganismeSecteurCommand {
+  id: OrganismeId;
+  secteurId: SecteurId;
+}
+
+export interface UpdateOrganismeTypeStructureCommand {
+  id: OrganismeId;
+  typeStructureId: TypeStructureId;
 }

@@ -1,7 +1,6 @@
 import orgarif.domain.EluId
 import orgarif.domain.RepresentantId
 import orgarif.repository.sql.*
-import java.time.Instant
 
 typealias OrganismeInfos = OrganismeDao.Record
 

@@ -2,7 +2,7 @@
 import { jsx } from '@emotion/core';
 import { useEffect, useState } from 'react';
 import { appContext } from '../ApplicationContext';
-import { OrganismeComponent } from '../component/OrganismeComponent';
+import { EditOrganismeComponent } from '../component/EditOrganismeComponent';
 import { MainContainer } from '../container/MainContainer';
 import { FullOrganisme } from '../domain/organisme';
 import { RouteLink } from '../routing/RouteLink';
@@ -26,7 +26,7 @@ export const EditOrganismeView = (props: {
     <MainContainer>
       <RouteLink route={{ name: 'ListOrganismesRoute' }}>list</RouteLink>
       {!organisme && <div>Chargement...</div>}
-      {organisme && <OrganismeComponent organisme={organisme} />}
+      {organisme && <EditOrganismeComponent organisme={organisme} />}
     </MainContainer>
   );
 };

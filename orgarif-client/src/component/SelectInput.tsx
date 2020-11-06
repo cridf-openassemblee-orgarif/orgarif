@@ -11,7 +11,6 @@ const useStyles = makeStyles((theme: Theme) =>
   createStyles({
     formControl: {
       margin: theme.spacing(1),
-      minWidth: 120,
     },
     selectEmpty: {
       marginTop: theme.spacing(2),
@@ -33,7 +32,11 @@ export const SelectInput = (props: {
   const inputId = clientUid();
   const classes = useStyles();
   return (
-    <FormControl variant="outlined" className={classes.formControl}>
+    <FormControl
+      variant="outlined"
+      className={classes.formControl}
+      fullWidth={true}
+    >
       <InputLabel id={stringifyNominalString(inputId)}>
         {props.label}
       </InputLabel>

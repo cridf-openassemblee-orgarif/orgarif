@@ -67,7 +67,7 @@ abstract class NeutralCommandHandler<C : Command, R : CommandResponse> : Command
 
 data class CreateOrganismeCommand(val nom: String) : Command()
 
-data class CreateOrganismeCommandResponse (val id: OrganismeId) : CommandResponse()
+data class CreateOrganismeCommandResponse(val id: OrganismeId) : CommandResponse()
 
 // [doc] login as username|mail
 data class LoginCommand(val login: String,
@@ -83,3 +83,12 @@ data class RegisterCommand(val mail: String,
 
 data class RegisterCommandResponse(val result: RegisterResult,
                                    val userinfos: UserInfos?) : CommandResponse()
+
+data class UpdateOrganismeNatureJuridiqueCommand(val id: OrganismeId,
+                                                 val natureJuridiqueId: NatureJuridiqueId) : Command()
+
+data class UpdateOrganismeSecteurCommand(val id: OrganismeId,
+                                         val secteurId: SecteurId) : Command()
+
+data class UpdateOrganismeTypeStructureCommand(val id: OrganismeId,
+                                               val typeStructureId: TypeStructureId) : Command()

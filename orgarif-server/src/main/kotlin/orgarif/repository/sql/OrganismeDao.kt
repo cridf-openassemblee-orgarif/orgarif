@@ -7,6 +7,7 @@ import orgarif.domain.NatureJuridiqueId
 import orgarif.domain.OrganismeId
 import orgarif.domain.SecteurId
 import orgarif.domain.TypeStructureId
+import orgarif.jooq.generated.Tables
 import orgarif.jooq.generated.Tables.ORGANISME
 import orgarif.jooq.generated.tables.records.OrganismeRecord
 import orgarif.utils.toTypeId
@@ -54,6 +55,29 @@ class OrganismeDao(val jooq: DSLContext) {
     fun fetch(id: OrganismeId) =
             fetchOrNull(id)
                     ?: throw IllegalArgumentException("$id")
+
+    fun updateNatureJuridiqueId(id: OrganismeId, natureJuridiqueId: NatureJuridiqueId) {
+        jooq.update(ORGANISME)
+                .set(ORGANISME.NATURE_JURIDIQUE_ID, natureJuridiqueId.rawId)
+                .where(ORGANISME.ID.equal(id.rawId))
+                .execute()
+    }
+
+
+    fun updateSecteurId(id: OrganismeId, secteurId: SecteurId) {
+        jooq.update(ORGANISME)
+                .set(ORGANISME.SECTEUR_ID, secteurId.rawId)
+                .where(ORGANISME.ID.equal(id.rawId))
+                .execute()
+    }
+
+
+    fun updateTypeStructureId(id: OrganismeId, typeStructureId: TypeStructureId) {
+        jooq.update(ORGANISME)
+                .set(ORGANISME.TYPE_STRUCTURE_ID, typeStructureId.rawId)
+                .where(ORGANISME.ID.equal(id.rawId))
+                .execute()
+    }
 
     fun fetchAll() =
             jooq.selectFrom(ORGANISME)

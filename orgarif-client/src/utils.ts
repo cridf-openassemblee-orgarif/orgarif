@@ -19,3 +19,6 @@ export const getCookie = (cookieName: string) => {
   }
   return undefined;
 };
+
+export const compareByString = <T>(l: (o: T) => string) => (o1: T, o2: T) =>
+  l(o1).localeCompare(l(o2));

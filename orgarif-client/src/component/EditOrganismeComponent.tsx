@@ -1,21 +1,34 @@
 /** @jsx jsx */
 import { css, jsx } from '@emotion/core';
-import { useRecoilState } from 'recoil';
-import { get, stringifyNominalString } from '../domain/nominal-class';
+import { useRecoilValue } from 'recoil';
+import { appContext } from '../ApplicationContext';
+import { Category } from '../domain/bootstrap-data';
+import {
+  NatureJuridiqueId,
+  OrgarifId,
+  SecteurId,
+  TypeStructureId,
+} from '../domain/id';
+import {
+  instanciateNominalString,
+  stringifyNominalString,
+} from '../domain/nominal-class';
 import {
   DeliberationInfos,
   FullInstance,
   FullOrganisme,
   RepresentantInfos,
 } from '../domain/organisme';
+import { Dict } from '../interfaces';
 import { state } from '../state/state';
 import { colors } from '../styles/vars';
 import { EluComponent } from './EluComponent';
+import { SelectInput, SelectOption } from './SelectInput';
 
 const classes = {
   categories: css`
+    flex: 1;
     padding: 0 20px;
-    font-size: 0.8rem;
   `,
 };
 
@@ -116,9 +129,37 @@ const InstanceComponent = (props: { instance: FullInstance }) => (
   </div>
 );
 
-export const OrganismeComponent = (props: { organisme: FullOrganisme }) => {
+export const EditCategoryComponent = (props: {
+  label: string;
+  categoryList: Category[];
+  categoryById: Dict<OrgarifId, Category>;
+  currentId?: OrgarifId;
+  onChange: (id: OrgarifId) => void;
+}) => {
+  const options: SelectOption[] = props.categoryList.map((e) => ({
+    value: e.id,
+    label: e.libelle,
+  }));
+  options.unshift({
+    value: undefined,
+    label: `- Sans ${props.label.toLowerCase()} -`,
+  });
+  return (
+    <SelectInput
+      label={props.label}
+      value={props.currentId}
+      options={options}
+      onChange={(e) =>
+        props.onChange(
+          instanciateNominalString<OrgarifId>(e.target.value as string)
+        )
+      }
+    />
+  );
+};
+
+export const EditOrganismeComponent = (props: { organisme: FullOrganisme }) => {
   const organisme = props.organisme;
-  const [categories] = useRecoilState(state.organismeCategories);
   return (
     <div
       css={css`
@@ -129,28 +170,53 @@ export const OrganismeComponent = (props: { organisme: FullOrganisme }) => {
       <div
         css={css`
           display: flex;
+          width: 100%;
         `}
       >
-        {organisme.infos.natureJuridiqueId && (
-          <p css={classes.categories}>
-            Nature juridique :{' '}
-            {get(
-              categories.natureJuridiques,
-              organisme.infos.natureJuridiqueId
-            )}
-          </p>
-        )}
-        {organisme.infos.secteurId && (
-          <p css={classes.categories}>
-            Secteur : {get(categories.secteurs, organisme.infos.secteurId)}
-          </p>
-        )}
-        {organisme.infos.typeStructureId && (
-          <p css={classes.categories}>
-            Type de structure :{' '}
-            {get(categories.typeStructures, organisme.infos.typeStructureId)}
-          </p>
-        )}
+        <p css={classes.categories}>
+          <EditCategoryComponent
+            label="Nature juridique"
+            categoryList={useRecoilValue(state.natureJuridiques)}
+            categoryById={useRecoilValue(state.natureJuridiquesById)}
+            currentId={organisme.infos.natureJuridiqueId}
+            onChange={(natureJuridiqueId: NatureJuridiqueId) =>
+              appContext
+                .commandService()
+                .updateOrganismeNatureJuridiqueCommand({
+                  id: organisme.infos.id,
+                  natureJuridiqueId,
+                })
+            }
+          />
+        </p>
+        <p css={classes.categories}>
+          <EditCategoryComponent
+            label="Secteur"
+            categoryList={useRecoilValue(state.secteurs)}
+            categoryById={useRecoilValue(state.secteursById)}
+            currentId={organisme.infos.secteurId}
+            onChange={(secteurId: SecteurId) =>
+              appContext.commandService().updateOrganismeSecteurCommand({
+                id: organisme.infos.id,
+                secteurId,
+              })
+            }
+          />
+        </p>
+        <p css={classes.categories}>
+          <EditCategoryComponent
+            label="Type de structure"
+            categoryList={useRecoilValue(state.typeStructures)}
+            categoryById={useRecoilValue(state.typeStructuresById)}
+            currentId={organisme.infos.typeStructureId}
+            onChange={(typeStructureId: TypeStructureId) =>
+              appContext.commandService().updateOrganismeTypeStructureCommand({
+                id: organisme.infos.id,
+                typeStructureId,
+              })
+            }
+          />
+        </p>
       </div>
       <NombreRepresentants
         nombreRepresentants={organisme.infos.nombreRepresentants}

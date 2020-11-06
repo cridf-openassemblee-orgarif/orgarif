@@ -1,8 +1,16 @@
 package orgarif.domain
 
-data class OrganismeCategories(val secteurs: Map<SecteurId, String>,
-                               val natureJuridiques: Map<NatureJuridiqueId, String>,
-                               val typeStructures: Map<TypeStructureId, String>)
+import orgarif.repository.sql.NatureJuridiqueDao
+import orgarif.repository.sql.SecteurDao
+import orgarif.repository.sql.TypeStructureDao
+
+typealias Secteur = SecteurDao.Record
+typealias NatureJuridique = NatureJuridiqueDao.Record
+typealias TypeStructure = TypeStructureDao.Record
+
+data class OrganismeCategories(val secteurs: List<Secteur>,
+                               val natureJuridiques: List<NatureJuridique>,
+                               val typeStructures: List<TypeStructure>)
 
 // TODO[user] start ? boot ? launch ? base Infos ?
 // ConnectedUserInfos (logged pue comme wording btw)

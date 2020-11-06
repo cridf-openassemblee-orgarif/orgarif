@@ -1,6 +1,6 @@
 /** @jsx jsx */
 import { css, jsx } from '@emotion/core';
-import { useRecoilState } from 'recoil';
+import { useRecoilValue } from 'recoil';
 import { get, stringifyNominalString } from '../domain/nominal-class';
 import {
   DeliberationInfos,
@@ -118,7 +118,6 @@ const InstanceComponent = (props: { instance: FullInstance }) => (
 
 export const OrganismeComponent = (props: { organisme: FullOrganisme }) => {
   const organisme = props.organisme;
-  const [categories] = useRecoilState(state.organismeCategories);
   return (
     <div
       css={css`
@@ -134,21 +133,32 @@ export const OrganismeComponent = (props: { organisme: FullOrganisme }) => {
         {organisme.infos.natureJuridiqueId && (
           <p css={classes.categories}>
             Nature juridique :{' '}
-            {get(
-              categories.natureJuridiques,
-              organisme.infos.natureJuridiqueId
-            )}
+            {
+              get(
+                useRecoilValue(state.natureJuridiquesById),
+                organisme.infos.natureJuridiqueId
+              ).libelle
+            }
           </p>
         )}
         {organisme.infos.secteurId && (
           <p css={classes.categories}>
-            Secteur : {get(categories.secteurs, organisme.infos.secteurId)}
+            Secteur :{' '}
+            {
+              get(useRecoilValue(state.secteursById), organisme.infos.secteurId)
+                .libelle
+            }
           </p>
         )}
         {organisme.infos.typeStructureId && (
           <p css={classes.categories}>
             Type de structure :{' '}
-            {get(categories.typeStructures, organisme.infos.typeStructureId)}
+            {
+              get(
+                useRecoilValue(state.typeStructuresById),
+                organisme.infos.typeStructureId
+              ).libelle
+            }
           </p>
         )}
       </div>

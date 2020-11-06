@@ -33,6 +33,9 @@ class CommandController(
         val createOrganismeCommandHandler: CreateOrganismeCommandHandler,
         val loginCommandHandler: LoginCommandHandler,
         val registerCommandHandler: RegisterCommandHandler,
+        val updateOrganismeNatureJuridiqueCommandHandler: UpdateOrganismeNatureJuridiqueCommandHandler,
+        val updateOrganismeSecteurCommandHandler: UpdateOrganismeSecteurCommandHandler,
+        val updateOrganismeTypeStructureCommandCommandHandler: UpdateOrganismeTypeStructureCommandHandler,
 ) {
 
     private val logger = KotlinLogging.logger {}
@@ -113,6 +116,9 @@ class CommandController(
         is CreateOrganismeCommand -> createOrganismeCommandHandler
         is LoginCommand -> loginCommandHandler
         is RegisterCommand -> registerCommandHandler
+        is UpdateOrganismeNatureJuridiqueCommand -> updateOrganismeNatureJuridiqueCommandHandler
+        is UpdateOrganismeSecteurCommand -> updateOrganismeSecteurCommandHandler
+        is UpdateOrganismeTypeStructureCommand -> updateOrganismeTypeStructureCommandCommandHandler
     } as CommandHandler<Command, CommandResponse>
 
 }
