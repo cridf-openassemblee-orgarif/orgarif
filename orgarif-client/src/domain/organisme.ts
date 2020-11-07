@@ -4,7 +4,8 @@ import {
   InstanceId,
   NatureJuridiqueId,
   OrganismeId,
-  RepresentantId,
+  RepresentantInstanceId,
+  RepresentantOrganismeId,
   SecteurId,
   TypeStructureId,
 } from './id';
@@ -31,13 +32,23 @@ export interface InstanceInfos {
   nombreSuppleants?: number;
 }
 
-export interface RepresentantInfos {
-  id: RepresentantId;
+export type RepresentantId = RepresentantOrganismeId | RepresentantInstanceId;
+
+export interface Representant<T extends RepresentantId> {
+  id: T;
   eluId: EluId;
-  position: number;
-  isSuppleant: boolean;
-  creationDate: Instant;
-  lastMotificationDate: Instant;
+}
+
+export interface RepresentantOrganisme
+  extends Representant<RepresentantOrganismeId> {
+  id: RepresentantOrganismeId;
+  eluId: EluId;
+}
+
+export interface RepresentantInstance
+  extends Representant<RepresentantInstanceId> {
+  id: RepresentantInstanceId;
+  eluId: EluId;
 }
 
 export interface DeliberationInfos {
@@ -50,14 +61,14 @@ export interface DeliberationInfos {
 export interface FullInstance {
   infos: InstanceInfos;
   deliberations: DeliberationInfos[];
-  representants: RepresentantInfos[];
-  suppleants: RepresentantInfos[];
+  representants: RepresentantInstance[];
+  suppleants: RepresentantInstance[];
 }
 
 export interface FullOrganisme {
   infos: OrganismeInfos;
   deliberations: DeliberationInfos[];
-  representants: RepresentantInfos[];
-  suppleants: RepresentantInfos[];
+  representants: RepresentantOrganisme[];
+  suppleants: RepresentantOrganisme[];
   instances: FullInstance[];
 }

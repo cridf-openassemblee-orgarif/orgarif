@@ -14,7 +14,7 @@ import {
 import { enumValues } from '../domain/enum';
 import { InstanceId, OrganismeId } from '../domain/id';
 import { stringifyNominalString } from '../domain/nominal-class';
-import { RepresentantInfos } from '../domain/organisme';
+import { Representant, RepresentantId } from '../domain/organisme';
 import { EluComponent } from './EluComponent';
 
 const padding = 8;
@@ -22,7 +22,7 @@ const padding = 8;
 type ListId = 'representants' | 'suppleants';
 const DroppableComponent = (props: {
   listId: ListId;
-  representants: RepresentantInfos[];
+  representants: Representant<RepresentantId>[];
 }) => (
   <Droppable droppableId={props.listId}>
     {(provided: DroppableProvided, snapshot: DroppableStateSnapshot) => (
@@ -70,13 +70,13 @@ const DroppableComponent = (props: {
 );
 
 export const EditRepresentantSuppleantComponent = (props: {
-  representants: RepresentantInfos[];
-  suppleants: RepresentantInfos[];
+  representants: Representant<RepresentantId>[];
+  suppleants: Representant<RepresentantId>[];
   // TODO check must be l'un ou l'autre
   organismeId?: OrganismeId;
   instanceId?: InstanceId;
 }) => {
-  const representantsLists: Record<ListId, RepresentantInfos[]> = {
+  const representantsLists: Record<ListId, Representant<RepresentantId>[]> = {
     representants: props.representants,
     suppleants: props.suppleants,
   };
@@ -89,7 +89,9 @@ export const EditRepresentantSuppleantComponent = (props: {
     const sourceId = result.source.droppableId as ListId;
     const destinationId = result.destination.droppableId as ListId;
 
-    const newLists: Record<ListId, RepresentantInfos[]> = { ...lists };
+    const newLists: Record<ListId, Representant<RepresentantId>[]> = {
+      ...lists,
+    };
     Object.keys(newLists).forEach((k: ListId) => {
       newLists[k] = [...newLists[k]];
     });

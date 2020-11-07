@@ -2,7 +2,8 @@ package orgarif.service.organisme
 
 import FullInstance
 import FullOrganisme
-import RepresentantInfos
+import RepresentantInstance
+import RepresentantOrganisme
 import org.springframework.stereotype.Service
 import orgarif.domain.OrganismeId
 import orgarif.repository.sql.*
@@ -23,7 +24,7 @@ class OrganismeService(val organismeDao: OrganismeDao,
                 .sortedBy { it.deliberationDate }
         val representants = representantOrganismeDao.fetchByOrganismeId(organisme.id)
                 .groupBy { it.isSuppleant }
-                .mapValues { it.value.sortedBy { it.position }.map { RepresentantInfos.from(it) } }
+                .mapValues { it.value.sortedBy { it.position }.map { RepresentantOrganisme(it.id, it.eluId) } }
         val instances = instanceDao.fetchByOrganismeId(organisme.id)
                 .map {
                     val deliberations = instanceDeliberationDao.fetchByInstanceId(it.id)
@@ -31,7 +32,9 @@ class OrganismeService(val organismeDao: OrganismeDao,
                             .sortedBy { it.deliberationDate }
                     val representants = representantInstanceDao.fetchByInstanceId(it.id)
                             .groupBy { it.isSuppleant }
-                            .mapValues { it.value.sortedBy { it.position }.map { RepresentantInfos.from(it) } }
+                            .mapValues {
+                                it.value.sortedBy { it.position }.map { RepresentantInstance(it.id, it.eluId) }
+                            }
                     FullInstance(it,
                             deliberations,
                             representants[false] ?: emptyList(),

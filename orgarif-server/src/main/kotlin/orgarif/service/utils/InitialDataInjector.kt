@@ -180,7 +180,7 @@ class InitialDataInjector(@Value("\${injectFakeData}") val injectFakeData: Boole
             val now = dateService.now()
             elus.shuffled().subList(0, nombreRepresentants * 2).forEachIndexed { index, e ->
                 representantOrganismeDao.insert(RepresentantOrganismeDao.Record(
-                        RepresentantId(randomService.randomUUID()),
+                        RepresentantOrganismeId(randomService.randomUUID()),
                         e.id,
                         fakeOrganismeId1,
                         if (index < nombreRepresentants) index else index - nombreRepresentants,
@@ -191,7 +191,7 @@ class InitialDataInjector(@Value("\${injectFakeData}") val injectFakeData: Boole
             }
             elus.shuffled().subList(0, nombreRepresentants * 2).forEachIndexed { index, e ->
                 representantInstanceDao.insert(RepresentantInstanceDao.Record(
-                        RepresentantId(randomService.randomUUID()),
+                        RepresentantInstanceId(randomService.randomUUID()),
                         e.id,
                         fakeOrganisme2InstanceId1,
                         if (index < nombreRepresentants) index else index - nombreRepresentants,
@@ -202,7 +202,7 @@ class InitialDataInjector(@Value("\${injectFakeData}") val injectFakeData: Boole
             }
             elus.shuffled().subList(0, nombreRepresentants * 2).forEachIndexed { index, e ->
                 representantInstanceDao.insert(RepresentantInstanceDao.Record(
-                        RepresentantId(randomService.randomUUID()),
+                        RepresentantInstanceId(randomService.randomUUID()),
                         e.id,
                         fakeOrganisme2InstanceId2,
                         if (index < nombreRepresentants) index else index - nombreRepresentants,
@@ -213,7 +213,7 @@ class InitialDataInjector(@Value("\${injectFakeData}") val injectFakeData: Boole
             }
             elus.shuffled().subList(0, nombreRepresentants * 2).forEachIndexed { index, e ->
                 representantOrganismeDao.insert(RepresentantOrganismeDao.Record(
-                        RepresentantId(randomService.randomUUID()),
+                        RepresentantOrganismeId(randomService.randomUUID()),
                         e.id,
                         fakeOrganismeId3,
                         if (index < nombreRepresentants) index else index - nombreRepresentants,

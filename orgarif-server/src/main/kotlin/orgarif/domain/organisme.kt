@@ -1,30 +1,27 @@
 import orgarif.domain.EluId
-import orgarif.domain.RepresentantId
+import orgarif.domain.RepresentantInstanceId
+import orgarif.domain.RepresentantOrganismeId
 import orgarif.repository.sql.*
 
 typealias OrganismeInfos = OrganismeDao.Record
 
 typealias InstanceInfos = InstanceDao.Record
 
-data class RepresentantInfos(val id: RepresentantId,
-                             val eluId: EluId) {
+data class RepresentantOrganisme  (val id: RepresentantOrganismeId,
+                                   val eluId: EluId)
 
-    companion object {
-        fun from(r: RepresentantOrganismeDao.Record) = RepresentantInfos(r.id, r.eluId)
-
-        fun from(r: RepresentantInstanceDao.Record) = RepresentantInfos(r.id, r.eluId)
-    }
-}
+data class RepresentantInstance  (val id: RepresentantInstanceId,
+                                  val eluId: EluId)
 
 typealias DeliberationInfos = DeliberationDao.Record
 
 data class FullInstance(val infos: InstanceInfos,
                         val deliberations: List<DeliberationInfos>,
-                        val representants: List<RepresentantInfos>,
-                        val suppleants: List<RepresentantInfos>)
+                        val representants: List<RepresentantInstance>,
+                        val suppleants: List<RepresentantInstance>)
 
 data class FullOrganisme(val infos: OrganismeInfos,
                          val deliberations: List<DeliberationInfos>,
-                         val representants: List<RepresentantInfos>,
-                         val suppleants: List<RepresentantInfos>,
+                         val representants: List<RepresentantOrganisme>,
+                         val suppleants: List<RepresentantOrganisme>,
                          val instances: List<FullInstance>)

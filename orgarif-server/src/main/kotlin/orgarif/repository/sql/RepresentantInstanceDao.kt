@@ -4,7 +4,7 @@ import org.jooq.DSLContext
 import org.springframework.stereotype.Repository
 import orgarif.domain.EluId
 import orgarif.domain.InstanceId
-import orgarif.domain.RepresentantId
+import orgarif.domain.RepresentantInstanceId
 import orgarif.jooq.generated.Tables.REPRESENTANT_INSTANCE
 import orgarif.jooq.generated.tables.records.RepresentantInstanceRecord
 import orgarif.utils.toTypeId
@@ -14,7 +14,7 @@ import java.time.ZoneOffset
 @Repository
 class RepresentantInstanceDao(val jooq: DSLContext) {
 
-    data class Record(val id: RepresentantId,
+    data class Record(val id: RepresentantInstanceId,
                       val eluId: EluId,
                       val instanceId: InstanceId,
                       val position: Int,
