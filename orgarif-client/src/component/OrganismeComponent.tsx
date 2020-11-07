@@ -131,7 +131,7 @@ export const OrganismeComponent = (props: { organisme: FullOrganisme }) => {
         `}
       >
         {organisme.infos.natureJuridiqueId && (
-          <p css={classes.categories}>
+          <div css={classes.categories}>
             Nature juridique :{' '}
             {
               get(
@@ -139,19 +139,19 @@ export const OrganismeComponent = (props: { organisme: FullOrganisme }) => {
                 organisme.infos.natureJuridiqueId
               ).libelle
             }
-          </p>
+          </div>
         )}
         {organisme.infos.secteurId && (
-          <p css={classes.categories}>
+          <div css={classes.categories}>
             Secteur :{' '}
             {
               get(useRecoilValue(state.secteursById), organisme.infos.secteurId)
                 .libelle
             }
-          </p>
+          </div>
         )}
         {organisme.infos.typeStructureId && (
-          <p css={classes.categories}>
+          <div css={classes.categories}>
             Type de structure :{' '}
             {
               get(
@@ -159,7 +159,7 @@ export const OrganismeComponent = (props: { organisme: FullOrganisme }) => {
                 organisme.infos.typeStructureId
               ).libelle
             }
-          </p>
+          </div>
         )}
       </div>
       <NombreRepresentants

@@ -1,14 +1,11 @@
 /** @jsx jsx */
 import { jsx } from '@emotion/core';
-import * as React from 'react';
-import { FormEvent } from 'react';
+import { FormEvent, PropsWithChildren } from 'react';
 
-interface Props {
-  onSubmit: (data: any) => void;
-}
-
-export class SimpleForm extends React.PureComponent<Props> {
-  onSubmit = (event: FormEvent<HTMLFormElement>) => {
+export const SimpleForm = (
+  props: PropsWithChildren<{ onSubmit: (data: any) => void }>
+) => {
+  const onSubmit = (event: FormEvent<HTMLFormElement>) => {
     event.preventDefault();
     event.stopPropagation();
     const form = event.currentTarget as HTMLFormElement;
@@ -18,10 +15,8 @@ export class SimpleForm extends React.PureComponent<Props> {
         dto[e.name] = e.value;
       }
     });
-    this.props.onSubmit(dto);
+    props.onSubmit(dto);
   };
 
-  render() {
-    return <form onSubmit={this.onSubmit}>{this.props.children}</form>;
-  }
-}
+  return <form onSubmit={onSubmit}>{props.children}</form>;
+};

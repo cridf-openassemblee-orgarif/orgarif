@@ -1,4 +1,3 @@
-import { Dict } from '../interfaces';
 import { ApplicationEnvironment } from './application';
 import { Elu } from './elu';
 import {
@@ -8,6 +7,7 @@ import {
   SecteurId,
   TypeStructureId,
 } from './id';
+import { Dict } from './nominal-class';
 import { UserInfos } from './user';
 
 export interface Category {

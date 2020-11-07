@@ -1,4 +1,3 @@
-import { Dict } from '../interfaces';
 import { OrgarifId } from './id';
 
 export abstract class NominalString<T extends string> {
@@ -22,6 +21,12 @@ export const instanciateNominalString = <T extends NominalString<any>>(
 export const instanciateNominalNumber = <T extends NominalNumber<any>>(
   value: number
 ) => (value as unknown) as T;
+
+export type Dict<K extends OrgarifId, T> = Record<
+  // @ts-ignore
+  K,
+  T
+>;
 
 export const getOrNull = <K extends OrgarifId, T>(
   dict: Dict<K, T>,

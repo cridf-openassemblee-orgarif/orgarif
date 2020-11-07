@@ -9,8 +9,8 @@ export const EluComponent = (props: { eluId: EluId }) => {
   const [elus] = useRecoilState(state.elus);
   const e = get(elus, props.eluId);
   return (
-    <div>
+    <p>
       {e.prenom} {e.nom}
-    </div>
+    </p>
   );
 };

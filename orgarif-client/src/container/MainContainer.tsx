@@ -1,9 +1,9 @@
 /** @jsx jsx */
 import { css, jsx } from '@emotion/core';
-import * as React from 'react';
+import { PropsWithChildren } from 'react';
 import { Menu } from './Menu';
 
-export const MainContainer: React.FunctionComponent = (props) => (
+export const MainContainer = (props: PropsWithChildren<{}>) => (
   <div
     css={css`
       position: absolute;

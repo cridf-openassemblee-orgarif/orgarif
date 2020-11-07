@@ -10,6 +10,7 @@ import {
   TypeStructureId,
 } from '../domain/id';
 import {
+  Dict,
   instanciateNominalString,
   stringifyNominalString,
 } from '../domain/nominal-class';
@@ -17,12 +18,10 @@ import {
   DeliberationInfos,
   FullInstance,
   FullOrganisme,
-  RepresentantInfos,
 } from '../domain/organisme';
-import { Dict } from '../interfaces';
 import { state } from '../state/state';
 import { colors } from '../styles/vars';
-import { EluComponent } from './EluComponent';
+import { EditRepresentantSuppleantComponent } from './EditRepresentantSuppleantComponent';
 import { SelectInput, SelectOption } from './SelectInput';
 
 const classes = {
@@ -52,50 +51,6 @@ const NombreRepresentants = (props: {
   </div>
 );
 
-const RepresentantsComponent = (props: {
-  representants: RepresentantInfos[];
-  suppleants: RepresentantInfos[];
-}) => {
-  if (props.representants.length === 0 && props.suppleants.length === 0) {
-    return null;
-  }
-  return (
-    <div
-      css={css`
-        display: flex;
-      `}
-    >
-      {props.representants.length !== 0 && (
-        <div
-          css={css`
-            padding: 0 20px;
-          `}
-        >
-          <h3>Représentants</h3>
-          {props.representants.map((r) => (
-            <EluComponent key={stringifyNominalString(r.id)} eluId={r.eluId} />
-          ))}
-        </div>
-      )}
-      {props.representants.length !== 0 && props.suppleants.length !== 0 && (
-        <Separator />
-      )}
-      {props.suppleants.length !== 0 && (
-        <div
-          css={css`
-            padding: 0 20px;
-          `}
-        >
-          <h3>Suppléants</h3>
-          {props.suppleants.map((r) => (
-            <EluComponent key={stringifyNominalString(r.id)} eluId={r.eluId} />
-          ))}
-        </div>
-      )}
-    </div>
-  );
-};
-
 const DeliberationsComponent = (props: {
   deliberations: DeliberationInfos[];
 }) => {
@@ -121,10 +76,10 @@ const InstanceComponent = (props: { instance: FullInstance }) => (
       nombreRepresentants={props.instance.infos.nombreRepresentants}
       nombreSuppleants={props.instance.infos.nombreSuppleants}
     />
-    <RepresentantsComponent
-      representants={props.instance.representants}
-      suppleants={props.instance.suppleants}
-    />
+    {/*<EditRepresentantsComponent*/}
+    {/*  representants={props.instance.representants}*/}
+    {/*  suppleants={props.instance.suppleants}*/}
+    {/*/>*/}
     <DeliberationsComponent deliberations={props.instance.deliberations} />
   </div>
 );
@@ -173,7 +128,7 @@ export const EditOrganismeComponent = (props: { organisme: FullOrganisme }) => {
           width: 100%;
         `}
       >
-        <p css={classes.categories}>
+        <div css={classes.categories}>
           <EditCategoryComponent
             label="Nature juridique"
             categoryList={useRecoilValue(state.natureJuridiques)}
@@ -188,8 +143,8 @@ export const EditOrganismeComponent = (props: { organisme: FullOrganisme }) => {
                 })
             }
           />
-        </p>
-        <p css={classes.categories}>
+        </div>
+        <div css={classes.categories}>
           <EditCategoryComponent
             label="Secteur"
             categoryList={useRecoilValue(state.secteurs)}
@@ -202,8 +157,8 @@ export const EditOrganismeComponent = (props: { organisme: FullOrganisme }) => {
               })
             }
           />
-        </p>
-        <p css={classes.categories}>
+        </div>
+        <div css={classes.categories}>
           <EditCategoryComponent
             label="Type de structure"
             categoryList={useRecoilValue(state.typeStructures)}
@@ -216,16 +171,23 @@ export const EditOrganismeComponent = (props: { organisme: FullOrganisme }) => {
               })
             }
           />
-        </p>
+        </div>
       </div>
       <NombreRepresentants
         nombreRepresentants={organisme.infos.nombreRepresentants}
         nombreSuppleants={organisme.infos.nombreSuppleants}
       />
-      <RepresentantsComponent
-        representants={organisme.representants}
-        suppleants={organisme.suppleants}
-      />
+      <div
+        css={css`
+          width: 100%;
+        `}
+      >
+        <EditRepresentantSuppleantComponent
+          representants={organisme.representants}
+          suppleants={organisme.suppleants}
+          organismeId={organisme.infos.id}
+        />
+      </div>
       <DeliberationsComponent deliberations={organisme.deliberations} />
       {organisme.instances.length !== 0 && (
         <div>
