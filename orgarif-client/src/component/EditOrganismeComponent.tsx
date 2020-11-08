@@ -1,5 +1,6 @@
 /** @jsx jsx */
 import { css, jsx } from '@emotion/core';
+import { useState } from 'react';
 import { useRecoilValue } from 'recoil';
 import { appContext } from '../ApplicationContext';
 import { Category } from '../domain/bootstrap-data';
@@ -121,16 +122,19 @@ export const EditCategoryComponent = (props: {
     value: undefined,
     label: `- Sans ${props.label.toLowerCase()} -`,
   });
+  const [value, setValue] = useState(props.currentId);
   return (
     <SelectInput
       label={props.label}
-      value={props.currentId}
+      value={value}
       options={options}
-      onChange={(e) =>
-        props.onChange(
-          instanciateNominalString<OrgarifId>(e.target.value as string)
-        )
-      }
+      onChange={(e) => {
+        const id = instanciateNominalString<OrgarifId>(
+          e.target.value as string
+        );
+        setValue(id);
+        props.onChange(id);
+      }}
     />
   );
 };
