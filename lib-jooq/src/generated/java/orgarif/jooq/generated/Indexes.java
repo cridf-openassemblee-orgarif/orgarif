@@ -10,14 +10,12 @@ import org.jooq.impl.Internal;
 
 import orgarif.jooq.generated.tables.AppUserTable;
 import orgarif.jooq.generated.tables.CommandLogTable;
-import orgarif.jooq.generated.tables.InstanceDeliberationTable;
 import orgarif.jooq.generated.tables.InstanceTable;
+import orgarif.jooq.generated.tables.LienDeliberationTable;
 import orgarif.jooq.generated.tables.MagicLinkTokenTable;
 import orgarif.jooq.generated.tables.MailLogTable;
-import orgarif.jooq.generated.tables.OrganismeDeliberationTable;
 import orgarif.jooq.generated.tables.OrganismeTable;
-import orgarif.jooq.generated.tables.RepresentantInstanceTable;
-import orgarif.jooq.generated.tables.RepresentantOrganismeTable;
+import orgarif.jooq.generated.tables.RepresentantTable;
 import orgarif.jooq.generated.tables.UserSessionLogTable;
 
 
@@ -33,19 +31,17 @@ public class Indexes {
 
     public static final Index APP_USER_APP_USER_MAIL_IDX = Indexes0.APP_USER_APP_USER_MAIL_IDX;
     public static final Index APP_USER_APP_USER_USERNAME_IDX = Indexes0.APP_USER_APP_USER_USERNAME_IDX;
-    public static final Index INSTANCE_DELIBERATION_DELIBERATION_ID = Indexes0.INSTANCE_DELIBERATION_DELIBERATION_ID;
-    public static final Index ORGANISME_DELIBERATION_DELIBERATION_ID = Indexes0.ORGANISME_DELIBERATION_DELIBERATION_ID;
+    public static final Index LIEN_DELIBERATION_DELIBERATION_ID = Indexes0.LIEN_DELIBERATION_DELIBERATION_ID;
     public static final Index COMMAND_LOG_DEPLOYMENT_LOG_ID = Indexes0.COMMAND_LOG_DEPLOYMENT_LOG_ID;
     public static final Index MAIL_LOG_DEPLOYMENT_LOG_ID = Indexes0.MAIL_LOG_DEPLOYMENT_LOG_ID;
-    public static final Index REPRESENTANT_INSTANCE_ELU_ID = Indexes0.REPRESENTANT_INSTANCE_ELU_ID;
-    public static final Index REPRESENTANT_ORGANISME_ELU_ID = Indexes0.REPRESENTANT_ORGANISME_ELU_ID;
-    public static final Index INSTANCE_DELIBERATION_INSTANCE_DELIBERATION_INSTANCE_ID_IDX = Indexes0.INSTANCE_DELIBERATION_INSTANCE_DELIBERATION_INSTANCE_ID_IDX;
+    public static final Index REPRESENTANT_ELU_ID = Indexes0.REPRESENTANT_ELU_ID;
+    public static final Index LIEN_DELIBERATION_INSTANCE_ID = Indexes0.LIEN_DELIBERATION_INSTANCE_ID;
     public static final Index INSTANCE_INSTANCE_ORGANISME_ID_IDX = Indexes0.INSTANCE_INSTANCE_ORGANISME_ID_IDX;
+    public static final Index LIEN_DELIBERATION_LIEN_DELIBERATION_ORGANISME_ID_IDX = Indexes0.LIEN_DELIBERATION_LIEN_DELIBERATION_ORGANISME_ID_IDX;
     public static final Index MAIL_LOG_MAIL_LOG_USER_ID_IDX = Indexes0.MAIL_LOG_MAIL_LOG_USER_ID_IDX;
     public static final Index ORGANISME_NATURE_JURIDIQUE_ID = Indexes0.ORGANISME_NATURE_JURIDIQUE_ID;
-    public static final Index ORGANISME_DELIBERATION_ORGANISME_DELIBERATION_ORGANISME_ID_IDX = Indexes0.ORGANISME_DELIBERATION_ORGANISME_DELIBERATION_ORGANISME_ID_IDX;
-    public static final Index REPRESENTANT_INSTANCE_REPRESENTANT_INSTANCE_INSTANCE_ID_IDX = Indexes0.REPRESENTANT_INSTANCE_REPRESENTANT_INSTANCE_INSTANCE_ID_IDX;
-    public static final Index REPRESENTANT_ORGANISME_REPRESENTANT_ORGANISME_ORGANISME_ID_IDX = Indexes0.REPRESENTANT_ORGANISME_REPRESENTANT_ORGANISME_ORGANISME_ID_IDX;
+    public static final Index REPRESENTANT_REPRESENTANT_INSTANCE_ID_IDX = Indexes0.REPRESENTANT_REPRESENTANT_INSTANCE_ID_IDX;
+    public static final Index REPRESENTANT_REPRESENTANT_ORGANISME_ID_IDX = Indexes0.REPRESENTANT_REPRESENTANT_ORGANISME_ID_IDX;
     public static final Index ORGANISME_SECTEUR_ID = Indexes0.ORGANISME_SECTEUR_ID;
     public static final Index ORGANISME_TYPE_STRUCTURE_ID = Indexes0.ORGANISME_TYPE_STRUCTURE_ID;
     public static final Index COMMAND_LOG_USER_ID = Indexes0.COMMAND_LOG_USER_ID;
@@ -60,19 +56,17 @@ public class Indexes {
     private static class Indexes0 {
         public static Index APP_USER_APP_USER_MAIL_IDX = Internal.createIndex("app_user_mail_idx", AppUserTable.APP_USER, new OrderField[] { AppUserTable.APP_USER.MAIL }, false);
         public static Index APP_USER_APP_USER_USERNAME_IDX = Internal.createIndex("app_user_username_idx", AppUserTable.APP_USER, new OrderField[] { AppUserTable.APP_USER.USERNAME }, false);
-        public static Index INSTANCE_DELIBERATION_DELIBERATION_ID = Internal.createIndex("deliberation_id", InstanceDeliberationTable.INSTANCE_DELIBERATION, new OrderField[] { InstanceDeliberationTable.INSTANCE_DELIBERATION.DELIBERATION_ID }, false);
-        public static Index ORGANISME_DELIBERATION_DELIBERATION_ID = Internal.createIndex("deliberation_id", OrganismeDeliberationTable.ORGANISME_DELIBERATION, new OrderField[] { OrganismeDeliberationTable.ORGANISME_DELIBERATION.DELIBERATION_ID }, false);
+        public static Index LIEN_DELIBERATION_DELIBERATION_ID = Internal.createIndex("deliberation_id", LienDeliberationTable.LIEN_DELIBERATION, new OrderField[] { LienDeliberationTable.LIEN_DELIBERATION.DELIBERATION_ID }, false);
         public static Index COMMAND_LOG_DEPLOYMENT_LOG_ID = Internal.createIndex("deployment_log_id", CommandLogTable.COMMAND_LOG, new OrderField[] { CommandLogTable.COMMAND_LOG.DEPLOYMENT_LOG_ID }, false);
         public static Index MAIL_LOG_DEPLOYMENT_LOG_ID = Internal.createIndex("deployment_log_id", MailLogTable.MAIL_LOG, new OrderField[] { MailLogTable.MAIL_LOG.DEPLOYMENT_LOG_ID }, false);
-        public static Index REPRESENTANT_INSTANCE_ELU_ID = Internal.createIndex("elu_id", RepresentantInstanceTable.REPRESENTANT_INSTANCE, new OrderField[] { RepresentantInstanceTable.REPRESENTANT_INSTANCE.ELU_ID }, false);
-        public static Index REPRESENTANT_ORGANISME_ELU_ID = Internal.createIndex("elu_id", RepresentantOrganismeTable.REPRESENTANT_ORGANISME, new OrderField[] { RepresentantOrganismeTable.REPRESENTANT_ORGANISME.ELU_ID }, false);
-        public static Index INSTANCE_DELIBERATION_INSTANCE_DELIBERATION_INSTANCE_ID_IDX = Internal.createIndex("instance_deliberation_instance_id_idx", InstanceDeliberationTable.INSTANCE_DELIBERATION, new OrderField[] { InstanceDeliberationTable.INSTANCE_DELIBERATION.INSTANCE_ID }, false);
+        public static Index REPRESENTANT_ELU_ID = Internal.createIndex("elu_id", RepresentantTable.REPRESENTANT, new OrderField[] { RepresentantTable.REPRESENTANT.ELU_ID }, false);
+        public static Index LIEN_DELIBERATION_INSTANCE_ID = Internal.createIndex("instance_id", LienDeliberationTable.LIEN_DELIBERATION, new OrderField[] { LienDeliberationTable.LIEN_DELIBERATION.INSTANCE_ID }, false);
         public static Index INSTANCE_INSTANCE_ORGANISME_ID_IDX = Internal.createIndex("instance_organisme_id_idx", InstanceTable.INSTANCE, new OrderField[] { InstanceTable.INSTANCE.ORGANISME_ID }, false);
+        public static Index LIEN_DELIBERATION_LIEN_DELIBERATION_ORGANISME_ID_IDX = Internal.createIndex("lien_deliberation_organisme_id_idx", LienDeliberationTable.LIEN_DELIBERATION, new OrderField[] { LienDeliberationTable.LIEN_DELIBERATION.ORGANISME_ID }, false);
         public static Index MAIL_LOG_MAIL_LOG_USER_ID_IDX = Internal.createIndex("mail_log_user_id_idx", MailLogTable.MAIL_LOG, new OrderField[] { MailLogTable.MAIL_LOG.USER_ID }, false);
         public static Index ORGANISME_NATURE_JURIDIQUE_ID = Internal.createIndex("nature_juridique_id", OrganismeTable.ORGANISME, new OrderField[] { OrganismeTable.ORGANISME.NATURE_JURIDIQUE_ID }, false);
-        public static Index ORGANISME_DELIBERATION_ORGANISME_DELIBERATION_ORGANISME_ID_IDX = Internal.createIndex("organisme_deliberation_organisme_id_idx", OrganismeDeliberationTable.ORGANISME_DELIBERATION, new OrderField[] { OrganismeDeliberationTable.ORGANISME_DELIBERATION.ORGANISME_ID }, false);
-        public static Index REPRESENTANT_INSTANCE_REPRESENTANT_INSTANCE_INSTANCE_ID_IDX = Internal.createIndex("representant_instance_instance_id_idx", RepresentantInstanceTable.REPRESENTANT_INSTANCE, new OrderField[] { RepresentantInstanceTable.REPRESENTANT_INSTANCE.INSTANCE_ID }, false);
-        public static Index REPRESENTANT_ORGANISME_REPRESENTANT_ORGANISME_ORGANISME_ID_IDX = Internal.createIndex("representant_organisme_organisme_id_idx", RepresentantOrganismeTable.REPRESENTANT_ORGANISME, new OrderField[] { RepresentantOrganismeTable.REPRESENTANT_ORGANISME.ORGANISME_ID }, false);
+        public static Index REPRESENTANT_REPRESENTANT_INSTANCE_ID_IDX = Internal.createIndex("representant_instance_id_idx", RepresentantTable.REPRESENTANT, new OrderField[] { RepresentantTable.REPRESENTANT.INSTANCE_ID }, false);
+        public static Index REPRESENTANT_REPRESENTANT_ORGANISME_ID_IDX = Internal.createIndex("representant_organisme_id_idx", RepresentantTable.REPRESENTANT, new OrderField[] { RepresentantTable.REPRESENTANT.ORGANISME_ID }, false);
         public static Index ORGANISME_SECTEUR_ID = Internal.createIndex("secteur_id", OrganismeTable.ORGANISME, new OrderField[] { OrganismeTable.ORGANISME.SECTEUR_ID }, false);
         public static Index ORGANISME_TYPE_STRUCTURE_ID = Internal.createIndex("type_structure_id", OrganismeTable.ORGANISME, new OrderField[] { OrganismeTable.ORGANISME.TYPE_STRUCTURE_ID }, false);
         public static Index COMMAND_LOG_USER_ID = Internal.createIndex("user_id", CommandLogTable.COMMAND_LOG, new OrderField[] { CommandLogTable.COMMAND_LOG.USER_ID }, false);

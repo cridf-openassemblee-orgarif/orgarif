@@ -9,15 +9,13 @@ import orgarif.jooq.generated.tables.CommandLogTable;
 import orgarif.jooq.generated.tables.DeliberationTable;
 import orgarif.jooq.generated.tables.DeploymentLogTable;
 import orgarif.jooq.generated.tables.EluTable;
-import orgarif.jooq.generated.tables.InstanceDeliberationTable;
 import orgarif.jooq.generated.tables.InstanceTable;
+import orgarif.jooq.generated.tables.LienDeliberationTable;
 import orgarif.jooq.generated.tables.MagicLinkTokenTable;
 import orgarif.jooq.generated.tables.MailLogTable;
 import orgarif.jooq.generated.tables.NatureJuridiqueTable;
-import orgarif.jooq.generated.tables.OrganismeDeliberationTable;
 import orgarif.jooq.generated.tables.OrganismeTable;
-import orgarif.jooq.generated.tables.RepresentantInstanceTable;
-import orgarif.jooq.generated.tables.RepresentantOrganismeTable;
+import orgarif.jooq.generated.tables.RepresentantTable;
 import orgarif.jooq.generated.tables.SecteurTable;
 import orgarif.jooq.generated.tables.TypeStructureTable;
 import orgarif.jooq.generated.tables.UserSessionLogTable;
@@ -60,9 +58,9 @@ public class Tables {
     public static final InstanceTable INSTANCE = InstanceTable.INSTANCE;
 
     /**
-     * The table <code>orgarif.instance_deliberation</code>.
+     * The table <code>orgarif.lien_deliberation</code>.
      */
-    public static final InstanceDeliberationTable INSTANCE_DELIBERATION = InstanceDeliberationTable.INSTANCE_DELIBERATION;
+    public static final LienDeliberationTable LIEN_DELIBERATION = LienDeliberationTable.LIEN_DELIBERATION;
 
     /**
      * The table <code>orgarif.magic_link_token</code>.
@@ -85,19 +83,9 @@ public class Tables {
     public static final OrganismeTable ORGANISME = OrganismeTable.ORGANISME;
 
     /**
-     * The table <code>orgarif.organisme_deliberation</code>.
+     * The table <code>orgarif.representant</code>.
      */
-    public static final OrganismeDeliberationTable ORGANISME_DELIBERATION = OrganismeDeliberationTable.ORGANISME_DELIBERATION;
-
-    /**
-     * The table <code>orgarif.representant_instance</code>.
-     */
-    public static final RepresentantInstanceTable REPRESENTANT_INSTANCE = RepresentantInstanceTable.REPRESENTANT_INSTANCE;
-
-    /**
-     * The table <code>orgarif.representant_organisme</code>.
-     */
-    public static final RepresentantOrganismeTable REPRESENTANT_ORGANISME = RepresentantOrganismeTable.REPRESENTANT_ORGANISME;
+    public static final RepresentantTable REPRESENTANT = RepresentantTable.REPRESENTANT;
 
     /**
      * The table <code>orgarif.secteur</code>.
