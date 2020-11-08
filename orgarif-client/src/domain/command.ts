@@ -1,5 +1,6 @@
 import { LoginResult, RegisterResult, UserInfos } from '../domain/user';
 import {
+  EluId,
   InstanceId,
   NatureJuridiqueId,
   OrganismeId,
@@ -8,6 +9,17 @@ import {
   TypeStructureId,
 } from './id';
 import { RepresentantOrSuppleant } from './organisme';
+
+export interface AddRepresentantCommand {
+  eluId: EluId;
+  organismeId: OrganismeId;
+  instanceId?: InstanceId;
+  representantOrSuppleant: RepresentantOrSuppleant;
+}
+
+export interface AddRepresentantCommandResponse {
+  id: RepresentantId;
+}
 
 export interface CreateOrganismeCommand {
   nom: string;

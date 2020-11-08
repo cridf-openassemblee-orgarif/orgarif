@@ -1,7 +1,8 @@
 /** @jsx jsx */
 import { jsx } from '@emotion/core';
-import { PropsWithChildren, useEffect, useState } from 'react';
+import { PropsWithChildren } from 'react';
 import { DragDropContext, DropResult } from 'react-beautiful-dnd';
+import { appContext } from '../ApplicationContext';
 import {
   InstanceId,
   OrganismeId,
@@ -21,7 +22,6 @@ import {
   RepresentantOrSuppleant,
 } from '../domain/organisme';
 import { Errors } from '../errors';
-import { appContext } from '../ApplicationContext';
 
 const noInstanceId = 'no-instance';
 
@@ -53,50 +53,12 @@ export const extract = (
 };
 
 export const DragAndDropRepresentantsContainer = (
-  props: {
+  props: PropsWithChildren<{
     organisme: FullOrganisme;
-    render: (
-      lists: Dict<RepresentantListId, Representant[]>
-    ) => React.ReactNode;
-  }
+    lists: Dict<RepresentantListId, Representant[]>;
+    setLists: (lists: Dict<RepresentantListId, Representant[]>) => void;
+  }>
 ) => {
-  const [lists, setLists] = useState<Dict<RepresentantListId, Representant[]>>(
-    {}
-  );
-  useEffect(() => {
-    const initialLists: Dict<RepresentantListId, Representant[]> = {};
-    set(
-      initialLists,
-      representantListId(props.organisme.infos.id, undefined, 'representant'),
-      props.organisme.representants
-    );
-    set(
-      initialLists,
-      representantListId(props.organisme.infos.id, undefined, 'suppleant'),
-      props.organisme.suppleants
-    );
-    props.organisme.instances.forEach((instance) => {
-      set(
-        initialLists,
-        representantListId(
-          props.organisme.infos.id,
-          instance.infos.id,
-          'representant'
-        ),
-        instance.representants
-      );
-      set(
-        initialLists,
-        representantListId(
-          props.organisme.infos.id,
-          instance.infos.id,
-          'suppleant'
-        ),
-        instance.suppleants
-      );
-    });
-    setLists(initialLists);
-  }, []);
   const onDragEnd = (result: DropResult) => {
     const representantId = instanciateNominalString<RepresentantId>(
       result.draggableId
@@ -111,14 +73,16 @@ export const DragAndDropRepresentantsContainer = (
       result.destination.droppableId
     );
 
-    const newLists:Dict<RepresentantListId, Representant[]> = { ...lists } ;
-    const sourceList = [...get(lists, sourceId)];
+    const newLists: Dict<RepresentantListId, Representant[]> = {
+      ...props.lists,
+    };
+    const sourceList = [...get(props.lists, sourceId)];
     const movedItem = sourceList.splice(result.source.index, 1)[0];
     set(newLists, sourceId, sourceList);
     const destinationList = [...get(newLists, destinationId)];
     destinationList.splice(result.destination.index, 0, movedItem);
     set(newLists, destinationId, destinationList);
-    setLists(newLists)
+    props.setLists(newLists);
 
     const [organismeId, instanceId, representantOrSuppleant] = extract(
       destinationId
@@ -133,12 +97,9 @@ export const DragAndDropRepresentantsContainer = (
         toPosition: result.destination.index,
         toRepresentantOrSuppleant: representantOrSuppleant,
       })
-      .then(() => {
-      });
+      .then(() => {});
   };
   return (
-    <DragDropContext onDragEnd={onDragEnd}>
-      {props.render(lists)}
-    </DragDropContext>
+    <DragDropContext onDragEnd={onDragEnd}>{props.children}</DragDropContext>
   );
 };

@@ -71,7 +71,7 @@ class IndexController(@Value("\${webpack.bundle}") val webpackBundle: String,
         } else null
         val categories = OrganismeCategories(secteurDao.fetchAll(), natureJuridiqueDao.fetchAll(),
                 typeStructureDao.fetchAll())
-        val elus = eluDao.fetchAll().associateBy { it.id }
+        val elus = eluDao.fetchAll()
         mav.model["bootstrapData"] = serialize(ApplicationBootstrapData(applicationInstance.env, userInfos, categories, elus))
         mav.model["deploymentId"] = applicationInstance.deploymentId.rawId
         mav.model["gitRevisionLabel"] = applicationInstance.gitRevisionLabel

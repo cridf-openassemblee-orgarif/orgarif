@@ -30,6 +30,7 @@ class CommandController(
         val randomService: RandomService,
         val transactionManager: PlatformTransactionManager,
 
+        val addRepresentantCommandHandler: AddRepresentantCommandHandler,
         val createOrganismeCommandHandler: CreateOrganismeCommandHandler,
         val loginCommandHandler: LoginCommandHandler,
         val moveRepresentantCommandHandler: MoveRepresentantCommandHandler,
@@ -114,6 +115,7 @@ class CommandController(
 
     @Suppress("UNCHECKED_CAST")
     private fun handler(command: Command): CommandHandler<Command, CommandResponse> = when (command) {
+        is AddRepresentantCommand -> addRepresentantCommandHandler
         is CreateOrganismeCommand -> createOrganismeCommandHandler
         is LoginCommand -> loginCommandHandler
         is MoveRepresentantCommand -> moveRepresentantCommandHandler

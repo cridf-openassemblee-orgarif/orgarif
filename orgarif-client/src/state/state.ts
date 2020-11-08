@@ -6,15 +6,28 @@ import {
   Secteur,
   TypeStructure,
 } from '../domain/bootstrap-data';
-import { NatureJuridiqueId, SecteurId, TypeStructureId } from '../domain/id';
-import { set } from '../domain/nominal-class';
-import { Dict } from '../interfaces';
+import { Elu } from '../domain/elu';
+import {
+  EluId,
+  NatureJuridiqueId,
+  SecteurId,
+  TypeStructureId,
+} from '../domain/id';
+import { Dict, set } from '../domain/nominal-class';
 import { compareByString } from '../utils';
 
 export const state = {
   elus: atom({
     key: 'elus',
-    default: applicationBootstrapData.elus,
+    default: applicationBootstrapData.elus.sort(compareByString((i) => i.nom)),
+  }),
+  elusById: selector({
+    key: 'elusById',
+    get: ({ get }) => {
+      const map: Dict<EluId, Elu> = {};
+      get(state.elus).forEach((e) => set(map, e.id, e));
+      return map;
+    },
   }),
   natureJuridiques: atom({
     key: 'natureJuridiques',

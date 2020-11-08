@@ -1,13 +1,6 @@
 import { ApplicationEnvironment } from './application';
 import { Elu } from './elu';
-import {
-  EluId,
-  NatureJuridiqueId,
-  OrgarifId,
-  SecteurId,
-  TypeStructureId,
-} from './id';
-import { Dict } from './nominal-class';
+import { NatureJuridiqueId, OrgarifId, SecteurId, TypeStructureId } from './id';
 import { UserInfos } from './user';
 
 export interface Category {
@@ -45,5 +38,5 @@ export interface ApplicationBootstrapData {
   env: ApplicationEnvironment;
   userInfos?: UserInfos;
   categories: OrganismeCategories;
-  elus: Dict<EluId, Elu>;
+  elus: Elu[];
 }

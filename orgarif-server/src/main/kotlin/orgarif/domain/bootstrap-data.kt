@@ -18,4 +18,4 @@ data class OrganismeCategories(val secteurs: List<Secteur>,
 data class ApplicationBootstrapData(val env: ApplicationEnvironment,
                                     val userInfos: UserInfos?,
                                     val categories: OrganismeCategories,
-                                    val elus: Map<EluId, Elu>)
+                                    val elus: List<Elu>)

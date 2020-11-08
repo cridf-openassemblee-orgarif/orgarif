@@ -9,7 +9,11 @@ import {
   DroppableStateSnapshot,
 } from 'react-beautiful-dnd';
 import { InstanceId, OrganismeId, RepresentantListId } from '../domain/id';
-import { Dict, get, getOrNull, stringifyNominalString } from '../domain/nominal-class';
+import {
+  Dict,
+  getOrNull,
+  stringifyNominalString,
+} from '../domain/nominal-class';
 import { Representant, RepresentantOrSuppleant } from '../domain/organisme';
 import { representantListId } from './DragAndDropRepresentantsContainer';
 import { EluComponent } from './EluComponent';

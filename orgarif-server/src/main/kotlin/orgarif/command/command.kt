@@ -66,6 +66,13 @@ abstract class NeutralCommandHandler<C : Command, R : CommandResponse> : Command
     abstract fun handle(command: C): R
 }
 
+data class AddRepresentantCommand(val eluId: EluId,
+                                  val organismeId: OrganismeId,
+                                  val instanceId: InstanceId?,
+                                  val representantOrSuppleant: RepresentantOrSuppleant) : Command()
+
+data class AddRepresentantCommandResponse(val id: RepresentantId) : CommandResponse()
+
 data class CreateOrganismeCommand(val nom: String) : Command()
 
 data class CreateOrganismeCommandResponse(val id: OrganismeId) : CommandResponse()

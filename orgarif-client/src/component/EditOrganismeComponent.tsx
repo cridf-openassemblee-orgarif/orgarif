@@ -1,6 +1,6 @@
 /** @jsx jsx */
 import { css, jsx } from '@emotion/core';
-import { useState } from 'react';
+import { useEffect, useState } from 'react';
 import { useRecoilValue } from 'recoil';
 import { appContext } from '../ApplicationContext';
 import { Category } from '../domain/bootstrap-data';
@@ -14,6 +14,7 @@ import {
 import {
   Dict,
   instanciateNominalString,
+  set,
   stringifyNominalString,
 } from '../domain/nominal-class';
 import {
@@ -23,8 +24,12 @@ import {
   Representant,
 } from '../domain/organisme';
 import { state } from '../state/state';
+import { AddRepresentantComponent } from './AddRepresentantComponent';
 import { DragableRepresentantsListComponent } from './DragableRepresentantsListComponent';
-import { DragAndDropRepresentantsContainer } from './DragAndDropRepresentantsContainer';
+import {
+  DragAndDropRepresentantsContainer,
+  representantListId,
+} from './DragAndDropRepresentantsContainer';
 import { SelectInput, SelectOption } from './SelectInput';
 
 const classes = {
@@ -145,119 +150,164 @@ export const EditOrganismeComponent = (props: {
   setLoading: (l: boolean) => void;
 }) => {
   const organisme = props.organisme;
+  const [lists, setLists] = useState<Dict<RepresentantListId, Representant[]>>(
+    {}
+  );
+  useEffect(() => {
+    const initialLists: Dict<RepresentantListId, Representant[]> = {};
+    set(
+      initialLists,
+      representantListId(props.organisme.infos.id, undefined, 'representant'),
+      props.organisme.representants
+    );
+    set(
+      initialLists,
+      representantListId(props.organisme.infos.id, undefined, 'suppleant'),
+      props.organisme.suppleants
+    );
+    props.organisme.instances.forEach((instance) => {
+      set(
+        initialLists,
+        representantListId(
+          props.organisme.infos.id,
+          instance.infos.id,
+          'representant'
+        ),
+        instance.representants
+      );
+      set(
+        initialLists,
+        representantListId(
+          props.organisme.infos.id,
+          instance.infos.id,
+          'suppleant'
+        ),
+        instance.suppleants
+      );
+    });
+    setLists(initialLists);
+  }, []);
   return (
     <DragAndDropRepresentantsContainer
       organisme={props.organisme}
-      render={(lists) => (
+      lists={lists}
+      setLists={setLists}
+    >
+      <div
+        css={css`
+          width: 100%;
+        `}
+      >
+        <h2>{organisme.infos.nom}</h2>
         <div
           css={css`
+            display: flex;
             width: 100%;
           `}
         >
-          <h2>{organisme.infos.nom}</h2>
-          <div
-            css={css`
-              display: flex;
-              width: 100%;
-            `}
-          >
-            <div css={classes.categories}>
-              <EditCategoryComponent
-                label="Nature juridique"
-                categoryList={useRecoilValue(state.natureJuridiques)}
-                categoryById={useRecoilValue(state.natureJuridiquesById)}
-                currentId={organisme.infos.natureJuridiqueId}
-                onChange={(natureJuridiqueId: NatureJuridiqueId) =>
-                  appContext
-                    .commandService()
-                    .updateOrganismeNatureJuridiqueCommand({
-                      id: organisme.infos.id,
-                      natureJuridiqueId,
-                    })
-                }
-              />
-            </div>
-            <div css={classes.categories}>
-              <EditCategoryComponent
-                label="Secteur"
-                categoryList={useRecoilValue(state.secteurs)}
-                categoryById={useRecoilValue(state.secteursById)}
-                currentId={organisme.infos.secteurId}
-                onChange={(secteurId: SecteurId) =>
-                  appContext.commandService().updateOrganismeSecteurCommand({
+          <div css={classes.categories}>
+            <EditCategoryComponent
+              label="Nature juridique"
+              categoryList={useRecoilValue(state.natureJuridiques)}
+              categoryById={useRecoilValue(state.natureJuridiquesById)}
+              currentId={organisme.infos.natureJuridiqueId}
+              onChange={(natureJuridiqueId: NatureJuridiqueId) =>
+                appContext
+                  .commandService()
+                  .updateOrganismeNatureJuridiqueCommand({
                     id: organisme.infos.id,
-                    secteurId,
+                    natureJuridiqueId,
                   })
-                }
-              />
-            </div>
-            <div css={classes.categories}>
-              <EditCategoryComponent
-                label="Type de structure"
-                categoryList={useRecoilValue(state.typeStructures)}
-                categoryById={useRecoilValue(state.typeStructuresById)}
-                currentId={organisme.infos.typeStructureId}
-                onChange={(typeStructureId: TypeStructureId) =>
-                  appContext
-                    .commandService()
-                    .updateOrganismeTypeStructureCommand({
-                      id: organisme.infos.id,
-                      typeStructureId,
-                    })
-                }
-              />
-            </div>
+              }
+            />
           </div>
-          <NombreRepresentants
-            nombreRepresentants={organisme.infos.nombreRepresentants}
-            nombreSuppleants={organisme.infos.nombreSuppleants}
-          />
+          <div css={classes.categories}>
+            <EditCategoryComponent
+              label="Secteur"
+              categoryList={useRecoilValue(state.secteurs)}
+              categoryById={useRecoilValue(state.secteursById)}
+              currentId={organisme.infos.secteurId}
+              onChange={(secteurId: SecteurId) =>
+                appContext.commandService().updateOrganismeSecteurCommand({
+                  id: organisme.infos.id,
+                  secteurId,
+                })
+              }
+            />
+          </div>
+          <div css={classes.categories}>
+            <EditCategoryComponent
+              label="Type de structure"
+              categoryList={useRecoilValue(state.typeStructures)}
+              categoryById={useRecoilValue(state.typeStructuresById)}
+              currentId={organisme.infos.typeStructureId}
+              onChange={(typeStructureId: TypeStructureId) =>
+                appContext
+                  .commandService()
+                  .updateOrganismeTypeStructureCommand({
+                    id: organisme.infos.id,
+                    typeStructureId,
+                  })
+              }
+            />
+          </div>
+        </div>
+        <NombreRepresentants
+          nombreRepresentants={organisme.infos.nombreRepresentants}
+          nombreSuppleants={organisme.infos.nombreSuppleants}
+        />
+        <div
+          css={css`
+            width: 100%;
+            display: flex;
+          `}
+        >
           <div
             css={css`
-              width: 100%;
-              display: flex;
+              flex: 1;
             `}
           >
-            <div
-              css={css`
-                flex: 1;
-              `}
-            >
-              <DragableRepresentantsListComponent
-                organismeId={organisme.infos.id}
-                instanceId={undefined}
-                representantOrSuppleant="representant"
-                lists={lists}
-              />
-            </div>
-            <div
-              css={css`
-                flex: 1;
-              `}
-            >
-              <DragableRepresentantsListComponent
-                organismeId={organisme.infos.id}
-                instanceId={undefined}
-                representantOrSuppleant="suppleant"
-                lists={lists}
-              />
-            </div>
+            <DragableRepresentantsListComponent
+              organismeId={organisme.infos.id}
+              instanceId={undefined}
+              representantOrSuppleant="representant"
+              lists={lists}
+            />
+            <AddRepresentantComponent
+              organismeId={organisme.infos.id}
+              instanceId={undefined}
+              representantOrSuppleant="representant"
+              lists={lists}
+              setLists={setLists}
+            />
           </div>
-          <DeliberationsComponent deliberations={organisme.deliberations} />
-          {organisme.instances.length !== 0 && (
-            <div>
-              <h3>Instances</h3>
-              {organisme.instances.map((i) => (
-                <InstanceComponent
-                  key={stringifyNominalString(i.infos.id)}
-                  instance={i}
-                  lists={lists}
-                />
-              ))}
-            </div>
-          )}
+          <div
+            css={css`
+              flex: 1;
+            `}
+          >
+            <DragableRepresentantsListComponent
+              organismeId={organisme.infos.id}
+              instanceId={undefined}
+              representantOrSuppleant="suppleant"
+              lists={lists}
+            />
+          </div>
         </div>
-      )}
-    />
+        <DeliberationsComponent deliberations={organisme.deliberations} />
+        {organisme.instances.length !== 0 && (
+          <div>
+            <h3>Instances</h3>
+            {organisme.instances.map((i) => (
+              <InstanceComponent
+                key={stringifyNominalString(i.infos.id)}
+                instance={i}
+                lists={lists}
+              />
+            ))}
+          </div>
+        )}
+      </div>
+    </DragAndDropRepresentantsContainer>
   );
 };

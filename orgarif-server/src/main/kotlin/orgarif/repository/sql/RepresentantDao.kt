@@ -63,18 +63,39 @@ class RepresentantDao(val jooq: DSLContext) {
     fun fetchByOrganismeInstanceRepresentantOrSuppleant(
             organismeId: OrganismeId,
             instanceId: InstanceId?,
-            representantOrSuppleant: RepresentantOrSuppleant): List<Record> = jooq.selectFrom(REPRESENTANT)
-            .where(REPRESENTANT.ORGANISME_ID.equal(organismeId.rawId))
-            .apply {
-                if (instanceId == null) {
-                    and(REPRESENTANT.INSTANCE_ID.isNull)
-                } else {
-                    and(REPRESENTANT.INSTANCE_ID.equal(instanceId.rawId))
-                }
-            }
-            .and(REPRESENTANT.REPRESENTANT_OR_SUPPLEANT.equal(representantOrSuppleant.name))
-            .fetch()
-            .map(this::map)
+            representantOrSuppleant: RepresentantOrSuppleant): List<Record> =
+            jooq.selectFrom(REPRESENTANT)
+                    .where(REPRESENTANT.ORGANISME_ID.equal(organismeId.rawId))
+                    .apply {
+                        if (instanceId == null) {
+                            and(REPRESENTANT.INSTANCE_ID.isNull)
+                        } else {
+                            and(REPRESENTANT.INSTANCE_ID.equal(instanceId.rawId))
+                        }
+                    }
+                    .and(REPRESENTANT.REPRESENTANT_OR_SUPPLEANT.equal(representantOrSuppleant.name))
+                    .fetch()
+                    .map(this::map)
+
+    fun fetchCurrentPositionByOrganismeInstanceRepresentantOrSuppleant(
+            organismeId: OrganismeId,
+            instanceId: InstanceId?,
+            representantOrSuppleant: RepresentantOrSuppleant): Int? =
+            jooq.select(REPRESENTANT.POSITION)
+                    .from(REPRESENTANT)
+                    .where(REPRESENTANT.ORGANISME_ID.equal(organismeId.rawId))
+                    .apply {
+                        if (instanceId == null) {
+                            and(REPRESENTANT.INSTANCE_ID.isNull)
+                        } else {
+                            and(REPRESENTANT.INSTANCE_ID.equal(instanceId.rawId))
+                        }
+                    }
+                    .and(REPRESENTANT.REPRESENTANT_OR_SUPPLEANT.equal(representantOrSuppleant.name))
+                    .orderBy(REPRESENTANT.POSITION.desc())
+                    .limit(1)
+                    .fetchOne()
+                    ?.let { it.value1() }
 
     fun updatePosition(id: RepresentantId, newPosition: Int, date: Instant) {
         jooq.update(REPRESENTANT)
