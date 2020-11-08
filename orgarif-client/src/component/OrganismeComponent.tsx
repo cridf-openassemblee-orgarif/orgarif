@@ -7,7 +7,6 @@ import {
   FullInstance,
   FullOrganisme,
   Representant,
-  RepresentantId,
 } from '../domain/organisme';
 import { state } from '../state/state';
 import { colors } from '../styles/vars';
@@ -41,8 +40,8 @@ const NombreRepresentants = (props: {
 );
 
 const RepresentantsComponent = (props: {
-  representants: Representant<RepresentantId>[];
-  suppleants: Representant<RepresentantId>[];
+  representants: Representant[];
+  suppleants: Representant[];
 }) => {
   if (props.representants.length === 0 && props.suppleants.length === 0) {
     return null;
