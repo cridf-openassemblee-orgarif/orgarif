@@ -6,6 +6,7 @@ import { Category } from '../domain/bootstrap-data';
 import {
   NatureJuridiqueId,
   OrgarifId,
+  RepresentantListId,
   SecteurId,
   TypeStructureId,
 } from '../domain/id';
@@ -18,6 +19,7 @@ import {
   DeliberationInfos,
   FullInstance,
   FullOrganisme,
+  Representant,
 } from '../domain/organisme';
 import { state } from '../state/state';
 import { DragableRepresentantsListComponent } from './DragableRepresentantsListComponent';
@@ -59,17 +61,47 @@ const DeliberationsComponent = (props: {
   );
 };
 
-const InstanceComponent = (props: { instance: FullInstance }) => (
+const InstanceComponent = (props: {
+  instance: FullInstance;
+  lists: Dict<RepresentantListId, Representant[]>;
+}) => (
   <div>
     <h4>{props.instance.infos.nom}</h4>
     <NombreRepresentants
       nombreRepresentants={props.instance.infos.nombreRepresentants}
       nombreSuppleants={props.instance.infos.nombreSuppleants}
     />
-    {/*<EditRepresentantsComponent*/}
-    {/*  representants={props.instance.representants}*/}
-    {/*  suppleants={props.instance.suppleants}*/}
-    {/*/>*/}
+    <div
+      css={css`
+        width: 100%;
+        display: flex;
+      `}
+    >
+      <div
+        css={css`
+          flex: 1;
+        `}
+      >
+        <DragableRepresentantsListComponent
+          organismeId={props.instance.infos.organismeId}
+          instanceId={props.instance.infos.id}
+          representantOrSuppleant="representant"
+          lists={props.lists}
+        />
+      </div>
+      <div
+        css={css`
+          flex: 1;
+        `}
+      >
+        <DragableRepresentantsListComponent
+          organismeId={props.instance.infos.organismeId}
+          instanceId={props.instance.infos.id}
+          representantOrSuppleant="suppleant"
+          lists={props.lists}
+        />
+      </div>
+    </div>
     <DeliberationsComponent deliberations={props.instance.deliberations} />
   </div>
 );
@@ -215,6 +247,7 @@ export const EditOrganismeComponent = (props: {
                 <InstanceComponent
                   key={stringifyNominalString(i.infos.id)}
                   instance={i}
+                  lists={lists}
                 />
               ))}
             </div>
