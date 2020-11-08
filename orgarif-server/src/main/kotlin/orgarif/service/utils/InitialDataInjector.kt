@@ -1,5 +1,6 @@
 package orgarif.service.utils
 
+import RepresentantOrSuppleant
 import org.springframework.beans.factory.annotation.Value
 import org.springframework.stereotype.Service
 import orgarif.domain.*
@@ -16,13 +17,11 @@ class InitialDataInjector(@Value("\${injectFakeData}") val injectFakeData: Boole
                           val secteurDao: SecteurDao,
                           val natureJuridiqueDao: NatureJuridiqueDao,
                           val typeStructureDao: TypeStructureDao,
-                          val representantOrganismeDao: RepresentantOrganismeDao,
+                          val representantDao: RepresentantDao,
                           val instanceDao: InstanceDao,
-                          val instanceDeliberationDao: InstanceDeliberationDao,
                           val eluDao: EluDao,
                           val deliberationDao: DeliberationDao,
-                          val organismeDeliberationDao: OrganismeDeliberationDao,
-                          val representantInstanceDao: RepresentantInstanceDao,
+                          val lienDeliberationDao: LienDeliberationDao,
                           val randomService: RandomService,
                           val dateService: DateService) {
 
@@ -56,10 +55,11 @@ class InitialDataInjector(@Value("\${injectFakeData}") val injectFakeData: Boole
                         creationDate = now,
                         lastModificationDate = now))
                 val deliberationId = deliberation("Délibération organisme 1")
-                organismeDeliberationDao.insert(OrganismeDeliberationDao.Record(
+                lienDeliberationDao.insert(LienDeliberationDao.Record(
                         id = OrganismeDeliberationId(randomService.randomUUID()),
+                        deliberationId = deliberationId,
                         organismeId = fakeOrganismeId1,
-                        deliberationId = deliberationId))
+                        instanceId = null))
             }
             if (organismeDao.fetchOrNull(fakeOrganismeId2) == null) {
                 organismeDao.insert(OrganismeDao.Record(
@@ -68,40 +68,41 @@ class InitialDataInjector(@Value("\${injectFakeData}") val injectFakeData: Boole
                         secteurId = secteurs.random().id,
                         natureJuridiqueId = natureJuridiques.random().id,
                         typeStructureId = typeStructures.random().id,
-                        nombreRepresentants = nombreRepresentants,
-                        nombreSuppleants = nombreRepresentants,
+                        nombreRepresentants = null,
+                        nombreSuppleants = null,
                         partageRepresentants = false,
                         creationDate = now,
                         lastModificationDate = now))
                 val deliberationId1 = deliberation("Délibération organisme 2")
-                organismeDeliberationDao.insert(OrganismeDeliberationDao.Record(
+                lienDeliberationDao.insert(LienDeliberationDao.Record(
                         id = OrganismeDeliberationId(randomService.randomUUID()),
-                        organismeId = fakeOrganismeId1,
-                        deliberationId = deliberationId1))
+                        deliberationId = deliberationId1,
+                        organismeId = fakeOrganismeId2,
+                        instanceId = null))
                 instanceDao.insert(InstanceDao.Record(
                         id = fakeOrganisme2InstanceId1,
                         nom = "Instance 1",
                         organismeId = fakeOrganismeId2,
                         nombreRepresentants = nombreRepresentants,
                         nombreSuppleants = nombreRepresentants))
-                val deliberationId2 = deliberation("Délibération 1 instance 2 organisme 2")
-                instanceDeliberationDao.insert(InstanceDeliberationDao.Record(
+                val deliberationId2 = deliberation("Délibération instance 1 organisme 2")
+                lienDeliberationDao.insert(LienDeliberationDao.Record(
                         id = OrganismeDeliberationId(randomService.randomUUID()),
-                        instanceId = fakeOrganisme2InstanceId1,
-                        deliberationId = deliberationId2
-                ))
+                        deliberationId = deliberationId2,
+                        organismeId = fakeOrganismeId2,
+                        instanceId = fakeOrganisme2InstanceId1))
                 instanceDao.insert(InstanceDao.Record(
                         id = fakeOrganisme2InstanceId2,
                         nom = "Instance 2",
                         organismeId = fakeOrganismeId2,
                         nombreRepresentants = nombreRepresentants,
                         nombreSuppleants = nombreRepresentants))
-                val deliberationId3 = deliberation("Délibération 1 instance 2 organisme 2")
-                instanceDeliberationDao.insert(InstanceDeliberationDao.Record(
+                val deliberationId3 = deliberation("Délibération instance 2 organisme 2")
+                lienDeliberationDao.insert(LienDeliberationDao.Record(
                         id = OrganismeDeliberationId(randomService.randomUUID()),
-                        instanceId = fakeOrganisme2InstanceId2,
-                        deliberationId = deliberationId3
-                ))
+                        deliberationId = deliberationId3,
+                        organismeId = fakeOrganismeId2,
+                        instanceId = fakeOrganisme2InstanceId2))
             }
             if (organismeDao.fetchOrNull(fakeOrganismeId3) == null) {
                 organismeDao.insert(OrganismeDao.Record(
@@ -116,34 +117,35 @@ class InitialDataInjector(@Value("\${injectFakeData}") val injectFakeData: Boole
                         creationDate = now,
                         lastModificationDate = now))
                 val deliberationId1 = deliberation("Délibération organisme 3")
-                organismeDeliberationDao.insert(OrganismeDeliberationDao.Record(
+                lienDeliberationDao.insert(LienDeliberationDao.Record(
                         id = OrganismeDeliberationId(randomService.randomUUID()),
-                        organismeId = fakeOrganismeId1,
-                        deliberationId = deliberationId1))
+                        deliberationId = deliberationId1,
+                        organismeId = fakeOrganismeId3,
+                        instanceId = null))
                 instanceDao.insert(InstanceDao.Record(
                         id = fakeOrganisme3InstanceId1,
                         nom = "Instance 1",
                         organismeId = fakeOrganismeId3,
                         nombreRepresentants = null,
                         nombreSuppleants = null))
-                val deliberationId2 = deliberation("Délibération 1 instance 2 organisme 3")
-                instanceDeliberationDao.insert(InstanceDeliberationDao.Record(
+                val deliberationId2 = deliberation("Délibération instance 1 organisme 3")
+                lienDeliberationDao.insert(LienDeliberationDao.Record(
                         id = OrganismeDeliberationId(randomService.randomUUID()),
-                        instanceId = fakeOrganisme3InstanceId1,
-                        deliberationId = deliberationId2
-                ))
+                        deliberationId = deliberationId2,
+                        organismeId = fakeOrganismeId3,
+                        instanceId = fakeOrganisme3InstanceId1))
                 instanceDao.insert(InstanceDao.Record(
                         id = fakeOrganisme3InstanceId2,
                         nom = "Instance 2",
                         organismeId = fakeOrganismeId3,
                         nombreRepresentants = null,
                         nombreSuppleants = null))
-                val deliberationId3 = deliberation("Délibération 1 instance 2 organisme 3")
-                instanceDeliberationDao.insert(InstanceDeliberationDao.Record(
+                val deliberationId3 = deliberation("Délibération instance 2 organisme 3")
+                lienDeliberationDao.insert(LienDeliberationDao.Record(
                         id = OrganismeDeliberationId(randomService.randomUUID()),
-                        instanceId = fakeOrganisme3InstanceId2,
-                        deliberationId = deliberationId3
-                ))
+                        deliberationId = deliberationId3,
+                        organismeId = fakeOrganismeId3,
+                        instanceId = fakeOrganisme3InstanceId2))
             }
             injectRepresentants()
         }
@@ -165,7 +167,7 @@ class InitialDataInjector(@Value("\${injectFakeData}") val injectFakeData: Boole
         if (!injectFakeData) {
             return
         }
-        val existingRepresentants = representantOrganismeDao.fetchByOrganismeId(fakeOrganismeId1)
+        val existingRepresentants = representantDao.fetchByOrganismeId(fakeOrganismeId1)
         if (existingRepresentants.isEmpty()) {
             val elus = eluDao.fetchAll()
             if (elus.isEmpty()) {
@@ -174,52 +176,60 @@ class InitialDataInjector(@Value("\${injectFakeData}") val injectFakeData: Boole
             if (organismeDao.fetchOrNull(fakeOrganismeId1) == null ||
                     instanceDao.fetchOrNull(fakeOrganisme2InstanceId1) == null ||
                     instanceDao.fetchOrNull(fakeOrganisme2InstanceId2) == null ||
-                    organismeDao.fetchOrNull(fakeOrganismeId3) == null ) {
+                    organismeDao.fetchOrNull(fakeOrganismeId3) == null) {
                 return
             }
             val now = dateService.now()
             elus.shuffled().subList(0, nombreRepresentants * 2).forEachIndexed { index, e ->
-                representantOrganismeDao.insert(RepresentantOrganismeDao.Record(
-                        RepresentantOrganismeId(randomService.randomUUID()),
-                        e.id,
-                        fakeOrganismeId1,
-                        if (index < nombreRepresentants) index else index - nombreRepresentants,
-                        index >= nombreRepresentants,
-                        now,
-                        now
+                representantDao.insert(RepresentantDao.Record(
+                        id = RepresentantId(randomService.randomUUID()),
+                        eluId = e.id,
+                        organismeId = fakeOrganismeId1,
+                        instanceId = null,
+                        position = if (index < nombreRepresentants) index else index - nombreRepresentants,
+                        representantOrSuppleant = if (index < nombreRepresentants) RepresentantOrSuppleant.representant
+                        else RepresentantOrSuppleant.suppleant,
+                        creationDate = now,
+                        lastMotificationDate = now
                 ))
             }
             elus.shuffled().subList(0, nombreRepresentants * 2).forEachIndexed { index, e ->
-                representantInstanceDao.insert(RepresentantInstanceDao.Record(
-                        RepresentantInstanceId(randomService.randomUUID()),
-                        e.id,
-                        fakeOrganisme2InstanceId1,
-                        if (index < nombreRepresentants) index else index - nombreRepresentants,
-                        index >= nombreRepresentants,
-                        now,
-                        now
+                representantDao.insert(RepresentantDao.Record(
+                        id = RepresentantId(randomService.randomUUID()),
+                        eluId = e.id,
+                        organismeId = fakeOrganismeId2,
+                        instanceId = fakeOrganisme2InstanceId1,
+                        position = if (index < nombreRepresentants) index else index - nombreRepresentants,
+                        representantOrSuppleant = if (index < nombreRepresentants) RepresentantOrSuppleant.representant
+                        else RepresentantOrSuppleant.suppleant,
+                        creationDate = now,
+                        lastMotificationDate = now
                 ))
             }
             elus.shuffled().subList(0, nombreRepresentants * 2).forEachIndexed { index, e ->
-                representantInstanceDao.insert(RepresentantInstanceDao.Record(
-                        RepresentantInstanceId(randomService.randomUUID()),
-                        e.id,
-                        fakeOrganisme2InstanceId2,
-                        if (index < nombreRepresentants) index else index - nombreRepresentants,
-                        index >= nombreRepresentants,
-                        now,
-                        now
+                representantDao.insert(RepresentantDao.Record(
+                        id = RepresentantId(randomService.randomUUID()),
+                        eluId = e.id,
+                        organismeId = fakeOrganismeId2,
+                        instanceId = fakeOrganisme2InstanceId2,
+                        position = if (index < nombreRepresentants) index else index - nombreRepresentants,
+                        representantOrSuppleant = if (index < nombreRepresentants) RepresentantOrSuppleant.representant
+                        else RepresentantOrSuppleant.suppleant,
+                        creationDate = now,
+                        lastMotificationDate = now
                 ))
             }
             elus.shuffled().subList(0, nombreRepresentants * 2).forEachIndexed { index, e ->
-                representantOrganismeDao.insert(RepresentantOrganismeDao.Record(
-                        RepresentantOrganismeId(randomService.randomUUID()),
-                        e.id,
-                        fakeOrganismeId3,
-                        if (index < nombreRepresentants) index else index - nombreRepresentants,
-                        index >= nombreRepresentants,
-                        now,
-                        now
+                representantDao.insert(RepresentantDao.Record(
+                        id = RepresentantId(randomService.randomUUID()),
+                        eluId = e.id,
+                        organismeId = fakeOrganismeId3,
+                        instanceId = null,
+                        position = if (index < nombreRepresentants) index else index - nombreRepresentants,
+                        representantOrSuppleant = if (index < nombreRepresentants) RepresentantOrSuppleant.representant
+                        else RepresentantOrSuppleant.suppleant,
+                        creationDate = now,
+                        lastMotificationDate = now
                 ))
             }
         }

@@ -1,27 +1,27 @@
 import orgarif.domain.EluId
-import orgarif.domain.RepresentantInstanceId
-import orgarif.domain.RepresentantOrganismeId
-import orgarif.repository.sql.*
+import orgarif.domain.RepresentantId
+import orgarif.repository.sql.DeliberationDao
+import orgarif.repository.sql.InstanceDao
+import orgarif.repository.sql.OrganismeDao
+
+enum class RepresentantOrSuppleant { representant, suppleant }
 
 typealias OrganismeInfos = OrganismeDao.Record
 
 typealias InstanceInfos = InstanceDao.Record
 
-data class RepresentantOrganisme  (val id: RepresentantOrganismeId,
-                                   val eluId: EluId)
-
-data class RepresentantInstance  (val id: RepresentantInstanceId,
-                                  val eluId: EluId)
+data class Representant(val id: RepresentantId,
+                        val eluId: EluId)
 
 typealias DeliberationInfos = DeliberationDao.Record
 
 data class FullInstance(val infos: InstanceInfos,
                         val deliberations: List<DeliberationInfos>,
-                        val representants: List<RepresentantInstance>,
-                        val suppleants: List<RepresentantInstance>)
+                        val representants: List<Representant>,
+                        val suppleants: List<Representant>)
 
 data class FullOrganisme(val infos: OrganismeInfos,
                          val deliberations: List<DeliberationInfos>,
-                         val representants: List<RepresentantOrganisme>,
-                         val suppleants: List<RepresentantOrganisme>,
+                         val representants: List<Representant>,
+                         val suppleants: List<Representant>,
                          val instances: List<FullInstance>)
