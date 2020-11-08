@@ -1,10 +1,13 @@
 import { LoginResult, RegisterResult, UserInfos } from '../domain/user';
 import {
+  InstanceId,
   NatureJuridiqueId,
   OrganismeId,
+  RepresentantId,
   SecteurId,
   TypeStructureId,
 } from './id';
+import { RepresentantOrSuppleant } from './organisme';
 
 export interface CreateOrganismeCommand {
   nom: string;
@@ -22,6 +25,14 @@ export interface LoginCommand {
 export interface LoginCommandResponse {
   result: LoginResult;
   userinfos?: UserInfos;
+}
+
+export interface MoveRepresentantCommand {
+  id: RepresentantId;
+  toOrganismeId: OrganismeId;
+  toInstanceId?: InstanceId;
+  toPosition: number;
+  toRepresentantOrSuppleant: RepresentantOrSuppleant;
 }
 
 export interface RegisterCommand {

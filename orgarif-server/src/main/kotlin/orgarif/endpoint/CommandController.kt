@@ -1,6 +1,11 @@
 package orgarif.endpoint
 
 import mu.KotlinLogging
+import org.apache.commons.lang3.exception.ExceptionUtils
+import org.springframework.transaction.PlatformTransactionManager
+import org.springframework.web.bind.annotation.PostMapping
+import org.springframework.web.bind.annotation.RequestBody
+import org.springframework.web.bind.annotation.RestController
 import orgarif.command.*
 import orgarif.domain.AuthenticationLevel
 import orgarif.domain.CommandLogId
@@ -13,11 +18,6 @@ import orgarif.service.user.IpService
 import orgarif.service.user.UserSessionHelper
 import orgarif.utils.Serializer.deserialize
 import orgarif.utils.Serializer.serialize
-import org.apache.commons.lang3.exception.ExceptionUtils
-import org.springframework.transaction.PlatformTransactionManager
-import org.springframework.web.bind.annotation.PostMapping
-import org.springframework.web.bind.annotation.RequestBody
-import org.springframework.web.bind.annotation.RestController
 import javax.servlet.http.HttpServletRequest
 import javax.servlet.http.HttpServletResponse
 
@@ -32,6 +32,7 @@ class CommandController(
 
         val createOrganismeCommandHandler: CreateOrganismeCommandHandler,
         val loginCommandHandler: LoginCommandHandler,
+        val moveRepresentantCommandHandler: MoveRepresentantCommandHandler,
         val registerCommandHandler: RegisterCommandHandler,
         val updateOrganismeNatureJuridiqueCommandHandler: UpdateOrganismeNatureJuridiqueCommandHandler,
         val updateOrganismeSecteurCommandHandler: UpdateOrganismeSecteurCommandHandler,
@@ -115,6 +116,7 @@ class CommandController(
     private fun handler(command: Command): CommandHandler<Command, CommandResponse> = when (command) {
         is CreateOrganismeCommand -> createOrganismeCommandHandler
         is LoginCommand -> loginCommandHandler
+        is MoveRepresentantCommand -> moveRepresentantCommandHandler
         is RegisterCommand -> registerCommandHandler
         is UpdateOrganismeNatureJuridiqueCommand -> updateOrganismeNatureJuridiqueCommandHandler
         is UpdateOrganismeSecteurCommand -> updateOrganismeSecteurCommandHandler

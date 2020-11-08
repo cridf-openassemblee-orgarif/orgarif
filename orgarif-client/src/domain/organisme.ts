@@ -10,6 +10,8 @@ import {
 } from './id';
 import { Instant, LocalDate } from './time';
 
+export type RepresentantOrSuppleant = 'representant' | 'suppleant';
+
 export interface OrganismeInfos {
   id: OrganismeId;
   nom: string;

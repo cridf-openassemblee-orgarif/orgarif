@@ -14,19 +14,28 @@ export const EditOrganismeView = (props: {
   const [organisme, setOrganisme] = useState<FullOrganisme | undefined>(
     undefined
   );
+  const [loading, setLoading] = useState(false);
   useEffect(() => {
+    setLoading(true);
     appContext
       .queryService()
       .getOrganismeQuery({ id: props.routeParams.id })
       .then((r) => {
+        setLoading(false);
         setOrganisme(r.organisme);
       });
   }, []);
   return (
     <MainContainer>
       <RouteLink route={{ name: 'ListOrganismesRoute' }}>list</RouteLink>
-      {!organisme && <div>Chargement...</div>}
-      {organisme && <EditOrganismeComponent organisme={organisme} />}
+      {loading && <div>Chargement...</div>}
+      {organisme && (
+        <EditOrganismeComponent
+          organisme={organisme}
+          setOrganisme={setOrganisme}
+          setLoading={setLoading}
+        />
+      )}
     </MainContainer>
   );
 };

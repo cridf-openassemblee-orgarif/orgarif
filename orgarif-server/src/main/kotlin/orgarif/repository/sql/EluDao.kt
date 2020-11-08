@@ -40,6 +40,12 @@ class EluDao(val jooq: DSLContext) {
         jooq.insertInto(ELU).set(record).execute()
     }
 
+    fun fetch(id: EluId) =
+            jooq.selectFrom(ELU)
+                    .where(ELU.ID.equal(id.rawId))
+                    .fetchOne()
+                    ?.let(this::map)
+
     fun fetchAll() =
             jooq.selectFrom(ELU)
                     .fetch()

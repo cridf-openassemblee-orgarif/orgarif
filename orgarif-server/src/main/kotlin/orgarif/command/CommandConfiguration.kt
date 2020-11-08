@@ -7,6 +7,7 @@ object CommandConfiguration {
         // TODO loggedIn
         is CreateOrganismeCommand -> AuthenticationLevel.neutral
         is LoginCommand -> AuthenticationLevel.loggedOut
+        is MoveRepresentantCommand -> AuthenticationLevel.neutral
         is RegisterCommand -> AuthenticationLevel.loggedOut
         // TODO loggedIn
         is UpdateOrganismeNatureJuridiqueCommand -> AuthenticationLevel.neutral

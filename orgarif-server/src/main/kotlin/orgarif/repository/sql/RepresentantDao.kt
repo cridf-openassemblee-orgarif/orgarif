@@ -3,12 +3,16 @@ package orgarif.repository.sql
 import RepresentantOrSuppleant
 import org.jooq.DSLContext
 import org.springframework.stereotype.Repository
-import orgarif.domain.*
+import orgarif.domain.EluId
+import orgarif.domain.InstanceId
+import orgarif.domain.OrganismeId
+import orgarif.domain.RepresentantId
 import orgarif.jooq.generated.Tables.REPRESENTANT
 import orgarif.jooq.generated.tables.records.RepresentantRecord
 import orgarif.utils.toTypeId
 import java.time.Instant
 import java.time.ZoneOffset
+
 
 @Repository
 class RepresentantDao(val jooq: DSLContext) {
@@ -41,6 +45,68 @@ class RepresentantDao(val jooq: DSLContext) {
                     .where(REPRESENTANT.ORGANISME_ID.equal(organismeId.rawId))
                     .fetch()
                     .map(this::map)
+
+    // fetch tous la listes des represetants à laquelle appartient un representant donné
+    fun fetchListById(id: RepresentantId): List<Record> {
+        val a = REPRESENTANT.`as`("a")
+        val b = REPRESENTANT.`as`("b")
+        return jooq.select()
+                .from(a)
+                .join(b)
+                .on(a.ORGANISME_ID.equal(b.ORGANISME_ID))
+                .and(a.REPRESENTANT_OR_SUPPLEANT.equal(b.REPRESENTANT_OR_SUPPLEANT))
+                .where(b.ID.equal(id.rawId))
+                .fetchInto(a)
+                .map(this::map)
+    }
+
+    fun fetchByOrganismeInstanceRepresentantOrSuppleant(
+            organismeId: OrganismeId,
+            instanceId: InstanceId?,
+            representantOrSuppleant: RepresentantOrSuppleant): List<Record> = jooq.selectFrom(REPRESENTANT)
+            .where(REPRESENTANT.ORGANISME_ID.equal(organismeId.rawId))
+            .apply {
+                if (instanceId == null) {
+                    and(REPRESENTANT.INSTANCE_ID.isNull)
+                } else {
+                    and(REPRESENTANT.INSTANCE_ID.equal(instanceId.rawId))
+                }
+            }
+            .and(REPRESENTANT.REPRESENTANT_OR_SUPPLEANT.equal(representantOrSuppleant.name))
+            .fetch()
+            .map(this::map)
+
+    fun updatePosition(id: RepresentantId, newPosition: Int, date: Instant) {
+        jooq.update(REPRESENTANT)
+                .set(REPRESENTANT.POSITION, newPosition)
+                .set(REPRESENTANT.LAST_MODIFICATION_DATE, date.atOffset(ZoneOffset.UTC).toLocalDateTime())
+                .where(REPRESENTANT.ID.equal(id.rawId))
+                .execute()
+    }
+
+    fun updateRepresentant(id: RepresentantId,
+                           organismeId: OrganismeId,
+                           instanceId: InstanceId?,
+                           position: Int,
+                           representantOrSuppleant: RepresentantOrSuppleant,
+                           date: Instant) {
+        val r = RepresentantRecord()
+        r.organismeId = organismeId.rawId
+        r.instanceId = instanceId?.rawId
+        r.position = position
+        r.representantOrSuppleant = representantOrSuppleant.name
+        r.lastModificationDate = date.atOffset(ZoneOffset.UTC).toLocalDateTime()
+        jooq.update(REPRESENTANT)
+                .set(r)
+                .where(REPRESENTANT.ID.equal(id.rawId))
+                .execute()
+    }
+
+    fun delete(id: RepresentantId) {
+        jooq.deleteFrom(REPRESENTANT)
+                .where(REPRESENTANT.ID.equal(id.rawId))
+                .execute()
+    }
 
     private fun map(r: RepresentantRecord) = Record(
             r.id.toTypeId(),

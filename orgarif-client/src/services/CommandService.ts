@@ -4,6 +4,7 @@ import {
   CreateOrganismeCommandResponse,
   LoginCommand,
   LoginCommandResponse,
+  MoveRepresentantCommand,
   RegisterCommand,
   RegisterCommandResponse,
   UpdateOrganismeNatureJuridiqueCommand,
@@ -20,6 +21,11 @@ export class CommandService {
   public loginCommand = (
     command: LoginCommand
   ): Promise<LoginCommandResponse> => this.command('LoginCommand', command);
+
+  public moveRepresentantCommand = (
+    command: MoveRepresentantCommand
+  ): Promise<MoveRepresentantCommand> =>
+    this.command('MoveRepresentantCommand', command);
 
   public registerCommand = (
     command: RegisterCommand

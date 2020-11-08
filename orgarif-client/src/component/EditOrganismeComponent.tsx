@@ -20,8 +20,8 @@ import {
   FullOrganisme,
 } from '../domain/organisme';
 import { state } from '../state/state';
-import { colors } from '../styles/vars';
-import { EditRepresentantSuppleantComponent } from './EditRepresentantSuppleantComponent';
+import { DragableRepresentantsListComponent } from './DragableRepresentantsListComponent';
+import { DragAndDropRepresentantsContainer } from './DragAndDropRepresentantsContainer';
 import { SelectInput, SelectOption } from './SelectInput';
 
 const classes = {
@@ -30,16 +30,6 @@ const classes = {
     padding: 0 20px;
   `,
 };
-
-const Separator = () => (
-  <div
-    css={css`
-      width: 1px;
-      background: ${colors.grey};
-      margin: 30px 0 4px 0;
-    `}
-  />
-);
 
 const NombreRepresentants = (props: {
   nombreRepresentants?: number;
@@ -113,93 +103,124 @@ export const EditCategoryComponent = (props: {
   );
 };
 
-export const EditOrganismeComponent = (props: { organisme: FullOrganisme }) => {
+export const EditOrganismeComponent = (props: {
+  organisme: FullOrganisme;
+  setOrganisme: (o: FullOrganisme) => void;
+  setLoading: (l: boolean) => void;
+}) => {
   const organisme = props.organisme;
   return (
-    <div
-      css={css`
-        width: 100%;
-      `}
-    >
-      <h2>{organisme.infos.nom}</h2>
-      <div
-        css={css`
-          display: flex;
-          width: 100%;
-        `}
-      >
-        <div css={classes.categories}>
-          <EditCategoryComponent
-            label="Nature juridique"
-            categoryList={useRecoilValue(state.natureJuridiques)}
-            categoryById={useRecoilValue(state.natureJuridiquesById)}
-            currentId={organisme.infos.natureJuridiqueId}
-            onChange={(natureJuridiqueId: NatureJuridiqueId) =>
-              appContext
-                .commandService()
-                .updateOrganismeNatureJuridiqueCommand({
-                  id: organisme.infos.id,
-                  natureJuridiqueId,
-                })
-            }
+    <DragAndDropRepresentantsContainer
+      organisme={props.organisme}
+      render={(lists) => (
+        <div
+          css={css`
+            width: 100%;
+          `}
+        >
+          <h2>{organisme.infos.nom}</h2>
+          <div
+            css={css`
+              display: flex;
+              width: 100%;
+            `}
+          >
+            <div css={classes.categories}>
+              <EditCategoryComponent
+                label="Nature juridique"
+                categoryList={useRecoilValue(state.natureJuridiques)}
+                categoryById={useRecoilValue(state.natureJuridiquesById)}
+                currentId={organisme.infos.natureJuridiqueId}
+                onChange={(natureJuridiqueId: NatureJuridiqueId) =>
+                  appContext
+                    .commandService()
+                    .updateOrganismeNatureJuridiqueCommand({
+                      id: organisme.infos.id,
+                      natureJuridiqueId,
+                    })
+                }
+              />
+            </div>
+            <div css={classes.categories}>
+              <EditCategoryComponent
+                label="Secteur"
+                categoryList={useRecoilValue(state.secteurs)}
+                categoryById={useRecoilValue(state.secteursById)}
+                currentId={organisme.infos.secteurId}
+                onChange={(secteurId: SecteurId) =>
+                  appContext.commandService().updateOrganismeSecteurCommand({
+                    id: organisme.infos.id,
+                    secteurId,
+                  })
+                }
+              />
+            </div>
+            <div css={classes.categories}>
+              <EditCategoryComponent
+                label="Type de structure"
+                categoryList={useRecoilValue(state.typeStructures)}
+                categoryById={useRecoilValue(state.typeStructuresById)}
+                currentId={organisme.infos.typeStructureId}
+                onChange={(typeStructureId: TypeStructureId) =>
+                  appContext
+                    .commandService()
+                    .updateOrganismeTypeStructureCommand({
+                      id: organisme.infos.id,
+                      typeStructureId,
+                    })
+                }
+              />
+            </div>
+          </div>
+          <NombreRepresentants
+            nombreRepresentants={organisme.infos.nombreRepresentants}
+            nombreSuppleants={organisme.infos.nombreSuppleants}
           />
-        </div>
-        <div css={classes.categories}>
-          <EditCategoryComponent
-            label="Secteur"
-            categoryList={useRecoilValue(state.secteurs)}
-            categoryById={useRecoilValue(state.secteursById)}
-            currentId={organisme.infos.secteurId}
-            onChange={(secteurId: SecteurId) =>
-              appContext.commandService().updateOrganismeSecteurCommand({
-                id: organisme.infos.id,
-                secteurId,
-              })
-            }
-          />
-        </div>
-        <div css={classes.categories}>
-          <EditCategoryComponent
-            label="Type de structure"
-            categoryList={useRecoilValue(state.typeStructures)}
-            categoryById={useRecoilValue(state.typeStructuresById)}
-            currentId={organisme.infos.typeStructureId}
-            onChange={(typeStructureId: TypeStructureId) =>
-              appContext.commandService().updateOrganismeTypeStructureCommand({
-                id: organisme.infos.id,
-                typeStructureId,
-              })
-            }
-          />
-        </div>
-      </div>
-      <NombreRepresentants
-        nombreRepresentants={organisme.infos.nombreRepresentants}
-        nombreSuppleants={organisme.infos.nombreSuppleants}
-      />
-      <div
-        css={css`
-          width: 100%;
-        `}
-      >
-        <EditRepresentantSuppleantComponent
-          representants={organisme.representants}
-          suppleants={organisme.suppleants}
-          organismeId={organisme.infos.id}
-        />
-      </div>
-      <DeliberationsComponent deliberations={organisme.deliberations} />
-      {organisme.instances.length !== 0 && (
-        <div>
-          <h3>Instances</h3>
-          {organisme.instances.map((i) => (
-            <InstanceComponent
-              key={stringifyNominalString(i.infos.id)}
-              instance={i}
-            />
-          ))}
+          <div
+            css={css`
+              width: 100%;
+              display: flex;
+            `}
+          >
+            <div
+              css={css`
+                flex: 1;
+              `}
+            >
+              <DragableRepresentantsListComponent
+                organismeId={organisme.infos.id}
+                instanceId={undefined}
+                representantOrSuppleant="representant"
+                lists={lists}
+              />
+            </div>
+            <div
+              css={css`
+                flex: 1;
+              `}
+            >
+              <DragableRepresentantsListComponent
+                organismeId={organisme.infos.id}
+                instanceId={undefined}
+                representantOrSuppleant="suppleant"
+                lists={lists}
+              />
+            </div>
+          </div>
+          <DeliberationsComponent deliberations={organisme.deliberations} />
+          {organisme.instances.length !== 0 && (
+            <div>
+              <h3>Instances</h3>
+              {organisme.instances.map((i) => (
+                <InstanceComponent
+                  key={stringifyNominalString(i.infos.id)}
+                  instance={i}
+                />
+              ))}
+            </div>
+          )}
         </div>
       )}
-    </div>
+    />
   );
 };

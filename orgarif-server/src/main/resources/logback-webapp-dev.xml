@@ -20,4 +20,5 @@
     <!-- Spring noise -->
     <logger name="orgarif.error.ApplicationExceptionHandlerExceptionResolver" level="WARN"/>
     <logger name="org.spring.aop.framework.CglibAopProxy" level="INFO"/>
+<!--    <logger name="orgarif.command.MoveRepresentantCommandHandler" level="DEBUG"/>-->
 </configuration>

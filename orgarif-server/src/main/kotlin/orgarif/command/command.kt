@@ -1,5 +1,6 @@
 package orgarif.command
 
+import RepresentantOrSuppleant
 import com.fasterxml.jackson.annotation.JsonTypeInfo
 import orgarif.domain.*
 import javax.servlet.http.HttpServletRequest
@@ -76,6 +77,12 @@ data class LoginCommand(val login: String,
 data class LoginCommandResponse(val result: LoginResult,
                                 val userinfos: UserInfos?,
                                 val csrfToken: String?) : CommandResponse()
+
+data class MoveRepresentantCommand(val id: RepresentantId,
+                                   val toOrganismeId: OrganismeId,
+                                   val toInstanceId: InstanceId?,
+                                   val toPosition: Int,
+                                   val toRepresentantOrSuppleant: RepresentantOrSuppleant) : Command()
 
 data class RegisterCommand(val mail: String,
                            val password: PlainStringPassword,
