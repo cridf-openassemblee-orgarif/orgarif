@@ -7,10 +7,7 @@ import orgarif.repository.sql.EluDao
 import orgarif.repository.sql.RepresentantDao
 import orgarif.service.DateService
 import orgarif.service.RandomService
-import orgarif.utils.OrgarifStringUtils
 import orgarif.utils.OrgarifStringUtils.serializeUuid
-import orgarif.utils.Serializer
-import orgarif.utils.Serializer.serialize
 import java.time.Instant
 
 @Service
@@ -25,14 +22,18 @@ class MoveRepresentantCommandHandler(
 
     override fun handle(command: MoveRepresentantCommand): EmptyCommandResponse {
         val now = dateService.now()
-        val (sourceRepresentant, sourceList) = representantDao.fetchListById(command.id)
-                .let {
-                    val sourceRepresentant = it.find { it.id == command.id }
-                            ?: throw IllegalStateException("${command.id}")
-                    val sourceList = it.filter { it.id != command.id }
-                            .sortedBy { it.position }
-                    sourceRepresentant to sourceList
-                }
+        // failed to write a dao method with a join - log nodes ticktick id 5fa9d45aa24d5700ebe5fa12
+        // TODO creser et doc
+        // ne pas remonter depuis le client les infos sur la liste de départ
+        // par exemple, dans le scenario 2 user edite meme representant, la sourceList pourrait avoir changé
+        val sourceRepresentant = representantDao.fetchById(command.id)
+                ?: throw IllegalArgumentException("${command.id}")
+        val sourceList = representantDao.fetchByOrganismeInstanceRepresentantOrSuppleant(
+                sourceRepresentant.organismeId,
+                sourceRepresentant.instanceId,
+                sourceRepresentant.representantOrSuppleant)
+                .filter { it.id != sourceRepresentant.id }
+                .sortedBy { it.position }
         val isSameList = let {
             sourceRepresentant.organismeId == command.toOrganismeId
                     && sourceRepresentant.instanceId == command.toInstanceId

@@ -40,25 +40,17 @@ class RepresentantDao(val jooq: DSLContext) {
         jooq.insertInto(REPRESENTANT).set(record).execute()
     }
 
+    fun fetchById(id: RepresentantId) =
+            jooq.selectFrom(REPRESENTANT)
+                    .where(REPRESENTANT.ID.equal(id.rawId))
+                    .fetchOne()
+                    ?.let(this::map)
+
     fun fetchByOrganismeId(organismeId: OrganismeId) =
             jooq.selectFrom(REPRESENTANT)
                     .where(REPRESENTANT.ORGANISME_ID.equal(organismeId.rawId))
                     .fetch()
                     .map(this::map)
-
-    // fetch tous la listes des represetants à laquelle appartient un representant donné
-    fun fetchListById(id: RepresentantId): List<Record> {
-        val a = REPRESENTANT.`as`("a")
-        val b = REPRESENTANT.`as`("b")
-        return jooq.select()
-                .from(a)
-                .join(b)
-                .on(a.ORGANISME_ID.equal(b.ORGANISME_ID))
-                .and(a.REPRESENTANT_OR_SUPPLEANT.equal(b.REPRESENTANT_OR_SUPPLEANT))
-                .where(b.ID.equal(id.rawId))
-                .fetchInto(a)
-                .map(this::map)
-    }
 
     fun fetchByOrganismeInstanceRepresentantOrSuppleant(
             organismeId: OrganismeId,
