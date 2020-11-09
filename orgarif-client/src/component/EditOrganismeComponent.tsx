@@ -1,11 +1,14 @@
 /** @jsx jsx */
 import { css, jsx } from '@emotion/core';
+import * as React from 'react';
 import { useEffect, useState } from 'react';
 import { useRecoilValue } from 'recoil';
 import { appContext } from '../ApplicationContext';
 import { Category } from '../domain/bootstrap-data';
 import {
+  InstanceId,
   NatureJuridiqueId,
+  OrganismeId,
   OrgarifId,
   RepresentantListId,
   SecteurId,
@@ -22,6 +25,7 @@ import {
   FullInstance,
   FullOrganisme,
   Representant,
+  RepresentantOrSuppleant,
 } from '../domain/organisme';
 import { state } from '../state/state';
 import { AddRepresentantComponent } from './AddRepresentantComponent';
@@ -70,6 +74,7 @@ const DeliberationsComponent = (props: {
 const InstanceComponent = (props: {
   instance: FullInstance;
   lists: Dict<RepresentantListId, Representant[]>;
+  setLists: (lists: Dict<RepresentantListId, Representant[]>) => void;
 }) => (
   <div>
     <h4>{props.instance.infos.nom}</h4>
@@ -88,11 +93,12 @@ const InstanceComponent = (props: {
           flex: 1;
         `}
       >
-        <DragableRepresentantsListComponent
+        <EditRepresentantBloc
           organismeId={props.instance.infos.organismeId}
           instanceId={props.instance.infos.id}
           representantOrSuppleant="representant"
           lists={props.lists}
+          setLists={props.setLists}
         />
       </div>
       <div
@@ -100,11 +106,12 @@ const InstanceComponent = (props: {
           flex: 1;
         `}
       >
-        <DragableRepresentantsListComponent
+        <EditRepresentantBloc
           organismeId={props.instance.infos.organismeId}
           instanceId={props.instance.infos.id}
           representantOrSuppleant="suppleant"
           lists={props.lists}
+          setLists={props.setLists}
         />
       </div>
     </div>
@@ -143,6 +150,30 @@ export const EditCategoryComponent = (props: {
     />
   );
 };
+
+const EditRepresentantBloc = (props: {
+  organismeId: OrganismeId;
+  instanceId: InstanceId | undefined;
+  representantOrSuppleant: RepresentantOrSuppleant;
+  lists: Dict<RepresentantListId, Representant[]>;
+  setLists: (lists: Dict<RepresentantListId, Representant[]>) => void;
+}) => (
+  <React.Fragment>
+    <DragableRepresentantsListComponent
+      organismeId={props.organismeId}
+      instanceId={props.instanceId}
+      representantOrSuppleant={props.representantOrSuppleant}
+      lists={props.lists}
+    />
+    <AddRepresentantComponent
+      organismeId={props.organismeId}
+      instanceId={props.instanceId}
+      representantOrSuppleant={props.representantOrSuppleant}
+      lists={props.lists}
+      setLists={props.setLists}
+    />
+  </React.Fragment>
+);
 
 export const EditOrganismeComponent = (props: {
   organisme: FullOrganisme;
@@ -267,13 +298,7 @@ export const EditOrganismeComponent = (props: {
               flex: 1;
             `}
           >
-            <DragableRepresentantsListComponent
-              organismeId={organisme.infos.id}
-              instanceId={undefined}
-              representantOrSuppleant="representant"
-              lists={lists}
-            />
-            <AddRepresentantComponent
+            <EditRepresentantBloc
               organismeId={organisme.infos.id}
               instanceId={undefined}
               representantOrSuppleant="representant"
@@ -286,11 +311,12 @@ export const EditOrganismeComponent = (props: {
               flex: 1;
             `}
           >
-            <DragableRepresentantsListComponent
+            <EditRepresentantBloc
               organismeId={organisme.infos.id}
               instanceId={undefined}
               representantOrSuppleant="suppleant"
               lists={lists}
+              setLists={setLists}
             />
           </div>
         </div>
@@ -303,6 +329,7 @@ export const EditOrganismeComponent = (props: {
                 key={stringifyNominalString(i.infos.id)}
                 instance={i}
                 lists={lists}
+                setLists={setLists}
               />
             ))}
           </div>
