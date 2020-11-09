@@ -12,9 +12,15 @@ import {
   OrganismeId,
   RepresentantListId,
 } from '../domain/id';
-import { Dict, get, set } from '../domain/nominal-class';
+import {
+  Dict,
+  get,
+  set,
+  stringifyNominalString,
+} from '../domain/nominal-class';
 import { Representant, RepresentantOrSuppleant } from '../domain/organisme';
 import { state } from '../state/state';
+import { clientUid } from '../utils';
 import { representantListId } from './DragAndDropRepresentantsContainer';
 
 export const AddRepresentantComponent = (props: {
@@ -25,7 +31,11 @@ export const AddRepresentantComponent = (props: {
   setLists: (lists: Dict<RepresentantListId, Representant[]>) => void;
 }) => {
   const elus = useRecoilValue(state.elus);
-  const [value, setValue] = useState<Elu | undefined>(undefined);
+  const [id] = useState(clientUid());
+  // with this key we completly reset the state of the component when an
+  // elu is chosen
+  // there must be a smarter way but manipulating value+inputValue is tricky
+  const [key, setKey] = useState(clientUid());
   const addRepresentant = (eluId: EluId) => {
     appContext
       .commandService()
@@ -36,7 +46,6 @@ export const AddRepresentantComponent = (props: {
         representantOrSuppleant: props.representantOrSuppleant,
       })
       .then((r) => {
-        setValue(undefined);
         const representant: Representant = {
           id: r.id,
           eluId,
@@ -50,17 +59,18 @@ export const AddRepresentantComponent = (props: {
         const newList = [...get(props.lists, listId), representant];
         set(newLists, listId, newList);
         props.setLists(newLists);
+        setKey(clientUid());
       });
   };
-  const label = (e: Elu | undefined) => (e ? `${e.prenom} ${e.nom}` : '');
+  const label = (e: Elu | undefined) => (e ? `${e.nom} ${e.prenom}` : '');
   return (
     <Autocomplete
-      id="combo-box-demo"
+      key={stringifyNominalString(key)}
+      id={stringifyNominalString(id)}
       options={elus}
       getOptionLabel={label}
-      // style={{ width: 300 }}
-      value={value}
-      inputValue={label(value)}
+      clearOnEscape={true}
+      clearOnBlur={true}
       renderInput={(params) => (
         <TextField
           {...params}
