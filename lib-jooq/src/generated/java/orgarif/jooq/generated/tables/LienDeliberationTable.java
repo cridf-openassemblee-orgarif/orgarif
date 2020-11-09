@@ -4,6 +4,7 @@
 package orgarif.jooq.generated.tables;
 
 
+import java.time.LocalDateTime;
 import java.util.Arrays;
 import java.util.List;
 import java.util.UUID;
@@ -13,7 +14,7 @@ import org.jooq.ForeignKey;
 import org.jooq.Index;
 import org.jooq.Name;
 import org.jooq.Record;
-import org.jooq.Row4;
+import org.jooq.Row6;
 import org.jooq.Schema;
 import org.jooq.Table;
 import org.jooq.TableField;
@@ -35,7 +36,7 @@ import orgarif.jooq.tools.jooq.CharToUUIDConverter;
 @SuppressWarnings({ "all", "unchecked", "rawtypes" })
 public class LienDeliberationTable extends TableImpl<LienDeliberationRecord> {
 
-    private static final long serialVersionUID = 1629197000;
+    private static final long serialVersionUID = 1723895337;
 
     /**
      * The reference instance of <code>orgarif.lien_deliberation</code>
@@ -69,6 +70,16 @@ public class LienDeliberationTable extends TableImpl<LienDeliberationRecord> {
      * The column <code>orgarif.lien_deliberation.instance_id</code>.
      */
     public final TableField<LienDeliberationRecord, UUID> INSTANCE_ID = createField(DSL.name("instance_id"), org.jooq.impl.SQLDataType.CHAR(32), this, "", new CharToUUIDConverter());
+
+    /**
+     * The column <code>orgarif.lien_deliberation.creation_date</code>.
+     */
+    public final TableField<LienDeliberationRecord, LocalDateTime> CREATION_DATE = createField(DSL.name("creation_date"), org.jooq.impl.SQLDataType.LOCALDATETIME.nullable(false), this, "");
+
+    /**
+     * The column <code>orgarif.lien_deliberation.last_modification_date</code>.
+     */
+    public final TableField<LienDeliberationRecord, LocalDateTime> LAST_MODIFICATION_DATE = createField(DSL.name("last_modification_date"), org.jooq.impl.SQLDataType.LOCALDATETIME.nullable(false), this, "");
 
     /**
      * Create a <code>orgarif.lien_deliberation</code> table reference
@@ -167,11 +178,11 @@ public class LienDeliberationTable extends TableImpl<LienDeliberationRecord> {
     }
 
     // -------------------------------------------------------------------------
-    // Row4 type methods
+    // Row6 type methods
     // -------------------------------------------------------------------------
 
     @Override
-    public Row4<UUID, UUID, UUID, UUID> fieldsRow() {
-        return (Row4) super.fieldsRow();
+    public Row6<UUID, UUID, UUID, UUID, LocalDateTime, LocalDateTime> fieldsRow() {
+        return (Row6) super.fieldsRow();
     }
 }

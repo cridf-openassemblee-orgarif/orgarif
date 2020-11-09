@@ -14,7 +14,7 @@ import org.jooq.Field;
 import org.jooq.ForeignKey;
 import org.jooq.Name;
 import org.jooq.Record;
-import org.jooq.Row4;
+import org.jooq.Row5;
 import org.jooq.Schema;
 import org.jooq.Table;
 import org.jooq.TableField;
@@ -35,7 +35,7 @@ import orgarif.jooq.tools.jooq.CharToUUIDConverter;
 @SuppressWarnings({ "all", "unchecked", "rawtypes" })
 public class DeliberationTable extends TableImpl<DeliberationRecord> {
 
-    private static final long serialVersionUID = 54173416;
+    private static final long serialVersionUID = 180474336;
 
     /**
      * The reference instance of <code>orgarif.deliberation</code>
@@ -69,6 +69,11 @@ public class DeliberationTable extends TableImpl<DeliberationRecord> {
      * The column <code>orgarif.deliberation.creation_date</code>.
      */
     public final TableField<DeliberationRecord, LocalDateTime> CREATION_DATE = createField(DSL.name("creation_date"), org.jooq.impl.SQLDataType.LOCALDATETIME.nullable(false), this, "");
+
+    /**
+     * The column <code>orgarif.deliberation.last_modification_date</code>.
+     */
+    public final TableField<DeliberationRecord, LocalDateTime> LAST_MODIFICATION_DATE = createField(DSL.name("last_modification_date"), org.jooq.impl.SQLDataType.LOCALDATETIME.nullable(false), this, "");
 
     /**
      * Create a <code>orgarif.deliberation</code> table reference
@@ -145,11 +150,11 @@ public class DeliberationTable extends TableImpl<DeliberationRecord> {
     }
 
     // -------------------------------------------------------------------------
-    // Row4 type methods
+    // Row5 type methods
     // -------------------------------------------------------------------------
 
     @Override
-    public Row4<UUID, String, LocalDate, LocalDateTime> fieldsRow() {
-        return (Row4) super.fieldsRow();
+    public Row5<UUID, String, LocalDate, LocalDateTime, LocalDateTime> fieldsRow() {
+        return (Row5) super.fieldsRow();
     }
 }
