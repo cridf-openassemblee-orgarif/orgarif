@@ -7,6 +7,8 @@ import orgarif.domain.OrganismeId
 import orgarif.jooq.generated.Tables.INSTANCE
 import orgarif.jooq.generated.tables.records.InstanceRecord
 import orgarif.utils.toTypeId
+import java.time.Instant
+import java.time.ZoneOffset
 
 @Repository
 class InstanceDao(val jooq: DSLContext) {
@@ -15,7 +17,9 @@ class InstanceDao(val jooq: DSLContext) {
                       val nom: String,
                       val organismeId: OrganismeId,
                       val nombreRepresentants: Int?,
-                      val nombreSuppleants: Int?)
+                      val nombreSuppleants: Int?,
+                      val creationDate: Instant,
+                      val lastModificationDate: Instant)
 
     fun insert(r: Record) {
         val record = InstanceRecord().apply {
@@ -24,6 +28,8 @@ class InstanceDao(val jooq: DSLContext) {
             organismeId = r.organismeId.rawId
             nombreRepresentants = r.nombreRepresentants
             nombreSuppleants = r.nombreSuppleants
+            creationDate = r.creationDate.atOffset(ZoneOffset.UTC).toLocalDateTime()
+            lastModificationDate = r.lastModificationDate.atOffset(ZoneOffset.UTC).toLocalDateTime()
         }
         jooq.insertInto(INSTANCE).set(record).execute()
     }
@@ -45,6 +51,8 @@ class InstanceDao(val jooq: DSLContext) {
             r.nom,
             r.organismeId.toTypeId(),
             r.nombreRepresentants,
-            r.nombreSuppleants)
+            r.nombreSuppleants,
+            r.creationDate.toInstant(ZoneOffset.UTC),
+            r.lastModificationDate.toInstant(ZoneOffset.UTC))
 
 }

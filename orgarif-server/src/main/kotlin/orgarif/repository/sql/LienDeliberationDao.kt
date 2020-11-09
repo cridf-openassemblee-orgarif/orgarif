@@ -9,6 +9,8 @@ import orgarif.domain.OrganismeId
 import orgarif.jooq.generated.Tables.LIEN_DELIBERATION
 import orgarif.jooq.generated.tables.records.LienDeliberationRecord
 import orgarif.utils.toTypeId
+import java.time.Instant
+import java.time.ZoneOffset
 
 @Repository
 class LienDeliberationDao(val jooq: DSLContext) {
@@ -16,7 +18,9 @@ class LienDeliberationDao(val jooq: DSLContext) {
     data class Record(val id: OrganismeDeliberationId,
                       val deliberationId: DeliberationId,
                       val organismeId: OrganismeId,
-                      val instanceId: InstanceId?)
+                      val instanceId: InstanceId?,
+                      val creationDate: Instant,
+                      val lastModificationDate: Instant)
 
     fun insert(r: Record) {
         val record = LienDeliberationRecord().apply {
@@ -24,6 +28,8 @@ class LienDeliberationDao(val jooq: DSLContext) {
             deliberationId = r.deliberationId.rawId
             organismeId = r.organismeId.rawId
             instanceId = r.instanceId?.rawId
+            creationDate = r.creationDate.atOffset(ZoneOffset.UTC).toLocalDateTime()
+            lastModificationDate = r.lastModificationDate.atOffset(ZoneOffset.UTC).toLocalDateTime()
         }
         jooq.insertInto(LIEN_DELIBERATION).set(record).execute()
     }
@@ -32,6 +38,8 @@ class LienDeliberationDao(val jooq: DSLContext) {
             r.id.toTypeId(),
             r.deliberationId.toTypeId(),
             r.organismeId.toTypeId(),
-            r.instanceId?.toTypeId())
+            r.instanceId?.toTypeId(),
+            r.creationDate.toInstant(ZoneOffset.UTC),
+            r.lastModificationDate.toInstant(ZoneOffset.UTC))
 
 }

@@ -28,7 +28,7 @@ class AddRepresentantCommandHandler(val representantDao: RepresentantDao,
                 position = newPosition,
                 representantOrSuppleant = command.representantOrSuppleant,
                 creationDate = now,
-                lastMotificationDate = now))
+                lastModificationDate = now))
         return AddRepresentantCommandResponse(representantId)
     }
 

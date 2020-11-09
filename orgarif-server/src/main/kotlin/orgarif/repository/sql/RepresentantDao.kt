@@ -24,7 +24,7 @@ class RepresentantDao(val jooq: DSLContext) {
                       val position: Int,
                       val representantOrSuppleant: RepresentantOrSuppleant,
                       val creationDate: Instant,
-                      val lastMotificationDate: Instant)
+                      val lastModificationDate: Instant)
 
     fun insert(r: Record) {
         val record = RepresentantRecord().apply {
@@ -35,7 +35,7 @@ class RepresentantDao(val jooq: DSLContext) {
             position = r.position
             representantOrSuppleant = r.representantOrSuppleant.name
             creationDate = r.creationDate.atOffset(ZoneOffset.UTC).toLocalDateTime()
-            lastModificationDate = r.lastMotificationDate.atOffset(ZoneOffset.UTC).toLocalDateTime()
+            lastModificationDate = r.lastModificationDate.atOffset(ZoneOffset.UTC).toLocalDateTime()
         }
         jooq.insertInto(REPRESENTANT).set(record).execute()
     }

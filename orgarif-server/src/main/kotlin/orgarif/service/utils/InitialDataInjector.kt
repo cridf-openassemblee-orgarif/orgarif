@@ -59,7 +59,9 @@ class InitialDataInjector(@Value("\${injectFakeData}") val injectFakeData: Boole
                         id = OrganismeDeliberationId(randomService.randomUUID()),
                         deliberationId = deliberationId,
                         organismeId = fakeOrganismeId1,
-                        instanceId = null))
+                        instanceId = null,
+                        creationDate = now,
+                        lastModificationDate = now))
             }
             if (organismeDao.fetchOrNull(fakeOrganismeId2) == null) {
                 organismeDao.insert(OrganismeDao.Record(
@@ -78,31 +80,41 @@ class InitialDataInjector(@Value("\${injectFakeData}") val injectFakeData: Boole
                         id = OrganismeDeliberationId(randomService.randomUUID()),
                         deliberationId = deliberationId1,
                         organismeId = fakeOrganismeId2,
-                        instanceId = null))
+                        instanceId = null,
+                        creationDate = now,
+                        lastModificationDate = now))
                 instanceDao.insert(InstanceDao.Record(
                         id = fakeOrganisme2InstanceId1,
                         nom = "Instance 1",
                         organismeId = fakeOrganismeId2,
                         nombreRepresentants = nombreRepresentants,
-                        nombreSuppleants = nombreRepresentants))
+                        nombreSuppleants = nombreRepresentants,
+                        creationDate = now,
+                        lastModificationDate = now))
                 val deliberationId2 = deliberation("Délibération instance 1 organisme 2")
                 lienDeliberationDao.insert(LienDeliberationDao.Record(
                         id = OrganismeDeliberationId(randomService.randomUUID()),
                         deliberationId = deliberationId2,
                         organismeId = fakeOrganismeId2,
-                        instanceId = fakeOrganisme2InstanceId1))
+                        instanceId = fakeOrganisme2InstanceId1,
+                        creationDate = now,
+                        lastModificationDate = now))
                 instanceDao.insert(InstanceDao.Record(
                         id = fakeOrganisme2InstanceId2,
                         nom = "Instance 2",
                         organismeId = fakeOrganismeId2,
                         nombreRepresentants = nombreRepresentants,
-                        nombreSuppleants = nombreRepresentants))
+                        nombreSuppleants = nombreRepresentants,
+                        creationDate = now,
+                        lastModificationDate = now))
                 val deliberationId3 = deliberation("Délibération instance 2 organisme 2")
                 lienDeliberationDao.insert(LienDeliberationDao.Record(
                         id = OrganismeDeliberationId(randomService.randomUUID()),
                         deliberationId = deliberationId3,
                         organismeId = fakeOrganismeId2,
-                        instanceId = fakeOrganisme2InstanceId2))
+                        instanceId = fakeOrganisme2InstanceId2,
+                        creationDate = now,
+                        lastModificationDate = now))
             }
             if (organismeDao.fetchOrNull(fakeOrganismeId3) == null) {
                 organismeDao.insert(OrganismeDao.Record(
@@ -121,31 +133,41 @@ class InitialDataInjector(@Value("\${injectFakeData}") val injectFakeData: Boole
                         id = OrganismeDeliberationId(randomService.randomUUID()),
                         deliberationId = deliberationId1,
                         organismeId = fakeOrganismeId3,
-                        instanceId = null))
+                        instanceId = null,
+                        creationDate = now,
+                        lastModificationDate = now))
                 instanceDao.insert(InstanceDao.Record(
                         id = fakeOrganisme3InstanceId1,
                         nom = "Instance 1",
                         organismeId = fakeOrganismeId3,
                         nombreRepresentants = null,
-                        nombreSuppleants = null))
+                        nombreSuppleants = null,
+                        creationDate = now,
+                        lastModificationDate = now))
                 val deliberationId2 = deliberation("Délibération instance 1 organisme 3")
                 lienDeliberationDao.insert(LienDeliberationDao.Record(
                         id = OrganismeDeliberationId(randomService.randomUUID()),
                         deliberationId = deliberationId2,
                         organismeId = fakeOrganismeId3,
-                        instanceId = fakeOrganisme3InstanceId1))
+                        instanceId = fakeOrganisme3InstanceId1,
+                        creationDate = now,
+                        lastModificationDate = now))
                 instanceDao.insert(InstanceDao.Record(
                         id = fakeOrganisme3InstanceId2,
                         nom = "Instance 2",
                         organismeId = fakeOrganismeId3,
                         nombreRepresentants = null,
-                        nombreSuppleants = null))
+                        nombreSuppleants = null,
+                        creationDate = now,
+                        lastModificationDate = now))
                 val deliberationId3 = deliberation("Délibération instance 2 organisme 3")
                 lienDeliberationDao.insert(LienDeliberationDao.Record(
                         id = OrganismeDeliberationId(randomService.randomUUID()),
                         deliberationId = deliberationId3,
                         organismeId = fakeOrganismeId3,
-                        instanceId = fakeOrganisme3InstanceId2))
+                        instanceId = fakeOrganisme3InstanceId2,
+                        creationDate = now,
+                        lastModificationDate = now))
             }
             injectRepresentants()
         }
@@ -153,12 +175,14 @@ class InitialDataInjector(@Value("\${injectFakeData}") val injectFakeData: Boole
 
     private fun deliberation(libelle: String): DeliberationId {
         val id = DeliberationId(randomService.randomUUID())
+        val now = dateService.now()
         deliberationDao.insert(DeliberationDao.Record(
                 id = id,
                 libelle = libelle,
                 deliberationDate = LocalDate.of(2020, 1, 1)
                         .plusDays(random.nextInt(100).toLong()),
-                creationDate = dateService.now()))
+                creationDate = now,
+                lastModificationDate = now))
         return id
     }
 
@@ -190,7 +214,7 @@ class InitialDataInjector(@Value("\${injectFakeData}") val injectFakeData: Boole
                         representantOrSuppleant = if (index < nombreRepresentants) RepresentantOrSuppleant.representant
                         else RepresentantOrSuppleant.suppleant,
                         creationDate = now,
-                        lastMotificationDate = now
+                        lastModificationDate = now
                 ))
             }
             elus.shuffled().subList(0, nombreRepresentants * 2).forEachIndexed { index, e ->
@@ -203,7 +227,7 @@ class InitialDataInjector(@Value("\${injectFakeData}") val injectFakeData: Boole
                         representantOrSuppleant = if (index < nombreRepresentants) RepresentantOrSuppleant.representant
                         else RepresentantOrSuppleant.suppleant,
                         creationDate = now,
-                        lastMotificationDate = now
+                        lastModificationDate = now
                 ))
             }
             elus.shuffled().subList(0, nombreRepresentants * 2).forEachIndexed { index, e ->
@@ -216,7 +240,7 @@ class InitialDataInjector(@Value("\${injectFakeData}") val injectFakeData: Boole
                         representantOrSuppleant = if (index < nombreRepresentants) RepresentantOrSuppleant.representant
                         else RepresentantOrSuppleant.suppleant,
                         creationDate = now,
-                        lastMotificationDate = now
+                        lastModificationDate = now
                 ))
             }
             elus.shuffled().subList(0, nombreRepresentants * 2).forEachIndexed { index, e ->
@@ -229,7 +253,7 @@ class InitialDataInjector(@Value("\${injectFakeData}") val injectFakeData: Boole
                         representantOrSuppleant = if (index < nombreRepresentants) RepresentantOrSuppleant.representant
                         else RepresentantOrSuppleant.suppleant,
                         creationDate = now,
-                        lastMotificationDate = now
+                        lastModificationDate = now
                 ))
             }
         }
