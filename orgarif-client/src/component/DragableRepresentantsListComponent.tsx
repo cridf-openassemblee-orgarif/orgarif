@@ -64,7 +64,6 @@ export const DragableRepresentantsListComponent = (props: {
                 <div
                   ref={providedDraggable.innerRef}
                   {...providedDraggable.draggableProps}
-                  {...providedDraggable.dragHandleProps}
                   css={css`
                     user-select: none;
                     padding: ${2 * padding}px;
@@ -74,6 +73,14 @@ export const DragableRepresentantsListComponent = (props: {
                       : 'grey'};
                   `}
                 >
+                  <div
+                    css={css`
+                      width: 20px;
+                      height: 20px;
+                      background: red;
+                    `}
+                    {...providedDraggable.dragHandleProps}
+                  />
                   <div>{r.id}</div>
                   <EluComponent eluId={r.eluId} />
                 </div>
