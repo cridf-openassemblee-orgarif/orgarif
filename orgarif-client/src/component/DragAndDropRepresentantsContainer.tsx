@@ -72,6 +72,12 @@ export const DragAndDropRepresentantsContainer = (
     const destinationId = instanciateNominalString<RepresentantListId>(
       result.destination.droppableId
     );
+    if (
+      sourceId === destinationId &&
+      result.source.index === result.destination.index
+    ) {
+      return;
+    }
 
     const newLists: Dict<RepresentantListId, Representant[]> = {
       ...props.lists,
