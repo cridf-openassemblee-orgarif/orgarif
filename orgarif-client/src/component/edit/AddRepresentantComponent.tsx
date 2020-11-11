@@ -4,23 +4,23 @@ import TextField from '@material-ui/core/TextField';
 import Autocomplete from '@material-ui/lab/Autocomplete';
 import { useState } from 'react';
 import { useRecoilValue } from 'recoil';
-import { appContext } from '../ApplicationContext';
-import { Elu } from '../domain/elu';
+import { appContext } from '../../ApplicationContext';
+import { Elu } from '../../domain/elu';
 import {
   EluId,
   InstanceId,
   OrganismeId,
   RepresentantListId,
-} from '../domain/id';
+} from '../../domain/id';
 import {
   Dict,
   get,
   set,
   stringifyNominalString,
-} from '../domain/nominal-class';
-import { Representant, RepresentantOrSuppleant } from '../domain/organisme';
-import { state } from '../state/state';
-import { clientUid } from '../utils';
+} from '../../domain/nominal-class';
+import { Representant, RepresentantOrSuppleant } from '../../domain/organisme';
+import { state } from '../../state/state';
+import { clientUid } from '../../utils';
 import { representantListId } from './DragAndDropContainer';
 
 export const AddRepresentantComponent = (props: {

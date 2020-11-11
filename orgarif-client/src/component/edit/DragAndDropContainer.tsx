@@ -2,27 +2,27 @@
 import { jsx } from '@emotion/core';
 import { PropsWithChildren } from 'react';
 import { DragDropContext, DropResult } from 'react-beautiful-dnd';
-import { appContext } from '../ApplicationContext';
+import { appContext } from '../../ApplicationContext';
 import {
   InstanceId,
   OrganismeId,
   RepresentantId,
   RepresentantListId,
-} from '../domain/id';
+} from '../../domain/id';
 import {
   Dict,
   get,
   instanciateNominalString,
   set,
   stringifyNominalString,
-} from '../domain/nominal-class';
+} from '../../domain/nominal-class';
 import {
   FullOrganisme,
   Representant,
   RepresentantOrSuppleant,
-} from '../domain/organisme';
-import { Errors } from '../errors';
-import { assertUnreachable } from '../utils';
+} from '../../domain/organisme';
+import { Errors } from '../../errors';
+import { assertUnreachable } from '../../utils';
 
 const noInstanceId = 'no-instance';
 

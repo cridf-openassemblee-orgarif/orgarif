@@ -2,7 +2,7 @@
 import { jsx } from '@emotion/core';
 import { ChangeEvent, useEffect, useState } from 'react';
 import { appContext } from '../ApplicationContext';
-import { SimpleForm } from '../component/SimpleForm';
+import { SimpleForm } from '../component/base-component/SimpleForm';
 
 export interface RegisterFormDto {
   mail: string;

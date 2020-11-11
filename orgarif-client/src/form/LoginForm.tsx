@@ -1,6 +1,6 @@
 /** @jsx jsx */
 import { jsx } from '@emotion/core';
-import { SimpleForm } from '../component/SimpleForm';
+import { SimpleForm } from '../component/base-component/SimpleForm';
 
 export interface LoginFormDto {
   login: string;

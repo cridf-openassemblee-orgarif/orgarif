@@ -2,8 +2,8 @@
 import { css, jsx } from '@emotion/core';
 import { useEffect, useState } from 'react';
 import { appContext } from '../ApplicationContext';
-import { SimpleForm } from '../component/SimpleForm';
-import { TextInput } from '../component/TextInput';
+import { SimpleForm } from '../component/base-component/SimpleForm';
+import { TextInput } from '../component/base-component/TextInput';
 import { MainContainer } from '../container/MainContainer';
 import { stringifyNominalString } from '../domain/nominal-class';
 import { OrganismeInfos } from '../domain/organisme';

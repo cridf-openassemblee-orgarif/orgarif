@@ -2,18 +2,28 @@
 import { css, jsx } from '@emotion/core';
 import { useEffect, useState } from 'react';
 import { useRecoilValue } from 'recoil';
-import { appContext } from '../ApplicationContext';
-import { Category } from '../domain/bootstrap-data';
+import { appContext } from '../../ApplicationContext';
+import { Category } from '../../domain/bootstrap-data';
 import {
   NatureJuridiqueId,
   OrgarifId,
   RepresentantListId,
   SecteurId,
   TypeStructureId,
-} from '../domain/id';
-import { Dict, instanciateNominalString, set } from '../domain/nominal-class';
-import { FullInstance, FullOrganisme, Representant } from '../domain/organisme';
-import { state } from '../state/state';
+} from '../../domain/id';
+import {
+  Dict,
+  instanciateNominalString,
+  set,
+} from '../../domain/nominal-class';
+import {
+  FullInstance,
+  FullOrganisme,
+  Representant,
+} from '../../domain/organisme';
+import { state } from '../../state/state';
+import { SelectInput, SelectOption } from '../base-component/SelectInput';
+import { NombreRepresentantsComponent } from '../NombreRepresentantsComponent';
 import { DragableInstancesListComponent } from './DragableInstancesListComponent';
 import {
   DragAndDropContainer,
@@ -21,8 +31,6 @@ import {
 } from './DragAndDropContainer';
 import { EditDeliberationsListComponent } from './EditDeliberationsListComponent';
 import { EditRepresentantsListComponent } from './EditRepresentantsListComponent';
-import { NombreRepresentantsComponent } from './NombreRepresentantsComponent';
-import { SelectInput, SelectOption } from './SelectInput';
 
 const classes = {
   categories: css`

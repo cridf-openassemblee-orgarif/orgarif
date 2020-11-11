@@ -8,13 +8,13 @@ import {
   DroppableProvided,
   DroppableStateSnapshot,
 } from 'react-beautiful-dnd';
-import { OrganismeId, RepresentantListId } from '../domain/id';
-import { Dict, stringifyNominalString } from '../domain/nominal-class';
-import { FullInstance, Representant } from '../domain/organisme';
+import { OrganismeId, RepresentantListId } from '../../domain/id';
+import { Dict, stringifyNominalString } from '../../domain/nominal-class';
+import { FullInstance, Representant } from '../../domain/organisme';
 import { DragAndDropItem } from './DragAndDropContainer';
 import { EditDeliberationsListComponent } from './EditDeliberationsListComponent';
 import { EditRepresentantsListComponent } from './EditRepresentantsListComponent';
-import { NombreRepresentantsComponent } from './NombreRepresentantsComponent';
+import { NombreRepresentantsComponent } from '../NombreRepresentantsComponent';
 
 const padding = 8;
 

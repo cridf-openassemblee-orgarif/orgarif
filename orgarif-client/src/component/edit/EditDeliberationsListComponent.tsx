@@ -1,7 +1,7 @@
 /** @jsx jsx */
 import { jsx } from '@emotion/core';
-import { stringifyNominalString } from '../domain/nominal-class';
-import { DeliberationInfos } from '../domain/organisme';
+import { stringifyNominalString } from '../../domain/nominal-class';
+import { DeliberationInfos } from '../../domain/organisme';
 
 export const EditDeliberationsListComponent = (props: {
   deliberations: DeliberationInfos[];

@@ -2,7 +2,7 @@
 import { jsx } from '@emotion/core';
 import { useEffect, useState } from 'react';
 import { appContext } from '../ApplicationContext';
-import { EditOrganismeComponent } from '../component/EditOrganismeComponent';
+import { EditOrganismeComponent } from '../component/edit/EditOrganismeComponent';
 import { MainContainer } from '../container/MainContainer';
 import { FullOrganisme } from '../domain/organisme';
 import { RouteLink } from '../routing/RouteLink';

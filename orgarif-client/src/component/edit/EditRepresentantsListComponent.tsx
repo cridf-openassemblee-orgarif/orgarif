@@ -1,9 +1,9 @@
 /** @jsx jsx */
 import { jsx } from '@emotion/core';
 import * as React from 'react';
-import { InstanceId, OrganismeId, RepresentantListId } from '../domain/id';
-import { Dict } from '../domain/nominal-class';
-import { Representant, RepresentantOrSuppleant } from '../domain/organisme';
+import { InstanceId, OrganismeId, RepresentantListId } from '../../domain/id';
+import { Dict } from '../../domain/nominal-class';
+import { Representant, RepresentantOrSuppleant } from '../../domain/organisme';
 import { AddRepresentantComponent } from './AddRepresentantComponent';
 import { DragableRepresentantsListComponent } from './DragableRepresentantsListComponent';
 
