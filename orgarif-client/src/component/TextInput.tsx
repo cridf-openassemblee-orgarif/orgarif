@@ -6,17 +6,16 @@ import { useState } from 'react';
 export const TextInput = (props: {
   name: string;
   label: string;
-  initialValue: string | undefined;
-  onChange: (event: React.ChangeEvent<{ value: unknown }>) => void;
+  initialValue?: string;
 }) => {
-  const [value, setValue] = useState(props.initialValue);
+  const [value] = useState(props.initialValue);
   return (
     <TextField
+      name={props.name}
       label={props.label}
       variant="outlined"
       value={value}
-      name={props.name}
-      onChange={(event) => setValue(event.target.value)}
+      fullWidth={true}
     />
   );
 };

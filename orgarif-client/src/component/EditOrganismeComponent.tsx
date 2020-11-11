@@ -1,39 +1,27 @@
 /** @jsx jsx */
 import { css, jsx } from '@emotion/core';
-import * as React from 'react';
 import { useEffect, useState } from 'react';
 import { useRecoilValue } from 'recoil';
 import { appContext } from '../ApplicationContext';
 import { Category } from '../domain/bootstrap-data';
 import {
-  InstanceId,
   NatureJuridiqueId,
-  OrganismeId,
   OrgarifId,
   RepresentantListId,
   SecteurId,
   TypeStructureId,
 } from '../domain/id';
-import {
-  Dict,
-  instanciateNominalString,
-  set,
-  stringifyNominalString,
-} from '../domain/nominal-class';
-import {
-  DeliberationInfos,
-  FullInstance,
-  FullOrganisme,
-  Representant,
-  RepresentantOrSuppleant,
-} from '../domain/organisme';
+import { Dict, instanciateNominalString, set } from '../domain/nominal-class';
+import { FullInstance, FullOrganisme, Representant } from '../domain/organisme';
 import { state } from '../state/state';
-import { AddRepresentantComponent } from './AddRepresentantComponent';
-import { DragableRepresentantsListComponent } from './DragableRepresentantsListComponent';
+import { DragableInstancesListComponent } from './DragableInstancesListComponent';
 import {
-  DragAndDropRepresentantsContainer,
+  DragAndDropContainer,
   representantListId,
-} from './DragAndDropRepresentantsContainer';
+} from './DragAndDropContainer';
+import { EditDeliberationsListComponent } from './EditDeliberationsListComponent';
+import { EditRepresentantsListComponent } from './EditRepresentantsListComponent';
+import { NombreRepresentantsComponent } from './NombreRepresentantsComponent';
 import { SelectInput, SelectOption } from './SelectInput';
 
 const classes = {
@@ -42,82 +30,6 @@ const classes = {
     padding: 0 20px;
   `,
 };
-
-const NombreRepresentants = (props: {
-  nombreRepresentants?: number;
-  nombreSuppleants?: number;
-}) => (
-  <div>
-    {props.nombreRepresentants} représentants, {props.nombreSuppleants}{' '}
-    suppléants
-  </div>
-);
-
-const DeliberationsComponent = (props: {
-  deliberations: DeliberationInfos[];
-}) => {
-  if (props.deliberations.length === 0) {
-    return null;
-  }
-  return (
-    <div>
-      <h3>Délibérations</h3>
-      {props.deliberations.map((d) => (
-        <div key={stringifyNominalString(d.id)}>
-          {d.libelle} du {d.deliberationDate}
-        </div>
-      ))}
-    </div>
-  );
-};
-
-const InstanceComponent = (props: {
-  instance: FullInstance;
-  lists: Dict<RepresentantListId, Representant[]>;
-  setLists: (lists: Dict<RepresentantListId, Representant[]>) => void;
-}) => (
-  <div>
-    <h4>{props.instance.infos.nom}</h4>
-    <NombreRepresentants
-      nombreRepresentants={props.instance.infos.nombreRepresentants}
-      nombreSuppleants={props.instance.infos.nombreSuppleants}
-    />
-    <div
-      css={css`
-        width: 100%;
-        display: flex;
-      `}
-    >
-      <div
-        css={css`
-          flex: 1;
-        `}
-      >
-        <EditRepresentantBloc
-          organismeId={props.instance.infos.organismeId}
-          instanceId={props.instance.infos.id}
-          representantOrSuppleant="representant"
-          lists={props.lists}
-          setLists={props.setLists}
-        />
-      </div>
-      <div
-        css={css`
-          flex: 1;
-        `}
-      >
-        <EditRepresentantBloc
-          organismeId={props.instance.infos.organismeId}
-          instanceId={props.instance.infos.id}
-          representantOrSuppleant="suppleant"
-          lists={props.lists}
-          setLists={props.setLists}
-        />
-      </div>
-    </div>
-    <DeliberationsComponent deliberations={props.instance.deliberations} />
-  </div>
-);
 
 export const EditCategoryComponent = (props: {
   label: string;
@@ -150,30 +62,6 @@ export const EditCategoryComponent = (props: {
     />
   );
 };
-
-const EditRepresentantBloc = (props: {
-  organismeId: OrganismeId;
-  instanceId: InstanceId | undefined;
-  representantOrSuppleant: RepresentantOrSuppleant;
-  lists: Dict<RepresentantListId, Representant[]>;
-  setLists: (lists: Dict<RepresentantListId, Representant[]>) => void;
-}) => (
-  <React.Fragment>
-    <DragableRepresentantsListComponent
-      organismeId={props.organismeId}
-      instanceId={props.instanceId}
-      representantOrSuppleant={props.representantOrSuppleant}
-      lists={props.lists}
-    />
-    <AddRepresentantComponent
-      organismeId={props.organismeId}
-      instanceId={props.instanceId}
-      representantOrSuppleant={props.representantOrSuppleant}
-      lists={props.lists}
-      setLists={props.setLists}
-    />
-  </React.Fragment>
-);
 
 export const EditOrganismeComponent = (props: {
   organisme: FullOrganisme;
@@ -218,8 +106,11 @@ export const EditOrganismeComponent = (props: {
     });
     setLists(initialLists);
   }, []);
+  const [instances, setInstances] = useState<FullInstance[]>(
+    organisme.instances
+  );
   return (
-    <DragAndDropRepresentantsContainer
+    <DragAndDropContainer
       organisme={props.organisme}
       lists={lists}
       setLists={setLists}
@@ -283,7 +174,7 @@ export const EditOrganismeComponent = (props: {
             />
           </div>
         </div>
-        <NombreRepresentants
+        <NombreRepresentantsComponent
           nombreRepresentants={organisme.infos.nombreRepresentants}
           nombreSuppleants={organisme.infos.nombreSuppleants}
         />
@@ -298,7 +189,7 @@ export const EditOrganismeComponent = (props: {
               flex: 1;
             `}
           >
-            <EditRepresentantBloc
+            <EditRepresentantsListComponent
               organismeId={organisme.infos.id}
               instanceId={undefined}
               representantOrSuppleant="representant"
@@ -311,7 +202,7 @@ export const EditOrganismeComponent = (props: {
               flex: 1;
             `}
           >
-            <EditRepresentantBloc
+            <EditRepresentantsListComponent
               organismeId={organisme.infos.id}
               instanceId={undefined}
               representantOrSuppleant="suppleant"
@@ -320,21 +211,22 @@ export const EditOrganismeComponent = (props: {
             />
           </div>
         </div>
-        <DeliberationsComponent deliberations={organisme.deliberations} />
+        <EditDeliberationsListComponent
+          deliberations={organisme.deliberations}
+        />
         {organisme.instances.length !== 0 && (
           <div>
             <h3>Instances</h3>
-            {organisme.instances.map((i) => (
-              <InstanceComponent
-                key={stringifyNominalString(i.infos.id)}
-                instance={i}
-                lists={lists}
-                setLists={setLists}
-              />
-            ))}
+            <DragableInstancesListComponent
+              organismeId={organisme.infos.id}
+              instances={instances}
+              setInstances={setInstances}
+              lists={lists}
+              setLists={setLists}
+            />
           </div>
         )}
       </div>
-    </DragAndDropRepresentantsContainer>
+    </DragAndDropContainer>
   );
 };

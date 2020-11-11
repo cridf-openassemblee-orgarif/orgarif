@@ -22,8 +22,11 @@ import {
   RepresentantOrSuppleant,
 } from '../domain/organisme';
 import { Errors } from '../errors';
+import { assertUnreachable } from '../utils';
 
 const noInstanceId = 'no-instance';
+
+export type DragAndDropItem = 'instance' | 'representant';
 
 export const representantListId = (
   organismeId: OrganismeId,
@@ -52,7 +55,7 @@ export const extract = (
   ];
 };
 
-export const DragAndDropRepresentantsContainer = (
+export const DragAndDropContainer = (
   props: PropsWithChildren<{
     organisme: FullOrganisme;
     lists: Dict<RepresentantListId, Representant[]>;
@@ -60,6 +63,15 @@ export const DragAndDropRepresentantsContainer = (
   }>
 ) => {
   const onDragEnd = (result: DropResult) => {
+    const type = result.type as DragAndDropItem;
+    switch (type) {
+      case 'instance':
+        throw Error('Not implemented yet');
+      case 'representant':
+        break;
+      default:
+        assertUnreachable(type);
+    }
     const representantId = instanciateNominalString<RepresentantId>(
       result.draggableId
     );

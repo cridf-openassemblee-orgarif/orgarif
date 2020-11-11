@@ -21,7 +21,7 @@ import {
 import { Representant, RepresentantOrSuppleant } from '../domain/organisme';
 import { state } from '../state/state';
 import { clientUid } from '../utils';
-import { representantListId } from './DragAndDropRepresentantsContainer';
+import { representantListId } from './DragAndDropContainer';
 
 export const AddRepresentantComponent = (props: {
   organismeId: OrganismeId;

@@ -15,10 +15,12 @@ import {
   stringifyNominalString,
 } from '../domain/nominal-class';
 import { Representant, RepresentantOrSuppleant } from '../domain/organisme';
-import { representantListId } from './DragAndDropRepresentantsContainer';
+import { DragAndDropItem, representantListId } from './DragAndDropContainer';
 import { EluComponent } from './EluComponent';
 
 const padding = 8;
+
+const dragType: DragAndDropItem = 'representant';
 
 export const DragableRepresentantsListComponent = (props: {
   organismeId: OrganismeId;
@@ -34,6 +36,7 @@ export const DragableRepresentantsListComponent = (props: {
   const representants = getOrNull(props.lists, listId) ?? [];
   return (
     <Droppable
+      type={dragType}
       droppableId={stringifyNominalString(
         representantListId(
           props.organismeId,

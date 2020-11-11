@@ -38,12 +38,7 @@ export const ListOrganismesView = () => {
       <h1>Liste des organismes</h1>
       {!organismes && <div>Chargement...</div>}
       <SimpleForm onSubmit={newOrganismeOnSubmit}>
-        <TextInput
-          name={'nom'}
-          label="Nouvel organisme"
-          onChange={() => {}}
-          initialValue=""
-        />
+        <TextInput name="nom" label="Nouvel organisme" />
         <button>ok</button>
       </SimpleForm>
       {organismes &&
