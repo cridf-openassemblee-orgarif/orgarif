@@ -24,6 +24,7 @@ import {
 import { state } from '../../state/state';
 import { SelectInput, SelectOption } from '../base-component/SelectInput';
 import { NombreRepresentantsComponent } from '../NombreRepresentantsComponent';
+import { AddInstanceComponent } from './AddInstanceComponent';
 import { DragableInstancesListComponent } from './DragableInstancesListComponent';
 import {
   DragAndDropContainer,
@@ -80,6 +81,9 @@ export const EditOrganismeComponent = (props: {
   const [lists, setLists] = useState<Dict<RepresentantListId, Representant[]>>(
     {}
   );
+  const [instances, setInstances] = useState<FullInstance[]>(
+    organisme.instances
+  );
   useEffect(() => {
     const initialLists: Dict<RepresentantListId, Representant[]> = {};
     set(
@@ -92,7 +96,7 @@ export const EditOrganismeComponent = (props: {
       representantListId(props.organisme.infos.id, undefined, 'suppleant'),
       props.organisme.suppleants
     );
-    props.organisme.instances.forEach((instance) => {
+    instances.forEach((instance) => {
       set(
         initialLists,
         representantListId(
@@ -113,10 +117,7 @@ export const EditOrganismeComponent = (props: {
       );
     });
     setLists(initialLists);
-  }, []);
-  const [instances, setInstances] = useState<FullInstance[]>(
-    organisme.instances
-  );
+  }, [instances]);
   return (
     <DragAndDropContainer
       organisme={props.organisme}
@@ -222,7 +223,7 @@ export const EditOrganismeComponent = (props: {
         <EditDeliberationsListComponent
           deliberations={organisme.deliberations}
         />
-        {organisme.instances.length !== 0 && (
+        {instances.length !== 0 && (
           <div>
             <h3>Instances</h3>
             <DragableInstancesListComponent
@@ -234,6 +235,11 @@ export const EditOrganismeComponent = (props: {
             />
           </div>
         )}
+        <AddInstanceComponent
+          organismeId={organisme.infos.id}
+          instances={instances}
+          setInstances={setInstances}
+        />
       </div>
     </DragAndDropContainer>
   );

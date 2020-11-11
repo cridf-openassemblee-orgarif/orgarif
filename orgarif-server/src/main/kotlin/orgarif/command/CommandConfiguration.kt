@@ -5,6 +5,8 @@ import orgarif.domain.AuthenticationLevel
 object CommandConfiguration {
     fun authenticationLevel(command: Command) = when (command) {
         // TODO loggedIn
+        is AddInstanceCommand -> AuthenticationLevel.neutral
+        // TODO loggedIn
         is AddRepresentantCommand -> AuthenticationLevel.neutral
         // TODO loggedIn
         is CreateOrganismeCommand -> AuthenticationLevel.neutral

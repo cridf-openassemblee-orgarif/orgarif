@@ -1,5 +1,7 @@
 import { appContext } from '../ApplicationContext';
 import {
+  AddInstanceCommand,
+  AddInstanceCommandResponse,
   AddRepresentantCommand,
   AddRepresentantCommandResponse,
   CreateOrganismeCommand,
@@ -15,6 +17,11 @@ import {
 } from '../domain/command';
 
 export class CommandService {
+  public addInstanceCommand = (
+    command: AddInstanceCommand
+  ): Promise<AddInstanceCommandResponse> =>
+    this.command('AddInstanceCommand', command);
+
   public addRepresentantCommand = (
     command: AddRepresentantCommand
   ): Promise<AddRepresentantCommandResponse> =>

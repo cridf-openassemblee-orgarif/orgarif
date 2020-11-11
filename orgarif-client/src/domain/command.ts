@@ -10,6 +10,15 @@ import {
 } from './id';
 import { RepresentantOrSuppleant } from './organisme';
 
+export interface AddInstanceCommand {
+  nomInstance: string;
+  organismeId: OrganismeId;
+}
+
+export interface AddInstanceCommandResponse {
+  id: InstanceId;
+}
+
 export interface AddRepresentantCommand {
   eluId: EluId;
   organismeId: OrganismeId;
