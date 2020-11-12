@@ -121,6 +121,12 @@ class RepresentantDao(val jooq: DSLContext) {
                 .execute()
     }
 
+    fun deleteByInstanceId(instanceId: InstanceId) {
+        jooq.deleteFrom(REPRESENTANT)
+                .where(REPRESENTANT.INSTANCE_ID.equal(instanceId.rawId))
+                .execute()
+    }
+
     private fun map(r: RepresentantRecord) = Record(
             r.id.toTypeId(),
             r.eluId.toTypeId(),

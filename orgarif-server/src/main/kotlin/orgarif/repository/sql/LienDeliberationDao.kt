@@ -6,6 +6,7 @@ import orgarif.domain.DeliberationId
 import orgarif.domain.InstanceId
 import orgarif.domain.OrganismeDeliberationId
 import orgarif.domain.OrganismeId
+import orgarif.jooq.generated.Tables
 import orgarif.jooq.generated.Tables.LIEN_DELIBERATION
 import orgarif.jooq.generated.tables.records.LienDeliberationRecord
 import orgarif.utils.toTypeId
@@ -32,6 +33,12 @@ class LienDeliberationDao(val jooq: DSLContext) {
             lastModificationDate = r.lastModificationDate.atOffset(ZoneOffset.UTC).toLocalDateTime()
         }
         jooq.insertInto(LIEN_DELIBERATION).set(record).execute()
+    }
+
+    fun deleteByInstanceId(instanceId: InstanceId) {
+        jooq.deleteFrom(LIEN_DELIBERATION)
+                .where(LIEN_DELIBERATION.INSTANCE_ID.equal(instanceId.rawId))
+                .execute()
     }
 
     fun map(r: LienDeliberationRecord) = Record(

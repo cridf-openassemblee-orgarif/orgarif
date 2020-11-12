@@ -12,6 +12,7 @@ import { OrganismeId, RepresentantListId } from '../../domain/id';
 import { Dict, stringifyNominalString } from '../../domain/nominal-class';
 import { FullInstance, Representant } from '../../domain/organisme';
 import { NombreRepresentantsComponent } from '../NombreRepresentantsComponent';
+import { DeleteInstanceButton } from './DeleteInstanceButton';
 import { DragAndDropItem } from './DragAndDropContainer';
 import { EditDeliberationsListComponent } from './EditDeliberationsListComponent';
 import { EditRepresentantsListComponent } from './EditRepresentantsListComponent';
@@ -78,6 +79,11 @@ export const DragableInstancesListComponent = (props: {
                   />
                   <div>{i.infos.id}</div>
                   <h4>{i.infos.nom}</h4>
+                  <DeleteInstanceButton
+                    instanceId={i.infos.id}
+                    instances={props.instances}
+                    setInstances={props.setInstances}
+                  />
                   <NombreRepresentantsComponent
                     nombreRepresentants={i.infos.nombreRepresentants}
                     nombreSuppleants={i.infos.nombreSuppleants}

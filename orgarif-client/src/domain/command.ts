@@ -38,6 +38,10 @@ export interface CreateOrganismeCommandResponse {
   id: OrganismeId;
 }
 
+export interface DeleteInstanceCommand {
+  id: InstanceId;
+}
+
 export interface DeleteRepresentantCommand {
   id: RepresentantId;
 }

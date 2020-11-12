@@ -4,6 +4,8 @@ import org.jooq.DSLContext
 import org.springframework.stereotype.Repository
 import orgarif.domain.InstanceId
 import orgarif.domain.OrganismeId
+import orgarif.domain.RepresentantId
+import orgarif.jooq.generated.Tables
 import orgarif.jooq.generated.Tables.INSTANCE
 import orgarif.jooq.generated.tables.records.InstanceRecord
 import orgarif.utils.toTypeId
@@ -45,6 +47,12 @@ class InstanceDao(val jooq: DSLContext) {
                     .where(INSTANCE.ORGANISME_ID.equal(organismeId.rawId))
                     .fetch()
                     .map(this::map)
+
+    fun delete(id: InstanceId) {
+        jooq.deleteFrom(INSTANCE)
+                .where(INSTANCE.ID.equal(id.rawId))
+                .execute()
+    }
 
     private fun map(r: InstanceRecord) = Record(
             r.id.toTypeId(),
