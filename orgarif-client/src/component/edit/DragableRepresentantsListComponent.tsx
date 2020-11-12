@@ -15,8 +15,9 @@ import {
   stringifyNominalString,
 } from '../../domain/nominal-class';
 import { Representant, RepresentantOrSuppleant } from '../../domain/organisme';
-import { DragAndDropItem, representantListId } from './DragAndDropContainer';
 import { EluComponent } from '../EluComponent';
+import { DeleteRepresentantButton } from './DeleteRepresentantButton';
+import { DragAndDropItem, representantListId } from './DragAndDropContainer';
 
 const padding = 8;
 
@@ -27,6 +28,9 @@ export const DragableRepresentantsListComponent = (props: {
   instanceId: InstanceId | undefined;
   representantOrSuppleant: RepresentantOrSuppleant;
   representantsLists: Dict<RepresentantListId, Representant[]>;
+  setRepresentantsLists: (
+    lists: Dict<RepresentantListId, Representant[]>
+  ) => void;
 }) => {
   const listId = representantListId(
     props.organismeId,
@@ -86,6 +90,14 @@ export const DragableRepresentantsListComponent = (props: {
                   />
                   <div>{r.id}</div>
                   <EluComponent eluId={r.eluId} />
+                  <DeleteRepresentantButton
+                    representantId={r.id}
+                    organismeId={props.organismeId}
+                    instanceId={props.instanceId}
+                    representantOrSuppleant={props.representantOrSuppleant}
+                    representantsLists={props.representantsLists}
+                    setRepresentantsLists={props.setRepresentantsLists}
+                  />
                 </div>
               )}
             </Draggable>

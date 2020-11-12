@@ -28,7 +28,9 @@ export const AddRepresentantComponent = (props: {
   instanceId: InstanceId | undefined;
   representantOrSuppleant: RepresentantOrSuppleant;
   representantsLists: Dict<RepresentantListId, Representant[]>;
-  setRepresentantsLists: (lists: Dict<RepresentantListId, Representant[]>) => void;
+  setRepresentantsLists: (
+    lists: Dict<RepresentantListId, Representant[]>
+  ) => void;
 }) => {
   const elus = useRecoilValue(state.elus);
   const [id] = useState(clientUid());
@@ -56,7 +58,10 @@ export const AddRepresentantComponent = (props: {
           props.representantOrSuppleant
         );
         const newRepresentantsLists = { ...props.representantsLists };
-        const newRepresentants = [...get(props.representantsLists, listId), representant];
+        const newRepresentants = [
+          ...get(props.representantsLists, listId),
+          representant,
+        ];
         set(newRepresentantsLists, listId, newRepresentants);
         props.setRepresentantsLists(newRepresentantsLists);
         setKey(clientUid());

@@ -11,10 +11,10 @@ import {
 import { OrganismeId, RepresentantListId } from '../../domain/id';
 import { Dict, stringifyNominalString } from '../../domain/nominal-class';
 import { FullInstance, Representant } from '../../domain/organisme';
+import { NombreRepresentantsComponent } from '../NombreRepresentantsComponent';
 import { DragAndDropItem } from './DragAndDropContainer';
 import { EditDeliberationsListComponent } from './EditDeliberationsListComponent';
 import { EditRepresentantsListComponent } from './EditRepresentantsListComponent';
-import { NombreRepresentantsComponent } from '../NombreRepresentantsComponent';
 
 const padding = 8;
 
@@ -25,7 +25,9 @@ export const DragableInstancesListComponent = (props: {
   instances: FullInstance[];
   setInstances: (instances: FullInstance[]) => void;
   representantsLists: Dict<RepresentantListId, Representant[]>;
-  setRepresentantsLists: (lists: Dict<RepresentantListId, Representant[]>) => void;
+  setRepresentantsLists: (
+    lists: Dict<RepresentantListId, Representant[]>
+  ) => void;
 }) => {
   return (
     <Droppable

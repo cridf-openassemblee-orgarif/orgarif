@@ -82,6 +82,8 @@ data class CreateOrganismeCommand(val nom: String) : Command()
 
 data class CreateOrganismeCommandResponse(val id: OrganismeId) : CommandResponse()
 
+data class DeleteRepresentantCommand(val id: RepresentantId) : Command()
+
 // [doc] login as username|mail
 data class LoginCommand(val login: String,
                         val password: PlainStringPassword) : Command()

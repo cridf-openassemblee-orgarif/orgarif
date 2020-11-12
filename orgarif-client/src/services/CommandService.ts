@@ -6,6 +6,7 @@ import {
   AddRepresentantCommandResponse,
   CreateOrganismeCommand,
   CreateOrganismeCommandResponse,
+  DeleteRepresentantCommand,
   LoginCommand,
   LoginCommandResponse,
   MoveRepresentantCommand,
@@ -31,6 +32,10 @@ export class CommandService {
     command: CreateOrganismeCommand
   ): Promise<CreateOrganismeCommandResponse> =>
     this.command('CreateOrganismeCommand', command);
+
+  public deleteRepresentantCommand = (
+    command: DeleteRepresentantCommand
+  ): Promise<void> => this.command('DeleteRepresentantCommand', command);
 
   public loginCommand = (
     command: LoginCommand

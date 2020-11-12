@@ -33,6 +33,7 @@ class CommandController(
         val addInstanceCommandHandler: AddInstanceCommandHandler,
         val addRepresentantCommandHandler: AddRepresentantCommandHandler,
         val createOrganismeCommandHandler: CreateOrganismeCommandHandler,
+        val deleteRepresentantCommandHandler: DeleteRepresentantCommandHandler,
         val loginCommandHandler: LoginCommandHandler,
         val moveRepresentantCommandHandler: MoveRepresentantCommandHandler,
         val registerCommandHandler: RegisterCommandHandler,
@@ -119,6 +120,7 @@ class CommandController(
         is AddInstanceCommand -> addInstanceCommandHandler
         is AddRepresentantCommand -> addRepresentantCommandHandler
         is CreateOrganismeCommand -> createOrganismeCommandHandler
+        is DeleteRepresentantCommand -> deleteRepresentantCommandHandler
         is LoginCommand -> loginCommandHandler
         is MoveRepresentantCommand -> moveRepresentantCommandHandler
         is RegisterCommand -> registerCommandHandler

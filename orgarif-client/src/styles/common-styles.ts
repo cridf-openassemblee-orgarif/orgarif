@@ -1,5 +1,6 @@
 /** @jsx jsx */
 import { css } from '@emotion/core';
+import { fonts } from './vars';
 
 export const globalStyles = css`
   *,
@@ -7,13 +8,13 @@ export const globalStyles = css`
   *:after {
     position: relative;
     box-sizing: border-box;
-    font-family: Arial, 'sans-serif';
-    font-size: 14px;
   }
 
   html,
   body {
     margin: 0;
+    font-size: ${fonts.baseSize}px;
+    font-family: ${fonts.font};
   }
 
   button {

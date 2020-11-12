@@ -11,6 +11,7 @@ import { HotRoot as Root } from './container/Root';
 import { ApplicationRouter } from './routing/ApplicationRouter';
 import { globalStyles } from './styles/common-styles';
 import './styles/ReactToastify-additional.css';
+import { colors, fonts } from './styles/vars';
 
 global.log = (logged: any) => console.log(logged);
 
@@ -20,7 +21,14 @@ if (!productionBuild && global.__REDUX_DEVTOOLS_EXTENSION__) {
   devTools = global.__REDUX_DEVTOOLS_EXTENSION__();
 }
 
-const muiTheme = createMuiTheme({});
+const muiTheme = createMuiTheme({
+  palette: {
+    secondary: { main: colors.errorRed },
+  },
+  typography: {
+    htmlFontSize: fonts.baseSize,
+  },
+});
 ReactDOM.render(
   <RecoilRoot>
     <Global styles={[globalStyles]} />

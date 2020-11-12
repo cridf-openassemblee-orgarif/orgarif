@@ -91,11 +91,6 @@ class MailLogDao(val jooq: DSLContext) {
 //                    .fetch()
 //                    .map(this::map)
 
-    fun delete(id: MailLogId) =
-            jooq.deleteFrom(MAIL_LOG)
-                    .where(MAIL_LOG.ID.equal(id.rawId))
-                    .execute()
-
     fun map(r: MailLogRecord) = Record(
             r.id.toTypeId(),
             r.deploymentLogId.toTypeId(),

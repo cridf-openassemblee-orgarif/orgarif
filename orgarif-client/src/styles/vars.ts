@@ -5,7 +5,8 @@ export const dimensions = {
 };
 
 export const fonts = {
-  font: 'Arial',
+  baseSize: 14,
+  font: "Arial, 'sans-serif'",
 };
 
 export const colors = {
@@ -14,4 +15,5 @@ export const colors = {
   grey: '#333333',
   popupGlasspanel: 'rgba(220, 220, 220, 0.85)',
   errorBackground: '#bd4641',
+  errorRed: '#cc0000',
 };

@@ -12,7 +12,9 @@ export const EditRepresentantsListComponent = (props: {
   instanceId: InstanceId | undefined;
   representantOrSuppleant: RepresentantOrSuppleant;
   representantsLists: Dict<RepresentantListId, Representant[]>;
-  setRepresentantsLists: (lists: Dict<RepresentantListId, Representant[]>) => void;
+  setRepresentantsLists: (
+    lists: Dict<RepresentantListId, Representant[]>
+  ) => void;
 }) => (
   <React.Fragment>
     <DragableRepresentantsListComponent
@@ -20,6 +22,7 @@ export const EditRepresentantsListComponent = (props: {
       instanceId={props.instanceId}
       representantOrSuppleant={props.representantOrSuppleant}
       representantsLists={props.representantsLists}
+      setRepresentantsLists={props.setRepresentantsLists}
     />
     <AddRepresentantComponent
       organismeId={props.organismeId}

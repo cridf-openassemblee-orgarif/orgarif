@@ -78,9 +78,9 @@ export const EditOrganismeComponent = (props: {
   setLoading: (l: boolean) => void;
 }) => {
   const organisme = props.organisme;
-  const [representantsLists, setRepresentantsLists] = useState<Dict<RepresentantListId, Representant[]>>(
-    {}
-  );
+  const [representantsLists, setRepresentantsLists] = useState<
+    Dict<RepresentantListId, Representant[]>
+  >({});
   const [instances, setInstances] = useState<FullInstance[]>(
     organisme.instances
   );

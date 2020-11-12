@@ -10,6 +10,8 @@ object CommandConfiguration {
         is AddRepresentantCommand -> AuthenticationLevel.neutral
         // TODO loggedIn
         is CreateOrganismeCommand -> AuthenticationLevel.neutral
+        // TODO loggedIn
+        is DeleteRepresentantCommand -> AuthenticationLevel.neutral
         is LoginCommand -> AuthenticationLevel.loggedOut
         is MoveRepresentantCommand -> AuthenticationLevel.neutral
         is RegisterCommand -> AuthenticationLevel.loggedOut

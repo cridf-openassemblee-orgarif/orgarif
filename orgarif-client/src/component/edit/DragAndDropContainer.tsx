@@ -59,7 +59,9 @@ export const DragAndDropContainer = (
   props: PropsWithChildren<{
     organisme: FullOrganisme;
     representantsLists: Dict<RepresentantListId, Representant[]>;
-    setRepresentantsLists: (lists: Dict<RepresentantListId, Representant[]>) => void;
+    setRepresentantsLists: (
+      lists: Dict<RepresentantListId, Representant[]>
+    ) => void;
   }>
 ) => {
   const onDragEnd = (result: DropResult) => {
