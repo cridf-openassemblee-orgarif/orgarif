@@ -78,7 +78,7 @@ export const EditOrganismeComponent = (props: {
   setLoading: (l: boolean) => void;
 }) => {
   const organisme = props.organisme;
-  const [lists, setLists] = useState<Dict<RepresentantListId, Representant[]>>(
+  const [representantsLists, setRepresentantsLists] = useState<Dict<RepresentantListId, Representant[]>>(
     {}
   );
   const [instances, setInstances] = useState<FullInstance[]>(
@@ -116,13 +116,13 @@ export const EditOrganismeComponent = (props: {
         instance.suppleants
       );
     });
-    setLists(initialLists);
+    setRepresentantsLists(initialLists);
   }, [instances]);
   return (
     <DragAndDropContainer
       organisme={props.organisme}
-      lists={lists}
-      setLists={setLists}
+      representantsLists={representantsLists}
+      setRepresentantsLists={setRepresentantsLists}
     >
       <div
         css={css`
@@ -202,8 +202,8 @@ export const EditOrganismeComponent = (props: {
               organismeId={organisme.infos.id}
               instanceId={undefined}
               representantOrSuppleant="representant"
-              lists={lists}
-              setLists={setLists}
+              representantsLists={representantsLists}
+              setRepresentantsLists={setRepresentantsLists}
             />
           </div>
           <div
@@ -215,8 +215,8 @@ export const EditOrganismeComponent = (props: {
               organismeId={organisme.infos.id}
               instanceId={undefined}
               representantOrSuppleant="suppleant"
-              lists={lists}
-              setLists={setLists}
+              representantsLists={representantsLists}
+              setRepresentantsLists={setRepresentantsLists}
             />
           </div>
         </div>
@@ -230,8 +230,8 @@ export const EditOrganismeComponent = (props: {
               organismeId={organisme.infos.id}
               instances={instances}
               setInstances={setInstances}
-              lists={lists}
-              setLists={setLists}
+              representantsLists={representantsLists}
+              setRepresentantsLists={setRepresentantsLists}
             />
           </div>
         )}

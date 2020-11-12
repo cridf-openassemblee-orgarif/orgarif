@@ -26,14 +26,14 @@ export const DragableRepresentantsListComponent = (props: {
   organismeId: OrganismeId;
   instanceId: InstanceId | undefined;
   representantOrSuppleant: RepresentantOrSuppleant;
-  lists: Dict<RepresentantListId, Representant[]>;
+  representantsLists: Dict<RepresentantListId, Representant[]>;
 }) => {
   const listId = representantListId(
     props.organismeId,
     props.instanceId,
     props.representantOrSuppleant
   );
-  const representants = getOrNull(props.lists, listId) ?? [];
+  const representants = getOrNull(props.representantsLists, listId) ?? [];
   return (
     <Droppable
       type={dragType}

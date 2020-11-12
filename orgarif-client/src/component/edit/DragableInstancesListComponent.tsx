@@ -24,8 +24,8 @@ export const DragableInstancesListComponent = (props: {
   organismeId: OrganismeId;
   instances: FullInstance[];
   setInstances: (instances: FullInstance[]) => void;
-  lists: Dict<RepresentantListId, Representant[]>;
-  setLists: (lists: Dict<RepresentantListId, Representant[]>) => void;
+  representantsLists: Dict<RepresentantListId, Representant[]>;
+  setRepresentantsLists: (lists: Dict<RepresentantListId, Representant[]>) => void;
 }) => {
   return (
     <Droppable
@@ -95,8 +95,8 @@ export const DragableInstancesListComponent = (props: {
                         organismeId={i.infos.organismeId}
                         instanceId={i.infos.id}
                         representantOrSuppleant="representant"
-                        lists={props.lists}
-                        setLists={props.setLists}
+                        representantsLists={props.representantsLists}
+                        setRepresentantsLists={props.setRepresentantsLists}
                       />
                     </div>
                     <div
@@ -108,8 +108,8 @@ export const DragableInstancesListComponent = (props: {
                         organismeId={i.infos.organismeId}
                         instanceId={i.infos.id}
                         representantOrSuppleant="suppleant"
-                        lists={props.lists}
-                        setLists={props.setLists}
+                        representantsLists={props.representantsLists}
+                        setRepresentantsLists={props.setRepresentantsLists}
                       />
                     </div>
                   </div>

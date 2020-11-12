@@ -58,8 +58,8 @@ export const extract = (
 export const DragAndDropContainer = (
   props: PropsWithChildren<{
     organisme: FullOrganisme;
-    lists: Dict<RepresentantListId, Representant[]>;
-    setLists: (lists: Dict<RepresentantListId, Representant[]>) => void;
+    representantsLists: Dict<RepresentantListId, Representant[]>;
+    setRepresentantsLists: (lists: Dict<RepresentantListId, Representant[]>) => void;
   }>
 ) => {
   const onDragEnd = (result: DropResult) => {
@@ -92,15 +92,15 @@ export const DragAndDropContainer = (
     }
 
     const newLists: Dict<RepresentantListId, Representant[]> = {
-      ...props.lists,
+      ...props.representantsLists,
     };
-    const sourceList = [...get(props.lists, sourceId)];
+    const sourceList = [...get(props.representantsLists, sourceId)];
     const movedItem = sourceList.splice(result.source.index, 1)[0];
     set(newLists, sourceId, sourceList);
     const destinationList = [...get(newLists, destinationId)];
     destinationList.splice(result.destination.index, 0, movedItem);
     set(newLists, destinationId, destinationList);
-    props.setLists(newLists);
+    props.setRepresentantsLists(newLists);
 
     const [organismeId, instanceId, representantOrSuppleant] = extract(
       destinationId

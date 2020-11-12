@@ -11,22 +11,22 @@ export const EditRepresentantsListComponent = (props: {
   organismeId: OrganismeId;
   instanceId: InstanceId | undefined;
   representantOrSuppleant: RepresentantOrSuppleant;
-  lists: Dict<RepresentantListId, Representant[]>;
-  setLists: (lists: Dict<RepresentantListId, Representant[]>) => void;
+  representantsLists: Dict<RepresentantListId, Representant[]>;
+  setRepresentantsLists: (lists: Dict<RepresentantListId, Representant[]>) => void;
 }) => (
   <React.Fragment>
     <DragableRepresentantsListComponent
       organismeId={props.organismeId}
       instanceId={props.instanceId}
       representantOrSuppleant={props.representantOrSuppleant}
-      lists={props.lists}
+      representantsLists={props.representantsLists}
     />
     <AddRepresentantComponent
       organismeId={props.organismeId}
       instanceId={props.instanceId}
       representantOrSuppleant={props.representantOrSuppleant}
-      lists={props.lists}
-      setLists={props.setLists}
+      representantsLists={props.representantsLists}
+      setRepresentantsLists={props.setRepresentantsLists}
     />
   </React.Fragment>
 );
