@@ -2,17 +2,22 @@
 import { jsx } from '@emotion/core';
 import { useState } from 'react';
 import { appContext } from '../../ApplicationContext';
-import { OrganismeId } from '../../domain/id';
-import { stringifyNominalString } from '../../domain/nominal-class';
-import { FullInstance } from '../../domain/organisme';
+import { OrganismeId, RepresentantListId } from '../../domain/id';
+import { Dict, set, stringifyNominalString } from '../../domain/nominal-class';
+import { FullInstance, Representant } from '../../domain/organisme';
 import { clientUid } from '../../utils';
 import { SimpleForm } from '../base-component/SimpleForm';
 import { TextInput } from '../base-component/TextInput';
+import { representantListId } from './DragAndDropContainer';
 
 export const AddInstanceComponent = (props: {
   organismeId: OrganismeId;
   instances: FullInstance[];
   setInstances: (instances: FullInstance[]) => void;
+  representantsLists: Dict<RepresentantListId, Representant[]>;
+  setRepresentantsLists: (
+    lists: Dict<RepresentantListId, Representant[]>
+  ) => void;
 }) => {
   // key to reset the form
   const [key, setKey] = useState(clientUid());
@@ -34,6 +39,18 @@ export const AddInstanceComponent = (props: {
         };
         const newInstances = [...props.instances, instance];
         props.setInstances(newInstances);
+        const newRepresentantsLists = { ...props.representantsLists };
+        set(
+          newRepresentantsLists,
+          representantListId(props.organismeId, r.id, 'representant'),
+          []
+        );
+        set(
+          newRepresentantsLists,
+          representantListId(props.organismeId, r.id, 'suppleant'),
+          []
+        );
+        props.setRepresentantsLists(newRepresentantsLists);
       });
   };
   return (

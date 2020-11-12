@@ -30,11 +30,7 @@ export const EditOrganismeView = (props: {
       <RouteLink route={{ name: 'ListOrganismesRoute' }}>list</RouteLink>
       {loading && <div>Chargement...</div>}
       {organisme && (
-        <EditOrganismeComponent
-          organisme={organisme}
-          setOrganisme={setOrganisme}
-          setLoading={setLoading}
-        />
+        <EditOrganismeComponent organisme={organisme} setLoading={setLoading} />
       )}
     </MainContainer>
   );

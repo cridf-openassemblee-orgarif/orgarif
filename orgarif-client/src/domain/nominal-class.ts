@@ -48,3 +48,10 @@ export const set = <K extends OrgarifId, T>(
 ) => {
   dict[key] = value;
 };
+
+export const deleteItem = <K extends OrgarifId, T>(
+  dict: Dict<K, T>,
+  key: K
+) => {
+  delete dict[key];
+};

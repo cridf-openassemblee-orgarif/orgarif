@@ -74,7 +74,6 @@ export const EditCategoryComponent = (props: {
 
 export const EditOrganismeComponent = (props: {
   organisme: FullOrganisme;
-  setOrganisme: (o: FullOrganisme) => void;
   setLoading: (l: boolean) => void;
 }) => {
   const organisme = props.organisme;
@@ -88,19 +87,19 @@ export const EditOrganismeComponent = (props: {
     const initialLists: Dict<RepresentantListId, Representant[]> = {};
     set(
       initialLists,
-      representantListId(props.organisme.infos.id, undefined, 'representant'),
-      props.organisme.representants
+      representantListId(organisme.infos.id, undefined, 'representant'),
+      organisme.representants
     );
     set(
       initialLists,
-      representantListId(props.organisme.infos.id, undefined, 'suppleant'),
-      props.organisme.suppleants
+      representantListId(organisme.infos.id, undefined, 'suppleant'),
+      organisme.suppleants
     );
     instances.forEach((instance) => {
       set(
         initialLists,
         representantListId(
-          props.organisme.infos.id,
+          organisme.infos.id,
           instance.infos.id,
           'representant'
         ),
@@ -108,19 +107,15 @@ export const EditOrganismeComponent = (props: {
       );
       set(
         initialLists,
-        representantListId(
-          props.organisme.infos.id,
-          instance.infos.id,
-          'suppleant'
-        ),
+        representantListId(organisme.infos.id, instance.infos.id, 'suppleant'),
         instance.suppleants
       );
     });
     setRepresentantsLists(initialLists);
-  }, [instances]);
+  }, []);
   return (
     <DragAndDropContainer
-      organisme={props.organisme}
+      organisme={organisme}
       representantsLists={representantsLists}
       setRepresentantsLists={setRepresentantsLists}
     >
@@ -239,6 +234,8 @@ export const EditOrganismeComponent = (props: {
           organismeId={organisme.infos.id}
           instances={instances}
           setInstances={setInstances}
+          representantsLists={representantsLists}
+          setRepresentantsLists={setRepresentantsLists}
         />
       </div>
     </DragAndDropContainer>

@@ -80,9 +80,12 @@ export const DragableInstancesListComponent = (props: {
                   <div>{i.infos.id}</div>
                   <h4>{i.infos.nom}</h4>
                   <DeleteInstanceButton
+                    organismeId={props.organismeId}
                     instanceId={i.infos.id}
                     instances={props.instances}
                     setInstances={props.setInstances}
+                    representantsLists={props.representantsLists}
+                    setRepresentantsLists={props.setRepresentantsLists}
                   />
                   <NombreRepresentantsComponent
                     nombreRepresentants={i.infos.nombreRepresentants}
