@@ -56,25 +56,25 @@ class OrganismeDao(val jooq: DSLContext) {
             fetchOrNull(id)
                     ?: throw IllegalArgumentException("$id")
 
-    fun updateNatureJuridiqueId(id: OrganismeId, natureJuridiqueId: NatureJuridiqueId) {
+    fun updateNatureJuridiqueId(id: OrganismeId, natureJuridiqueId: NatureJuridiqueId?) {
         jooq.update(ORGANISME)
-                .set(ORGANISME.NATURE_JURIDIQUE_ID, natureJuridiqueId.rawId)
+                .set(ORGANISME.NATURE_JURIDIQUE_ID, natureJuridiqueId?.rawId)
                 .where(ORGANISME.ID.equal(id.rawId))
                 .execute()
     }
 
 
-    fun updateSecteurId(id: OrganismeId, secteurId: SecteurId) {
+    fun updateSecteurId(id: OrganismeId, secteurId: SecteurId?) {
         jooq.update(ORGANISME)
-                .set(ORGANISME.SECTEUR_ID, secteurId.rawId)
+                .set(ORGANISME.SECTEUR_ID, secteurId?.rawId)
                 .where(ORGANISME.ID.equal(id.rawId))
                 .execute()
     }
 
 
-    fun updateTypeStructureId(id: OrganismeId, typeStructureId: TypeStructureId) {
+    fun updateTypeStructureId(id: OrganismeId, typeStructureId: TypeStructureId?) {
         jooq.update(ORGANISME)
-                .set(ORGANISME.TYPE_STRUCTURE_ID, typeStructureId.rawId)
+                .set(ORGANISME.TYPE_STRUCTURE_ID, typeStructureId?.rawId)
                 .where(ORGANISME.ID.equal(id.rawId))
                 .execute()
     }

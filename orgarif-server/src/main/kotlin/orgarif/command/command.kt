@@ -108,10 +108,10 @@ data class RegisterCommandResponse(val result: RegisterResult,
                                    val userinfos: UserInfos?) : CommandResponse()
 
 data class UpdateOrganismeNatureJuridiqueCommand(val id: OrganismeId,
-                                                 val natureJuridiqueId: NatureJuridiqueId) : Command()
+                                                 val natureJuridiqueId: NatureJuridiqueId?) : Command()
 
 data class UpdateOrganismeSecteurCommand(val id: OrganismeId,
-                                         val secteurId: SecteurId) : Command()
+                                         val secteurId: SecteurId?) : Command()
 
 data class UpdateOrganismeTypeStructureCommand(val id: OrganismeId,
-                                               val typeStructureId: TypeStructureId) : Command()
+                                               val typeStructureId: TypeStructureId?) : Command()
