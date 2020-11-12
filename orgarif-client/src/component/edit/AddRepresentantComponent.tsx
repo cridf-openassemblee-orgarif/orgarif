@@ -12,15 +12,9 @@ import {
   OrganismeId,
   RepresentantListId,
 } from '../../domain/id';
-import {
-  Dict,
-  get,
-  set,
-  stringifyNominalString,
-} from '../../domain/nominal-class';
+import { Dict, get, set } from '../../domain/nominal-class';
 import { Representant, RepresentantOrSuppleant } from '../../domain/organisme';
 import { state } from '../../state/state';
-import { clientUid } from '../../utils';
 import { representantListId } from './DragAndDropContainer';
 
 export const AddRepresentantComponent = (props: {
@@ -33,11 +27,8 @@ export const AddRepresentantComponent = (props: {
   ) => void;
 }) => {
   const elus = useRecoilValue(state.elus);
-  const [id] = useState(clientUid());
-  // with this key we completly reset the state of the component when an
-  // elu is chosen
-  // there must be a smarter way but manipulating value+inputValue is tricky
-  const [key, setKey] = useState(clientUid());
+  const [value, setValue] = useState<Elu | undefined>(undefined);
+  const [inputValue, setInputValue] = useState('');
   const addRepresentant = (eluId: EluId) => {
     appContext
       .commandService()
@@ -64,18 +55,21 @@ export const AddRepresentantComponent = (props: {
         ];
         set(newRepresentantsLists, listId, newRepresentants);
         props.setRepresentantsLists(newRepresentantsLists);
-        setKey(clientUid());
+        setValue(undefined);
+        setInputValue('');
       });
   };
   const label = (e: Elu | undefined) => (e ? `${e.nom} ${e.prenom}` : '');
   return (
     <Autocomplete
-      key={stringifyNominalString(key)}
-      id={stringifyNominalString(id)}
       options={elus}
       getOptionLabel={label}
       clearOnEscape={true}
       clearOnBlur={true}
+      value={value}
+      onChange={(e, value: Elu) => addRepresentant(value.id)}
+      inputValue={inputValue}
+      onInputChange={(e, v) => setInputValue(v)}
       renderInput={(params) => (
         <TextField
           {...params}
@@ -83,7 +77,6 @@ export const AddRepresentantComponent = (props: {
           variant="outlined"
         />
       )}
-      onChange={(e, value: Elu) => addRepresentant(value.id)}
     />
   );
 };

@@ -1,9 +1,12 @@
 /** @jsx jsx */
 import { jsx } from '@emotion/core';
-import { FormEvent, PropsWithChildren } from 'react';
+import { FormEvent, PropsWithChildren, Ref } from 'react';
 
 export const SimpleForm = (
-  props: PropsWithChildren<{ onSubmit: (data: any) => void }>
+  props: PropsWithChildren<{
+    forwardRef?: Ref<HTMLFormElement>;
+    onSubmit: (data: any) => void;
+  }>
 ) => {
   const onSubmit = (event: FormEvent<HTMLFormElement>) => {
     event.preventDefault();
@@ -18,5 +21,9 @@ export const SimpleForm = (
     props.onSubmit(dto);
   };
 
-  return <form onSubmit={onSubmit}>{props.children}</form>;
+  return (
+    <form ref={props.forwardRef} onSubmit={onSubmit}>
+      {props.children}
+    </form>
+  );
 };
