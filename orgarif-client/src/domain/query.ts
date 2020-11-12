@@ -1,5 +1,5 @@
 import { OrganismeId } from './id';
-import { FullOrganisme, OrganismeInfos } from './organisme';
+import { DeliberationInfos, FullOrganisme, OrganismeInfos } from './organisme';
 
 export interface GetOrganismeQuery {
   id: OrganismeId;
@@ -19,4 +19,12 @@ export interface IsLoginAlreadyTakenQueryResponse {
 
 export interface ListOrganismesQueryResponse {
   organismes: OrganismeInfos[];
+}
+
+export interface SearchDeliberationQuery {
+  searchToken: string;
+}
+
+export interface SearchDeliberationQueryResponse {
+  results: DeliberationInfos[];
 }

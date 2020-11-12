@@ -8,6 +8,7 @@ object QueryConfiguration {
         is GetOrganismeQuery -> AuthenticationLevel.neutral
         is IsLoginAlreadyTakenQuery -> AuthenticationLevel.neutral
         is ListOrganismesQuery -> AuthenticationLevel.neutral
+        is SearchDeliberationQuery -> AuthenticationLevel.neutral
     }
 
 }

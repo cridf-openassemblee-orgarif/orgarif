@@ -8,6 +8,7 @@ import orgarif.query.*
 import orgarif.query.mail.IsLoginAlreadyExistsQueryHandler
 import orgarif.query.mail.ListOrganismesQueryHandler
 import orgarif.query.mail.GetOrganismeQueryHandler
+import orgarif.query.mail.SearchDeliberationQueryHandler
 import orgarif.repository.sql.UserDao
 import orgarif.service.user.UserSessionHelper
 import orgarif.utils.Serializer
@@ -19,6 +20,7 @@ class QueryController(
         val getOrganismeQueryHandler: GetOrganismeQueryHandler,
         val isLoginAlreadyExistsQueryHandler: IsLoginAlreadyExistsQueryHandler,
         val listOrganismesQueryHandler: ListOrganismesQueryHandler,
+        val searchDeliberationQueryHandler: SearchDeliberationQueryHandler,
 
         val userDao: UserDao) {
 
@@ -56,6 +58,7 @@ class QueryController(
         is GetOrganismeQuery -> getOrganismeQueryHandler
         is IsLoginAlreadyTakenQuery -> isLoginAlreadyExistsQueryHandler
         is ListOrganismesQuery -> listOrganismesQueryHandler
+        is SearchDeliberationQuery -> searchDeliberationQueryHandler
     } as QueryHandler<Query, QueryResponse>
 
 }

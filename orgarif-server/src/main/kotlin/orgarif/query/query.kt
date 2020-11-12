@@ -1,5 +1,6 @@
 package orgarif.query
 
+import DeliberationInfos
 import FullOrganisme
 import OrganismeInfos
 import com.fasterxml.jackson.annotation.JsonTypeInfo
@@ -45,3 +46,7 @@ data class IsLoginAlreadyTakenQueryResponse(val alreadyTaken: Boolean) : QueryRe
 class ListOrganismesQuery : Query()
 
 data class ListOrganismesQueryResponse(val organismes: List<OrganismeInfos>) : QueryResponse()
+
+data class SearchDeliberationQuery(val searchToken: String) : Query()
+
+data class SearchDeliberationQueryResponse(val results: List<DeliberationInfos>) : QueryResponse()

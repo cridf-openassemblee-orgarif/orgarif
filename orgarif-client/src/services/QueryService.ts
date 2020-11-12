@@ -5,6 +5,8 @@ import {
   IsLoginAlreadyTakenQuery,
   IsLoginAlreadyTakenQueryResponse,
   ListOrganismesQueryResponse,
+  SearchDeliberationQuery,
+  SearchDeliberationQueryResponse,
 } from '../domain/query';
 
 export class QueryService {
@@ -20,6 +22,11 @@ export class QueryService {
 
   public listOrganismesQuery = (): Promise<ListOrganismesQueryResponse> =>
     this.query('ListOrganismesQuery');
+
+  public searchDeliberationQuery = (
+    query: SearchDeliberationQuery
+  ): Promise<SearchDeliberationQueryResponse> =>
+    this.query('SearchDeliberationQuery', query);
 
   private query = <R>(queryName: string, query?: object): Promise<R> =>
     appContext

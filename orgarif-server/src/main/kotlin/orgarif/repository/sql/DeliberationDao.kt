@@ -1,6 +1,7 @@
 package orgarif.repository.sql
 
 import org.jooq.DSLContext
+import org.jooq.impl.DSL.lower
 import org.springframework.stereotype.Repository
 import orgarif.domain.DeliberationId
 import orgarif.jooq.generated.Tables.DELIBERATION
@@ -36,6 +37,12 @@ class DeliberationDao(val jooq: DSLContext) {
                     .fetchOne()
                     ?.let(this::map)
                     ?: throw IllegalArgumentException("$id")
+
+    fun search(searchToken: String): List<Record> =
+            jooq.selectFrom(DELIBERATION)
+                    .where(lower(DELIBERATION.LIBELLE).like("%${searchToken.toLowerCase()}%"))
+                    .fetch()
+                    .map(this::map)
 
     fun map(r: DeliberationRecord) = Record(
             r.id.toTypeId(),
