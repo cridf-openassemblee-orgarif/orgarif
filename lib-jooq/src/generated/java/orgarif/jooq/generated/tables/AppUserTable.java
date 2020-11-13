@@ -14,7 +14,7 @@ import org.jooq.ForeignKey;
 import org.jooq.Index;
 import org.jooq.Name;
 import org.jooq.Record;
-import org.jooq.Row9;
+import org.jooq.Row8;
 import org.jooq.Schema;
 import org.jooq.Table;
 import org.jooq.TableField;
@@ -36,7 +36,7 @@ import orgarif.jooq.tools.jooq.CharToUUIDConverter;
 @SuppressWarnings({ "all", "unchecked", "rawtypes" })
 public class AppUserTable extends TableImpl<AppUserRecord> {
 
-    private static final long serialVersionUID = 462717518;
+    private static final long serialVersionUID = -1037450457;
 
     /**
      * The reference instance of <code>orgarif.app_user</code>
@@ -70,11 +70,6 @@ public class AppUserTable extends TableImpl<AppUserRecord> {
      * The column <code>orgarif.app_user.username</code>.
      */
     public final TableField<AppUserRecord, String> USERNAME = createField(DSL.name("username"), org.jooq.impl.SQLDataType.VARCHAR(255), this, "");
-
-    /**
-     * The column <code>orgarif.app_user.display_name</code>.
-     */
-    public final TableField<AppUserRecord, String> DISPLAY_NAME = createField(DSL.name("display_name"), org.jooq.impl.SQLDataType.VARCHAR(255).nullable(false), this, "");
 
     /**
      * The column <code>orgarif.app_user.language</code>.
@@ -176,11 +171,11 @@ public class AppUserTable extends TableImpl<AppUserRecord> {
     }
 
     // -------------------------------------------------------------------------
-    // Row9 type methods
+    // Row8 type methods
     // -------------------------------------------------------------------------
 
     @Override
-    public Row9<UUID, String, String, String, String, String, Boolean, LocalDateTime, String> fieldsRow() {
-        return (Row9) super.fieldsRow();
+    public Row8<UUID, String, String, String, String, Boolean, LocalDateTime, String> fieldsRow() {
+        return (Row8) super.fieldsRow();
     }
 }
