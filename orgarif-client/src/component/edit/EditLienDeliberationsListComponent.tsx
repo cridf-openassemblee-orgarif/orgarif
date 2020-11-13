@@ -11,9 +11,6 @@ export const EditLienDeliberationsListComponent = (props: {
   organismeId: OrganismeId;
   instanceId?: InstanceId;
 }) => {
-  if (props.lienDeliberations.length === 0) {
-    return null;
-  }
   const [lienDeliberations, setLienDeliberations] = useState<
     LienDeliberationInfos[]
   >(props.lienDeliberations);
