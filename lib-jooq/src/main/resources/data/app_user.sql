@@ -5,7 +5,6 @@ CREATE TABLE app_user
     password     VARCHAR(60)          NOT NULL,
 -- [doc] username is at least useful for development
     username     VARCHAR(255) UNIQUE,
-    display_name VARCHAR(255)         NOT NULL,
     language     VARCHAR(2)           NOT NULL,
     admin        BOOLEAN              NOT NULL,
     signup_date  TIMESTAMP            NOT NULL,
