@@ -23,20 +23,19 @@ class LostPasswordMailSenderService(@Value("\${app.url}") val appUrl: String,
 
     private val logger = KotlinLogging.logger {}
 
-    data class LostPasswordMailPayload(val displayName: String,
-                                       val url: String,
+    data class LostPasswordMailPayload(val url: String,
                                        val invalidateTokenUrl: String)
 
     fun sendMail(user: UserDao.Record) {
         val magicToken = magicLinkTokenService.createToken(user.id)
         val magicUrl = "$appUrl${IndexController.loginUpdatePasswordRoute}?${IndexController.magicTokenParameterName}=$magicToken"
         val invalidateUrl = "$appUrl${InvalidateMagicLinkTokenController.invalidateTokenUri}?${IndexController.magicTokenParameterName}=$magicToken"
-        val data = LostPasswordMailPayload(user.displayName, magicUrl, invalidateUrl)
+        val data = LostPasswordMailPayload(magicUrl, invalidateUrl)
         val mailContent = fetchMailContent(data)
         logger.info { "Send lost password mail to $user" }
         mailService.sendMail(ApplicationConstants.applicationMailSenderName,
                 ApplicationConstants.applicationMail,
-                user.displayName,
+                user.mail,
                 user.mail,
                 "Change your password",
                 mailContent,

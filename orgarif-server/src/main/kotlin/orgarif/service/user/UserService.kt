@@ -38,7 +38,6 @@ class UserService(val userDao: UserDao,
         // * ne doivent pas dépasser les 255 chars de la db
         fun validateRegisterUserDto(c: RegisterCommand) {
             if (c.mail.isBlank()) throw IllegalArgumentException("Mail is blank")
-            if (c.displayName.isBlank()) throw IllegalArgumentException("Display name is blank")
         }
 
         fun cleanRegisterUserDto(c: RegisterCommand): Pair<RegisterCommand, String?> {
@@ -46,8 +45,7 @@ class UserService(val userDao: UserDao,
             val cleanMail = cleanMail(c.mail)
             // do not clone forces to update cleaning =)
             return Pair(c.copy(
-                    mail = cleanMail,
-                    displayName = c.displayName.trim()),
+                    mail = cleanMail),
                     if (dirtyMail != cleanMail) dirtyMail else null)
         }
 
@@ -89,7 +87,6 @@ class UserService(val userDao: UserDao,
         val user = UserDao.Record(id = UserId(randomService.randomUUID()),
                 mail = command.mail,
                 username = null,
-                displayName = command.displayName,
                 language = language,
                 signupDate = dateService.now(),
                 admin = false,

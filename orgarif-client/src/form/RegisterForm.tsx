@@ -7,7 +7,6 @@ import { SimpleForm } from '../component/base-component/SimpleForm';
 export interface RegisterFormDto {
   mail: string;
   password: string;
-  displayName: string;
 }
 
 interface Props {
@@ -39,10 +38,6 @@ export const RegisterForm = (props: Props) => {
       <label>
         Password :
         <input name="password" />
-      </label>
-      <label>
-        Display name :
-        <input name="displayName" />
       </label>
       <input type="submit" />
     </SimpleForm>

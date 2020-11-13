@@ -31,7 +31,6 @@ export const LoginView = () => {
             break;
           case 'USER_NOT_FOUND':
           case 'BAD_PASSWORD':
-          case 'NO_PASSWORD':
             break;
           default:
             assertUnreachable(r.result);

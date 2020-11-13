@@ -92,7 +92,6 @@ export interface MoveRepresentantCommand {
 export interface RegisterCommand {
   mail: string;
   password: string;
-  displayName: string;
 }
 
 export interface RegisterCommandResponse {

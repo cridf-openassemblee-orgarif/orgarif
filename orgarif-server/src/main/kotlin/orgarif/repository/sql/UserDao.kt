@@ -20,7 +20,6 @@ class UserDao(val jooq: DSLContext) {
     data class Record(val id: UserId,
                       val mail: String,
                       val username: String?,
-                      val displayName: String,
                       val language: Language,
                       val admin: Boolean,
                       val signupDate: Instant,
@@ -39,7 +38,6 @@ class UserDao(val jooq: DSLContext) {
             mail = r.mail
             username = r.username
             password = hashedPassword.hash
-            displayName = r.displayName
             language = r.language.name
             signupDate = r.signupDate.atOffset(ZoneOffset.UTC).toLocalDateTime()
             admin = r.admin
@@ -54,29 +52,11 @@ class UserDao(val jooq: DSLContext) {
     }
 
     private fun handleDuplicateKeyException(e: DuplicateKeyException, mail: String) {
-        if (e.cause?.message?.split("\n")?.first() == "ERROR: duplicate key value violates unique constraint \"app_user_mail_key\"") {
+        val message = e.cause?.message
+        if (message != null && "for key 'mail'" in message) {
             throw MailAlreadyRegisteredException(mail)
         } else {
             throw e
-        }
-    }
-
-    @Throws(MailAlreadyRegisteredException::class)
-    fun updateIdentity(userId: UserId,
-                       mail: String,
-                       lastname: String,
-                       firstname: String,
-                       phoneNumber: String?,
-                       dirtyMail: String?) {
-        try {
-            jooq.update(APP_USER)
-                    .set(APP_USER.MAIL, mail)
-                    .set(APP_USER.DISPLAY_NAME, lastname)
-                    .set(APP_USER.DIRTY_MAIL, dirtyMail)
-                    .where(APP_USER.ID.equal(userId.rawId))
-                    .execute()
-        } catch (e: DuplicateKeyException) {
-            handleDuplicateKeyException(e, mail)
         }
     }
 
@@ -113,14 +93,6 @@ class UserDao(val jooq: DSLContext) {
                     .fetchOne()
                     ?.let(this::map)
 
-    fun search(label: String): List<Record> =
-            jooq.selectFrom(APP_USER)
-                    .where(APP_USER.MAIL.lower().like("%$label%"))
-                    .or(APP_USER.DISPLAY_NAME.lower().like("%$label%"))
-                    .or(APP_USER.USERNAME.lower().like("%$label%"))
-                    .fetch()
-                    .map(this::map)
-
     fun fetchPassword(id: UserId): HashedPassword? =
             jooq.select(APP_USER.PASSWORD)
                     .from(APP_USER)
@@ -133,7 +105,6 @@ class UserDao(val jooq: DSLContext) {
             id = r.id.toTypeId(),
             mail = r.mail,
             username = r.username,
-            displayName = r.displayName,
             language = Language.valueOf(r.language),
             signupDate = r.signupDate.toInstant(ZoneOffset.UTC),
             admin = r.admin,

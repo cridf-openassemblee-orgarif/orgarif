@@ -116,8 +116,7 @@ data class MoveRepresentantCommand(val id: RepresentantId,
                                    val toRepresentantOrSuppleant: RepresentantOrSuppleant) : Command()
 
 data class RegisterCommand(val mail: String,
-                           val password: PlainStringPassword,
-                           val displayName: String) : Command()
+                           val password: PlainStringPassword) : Command()
 
 data class RegisterCommandResponse(val result: RegisterResult,
                                    val userinfos: UserInfos?) : CommandResponse()

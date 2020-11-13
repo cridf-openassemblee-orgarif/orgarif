@@ -12,13 +12,11 @@ enum class Language {
 
 data class UserInfos(val id: UserId,
                      val mail: String,
-                     val displayName: String,
         // [doc] is null if false, so "admin" field won't be obviously serialized for common users
         // TODO[secu] test
                      val admin: Boolean?) {
     companion object {
-        fun fromUser(user: UserDao.Record) = UserInfos(user.id, user.mail, user.displayName,
-                if (user.admin) true else null)
+        fun fromUser(user: UserDao.Record) = UserInfos(user.id, user.mail, if (user.admin) true else null)
     }
 }
 

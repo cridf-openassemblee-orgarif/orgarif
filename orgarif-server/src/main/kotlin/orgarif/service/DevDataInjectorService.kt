@@ -32,7 +32,6 @@ class DevDataInjectorService(@Value("\${developerMail}") val developerMail: Stri
                     id = UserId(randomService.randomUUID()),
                     mail = "$mailPrefix+$username$mailSuffix",
                     username = username,
-                    displayName = username,
                     language = Language.en,
                     signupDate = dateService.now(),
                     admin = admin,
