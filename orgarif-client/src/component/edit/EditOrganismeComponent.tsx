@@ -30,7 +30,7 @@ import {
   DragAndDropContainer,
   representantListId,
 } from './DragAndDropContainer';
-import { EditDeliberationsListComponent } from './EditDeliberationsListComponent';
+import { EditLienDeliberationsListComponent } from './EditLienDeliberationsListComponent';
 import { EditRepresentantsListComponent } from './EditRepresentantsListComponent';
 
 const classes = {
@@ -215,7 +215,7 @@ export const EditOrganismeComponent = (props: {
             />
           </div>
         </div>
-        <EditDeliberationsListComponent
+        <EditLienDeliberationsListComponent
           lienDeliberations={organisme.lienDeliberations}
           organismeId={organisme.infos.id}
         />

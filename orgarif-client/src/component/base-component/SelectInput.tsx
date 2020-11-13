@@ -36,6 +36,7 @@ export const SelectInput = (props: {
       variant="outlined"
       className={classes.formControl}
       fullWidth={true}
+      size={'small'}
     >
       <InputLabel id={stringifyNominalString(inputId)}>
         {props.label}

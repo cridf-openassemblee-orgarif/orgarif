@@ -11,7 +11,7 @@ export interface HttpResponse {
   body?: any;
 }
 
-interface RequestError {
+export interface RequestError {
   id?: RequestErrorId;
   status: number;
   error: string;

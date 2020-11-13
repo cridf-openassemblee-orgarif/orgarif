@@ -31,3 +31,5 @@ export const compareByLocalDate = <T>(l: (o: T) => LocalDate) => (
   o1: T,
   o2: T
 ) => stringifyNominalString(l(o1)).localeCompare(stringifyNominalString(l(o2)));
+
+export const defer = (action: () => void) => setTimeout(action, 0);

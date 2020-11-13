@@ -7,6 +7,7 @@ export const TextInput = (props: {
   name: string;
   label: string;
   initialValue?: string;
+  autoFocus?: boolean;
 }) => {
   const [value] = useState(props.initialValue);
   return (
@@ -16,6 +17,8 @@ export const TextInput = (props: {
       variant="outlined"
       value={value}
       fullWidth={true}
+      autoFocus={props.autoFocus}
+      size={'small'}
     />
   );
 };

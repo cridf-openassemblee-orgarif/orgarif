@@ -31,7 +31,9 @@ class CommandController(
         val transactionManager: PlatformTransactionManager,
 
         val addInstanceCommandHandler: AddInstanceCommandHandler,
+        val addLienDeliberationCommandHandler: AddLienDeliberationCommandHandler,
         val addRepresentantCommandHandler: AddRepresentantCommandHandler,
+        val createDeliberationAndAddLienCommandHandler: CreateDeliberationAndAddLienCommandHandler,
         val createOrganismeCommandHandler: CreateOrganismeCommandHandler,
         val deleteInstanceCommandHandler: DeleteInstanceCommandHandler,
         val deleteRepresentantCommandHandler: DeleteRepresentantCommandHandler,
@@ -119,7 +121,9 @@ class CommandController(
     @Suppress("UNCHECKED_CAST")
     private fun handler(command: Command): CommandHandler<Command, CommandResponse> = when (command) {
         is AddInstanceCommand -> addInstanceCommandHandler
+        is AddLienDeliberationCommand -> addLienDeliberationCommandHandler
         is AddRepresentantCommand -> addRepresentantCommandHandler
+        is CreateDeliberationAndAddLienCommand -> createDeliberationAndAddLienCommandHandler
         is CreateOrganismeCommand -> createOrganismeCommandHandler
         is DeleteInstanceCommand -> deleteInstanceCommandHandler
         is DeleteRepresentantCommand -> deleteRepresentantCommandHandler

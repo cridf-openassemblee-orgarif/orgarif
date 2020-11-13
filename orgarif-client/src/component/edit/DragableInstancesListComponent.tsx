@@ -14,7 +14,7 @@ import { FullInstance, Representant } from '../../domain/organisme';
 import { NombreRepresentantsComponent } from '../NombreRepresentantsComponent';
 import { DeleteInstanceButton } from './DeleteInstanceButton';
 import { DragAndDropItem } from './DragAndDropContainer';
-import { EditDeliberationsListComponent } from './EditDeliberationsListComponent';
+import { EditLienDeliberationsListComponent } from './EditLienDeliberationsListComponent';
 import { EditRepresentantsListComponent } from './EditRepresentantsListComponent';
 
 const padding = 8;
@@ -124,7 +124,7 @@ export const DragableInstancesListComponent = (props: {
                       />
                     </div>
                   </div>
-                  <EditDeliberationsListComponent
+                  <EditLienDeliberationsListComponent
                     lienDeliberations={i.lienDeliberations}
                     organismeId={props.organismeId}
                     instanceId={i.infos.id}

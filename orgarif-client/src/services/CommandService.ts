@@ -2,8 +2,12 @@ import { appContext } from '../ApplicationContext';
 import {
   AddInstanceCommand,
   AddInstanceCommandResponse,
+  AddLienDeliberationCommand,
+  AddLienDeliberationCommandResponse,
   AddRepresentantCommand,
   AddRepresentantCommandResponse,
+  CreateDeliberationAndAddLienCommand,
+  CreateDeliberationAndAddLienCommandResponse,
   CreateOrganismeCommand,
   CreateOrganismeCommandResponse,
   DeleteInstanceCommand,
@@ -24,10 +28,20 @@ export class CommandService {
   ): Promise<AddInstanceCommandResponse> =>
     this.command('AddInstanceCommand', command);
 
+  public addLienDeliberationCommand = (
+    command: AddLienDeliberationCommand
+  ): Promise<AddLienDeliberationCommandResponse> =>
+    this.command('AddLienDeliberationCommand', command);
+
   public addRepresentantCommand = (
     command: AddRepresentantCommand
   ): Promise<AddRepresentantCommandResponse> =>
     this.command('AddRepresentantCommand', command);
+
+  public createDeliberationAndAddLienCommand = (
+    command: CreateDeliberationAndAddLienCommand
+  ): Promise<CreateDeliberationAndAddLienCommandResponse> =>
+    this.command('CreateDeliberationAndAddLienCommand', command);
 
   public createOrganismeCommand = (
     command: CreateOrganismeCommand

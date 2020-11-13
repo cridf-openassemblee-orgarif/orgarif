@@ -7,7 +7,11 @@ object CommandConfiguration {
         // TODO loggedIn
         is AddInstanceCommand -> AuthenticationLevel.neutral
         // TODO loggedIn
+        is AddLienDeliberationCommand -> AuthenticationLevel.neutral
+        // TODO loggedIn
         is AddRepresentantCommand -> AuthenticationLevel.neutral
+        // TODO loggedIn
+        is CreateDeliberationAndAddLienCommand -> AuthenticationLevel.neutral
         // TODO loggedIn
         is CreateOrganismeCommand -> AuthenticationLevel.neutral
         // TODO loggedIn

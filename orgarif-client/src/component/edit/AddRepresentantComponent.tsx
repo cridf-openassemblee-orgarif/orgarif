@@ -79,6 +79,7 @@ export const AddRepresentantComponent = (props: {
           variant="outlined"
         />
       )}
+      size={'small'}
     />
   );
 };

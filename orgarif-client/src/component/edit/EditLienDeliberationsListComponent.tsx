@@ -1,12 +1,12 @@
 /** @jsx jsx */
-import { jsx } from '@emotion/core';
+import { css, jsx } from '@emotion/core';
 import { useState } from 'react';
 import { InstanceId, OrganismeId } from '../../domain/id';
 import { stringifyNominalString } from '../../domain/nominal-class';
 import { LienDeliberationInfos } from '../../domain/organisme';
-import { AddDeliberationComponent } from './AddDeliberationComponent';
+import { AddLienDeliberationComponent } from './AddLienDeliberationComponent';
 
-export const EditDeliberationsListComponent = (props: {
+export const EditLienDeliberationsListComponent = (props: {
   lienDeliberations: LienDeliberationInfos[];
   organismeId: OrganismeId;
   instanceId?: InstanceId;
@@ -21,11 +21,21 @@ export const EditDeliberationsListComponent = (props: {
     <div>
       <h3>Délibérations</h3>
       {lienDeliberations.map((d) => (
-        <div key={stringifyNominalString(d.id)}>
+        <div
+          key={stringifyNominalString(d.id)}
+          css={css`
+            padding: 10px 0;
+          `}
+        >
           {d.deliberation.libelle} du {d.deliberation.deliberationDate}
         </div>
       ))}
-      <AddDeliberationComponent />
+      <AddLienDeliberationComponent
+        organismeId={props.organismeId}
+        instanceId={props.instanceId}
+        lienDeliberations={lienDeliberations}
+        setLienDeliberations={setLienDeliberations}
+      />
     </div>
   );
 };

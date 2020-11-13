@@ -1,8 +1,15 @@
 package orgarif.error
 
+import com.fasterxml.jackson.databind.JsonMappingException
 import freemarker.ext.beans.BeansWrapperBuilder
 import freemarker.template.Configuration
 import mu.KotlinLogging
+import org.apache.tomcat.util.http.fileupload.impl.SizeLimitExceededException
+import org.springframework.web.bind.annotation.ControllerAdvice
+import org.springframework.web.bind.annotation.ExceptionHandler
+import org.springframework.web.context.request.WebRequest
+import org.springframework.web.servlet.ModelAndView
+import org.springframework.web.servlet.view.json.MappingJackson2JsonView
 import orgarif.config.ApplicationConstants
 import orgarif.domain.ApplicationEnvironment
 import orgarif.domain.MimeType
@@ -13,12 +20,6 @@ import orgarif.service.RandomService
 import orgarif.service.user.UserSessionHelper
 import orgarif.utils.OrgarifStringUtils
 import orgarif.utils.Serializer
-import org.apache.tomcat.util.http.fileupload.impl.SizeLimitExceededException
-import org.springframework.web.bind.annotation.ControllerAdvice
-import org.springframework.web.bind.annotation.ExceptionHandler
-import org.springframework.web.context.request.WebRequest
-import org.springframework.web.servlet.ModelAndView
-import org.springframework.web.servlet.view.json.MappingJackson2JsonView
 import javax.servlet.http.HttpServletResponse
 
 @ControllerAdvice
@@ -42,7 +43,8 @@ class ApplicationExceptionHandler(val applicationInstance: ApplicationInstance,
                 } else {
                     null
                 }
-        val subCause = exception.cause?.cause
+        val cause = exception.cause
+        val subCause = cause?.cause
         when {
             subCause is SizeLimitExceededException -> {
                 // TODO[secu] tester dans la pratiqu, il se passe quoi avec le user null
@@ -60,6 +62,20 @@ class ApplicationExceptionHandler(val applicationInstance: ApplicationInstance,
                 logger.info { "[user message exception] ${exception.logMessage}" }
                 return render(request, response, RequestError(id, 500, "DisplayError",
                         exception.displayMessage, dateService.now(), readableStackTrace))
+            }
+            exception is JsonMappingException -> {
+                when (cause) {
+                    is LiteSerializationLocalDateException -> {
+                        return render(request, response, RequestError(id, 400, "SerializationError",
+                                // on ne met pas la date dans le message car non formattée ce n'est pas clair
+                                // (2020-33-33 vs 33/33/2020)
+                                "La date n'est pas valide.", dateService.now(), readableStackTrace))
+                    }
+                    else -> {
+                        return render(request, response, RequestError(id, 500, "Erreur", "Erreur inconnue",
+                                dateService.now(), readableStackTrace))
+                    }
+                }
             }
             else -> {
                 if (UserSessionHelper.isAuthenticated()) {

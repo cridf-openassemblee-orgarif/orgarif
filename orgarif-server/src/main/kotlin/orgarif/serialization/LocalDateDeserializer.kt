@@ -3,12 +3,17 @@ package orgarif.serialization
 import com.fasterxml.jackson.core.JsonParser
 import com.fasterxml.jackson.databind.DeserializationContext
 import com.fasterxml.jackson.databind.deser.std.StdDeserializer
+import orgarif.error.LiteSerializationLocalDateException
 import java.time.LocalDate
+import java.time.format.DateTimeParseException
 
 class LocalDateDeserializer : StdDeserializer<LocalDate>(LocalDate::class.java) {
 
-    override fun deserialize(p: JsonParser, ctxt: DeserializationContext): LocalDate {
-        return LocalDate.parse(p.valueAsString, LocalDateSerializer.formatter)
-    }
+    override fun deserialize(p: JsonParser, ctxt: DeserializationContext): LocalDate =
+        try {
+            LocalDate.parse(p.valueAsString, LocalDateSerializer.formatter)
+        } catch (e: DateTimeParseException) {
+            throw LiteSerializationLocalDateException(p.valueAsString)
+        }
 
 }
