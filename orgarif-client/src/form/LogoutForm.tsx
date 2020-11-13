@@ -1,5 +1,6 @@
 /** @jsx jsx */
-import { jsx } from '@emotion/core';
+import { css, jsx } from '@emotion/core';
+import { Button } from '@material-ui/core';
 import * as React from 'react';
 import { PureComponent } from 'react';
 import { appContext } from '../ApplicationContext';
@@ -34,7 +35,19 @@ export class LogoutForm extends PureComponent {
             value={appContext.csrfTokenService().token}
           />
         </form>
-        <button onClick={this.logout}>logout</button>
+        <Button
+          onClick={this.logout}
+          size="small"
+          css={css`
+            top: -4px;
+            height: 24px;
+            background-color: white;
+            font-size: 0.8rem;
+            padding: 0 10px;
+          `}
+        >
+          Se déconnecter
+        </Button>
       </React.Fragment>
     );
   }

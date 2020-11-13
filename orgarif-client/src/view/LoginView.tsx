@@ -1,5 +1,5 @@
 /** @jsx jsx */
-import { jsx } from '@emotion/core';
+import { css, jsx } from '@emotion/core';
 import { useState } from 'react';
 import { useRecoilState } from 'recoil';
 import { appContext } from '../ApplicationContext';
@@ -7,11 +7,12 @@ import { MainContainer } from '../container/MainContainer';
 import { LoginResult } from '../domain/user';
 import { Errors } from '../errors';
 import { LoginForm, LoginFormDto } from '../form/LoginForm';
+import { RouteLink } from '../routing/RouteLink';
 import { state } from '../state/state';
 import { assertUnreachable } from '../utils';
 
 export const LoginView = () => {
-  const [_, setUserInfos] = useRecoilState(state.userInfos);
+  const [userInfos, setUserInfos] = useRecoilState(state.userInfos);
   const [loginResult, setLoginResult] = useState<LoginResult | undefined>(
     undefined
   );
@@ -39,9 +40,69 @@ export const LoginView = () => {
   };
   return (
     <MainContainer>
-      <h1>Login view</h1>
-      <LoginForm onSubmit={login} />
-      {loginResult}
+      <div
+        css={css`
+          display: flex;
+          justify-content: center;
+        `}
+      >
+        <div>
+          <h1
+            css={css`
+              text-align: center;
+            `}
+          >
+            Identification
+          </h1>
+          <div
+            css={css`
+              width: 400px;
+            `}
+          >
+            {loginResult !== 'LOGGED_IN' && !userInfos && (
+              <LoginForm onSubmit={login} />
+            )}
+            {userInfos && (
+              <div
+                css={css`
+                  text-align: center;
+                `}
+              >
+                Vous êtes connecté
+                <br />
+                <RouteLink
+                  route={{
+                    name: 'ListOrganismesRoute',
+                  }}
+                >
+                  Liste des organismes
+                </RouteLink>
+              </div>
+            )}
+            {loginResult && (
+              <div
+                css={css`
+                  text-align: center;
+                  margin-top: 20px;
+                `}
+              >
+                {(() => {
+                  switch (loginResult) {
+                    case 'LOGGED_IN':
+                      return null;
+                    case 'USER_NOT_FOUND':
+                      return <div>Utilisateur non trouvé</div>;
+                    case 'BAD_PASSWORD':
+                      return <div>Mauvais mot de passe</div>;
+                    default:
+                      assertUnreachable(loginResult);
+                  }
+                })()}
+              </div>
+            )}
+          </div>
+        </div>
+      </div>
     </MainContainer>
   );
 };

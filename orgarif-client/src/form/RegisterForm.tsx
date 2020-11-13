@@ -1,8 +1,11 @@
 /** @jsx jsx */
-import { jsx } from '@emotion/core';
-import { ChangeEvent, useEffect, useState } from 'react';
+import { css, jsx } from '@emotion/core';
+import { Button } from '@material-ui/core';
+import { ChangeEvent, useState } from 'react';
 import { appContext } from '../ApplicationContext';
+import { PasswordInput } from '../component/base-component/PasswordInput';
 import { SimpleForm } from '../component/base-component/SimpleForm';
+import { TextInput } from '../component/base-component/TextInput';
 
 export interface RegisterFormDto {
   mail: string;
@@ -14,32 +17,58 @@ interface Props {
 }
 
 export const RegisterForm = (props: Props) => {
-  const [login, setLogin] = useState('');
   const [mailIsAlreadyTaken, setMailIsAlreadyTaken] = useState(false);
-  useEffect(() => {
-    if (login !== '') {
-      appContext
-        .queryService()
-        .isLoginAlreadyTakenQuery({ login })
-        .then((r) => {
-          setMailIsAlreadyTaken(r.alreadyTaken);
-        });
-    }
-  }, [login]);
-  const loginOnChange = (event: ChangeEvent<HTMLInputElement>) =>
-    setLogin(event.target.value);
+  const [password, setPassword] = useState('');
+  const checkLoginAvailability = (event: ChangeEvent<HTMLInputElement>) => {
+    const login = event.target.value;
+    appContext
+      .queryService()
+      .isLoginAlreadyTakenQuery({ login })
+      .then((r) => {
+        setMailIsAlreadyTaken(r.alreadyTaken);
+      });
+  };
   return (
-    <SimpleForm onSubmit={props.onSubmit}>
-      <label>
-        Email :
-        <input name="mail" onChange={loginOnChange} />
-      </label>
-      {mailIsAlreadyTaken && <div>Email is already taken</div>}
-      <label>
-        Password :
-        <input name="password" />
-      </label>
-      <input type="submit" />
+    <SimpleForm
+      onSubmit={(dto: { mail: string }) =>
+        props.onSubmit({
+          mail: dto.mail,
+          password,
+        })
+      }
+    >
+      <div
+        css={css`
+          margin: 10px 0;
+        `}
+      >
+        <TextInput
+          name="mail"
+          label={'E-mail'}
+          onChange={checkLoginAvailability}
+        />
+      </div>
+      {mailIsAlreadyTaken && (
+        <div
+          css={css`
+            margin: 10px 0;
+          `}
+        >
+          L'e-mail est déjà pris
+        </div>
+      )}
+      <div
+        css={css`
+          margin: 10px 0;
+        `}
+      >
+        <PasswordInput
+          label="Mode de passe"
+          value={password}
+          setValue={setPassword}
+        />
+      </div>
+      <Button type="submit">Créer le compte</Button>
     </SimpleForm>
   );
 };

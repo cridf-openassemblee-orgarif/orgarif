@@ -15,12 +15,17 @@ export const MainContainer = (props: PropsWithChildren<{}>) => (
     <div
       css={css`
         flex: 1;
-        margin: 10px;
         overflow: scroll;
       `}
     >
       <Menu />
-      {props.children}
+      <div
+        css={css`
+          margin: 10px;
+        `}
+      >
+        {props.children}
+      </div>
     </div>
   </div>
 );

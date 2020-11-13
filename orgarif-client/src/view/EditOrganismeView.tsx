@@ -1,5 +1,6 @@
 /** @jsx jsx */
-import { jsx } from '@emotion/core';
+import { css, jsx } from '@emotion/core';
+import { ArrowBackIos } from '@material-ui/icons';
 import { useEffect, useState } from 'react';
 import { appContext } from '../ApplicationContext';
 import { EditOrganismeComponent } from '../component/edit/EditOrganismeComponent';
@@ -27,7 +28,16 @@ export const EditOrganismeView = (props: {
   }, []);
   return (
     <MainContainer>
-      <RouteLink route={{ name: 'ListOrganismesRoute' }}>list</RouteLink>
+      <RouteLink route={{ name: 'ListOrganismesRoute' }}>
+        <span
+          css={css`
+            top: 6px;
+          `}
+        >
+          <ArrowBackIos />
+        </span>{' '}
+        Retour liste des organismes
+      </RouteLink>
       {loading && <div>Chargement...</div>}
       {organisme && (
         <EditOrganismeComponent organisme={organisme} setLoading={setLoading} />

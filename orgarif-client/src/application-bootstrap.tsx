@@ -1,5 +1,5 @@
 import { Global } from '@emotion/core';
-import { MuiThemeProvider } from '@material-ui/core';
+import { MuiThemeProvider, StylesProvider } from '@material-ui/core';
 import createMuiTheme from '@material-ui/core/styles/createMuiTheme';
 import * as React from 'react';
 import * as ReactDOM from 'react-dom';
@@ -33,11 +33,13 @@ ReactDOM.render(
   <RecoilRoot>
     <Global styles={[globalStyles]} />
     <ReactRouter history={appContext.applicationHistory().browserHistory}>
-      <MuiThemeProvider theme={muiTheme}>
-        <Root>
-          <ApplicationRouter />
-        </Root>
-      </MuiThemeProvider>
+      <StylesProvider injectFirst>
+        <MuiThemeProvider theme={muiTheme}>
+          <Root>
+            <ApplicationRouter />
+          </Root>
+        </MuiThemeProvider>
+      </StylesProvider>
     </ReactRouter>
   </RecoilRoot>,
   document.getElementById('root')

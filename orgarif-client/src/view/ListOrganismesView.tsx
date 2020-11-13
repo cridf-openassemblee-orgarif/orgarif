@@ -1,5 +1,6 @@
 /** @jsx jsx */
 import { css, jsx } from '@emotion/core';
+import { Button } from '@material-ui/core';
 import { useEffect, useState } from 'react';
 import { appContext } from '../ApplicationContext';
 import { SimpleForm } from '../component/base-component/SimpleForm';
@@ -23,24 +24,28 @@ export const ListOrganismesView = () => {
       });
   }, []);
   const newOrganismeOnSubmit = (dto: { nom: string }) => {
-    appContext
-      .commandService()
-      .createOrganismeCommand(dto)
-      .then((r) => {
-        appContext.applicationHistory().goTo({
-          name: 'EditOrganismeRoute',
-          id: r.id,
+    if (dto.nom !== '') {
+      appContext
+        .commandService()
+        .createOrganismeCommand(dto)
+        .then((r) => {
+          appContext.applicationHistory().goTo({
+            name: 'EditOrganismeRoute',
+            id: r.id,
+          });
         });
-      });
+    }
   };
   return (
     <MainContainer>
       <h1>Liste des organismes</h1>
-      {!organismes && <div>Chargement...</div>}
       <SimpleForm onSubmit={newOrganismeOnSubmit}>
         <TextInput name="nom" label="Nouvel organisme" />
-        <button>ok</button>
+        <Button type="submit" color="primary">
+          ok
+        </Button>
       </SimpleForm>
+      {!organismes && <div>Chargement...</div>}
       {organismes &&
         organismes.map((o) => (
           <div
@@ -52,12 +57,12 @@ export const ListOrganismesView = () => {
             `}
           >
             <h2>{o.nom}</h2>
-            <RouteLink route={{ name: 'OrganismeRoute', id: o.id }}>
-              view
-            </RouteLink>
-            <br />
+            {/*<RouteLink route={{ name: 'OrganismeRoute', id: o.id }}>*/}
+            {/*  view*/}
+            {/*</RouteLink>*/}
+            {/*<br />*/}
             <RouteLink route={{ name: 'EditOrganismeRoute', id: o.id }}>
-              edit
+              Éditer
             </RouteLink>
           </div>
         ))}

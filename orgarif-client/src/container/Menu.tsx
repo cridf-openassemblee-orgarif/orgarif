@@ -1,52 +1,80 @@
 /** @jsx jsx */
-import { jsx } from '@emotion/core';
+import { css, jsx } from '@emotion/core';
 import * as React from 'react';
-import { Link } from 'react-router-dom';
 import { useRecoilState } from 'recoil';
 import { LogoutForm } from '../form/LogoutForm';
 import { RouteLink } from '../routing/RouteLink';
 import { state } from '../state/state';
+import { colors } from '../styles/vars';
 
 export const Menu = () => {
   const [userInfos] = useRecoilState(state.userInfos);
   return (
-    <div>
-      {userInfos && <div>Connected user : {userInfos.mail}</div>}
-      <div>
-        <RouteLink
-          route={{
-            name: 'RootRoute',
-          }}
-        >
-          Go to root
-        </RouteLink>
-      </div>
-      <div>
-        <Link to="nimporte-quoi">404</Link>
-      </div>
-      {userInfos && <LogoutForm />}
-      {!userInfos && (
-        <React.Fragment>
-          <div>
+    <div
+      css={css`
+        display: flex;
+        justify-content: space-between;
+        width: 100%;
+        height: 36px;
+        padding: 8px 20px;
+        background: ${colors.grey};
+      `}
+    >
+      <RouteLink
+        forwardCss={css`
+          color: ${colors.white};
+          text-decoration: none;
+          text-transform: uppercase;
+        `}
+        route={{
+          name: 'RootRoute',
+        }}
+      >
+        Orgarif
+      </RouteLink>
+      <div
+        css={css`
+          display: flex;
+        `}
+      >
+        {userInfos && (
+          <div
+            css={css`
+              color: ${colors.white};
+              margin: 0 10px;
+            `}
+          >
+            {userInfos.mail}
+          </div>
+        )}
+        {userInfos && <LogoutForm />}
+        {!userInfos && (
+          <React.Fragment>
             <RouteLink
+              forwardCss={css`
+                color: ${colors.white};
+                margin: 0 10px;
+              `}
               route={{
                 name: 'LoginRoute',
               }}
             >
-              Login
+              Identification
             </RouteLink>
-          </div>
-          <div>
             <RouteLink
+              forwardCss={css`
+                color: ${colors.white};
+                margin: 0 10px;
+              `}
               route={{
                 name: 'RegisterRoute',
               }}
             >
-              Register
+              Créer un compte
             </RouteLink>
-          </div>
-        </React.Fragment>
-      )}
+          </React.Fragment>
+        )}
+      </div>
     </div>
   );
 };
