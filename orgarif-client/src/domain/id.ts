@@ -6,8 +6,8 @@ export type OrgarifId =
   | DeliberationId
   | EluId
   | InstanceId
+  | LienDeliberationId
   | NatureJuridiqueId
-  | OrganismeDeliberationId
   | OrganismeId
   | RepresentantId
   | RepresentantListId
@@ -19,8 +19,9 @@ export type OrgarifId =
 export type DeliberationId = NominalString<'DeliberationId'>;
 export type EluId = NominalString<'EluId'>;
 export type InstanceId = NominalString<'InstanceId'>;
+export type LienDeliberationId = NominalString<'LienDeliberationId'>;
+export type LienDeliberationListId = NominalString<'LienDeliberationListId'>;
 export type NatureJuridiqueId = NominalString<'NatureJuridiqueId'>;
-export type OrganismeDeliberationId = NominalString<'OrganismeDeliberationId'>;
 export type OrganismeId = NominalString<'OrganismeId'>;
 export type RepresentantId = NominalString<'RepresentantId'>;
 export type RepresentantListId = NominalString<'RepresentantListId'>;

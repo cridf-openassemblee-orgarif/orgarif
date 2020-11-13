@@ -1,5 +1,6 @@
 package orgarif.query.mail
 
+import DeliberationInfos
 import org.springframework.stereotype.Service
 import orgarif.query.QueryHandler
 import orgarif.query.SearchDeliberationQuery
@@ -13,6 +14,7 @@ class SearchDeliberationQueryHandler(val deliberationDao: DeliberationDao) :
 
     override fun handle(query: SearchDeliberationQuery): SearchDeliberationQueryResponse {
         val results = deliberationDao.search(query.searchToken)
+                .map { DeliberationInfos(it.id, it.libelle, it.deliberationDate) }
         return SearchDeliberationQueryResponse(results)
     }
 

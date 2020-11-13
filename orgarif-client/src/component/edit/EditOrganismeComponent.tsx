@@ -77,12 +77,12 @@ export const EditOrganismeComponent = (props: {
   setLoading: (l: boolean) => void;
 }) => {
   const organisme = props.organisme;
-  const [representantsLists, setRepresentantsLists] = useState<
-    Dict<RepresentantListId, Representant[]>
-  >({});
   const [instances, setInstances] = useState<FullInstance[]>(
     organisme.instances
   );
+  const [representantsLists, setRepresentantsLists] = useState<
+    Dict<RepresentantListId, Representant[]>
+  >({});
   useEffect(() => {
     const initialLists: Dict<RepresentantListId, Representant[]> = {};
     set(
@@ -216,7 +216,8 @@ export const EditOrganismeComponent = (props: {
           </div>
         </div>
         <EditDeliberationsListComponent
-          deliberations={organisme.deliberations}
+          lienDeliberations={organisme.lienDeliberations}
+          organismeId={organisme.infos.id}
         />
         {instances.length !== 0 && (
           <div>

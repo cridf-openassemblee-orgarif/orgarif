@@ -3,9 +3,9 @@ import { css, jsx } from '@emotion/core';
 import { useRecoilValue } from 'recoil';
 import { get, stringifyNominalString } from '../domain/nominal-class';
 import {
-  DeliberationInfos,
   FullInstance,
   FullOrganisme,
+  LienDeliberationInfos,
   Representant,
 } from '../domain/organisme';
 import { state } from '../state/state';
@@ -84,17 +84,17 @@ const RepresentantsComponent = (props: {
 };
 
 const DeliberationsComponent = (props: {
-  deliberations: DeliberationInfos[];
+  lienDeliberations: LienDeliberationInfos[];
 }) => {
-  if (props.deliberations.length === 0) {
+  if (props.lienDeliberations.length === 0) {
     return null;
   }
   return (
     <div>
       <h3>Délibérations</h3>
-      {props.deliberations.map((d) => (
+      {props.lienDeliberations.map((d) => (
         <div key={stringifyNominalString(d.id)}>
-          {d.libelle} du {d.deliberationDate}
+          {d.deliberation.libelle} du {d.deliberation.deliberationDate}
         </div>
       ))}
     </div>
@@ -112,7 +112,9 @@ const InstanceComponent = (props: { instance: FullInstance }) => (
       representants={props.instance.representants}
       suppleants={props.instance.suppleants}
     />
-    <DeliberationsComponent deliberations={props.instance.deliberations} />
+    <DeliberationsComponent
+      lienDeliberations={props.instance.lienDeliberations}
+    />
   </div>
 );
 
@@ -170,7 +172,7 @@ export const OrganismeComponent = (props: { organisme: FullOrganisme }) => {
         representants={organisme.representants}
         suppleants={organisme.suppleants}
       />
-      <DeliberationsComponent deliberations={organisme.deliberations} />
+      <DeliberationsComponent lienDeliberations={organisme.lienDeliberations} />
       {organisme.instances.length !== 0 && (
         <div>
           <h3>Instances</h3>

@@ -1,7 +1,9 @@
 import { LoginResult, RegisterResult, UserInfos } from '../domain/user';
 import {
+  DeliberationId,
   EluId,
   InstanceId,
+  LienDeliberationId,
   NatureJuridiqueId,
   OrganismeId,
   RepresentantId,
@@ -9,6 +11,7 @@ import {
   TypeStructureId,
 } from './id';
 import { RepresentantOrSuppleant } from './organisme';
+import { LocalDate } from './time';
 
 export interface AddInstanceCommand {
   nomInstance: string;
@@ -17,6 +20,16 @@ export interface AddInstanceCommand {
 
 export interface AddInstanceCommandResponse {
   id: InstanceId;
+}
+
+export interface AddLienDeliberationCommand {
+  deliberationId: DeliberationId;
+  organismeId: OrganismeId;
+  instanceId?: InstanceId;
+}
+
+export interface AddLienDeliberationCommandResponse {
+  lienDeliberationId: LienDeliberationId;
 }
 
 export interface AddRepresentantCommand {
@@ -28,6 +41,18 @@ export interface AddRepresentantCommand {
 
 export interface AddRepresentantCommandResponse {
   id: RepresentantId;
+}
+
+export interface CreateDeliberationAndAddLienCommand {
+  libelle: string;
+  deliberationDate: LocalDate;
+  organismeId: OrganismeId;
+  instanceId?: InstanceId;
+}
+
+export interface CreateDeliberationAndAddLienCommandResponse {
+  deliberationId: DeliberationId;
+  lienDeliberationId: LienDeliberationId;
 }
 
 export interface CreateOrganismeCommand {

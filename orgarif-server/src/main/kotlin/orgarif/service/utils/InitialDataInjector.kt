@@ -56,7 +56,7 @@ class InitialDataInjector(@Value("\${injectFakeData}") val injectFakeData: Boole
                         lastModificationDate = now))
                 val deliberationId = deliberation("Délibération organisme 1")
                 lienDeliberationDao.insert(LienDeliberationDao.Record(
-                        id = OrganismeDeliberationId(randomService.randomUUID()),
+                        id = LienDeliberationId(randomService.randomUUID()),
                         deliberationId = deliberationId,
                         organismeId = fakeOrganismeId1,
                         instanceId = null,
@@ -77,7 +77,7 @@ class InitialDataInjector(@Value("\${injectFakeData}") val injectFakeData: Boole
                         lastModificationDate = now))
                 val deliberationId1 = deliberation("Délibération organisme 2")
                 lienDeliberationDao.insert(LienDeliberationDao.Record(
-                        id = OrganismeDeliberationId(randomService.randomUUID()),
+                        id = LienDeliberationId(randomService.randomUUID()),
                         deliberationId = deliberationId1,
                         organismeId = fakeOrganismeId2,
                         instanceId = null,
@@ -93,7 +93,7 @@ class InitialDataInjector(@Value("\${injectFakeData}") val injectFakeData: Boole
                         lastModificationDate = now))
                 val deliberationId2 = deliberation("Délibération instance 1 organisme 2")
                 lienDeliberationDao.insert(LienDeliberationDao.Record(
-                        id = OrganismeDeliberationId(randomService.randomUUID()),
+                        id = LienDeliberationId(randomService.randomUUID()),
                         deliberationId = deliberationId2,
                         organismeId = fakeOrganismeId2,
                         instanceId = fakeOrganisme2InstanceId1,
@@ -109,7 +109,7 @@ class InitialDataInjector(@Value("\${injectFakeData}") val injectFakeData: Boole
                         lastModificationDate = now))
                 val deliberationId3 = deliberation("Délibération instance 2 organisme 2")
                 lienDeliberationDao.insert(LienDeliberationDao.Record(
-                        id = OrganismeDeliberationId(randomService.randomUUID()),
+                        id = LienDeliberationId(randomService.randomUUID()),
                         deliberationId = deliberationId3,
                         organismeId = fakeOrganismeId2,
                         instanceId = fakeOrganisme2InstanceId2,
@@ -130,7 +130,7 @@ class InitialDataInjector(@Value("\${injectFakeData}") val injectFakeData: Boole
                         lastModificationDate = now))
                 val deliberationId1 = deliberation("Délibération organisme 3")
                 lienDeliberationDao.insert(LienDeliberationDao.Record(
-                        id = OrganismeDeliberationId(randomService.randomUUID()),
+                        id = LienDeliberationId(randomService.randomUUID()),
                         deliberationId = deliberationId1,
                         organismeId = fakeOrganismeId3,
                         instanceId = null,
@@ -146,7 +146,7 @@ class InitialDataInjector(@Value("\${injectFakeData}") val injectFakeData: Boole
                         lastModificationDate = now))
                 val deliberationId2 = deliberation("Délibération instance 1 organisme 3")
                 lienDeliberationDao.insert(LienDeliberationDao.Record(
-                        id = OrganismeDeliberationId(randomService.randomUUID()),
+                        id = LienDeliberationId(randomService.randomUUID()),
                         deliberationId = deliberationId2,
                         organismeId = fakeOrganismeId3,
                         instanceId = fakeOrganisme3InstanceId1,
@@ -162,7 +162,7 @@ class InitialDataInjector(@Value("\${injectFakeData}") val injectFakeData: Boole
                         lastModificationDate = now))
                 val deliberationId3 = deliberation("Délibération instance 2 organisme 3")
                 lienDeliberationDao.insert(LienDeliberationDao.Record(
-                        id = OrganismeDeliberationId(randomService.randomUUID()),
+                        id = LienDeliberationId(randomService.randomUUID()),
                         deliberationId = deliberationId3,
                         organismeId = fakeOrganismeId3,
                         instanceId = fakeOrganisme3InstanceId2,

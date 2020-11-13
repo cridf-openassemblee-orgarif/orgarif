@@ -2,10 +2,7 @@ package orgarif.repository.sql
 
 import org.jooq.DSLContext
 import org.springframework.stereotype.Repository
-import orgarif.domain.DeliberationId
-import orgarif.domain.InstanceId
-import orgarif.domain.OrganismeDeliberationId
-import orgarif.domain.OrganismeId
+import orgarif.domain.*
 import orgarif.jooq.generated.Tables
 import orgarif.jooq.generated.Tables.LIEN_DELIBERATION
 import orgarif.jooq.generated.tables.records.LienDeliberationRecord
@@ -16,7 +13,7 @@ import java.time.ZoneOffset
 @Repository
 class LienDeliberationDao(val jooq: DSLContext) {
 
-    data class Record(val id: OrganismeDeliberationId,
+    data class Record(val id: LienDeliberationId,
                       val deliberationId: DeliberationId,
                       val organismeId: OrganismeId,
                       val instanceId: InstanceId?,

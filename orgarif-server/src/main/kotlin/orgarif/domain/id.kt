@@ -18,9 +18,9 @@ data class DeliberationId(override val rawId: UUID) : OrgarifUuidId
 data class DeploymentLogId(override val rawId: UUID) : OrgarifUuidId
 data class EluId(override val rawId: UUID) : OrgarifUuidId
 data class InstanceId(override val rawId: UUID) : OrgarifUuidId
+data class LienDeliberationId(override val rawId: UUID) : OrgarifUuidId
 data class MailLogId(override val rawId: UUID) : OrgarifUuidId
 data class NatureJuridiqueId(override val rawId: UUID) : OrgarifUuidId
-data class OrganismeDeliberationId(override val rawId: UUID) : OrgarifUuidId
 data class OrganismeId(override val rawId: UUID) : OrgarifUuidId
 data class RepresentantId(override val rawId: UUID) : OrgarifUuidId
 data class RequestErrorId(override val rawId: UUID) : OrgarifUuidId

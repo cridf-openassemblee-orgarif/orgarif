@@ -125,7 +125,9 @@ export const DragableInstancesListComponent = (props: {
                     </div>
                   </div>
                   <EditDeliberationsListComponent
-                    deliberations={i.deliberations}
+                    lienDeliberations={i.lienDeliberations}
+                    organismeId={props.organismeId}
+                    instanceId={i.infos.id}
                   />
                 </div>
               )}

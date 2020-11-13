@@ -2,6 +2,7 @@ import {
   DeliberationId,
   EluId,
   InstanceId,
+  LienDeliberationId,
   NatureJuridiqueId,
   OrganismeId,
   RepresentantId,
@@ -42,19 +43,23 @@ export interface DeliberationInfos {
   id: DeliberationId;
   libelle: string;
   deliberationDate: LocalDate;
-  creationDate: Instant;
+}
+
+export interface LienDeliberationInfos {
+  id: LienDeliberationId;
+  deliberation: DeliberationInfos;
 }
 
 export interface FullInstance {
   infos: InstanceInfos;
-  deliberations: DeliberationInfos[];
+  lienDeliberations: LienDeliberationInfos[];
   representants: Representant[];
   suppleants: Representant[];
 }
 
 export interface FullOrganisme {
   infos: OrganismeInfos;
-  deliberations: DeliberationInfos[];
+  lienDeliberations: LienDeliberationInfos[];
   representants: Representant[];
   suppleants: Representant[];
   instances: FullInstance[];

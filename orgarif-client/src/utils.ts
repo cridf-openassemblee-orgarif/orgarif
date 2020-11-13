@@ -1,5 +1,9 @@
 import { ClientUid } from './domain/id';
-import { instanciateNominalString } from './domain/nominal-class';
+import {
+  instanciateNominalString,
+  stringifyNominalString,
+} from './domain/nominal-class';
+import { LocalDate } from './domain/time';
 
 export function assertUnreachable(x: never): never {
   throw new Error(`Expected unreachable code ! Value : "${JSON.stringify(x)}"`);
@@ -22,3 +26,8 @@ export const getCookie = (cookieName: string) => {
 
 export const compareByString = <T>(l: (o: T) => string) => (o1: T, o2: T) =>
   l(o1).localeCompare(l(o2));
+
+export const compareByLocalDate = <T>(l: (o: T) => LocalDate) => (
+  o1: T,
+  o2: T
+) => stringifyNominalString(l(o1)).localeCompare(stringifyNominalString(l(o2)));

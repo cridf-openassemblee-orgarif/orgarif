@@ -31,7 +31,7 @@ export const AddInstanceComponent = (props: {
             nom: nomInstance,
             organismeId: props.organismeId,
           },
-          deliberations: [],
+          lienDeliberations: [],
           representants: [],
           suppleants: [],
         };
