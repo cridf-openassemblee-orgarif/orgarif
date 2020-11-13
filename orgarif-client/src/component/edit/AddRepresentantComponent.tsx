@@ -27,7 +27,9 @@ export const AddRepresentantComponent = (props: {
   ) => void;
 }) => {
   const elus = useRecoilValue(state.elus);
-  const [value, setValue] = useState<Elu | undefined>(undefined);
+  // material wants null, no undefined. To reproduce bug with undefined : select
+  // one elu and then blur the input
+  const [value, setValue] = useState<Elu | null>(null);
   const [inputValue, setInputValue] = useState('');
   const addRepresentant = (eluId: EluId) => {
     appContext
@@ -55,7 +57,7 @@ export const AddRepresentantComponent = (props: {
         ];
         set(newRepresentantsLists, listId, newRepresentants);
         props.setRepresentantsLists(newRepresentantsLists);
-        setValue(undefined);
+        setValue(null);
         setInputValue('');
       });
   };
@@ -64,8 +66,8 @@ export const AddRepresentantComponent = (props: {
     <Autocomplete
       options={elus}
       getOptionLabel={label}
-      clearOnEscape={true}
-      clearOnBlur={true}
+      clearOnEscape
+      clearOnBlur
       value={value}
       onChange={(e, value: Elu) => addRepresentant(value.id)}
       inputValue={inputValue}
