@@ -1,5 +1,5 @@
 /** @jsx jsx */
-import { jsx } from '@emotion/core';
+import { jsx } from '@emotion/react';
 import { appContext } from '../../ApplicationContext';
 import { InstanceId, OrganismeId, RepresentantListId } from '../../domain/id';
 import { deleteItem, Dict } from '../../domain/nominal-class';

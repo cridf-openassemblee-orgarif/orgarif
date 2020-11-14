@@ -1,5 +1,5 @@
 /** @jsx jsx */
-import { css, jsx } from '@emotion/core';
+import { css, jsx } from '@emotion/react';
 import * as React from 'react';
 import { useRecoilState } from 'recoil';
 import { LogoutForm } from '../form/LogoutForm';

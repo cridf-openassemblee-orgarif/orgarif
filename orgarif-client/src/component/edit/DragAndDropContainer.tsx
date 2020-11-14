@@ -1,5 +1,5 @@
 /** @jsx jsx */
-import { jsx } from '@emotion/core';
+import { jsx } from '@emotion/react';
 import { PropsWithChildren } from 'react';
 import { DragDropContext, DropResult } from 'react-beautiful-dnd';
 import { appContext } from '../../ApplicationContext';

@@ -1,5 +1,5 @@
 /** @jsx jsx */
-import { css, jsx } from '@emotion/core';
+import { css, jsx } from '@emotion/react';
 import { useRecoilValue } from 'recoil';
 import { get, stringifyNominalString } from '../domain/nominal-class';
 import {

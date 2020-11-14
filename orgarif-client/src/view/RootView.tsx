@@ -1,5 +1,5 @@
 /** @jsx jsx */
-import { jsx } from '@emotion/core';
+import { jsx } from '@emotion/react';
 import { useRecoilState } from 'recoil';
 import { MainContainer } from '../container/MainContainer';
 import { RouteLink } from '../routing/RouteLink';

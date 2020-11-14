@@ -1,5 +1,5 @@
 /** @jsx jsx */
-import { css, jsx } from '@emotion/core';
+import { css, jsx } from '@emotion/react';
 import { PropsWithChildren } from 'react';
 import { hot } from 'react-hot-loader/root';
 import { ToastContainer } from 'react-toastify';

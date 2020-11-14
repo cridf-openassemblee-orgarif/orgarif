@@ -1,4 +1,4 @@
-import { Global } from '@emotion/core';
+import { Global } from '@emotion/react';
 import { MuiThemeProvider, StylesProvider } from '@material-ui/core';
 import createMuiTheme from '@material-ui/core/styles/createMuiTheme';
 import * as React from 'react';

@@ -1,5 +1,5 @@
 /** @jsx jsx */
-import { css, jsx } from '@emotion/core';
+import { css, jsx } from '@emotion/react';
 import { useState } from 'react';
 import { InstanceId, OrganismeId } from '../../domain/id';
 import { stringifyNominalString } from '../../domain/nominal-class';

@@ -1,5 +1,5 @@
 /** @jsx jsx */
-import { jsx } from '@emotion/core';
+import { jsx } from '@emotion/react';
 import * as React from 'react';
 import { InstanceId, OrganismeId, RepresentantListId } from '../../domain/id';
 import { Dict } from '../../domain/nominal-class';
