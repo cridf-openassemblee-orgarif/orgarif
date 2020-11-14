@@ -11,7 +11,9 @@
   },
   "prettier": {
     "parser": "typescript",
-    "singleQuote": true
+    "singleQuote": true,
+    "trailingComma": "none",
+    "arrowParens": "avoid"
   },
   "dependencies": {
     "@babel/runtime": "7.12.5",
