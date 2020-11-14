@@ -6,14 +6,10 @@ const cookieName = 'XSRF-TOKEN';
 export class CsrfTokenService {
   public header = 'X-XSRF-TOKEN';
   public inputName = '_csrf';
-  public token: string;
+  public token!: string;
 
   constructor() {
-    const token = getCookie(cookieName);
-    if (!token) {
-      throw Errors._4b60ab70();
-    }
-    this.token = token;
+    this.refreshToken()
   }
 
   public refreshToken() {
