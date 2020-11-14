@@ -4,7 +4,23 @@ import { PropsWithChildren } from 'react';
 import { hot } from 'react-hot-loader/root';
 import { ToastContainer } from 'react-toastify';
 import { cleanScrollBar } from '../common-classes';
-import { useWindowSize } from '../hook';
+
+// [doc] https://usehooks.com/useWindowSize/
+export const useWindowHeight = () => {
+  const [height, setHeight] = useState(0);
+
+  useEffect(() => {
+    const handleResize = () => setHeight(window.innerHeight);
+
+    window.addEventListener('resize', () => handleResize());
+
+    handleResize();
+
+    return () => window.removeEventListener('resize', handleResize);
+  });
+
+  return height;
+};
 
 // [doc] Dimensionnement du root element est fait en javascript, à cause de Chrome _mobile_, car
 // la window.innerHeight change lorsque la barre d'url s'affiche ou ne cache...
@@ -19,13 +35,13 @@ import { useWindowSize } from '../hook';
 // min-height: -webkit-fill-available; => popup complètement coupée en bar hidden
 // cf onetab "100vh"
 const Root = (props: PropsWithChildren<{}>) => {
-  const size = useWindowSize();
+  const height = useWindowHeight();
   return (
     <div
       css={css`
         position: absolute;
         width: 100%;
-        height: ${size.height}px;
+        height: ${height}px;
         overflow: hidden;
       `}
     >
