@@ -14,12 +14,7 @@ module.exports = {
   devtool: 'source-map', // 17969ms
   // devtool: 'inline-source-map', // 18024ms
   // devtool: 'cheap-module-eval-source-map', // 18349ms
-  entry: [
-    'react-hot-loader/patch',
-    `webpack-dev-server/client?http://${jsBundleHost}:${port}`,
-    'webpack/hot/only-dev-server',
-    '../src/index',
-  ],
+  entry: ['react-hot-loader/patch', '../src/index'],
   resolve: Object.assign(base.resolve, {
     alias: {
       joi: 'joi-browser',
