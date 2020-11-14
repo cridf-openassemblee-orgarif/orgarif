@@ -1,6 +1,6 @@
 /** @jsx jsx */
 import { css, jsx } from '@emotion/core';
-import { FunctionComponent } from 'react';
+import { PropsWithChildren } from 'react';
 import { hot } from 'react-hot-loader/root';
 import { ToastContainer } from 'react-toastify';
 import { cleanScrollBar } from '../common-classes';
@@ -18,7 +18,7 @@ import { useWindowSize } from '../hook';
 // height: calc(100% - 56px); => je sais plus mais caca aussi =]
 // min-height: -webkit-fill-available; => popup complètement coupée en bar hidden
 // cf onetab "100vh"
-const Root: FunctionComponent = (props) => {
+const Root = (props: PropsWithChildren<{}>) => {
   const size = useWindowSize();
   return (
     <div
