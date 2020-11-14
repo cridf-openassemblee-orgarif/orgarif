@@ -1,5 +1,6 @@
-/** @jsx jsx */
-import { css, jsx } from '@emotion/react';
+/** @jsxImportSource @emotion/react */
+import { css } from '@emotion/react';
+import * as React from 'react';
 import { PropsWithChildren } from 'react';
 import { Menu } from './Menu';
 

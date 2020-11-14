@@ -1,11 +1,11 @@
 import { OrgarifId } from './id';
 
 export abstract class NominalString<T extends string> {
-  private _typeGuard: T;
+  private _typeGuard!: T;
 }
 
 export abstract class NominalNumber<T extends string> {
-  private _typeGuard: T;
+  private _typeGuard!: T;
 }
 
 export const stringifyNominalString = (value: NominalString<any> | string) =>

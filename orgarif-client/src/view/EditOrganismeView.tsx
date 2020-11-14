@@ -1,6 +1,7 @@
-/** @jsx jsx */
-import { css, jsx } from '@emotion/react';
+/** @jsxImportSource @emotion/react */
+import { css } from '@emotion/react';
 import { ArrowBackIos } from '@material-ui/icons';
+import * as React from 'react';
 import { useEffect, useState } from 'react';
 import { appContext } from '../ApplicationContext';
 import { EditOrganismeComponent } from '../component/edit/EditOrganismeComponent';

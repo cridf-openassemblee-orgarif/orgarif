@@ -1,5 +1,5 @@
-/** @jsx jsx */
-import { jsx } from '@emotion/react';
+/** @jsxImportSource @emotion/react */
+import * as React from 'react';
 import { useEffect, useState } from 'react';
 import { appContext } from '../ApplicationContext';
 import { OrganismeComponent } from '../component/OrganismeComponent';

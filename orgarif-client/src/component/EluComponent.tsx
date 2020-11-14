@@ -1,5 +1,5 @@
-/** @jsx jsx */
-import { jsx } from '@emotion/react';
+/** @jsxImportSource @emotion/react */
+import * as React from 'react';
 import { useRecoilValue } from 'recoil';
 import { EluId } from '../domain/id';
 import { get } from '../domain/nominal-class';

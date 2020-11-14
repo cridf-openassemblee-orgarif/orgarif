@@ -101,15 +101,15 @@ export interface RegisterCommandResponse {
 
 export interface UpdateOrganismeNatureJuridiqueCommand {
   id: OrganismeId;
-  natureJuridiqueId: NatureJuridiqueId;
+  natureJuridiqueId: NatureJuridiqueId | undefined;
 }
 
 export interface UpdateOrganismeSecteurCommand {
   id: OrganismeId;
-  secteurId: SecteurId;
+  secteurId: SecteurId | undefined;
 }
 
 export interface UpdateOrganismeTypeStructureCommand {
   id: OrganismeId;
-  typeStructureId: TypeStructureId;
+  typeStructureId: TypeStructureId | undefined;
 }

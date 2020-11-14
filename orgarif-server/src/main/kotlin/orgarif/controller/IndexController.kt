@@ -7,6 +7,7 @@ import org.springframework.stereotype.Controller
 import org.springframework.web.bind.annotation.GetMapping
 import org.springframework.web.servlet.ModelAndView
 import orgarif.domain.ApplicationBootstrapData
+import orgarif.domain.ApplicationEnvironment
 import orgarif.domain.OrganismeCategories
 import orgarif.domain.UserInfos
 import orgarif.repository.sql.*
@@ -21,19 +22,21 @@ import javax.servlet.http.HttpServletRequest
 import javax.servlet.http.HttpServletResponse
 
 @Controller
-class IndexController(@Value("\${webpack.bundle}") val webpackBundle: String,
-                      @Value("\${webpack.vendorBundle}") val webpackVendorBundle: String,
+class IndexController(
+        @Value("\${webpack.devHost}") val webpackDevHost: String,
+        @Value("\${webpack.bundleUrlBase}") val webpackBundleUrlBase: String,
+        @Value("\${webpack.bundleFiles}") val webpackBundleFiles: String,
 
-                      val userDao: UserDao,
-                      val secteurDao: SecteurDao,
-                      val natureJuridiqueDao: NatureJuridiqueDao,
-                      val typeStructureDao: TypeStructureDao,
-                      val eluDao: EluDao,
+        val userDao: UserDao,
+        val secteurDao: SecteurDao,
+        val natureJuridiqueDao: NatureJuridiqueDao,
+        val typeStructureDao: TypeStructureDao,
+        val eluDao: EluDao,
 
-                      val localeService: LocaleService,
-                      val userService: UserService,
-                      val applicationInstance: ApplicationInstance,
-                      val magicLinkTokenService: MagicLinkTokenService) {
+        val localeService: LocaleService,
+        val userService: UserService,
+        val applicationInstance: ApplicationInstance,
+        val magicLinkTokenService: MagicLinkTokenService) {
 
     companion object {
         // TODO [] mapping avec front
@@ -43,10 +46,6 @@ class IndexController(@Value("\${webpack.bundle}") val webpackBundle: String,
         const val loginUpdatePasswordRoute = "/login/mot-de-passe"
         const val newPasswordRoute = "/mot-de-passe-perdu"
         const val magicTokenParameterName = "magicToken"
-
-        // [doc] this syntax is replaced in configuration files at build time
-        const val jsBundleProtocolReplaceChunk = "\$JS_BUNDLE_PROTOCOL\$"
-        const val jsBundleHostReplaceChunk = "\$JS_BUNDLE_HOST\$"
 
         val statics = BeansWrapperBuilder(Configuration.DEFAULT_INCOMPATIBLE_IMPROVEMENTS).build().staticModels
     }
@@ -75,15 +74,13 @@ class IndexController(@Value("\${webpack.bundle}") val webpackBundle: String,
         mav.model["bootstrapData"] = serialize(ApplicationBootstrapData(applicationInstance.env, userInfos, categories, elus))
         mav.model["deploymentId"] = applicationInstance.deploymentId.rawId
         mav.model["gitRevisionLabel"] = applicationInstance.gitRevisionLabel
-        val jsBundleHost = if (System.getenv("JS_BUNDLE_HOST") != null) {
-            System.getenv("JS_BUNDLE_HOST")
+        val jsBundlesHost = if (applicationInstance.env == ApplicationEnvironment.dev) {
+            webpackDevHost
         } else {
             request.serverName
         }
-        mav.model["bundleSrc"] = webpackBundle
-                .replace(jsBundleProtocolReplaceChunk, (if (request.isSecure) "https" else "http"))
-                .replace(jsBundleHostReplaceChunk, jsBundleHost)
-        mav.model["vendorBundleSrc"] = webpackVendorBundle
+        mav.model["bundles"] = webpackBundleFiles.split(",")
+                .map { "$jsBundlesHost/$webpackBundleUrlBase/$it" }
         mav.model["statics"] = statics
         mav.viewName = "index"
         return mav

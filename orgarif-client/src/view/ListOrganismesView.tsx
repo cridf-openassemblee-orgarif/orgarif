@@ -1,6 +1,7 @@
-/** @jsx jsx */
-import { css, jsx } from '@emotion/react';
+/** @jsxImportSource @emotion/react */
+import { css } from '@emotion/react';
 import { Button } from '@material-ui/core';
+import * as React from 'react';
 import { useEffect, useState } from 'react';
 import { appContext } from '../ApplicationContext';
 import { SimpleForm } from '../component/base-component/SimpleForm';

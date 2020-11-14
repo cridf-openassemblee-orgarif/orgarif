@@ -28,7 +28,7 @@ export interface OrganismeInfos {
 
 export interface InstanceInfos {
   id: InstanceId;
-  nom: String;
+  nom: string;
   organismeId: OrganismeId;
   nombreRepresentants?: number;
   nombreSuppleants?: number;

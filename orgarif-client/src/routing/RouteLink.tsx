@@ -1,6 +1,6 @@
-/** @jsx jsx */
-import { jsx } from '@emotion/react';
+/** @jsxImportSource @emotion/react */
 import styled from '@emotion/styled';
+import * as React from 'react';
 import { PropsWithChildren } from 'react';
 import { Link } from 'react-router-dom';
 import { appContext } from '../ApplicationContext';

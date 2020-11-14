@@ -1,6 +1,6 @@
-/** @jsx jsx */
-import { jsx } from '@emotion/react';
+/** @jsxImportSource @emotion/react */
 import Fab from '@material-ui/core/Fab';
+import * as React from 'react';
 import { appContext } from '../../ApplicationContext';
 import {
   InstanceId,

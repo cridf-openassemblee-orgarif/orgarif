@@ -1,4 +1,3 @@
-/** @jsx jsx */
 import { css } from '@emotion/react';
 
 // https://stackoverflow.com/questions/43186015/css-hide-scroll-bar-but-have-element-scrollable/43186311

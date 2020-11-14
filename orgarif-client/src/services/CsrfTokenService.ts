@@ -9,7 +9,11 @@ export class CsrfTokenService {
   public token: string;
 
   constructor() {
-    this.refreshToken();
+    const token = getCookie(cookieName);
+    if (!token) {
+      throw Errors._4b60ab70();
+    }
+    this.token = token;
   }
 
   public refreshToken() {

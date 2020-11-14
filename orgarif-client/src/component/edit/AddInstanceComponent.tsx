@@ -1,5 +1,5 @@
-/** @jsx jsx */
-import { jsx } from '@emotion/react';
+/** @jsxImportSource @emotion/react */
+import * as React from 'react';
 import { useRef } from 'react';
 import { appContext } from '../../ApplicationContext';
 import { OrganismeId, RepresentantListId } from '../../domain/id';

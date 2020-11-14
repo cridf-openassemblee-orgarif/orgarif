@@ -1,9 +1,9 @@
-/** @jsx jsx */
-import { jsx } from '@emotion/react';
+/** @jsxImportSource @emotion/react */
 import { ButtonGroup } from '@material-ui/core';
 import Button from '@material-ui/core/Button';
 import makeStyles from '@material-ui/core/styles/makeStyles';
 import DeleteIcon from '@material-ui/icons/Delete';
+import * as React from 'react';
 import { useState } from 'react';
 import { assertUnreachable } from '../../utils';
 

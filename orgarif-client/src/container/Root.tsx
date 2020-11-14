@@ -1,7 +1,7 @@
-/** @jsx jsx */
-import { css, jsx } from '@emotion/react';
-import { PropsWithChildren } from 'react';
-import { hot } from 'react-hot-loader/root';
+/** @jsxImportSource @emotion/react */
+import { css } from '@emotion/react';
+import * as React from 'react';
+import { PropsWithChildren, useEffect, useState } from 'react';
 import { ToastContainer } from 'react-toastify';
 import { cleanScrollBar } from '../common-classes';
 
@@ -34,7 +34,7 @@ export const useWindowHeight = () => {
 // height: calc(100% - 56px); => je sais plus mais caca aussi =]
 // min-height: -webkit-fill-available; => popup complètement coupée en bar hidden
 // cf onetab "100vh"
-const Root = (props: PropsWithChildren<{}>) => {
+export const Root = (props: PropsWithChildren<{}>) => {
   const height = useWindowHeight();
   return (
     <div
@@ -60,5 +60,3 @@ const Root = (props: PropsWithChildren<{}>) => {
     </div>
   );
 };
-
-export const HotRoot = hot(Root);

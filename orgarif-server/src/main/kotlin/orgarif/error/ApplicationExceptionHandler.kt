@@ -65,7 +65,7 @@ class ApplicationExceptionHandler(val applicationInstance: ApplicationInstance,
             }
             exception is JsonMappingException -> {
                 when (cause) {
-                    is LiteSerializationLocalDateException -> {
+                    is OrgarifSerializationLocalDateException -> {
                         return render(request, response, RequestError(id, 400, "SerializationError",
                                 // on ne met pas la date dans le message car non formattée ce n'est pas clair
                                 // (2020-33-33 vs 33/33/2020)

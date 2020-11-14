@@ -1,5 +1,5 @@
-/** @jsx jsx */
-import { css, jsx } from '@emotion/react';
+/** @jsxImportSource @emotion/react */
+import { css } from '@emotion/react';
 import { Button } from '@material-ui/core';
 import * as React from 'react';
 import { PureComponent } from 'react';

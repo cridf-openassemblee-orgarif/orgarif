@@ -1,4 +1,4 @@
-import { Global } from '@emotion/react';
+import { Global } from '@emotion/core';
 import { MuiThemeProvider, StylesProvider } from '@material-ui/core';
 import createMuiTheme from '@material-ui/core/styles/createMuiTheme';
 import * as React from 'react';
@@ -7,7 +7,7 @@ import { Router as ReactRouter } from 'react-router-dom';
 import 'react-toastify/dist/ReactToastify.min.css';
 import { RecoilRoot } from 'recoil';
 import { appContext } from './ApplicationContext';
-import { HotRoot as Root } from './container/Root';
+import { Root } from './container/Root';
 import { ApplicationRouter } from './routing/ApplicationRouter';
 import { globalStyles } from './styles/common-styles';
 import './styles/ReactToastify-additional.css';

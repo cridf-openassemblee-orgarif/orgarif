@@ -1,5 +1,6 @@
-/** @jsx jsx */
-import { css, jsx } from '@emotion/react';
+/** @jsxImportSource @emotion/react */
+import { css } from '@emotion/react';
+import * as React from 'react';
 import { useEffect, useState } from 'react';
 import { useRecoilValue } from 'recoil';
 import { appContext } from '../../ApplicationContext';

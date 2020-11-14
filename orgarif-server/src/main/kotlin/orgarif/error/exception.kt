@@ -27,9 +27,9 @@ class DisplayMessageException(val displayMessage: String, val logMessage: String
 class MailAlreadyRegisteredException(mail: String) : Exception()
 class ItemIdNotFoundException(val id: OrgarifId<*>) : Exception()
 class ItemNotFoundException(val itemClass: Class<*>, val reference: String) : Exception()
-
-class LiteSerializationLocalDateException(val date: String) : Exception()
+class OrgarifNotFoundException : Exception()
+class OrgarifSerializationLocalDateException(val date: String) : Exception()
 // TODO[error] tjs utiliser des runtime donc ? a cause de kt
 class MessageNotSentException(message: String) : RuntimeException(message)
 class OrgarifSecurityException(message: String) : Exception(message)
-class UserLoggedOutException() : Exception()
+class UserLoggedOutException : Exception()

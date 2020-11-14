@@ -1,5 +1,6 @@
-/** @jsx jsx */
-import { css, jsx } from '@emotion/react';
+/** @jsxImportSource @emotion/react */
+import { css } from '@emotion/react';
+import * as React from 'react';
 import {
   Draggable,
   DraggableProvided,
@@ -18,7 +19,6 @@ import { Representant, RepresentantOrSuppleant } from '../../domain/organisme';
 import { EluComponent } from '../EluComponent';
 import { DeleteRepresentantButton } from './DeleteRepresentantButton';
 import { DragAndDropItem, representantListId } from './DragAndDropContainer';
-
 const padding = 8;
 
 const dragType: DragAndDropItem = 'representant';

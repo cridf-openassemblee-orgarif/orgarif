@@ -1,4 +1,3 @@
-/** @jsx jsx */
 import { atom, selector } from 'recoil';
 import { applicationBootstrapData } from '../constants';
 import {

@@ -1,5 +1,3 @@
-/** @jsx jsx */
-
 export const dimensions = {
   screenSmMin: 768
 };

@@ -1,9 +1,9 @@
-/** @jsx jsx */
-import { jsx } from '@emotion/react';
+/** @jsxImportSource @emotion/react */
 import { createStyles, FormControl, Select, Theme } from '@material-ui/core';
 import InputLabel from '@material-ui/core/InputLabel';
 import MenuItem from '@material-ui/core/MenuItem/MenuItem';
 import makeStyles from '@material-ui/core/styles/makeStyles';
+import * as React from 'react';
 import { stringifyNominalString } from '../../domain/nominal-class';
 import { clientUid } from '../../utils';
 

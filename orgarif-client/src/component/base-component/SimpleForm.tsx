@@ -1,5 +1,5 @@
-/** @jsx jsx */
-import { jsx } from '@emotion/react';
+/** @jsxImportSource @emotion/react */
+import * as React from 'react';
 import { FormEvent, PropsWithChildren, Ref } from 'react';
 
 export const SimpleForm = (

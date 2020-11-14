@@ -14,8 +14,8 @@
 <body>
 <div id="root">
 </div>
-<script src="${bundleSrc?no_esc}"></script>
-<#if vendorBundleSrc != ''>
-    <script src="${vendorBundleSrc?no_esc}"></script></#if>
+<#list bundles as bundle>
+<script src="${bundle?no_esc}"></script>
+</#list>
 </body>
 </html>
