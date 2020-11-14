@@ -7,19 +7,19 @@ import {
   InstanceId,
   OrganismeId,
   RepresentantId,
-  RepresentantListId,
+  RepresentantListId
 } from '../../domain/id';
 import {
   Dict,
   get,
   instanciateNominalString,
   set,
-  stringifyNominalString,
+  stringifyNominalString
 } from '../../domain/nominal-class';
 import {
   FullOrganisme,
   Representant,
-  RepresentantOrSuppleant,
+  RepresentantOrSuppleant
 } from '../../domain/organisme';
 import { Errors } from '../../errors';
 import { assertUnreachable } from '../../utils';
@@ -51,7 +51,7 @@ export const extract = (
     parts[1] !== noInstanceId
       ? instanciateNominalString<InstanceId>(parts[1])
       : undefined,
-    parts[2] as RepresentantOrSuppleant,
+    parts[2] as RepresentantOrSuppleant
   ];
 };
 
@@ -94,7 +94,7 @@ export const DragAndDropContainer = (
     }
 
     const newLists: Dict<RepresentantListId, Representant[]> = {
-      ...props.representantsLists,
+      ...props.representantsLists
     };
     const sourceList = [...get(props.representantsLists, sourceId)];
     const movedItem = sourceList.splice(result.source.index, 1)[0];
@@ -115,7 +115,7 @@ export const DragAndDropContainer = (
         toOrganismeId: organismeId,
         toInstanceId: instanceId,
         toPosition: result.destination.index,
-        toRepresentantOrSuppleant: representantOrSuppleant,
+        toRepresentantOrSuppleant: representantOrSuppleant
       })
       .then(() => {});
   };

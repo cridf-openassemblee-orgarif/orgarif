@@ -22,7 +22,7 @@ export const RegisterView = () => {
     appContext
       .commandService()
       .registerCommand(registerCommand)
-      .then((r) => {
+      .then(r => {
         switch (r.result) {
           case 'REGISTERED':
             if (!r.userinfos) {
@@ -73,7 +73,7 @@ export const RegisterView = () => {
                 <br />
                 <RouteLink
                   route={{
-                    name: 'ListOrganismesRoute',
+                    name: 'ListOrganismesRoute'
                   }}
                 >
                   Liste des organismes

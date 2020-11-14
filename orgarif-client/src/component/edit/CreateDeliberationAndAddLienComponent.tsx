@@ -10,13 +10,13 @@ import { appContext } from '../../ApplicationContext';
 import { InstanceId, OrganismeId } from '../../domain/id';
 import {
   DeliberationInfos,
-  LienDeliberationInfos,
+  LienDeliberationInfos
 } from '../../domain/organisme';
 import { RequestError } from '../../services/HttpService';
 import { colors } from '../../styles/vars';
 import {
   LocalDateInput,
-  stringToLocalDate,
+  stringToLocalDate
 } from '../base-component/LocalDateInput';
 import { SimpleForm } from '../base-component/SimpleForm';
 import { TextInput } from '../base-component/TextInput';
@@ -45,17 +45,17 @@ export const CreateDeliberationAndAddLienComponent = (props: {
         libelle: dto.libelle,
         deliberationDate,
         organismeId: props.organismeId,
-        instanceId: props.instanceId,
+        instanceId: props.instanceId
       })
-      .then((r) => {
+      .then(r => {
         const deliberation: DeliberationInfos = {
           id: r.deliberationId,
           libelle: dto.libelle,
-          deliberationDate,
+          deliberationDate
         };
         props.addDeliberation({
           id: r.lienDeliberationId,
-          deliberation,
+          deliberation
         });
         props.close();
         setDisplayError('');

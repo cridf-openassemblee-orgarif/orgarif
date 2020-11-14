@@ -12,24 +12,24 @@ module.exports = {
     path: path.resolve('./build/'),
     chunkFilename: '[name].[chunkhash].bundle.js',
     filename: 'app.[chunkhash].js',
-    publicPath: '/res/',
+    publicPath: '/res/'
   },
   module: {
-    rules: base.rules(false),
+    rules: base.rules(false)
   },
   optimization: {
     minimize: true,
     splitChunks: {
-      chunks: 'all',
-    },
+      chunks: 'all'
+    }
   },
   plugins: [
     new webpack.DefinePlugin({
       // This has effect on the react lib size
-      'process.env.NODE_ENV': JSON.stringify('production'),
+      'process.env.NODE_ENV': JSON.stringify('production')
     }),
     new webpack.ContextReplacementPlugin(/moment[\/\\]locale$/, /en|fr/),
     new webpack.HashedModuleIdsPlugin(),
-    new AssetsPlugin(),
-  ],
+    new AssetsPlugin()
+  ]
 };

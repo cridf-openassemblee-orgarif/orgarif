@@ -17,7 +17,7 @@ export const EditLienDeliberationsListComponent = (props: {
   return (
     <div>
       <h3>Délibérations</h3>
-      {lienDeliberations.map((d) => (
+      {lienDeliberations.map(d => (
         <div
           key={stringifyNominalString(d.id)}
           css={css`

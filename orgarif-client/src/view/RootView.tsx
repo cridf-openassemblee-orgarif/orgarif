@@ -12,7 +12,7 @@ export const RootView = () => {
       {!userInfos && (
         <RouteLink
           route={{
-            name: 'LoginRoute',
+            name: 'LoginRoute'
           }}
         >
           Se connecter
@@ -21,7 +21,7 @@ export const RootView = () => {
       {userInfos && (
         <RouteLink
           route={{
-            name: 'ListOrganismesRoute',
+            name: 'ListOrganismesRoute'
           }}
         >
           Liste des organismes

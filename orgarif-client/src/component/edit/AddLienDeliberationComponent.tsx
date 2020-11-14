@@ -10,7 +10,7 @@ import { SharedConstants } from '../../constants';
 import { DeliberationId, InstanceId, OrganismeId } from '../../domain/id';
 import {
   DeliberationInfos,
-  LienDeliberationInfos,
+  LienDeliberationInfos
 } from '../../domain/organisme';
 import { LocalDate } from '../../domain/time';
 import { Errors } from '../../errors';
@@ -41,7 +41,7 @@ export const AddLienDeliberationComponent = (props: {
   const addDeliberation = (lienDeliberation: LienDeliberationInfos) => {
     const newDeliberations = [...props.lienDeliberations, lienDeliberation];
     newDeliberations.sort(
-      compareByLocalDate((d) => d.deliberation.deliberationDate)
+      compareByLocalDate(d => d.deliberation.deliberationDate)
     );
     props.setLienDeliberations(newDeliberations);
   };
@@ -56,17 +56,15 @@ export const AddLienDeliberationComponent = (props: {
       appContext
         .queryService()
         .searchDeliberationQuery({
-          searchToken: value,
+          searchToken: value
         })
-        .then((r) => {
+        .then(r => {
           setLoading(false);
           const existingLiens = props.lienDeliberations.map(
-            (l) => l.deliberation.id
+            l => l.deliberation.id
           );
-          const results = r.results.filter(
-            (r) => !existingLiens.includes(r.id)
-          );
-          const libelles = r.results.map((r) => r.libelle);
+          const results = r.results.filter(r => !existingLiens.includes(r.id));
+          const libelles = r.results.map(r => r.libelle);
           if (libelles.includes(value) && results.length === 0) {
             setAlreadySet(true);
           } else {
@@ -77,8 +75,8 @@ export const AddLienDeliberationComponent = (props: {
                 ...results,
                 {
                   id: undefined,
-                  libelle: value,
-                },
+                  libelle: value
+                }
               ]);
             }
           }
@@ -115,17 +113,17 @@ export const AddLienDeliberationComponent = (props: {
           .addLienDeliberationCommand({
             deliberationId, //: newValue.id,
             organismeId: props.organismeId,
-            instanceId: props.instanceId,
+            instanceId: props.instanceId
           })
-          .then((r) => {
+          .then(r => {
             const deliberation: DeliberationInfos = {
               id: deliberationId,
               libelle: newValue.libelle,
-              deliberationDate,
+              deliberationDate
             };
             addDeliberation({
               id: r.lienDeliberationId,
-              deliberation,
+              deliberation
             });
             setInputValue('');
             setValue(null);
@@ -156,7 +154,7 @@ export const AddLienDeliberationComponent = (props: {
         freeSolo
         options={deliberations}
         style={{ width: 300 }}
-        renderInput={(params) => (
+        renderInput={params => (
           <div>
             <TextField
               {...params}

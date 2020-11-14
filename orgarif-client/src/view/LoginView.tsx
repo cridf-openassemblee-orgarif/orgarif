@@ -20,7 +20,7 @@ export const LoginView = () => {
     appContext
       .commandService()
       .loginCommand(data)
-      .then((r) => {
+      .then(r => {
         setLoginResult(r.result);
         switch (r.result) {
           case 'LOGGED_IN':
@@ -72,7 +72,7 @@ export const LoginView = () => {
                 <br />
                 <RouteLink
                   route={{
-                    name: 'ListOrganismesRoute',
+                    name: 'ListOrganismesRoute'
                   }}
                 >
                   Liste des organismes

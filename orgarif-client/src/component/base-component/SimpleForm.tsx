@@ -13,7 +13,7 @@ export const SimpleForm = (
     event.stopPropagation();
     const form = event.currentTarget as HTMLFormElement;
     const dto: any = {};
-    Array.from(form.elements).forEach((e) => {
+    Array.from(form.elements).forEach(e => {
       if (e instanceof HTMLInputElement && e.type === 'text') {
         dto[e.name] = e.value;
       }

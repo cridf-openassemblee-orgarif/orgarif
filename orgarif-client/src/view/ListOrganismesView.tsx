@@ -19,7 +19,7 @@ export const ListOrganismesView = () => {
     appContext
       .queryService()
       .listOrganismesQuery()
-      .then((r) => {
+      .then(r => {
         setOrganismes(r.organismes);
       });
   }, []);
@@ -28,10 +28,10 @@ export const ListOrganismesView = () => {
       appContext
         .commandService()
         .createOrganismeCommand(dto)
-        .then((r) => {
+        .then(r => {
           appContext.applicationHistory().goTo({
             name: 'EditOrganismeRoute',
-            id: r.id,
+            id: r.id
           });
         });
     }
@@ -47,7 +47,7 @@ export const ListOrganismesView = () => {
       </SimpleForm>
       {!organismes && <div>Chargement...</div>}
       {organismes &&
-        organismes.map((o) => (
+        organismes.map(o => (
           <div
             key={stringifyNominalString(o.id)}
             css={css`

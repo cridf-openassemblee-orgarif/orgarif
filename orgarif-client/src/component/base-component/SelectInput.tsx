@@ -10,11 +10,11 @@ import { clientUid } from '../../utils';
 const useStyles = makeStyles((theme: Theme) =>
   createStyles({
     formControl: {
-      margin: theme.spacing(1),
+      margin: theme.spacing(1)
     },
     selectEmpty: {
-      marginTop: theme.spacing(2),
-    },
+      marginTop: theme.spacing(2)
+    }
   })
 );
 

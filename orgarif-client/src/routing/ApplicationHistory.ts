@@ -19,7 +19,7 @@ export class ApplicationHistory {
   public buildPath(route: Route): string {
     let path = routes[route.name].path;
     Object.keys(route)
-      .filter((k) => k !== 'name')
+      .filter(k => k !== 'name')
       .forEach((k: string) => {
         // @ts-ignore
         const param = route[k];

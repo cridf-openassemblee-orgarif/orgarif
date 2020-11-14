@@ -1,12 +1,12 @@
 /** @jsx jsx */
 
 export const dimensions = {
-  screenSmMin: 768,
+  screenSmMin: 768
 };
 
 export const fonts = {
   baseSize: 14,
-  font: "Arial, 'sans-serif'",
+  font: "Arial, 'sans-serif'"
 };
 
 export const colors = {
@@ -15,5 +15,5 @@ export const colors = {
   grey: '#333333',
   popupGlasspanel: 'rgba(220, 220, 220, 0.85)',
   errorBackground: '#bd4641',
-  errorRed: '#cc0000',
+  errorRed: '#cc0000'
 };

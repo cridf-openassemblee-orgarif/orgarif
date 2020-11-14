@@ -9,17 +9,17 @@ import {
   OrgarifId,
   RepresentantListId,
   SecteurId,
-  TypeStructureId,
+  TypeStructureId
 } from '../../domain/id';
 import {
   Dict,
   instanciateNominalString,
-  set,
+  set
 } from '../../domain/nominal-class';
 import {
   FullInstance,
   FullOrganisme,
-  Representant,
+  Representant
 } from '../../domain/organisme';
 import { state } from '../../state/state';
 import { SelectInput, SelectOption } from '../base-component/SelectInput';
@@ -28,7 +28,7 @@ import { AddInstanceComponent } from './AddInstanceComponent';
 import { DragableInstancesListComponent } from './DragableInstancesListComponent';
 import {
   DragAndDropContainer,
-  representantListId,
+  representantListId
 } from './DragAndDropContainer';
 import { EditLienDeliberationsListComponent } from './EditLienDeliberationsListComponent';
 import { EditRepresentantsListComponent } from './EditRepresentantsListComponent';
@@ -37,7 +37,7 @@ const classes = {
   categories: css`
     flex: 1;
     padding: 0 20px;
-  `,
+  `
 };
 
 export const EditCategoryComponent = (props: {
@@ -47,13 +47,13 @@ export const EditCategoryComponent = (props: {
   currentId?: OrgarifId;
   onChange: (id: OrgarifId) => void;
 }) => {
-  const options: SelectOption[] = props.categoryList.map((e) => ({
+  const options: SelectOption[] = props.categoryList.map(e => ({
     value: e.id,
-    label: e.libelle,
+    label: e.libelle
   }));
   options.unshift({
     value: undefined,
-    label: `- Sans ${props.label.toLowerCase()} -`,
+    label: `- Sans ${props.label.toLowerCase()} -`
   });
   const [value, setValue] = useState(props.currentId);
   return (
@@ -61,7 +61,7 @@ export const EditCategoryComponent = (props: {
       label={props.label}
       value={value}
       options={options}
-      onChange={(e) => {
+      onChange={e => {
         const id = instanciateNominalString<OrgarifId>(
           e.target.value as string
         );
@@ -95,7 +95,7 @@ export const EditOrganismeComponent = (props: {
       representantListId(organisme.infos.id, undefined, 'suppleant'),
       organisme.suppleants
     );
-    instances.forEach((instance) => {
+    instances.forEach(instance => {
       set(
         initialLists,
         representantListId(
@@ -142,7 +142,7 @@ export const EditOrganismeComponent = (props: {
                   .commandService()
                   .updateOrganismeNatureJuridiqueCommand({
                     id: organisme.infos.id,
-                    natureJuridiqueId,
+                    natureJuridiqueId
                   })
               }
             />
@@ -156,7 +156,7 @@ export const EditOrganismeComponent = (props: {
               onChange={(secteurId: SecteurId) =>
                 appContext.commandService().updateOrganismeSecteurCommand({
                   id: organisme.infos.id,
-                  secteurId,
+                  secteurId
                 })
               }
             />
@@ -172,7 +172,7 @@ export const EditOrganismeComponent = (props: {
                   .commandService()
                   .updateOrganismeTypeStructureCommand({
                     id: organisme.infos.id,
-                    typeStructureId,
+                    typeStructureId
                   })
               }
             />

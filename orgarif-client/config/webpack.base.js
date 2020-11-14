@@ -2,7 +2,7 @@ const webpack = require('webpack');
 const path = require('path');
 
 const port = 3300;
-const excludes = ['./node_modules', './build', './bundles/'].map((e) =>
+const excludes = ['./node_modules', './build', './bundles/'].map(e =>
   path.resolve(e)
 );
 const rules = (hotLoader /*boolean*/, tsconfigFile /*string | undefined*/) => {
@@ -16,12 +16,12 @@ const rules = (hotLoader /*boolean*/, tsconfigFile /*string | undefined*/) => {
     {
       test: /\.tsx?$/,
       use: typescriptLoaders,
-      exclude: excludes,
+      exclude: excludes
     },
     {
       test: /\.css$/i,
-      use: ['style-loader', 'css-loader'],
-    },
+      use: ['style-loader', 'css-loader']
+    }
   ];
 };
 
@@ -30,8 +30,8 @@ module.exports = {
   excludes,
   resolve: {
     modules: ['node_modules'],
-    extensions: ['.ts', '.tsx', '.js'],
+    extensions: ['.ts', '.tsx', '.js']
   },
   rules,
-  port,
+  port
 };

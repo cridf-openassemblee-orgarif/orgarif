@@ -23,11 +23,11 @@ if (!productionBuild && global.__REDUX_DEVTOOLS_EXTENSION__) {
 
 const muiTheme = createMuiTheme({
   palette: {
-    secondary: { main: colors.errorRed },
+    secondary: { main: colors.errorRed }
   },
   typography: {
-    htmlFontSize: fonts.baseSize,
-  },
+    htmlFontSize: fonts.baseSize
+  }
 });
 ReactDOM.render(
   <RecoilRoot>

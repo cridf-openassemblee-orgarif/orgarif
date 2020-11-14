@@ -1,7 +1,7 @@
 import { ClientUid } from './domain/id';
 import {
   instanciateNominalString,
-  stringifyNominalString,
+  stringifyNominalString
 } from './domain/nominal-class';
 import { LocalDate } from './domain/time';
 

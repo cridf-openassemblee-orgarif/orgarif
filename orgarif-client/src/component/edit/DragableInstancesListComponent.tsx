@@ -6,7 +6,7 @@ import {
   DraggableStateSnapshot,
   Droppable,
   DroppableProvided,
-  DroppableStateSnapshot,
+  DroppableStateSnapshot
 } from 'react-beautiful-dnd';
 import { OrganismeId, RepresentantListId } from '../../domain/id';
 import { Dict, stringifyNominalString } from '../../domain/nominal-class';

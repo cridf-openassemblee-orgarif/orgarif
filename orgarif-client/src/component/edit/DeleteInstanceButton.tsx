@@ -23,7 +23,7 @@ export const DeleteInstanceButton = (props: {
       .deleteInstanceCommand({ id: props.instanceId })
       .then(() => {
         const newInstances = [...props.instances].filter(
-          (i) => i.infos.id !== props.instanceId
+          i => i.infos.id !== props.instanceId
         );
         props.setInstances(newInstances);
         const newRepresentantsLists = { ...props.representantsLists };

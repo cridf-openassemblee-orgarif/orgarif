@@ -6,7 +6,7 @@ import {
   InstanceId,
   OrganismeId,
   RepresentantId,
-  RepresentantListId,
+  RepresentantListId
 } from '../../domain/id';
 import { Dict, get, set } from '../../domain/nominal-class';
 import { Representant, RepresentantOrSuppleant } from '../../domain/organisme';
@@ -39,8 +39,8 @@ export const DeleteRepresentantButton = (props: {
               props.representantOrSuppleant
             );
             const newRepresentants = [
-              ...get(props.representantsLists, listId),
-            ].filter((r) => r.id !== props.representantId);
+              ...get(props.representantsLists, listId)
+            ].filter(r => r.id !== props.representantId);
             const newLists = { ...props.representantsLists };
             set(newLists, listId, newRepresentants);
             props.setRepresentantsLists(newLists);

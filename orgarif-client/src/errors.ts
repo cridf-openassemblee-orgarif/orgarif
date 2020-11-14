@@ -5,5 +5,5 @@ export const Errors = {
   _6f643a2a: () => Error('6f643a2a'),
   _82c7652b: () => Error('82c7652b'),
   _41dcf9d3: () => Error('41dcf9d3'),
-  _ff7e63f5: () => Error('ff7e63f5'),
+  _ff7e63f5: () => Error('ff7e63f5')
 };

@@ -22,7 +22,7 @@ export const LoginForm = (props: Props) => {
       onSubmit={(dto: { login: string }) =>
         props.onSubmit({
           login: dto.login,
-          password,
+          password
         })
       }
     >

@@ -41,9 +41,9 @@ export class HttpService {
         Accept: 'application/json',
         'Content-Type': 'application/json',
         [appContext.csrfTokenService().header]: appContext.csrfTokenService()
-          .token,
+          .token
       },
-      credentials: this.credentials,
+      credentials: this.credentials
     };
     if (bodyAsString) {
       params.body = bodyAsString;
@@ -64,12 +64,12 @@ export class HttpService {
     return this.fetch(requestType, url, getParams, bodyAsString).then(
       (response: Response) => {
         if (response.ok) {
-          return response.text().then((t) => ({
+          return response.text().then(t => ({
             status: response.status,
-            body: t !== '' ? JSON.parse(t) : undefined,
+            body: t !== '' ? JSON.parse(t) : undefined
           }));
         } else {
-          return response.text().then((t) => {
+          return response.text().then(t => {
             const error: RequestError = JSON.parse(t);
             if (error.error === displayErrorMessage) {
               return Promise.reject(displayErrorMessage);

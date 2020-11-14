@@ -24,7 +24,7 @@ export const RegisterForm = (props: Props) => {
     appContext
       .queryService()
       .isLoginAlreadyTakenQuery({ login })
-      .then((r) => {
+      .then(r => {
         setMailIsAlreadyTaken(r.alreadyTaken);
       });
   };
@@ -33,7 +33,7 @@ export const RegisterForm = (props: Props) => {
       onSubmit={(dto: { mail: string }) =>
         props.onSubmit({
           mail: dto.mail,
-          password,
+          password
         })
       }
     >

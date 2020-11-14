@@ -23,17 +23,17 @@ export const AddInstanceComponent = (props: {
     appContext
       .commandService()
       .addInstanceCommand({ nomInstance, organismeId: props.organismeId })
-      .then((r) => {
+      .then(r => {
         formRef.current!.reset();
         const instance: FullInstance = {
           infos: {
             id: r.id,
             nom: nomInstance,
-            organismeId: props.organismeId,
+            organismeId: props.organismeId
           },
           lienDeliberations: [],
           representants: [],
-          suppleants: [],
+          suppleants: []
         };
         const newInstances = [...props.instances, instance];
         props.setInstances(newInstances);
@@ -52,7 +52,7 @@ export const AddInstanceComponent = (props: {
       });
   };
   return (
-    <SimpleForm forwardRef={formRef} onSubmit={(e) => addInstance(e.nom)}>
+    <SimpleForm forwardRef={formRef} onSubmit={e => addInstance(e.nom)}>
       <TextInput name="nom" label="Nouvelle instance" />
     </SimpleForm>
   );

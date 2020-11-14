@@ -28,33 +28,33 @@ export const routes: Record<Route['name'], RouteProps> = {
   EditOrganismeRoute: {
     path: '/edition-organisme/:id',
     component: EditOrganismeView,
-    authenticationLevel: 'loggedIn',
+    authenticationLevel: 'loggedIn'
   },
   ListOrganismesRoute: {
     path: '/organismes',
     component: ListOrganismesView,
-    authenticationLevel: 'loggedOut',
+    authenticationLevel: 'loggedOut'
   },
   LoginRoute: {
     path: '/login',
     component: LoginView,
-    authenticationLevel: 'loggedOut',
+    authenticationLevel: 'loggedOut'
   },
   OrganismeRoute: {
     path: '/organisme/:id',
     component: OrganismeView,
-    authenticationLevel: 'loggedIn',
+    authenticationLevel: 'loggedIn'
   },
   RegisterRoute: {
     path: '/register',
     component: RegisterView,
-    authenticationLevel: 'loggedOut',
+    authenticationLevel: 'loggedOut'
   },
   RootRoute: {
     path: '/',
     component: RootView,
-    authenticationLevel: 'neutral',
-  },
+    authenticationLevel: 'neutral'
+  }
 };
 
 export interface EditOrganismeRoute {

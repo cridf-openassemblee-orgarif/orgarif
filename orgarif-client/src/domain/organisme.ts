@@ -7,7 +7,7 @@ import {
   OrganismeId,
   RepresentantId,
   SecteurId,
-  TypeStructureId,
+  TypeStructureId
 } from './id';
 import { Instant, LocalDate } from './time';
 

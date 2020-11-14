@@ -33,7 +33,7 @@ export const PasswordInput = (props: {
         id={stringifyNominalString(id)}
         type={showPassword ? 'text' : 'password'}
         value={props.value}
-        onChange={(e) => props.setValue(e.target.value)}
+        onChange={e => props.setValue(e.target.value)}
         label={props.label}
         endAdornment={
           <InputAdornment position="end">

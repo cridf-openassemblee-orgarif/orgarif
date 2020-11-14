@@ -10,10 +10,10 @@ export const svgProps = (props: IconProps, ratio: number) => {
   return props.sizeAxe === 'width'
     ? {
         width: props.size + unit,
-        height: props.size / ratio + unit,
+        height: props.size / ratio + unit
       }
     : {
         width: props.size * ratio + unit,
-        height: props.size + unit,
+        height: props.size + unit
       };
 };

@@ -19,7 +19,7 @@ import {
   RegisterCommandResponse,
   UpdateOrganismeNatureJuridiqueCommand,
   UpdateOrganismeSecteurCommand,
-  UpdateOrganismeTypeStructureCommand,
+  UpdateOrganismeTypeStructureCommand
 } from '../domain/command';
 
 export class CommandService {
@@ -89,7 +89,7 @@ export class CommandService {
       .httpService()
       .post('/command', {
         ...command,
-        objectType: '.' + commandName,
+        objectType: '.' + commandName
       })
-      .then((r) => r.body);
+      .then(r => r.body);
 }

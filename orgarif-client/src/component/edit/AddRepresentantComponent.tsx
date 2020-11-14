@@ -10,7 +10,7 @@ import {
   EluId,
   InstanceId,
   OrganismeId,
-  RepresentantListId,
+  RepresentantListId
 } from '../../domain/id';
 import { Dict, get, set } from '../../domain/nominal-class';
 import { Representant, RepresentantOrSuppleant } from '../../domain/organisme';
@@ -38,12 +38,12 @@ export const AddRepresentantComponent = (props: {
         eluId,
         organismeId: props.organismeId,
         instanceId: props.instanceId,
-        representantOrSuppleant: props.representantOrSuppleant,
+        representantOrSuppleant: props.representantOrSuppleant
       })
-      .then((r) => {
+      .then(r => {
         const representant: Representant = {
           id: r.id,
-          eluId,
+          eluId
         };
         const listId = representantListId(
           props.organismeId,
@@ -53,7 +53,7 @@ export const AddRepresentantComponent = (props: {
         const newRepresentantsLists = { ...props.representantsLists };
         const newRepresentants = [
           ...get(props.representantsLists, listId),
-          representant,
+          representant
         ];
         set(newRepresentantsLists, listId, newRepresentants);
         props.setRepresentantsLists(newRepresentantsLists);
@@ -72,7 +72,7 @@ export const AddRepresentantComponent = (props: {
       onChange={(e, value: Elu) => addRepresentant(value.id)}
       inputValue={inputValue}
       onInputChange={(e, v) => setInputValue(v)}
-      renderInput={(params) => (
+      renderInput={params => (
         <TextField
           {...params}
           label="Ajouter représentant"

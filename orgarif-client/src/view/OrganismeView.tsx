@@ -16,7 +16,7 @@ export const OrganismeView = (props: { routeParams: EditOrganismeRoute }) => {
     appContext
       .queryService()
       .getOrganismeQuery({ id: props.routeParams.id })
-      .then((r) => {
+      .then(r => {
         setOrganisme(r.organisme);
       });
   }, []);

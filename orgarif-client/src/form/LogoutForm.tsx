@@ -25,7 +25,7 @@ export class LogoutForm extends PureComponent {
     return (
       <React.Fragment>
         <form
-          ref={(c) => (this.logoutForm = c)}
+          ref={c => (this.logoutForm = c)}
           method="post"
           action={logoutPath}
         >

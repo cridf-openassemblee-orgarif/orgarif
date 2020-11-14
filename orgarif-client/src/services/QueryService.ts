@@ -6,7 +6,7 @@ import {
   IsLoginAlreadyTakenQueryResponse,
   ListOrganismesQueryResponse,
   SearchDeliberationQuery,
-  SearchDeliberationQueryResponse,
+  SearchDeliberationQueryResponse
 } from '../domain/query';
 
 export class QueryService {
@@ -33,7 +33,7 @@ export class QueryService {
       .httpService()
       .get('/query', {
         ...query,
-        objectType: '.' + queryName,
+        objectType: '.' + queryName
       })
-      .then((r) => r.body);
+      .then(r => r.body);
 }

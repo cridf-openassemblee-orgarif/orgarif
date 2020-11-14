@@ -11,12 +11,12 @@ new WebpackDevServer(webpack(config), {
   quiet: false,
   noInfo: false,
   headers: {
-    'Access-Control-Allow-Origin': '*',
+    'Access-Control-Allow-Origin': '*'
   },
   stats: 'minimal',
   // si non précisé, webpack tente des GET de /sockjs-node sur port 8080
-  port: port,
-}).listen(port, 'devorgarif', function (err, result) {
+  port: port
+}).listen(port, 'devorgarif', function(err, result) {
   if (err) {
     /*oklog*/ console.log(err);
   }

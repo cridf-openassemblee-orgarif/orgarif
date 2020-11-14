@@ -8,7 +8,7 @@ import { routes } from './routes';
 export const ApplicationRouter = () => (
   <Router history={appContext.applicationHistory().browserHistory}>
     <Switch>
-      {Object.values(routes).map((r) => (
+      {Object.values(routes).map(r => (
         <Route
           key={r.path}
           exact={true}
@@ -16,7 +16,7 @@ export const ApplicationRouter = () => (
           render={(routerProps: RouteComponentProps<any>) => {
             return React.createElement(r.component, {
               // @ts-ignore
-              routeParams: routerProps.match.params,
+              routeParams: routerProps.match.params
             });
           }}
         />

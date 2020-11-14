@@ -27,7 +27,7 @@ export const Menu = () => {
           text-transform: uppercase;
         `}
         route={{
-          name: 'RootRoute',
+          name: 'RootRoute'
         }}
       >
         Orgarif
@@ -56,7 +56,7 @@ export const Menu = () => {
                 margin: 0 10px;
               `}
               route={{
-                name: 'LoginRoute',
+                name: 'LoginRoute'
               }}
             >
               Identification
@@ -67,7 +67,7 @@ export const Menu = () => {
                 margin: 0 10px;
               `}
               route={{
-                name: 'RegisterRoute',
+                name: 'RegisterRoute'
               }}
             >
               Créer un compte

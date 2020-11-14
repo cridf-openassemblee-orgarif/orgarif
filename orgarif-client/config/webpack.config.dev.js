@@ -17,16 +17,16 @@ module.exports = {
   entry: ['react-hot-loader/patch', '../src/index'],
   resolve: Object.assign(base.resolve, {
     alias: {
-      joi: 'joi-browser',
-    },
+      joi: 'joi-browser'
+    }
   }),
   output: {
     path: path.resolve('./bundles/'),
     filename: '[name].js',
-    publicPath: `http://${jsBundleHost}:${port}/bundles/`,
+    publicPath: `http://${jsBundleHost}:${port}/bundles/`
   },
   module: {
-    rules: base.rules(true),
+    rules: base.rules(true)
   },
-  plugins: [new webpack.HotModuleReplacementPlugin()],
+  plugins: [new webpack.HotModuleReplacementPlugin()]
 };

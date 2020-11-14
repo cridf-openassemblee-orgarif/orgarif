@@ -8,7 +8,7 @@ import {
   OrganismeId,
   RepresentantId,
   SecteurId,
-  TypeStructureId,
+  TypeStructureId
 } from './id';
 import { RepresentantOrSuppleant } from './organisme';
 import { LocalDate } from './time';

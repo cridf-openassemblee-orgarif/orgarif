@@ -6,7 +6,7 @@ import {
   FullInstance,
   FullOrganisme,
   LienDeliberationInfos,
-  Representant,
+  Representant
 } from '../domain/organisme';
 import { state } from '../state/state';
 import { colors } from '../styles/vars';
@@ -16,7 +16,7 @@ const classes = {
   categories: css`
     padding: 0 20px;
     font-size: 0.8rem;
-  `,
+  `
 };
 
 const Separator = () => (
@@ -59,7 +59,7 @@ const RepresentantsComponent = (props: {
           `}
         >
           <h3>Représentants</h3>
-          {props.representants.map((r) => (
+          {props.representants.map(r => (
             <EluComponent key={stringifyNominalString(r.id)} eluId={r.eluId} />
           ))}
         </div>
@@ -74,7 +74,7 @@ const RepresentantsComponent = (props: {
           `}
         >
           <h3>Suppléants</h3>
-          {props.suppleants.map((r) => (
+          {props.suppleants.map(r => (
             <EluComponent key={stringifyNominalString(r.id)} eluId={r.eluId} />
           ))}
         </div>
@@ -92,7 +92,7 @@ const DeliberationsComponent = (props: {
   return (
     <div>
       <h3>Délibérations</h3>
-      {props.lienDeliberations.map((d) => (
+      {props.lienDeliberations.map(d => (
         <div key={stringifyNominalString(d.id)}>
           {d.deliberation.libelle} du {d.deliberation.deliberationDate}
         </div>
@@ -168,7 +168,7 @@ export const OrganismeComponent = (props: { organisme: FullOrganisme }) => {
       {organisme.instances.length !== 0 && (
         <div>
           <h3>Instances</h3>
-          {organisme.instances.map((i) => (
+          {organisme.instances.map(i => (
             <InstanceComponent
               key={stringifyNominalString(i.infos.id)}
               instance={i}

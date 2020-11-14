@@ -13,8 +13,8 @@ const useStyles = makeStyles({
   root: {
     padding: '0 10px',
     fontSize: '0.8rem',
-    width: 200,
-  },
+    width: 200
+  }
 });
 
 export const DeleteButton = (props: {

@@ -6,13 +6,13 @@ import {
   DraggableStateSnapshot,
   Droppable,
   DroppableProvided,
-  DroppableStateSnapshot,
+  DroppableStateSnapshot
 } from 'react-beautiful-dnd';
 import { InstanceId, OrganismeId, RepresentantListId } from '../../domain/id';
 import {
   Dict,
   getOrNull,
-  stringifyNominalString,
+  stringifyNominalString
 } from '../../domain/nominal-class';
 import { Representant, RepresentantOrSuppleant } from '../../domain/organisme';
 import { EluComponent } from '../EluComponent';
