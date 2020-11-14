@@ -120,6 +120,9 @@ const InstanceComponent = (props: { instance: FullInstance }) => (
 
 export const OrganismeComponent = (props: { organisme: FullOrganisme }) => {
   const organisme = props.organisme;
+  const natureJuridiquesById = useRecoilValue(state.natureJuridiquesById);
+  const secteursById = useRecoilValue(state.secteursById);
+  const typeStructuresById = useRecoilValue(state.typeStructuresById);
   return (
     <div
       css={css`
@@ -136,31 +139,20 @@ export const OrganismeComponent = (props: { organisme: FullOrganisme }) => {
           <div css={classes.categories}>
             Nature juridique :{' '}
             {
-              get(
-                useRecoilValue(state.natureJuridiquesById),
-                organisme.infos.natureJuridiqueId
-              ).libelle
+              get(natureJuridiquesById, organisme.infos.natureJuridiqueId)
+                .libelle
             }
           </div>
         )}
         {organisme.infos.secteurId && (
           <div css={classes.categories}>
-            Secteur :{' '}
-            {
-              get(useRecoilValue(state.secteursById), organisme.infos.secteurId)
-                .libelle
-            }
+            Secteur : {get(secteursById, organisme.infos.secteurId).libelle}
           </div>
         )}
         {organisme.infos.typeStructureId && (
           <div css={classes.categories}>
             Type de structure :{' '}
-            {
-              get(
-                useRecoilValue(state.typeStructuresById),
-                organisme.infos.typeStructureId
-              ).libelle
-            }
+            {get(typeStructuresById, organisme.infos.typeStructureId).libelle}
           </div>
         )}
       </div>
