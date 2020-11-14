@@ -25,7 +25,7 @@ export const EditOrganismeView = (props: {
         setLoading(false);
         setOrganisme(r.organisme);
       });
-  }, []);
+  }, [props.routeParams.id]);
   return (
     <MainContainer>
       <RouteLink route={{ name: 'ListOrganismesRoute' }}>

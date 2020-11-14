@@ -16,7 +16,7 @@ new WebpackDevServer(webpack(config), {
   stats: 'minimal',
   // si non précisé, webpack tente des GET de /sockjs-node sur port 8080
   port: port
-}).listen(port, 'devorgarif', function(err, result) {
+}).listen(port, 'devorgarif', function (err, result) {
   if (err) {
     /*oklog*/ console.log(err);
   }

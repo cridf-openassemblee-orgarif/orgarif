@@ -64,16 +64,16 @@ const latinMap: Record<string, string> = {
 };
 
 // [doc] https://gist.github.com/samgiles/762ee337dff48623e729*/
-Array.prototype.flatMap = function(lambda) {
+Array.prototype.flatMap = function (lambda) {
   return Array.prototype.concat.apply([], this.map(lambda));
 };
-String.prototype.latinize = function() {
+String.prototype.latinize = function () {
   return this.replace(/[^A-Za-z0-9]/g, (x: string) => latinMap[x] || x);
 };
 // [doc] https://stackoverflow.com/questions/1144783/how-to-replace-all-occurrences-of-a-string-in-javascript
-String.prototype.replaceAll = function(search, replacement) {
+String.prototype.replaceAll = function (search, replacement) {
   return this.split(search).join(replacement);
 };
-String.prototype.toInt = function() {
+String.prototype.toInt = function () {
   return parseInt(this, 10);
 };

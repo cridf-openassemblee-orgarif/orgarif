@@ -40,13 +40,17 @@ const classes = {
   `
 };
 
-export const EditCategoryComponent = (props: {
+interface Props<C extends Category, I extends OrgarifId> {
   label: string;
-  categoryList: Category[];
-  categoryById: Dict<OrgarifId, Category>;
-  currentId?: OrgarifId;
-  onChange: (id: OrgarifId) => void;
-}) => {
+  categoryList: C[];
+  categoryById: Dict<OrgarifId, C>;
+  currentId: I | undefined;
+  onChange: (id: I | undefined) => void;
+}
+
+export const EditCategoryComponent = <C extends Category, I extends OrgarifId>(
+  props: Props<C, I>
+) => {
   const options: SelectOption[] = props.categoryList.map(e => ({
     value: e.id,
     label: e.libelle
@@ -55,16 +59,16 @@ export const EditCategoryComponent = (props: {
     value: undefined,
     label: `- Sans ${props.label.toLowerCase()} -`
   });
-  const [value, setValue] = useState(props.currentId);
+  const [value, setValue] = useState<I | undefined>(props.currentId);
   return (
     <SelectInput
       label={props.label}
       value={value}
       options={options}
       onChange={e => {
-        const id = instanciateNominalString<OrgarifId>(
-          e.target.value as string
-        );
+        const id = e.target.value
+          ? instanciateNominalString<I>(e.target.value as string)
+          : undefined;
         setValue(id);
         props.onChange(id);
       }}
@@ -95,7 +99,7 @@ export const EditOrganismeComponent = (props: {
       representantListId(organisme.infos.id, undefined, 'suppleant'),
       organisme.suppleants
     );
-    instances.forEach(instance => {
+    organisme.instances.forEach(instance => {
       set(
         initialLists,
         representantListId(
@@ -112,7 +116,7 @@ export const EditOrganismeComponent = (props: {
       );
     });
     setRepresentantsLists(initialLists);
-  }, []);
+  }, [organisme]);
   return (
     <DragAndDropContainer
       organisme={organisme}
@@ -137,12 +141,14 @@ export const EditOrganismeComponent = (props: {
               categoryList={useRecoilValue(state.natureJuridiques)}
               categoryById={useRecoilValue(state.natureJuridiquesById)}
               currentId={organisme.infos.natureJuridiqueId}
-              onChange={(natureJuridiqueId: NatureJuridiqueId) =>
+              onChange={(
+                natureJuridiqueId: NatureJuridiqueId | undefined | null
+              ) =>
                 appContext
                   .commandService()
                   .updateOrganismeNatureJuridiqueCommand({
                     id: organisme.infos.id,
-                    natureJuridiqueId
+                    natureJuridiqueId: natureJuridiqueId ?? undefined
                   })
               }
             />
@@ -153,10 +159,10 @@ export const EditOrganismeComponent = (props: {
               categoryList={useRecoilValue(state.secteurs)}
               categoryById={useRecoilValue(state.secteursById)}
               currentId={organisme.infos.secteurId}
-              onChange={(secteurId: SecteurId) =>
+              onChange={(secteurId: SecteurId | undefined | null) =>
                 appContext.commandService().updateOrganismeSecteurCommand({
                   id: organisme.infos.id,
-                  secteurId
+                  secteurId: secteurId ?? undefined
                 })
               }
             />
@@ -167,12 +173,12 @@ export const EditOrganismeComponent = (props: {
               categoryList={useRecoilValue(state.typeStructures)}
               categoryById={useRecoilValue(state.typeStructuresById)}
               currentId={organisme.infos.typeStructureId}
-              onChange={(typeStructureId: TypeStructureId) =>
+              onChange={(typeStructureId: TypeStructureId | undefined | null) =>
                 appContext
                   .commandService()
                   .updateOrganismeTypeStructureCommand({
                     id: organisme.infos.id,
-                    typeStructureId
+                    typeStructureId: typeStructureId ?? undefined
                   })
               }
             />

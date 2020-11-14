@@ -15,12 +15,6 @@ import { colors, fonts } from './styles/vars';
 
 global.log = (logged: any) => console.log(logged);
 
-const productionBuild = process.env.NODE_ENV === 'production';
-let devTools = (f: any) => f;
-if (!productionBuild && global.__REDUX_DEVTOOLS_EXTENSION__) {
-  devTools = global.__REDUX_DEVTOOLS_EXTENSION__();
-}
-
 const muiTheme = createMuiTheme({
   palette: {
     secondary: { main: colors.errorRed }

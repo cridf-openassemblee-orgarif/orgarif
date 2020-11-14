@@ -69,7 +69,11 @@ export const AddRepresentantComponent = (props: {
       clearOnEscape
       clearOnBlur
       value={value}
-      onChange={(e, value: Elu) => addRepresentant(value.id)}
+      onChange={(e, value: Elu | null) => {
+        if (value) {
+          addRepresentant(value.id);
+        }
+      }}
       inputValue={inputValue}
       onInputChange={(e, v) => setInputValue(v)}
       renderInput={params => (

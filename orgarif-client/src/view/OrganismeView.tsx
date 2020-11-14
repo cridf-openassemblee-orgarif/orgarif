@@ -19,7 +19,7 @@ export const OrganismeView = (props: { routeParams: EditOrganismeRoute }) => {
       .then(r => {
         setOrganisme(r.organisme);
       });
-  }, []);
+  });
   return (
     <MainContainer>
       <RouteLink route={{ name: 'ListOrganismesRoute' }}>list</RouteLink>

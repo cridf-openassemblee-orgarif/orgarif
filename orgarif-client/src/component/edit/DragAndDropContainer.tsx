@@ -43,7 +43,7 @@ export const extract = (
   representantListId: RepresentantListId
 ): [OrganismeId, InstanceId | undefined, RepresentantOrSuppleant] => {
   const parts = stringifyNominalString(representantListId).split('.');
-  if (parts.length != 3) {
+  if (parts.length !== 3) {
     throw Errors._6f643a2a();
   }
   return [

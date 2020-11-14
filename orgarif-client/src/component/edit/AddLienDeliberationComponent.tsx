@@ -95,7 +95,7 @@ export const AddLienDeliberationComponent = (props: {
   };
   const onChange = (
     event: ChangeEvent<{}>,
-    newValue: string | DeliberationItem | undefined
+    newValue: string | DeliberationItem | null
   ) => {
     if (typeof newValue === 'string') {
       openDialog(newValue);
@@ -186,7 +186,7 @@ export const AddLienDeliberationComponent = (props: {
             )}
           </div>
         )}
-        renderOption={(option: DeliberationInfos) => (
+        renderOption={(option: DeliberationItem) => (
           <div>
             {!option.id && (
               <span
