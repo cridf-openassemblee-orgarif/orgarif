@@ -5,6 +5,6 @@ enum class ApplicationEnvironment {
 }
 
 enum class MimeType(val fullType: String) {
-    js("application/javascript"),
+    javascript("application/javascript"),
     json("application/json"),
 }

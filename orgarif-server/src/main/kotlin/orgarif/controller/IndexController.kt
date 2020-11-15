@@ -80,7 +80,7 @@ class IndexController(
             request.serverName
         }
         mav.model["bundles"] = webpackBundleFiles.split(",")
-                .map { "$jsBundlesHost/$webpackBundleUrlBase/$it" }
+                .map { "$jsBundlesHost$webpackBundleUrlBase/$it" }
         mav.model["statics"] = statics
         mav.viewName = "index"
         return mav

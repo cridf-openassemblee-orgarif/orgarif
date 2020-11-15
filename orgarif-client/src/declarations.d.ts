@@ -5,7 +5,6 @@ declare namespace NodeJS {
   /* tslint:enable */
   export interface Global {
     window: any;
-    __REDUX_DEVTOOLS_EXTENSION__: any;
     bootstrapData: any; // bootstrapData: ApplicationBootstrapData;
     log: (mess: any) => void;
   }

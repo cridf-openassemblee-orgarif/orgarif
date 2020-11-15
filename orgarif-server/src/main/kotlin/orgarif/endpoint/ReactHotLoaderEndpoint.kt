@@ -21,7 +21,7 @@ class ReactHotLoaderEndpoint(@Value("\${webpack.devHost}") val webpackDevHost: S
         if (applicationInstance.env == ApplicationEnvironment.dev) {
             val path = request.servletPath
             response.contentType = if (path.endsWith(".js")) {
-                MimeType.js.fullType
+                MimeType.javascript.fullType
             } else {
                 MimeType.json.fullType
             }
