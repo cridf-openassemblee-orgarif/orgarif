@@ -1,4 +1,4 @@
-package orgarif.query.mail
+package orgarif.query
 
 import orgarif.query.IsLoginAlreadyTakenQuery
 import orgarif.query.IsLoginAlreadyTakenQueryResponse
@@ -7,7 +7,7 @@ import orgarif.repository.sql.UserDao
 import org.springframework.stereotype.Service
 
 @Service
-class IsLoginAlreadyExistsQueryHandler(val userDao: UserDao) :
+class IsLoginAlreadyTakenQueryHandler(val userDao: UserDao) :
         QueryHandler<IsLoginAlreadyTakenQuery, IsLoginAlreadyTakenQueryResponse>() {
 
     override fun handle(query: IsLoginAlreadyTakenQuery) =

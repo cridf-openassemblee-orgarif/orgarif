@@ -89,7 +89,7 @@ export class CommandService {
       .httpService()
       .post('/command', {
         ...command,
-        objectType: '.' + commandName
+        objectType: commandName
       })
       .then(r => r.body);
 }

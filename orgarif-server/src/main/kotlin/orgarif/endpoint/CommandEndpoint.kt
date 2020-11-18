@@ -22,7 +22,7 @@ import javax.servlet.http.HttpServletRequest
 import javax.servlet.http.HttpServletResponse
 
 @RestController
-class CommandController(
+class CommandEndpoint(
         val commandLogDao: CommandLogDao,
         val applicationInstance: ApplicationInstance,
         val ipService: IpService,

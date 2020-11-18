@@ -10,7 +10,7 @@ import { useState } from 'react';
 import { stringifyNominalString } from '../../domain/nominal-class';
 import { clientUid } from '../../utils';
 
-// TODO[doc] material password input doesn't send its value in a classic form
+// [doc] material password input doesn't send its value in a classic form
 // submission... so we have to use a hook to get the value
 export const PasswordInput = (props: {
   label: string;

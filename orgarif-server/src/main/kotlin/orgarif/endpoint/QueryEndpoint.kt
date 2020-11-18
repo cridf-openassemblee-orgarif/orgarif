@@ -5,10 +5,10 @@ import org.springframework.web.bind.annotation.RestController
 import orgarif.domain.AuthenticationLevel
 import orgarif.error.OrgarifSecurityException
 import orgarif.query.*
-import orgarif.query.mail.IsLoginAlreadyExistsQueryHandler
-import orgarif.query.mail.ListOrganismesQueryHandler
-import orgarif.query.mail.GetOrganismeQueryHandler
-import orgarif.query.mail.SearchDeliberationQueryHandler
+import orgarif.query.IsLoginAlreadyTakenQueryHandler
+import orgarif.query.ListOrganismesQueryHandler
+import orgarif.query.GetOrganismeQueryHandler
+import orgarif.query.SearchDeliberationQueryHandler
 import orgarif.repository.sql.UserDao
 import orgarif.service.user.UserSessionHelper
 import orgarif.utils.Serializer
@@ -16,9 +16,9 @@ import java.net.URLDecoder
 import javax.servlet.http.HttpServletRequest
 
 @RestController
-class QueryController(
+class QueryEndpoint(
         val getOrganismeQueryHandler: GetOrganismeQueryHandler,
-        val isLoginAlreadyExistsQueryHandler: IsLoginAlreadyExistsQueryHandler,
+        val isLoginAlreadyTakenQueryHandler: IsLoginAlreadyTakenQueryHandler,
         val listOrganismesQueryHandler: ListOrganismesQueryHandler,
         val searchDeliberationQueryHandler: SearchDeliberationQueryHandler,
 
@@ -56,7 +56,7 @@ class QueryController(
     @Suppress("UNCHECKED_CAST")
     private fun handler(query: Query): QueryHandlerInterface<Query, QueryResponse> = when (query) {
         is GetOrganismeQuery -> getOrganismeQueryHandler
-        is IsLoginAlreadyTakenQuery -> isLoginAlreadyExistsQueryHandler
+        is IsLoginAlreadyTakenQuery -> isLoginAlreadyTakenQueryHandler
         is ListOrganismesQuery -> listOrganismesQueryHandler
         is SearchDeliberationQuery -> searchDeliberationQueryHandler
     } as QueryHandler<Query, QueryResponse>

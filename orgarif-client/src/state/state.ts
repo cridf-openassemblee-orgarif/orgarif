@@ -75,7 +75,7 @@ export const state = {
     }
   }),
   userInfos: atom({
-    key: 'userState',
+    key: 'userInfos',
     default: applicationBootstrapData.userInfos
   })
 };

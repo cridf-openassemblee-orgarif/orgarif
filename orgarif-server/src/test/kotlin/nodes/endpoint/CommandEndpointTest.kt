@@ -5,7 +5,7 @@ import orgarif.command.LoginCommand
 import orgarif.utils.Serializer
 import org.junit.Test
 
-internal class CommandControllerTest {
+internal class CommandEndpointTest {
 
     @Test
     fun command() {

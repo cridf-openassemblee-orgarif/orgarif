@@ -33,7 +33,7 @@ export class QueryService {
       .httpService()
       .get('/query', {
         ...query,
-        objectType: '.' + queryName
+        objectType: queryName
       })
       .then(r => r.body);
 }

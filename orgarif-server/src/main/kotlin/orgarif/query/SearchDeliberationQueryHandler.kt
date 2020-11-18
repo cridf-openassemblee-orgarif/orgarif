@@ -1,4 +1,4 @@
-package orgarif.query.mail
+package orgarif.query
 
 import DeliberationInfos
 import org.springframework.stereotype.Service
