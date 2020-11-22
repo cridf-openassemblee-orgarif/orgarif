@@ -23,7 +23,7 @@ export const ListOrganismesView = () => {
       .then(r => {
         setOrganismes(r.organismes);
       });
-  });
+  }, []);
   const newOrganismeOnSubmit = (dto: { nom: string }) => {
     if (dto.nom !== '') {
       appContext
