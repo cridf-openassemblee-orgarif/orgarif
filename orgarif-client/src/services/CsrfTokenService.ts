@@ -9,7 +9,7 @@ export class CsrfTokenService {
   public token!: string;
 
   constructor() {
-    this.refreshToken()
+    this.refreshToken();
   }
 
   public refreshToken() {

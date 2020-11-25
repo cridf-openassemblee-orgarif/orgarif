@@ -1,4 +1,4 @@
-import { ClientUid } from './domain/id';
+import { ClientUid } from './domain/client-id';
 import {
   instanciateNominalString,
   stringifyNominalString

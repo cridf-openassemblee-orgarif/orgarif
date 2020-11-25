@@ -2,7 +2,8 @@
 import * as React from 'react';
 import { useRef } from 'react';
 import { appContext } from '../../ApplicationContext';
-import { OrganismeId, RepresentantListId } from '../../domain/id';
+import { RepresentantListId } from '../../domain/client-id';
+import { OrganismeId } from '../../domain/id';
 import { Dict, set } from '../../domain/nominal-class';
 import { FullInstance, Representant } from '../../domain/organisme';
 import { SimpleForm } from '../base-component/SimpleForm';

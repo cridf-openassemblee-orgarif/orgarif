@@ -2,12 +2,8 @@
 import Fab from '@material-ui/core/Fab';
 import * as React from 'react';
 import { appContext } from '../../ApplicationContext';
-import {
-  InstanceId,
-  OrganismeId,
-  RepresentantId,
-  RepresentantListId
-} from '../../domain/id';
+import { RepresentantListId } from '../../domain/client-id';
+import { InstanceId, OrganismeId, RepresentantId } from '../../domain/id';
 import { Dict, get, set } from '../../domain/nominal-class';
 import { Representant, RepresentantOrSuppleant } from '../../domain/organisme';
 import { representantListId } from './DragAndDropContainer';

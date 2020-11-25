@@ -1,4 +1,4 @@
-import { OrgarifId } from './id';
+export type NominalItem = NominalString<any> | NominalNumber<any>;
 
 export abstract class NominalString<T extends string> {
   private _typeGuard!: T;
@@ -22,18 +22,18 @@ export const instanciateNominalNumber = <T extends NominalNumber<any>>(
   value: number
 ) => (value as unknown) as T;
 
-export type Dict<K extends OrgarifId, T> = Record<
+export type Dict<K extends NominalItem, T> = Record<
   // @ts-ignore
   K,
   T
 >;
 
-export const getOrNull = <K extends OrgarifId, T>(
+export const getOrNull = <K extends NominalItem, T>(
   dict: Dict<K, T>,
   key: K
 ): T | undefined => dict[key];
 
-export const get = <K extends OrgarifId, T>(dict: Dict<K, T>, key: K): T => {
+export const get = <K extends NominalItem, T>(dict: Dict<K, T>, key: K): T => {
   const r = getOrNull(dict, key);
   if (!r) {
     throw new Error(`Could not find item ${key}`);
@@ -41,7 +41,7 @@ export const get = <K extends OrgarifId, T>(dict: Dict<K, T>, key: K): T => {
   return r;
 };
 
-export const set = <K extends OrgarifId, T>(
+export const set = <K extends NominalItem, T>(
   dict: Dict<K, T>,
   key: K,
   value: T
@@ -49,7 +49,7 @@ export const set = <K extends OrgarifId, T>(
   dict[key] = value;
 };
 
-export const deleteItem = <K extends OrgarifId, T>(
+export const deleteItem = <K extends NominalItem, T>(
   dict: Dict<K, T>,
   key: K
 ) => {

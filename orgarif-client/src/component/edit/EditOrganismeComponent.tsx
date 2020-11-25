@@ -5,10 +5,10 @@ import { useEffect, useState } from 'react';
 import { useRecoilValue } from 'recoil';
 import { appContext } from '../../ApplicationContext';
 import { Category } from '../../domain/bootstrap-data';
+import { RepresentantListId } from '../../domain/client-id';
 import {
   NatureJuridiqueId,
   OrgarifId,
-  RepresentantListId,
   SecteurId,
   TypeStructureId
 } from '../../domain/id';

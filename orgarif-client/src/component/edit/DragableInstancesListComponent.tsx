@@ -9,7 +9,8 @@ import {
   DroppableProvided,
   DroppableStateSnapshot
 } from 'react-beautiful-dnd';
-import { OrganismeId, RepresentantListId } from '../../domain/id';
+import { RepresentantListId } from '../../domain/client-id';
+import { OrganismeId } from '../../domain/id';
 import { Dict, stringifyNominalString } from '../../domain/nominal-class';
 import { FullInstance, Representant } from '../../domain/organisme';
 import { NombreRepresentantsComponent } from '../NombreRepresentantsComponent';

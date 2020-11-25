@@ -1,7 +1,8 @@
 /** @jsxImportSource @emotion/react */
 import * as React from 'react';
 import { appContext } from '../../ApplicationContext';
-import { InstanceId, OrganismeId, RepresentantListId } from '../../domain/id';
+import { RepresentantListId } from '../../domain/client-id';
+import { InstanceId, OrganismeId } from '../../domain/id';
 import { deleteItem, Dict } from '../../domain/nominal-class';
 import { FullInstance, Representant } from '../../domain/organisme';
 import { DeleteButton } from '../base-component/DeleteButton';

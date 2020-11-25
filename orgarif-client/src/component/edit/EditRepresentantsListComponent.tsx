@@ -1,6 +1,7 @@
 /** @jsxImportSource @emotion/react */
 import * as React from 'react';
-import { InstanceId, OrganismeId, RepresentantListId } from '../../domain/id';
+import { RepresentantListId } from '../../domain/client-id';
+import { InstanceId, OrganismeId } from '../../domain/id';
 import { Dict } from '../../domain/nominal-class';
 import { Representant, RepresentantOrSuppleant } from '../../domain/organisme';
 import { AddRepresentantComponent } from './AddRepresentantComponent';

@@ -6,7 +6,7 @@ import { NotificationService } from './services/NotificationService';
 import { QueryService } from './services/QueryService';
 
 class ApplicationContext {
-  private csrfTokenServiceInstance!: CsrfTokenService ;
+  private csrfTokenServiceInstance!: CsrfTokenService;
   public csrfTokenService = () => {
     if (!this.csrfTokenServiceInstance) {
       this.csrfTokenServiceInstance = new CsrfTokenService();
@@ -14,7 +14,7 @@ class ApplicationContext {
     return this.csrfTokenServiceInstance;
   };
 
-  private httpServiceInstance!: HttpService ;
+  private httpServiceInstance!: HttpService;
   public httpService = () => {
     if (!this.httpServiceInstance) {
       this.httpServiceInstance = new HttpService();
@@ -22,7 +22,7 @@ class ApplicationContext {
     return this.httpServiceInstance;
   };
 
-  private notificationServiceInstance!: NotificationService ;
+  private notificationServiceInstance!: NotificationService;
   public notificationService = () => {
     if (!this.notificationServiceInstance) {
       this.notificationServiceInstance = new NotificationService();
@@ -30,7 +30,7 @@ class ApplicationContext {
     return this.notificationServiceInstance;
   };
 
-  private applicationHistoryInstance!: ApplicationHistory ;
+  private applicationHistoryInstance!: ApplicationHistory;
   public applicationHistory = () => {
     if (!this.applicationHistoryInstance) {
       this.applicationHistoryInstance = new ApplicationHistory();
@@ -38,7 +38,7 @@ class ApplicationContext {
     return this.applicationHistoryInstance;
   };
 
-  private queryServiceInstance!: QueryService ;
+  private queryServiceInstance!: QueryService;
   public queryService = () => {
     if (!this.queryServiceInstance) {
       this.queryServiceInstance = new QueryService();
@@ -46,7 +46,7 @@ class ApplicationContext {
     return this.queryServiceInstance;
   };
 
-  private commandServiceInstance!: CommandService ;
+  private commandServiceInstance!: CommandService;
   public commandService = () => {
     if (!this.commandServiceInstance) {
       this.commandServiceInstance = new CommandService();

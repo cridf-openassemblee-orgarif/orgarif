@@ -5,13 +5,9 @@ import * as React from 'react';
 import { useState } from 'react';
 import { useRecoilValue } from 'recoil';
 import { appContext } from '../../ApplicationContext';
+import { RepresentantListId } from '../../domain/client-id';
 import { Elu } from '../../domain/elu';
-import {
-  EluId,
-  InstanceId,
-  OrganismeId,
-  RepresentantListId
-} from '../../domain/id';
+import { EluId, InstanceId, OrganismeId } from '../../domain/id';
 import { Dict, get, set } from '../../domain/nominal-class';
 import { Representant, RepresentantOrSuppleant } from '../../domain/organisme';
 import { state } from '../../state/state';
