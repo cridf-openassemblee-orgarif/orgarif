@@ -17,8 +17,8 @@ class WebConfiguration(val env: Environment) : WebMvcConfigurer, ServletContextI
 
     override fun addResourceHandlers(registry: ResourceHandlerRegistry) {
         registry
-                .addResourceHandler(ApplicationConstants.resourcesPath + "/**")
-                .addResourceLocations("classpath:/static/", "file:static" + ApplicationConstants.resourcesPath + "/")
+                .addResourceHandler(ApplicationConstants.staticResourcesPath + "/**")
+                .addResourceLocations("classpath:/static/", "file:static" + ApplicationConstants.staticResourcesPath + "/")
     }
 
     override fun onStartup(servletContext: ServletContext) {
@@ -33,7 +33,7 @@ class WebConfiguration(val env: Environment) : WebMvcConfigurer, ServletContextI
     private fun initCachingHttpHeadersFilter(servletContext: ServletContext,
                                              disps: EnumSet<DispatcherType>) {
         val cachingHttpHeadersFilter = servletContext.addFilter("cachingHttpHeadersFilter", CachingHttpHeadersFilter())
-        cachingHttpHeadersFilter.addMappingForUrlPatterns(disps, true, ApplicationConstants.resourcesPath + "/*")
+        cachingHttpHeadersFilter.addMappingForUrlPatterns(disps, true, ApplicationConstants.staticResourcesPath + "/*")
     }
 
 }

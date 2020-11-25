@@ -47,6 +47,7 @@ dependencies {
     implementation("com.fasterxml.jackson.module:jackson-module-kotlin:2.11.0")
     implementation("org.reflections:reflections:0.9.10")
     implementation("com.squareup.okhttp3:okhttp:4.2.2")
+    implementation("org.json:json:20201115")
 
     testImplementation("org.springframework.boot:spring-boot-starter-test")
 //    testImplementation("org.springframework.boot:spring-boot-starter-test") {

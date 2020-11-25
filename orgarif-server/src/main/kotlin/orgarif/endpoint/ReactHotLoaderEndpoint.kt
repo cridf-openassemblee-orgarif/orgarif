@@ -12,7 +12,7 @@ import javax.servlet.http.HttpServletRequest
 import javax.servlet.http.HttpServletResponse
 
 @RestController
-class ReactHotLoaderEndpoint(@Value("\${webpack.devHost}") val webpackDevHost: String,
+class ReactHotLoaderEndpoint(@Value("\${assets.webpackDevHost}") val assetsWebpackDevHost: String,
                              val applicationInstance: ApplicationInstance,
                              val httpService: HttpService) {
 
@@ -25,7 +25,7 @@ class ReactHotLoaderEndpoint(@Value("\${webpack.devHost}") val webpackDevHost: S
             } else {
                 MimeType.json.fullType
             }
-            response.writer.print(httpService.getString(webpackDevHost + path).body)
+            response.writer.print(httpService.getString(assetsWebpackDevHost + path).body)
         } else {
             throw OrgarifNotFoundException()
         }

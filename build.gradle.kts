@@ -28,8 +28,9 @@ tasks {
         from("orgarif-server/build/libs") {
             include("orgarif-server.jar")
         }
-        from("orgarif-client/build") {
-            into("static/resources/")
+        from("nodes-client/build/asset-manifest.json")
+        from("nodes-client/build/static") {
+            into("static/")
         }
         into("build")
         doLast {
@@ -43,37 +44,10 @@ tasks {
             val shortGitRevision = "git log -1 --pretty=%h".runCommand()
             val gitRevision = "git rev-parse HEAD".runCommand()
             File(buildPropertiesFile).writeText("""
-                bundleName=${bundleName()}
-                vendorBundleName=${vendorBundleName()}
                 shortGitRevision=$shortGitRevision
                 gitRevision=$gitRevision
             """.trimIndent())
             File(buildGitDiffFile).writeText("git diff HEAD".runCommand())
         }
     }
-}
-
-val bundleName = {
-    val mainBundlePrefix = "app."
-    val sizeLimit = 200
-    val allFiles = file("build/static/resources").listFiles() ?: emptyArray()
-    // assert : there's files
-    assert(allFiles.size > 0) { "/!\\ Client build problem - no JS bundle" }
-    // assert : each of these files is less than sizeLimit ko
-    allFiles.forEach {
-        assert(it.length() < sizeLimit * 1000) { "/!\\ JS bundle is more than $sizeLimit ko : ${it.length()}" }
-    }
-    val mainList = allFiles.filter { it.name.startsWith(mainBundlePrefix) }
-    // assert there's only one main bundle
-    assert(mainList.size == 1) { "/!\\ Client build problem - more than one main JS bundle : ${mainList}" }
-    "/resources/${mainList.first().name}"
-}
-
-val vendorBundleName = {
-    val vendorBundlePrefix = "vendors~main."
-    val allFiles = file("build/static/resources").listFiles() ?: emptyArray()
-    val bundleList = allFiles.filter { it.name.startsWith(vendorBundlePrefix) }
-    // assert there's only one vendors~main
-    assert(bundleList.size == 1) { "/!\\ Client build problem - more than one vendors JS bundle : ${bundleList}" }
-    "/resources/${bundleList.first().name}"
 }

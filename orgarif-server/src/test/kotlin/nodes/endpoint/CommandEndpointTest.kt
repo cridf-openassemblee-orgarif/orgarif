@@ -11,7 +11,7 @@ internal class CommandEndpointTest {
     fun command() {
         val json = """
         {
-            "objectType":"orgarif.command.LoginCommand",
+            "objectType":"LoginCommand",
             "login": "username",
             "password": "password"
         }

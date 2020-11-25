@@ -10,7 +10,7 @@ object ApplicationConstants {
     // TODO[orgarif]
     const val applicationMail = "nepasrepondre@iledefrance.fr"
 
-    const val resourcesPath = "/res"
+    const val staticResourcesPath = "/static"
 
     val parisZoneId = ZoneId.of("Europe/Paris")
 }

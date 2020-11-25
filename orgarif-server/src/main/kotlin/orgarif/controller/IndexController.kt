@@ -2,6 +2,7 @@ package orgarif.controller
 
 import freemarker.ext.beans.BeansWrapperBuilder
 import freemarker.template.Configuration
+import org.json.JSONObject
 import org.springframework.beans.factory.annotation.Value
 import org.springframework.stereotype.Controller
 import org.springframework.web.bind.annotation.GetMapping
@@ -17,15 +18,17 @@ import orgarif.service.user.MagicLinkTokenService
 import orgarif.service.user.UserService
 import orgarif.service.user.UserSessionHelper
 import orgarif.utils.Serializer.serialize
+import java.io.File
 import java.net.URLEncoder
+import java.nio.file.Files
 import javax.servlet.http.HttpServletRequest
 import javax.servlet.http.HttpServletResponse
 
 @Controller
 class IndexController(
-        @Value("\${webpack.devHost}") val webpackDevHost: String,
-        @Value("\${webpack.bundleUrlBase}") val webpackBundleUrlBase: String,
-        @Value("\${webpack.bundleFiles}") val webpackBundleFiles: String,
+        @Value("\${assets.webpackDevHost}") val assetsWebpackDevHost: String,
+        @Value("\${assets.useBuildFiles}") val assetsUseBuildFiles: Boolean,
+
 
         val userDao: UserDao,
         val secteurDao: SecteurDao,
@@ -48,6 +51,29 @@ class IndexController(
         const val magicTokenParameterName = "magicToken"
 
         val statics = BeansWrapperBuilder(Configuration.DEFAULT_INCOMPATIBLE_IMPROVEMENTS).build().staticModels
+    }
+
+    val assets by lazy {
+        File(System.getProperty("user.dir") + "/asset-manifest.json")
+                .let { Files.readString(it.toPath()) }
+                .let { JSONObject(it ?: throw RuntimeException()) }
+                .let { it.getJSONArray("entrypoints") }
+                .map { "/$it" }
+                .map { if (!assetsUseBuildFiles) assetsWebpackDevHost + it else it }
+    }
+    val jsAssets by lazy {
+        if (assetsUseBuildFiles) {
+            assets.filter { it.endsWith(".js") }
+        } else {
+            listOf("bundle.js", "0.chunk.js", "main.chunk.js").map { "/static/js/$it" }
+        }
+    }
+    val cssAssets by lazy {
+        if (assetsUseBuildFiles) {
+            assets.filter { it.endsWith(".css") }
+        } else {
+            emptyList()
+        }
     }
 
     @GetMapping(logoutRoute)
@@ -74,13 +100,8 @@ class IndexController(
         mav.model["bootstrapData"] = serialize(ApplicationBootstrapData(applicationInstance.env, userInfos, categories, elus))
         mav.model["deploymentId"] = applicationInstance.deploymentId.rawId
         mav.model["gitRevisionLabel"] = applicationInstance.gitRevisionLabel
-        val jsBundlesHost = if (applicationInstance.env == ApplicationEnvironment.dev) {
-            webpackDevHost
-        } else {
-            request.serverName
-        }
-        mav.model["bundles"] = webpackBundleFiles.split(",")
-                .map { "$jsBundlesHost$webpackBundleUrlBase/$it" }
+        mav.model["jsAssets"] = jsAssets
+        mav.model["cssAssets"] = cssAssets
         mav.model["statics"] = statics
         mav.viewName = "index"
         return mav

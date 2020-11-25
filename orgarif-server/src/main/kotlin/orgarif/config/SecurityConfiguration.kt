@@ -20,8 +20,8 @@ class SecurityConfiguration(@Value("\${forceHttps}") val forceHttps: Boolean,
         // TODO[fmk] est necessaire en fait ??
         // "/**/*" match "/*" ou pas ?
         web.ignoring()
-                .antMatchers(ApplicationConstants.resourcesPath + "/*")
-                .antMatchers(ApplicationConstants.resourcesPath + "/**/*")
+                .antMatchers(ApplicationConstants.staticResourcesPath + "/*")
+                .antMatchers(ApplicationConstants.staticResourcesPath + "/**/*")
     }
 
     override fun configure(http: HttpSecurity) {
