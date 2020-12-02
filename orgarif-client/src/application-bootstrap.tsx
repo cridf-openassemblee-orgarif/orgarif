@@ -20,6 +20,7 @@ const muiTheme = createMuiTheme({
     secondary: { main: colors.errorRed }
   },
   typography: {
+    fontSize: fonts.baseSize,
     htmlFontSize: fonts.baseSize
   }
 });
