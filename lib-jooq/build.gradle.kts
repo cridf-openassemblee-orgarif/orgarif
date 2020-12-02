@@ -33,9 +33,9 @@ dependencies {
 
     implementation("com.google.guava:guava:29.0-jre")
 
-    implementation("org.jooq:jooq:3.13.5")
-    implementation("org.jooq:jooq-meta:3.13.5")
-    implementation("org.jooq:jooq-codegen:3.13.5")
+    implementation("org.jooq:jooq:3.14.4")
+    implementation("org.jooq:jooq-meta:3.14.4")
+    implementation("org.jooq:jooq-codegen:3.14.4")
 
     implementation("mysql:mysql-connector-java:8.0.22")
 }

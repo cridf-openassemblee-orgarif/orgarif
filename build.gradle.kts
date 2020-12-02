@@ -28,8 +28,8 @@ tasks {
         from("orgarif-server/build/libs") {
             include("orgarif-server.jar")
         }
-        from("nodes-client/build/asset-manifest.json")
-        from("nodes-client/build/static") {
+        from("orgarif-client/build/asset-manifest.json")
+        from("orgarif-client/build/static") {
             into("static/")
         }
         into("build")

@@ -8,7 +8,6 @@ import org.springframework.stereotype.Controller
 import org.springframework.web.bind.annotation.GetMapping
 import org.springframework.web.servlet.ModelAndView
 import orgarif.domain.ApplicationBootstrapData
-import orgarif.domain.ApplicationEnvironment
 import orgarif.domain.OrganismeCategories
 import orgarif.domain.UserInfos
 import orgarif.repository.sql.*
@@ -59,13 +58,13 @@ class IndexController(
                 .let { JSONObject(it ?: throw RuntimeException()) }
                 .let { it.getJSONArray("entrypoints") }
                 .map { "/$it" }
-                .map { if (!assetsUseBuildFiles) assetsWebpackDevHost + it else it }
     }
     val jsAssets by lazy {
         if (assetsUseBuildFiles) {
             assets.filter { it.endsWith(".js") }
         } else {
-            listOf("bundle.js", "0.chunk.js", "main.chunk.js").map { "/static/js/$it" }
+            listOf("bundle.js", "0.chunk.js", "main.chunk.js")
+                    .map { "$assetsWebpackDevHost/static/js/$it" }
         }
     }
     val cssAssets by lazy {

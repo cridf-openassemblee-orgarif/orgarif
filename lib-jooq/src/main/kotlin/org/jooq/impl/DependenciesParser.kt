@@ -1,7 +1,7 @@
 package org.jooq.impl
 
-import org.jooq.DSLContext
 import org.jooq.Query
+import org.jooq.Record
 import org.jooq.Table
 import orgarif.dbtooling.LocalDatasource
 import orgarif.dbtooling.References
@@ -29,7 +29,7 @@ object DependenciesParser {
                             .map { constraint ->
                                 when (constraint) {
                                     is ConstraintImpl -> {
-                                        constraint.`$referencesTable`()
+                                        checkSpringSessionCase(constraint.`$referencesTable`())
                                     }
                                     else -> {
                                         println(constraint)
@@ -50,7 +50,7 @@ object DependenciesParser {
                                     .let { constraint ->
                                         when (constraint) {
                                             is ConstraintImpl -> {
-                                                constraint.`$referencesTable`()
+                                                checkSpringSessionCase(constraint.`$referencesTable`())
                                             }
                                             else -> {
                                                 println(constraint)
@@ -113,4 +113,15 @@ object DependenciesParser {
             checkReferences(startTable, map, tableChain + table)
         }
     }
+
+    // [doc] because Jooq do lower case contraint table name... which is a problem for SPRING_SESSION & ATTRIBUTES
+    // (with mysql)
+    // TODO un fix sur Jooq ?
+    fun checkSpringSessionCase(table: Table<*>?): Table<*>? =
+            if (Config.driver == Config.Driver.mysql
+                    && table != null
+                    && table.name in listOf("spring_session", "spring_session_attributes"))
+                TableImpl<Record>(QualifiedName(arrayOf(table.name.toUpperCase())))
+            else
+                table
 }

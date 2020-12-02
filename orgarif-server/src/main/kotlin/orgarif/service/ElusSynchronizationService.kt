@@ -27,6 +27,7 @@ open class ElusSynchronizationService(@Value("\${doSynchronizeElus}")
     private val logger = KotlinLogging.logger {}
 
     init {
+        // TODO pas foufou la stratégie systématique
         if (doSynchronizeElus) {
             taskExecutor.execute {
                 sync()

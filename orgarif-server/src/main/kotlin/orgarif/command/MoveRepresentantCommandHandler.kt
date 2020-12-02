@@ -72,7 +72,8 @@ class MoveRepresentantCommandHandler(
         logger.debug {
             val s = StringBuilder("Update list")
             list.forEach {
-                val elu = eluDao.fetch(it.eluId)!!
+                val elu = eluDao.fetch(it.eluId)
+                        ?: throw IllegalArgumentException("${it.eluId}")
                 s.append("\n${serializeUuid(it.id.rawId)} ${elu.prenom} ${elu.nom} ${it.position}")
             }
             s
@@ -80,13 +81,15 @@ class MoveRepresentantCommandHandler(
         list.forEachIndexed { index, representant ->
             if (index != representant.position && representant.id != updatedRepresentantId) {
                 logger.debug {
-                    val elu = eluDao.fetch(representant.eluId)!!
+                    val elu = eluDao.fetch(representant.eluId)
+                            ?: throw IllegalArgumentException("${representant.eluId}")
                     "Update position ${serializeUuid(representant.id.rawId)} ${elu.prenom} ${elu.nom} $index"
                 }
                 representantDao.updatePosition(representant.id, index, now)
             } else {
                 logger.debug {
-                    val elu = eluDao.fetch(representant.eluId)!!
+                    val elu = eluDao.fetch(representant.eluId)
+                            ?: throw IllegalArgumentException("${representant.eluId}")
                     "Don't move ${serializeUuid(representant.id.rawId)} ${elu.prenom} ${elu.nom} $index"
                 }
             }

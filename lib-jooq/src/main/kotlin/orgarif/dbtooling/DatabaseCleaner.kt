@@ -3,6 +3,8 @@ package orgarif.dbtooling
 import mu.KotlinLogging
 import org.jooq.Table
 import org.jooq.impl.DependenciesParser
+import java.nio.file.Files
+import java.nio.file.Paths
 import java.sql.Statement
 
 object DatabaseCleaner {
@@ -23,9 +25,13 @@ object DatabaseCleaner {
                 .reduce { acc, s -> acc + "\n" + s }.let { SqlQueryString(it) }
         val dependencies = DependenciesParser.getDependencies(listOf(schema), databaseName)
         val reversed = reverseDependencies(dependencies.dependencies)
+        val sb = StringBuilder()
         LocalDatasource.get(databaseName).connection.createStatement().use { statement ->
-            dropTables(reversed, emptySet(), statement)
+            dropTables(reversed, emptySet(), statement, sb)
         }
+        val cleanTablesFile = Paths.get(System.getProperty("user.dir"), "/lib-jooq/build/db/clean-tables.sql")
+        cleanTablesFile.toFile().parentFile.mkdirs()
+        Files.write(cleanTablesFile, sb.toString().toByteArray(Charsets.UTF_8))
     }
 
     fun reverseDependencies(dependencies: Set<DependenciesParser.TableDependencies>): List<Pair<Table<*>, References>> {
@@ -44,18 +50,22 @@ object DatabaseCleaner {
 
     private fun dropTables(relations: List<Pair<Table<*>, References>>,
                            alreadyDroped: Set<Table<*>>,
-                           statement: Statement) {
+                           statement: Statement,
+                           sb: StringBuilder) {
         val dropTables = relations
                 .filter { (it.second.tables - alreadyDroped).isEmpty() }
                 .map { it.first }
                 .toSet()
         logger.debug { "Clean ${dropTables.map { it.name }}" }
         dropTables.forEach {
-            statement.execute("drop table if exists ${it.name}")
+            val sql = "drop table if exists ${it.name}"
+            statement.execute(sql)
+            sb.appendLine(sql + ";")
+            sb.appendLine()
         }
         val remainingRelations = relations.filter { it.first !in dropTables }
         if (remainingRelations.isNotEmpty()) {
-            dropTables(remainingRelations, alreadyDroped + dropTables, statement)
+            dropTables(remainingRelations, alreadyDroped + dropTables, statement, sb)
         }
     }
 }

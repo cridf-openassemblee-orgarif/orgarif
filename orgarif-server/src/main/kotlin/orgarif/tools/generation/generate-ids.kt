@@ -5,14 +5,15 @@ import org.reflections.util.ClasspathHelper
 import org.reflections.util.ConfigurationBuilder
 import org.reflections.util.FilterBuilder
 import orgarif.domain.OrgarifId
+import orgarif.utils.Serializer.idsPackage
 import java.nio.file.Files
 import java.nio.file.Paths
 
 fun main() {
     val stringBuilder = StringBuilder()
     val reflections = Reflections(ConfigurationBuilder()
-            .filterInputsBy(FilterBuilder().includePackage("orgarif.domain"))
-            .setUrls(ClasspathHelper.forPackage("orgarif.domain")))
+            .filterInputsBy(FilterBuilder().includePackage(idsPackage))
+            .setUrls(ClasspathHelper.forPackage(idsPackage)))
     val idClasses: List<Class<out OrgarifId<*>>> = reflections.getSubTypesOf(OrgarifId::class.java)
             .sortedBy { it.simpleName }
     stringBuilder.appendLine("import { NominalString } from './nominal-class';")

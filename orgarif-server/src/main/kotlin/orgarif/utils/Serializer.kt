@@ -5,14 +5,15 @@ import com.fasterxml.jackson.databind.ObjectMapper
 import com.fasterxml.jackson.databind.module.SimpleModule
 import com.fasterxml.jackson.module.kotlin.KotlinModule
 import com.fasterxml.jackson.module.kotlin.readValue
-import orgarif.domain.OrgarifStringId
-import orgarif.domain.OrgarifUuidId
-import orgarif.domain.PlainStringPassword
-import orgarif.serialization.*
 import org.reflections.Reflections
 import org.reflections.util.ClasspathHelper
 import org.reflections.util.ConfigurationBuilder
 import org.reflections.util.FilterBuilder
+import orgarif.domain.OrgarifId
+import orgarif.domain.OrgarifStringId
+import orgarif.domain.OrgarifUuidId
+import orgarif.domain.PlainStringPassword
+import orgarif.serialization.*
 import java.time.Instant
 import java.time.LocalDate
 import java.time.ZoneId
@@ -21,6 +22,8 @@ import kotlin.jvm.internal.Reflection
 import kotlin.reflect.KClass
 
 object Serializer {
+
+    val idsPackage = OrgarifId::class.java.packageName
 
     val objectMapper: ObjectMapper = ObjectMapper().apply { configure(this) }
 
@@ -67,8 +70,8 @@ object Serializer {
 
     fun addOrgarifUuidIdsDeserializers(module: SimpleModule) {
         val reflections = Reflections(ConfigurationBuilder()
-                .filterInputsBy(FilterBuilder().includePackage("orgarif.domain"))
-                .setUrls(ClasspathHelper.forPackage("orgarif.domain")))
+                .filterInputsBy(FilterBuilder().includePackage(idsPackage))
+                .setUrls(ClasspathHelper.forPackage(idsPackage)))
         val idClasses: Set<Class<out OrgarifUuidId>> = reflections.getSubTypesOf(OrgarifUuidId::class.java)
         idClasses
                 .forEach {
@@ -83,8 +86,8 @@ object Serializer {
 
     fun addOrgarifStringIdsDeserializers(module: SimpleModule) {
         val reflections = Reflections(ConfigurationBuilder()
-                .filterInputsBy(FilterBuilder().includePackage("orgarif.domain"))
-                .setUrls(ClasspathHelper.forPackage("orgarif.domain")))
+                .filterInputsBy(FilterBuilder().includePackage(idsPackage))
+                .setUrls(ClasspathHelper.forPackage(idsPackage)))
         val idClasses: Set<Class<out OrgarifStringId>> = reflections.getSubTypesOf(OrgarifStringId::class.java)
         idClasses
                 .forEach {

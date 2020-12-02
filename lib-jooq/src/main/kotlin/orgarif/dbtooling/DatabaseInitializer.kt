@@ -8,6 +8,8 @@ import orgarif.dbtooling.util.ShellRunner
 import orgarif.jooq.tools.Config
 import java.io.File
 import java.net.URL
+import java.nio.file.Files
+import java.nio.file.Paths
 import java.sql.Statement
 
 object DatabaseInitializer {
@@ -19,7 +21,7 @@ object DatabaseInitializer {
         Config.Driver.mysql -> ShellRunner.run("mysqldump", "--no-data", "-u", "root", databaseName)
     }
 
-    fun createDb(databaseName: String)=
+    fun createDb(databaseName: String) =
             when (Config.driver) {
                 Config.Driver.psql -> ShellRunner.run("createdb $databaseName")
                 Config.Driver.mysql -> LocalDatasource.get().connection.createStatement().use { statement ->
@@ -45,27 +47,36 @@ object DatabaseInitializer {
                             .let { SqlQueryString(it) }
                 }
         val dependencies = DependenciesParser.getDependencies(sqlQueries, databaseName)
+        val sb = StringBuilder()
         LocalDatasource.get(databaseName).connection.createStatement().use { statement ->
-            createTables(dependencies.dependencies, emptySet(), statement)
+            createTables(dependencies.dependencies, emptySet(), statement, sb)
             dependencies.otherQueries.forEach {
                 statement.execute(it.sql)
+                sb.appendLine(it.sql + ";")
+                sb.appendLine()
             }
         }
+        val createTablesFile = Paths.get(System.getProperty("user.dir"), "/lib-jooq/build/db/create-tables.sql")
+        createTablesFile.toFile().parentFile.mkdirs()
+        Files.write(createTablesFile, sb.toString().toByteArray(Charsets.UTF_8))
     }
 
     private fun createTables(dependencies: Set<DependenciesParser.TableDependencies>,
                              alreadyCreated: Set<Table<*>>,
-                             statement: Statement) {
+                             statement: Statement,
+                             sb: StringBuilder) {
         val createTables = dependencies
                 .filter { (it.references.tables - alreadyCreated).isEmpty() }
         logger.debug { "Create ${createTables.map { it.table.name }}" }
         createTables.forEach {
             statement.execute(it.createTableQuery.sql)
+            sb.appendLine(it.createTableQuery.sql + ";")
+            sb.appendLine()
         }
         val created = createTables.map { it.table }
         val remainingTables = dependencies.filter { it.table !in created }.toSet()
         if (remainingTables.isNotEmpty()) {
-            createTables(remainingTables, alreadyCreated + created, statement)
+            createTables(remainingTables, alreadyCreated + created, statement, sb)
         }
     }
 }

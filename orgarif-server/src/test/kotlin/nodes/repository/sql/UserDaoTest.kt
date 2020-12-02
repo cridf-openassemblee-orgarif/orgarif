@@ -11,6 +11,7 @@ import org.springframework.beans.factory.annotation.Autowired
 import org.springframework.boot.test.context.SpringBootTest
 import org.springframework.test.context.ActiveProfiles
 import org.springframework.test.context.junit4.SpringJUnit4ClassRunner
+import orgarif.TestData
 import java.time.Instant
 import java.util.*
 
@@ -26,16 +27,7 @@ internal class UserDaoTest {
     @Test
     fun `test conflict`() {
         try {
-            userDao.insert(UserDao.Record(
-                    id = UserId(UUID.randomUUID()),
-                    mail = "test",
-                    username = "test",
-                    displayName = "test",
-                    language = Language.en,
-                    admin = false,
-                    signupDate = Instant.now(),
-                    dirtyMail = null
-            ), HashedPassword("sdv"))
+            userDao.insert(TestData.dummyUser, HashedPassword("sdv"))
             throw RuntimeException()
         } catch (e: MailAlreadyRegisteredException) {
         }

@@ -78,7 +78,7 @@ class UserDao(val jooq: DSLContext) {
                     .from(APP_USER)
                     .where(APP_USER.MAIL.equal(login))
                     .or(APP_USER.USERNAME.equal(login))
-                    .fetchOne()
+                    .fetchSingle()
                     .let { it.value1() > 0 }
 
     fun fetchByMail(mail: String): Record? =

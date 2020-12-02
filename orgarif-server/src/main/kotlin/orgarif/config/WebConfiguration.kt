@@ -6,6 +6,8 @@ import org.springframework.context.annotation.Configuration
 import org.springframework.core.env.Environment
 import org.springframework.web.servlet.config.annotation.ResourceHandlerRegistry
 import org.springframework.web.servlet.config.annotation.WebMvcConfigurer
+import java.time.Duration
+import java.time.temporal.ChronoUnit
 import java.util.*
 import javax.servlet.DispatcherType
 import javax.servlet.ServletContext
@@ -15,10 +17,14 @@ class WebConfiguration(val env: Environment) : WebMvcConfigurer, ServletContextI
 
     private val logger = KotlinLogging.logger {}
 
+    // cache for 4 years
+    private val cacheTimeToLive = Duration.of((365 * 3 + 366).toLong(), ChronoUnit.DAYS)
+
     override fun addResourceHandlers(registry: ResourceHandlerRegistry) {
         registry
                 .addResourceHandler(ApplicationConstants.staticResourcesPath + "/**")
-                .addResourceLocations("classpath:/static/", "file:static" + ApplicationConstants.staticResourcesPath + "/")
+                .addResourceLocations("classpath:/static/", "file:static/")
+                .setCachePeriod(cacheTimeToLive.seconds.toInt())
     }
 
     override fun onStartup(servletContext: ServletContext) {
@@ -26,14 +32,5 @@ class WebConfiguration(val env: Environment) : WebMvcConfigurer, ServletContextI
             val activeProfiles = env.activeProfiles.joinToString(", ")
             logger.info { "Web application configuration, using profiles: $activeProfiles" }
         }
-        val disps = EnumSet.of(DispatcherType.REQUEST, DispatcherType.FORWARD, DispatcherType.ASYNC)
-        initCachingHttpHeadersFilter(servletContext, disps)
     }
-
-    private fun initCachingHttpHeadersFilter(servletContext: ServletContext,
-                                             disps: EnumSet<DispatcherType>) {
-        val cachingHttpHeadersFilter = servletContext.addFilter("cachingHttpHeadersFilter", CachingHttpHeadersFilter())
-        cachingHttpHeadersFilter.addMappingForUrlPatterns(disps, true, ApplicationConstants.staticResourcesPath + "/*")
-    }
-
 }

@@ -15,6 +15,7 @@ import orgarif.error.MessageNotSentException
 import orgarif.repository.sql.MailLogDao
 import java.util.*
 
+// TODO clean les !!
 @Service
 class MailService(@Value("\${mailjet.url}") val url: String,
                   @Value("\${mailjet.api-key}") val apiKey: String,

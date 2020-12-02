@@ -17,7 +17,7 @@ plugins {
     val kotlinVersion = "1.4.0"
     id("org.jetbrains.kotlin.jvm") version kotlinVersion
     id("io.spring.dependency-management") version "1.0.9.RELEASE"
-    id("org.springframework.boot") version "2.3.4.RELEASE"
+    id("org.springframework.boot") version "2.4.0"
     // so we don't need to open Spring components classes
     id("org.jetbrains.kotlin.plugin.spring") version "1.4.0"
 }
@@ -50,9 +50,7 @@ dependencies {
     implementation("org.json:json:20201115")
 
     testImplementation("org.springframework.boot:spring-boot-starter-test")
-//    testImplementation("org.springframework.boot:spring-boot-starter-test") {
-//        exclude(module = "junit")
-//    }
+    testImplementation("junit:junit:4.13.1")
 //    testImplementation("org.junit.jupiter:junit-jupiter-api")
 //    testRuntimeOnly("org.junit.jupiter:junit-jupiter-engine")
 }
