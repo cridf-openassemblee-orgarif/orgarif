@@ -1,5 +1,5 @@
 /** @jsxImportSource @emotion/react */
-import { css } from '@emotion/core';
+import { css } from '@emotion/react';
 import TextField from '@material-ui/core/TextField';
 import Autocomplete from '@material-ui/lab/Autocomplete';
 import * as React from 'react';
@@ -9,10 +9,10 @@ import { appContext } from '../../ApplicationContext';
 import { RepresentantListId } from '../../domain/client-id';
 import { Elu } from '../../domain/elu';
 import { EluId, InstanceId, OrganismeId } from '../../domain/id';
-import { Dict, get, setOld } from '../../utils/nominal-class';
 import { Representant, RepresentantOrSuppleant } from '../../domain/organisme';
 import { state } from '../../state/state';
 import { colors } from '../../styles/vars';
+import { Dict, get, setOld } from '../../utils/nominal-class';
 import { representantListId } from './DragAndDropContainer';
 
 export const AddRepresentantComponent = (props: {

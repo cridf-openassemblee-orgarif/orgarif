@@ -7,8 +7,8 @@ import OutlinedInput from '@material-ui/core/OutlinedInput';
 import { Visibility, VisibilityOff } from '@material-ui/icons';
 import * as React from 'react';
 import { useState } from 'react';
-import { stringifyNominalString } from '../../utils/nominal-class';
 import { clientUid } from '../../utils';
+import { stringifyNominalString } from '../../utils/nominal-class';
 
 // [doc] material password input doesn't send its value in a classic form
 // submission... so we have to use a hook to get the value

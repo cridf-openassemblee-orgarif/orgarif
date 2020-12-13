@@ -1,14 +1,14 @@
 /** @jsxImportSource @emotion/react */
-import { css } from '@emotion/core';
+import { css } from '@emotion/react';
 import * as React from 'react';
 import { RepresentantListId } from '../../domain/client-id';
 import { InstanceId, OrganismeId } from '../../domain/id';
+import { Representant, RepresentantOrSuppleant } from '../../domain/organisme';
 import {
   Dict,
   instanciateNominalString,
   stringifyNominalString
 } from '../../utils/nominal-class';
-import { Representant, RepresentantOrSuppleant } from '../../domain/organisme';
 import { SharedHeightContainer } from '../base-component/SharedHeightContainer';
 import { AddRepresentantComponent } from './AddRepresentantComponent';
 import { RepresentantsListComponent } from './RepresentantsListComponent';

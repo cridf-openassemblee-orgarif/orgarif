@@ -11,13 +11,13 @@ import {
 } from 'react-beautiful-dnd';
 import { RepresentantListId } from '../../domain/client-id';
 import { InstanceId, OrganismeId } from '../../domain/id';
+import { Representant, RepresentantOrSuppleant } from '../../domain/organisme';
+import { colors } from '../../styles/vars';
 import {
   Dict,
   getOrNull,
   stringifyNominalString
 } from '../../utils/nominal-class';
-import { Representant, RepresentantOrSuppleant } from '../../domain/organisme';
-import { colors } from '../../styles/vars';
 import { EluComponent } from '../EluComponent';
 import { DeleteRepresentantButton } from './DeleteRepresentantButton';
 import { DragAndDropItem, representantListId } from './DragAndDropContainer';

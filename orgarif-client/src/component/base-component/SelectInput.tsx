@@ -4,8 +4,8 @@ import { createStyles, FormControl, Select, Theme } from '@material-ui/core';
 import MenuItem from '@material-ui/core/MenuItem/MenuItem';
 import makeStyles from '@material-ui/core/styles/makeStyles';
 import * as React from 'react';
-import { stringifyNominalString } from '../../utils/nominal-class';
 import { clientUid } from '../../utils';
+import { stringifyNominalString } from '../../utils/nominal-class';
 
 const useStyles = makeStyles((theme: Theme) =>
   createStyles({

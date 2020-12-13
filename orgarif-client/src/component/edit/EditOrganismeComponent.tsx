@@ -15,16 +15,16 @@ import {
   TypeStructureId
 } from '../../domain/id';
 import {
-  Dict,
-  instanciateNominalString,
-  setOld
-} from '../../utils/nominal-class';
-import {
   FullInstance,
   FullOrganisme,
   Representant
 } from '../../domain/organisme';
 import { state } from '../../state/state';
+import {
+  Dict,
+  instanciateNominalString,
+  setOld
+} from '../../utils/nominal-class';
 import { SelectInput, SelectOption } from '../base-component/SelectInput';
 import { NombreRepresentantsComponent } from '../NombreRepresentantsComponent';
 import { AddInstanceComponent } from './AddInstanceComponent';

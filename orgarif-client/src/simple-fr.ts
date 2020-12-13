@@ -1,6 +1,6 @@
-import { stringifyNominalString } from './utils/nominal-class';
 import { LocalDate } from './domain/time';
 import { Errors } from './errors';
+import { stringifyNominalString } from './utils/nominal-class';
 
 export const formatDate = (value: LocalDate) => {
   const parts = stringifyNominalString(value).split('-');

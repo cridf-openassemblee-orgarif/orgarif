@@ -3,10 +3,10 @@ import TextField from '@material-ui/core/TextField';
 import * as React from 'react';
 import { useState } from 'react';
 import InputMask from 'react-input-mask';
-import { instanciateNominalString } from '../../utils/nominal-class';
 import { LocalDate } from '../../domain/time';
 import { Errors } from '../../errors';
 import { formatDate } from '../../simple-fr';
+import { instanciateNominalString } from '../../utils/nominal-class';
 
 export const localDateToString = formatDate;
 
@@ -28,7 +28,7 @@ export const LocalDateInput = (props: {
     props.initialValue ? localDateToString(props.initialValue) : undefined
   );
   return (
-    <InputMask mask="99/99/9999" value={value} disabled={false} maskChar=" ">
+    <InputMask mask="99/99/9999" value={value} disabled={false}>
       {() => (
         <TextField
           name={props.name}

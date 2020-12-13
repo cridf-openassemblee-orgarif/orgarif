@@ -1,9 +1,9 @@
 import { ClientUid } from './domain/client-id';
+import { LocalDate } from './domain/time';
 import {
   instanciateNominalString,
   stringifyNominalString
 } from './utils/nominal-class';
-import { LocalDate } from './domain/time';
 
 export function assertUnreachable(x: never): never {
   throw new Error(`Expected unreachable code ! Value : "${JSON.stringify(x)}"`);

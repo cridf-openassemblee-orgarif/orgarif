@@ -3,8 +3,8 @@ import * as React from 'react';
 import { appContext } from '../../ApplicationContext';
 import { RepresentantListId } from '../../domain/client-id';
 import { InstanceId, OrganismeId } from '../../domain/id';
-import { deleteItemOld, Dict } from '../../utils/nominal-class';
 import { FullInstance, Representant } from '../../domain/organisme';
+import { deleteItemOld, Dict } from '../../utils/nominal-class';
 import { DeleteButton } from '../base-component/DeleteButton';
 import { representantListId } from './DragAndDropContainer';
 

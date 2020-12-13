@@ -2,7 +2,6 @@
 import { css } from '@emotion/react';
 import * as React from 'react';
 import { useRecoilValue } from 'recoil';
-import { get, stringifyNominalString } from '../utils/nominal-class';
 import {
   FullInstance,
   FullOrganisme,
@@ -11,6 +10,7 @@ import {
 } from '../domain/organisme';
 import { state } from '../state/state';
 import { colors } from '../styles/vars';
+import { get, stringifyNominalString } from '../utils/nominal-class';
 import { EluComponent } from './EluComponent';
 
 const classes = {

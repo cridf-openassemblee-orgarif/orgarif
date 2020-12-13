@@ -7,10 +7,10 @@ import { appContext } from '../ApplicationContext';
 import { SimpleForm } from '../component/base-component/SimpleForm';
 import { TextInput } from '../component/base-component/TextInput';
 import { MainContainer } from '../container/MainContainer';
-import { stringifyNominalString } from '../utils/nominal-class';
 import { OrganismeInfos } from '../domain/organisme';
 import { RouteLink } from '../routing/RouteLink';
 import { colors } from '../styles/vars';
+import { stringifyNominalString } from '../utils/nominal-class';
 
 export const ListOrganismesView = () => {
   const [organismes, setOrganismes] = useState<OrganismeInfos[] | undefined>(

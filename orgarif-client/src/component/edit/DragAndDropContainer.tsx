@@ -6,19 +6,19 @@ import { appContext } from '../../ApplicationContext';
 import { RepresentantListId } from '../../domain/client-id';
 import { InstanceId, OrganismeId, RepresentantId } from '../../domain/id';
 import {
-  Dict,
-  get,
-  instanciateNominalString,
-  setOld,
-  stringifyNominalString
-} from '../../utils/nominal-class';
-import {
   FullOrganisme,
   Representant,
   RepresentantOrSuppleant
 } from '../../domain/organisme';
 import { Errors } from '../../errors';
 import { assertUnreachable } from '../../utils';
+import {
+  Dict,
+  get,
+  instanciateNominalString,
+  setOld,
+  stringifyNominalString
+} from '../../utils/nominal-class';
 
 const noInstanceId = 'no-instance';
 

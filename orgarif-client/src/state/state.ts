@@ -12,8 +12,8 @@ import {
   SecteurId,
   TypeStructureId
 } from '../domain/id';
-import { Dict, setOld } from '../utils/nominal-class';
 import { compareByString } from '../utils';
+import { Dict, setOld } from '../utils/nominal-class';
 
 export const state = {
   elus: atom({

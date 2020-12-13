@@ -3,8 +3,8 @@ import { css } from '@emotion/react';
 import * as React from 'react';
 import { useState } from 'react';
 import { InstanceId, OrganismeId } from '../../domain/id';
-import { stringifyNominalString } from '../../utils/nominal-class';
 import { LienDeliberationInfos } from '../../domain/organisme';
+import { stringifyNominalString } from '../../utils/nominal-class';
 import { AddLienDeliberationComponent } from './AddLienDeliberationComponent';
 
 export const EditLienDeliberationsListComponent = (props: {
