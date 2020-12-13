@@ -1,6 +1,7 @@
 import { FunctionComponent } from 'react';
-import { OrganismeId } from '../domain/id';
+import { OrganismeId, SecteurId } from '../domain/id';
 import { EditOrganismeView } from '../view/EditOrganismeView';
+import { ListOrganismesBySecteurView } from '../view/ListOrganismesBySecteurView';
 import { ListOrganismesView } from '../view/ListOrganismesView';
 import { LoginView } from '../view/LoginView';
 import { OrganismeView } from '../view/OrganismeView';
@@ -9,6 +10,7 @@ import { RootView } from '../view/RootView';
 
 export type Route =
   | EditOrganismeRoute
+  | ListOrganismesBySecteurRoute
   | ListOrganismesRoute
   | LoginRoute
   | OrganismeRoute
@@ -29,6 +31,11 @@ export const routes: Record<Route['name'], RouteProps> = {
     path: '/edition-organisme/:id',
     component: EditOrganismeView,
     authenticationLevel: 'loggedIn'
+  },
+  ListOrganismesBySecteurRoute: {
+    path: '/organismes-par-secteur/:secteurId',
+    component: ListOrganismesBySecteurView,
+    authenticationLevel: 'loggedOut'
   },
   ListOrganismesRoute: {
     path: '/organismes',
@@ -60,6 +67,11 @@ export const routes: Record<Route['name'], RouteProps> = {
 export interface EditOrganismeRoute {
   name: 'EditOrganismeRoute';
   id: OrganismeId;
+}
+
+export interface ListOrganismesBySecteurRoute {
+  name: 'ListOrganismesBySecteurRoute';
+  secteurId: SecteurId;
 }
 
 interface ListOrganismesRoute {

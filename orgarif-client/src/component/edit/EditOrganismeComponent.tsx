@@ -20,7 +20,12 @@ import {
   Representant
 } from '../../domain/organisme';
 import { state } from '../../state/state';
-import { Dict, instanciateNominalString, mutableSet, set } from '../../utils/nominal-class';
+import {
+  Dict,
+  instanciateNominalString,
+  mutableSet,
+  set
+} from '../../utils/nominal-class';
 import { pipe } from '../../utils/Pipe';
 import { SelectInput, SelectOption } from '../base-component/SelectInput';
 import { NombreRepresentantsComponent } from '../NombreRepresentantsComponent';

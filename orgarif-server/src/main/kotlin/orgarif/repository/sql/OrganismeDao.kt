@@ -7,7 +7,6 @@ import orgarif.domain.NatureJuridiqueId
 import orgarif.domain.OrganismeId
 import orgarif.domain.SecteurId
 import orgarif.domain.TypeStructureId
-import orgarif.jooq.generated.Tables
 import orgarif.jooq.generated.Tables.ORGANISME
 import orgarif.jooq.generated.tables.records.OrganismeRecord
 import orgarif.utils.toTypeId
@@ -87,6 +86,13 @@ class OrganismeDao(val jooq: DSLContext) {
 
     fun fetchAll() =
             jooq.selectFrom(ORGANISME)
+                    .orderBy(ORGANISME.CREATION_DATE.desc())
+                    .fetch()
+                    .map(this::map)
+
+    fun fetchBySecteurId(secteurId: SecteurId) =
+            jooq.selectFrom(ORGANISME)
+                    .where(ORGANISME.SECTEUR_ID.equal(secteurId.rawId))
                     .orderBy(ORGANISME.CREATION_DATE.desc())
                     .fetch()
                     .map(this::map)

@@ -4,6 +4,8 @@ import {
   GetOrganismeQueryResponse,
   IsLoginAlreadyTakenQuery,
   IsLoginAlreadyTakenQueryResponse,
+  ListOrganismesBySecteurQuery,
+  ListOrganismesBySecteurQueryResponse,
   ListOrganismesQueryResponse,
   SearchDeliberationQuery,
   SearchDeliberationQueryResponse
@@ -19,6 +21,11 @@ export class QueryService {
     query: IsLoginAlreadyTakenQuery
   ): Promise<IsLoginAlreadyTakenQueryResponse> =>
     this.query('IsLoginAlreadyTakenQuery', query);
+
+  public listOrganismesBySecteurQuery = (
+    query: ListOrganismesBySecteurQuery
+  ): Promise<ListOrganismesBySecteurQueryResponse> =>
+    this.query('ListOrganismesBySecteurQuery', query);
 
   public listOrganismesQuery = (): Promise<ListOrganismesQueryResponse> =>
     this.query('ListOrganismesQuery');

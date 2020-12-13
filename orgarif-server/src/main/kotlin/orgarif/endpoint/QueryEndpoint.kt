@@ -19,6 +19,7 @@ import javax.servlet.http.HttpServletRequest
 class QueryEndpoint(
         val getOrganismeQueryHandler: GetOrganismeQueryHandler,
         val isLoginAlreadyTakenQueryHandler: IsLoginAlreadyTakenQueryHandler,
+        val listOrganismesBySecteurQueryHandler: ListOrganismesBySecteurQueryHandler,
         val listOrganismesQueryHandler: ListOrganismesQueryHandler,
         val searchDeliberationQueryHandler: SearchDeliberationQueryHandler,
 
@@ -57,6 +58,7 @@ class QueryEndpoint(
     private fun handler(query: Query): QueryHandlerInterface<Query, QueryResponse> = when (query) {
         is GetOrganismeQuery -> getOrganismeQueryHandler
         is IsLoginAlreadyTakenQuery -> isLoginAlreadyTakenQueryHandler
+        is ListOrganismesBySecteurQuery -> listOrganismesBySecteurQueryHandler
         is ListOrganismesQuery -> listOrganismesQueryHandler
         is SearchDeliberationQuery -> searchDeliberationQueryHandler
     } as QueryHandler<Query, QueryResponse>

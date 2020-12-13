@@ -1,4 +1,4 @@
-import { OrganismeId } from './id';
+import { OrganismeId, SecteurId } from './id';
 import { DeliberationInfos, FullOrganisme, OrganismeInfos } from './organisme';
 
 export interface GetOrganismeQuery {
@@ -15,6 +15,14 @@ export interface IsLoginAlreadyTakenQuery {
 
 export interface IsLoginAlreadyTakenQueryResponse {
   alreadyTaken: boolean;
+}
+
+export interface ListOrganismesBySecteurQuery {
+  secteurId: SecteurId;
+}
+
+export interface ListOrganismesBySecteurQueryResponse {
+  organismes: OrganismeInfos[];
 }
 
 export interface ListOrganismesQueryResponse {
