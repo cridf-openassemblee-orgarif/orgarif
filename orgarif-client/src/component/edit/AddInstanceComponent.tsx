@@ -5,7 +5,8 @@ import { appContext } from '../../ApplicationContext';
 import { RepresentantListId } from '../../domain/client-id';
 import { OrganismeId } from '../../domain/id';
 import { FullInstance, Representant } from '../../domain/organisme';
-import { Dict, setOld } from '../../utils/nominal-class';
+import { Dict, set } from '../../utils/nominal-class';
+import { pipe } from '../../utils/Pipe';
 import { SimpleForm } from '../base-component/SimpleForm';
 import { TextInput } from '../base-component/TextInput';
 import { representantListId } from './DragAndDropContainer';
@@ -38,17 +39,22 @@ export const AddInstanceComponent = (props: {
         };
         const newInstances = [...props.instances, instance];
         props.setInstances(newInstances);
-        const newRepresentantsLists = { ...props.representantsLists };
-        setOld(
-          newRepresentantsLists,
-          representantListId(props.organismeId, r.id, 'representant'),
-          []
-        );
-        setOld(
-          newRepresentantsLists,
-          representantListId(props.organismeId, r.id, 'suppleant'),
-          []
-        );
+        const newRepresentantsLists = pipe(props.representantsLists)
+          .map(list =>
+            set(
+              list,
+              representantListId(props.organismeId, r.id, 'representant'),
+              []
+            )
+          )
+          .map(list =>
+            set(
+              list,
+              representantListId(props.organismeId, r.id, 'suppleant'),
+              []
+            )
+          )
+          .unwrap();
         props.setRepresentantsLists(newRepresentantsLists);
       });
   };

@@ -16,9 +16,10 @@ import {
   Dict,
   get,
   instanciateNominalString,
-  setOld,
+  set,
   stringifyNominalString
 } from '../../utils/nominal-class';
+import { pipe } from '../../utils/Pipe';
 
 const noInstanceId = 'no-instance';
 
@@ -89,15 +90,20 @@ export const DragAndDropContainer = (
       return;
     }
 
-    const newLists: Dict<RepresentantListId, Representant[]> = {
-      ...props.representantsLists
-    };
-    const sourceList = [...get(props.representantsLists, sourceId)];
-    const movedItem = sourceList.splice(result.source.index, 1)[0];
-    setOld(newLists, sourceId, sourceList);
-    const destinationList = [...get(newLists, destinationId)];
-    destinationList.splice(result.destination.index, 0, movedItem);
-    setOld(newLists, destinationId, destinationList);
+    const sourceIndex = result.source.index;
+    const resultIndex = result.destination.index;
+    const newLists = pipe(props.representantsLists)
+      .map(list => {
+        const sourceList = [...get(list, sourceId)];
+        const movedItem = sourceList.splice(sourceIndex, 1)[0];
+        return { list: set(list, sourceId, sourceList), movedItem };
+      })
+      .map(({ list, movedItem }) => {
+        const destinationList = [...get(list, destinationId)];
+        destinationList.splice(resultIndex, 0, movedItem);
+        return set(list, destinationId, destinationList);
+      })
+      .unwrap();
     props.setRepresentantsLists(newLists);
 
     const [organismeId, instanceId, representantOrSuppleant] = extract(

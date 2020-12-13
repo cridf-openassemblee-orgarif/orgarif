@@ -13,20 +13,18 @@ import {
   TypeStructureId
 } from '../domain/id';
 import { compareByString } from '../utils';
-import { Dict, setOld } from '../utils/nominal-class';
+import { Dict, pairsToDict } from '../utils/nominal-class';
 
 export const state = {
-  elus: atom({
+  elus: atom<Elu[]>({
     key: 'elus',
     default: applicationBootstrapData.elus.sort(compareByString(i => i.nom))
   }),
   elusById: selector({
     key: 'elusById',
-    get: ({ get }) => {
-      const map: Dict<EluId, Elu> = {};
-      get(state.elus).forEach(e => setOld(map, e.id, e));
-      return map;
-    }
+    // TODO wtf typescript, pourquoi le return est nécessaire
+    get: ({ get }): Dict<EluId, Elu> =>
+      pairsToDict(get(state.elus).map(e => [e.id, e]))
   }),
   natureJuridiques: atom({
     key: 'natureJuridiques',
@@ -36,11 +34,8 @@ export const state = {
   }),
   natureJuridiquesById: selector({
     key: 'natureJuridiquesById',
-    get: ({ get }) => {
-      const map: Dict<NatureJuridiqueId, NatureJuridique> = {};
-      get(state.natureJuridiques).forEach(n => setOld(map, n.id, n));
-      return map;
-    }
+    get: ({ get }): Dict<NatureJuridiqueId, NatureJuridique> =>
+      pairsToDict(get(state.natureJuridiques).map(n => [n.id, n]))
   }),
   organismeCategories: atom({
     key: 'organismeCategories',
@@ -54,11 +49,8 @@ export const state = {
   }),
   secteursById: selector({
     key: 'secteursById',
-    get: ({ get }) => {
-      const map: Dict<SecteurId, Secteur> = {};
-      get(state.secteurs).forEach(s => setOld(map, s.id, s));
-      return map;
-    }
+    get: ({ get }): Dict<SecteurId, Secteur> =>
+      pairsToDict(get(state.secteurs).map(s => [s.id, s]))
   }),
   typeStructures: atom({
     key: 'typeStructures',
@@ -68,11 +60,8 @@ export const state = {
   }),
   typeStructuresById: selector({
     key: 'typeStructuresById',
-    get: ({ get }) => {
-      const map: Dict<TypeStructureId, TypeStructure> = {};
-      get(state.typeStructures).forEach(t => setOld(map, t.id, t));
-      return map;
-    }
+    get: ({ get }): Dict<TypeStructureId, TypeStructure> =>
+      pairsToDict(get(state.typeStructures).map(t => [t.id, t]))
   }),
   userInfos: atom({
     key: 'userInfos',

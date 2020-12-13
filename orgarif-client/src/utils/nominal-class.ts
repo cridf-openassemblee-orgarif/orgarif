@@ -41,15 +41,6 @@ export const get = <K extends NominalItem, T>(dict: Dict<K, T>, key: K): T => {
   return r;
 };
 
-// FIXME remove usage pour set
-export const setOld = <K extends NominalItem, T>(
-  dict: Dict<K, T>,
-  key: K,
-  value: T
-) => {
-  dict[key] = value;
-};
-
 export const set = <K extends NominalItem, T>(
   dict: Dict<K, T>,
   key: K,
@@ -60,8 +51,22 @@ export const set = <K extends NominalItem, T>(
   return newDict;
 };
 
+export const mutableSet = <K extends NominalItem, T>(
+  dict: Dict<K, T>,
+  key: K,
+  value: T
+) => {
+  dict[key] = value;
+};
+
+export const dictKeys = <K extends NominalItem, T>(dict: Dict<K, T>) =>
+  (Object.keys(dict) as unknown) as K[];
+
 export const dictValues = <K extends NominalItem, T>(dict: Dict<K, T>) =>
   Object.values(dict) as T[];
+
+export const dictEntries = <K extends NominalItem, T>(dict: Dict<K, T>) =>
+  (Object.entries(dict) as unknown) as [K, T][];
 
 // FIXME remove usage pour un deleteItem immuable
 export const deleteItemOld = <K extends NominalItem, T>(
@@ -80,10 +85,22 @@ export const deleteItem = <K extends NominalItem, T>(
   return newDict;
 };
 
-export const pairsToDict = <I extends NominalItem, T>(pairs: [I, T][]) => {
-  const dict = {} as Dict<I, T>;
+export const pairsToDict = <K extends NominalItem, T>(pairs: [K, T][]) => {
+  const dict = {} as Dict<K, T>;
   pairs.forEach(pair => {
     dict[pair[0]] = pair[1];
+  });
+  return dict;
+};
+
+export const mergeDicts = <K extends NominalItem, T>(
+  ...dicts: Dict<K, T>[]
+) => {
+  const dict = {} as Dict<K, T>;
+  dicts.forEach(d => {
+    dictEntries(d).forEach(p => {
+      mutableSet(dict, p[0], p[1]);
+    });
   });
   return dict;
 };

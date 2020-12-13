@@ -12,7 +12,7 @@ import { EluId, InstanceId, OrganismeId } from '../../domain/id';
 import { Representant, RepresentantOrSuppleant } from '../../domain/organisme';
 import { state } from '../../state/state';
 import { colors } from '../../styles/vars';
-import { Dict, get, setOld } from '../../utils/nominal-class';
+import { Dict, get, set } from '../../utils/nominal-class';
 import { representantListId } from './DragAndDropContainer';
 
 export const AddRepresentantComponent = (props: {
@@ -48,12 +48,15 @@ export const AddRepresentantComponent = (props: {
           props.instanceId,
           props.representantOrSuppleant
         );
-        const newRepresentantsLists = { ...props.representantsLists };
         const newRepresentants = [
           ...get(props.representantsLists, listId),
           representant
         ];
-        setOld(newRepresentantsLists, listId, newRepresentants);
+        const newRepresentantsLists = set(
+          props.representantsLists,
+          listId,
+          newRepresentants
+        );
         props.setRepresentantsLists(newRepresentantsLists);
         setValue(null);
         setInputValue('');

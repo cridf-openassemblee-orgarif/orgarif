@@ -20,11 +20,8 @@ import {
   Representant
 } from '../../domain/organisme';
 import { state } from '../../state/state';
-import {
-  Dict,
-  instanciateNominalString,
-  setOld
-} from '../../utils/nominal-class';
+import { Dict, instanciateNominalString, mutableSet, set } from '../../utils/nominal-class';
+import { pipe } from '../../utils/Pipe';
 import { SelectInput, SelectOption } from '../base-component/SelectInput';
 import { NombreRepresentantsComponent } from '../NombreRepresentantsComponent';
 import { AddInstanceComponent } from './AddInstanceComponent';
@@ -109,20 +106,25 @@ export const EditOrganismeComponent = (props: {
     organisme.infos.partageRepresentants
   );
   useEffect(() => {
-    const initialLists: Dict<RepresentantListId, Representant[]> = {};
-    setOld(
-      initialLists,
-      representantListId(organisme.infos.id, undefined, 'representant'),
-      organisme.representants
-    );
-    setOld(
-      initialLists,
-      representantListId(organisme.infos.id, undefined, 'suppleant'),
-      organisme.suppleants
-    );
+    const representants: Dict<RepresentantListId, Representant[]> = pipe({})
+      .map(list =>
+        set(
+          list,
+          representantListId(organisme.infos.id, undefined, 'representant'),
+          organisme.representants
+        )
+      )
+      .map(list =>
+        set(
+          list,
+          representantListId(organisme.infos.id, undefined, 'suppleant'),
+          organisme.suppleants
+        )
+      )
+      .unwrap();
     organisme.instances.forEach(instance => {
-      setOld(
-        initialLists,
+      mutableSet(
+        representants,
         representantListId(
           organisme.infos.id,
           instance.infos.id,
@@ -130,13 +132,13 @@ export const EditOrganismeComponent = (props: {
         ),
         instance.representants
       );
-      setOld(
-        initialLists,
+      mutableSet(
+        representants,
         representantListId(organisme.infos.id, instance.infos.id, 'suppleant'),
         instance.suppleants
       );
     });
-    setRepresentantsLists(initialLists);
+    setRepresentantsLists(representants);
   }, [organisme]);
   return (
     <DragAndDropContainer
