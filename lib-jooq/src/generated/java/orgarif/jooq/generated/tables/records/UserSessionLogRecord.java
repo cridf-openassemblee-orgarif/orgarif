@@ -24,7 +24,7 @@ import orgarif.jooq.generated.tables.UserSessionLogTable;
 @SuppressWarnings({ "all", "unchecked", "rawtypes" })
 public class UserSessionLogRecord extends UpdatableRecordImpl<UserSessionLogRecord> implements Record6<UUID, String, UUID, UUID, LocalDateTime, String> {
 
-    private static final long serialVersionUID = -152983669;
+    private static final long serialVersionUID = 1L;
 
     /**
      * Setter for <code>orgarif.user_session_log.id</code>.
@@ -121,6 +121,7 @@ public class UserSessionLogRecord extends UpdatableRecordImpl<UserSessionLogReco
     // -------------------------------------------------------------------------
 
     @Override
+    @Nonnull
     public Record1<UUID> key() {
         return (Record1) super.key();
     }
@@ -130,41 +131,49 @@ public class UserSessionLogRecord extends UpdatableRecordImpl<UserSessionLogReco
     // -------------------------------------------------------------------------
 
     @Override
+    @Nonnull
     public Row6<UUID, String, UUID, UUID, LocalDateTime, String> fieldsRow() {
         return (Row6) super.fieldsRow();
     }
 
     @Override
+    @Nonnull
     public Row6<UUID, String, UUID, UUID, LocalDateTime, String> valuesRow() {
         return (Row6) super.valuesRow();
     }
 
     @Override
+    @Nonnull
     public Field<UUID> field1() {
         return UserSessionLogTable.USER_SESSION_LOG.ID;
     }
 
     @Override
+    @Nonnull
     public Field<String> field2() {
         return UserSessionLogTable.USER_SESSION_LOG.SPRING_SESSION_ID;
     }
 
     @Override
+    @Nonnull
     public Field<UUID> field3() {
         return UserSessionLogTable.USER_SESSION_LOG.USER_ID;
     }
 
     @Override
+    @Nonnull
     public Field<UUID> field4() {
         return UserSessionLogTable.USER_SESSION_LOG.DEPLOYMENT_LOG_ID;
     }
 
     @Override
+    @Nonnull
     public Field<LocalDateTime> field5() {
         return UserSessionLogTable.USER_SESSION_LOG.DATE;
     }
 
     @Override
+    @Nonnull
     public Field<String> field6() {
         return UserSessionLogTable.USER_SESSION_LOG.IP;
     }
@@ -242,42 +251,49 @@ public class UserSessionLogRecord extends UpdatableRecordImpl<UserSessionLogReco
     }
 
     @Override
+    @Nonnull
     public UserSessionLogRecord value1(@Nonnull UUID value) {
         setId(value);
         return this;
     }
 
     @Override
+    @Nonnull
     public UserSessionLogRecord value2(@Nonnull String value) {
         setSpringSessionId(value);
         return this;
     }
 
     @Override
+    @Nonnull
     public UserSessionLogRecord value3(@Nonnull UUID value) {
         setUserId(value);
         return this;
     }
 
     @Override
+    @Nonnull
     public UserSessionLogRecord value4(@Nonnull UUID value) {
         setDeploymentLogId(value);
         return this;
     }
 
     @Override
+    @Nonnull
     public UserSessionLogRecord value5(@Nonnull LocalDateTime value) {
         setDate(value);
         return this;
     }
 
     @Override
+    @Nonnull
     public UserSessionLogRecord value6(@Nonnull String value) {
         setIp(value);
         return this;
     }
 
     @Override
+    @Nonnull
     public UserSessionLogRecord values(@Nonnull UUID value1, @Nonnull String value2, @Nonnull UUID value3, @Nonnull UUID value4, @Nonnull LocalDateTime value5, @Nonnull String value6) {
         value1(value1);
         value2(value2);
@@ -305,11 +321,11 @@ public class UserSessionLogRecord extends UpdatableRecordImpl<UserSessionLogReco
     public UserSessionLogRecord(@Nonnull UUID id, @Nonnull String springSessionId, @Nonnull UUID userId, @Nonnull UUID deploymentLogId, @Nonnull LocalDateTime date, @Nonnull String ip) {
         super(UserSessionLogTable.USER_SESSION_LOG);
 
-        set(0, id);
-        set(1, springSessionId);
-        set(2, userId);
-        set(3, deploymentLogId);
-        set(4, date);
-        set(5, ip);
+        setId(id);
+        setSpringSessionId(springSessionId);
+        setUserId(userId);
+        setDeploymentLogId(deploymentLogId);
+        setDate(date);
+        setIp(ip);
     }
 }

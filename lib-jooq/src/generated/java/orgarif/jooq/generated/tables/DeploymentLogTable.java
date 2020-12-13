@@ -9,6 +9,8 @@ import java.util.Arrays;
 import java.util.List;
 import java.util.UUID;
 
+import javax.annotation.Nonnull;
+
 import org.jooq.Field;
 import org.jooq.ForeignKey;
 import org.jooq.Name;
@@ -20,6 +22,7 @@ import org.jooq.TableField;
 import org.jooq.TableOptions;
 import org.jooq.UniqueKey;
 import org.jooq.impl.DSL;
+import org.jooq.impl.SQLDataType;
 import org.jooq.impl.TableImpl;
 
 import orgarif.jooq.generated.Keys;
@@ -34,7 +37,7 @@ import orgarif.jooq.tools.jooq.CharToUUIDConverter;
 @SuppressWarnings({ "all", "unchecked", "rawtypes" })
 public class DeploymentLogTable extends TableImpl<DeploymentLogRecord> {
 
-    private static final long serialVersionUID = 443040576;
+    private static final long serialVersionUID = 1L;
 
     /**
      * The reference instance of <code>orgarif.deployment_log</code>
@@ -45,6 +48,7 @@ public class DeploymentLogTable extends TableImpl<DeploymentLogRecord> {
      * The class holding records for this type
      */
     @Override
+    @Nonnull
     public Class<DeploymentLogRecord> getRecordType() {
         return DeploymentLogRecord.class;
     }
@@ -52,33 +56,34 @@ public class DeploymentLogTable extends TableImpl<DeploymentLogRecord> {
     /**
      * The column <code>orgarif.deployment_log.id</code>.
      */
-    public final TableField<DeploymentLogRecord, UUID> ID = createField(DSL.name("id"), org.jooq.impl.SQLDataType.CHAR(32).nullable(false), this, "", new CharToUUIDConverter());
+    public final TableField<DeploymentLogRecord, UUID> ID = createField(DSL.name("id"), SQLDataType.CHAR(32).nullable(false), this, "", new CharToUUIDConverter());
 
     /**
      * The column <code>orgarif.deployment_log.build_version</code>.
      */
-    public final TableField<DeploymentLogRecord, String> BUILD_VERSION = createField(DSL.name("build_version"), org.jooq.impl.SQLDataType.VARCHAR(255).nullable(false), this, "");
+    public final TableField<DeploymentLogRecord, String> BUILD_VERSION = createField(DSL.name("build_version"), SQLDataType.VARCHAR(255).nullable(false), this, "");
 
     /**
      * The column <code>orgarif.deployment_log.system_zone_id</code>.
      */
-    public final TableField<DeploymentLogRecord, String> SYSTEM_ZONE_ID = createField(DSL.name("system_zone_id"), org.jooq.impl.SQLDataType.VARCHAR(255).nullable(false), this, "");
+    public final TableField<DeploymentLogRecord, String> SYSTEM_ZONE_ID = createField(DSL.name("system_zone_id"), SQLDataType.VARCHAR(255).nullable(false), this, "");
 
     /**
      * The column <code>orgarif.deployment_log.startup_date</code>.
      */
-    public final TableField<DeploymentLogRecord, LocalDateTime> STARTUP_DATE = createField(DSL.name("startup_date"), org.jooq.impl.SQLDataType.LOCALDATETIME.nullable(false), this, "");
+    public final TableField<DeploymentLogRecord, LocalDateTime> STARTUP_DATE = createField(DSL.name("startup_date"), SQLDataType.LOCALDATETIME(0).nullable(false), this, "");
 
     /**
      * The column <code>orgarif.deployment_log.shutdown_date</code>.
      */
-    public final TableField<DeploymentLogRecord, LocalDateTime> SHUTDOWN_DATE = createField(DSL.name("shutdown_date"), org.jooq.impl.SQLDataType.LOCALDATETIME, this, "");
+    public final TableField<DeploymentLogRecord, LocalDateTime> SHUTDOWN_DATE = createField(DSL.name("shutdown_date"), SQLDataType.LOCALDATETIME(0), this, "");
 
-    /**
-     * Create a <code>orgarif.deployment_log</code> table reference
-     */
-    public DeploymentLogTable() {
-        this(DSL.name("deployment_log"), null);
+    private DeploymentLogTable(Name alias, Table<DeploymentLogRecord> aliased) {
+        this(alias, aliased, null);
+    }
+
+    private DeploymentLogTable(Name alias, Table<DeploymentLogRecord> aliased, Field<?>[] parameters) {
+        super(alias, null, aliased, parameters, DSL.comment(""), TableOptions.table());
     }
 
     /**
@@ -95,12 +100,11 @@ public class DeploymentLogTable extends TableImpl<DeploymentLogRecord> {
         this(alias, DEPLOYMENT_LOG);
     }
 
-    private DeploymentLogTable(Name alias, Table<DeploymentLogRecord> aliased) {
-        this(alias, aliased, null);
-    }
-
-    private DeploymentLogTable(Name alias, Table<DeploymentLogRecord> aliased, Field<?>[] parameters) {
-        super(alias, null, aliased, parameters, DSL.comment(""), TableOptions.table());
+    /**
+     * Create a <code>orgarif.deployment_log</code> table reference
+     */
+    public DeploymentLogTable() {
+        this(DSL.name("deployment_log"), null);
     }
 
     public <O extends Record> DeploymentLogTable(Table<O> child, ForeignKey<O, DeploymentLogRecord> key) {
@@ -108,26 +112,31 @@ public class DeploymentLogTable extends TableImpl<DeploymentLogRecord> {
     }
 
     @Override
+    @Nonnull
     public Schema getSchema() {
         return OrgarifTable.ORGARIF;
     }
 
     @Override
+    @Nonnull
     public UniqueKey<DeploymentLogRecord> getPrimaryKey() {
         return Keys.KEY_DEPLOYMENT_LOG_PRIMARY;
     }
 
     @Override
+    @Nonnull
     public List<UniqueKey<DeploymentLogRecord>> getKeys() {
         return Arrays.<UniqueKey<DeploymentLogRecord>>asList(Keys.KEY_DEPLOYMENT_LOG_PRIMARY);
     }
 
     @Override
+    @Nonnull
     public DeploymentLogTable as(String alias) {
         return new DeploymentLogTable(DSL.name(alias), this);
     }
 
     @Override
+    @Nonnull
     public DeploymentLogTable as(Name alias) {
         return new DeploymentLogTable(alias, this);
     }
@@ -136,6 +145,7 @@ public class DeploymentLogTable extends TableImpl<DeploymentLogRecord> {
      * Rename this table
      */
     @Override
+    @Nonnull
     public DeploymentLogTable rename(String name) {
         return new DeploymentLogTable(DSL.name(name), null);
     }
@@ -144,6 +154,7 @@ public class DeploymentLogTable extends TableImpl<DeploymentLogRecord> {
      * Rename this table
      */
     @Override
+    @Nonnull
     public DeploymentLogTable rename(Name name) {
         return new DeploymentLogTable(name, null);
     }
@@ -153,6 +164,7 @@ public class DeploymentLogTable extends TableImpl<DeploymentLogRecord> {
     // -------------------------------------------------------------------------
 
     @Override
+    @Nonnull
     public Row5<UUID, String, String, LocalDateTime, LocalDateTime> fieldsRow() {
         return (Row5) super.fieldsRow();
     }

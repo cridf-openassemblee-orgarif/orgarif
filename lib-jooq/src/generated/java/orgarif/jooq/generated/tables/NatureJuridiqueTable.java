@@ -8,6 +8,8 @@ import java.util.Arrays;
 import java.util.List;
 import java.util.UUID;
 
+import javax.annotation.Nonnull;
+
 import org.jooq.Field;
 import org.jooq.ForeignKey;
 import org.jooq.Name;
@@ -19,6 +21,7 @@ import org.jooq.TableField;
 import org.jooq.TableOptions;
 import org.jooq.UniqueKey;
 import org.jooq.impl.DSL;
+import org.jooq.impl.SQLDataType;
 import org.jooq.impl.TableImpl;
 
 import orgarif.jooq.generated.Keys;
@@ -33,7 +36,7 @@ import orgarif.jooq.tools.jooq.CharToUUIDConverter;
 @SuppressWarnings({ "all", "unchecked", "rawtypes" })
 public class NatureJuridiqueTable extends TableImpl<NatureJuridiqueRecord> {
 
-    private static final long serialVersionUID = 710272108;
+    private static final long serialVersionUID = 1L;
 
     /**
      * The reference instance of <code>orgarif.nature_juridique</code>
@@ -44,6 +47,7 @@ public class NatureJuridiqueTable extends TableImpl<NatureJuridiqueRecord> {
      * The class holding records for this type
      */
     @Override
+    @Nonnull
     public Class<NatureJuridiqueRecord> getRecordType() {
         return NatureJuridiqueRecord.class;
     }
@@ -51,18 +55,19 @@ public class NatureJuridiqueTable extends TableImpl<NatureJuridiqueRecord> {
     /**
      * The column <code>orgarif.nature_juridique.id</code>.
      */
-    public final TableField<NatureJuridiqueRecord, UUID> ID = createField(DSL.name("id"), org.jooq.impl.SQLDataType.CHAR(32).nullable(false), this, "", new CharToUUIDConverter());
+    public final TableField<NatureJuridiqueRecord, UUID> ID = createField(DSL.name("id"), SQLDataType.CHAR(32).nullable(false), this, "", new CharToUUIDConverter());
 
     /**
      * The column <code>orgarif.nature_juridique.libelle</code>.
      */
-    public final TableField<NatureJuridiqueRecord, String> LIBELLE = createField(DSL.name("libelle"), org.jooq.impl.SQLDataType.VARCHAR(255).nullable(false), this, "");
+    public final TableField<NatureJuridiqueRecord, String> LIBELLE = createField(DSL.name("libelle"), SQLDataType.VARCHAR(255).nullable(false), this, "");
 
-    /**
-     * Create a <code>orgarif.nature_juridique</code> table reference
-     */
-    public NatureJuridiqueTable() {
-        this(DSL.name("nature_juridique"), null);
+    private NatureJuridiqueTable(Name alias, Table<NatureJuridiqueRecord> aliased) {
+        this(alias, aliased, null);
+    }
+
+    private NatureJuridiqueTable(Name alias, Table<NatureJuridiqueRecord> aliased, Field<?>[] parameters) {
+        super(alias, null, aliased, parameters, DSL.comment(""), TableOptions.table());
     }
 
     /**
@@ -79,12 +84,11 @@ public class NatureJuridiqueTable extends TableImpl<NatureJuridiqueRecord> {
         this(alias, NATURE_JURIDIQUE);
     }
 
-    private NatureJuridiqueTable(Name alias, Table<NatureJuridiqueRecord> aliased) {
-        this(alias, aliased, null);
-    }
-
-    private NatureJuridiqueTable(Name alias, Table<NatureJuridiqueRecord> aliased, Field<?>[] parameters) {
-        super(alias, null, aliased, parameters, DSL.comment(""), TableOptions.table());
+    /**
+     * Create a <code>orgarif.nature_juridique</code> table reference
+     */
+    public NatureJuridiqueTable() {
+        this(DSL.name("nature_juridique"), null);
     }
 
     public <O extends Record> NatureJuridiqueTable(Table<O> child, ForeignKey<O, NatureJuridiqueRecord> key) {
@@ -92,26 +96,31 @@ public class NatureJuridiqueTable extends TableImpl<NatureJuridiqueRecord> {
     }
 
     @Override
+    @Nonnull
     public Schema getSchema() {
         return OrgarifTable.ORGARIF;
     }
 
     @Override
+    @Nonnull
     public UniqueKey<NatureJuridiqueRecord> getPrimaryKey() {
         return Keys.KEY_NATURE_JURIDIQUE_PRIMARY;
     }
 
     @Override
+    @Nonnull
     public List<UniqueKey<NatureJuridiqueRecord>> getKeys() {
         return Arrays.<UniqueKey<NatureJuridiqueRecord>>asList(Keys.KEY_NATURE_JURIDIQUE_PRIMARY);
     }
 
     @Override
+    @Nonnull
     public NatureJuridiqueTable as(String alias) {
         return new NatureJuridiqueTable(DSL.name(alias), this);
     }
 
     @Override
+    @Nonnull
     public NatureJuridiqueTable as(Name alias) {
         return new NatureJuridiqueTable(alias, this);
     }
@@ -120,6 +129,7 @@ public class NatureJuridiqueTable extends TableImpl<NatureJuridiqueRecord> {
      * Rename this table
      */
     @Override
+    @Nonnull
     public NatureJuridiqueTable rename(String name) {
         return new NatureJuridiqueTable(DSL.name(name), null);
     }
@@ -128,6 +138,7 @@ public class NatureJuridiqueTable extends TableImpl<NatureJuridiqueRecord> {
      * Rename this table
      */
     @Override
+    @Nonnull
     public NatureJuridiqueTable rename(Name name) {
         return new NatureJuridiqueTable(name, null);
     }
@@ -137,6 +148,7 @@ public class NatureJuridiqueTable extends TableImpl<NatureJuridiqueRecord> {
     // -------------------------------------------------------------------------
 
     @Override
+    @Nonnull
     public Row2<UUID, String> fieldsRow() {
         return (Row2) super.fieldsRow();
     }

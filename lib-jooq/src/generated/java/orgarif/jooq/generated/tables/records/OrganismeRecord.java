@@ -25,7 +25,7 @@ import orgarif.jooq.generated.tables.OrganismeTable;
 @SuppressWarnings({ "all", "unchecked", "rawtypes" })
 public class OrganismeRecord extends UpdatableRecordImpl<OrganismeRecord> implements Record10<UUID, String, UUID, UUID, UUID, Integer, Integer, Boolean, LocalDateTime, LocalDateTime> {
 
-    private static final long serialVersionUID = -444419133;
+    private static final long serialVersionUID = 1L;
 
     /**
      * Setter for <code>orgarif.organisme.id</code>.
@@ -182,6 +182,7 @@ public class OrganismeRecord extends UpdatableRecordImpl<OrganismeRecord> implem
     // -------------------------------------------------------------------------
 
     @Override
+    @Nonnull
     public Record1<UUID> key() {
         return (Record1) super.key();
     }
@@ -191,61 +192,73 @@ public class OrganismeRecord extends UpdatableRecordImpl<OrganismeRecord> implem
     // -------------------------------------------------------------------------
 
     @Override
+    @Nonnull
     public Row10<UUID, String, UUID, UUID, UUID, Integer, Integer, Boolean, LocalDateTime, LocalDateTime> fieldsRow() {
         return (Row10) super.fieldsRow();
     }
 
     @Override
+    @Nonnull
     public Row10<UUID, String, UUID, UUID, UUID, Integer, Integer, Boolean, LocalDateTime, LocalDateTime> valuesRow() {
         return (Row10) super.valuesRow();
     }
 
     @Override
+    @Nonnull
     public Field<UUID> field1() {
         return OrganismeTable.ORGANISME.ID;
     }
 
     @Override
+    @Nonnull
     public Field<String> field2() {
         return OrganismeTable.ORGANISME.NOM;
     }
 
     @Override
+    @Nonnull
     public Field<UUID> field3() {
         return OrganismeTable.ORGANISME.SECTEUR_ID;
     }
 
     @Override
+    @Nonnull
     public Field<UUID> field4() {
         return OrganismeTable.ORGANISME.NATURE_JURIDIQUE_ID;
     }
 
     @Override
+    @Nonnull
     public Field<UUID> field5() {
         return OrganismeTable.ORGANISME.TYPE_STRUCTURE_ID;
     }
 
     @Override
+    @Nonnull
     public Field<Integer> field6() {
         return OrganismeTable.ORGANISME.NOMBRE_REPRESENTANTS;
     }
 
     @Override
+    @Nonnull
     public Field<Integer> field7() {
         return OrganismeTable.ORGANISME.NOMBRE_SUPPLEANTS;
     }
 
     @Override
+    @Nonnull
     public Field<Boolean> field8() {
         return OrganismeTable.ORGANISME.PARTAGE_REPRESENTANTS;
     }
 
     @Override
+    @Nonnull
     public Field<LocalDateTime> field9() {
         return OrganismeTable.ORGANISME.CREATION_DATE;
     }
 
     @Override
+    @Nonnull
     public Field<LocalDateTime> field10() {
         return OrganismeTable.ORGANISME.LAST_MODIFICATION_DATE;
     }
@@ -371,66 +384,77 @@ public class OrganismeRecord extends UpdatableRecordImpl<OrganismeRecord> implem
     }
 
     @Override
+    @Nonnull
     public OrganismeRecord value1(@Nonnull UUID value) {
         setId(value);
         return this;
     }
 
     @Override
+    @Nonnull
     public OrganismeRecord value2(@Nonnull String value) {
         setNom(value);
         return this;
     }
 
     @Override
+    @Nonnull
     public OrganismeRecord value3(@Nullable UUID value) {
         setSecteurId(value);
         return this;
     }
 
     @Override
+    @Nonnull
     public OrganismeRecord value4(@Nullable UUID value) {
         setNatureJuridiqueId(value);
         return this;
     }
 
     @Override
+    @Nonnull
     public OrganismeRecord value5(@Nullable UUID value) {
         setTypeStructureId(value);
         return this;
     }
 
     @Override
+    @Nonnull
     public OrganismeRecord value6(@Nullable Integer value) {
         setNombreRepresentants(value);
         return this;
     }
 
     @Override
+    @Nonnull
     public OrganismeRecord value7(@Nullable Integer value) {
         setNombreSuppleants(value);
         return this;
     }
 
     @Override
+    @Nonnull
     public OrganismeRecord value8(@Nonnull Boolean value) {
         setPartageRepresentants(value);
         return this;
     }
 
     @Override
+    @Nonnull
     public OrganismeRecord value9(@Nonnull LocalDateTime value) {
         setCreationDate(value);
         return this;
     }
 
     @Override
+    @Nonnull
     public OrganismeRecord value10(@Nonnull LocalDateTime value) {
         setLastModificationDate(value);
         return this;
     }
 
     @Override
+    @Nonnull
     public OrganismeRecord values(@Nonnull UUID value1, @Nonnull String value2, @Nullable UUID value3, @Nullable UUID value4, @Nullable UUID value5, @Nullable Integer value6, @Nullable Integer value7, @Nonnull Boolean value8, @Nonnull LocalDateTime value9, @Nonnull LocalDateTime value10) {
         value1(value1);
         value2(value2);
@@ -462,15 +486,15 @@ public class OrganismeRecord extends UpdatableRecordImpl<OrganismeRecord> implem
     public OrganismeRecord(@Nonnull UUID id, @Nonnull String nom, @Nullable UUID secteurId, @Nullable UUID natureJuridiqueId, @Nullable UUID typeStructureId, @Nullable Integer nombreRepresentants, @Nullable Integer nombreSuppleants, @Nonnull Boolean partageRepresentants, @Nonnull LocalDateTime creationDate, @Nonnull LocalDateTime lastModificationDate) {
         super(OrganismeTable.ORGANISME);
 
-        set(0, id);
-        set(1, nom);
-        set(2, secteurId);
-        set(3, natureJuridiqueId);
-        set(4, typeStructureId);
-        set(5, nombreRepresentants);
-        set(6, nombreSuppleants);
-        set(7, partageRepresentants);
-        set(8, creationDate);
-        set(9, lastModificationDate);
+        setId(id);
+        setNom(nom);
+        setSecteurId(secteurId);
+        setNatureJuridiqueId(natureJuridiqueId);
+        setTypeStructureId(typeStructureId);
+        setNombreRepresentants(nombreRepresentants);
+        setNombreSuppleants(nombreSuppleants);
+        setPartageRepresentants(partageRepresentants);
+        setCreationDate(creationDate);
+        setLastModificationDate(lastModificationDate);
     }
 }

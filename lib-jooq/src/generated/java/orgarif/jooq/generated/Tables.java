@@ -22,7 +22,7 @@ import orgarif.jooq.generated.tables.UserSessionLogTable;
 
 
 /**
- * Convenience access to all tables in orgarif
+ * Convenience access to all tables in orgarif.
  */
 @SuppressWarnings({ "all", "unchecked", "rawtypes" })
 public class Tables {

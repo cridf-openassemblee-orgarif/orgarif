@@ -9,6 +9,8 @@ import java.util.Arrays;
 import java.util.List;
 import java.util.UUID;
 
+import javax.annotation.Nonnull;
+
 import org.jooq.Field;
 import org.jooq.ForeignKey;
 import org.jooq.Index;
@@ -21,6 +23,7 @@ import org.jooq.TableField;
 import org.jooq.TableOptions;
 import org.jooq.UniqueKey;
 import org.jooq.impl.DSL;
+import org.jooq.impl.SQLDataType;
 import org.jooq.impl.TableImpl;
 
 import orgarif.jooq.generated.Indexes;
@@ -36,7 +39,7 @@ import orgarif.jooq.tools.jooq.CharToUUIDConverter;
 @SuppressWarnings({ "all", "unchecked", "rawtypes" })
 public class RepresentantTable extends TableImpl<RepresentantRecord> {
 
-    private static final long serialVersionUID = 149536411;
+    private static final long serialVersionUID = 1L;
 
     /**
      * The reference instance of <code>orgarif.representant</code>
@@ -47,6 +50,7 @@ public class RepresentantTable extends TableImpl<RepresentantRecord> {
      * The class holding records for this type
      */
     @Override
+    @Nonnull
     public Class<RepresentantRecord> getRecordType() {
         return RepresentantRecord.class;
     }
@@ -54,48 +58,49 @@ public class RepresentantTable extends TableImpl<RepresentantRecord> {
     /**
      * The column <code>orgarif.representant.id</code>.
      */
-    public final TableField<RepresentantRecord, UUID> ID = createField(DSL.name("id"), org.jooq.impl.SQLDataType.CHAR(32).nullable(false), this, "", new CharToUUIDConverter());
+    public final TableField<RepresentantRecord, UUID> ID = createField(DSL.name("id"), SQLDataType.CHAR(32).nullable(false), this, "", new CharToUUIDConverter());
 
     /**
      * The column <code>orgarif.representant.elu_id</code>.
      */
-    public final TableField<RepresentantRecord, UUID> ELU_ID = createField(DSL.name("elu_id"), org.jooq.impl.SQLDataType.CHAR(32).nullable(false), this, "", new CharToUUIDConverter());
+    public final TableField<RepresentantRecord, UUID> ELU_ID = createField(DSL.name("elu_id"), SQLDataType.CHAR(32).nullable(false), this, "", new CharToUUIDConverter());
 
     /**
      * The column <code>orgarif.representant.organisme_id</code>.
      */
-    public final TableField<RepresentantRecord, UUID> ORGANISME_ID = createField(DSL.name("organisme_id"), org.jooq.impl.SQLDataType.CHAR(32).nullable(false), this, "", new CharToUUIDConverter());
+    public final TableField<RepresentantRecord, UUID> ORGANISME_ID = createField(DSL.name("organisme_id"), SQLDataType.CHAR(32).nullable(false), this, "", new CharToUUIDConverter());
 
     /**
      * The column <code>orgarif.representant.instance_id</code>.
      */
-    public final TableField<RepresentantRecord, UUID> INSTANCE_ID = createField(DSL.name("instance_id"), org.jooq.impl.SQLDataType.CHAR(32), this, "", new CharToUUIDConverter());
+    public final TableField<RepresentantRecord, UUID> INSTANCE_ID = createField(DSL.name("instance_id"), SQLDataType.CHAR(32), this, "", new CharToUUIDConverter());
 
     /**
      * The column <code>orgarif.representant.position</code>.
      */
-    public final TableField<RepresentantRecord, Integer> POSITION = createField(DSL.name("position"), org.jooq.impl.SQLDataType.INTEGER.nullable(false), this, "");
+    public final TableField<RepresentantRecord, Integer> POSITION = createField(DSL.name("position"), SQLDataType.INTEGER.nullable(false), this, "");
 
     /**
      * The column <code>orgarif.representant.representant_or_suppleant</code>.
      */
-    public final TableField<RepresentantRecord, String> REPRESENTANT_OR_SUPPLEANT = createField(DSL.name("representant_or_suppleant"), org.jooq.impl.SQLDataType.VARCHAR(255).nullable(false), this, "");
+    public final TableField<RepresentantRecord, String> REPRESENTANT_OR_SUPPLEANT = createField(DSL.name("representant_or_suppleant"), SQLDataType.VARCHAR(255).nullable(false), this, "");
 
     /**
      * The column <code>orgarif.representant.creation_date</code>.
      */
-    public final TableField<RepresentantRecord, LocalDateTime> CREATION_DATE = createField(DSL.name("creation_date"), org.jooq.impl.SQLDataType.LOCALDATETIME.nullable(false), this, "");
+    public final TableField<RepresentantRecord, LocalDateTime> CREATION_DATE = createField(DSL.name("creation_date"), SQLDataType.LOCALDATETIME(0).nullable(false), this, "");
 
     /**
      * The column <code>orgarif.representant.last_modification_date</code>.
      */
-    public final TableField<RepresentantRecord, LocalDateTime> LAST_MODIFICATION_DATE = createField(DSL.name("last_modification_date"), org.jooq.impl.SQLDataType.LOCALDATETIME.nullable(false), this, "");
+    public final TableField<RepresentantRecord, LocalDateTime> LAST_MODIFICATION_DATE = createField(DSL.name("last_modification_date"), SQLDataType.LOCALDATETIME(0).nullable(false), this, "");
 
-    /**
-     * Create a <code>orgarif.representant</code> table reference
-     */
-    public RepresentantTable() {
-        this(DSL.name("representant"), null);
+    private RepresentantTable(Name alias, Table<RepresentantRecord> aliased) {
+        this(alias, aliased, null);
+    }
+
+    private RepresentantTable(Name alias, Table<RepresentantRecord> aliased, Field<?>[] parameters) {
+        super(alias, null, aliased, parameters, DSL.comment(""), TableOptions.table());
     }
 
     /**
@@ -112,12 +117,11 @@ public class RepresentantTable extends TableImpl<RepresentantRecord> {
         this(alias, REPRESENTANT);
     }
 
-    private RepresentantTable(Name alias, Table<RepresentantRecord> aliased) {
-        this(alias, aliased, null);
-    }
-
-    private RepresentantTable(Name alias, Table<RepresentantRecord> aliased, Field<?>[] parameters) {
-        super(alias, null, aliased, parameters, DSL.comment(""), TableOptions.table());
+    /**
+     * Create a <code>orgarif.representant</code> table reference
+     */
+    public RepresentantTable() {
+        this(DSL.name("representant"), null);
     }
 
     public <O extends Record> RepresentantTable(Table<O> child, ForeignKey<O, RepresentantRecord> key) {
@@ -125,26 +129,31 @@ public class RepresentantTable extends TableImpl<RepresentantRecord> {
     }
 
     @Override
+    @Nonnull
     public Schema getSchema() {
         return OrgarifTable.ORGARIF;
     }
 
     @Override
+    @Nonnull
     public List<Index> getIndexes() {
         return Arrays.<Index>asList(Indexes.REPRESENTANT_ELU_ID, Indexes.REPRESENTANT_REPRESENTANT_INSTANCE_ID_IDX, Indexes.REPRESENTANT_REPRESENTANT_ORGANISME_ID_IDX);
     }
 
     @Override
+    @Nonnull
     public UniqueKey<RepresentantRecord> getPrimaryKey() {
         return Keys.KEY_REPRESENTANT_PRIMARY;
     }
 
     @Override
+    @Nonnull
     public List<UniqueKey<RepresentantRecord>> getKeys() {
         return Arrays.<UniqueKey<RepresentantRecord>>asList(Keys.KEY_REPRESENTANT_PRIMARY);
     }
 
     @Override
+    @Nonnull
     public List<ForeignKey<RepresentantRecord, ?>> getReferences() {
         return Arrays.<ForeignKey<RepresentantRecord, ?>>asList(Keys.REPRESENTANT_IBFK_1, Keys.REPRESENTANT_IBFK_2, Keys.REPRESENTANT_IBFK_3);
     }
@@ -162,11 +171,13 @@ public class RepresentantTable extends TableImpl<RepresentantRecord> {
     }
 
     @Override
+    @Nonnull
     public RepresentantTable as(String alias) {
         return new RepresentantTable(DSL.name(alias), this);
     }
 
     @Override
+    @Nonnull
     public RepresentantTable as(Name alias) {
         return new RepresentantTable(alias, this);
     }
@@ -175,6 +186,7 @@ public class RepresentantTable extends TableImpl<RepresentantRecord> {
      * Rename this table
      */
     @Override
+    @Nonnull
     public RepresentantTable rename(String name) {
         return new RepresentantTable(DSL.name(name), null);
     }
@@ -183,6 +195,7 @@ public class RepresentantTable extends TableImpl<RepresentantRecord> {
      * Rename this table
      */
     @Override
+    @Nonnull
     public RepresentantTable rename(Name name) {
         return new RepresentantTable(name, null);
     }
@@ -192,6 +205,7 @@ public class RepresentantTable extends TableImpl<RepresentantRecord> {
     // -------------------------------------------------------------------------
 
     @Override
+    @Nonnull
     public Row8<UUID, UUID, UUID, UUID, Integer, String, LocalDateTime, LocalDateTime> fieldsRow() {
         return (Row8) super.fieldsRow();
     }

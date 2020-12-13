@@ -25,7 +25,7 @@ import orgarif.jooq.generated.tables.AppUserTable;
 @SuppressWarnings({ "all", "unchecked", "rawtypes" })
 public class AppUserRecord extends UpdatableRecordImpl<AppUserRecord> implements Record8<UUID, String, String, String, String, Boolean, LocalDateTime, String> {
 
-    private static final long serialVersionUID = 1959365912;
+    private static final long serialVersionUID = 1L;
 
     /**
      * Setter for <code>orgarif.app_user.id</code>.
@@ -152,6 +152,7 @@ public class AppUserRecord extends UpdatableRecordImpl<AppUserRecord> implements
     // -------------------------------------------------------------------------
 
     @Override
+    @Nonnull
     public Record1<UUID> key() {
         return (Record1) super.key();
     }
@@ -161,51 +162,61 @@ public class AppUserRecord extends UpdatableRecordImpl<AppUserRecord> implements
     // -------------------------------------------------------------------------
 
     @Override
+    @Nonnull
     public Row8<UUID, String, String, String, String, Boolean, LocalDateTime, String> fieldsRow() {
         return (Row8) super.fieldsRow();
     }
 
     @Override
+    @Nonnull
     public Row8<UUID, String, String, String, String, Boolean, LocalDateTime, String> valuesRow() {
         return (Row8) super.valuesRow();
     }
 
     @Override
+    @Nonnull
     public Field<UUID> field1() {
         return AppUserTable.APP_USER.ID;
     }
 
     @Override
+    @Nonnull
     public Field<String> field2() {
         return AppUserTable.APP_USER.MAIL;
     }
 
     @Override
+    @Nonnull
     public Field<String> field3() {
         return AppUserTable.APP_USER.PASSWORD;
     }
 
     @Override
+    @Nonnull
     public Field<String> field4() {
         return AppUserTable.APP_USER.USERNAME;
     }
 
     @Override
+    @Nonnull
     public Field<String> field5() {
         return AppUserTable.APP_USER.LANGUAGE;
     }
 
     @Override
+    @Nonnull
     public Field<Boolean> field6() {
         return AppUserTable.APP_USER.ADMIN;
     }
 
     @Override
+    @Nonnull
     public Field<LocalDateTime> field7() {
         return AppUserTable.APP_USER.SIGNUP_DATE;
     }
 
     @Override
+    @Nonnull
     public Field<String> field8() {
         return AppUserTable.APP_USER.DIRTY_MAIL;
     }
@@ -307,54 +318,63 @@ public class AppUserRecord extends UpdatableRecordImpl<AppUserRecord> implements
     }
 
     @Override
+    @Nonnull
     public AppUserRecord value1(@Nonnull UUID value) {
         setId(value);
         return this;
     }
 
     @Override
+    @Nonnull
     public AppUserRecord value2(@Nonnull String value) {
         setMail(value);
         return this;
     }
 
     @Override
+    @Nonnull
     public AppUserRecord value3(@Nonnull String value) {
         setPassword(value);
         return this;
     }
 
     @Override
+    @Nonnull
     public AppUserRecord value4(@Nullable String value) {
         setUsername(value);
         return this;
     }
 
     @Override
+    @Nonnull
     public AppUserRecord value5(@Nonnull String value) {
         setLanguage(value);
         return this;
     }
 
     @Override
+    @Nonnull
     public AppUserRecord value6(@Nonnull Boolean value) {
         setAdmin(value);
         return this;
     }
 
     @Override
+    @Nonnull
     public AppUserRecord value7(@Nonnull LocalDateTime value) {
         setSignupDate(value);
         return this;
     }
 
     @Override
+    @Nonnull
     public AppUserRecord value8(@Nullable String value) {
         setDirtyMail(value);
         return this;
     }
 
     @Override
+    @Nonnull
     public AppUserRecord values(@Nonnull UUID value1, @Nonnull String value2, @Nonnull String value3, @Nullable String value4, @Nonnull String value5, @Nonnull Boolean value6, @Nonnull LocalDateTime value7, @Nullable String value8) {
         value1(value1);
         value2(value2);
@@ -384,13 +404,13 @@ public class AppUserRecord extends UpdatableRecordImpl<AppUserRecord> implements
     public AppUserRecord(@Nonnull UUID id, @Nonnull String mail, @Nonnull String password, @Nullable String username, @Nonnull String language, @Nonnull Boolean admin, @Nonnull LocalDateTime signupDate, @Nullable String dirtyMail) {
         super(AppUserTable.APP_USER);
 
-        set(0, id);
-        set(1, mail);
-        set(2, password);
-        set(3, username);
-        set(4, language);
-        set(5, admin);
-        set(6, signupDate);
-        set(7, dirtyMail);
+        setId(id);
+        setMail(mail);
+        setPassword(password);
+        setUsername(username);
+        setLanguage(language);
+        setAdmin(admin);
+        setSignupDate(signupDate);
+        setDirtyMail(dirtyMail);
     }
 }

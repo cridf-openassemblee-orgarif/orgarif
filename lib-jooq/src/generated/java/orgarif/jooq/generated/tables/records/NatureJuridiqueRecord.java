@@ -23,7 +23,7 @@ import orgarif.jooq.generated.tables.NatureJuridiqueTable;
 @SuppressWarnings({ "all", "unchecked", "rawtypes" })
 public class NatureJuridiqueRecord extends UpdatableRecordImpl<NatureJuridiqueRecord> implements Record2<UUID, String> {
 
-    private static final long serialVersionUID = -79100953;
+    private static final long serialVersionUID = 1L;
 
     /**
      * Setter for <code>orgarif.nature_juridique.id</code>.
@@ -60,6 +60,7 @@ public class NatureJuridiqueRecord extends UpdatableRecordImpl<NatureJuridiqueRe
     // -------------------------------------------------------------------------
 
     @Override
+    @Nonnull
     public Record1<UUID> key() {
         return (Record1) super.key();
     }
@@ -69,21 +70,25 @@ public class NatureJuridiqueRecord extends UpdatableRecordImpl<NatureJuridiqueRe
     // -------------------------------------------------------------------------
 
     @Override
+    @Nonnull
     public Row2<UUID, String> fieldsRow() {
         return (Row2) super.fieldsRow();
     }
 
     @Override
+    @Nonnull
     public Row2<UUID, String> valuesRow() {
         return (Row2) super.valuesRow();
     }
 
     @Override
+    @Nonnull
     public Field<UUID> field1() {
         return NatureJuridiqueTable.NATURE_JURIDIQUE.ID;
     }
 
     @Override
+    @Nonnull
     public Field<String> field2() {
         return NatureJuridiqueTable.NATURE_JURIDIQUE.LIBELLE;
     }
@@ -113,18 +118,21 @@ public class NatureJuridiqueRecord extends UpdatableRecordImpl<NatureJuridiqueRe
     }
 
     @Override
+    @Nonnull
     public NatureJuridiqueRecord value1(@Nonnull UUID value) {
         setId(value);
         return this;
     }
 
     @Override
+    @Nonnull
     public NatureJuridiqueRecord value2(@Nonnull String value) {
         setLibelle(value);
         return this;
     }
 
     @Override
+    @Nonnull
     public NatureJuridiqueRecord values(@Nonnull UUID value1, @Nonnull String value2) {
         value1(value1);
         value2(value2);
@@ -148,7 +156,7 @@ public class NatureJuridiqueRecord extends UpdatableRecordImpl<NatureJuridiqueRe
     public NatureJuridiqueRecord(@Nonnull UUID id, @Nonnull String libelle) {
         super(NatureJuridiqueTable.NATURE_JURIDIQUE);
 
-        set(0, id);
-        set(1, libelle);
+        setId(id);
+        setLibelle(libelle);
     }
 }

@@ -7,6 +7,8 @@ package orgarif.jooq.generated;
 import java.util.Arrays;
 import java.util.List;
 
+import javax.annotation.Nonnull;
+
 import org.jooq.Schema;
 import org.jooq.impl.CatalogImpl;
 
@@ -17,7 +19,7 @@ import org.jooq.impl.CatalogImpl;
 @SuppressWarnings({ "all", "unchecked", "rawtypes" })
 public class DefaultCatalog extends CatalogImpl {
 
-    private static final long serialVersionUID = 1151104261;
+    private static final long serialVersionUID = 1L;
 
     /**
      * The reference instance of <code>DEFAULT_CATALOG</code>
@@ -37,6 +39,7 @@ public class DefaultCatalog extends CatalogImpl {
     }
 
     @Override
+    @Nonnull
     public final List<Schema> getSchemas() {
         return Arrays.<Schema>asList(
             OrgarifTable.ORGARIF);

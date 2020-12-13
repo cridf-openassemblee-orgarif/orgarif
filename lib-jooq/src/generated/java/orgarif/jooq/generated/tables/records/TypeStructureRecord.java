@@ -23,7 +23,7 @@ import orgarif.jooq.generated.tables.TypeStructureTable;
 @SuppressWarnings({ "all", "unchecked", "rawtypes" })
 public class TypeStructureRecord extends UpdatableRecordImpl<TypeStructureRecord> implements Record2<UUID, String> {
 
-    private static final long serialVersionUID = -1320753897;
+    private static final long serialVersionUID = 1L;
 
     /**
      * Setter for <code>orgarif.type_structure.id</code>.
@@ -60,6 +60,7 @@ public class TypeStructureRecord extends UpdatableRecordImpl<TypeStructureRecord
     // -------------------------------------------------------------------------
 
     @Override
+    @Nonnull
     public Record1<UUID> key() {
         return (Record1) super.key();
     }
@@ -69,21 +70,25 @@ public class TypeStructureRecord extends UpdatableRecordImpl<TypeStructureRecord
     // -------------------------------------------------------------------------
 
     @Override
+    @Nonnull
     public Row2<UUID, String> fieldsRow() {
         return (Row2) super.fieldsRow();
     }
 
     @Override
+    @Nonnull
     public Row2<UUID, String> valuesRow() {
         return (Row2) super.valuesRow();
     }
 
     @Override
+    @Nonnull
     public Field<UUID> field1() {
         return TypeStructureTable.TYPE_STRUCTURE.ID;
     }
 
     @Override
+    @Nonnull
     public Field<String> field2() {
         return TypeStructureTable.TYPE_STRUCTURE.LIBELLE;
     }
@@ -113,18 +118,21 @@ public class TypeStructureRecord extends UpdatableRecordImpl<TypeStructureRecord
     }
 
     @Override
+    @Nonnull
     public TypeStructureRecord value1(@Nonnull UUID value) {
         setId(value);
         return this;
     }
 
     @Override
+    @Nonnull
     public TypeStructureRecord value2(@Nonnull String value) {
         setLibelle(value);
         return this;
     }
 
     @Override
+    @Nonnull
     public TypeStructureRecord values(@Nonnull UUID value1, @Nonnull String value2) {
         value1(value1);
         value2(value2);
@@ -148,7 +156,7 @@ public class TypeStructureRecord extends UpdatableRecordImpl<TypeStructureRecord
     public TypeStructureRecord(@Nonnull UUID id, @Nonnull String libelle) {
         super(TypeStructureTable.TYPE_STRUCTURE);
 
-        set(0, id);
-        set(1, libelle);
+        setId(id);
+        setLibelle(libelle);
     }
 }

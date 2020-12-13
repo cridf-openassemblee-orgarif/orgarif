@@ -7,6 +7,8 @@ package orgarif.jooq.generated;
 import java.util.Arrays;
 import java.util.List;
 
+import javax.annotation.Nonnull;
+
 import org.jooq.Catalog;
 import org.jooq.Table;
 import org.jooq.impl.SchemaImpl;
@@ -34,7 +36,7 @@ import orgarif.jooq.generated.tables.UserSessionLogTable;
 @SuppressWarnings({ "all", "unchecked", "rawtypes" })
 public class OrgarifTable extends SchemaImpl {
 
-    private static final long serialVersionUID = -668563942;
+    private static final long serialVersionUID = 1L;
 
     /**
      * The reference instance of <code>orgarif</code>
@@ -125,11 +127,13 @@ public class OrgarifTable extends SchemaImpl {
 
 
     @Override
+    @Nonnull
     public Catalog getCatalog() {
         return DefaultCatalog.DEFAULT_CATALOG;
     }
 
     @Override
+    @Nonnull
     public final List<Table<?>> getTables() {
         return Arrays.<Table<?>>asList(
             AppUserTable.APP_USER,

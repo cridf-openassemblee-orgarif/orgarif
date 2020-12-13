@@ -25,7 +25,7 @@ import orgarif.jooq.generated.tables.InstanceTable;
 @SuppressWarnings({ "all", "unchecked", "rawtypes" })
 public class InstanceRecord extends UpdatableRecordImpl<InstanceRecord> implements Record7<UUID, String, UUID, Integer, Integer, LocalDateTime, LocalDateTime> {
 
-    private static final long serialVersionUID = -1088401226;
+    private static final long serialVersionUID = 1L;
 
     /**
      * Setter for <code>orgarif.instance.id</code>.
@@ -137,6 +137,7 @@ public class InstanceRecord extends UpdatableRecordImpl<InstanceRecord> implemen
     // -------------------------------------------------------------------------
 
     @Override
+    @Nonnull
     public Record1<UUID> key() {
         return (Record1) super.key();
     }
@@ -146,46 +147,55 @@ public class InstanceRecord extends UpdatableRecordImpl<InstanceRecord> implemen
     // -------------------------------------------------------------------------
 
     @Override
+    @Nonnull
     public Row7<UUID, String, UUID, Integer, Integer, LocalDateTime, LocalDateTime> fieldsRow() {
         return (Row7) super.fieldsRow();
     }
 
     @Override
+    @Nonnull
     public Row7<UUID, String, UUID, Integer, Integer, LocalDateTime, LocalDateTime> valuesRow() {
         return (Row7) super.valuesRow();
     }
 
     @Override
+    @Nonnull
     public Field<UUID> field1() {
         return InstanceTable.INSTANCE.ID;
     }
 
     @Override
+    @Nonnull
     public Field<String> field2() {
         return InstanceTable.INSTANCE.NOM;
     }
 
     @Override
+    @Nonnull
     public Field<UUID> field3() {
         return InstanceTable.INSTANCE.ORGANISME_ID;
     }
 
     @Override
+    @Nonnull
     public Field<Integer> field4() {
         return InstanceTable.INSTANCE.NOMBRE_REPRESENTANTS;
     }
 
     @Override
+    @Nonnull
     public Field<Integer> field5() {
         return InstanceTable.INSTANCE.NOMBRE_SUPPLEANTS;
     }
 
     @Override
+    @Nonnull
     public Field<LocalDateTime> field6() {
         return InstanceTable.INSTANCE.CREATION_DATE;
     }
 
     @Override
+    @Nonnull
     public Field<LocalDateTime> field7() {
         return InstanceTable.INSTANCE.LAST_MODIFICATION_DATE;
     }
@@ -275,48 +285,56 @@ public class InstanceRecord extends UpdatableRecordImpl<InstanceRecord> implemen
     }
 
     @Override
+    @Nonnull
     public InstanceRecord value1(@Nonnull UUID value) {
         setId(value);
         return this;
     }
 
     @Override
+    @Nonnull
     public InstanceRecord value2(@Nonnull String value) {
         setNom(value);
         return this;
     }
 
     @Override
+    @Nonnull
     public InstanceRecord value3(@Nonnull UUID value) {
         setOrganismeId(value);
         return this;
     }
 
     @Override
+    @Nonnull
     public InstanceRecord value4(@Nullable Integer value) {
         setNombreRepresentants(value);
         return this;
     }
 
     @Override
+    @Nonnull
     public InstanceRecord value5(@Nullable Integer value) {
         setNombreSuppleants(value);
         return this;
     }
 
     @Override
+    @Nonnull
     public InstanceRecord value6(@Nonnull LocalDateTime value) {
         setCreationDate(value);
         return this;
     }
 
     @Override
+    @Nonnull
     public InstanceRecord value7(@Nonnull LocalDateTime value) {
         setLastModificationDate(value);
         return this;
     }
 
     @Override
+    @Nonnull
     public InstanceRecord values(@Nonnull UUID value1, @Nonnull String value2, @Nonnull UUID value3, @Nullable Integer value4, @Nullable Integer value5, @Nonnull LocalDateTime value6, @Nonnull LocalDateTime value7) {
         value1(value1);
         value2(value2);
@@ -345,12 +363,12 @@ public class InstanceRecord extends UpdatableRecordImpl<InstanceRecord> implemen
     public InstanceRecord(@Nonnull UUID id, @Nonnull String nom, @Nonnull UUID organismeId, @Nullable Integer nombreRepresentants, @Nullable Integer nombreSuppleants, @Nonnull LocalDateTime creationDate, @Nonnull LocalDateTime lastModificationDate) {
         super(InstanceTable.INSTANCE);
 
-        set(0, id);
-        set(1, nom);
-        set(2, organismeId);
-        set(3, nombreRepresentants);
-        set(4, nombreSuppleants);
-        set(5, creationDate);
-        set(6, lastModificationDate);
+        setId(id);
+        setNom(nom);
+        setOrganismeId(organismeId);
+        setNombreRepresentants(nombreRepresentants);
+        setNombreSuppleants(nombreSuppleants);
+        setCreationDate(creationDate);
+        setLastModificationDate(lastModificationDate);
     }
 }

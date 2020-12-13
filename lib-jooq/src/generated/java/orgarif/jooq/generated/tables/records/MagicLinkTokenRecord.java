@@ -24,7 +24,7 @@ import orgarif.jooq.generated.tables.MagicLinkTokenTable;
 @SuppressWarnings({ "all", "unchecked", "rawtypes" })
 public class MagicLinkTokenRecord extends UpdatableRecordImpl<MagicLinkTokenRecord> implements Record4<String, UUID, LocalDateTime, Boolean> {
 
-    private static final long serialVersionUID = -1937325424;
+    private static final long serialVersionUID = 1L;
 
     /**
      * Setter for <code>orgarif.magic_link_token.token</code>.
@@ -91,6 +91,7 @@ public class MagicLinkTokenRecord extends UpdatableRecordImpl<MagicLinkTokenReco
     // -------------------------------------------------------------------------
 
     @Override
+    @Nonnull
     public Record1<String> key() {
         return (Record1) super.key();
     }
@@ -100,31 +101,37 @@ public class MagicLinkTokenRecord extends UpdatableRecordImpl<MagicLinkTokenReco
     // -------------------------------------------------------------------------
 
     @Override
+    @Nonnull
     public Row4<String, UUID, LocalDateTime, Boolean> fieldsRow() {
         return (Row4) super.fieldsRow();
     }
 
     @Override
+    @Nonnull
     public Row4<String, UUID, LocalDateTime, Boolean> valuesRow() {
         return (Row4) super.valuesRow();
     }
 
     @Override
+    @Nonnull
     public Field<String> field1() {
         return MagicLinkTokenTable.MAGIC_LINK_TOKEN.TOKEN;
     }
 
     @Override
+    @Nonnull
     public Field<UUID> field2() {
         return MagicLinkTokenTable.MAGIC_LINK_TOKEN.USER_ID;
     }
 
     @Override
+    @Nonnull
     public Field<LocalDateTime> field3() {
         return MagicLinkTokenTable.MAGIC_LINK_TOKEN.CREATION_DATE;
     }
 
     @Override
+    @Nonnull
     public Field<Boolean> field4() {
         return MagicLinkTokenTable.MAGIC_LINK_TOKEN.VALIDITY;
     }
@@ -178,30 +185,35 @@ public class MagicLinkTokenRecord extends UpdatableRecordImpl<MagicLinkTokenReco
     }
 
     @Override
+    @Nonnull
     public MagicLinkTokenRecord value1(@Nonnull String value) {
         setToken(value);
         return this;
     }
 
     @Override
+    @Nonnull
     public MagicLinkTokenRecord value2(@Nonnull UUID value) {
         setUserId(value);
         return this;
     }
 
     @Override
+    @Nonnull
     public MagicLinkTokenRecord value3(@Nonnull LocalDateTime value) {
         setCreationDate(value);
         return this;
     }
 
     @Override
+    @Nonnull
     public MagicLinkTokenRecord value4(@Nonnull Boolean value) {
         setValidity(value);
         return this;
     }
 
     @Override
+    @Nonnull
     public MagicLinkTokenRecord values(@Nonnull String value1, @Nonnull UUID value2, @Nonnull LocalDateTime value3, @Nonnull Boolean value4) {
         value1(value1);
         value2(value2);
@@ -227,9 +239,9 @@ public class MagicLinkTokenRecord extends UpdatableRecordImpl<MagicLinkTokenReco
     public MagicLinkTokenRecord(@Nonnull String token, @Nonnull UUID userId, @Nonnull LocalDateTime creationDate, @Nonnull Boolean validity) {
         super(MagicLinkTokenTable.MAGIC_LINK_TOKEN);
 
-        set(0, token);
-        set(1, userId);
-        set(2, creationDate);
-        set(3, validity);
+        setToken(token);
+        setUserId(userId);
+        setCreationDate(creationDate);
+        setValidity(validity);
     }
 }

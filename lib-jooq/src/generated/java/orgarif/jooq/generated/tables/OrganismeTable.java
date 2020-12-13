@@ -9,6 +9,8 @@ import java.util.Arrays;
 import java.util.List;
 import java.util.UUID;
 
+import javax.annotation.Nonnull;
+
 import org.jooq.Field;
 import org.jooq.ForeignKey;
 import org.jooq.Index;
@@ -21,6 +23,7 @@ import org.jooq.TableField;
 import org.jooq.TableOptions;
 import org.jooq.UniqueKey;
 import org.jooq.impl.DSL;
+import org.jooq.impl.SQLDataType;
 import org.jooq.impl.TableImpl;
 
 import orgarif.jooq.generated.Indexes;
@@ -36,7 +39,7 @@ import orgarif.jooq.tools.jooq.CharToUUIDConverter;
 @SuppressWarnings({ "all", "unchecked", "rawtypes" })
 public class OrganismeTable extends TableImpl<OrganismeRecord> {
 
-    private static final long serialVersionUID = 1249699127;
+    private static final long serialVersionUID = 1L;
 
     /**
      * The reference instance of <code>orgarif.organisme</code>
@@ -47,6 +50,7 @@ public class OrganismeTable extends TableImpl<OrganismeRecord> {
      * The class holding records for this type
      */
     @Override
+    @Nonnull
     public Class<OrganismeRecord> getRecordType() {
         return OrganismeRecord.class;
     }
@@ -54,58 +58,59 @@ public class OrganismeTable extends TableImpl<OrganismeRecord> {
     /**
      * The column <code>orgarif.organisme.id</code>.
      */
-    public final TableField<OrganismeRecord, UUID> ID = createField(DSL.name("id"), org.jooq.impl.SQLDataType.CHAR(32).nullable(false), this, "", new CharToUUIDConverter());
+    public final TableField<OrganismeRecord, UUID> ID = createField(DSL.name("id"), SQLDataType.CHAR(32).nullable(false), this, "", new CharToUUIDConverter());
 
     /**
      * The column <code>orgarif.organisme.nom</code>.
      */
-    public final TableField<OrganismeRecord, String> NOM = createField(DSL.name("nom"), org.jooq.impl.SQLDataType.VARCHAR(255).nullable(false), this, "");
+    public final TableField<OrganismeRecord, String> NOM = createField(DSL.name("nom"), SQLDataType.VARCHAR(255).nullable(false), this, "");
 
     /**
      * The column <code>orgarif.organisme.secteur_id</code>.
      */
-    public final TableField<OrganismeRecord, UUID> SECTEUR_ID = createField(DSL.name("secteur_id"), org.jooq.impl.SQLDataType.CHAR(32), this, "", new CharToUUIDConverter());
+    public final TableField<OrganismeRecord, UUID> SECTEUR_ID = createField(DSL.name("secteur_id"), SQLDataType.CHAR(32), this, "", new CharToUUIDConverter());
 
     /**
      * The column <code>orgarif.organisme.nature_juridique_id</code>.
      */
-    public final TableField<OrganismeRecord, UUID> NATURE_JURIDIQUE_ID = createField(DSL.name("nature_juridique_id"), org.jooq.impl.SQLDataType.CHAR(32), this, "", new CharToUUIDConverter());
+    public final TableField<OrganismeRecord, UUID> NATURE_JURIDIQUE_ID = createField(DSL.name("nature_juridique_id"), SQLDataType.CHAR(32), this, "", new CharToUUIDConverter());
 
     /**
      * The column <code>orgarif.organisme.type_structure_id</code>.
      */
-    public final TableField<OrganismeRecord, UUID> TYPE_STRUCTURE_ID = createField(DSL.name("type_structure_id"), org.jooq.impl.SQLDataType.CHAR(32), this, "", new CharToUUIDConverter());
+    public final TableField<OrganismeRecord, UUID> TYPE_STRUCTURE_ID = createField(DSL.name("type_structure_id"), SQLDataType.CHAR(32), this, "", new CharToUUIDConverter());
 
     /**
      * The column <code>orgarif.organisme.nombre_representants</code>.
      */
-    public final TableField<OrganismeRecord, Integer> NOMBRE_REPRESENTANTS = createField(DSL.name("nombre_representants"), org.jooq.impl.SQLDataType.INTEGER, this, "");
+    public final TableField<OrganismeRecord, Integer> NOMBRE_REPRESENTANTS = createField(DSL.name("nombre_representants"), SQLDataType.INTEGER, this, "");
 
     /**
      * The column <code>orgarif.organisme.nombre_suppleants</code>.
      */
-    public final TableField<OrganismeRecord, Integer> NOMBRE_SUPPLEANTS = createField(DSL.name("nombre_suppleants"), org.jooq.impl.SQLDataType.INTEGER, this, "");
+    public final TableField<OrganismeRecord, Integer> NOMBRE_SUPPLEANTS = createField(DSL.name("nombre_suppleants"), SQLDataType.INTEGER, this, "");
 
     /**
      * The column <code>orgarif.organisme.partage_representants</code>.
      */
-    public final TableField<OrganismeRecord, Boolean> PARTAGE_REPRESENTANTS = createField(DSL.name("partage_representants"), org.jooq.impl.SQLDataType.BOOLEAN.nullable(false), this, "");
+    public final TableField<OrganismeRecord, Boolean> PARTAGE_REPRESENTANTS = createField(DSL.name("partage_representants"), SQLDataType.BOOLEAN.nullable(false), this, "");
 
     /**
      * The column <code>orgarif.organisme.creation_date</code>.
      */
-    public final TableField<OrganismeRecord, LocalDateTime> CREATION_DATE = createField(DSL.name("creation_date"), org.jooq.impl.SQLDataType.LOCALDATETIME.nullable(false), this, "");
+    public final TableField<OrganismeRecord, LocalDateTime> CREATION_DATE = createField(DSL.name("creation_date"), SQLDataType.LOCALDATETIME(0).nullable(false), this, "");
 
     /**
      * The column <code>orgarif.organisme.last_modification_date</code>.
      */
-    public final TableField<OrganismeRecord, LocalDateTime> LAST_MODIFICATION_DATE = createField(DSL.name("last_modification_date"), org.jooq.impl.SQLDataType.LOCALDATETIME.nullable(false), this, "");
+    public final TableField<OrganismeRecord, LocalDateTime> LAST_MODIFICATION_DATE = createField(DSL.name("last_modification_date"), SQLDataType.LOCALDATETIME(0).nullable(false), this, "");
 
-    /**
-     * Create a <code>orgarif.organisme</code> table reference
-     */
-    public OrganismeTable() {
-        this(DSL.name("organisme"), null);
+    private OrganismeTable(Name alias, Table<OrganismeRecord> aliased) {
+        this(alias, aliased, null);
+    }
+
+    private OrganismeTable(Name alias, Table<OrganismeRecord> aliased, Field<?>[] parameters) {
+        super(alias, null, aliased, parameters, DSL.comment(""), TableOptions.table());
     }
 
     /**
@@ -122,12 +127,11 @@ public class OrganismeTable extends TableImpl<OrganismeRecord> {
         this(alias, ORGANISME);
     }
 
-    private OrganismeTable(Name alias, Table<OrganismeRecord> aliased) {
-        this(alias, aliased, null);
-    }
-
-    private OrganismeTable(Name alias, Table<OrganismeRecord> aliased, Field<?>[] parameters) {
-        super(alias, null, aliased, parameters, DSL.comment(""), TableOptions.table());
+    /**
+     * Create a <code>orgarif.organisme</code> table reference
+     */
+    public OrganismeTable() {
+        this(DSL.name("organisme"), null);
     }
 
     public <O extends Record> OrganismeTable(Table<O> child, ForeignKey<O, OrganismeRecord> key) {
@@ -135,26 +139,31 @@ public class OrganismeTable extends TableImpl<OrganismeRecord> {
     }
 
     @Override
+    @Nonnull
     public Schema getSchema() {
         return OrgarifTable.ORGARIF;
     }
 
     @Override
+    @Nonnull
     public List<Index> getIndexes() {
         return Arrays.<Index>asList(Indexes.ORGANISME_NATURE_JURIDIQUE_ID, Indexes.ORGANISME_SECTEUR_ID, Indexes.ORGANISME_TYPE_STRUCTURE_ID);
     }
 
     @Override
+    @Nonnull
     public UniqueKey<OrganismeRecord> getPrimaryKey() {
         return Keys.KEY_ORGANISME_PRIMARY;
     }
 
     @Override
+    @Nonnull
     public List<UniqueKey<OrganismeRecord>> getKeys() {
         return Arrays.<UniqueKey<OrganismeRecord>>asList(Keys.KEY_ORGANISME_PRIMARY);
     }
 
     @Override
+    @Nonnull
     public List<ForeignKey<OrganismeRecord, ?>> getReferences() {
         return Arrays.<ForeignKey<OrganismeRecord, ?>>asList(Keys.ORGANISME_IBFK_1, Keys.ORGANISME_IBFK_2, Keys.ORGANISME_IBFK_3);
     }
@@ -172,11 +181,13 @@ public class OrganismeTable extends TableImpl<OrganismeRecord> {
     }
 
     @Override
+    @Nonnull
     public OrganismeTable as(String alias) {
         return new OrganismeTable(DSL.name(alias), this);
     }
 
     @Override
+    @Nonnull
     public OrganismeTable as(Name alias) {
         return new OrganismeTable(alias, this);
     }
@@ -185,6 +196,7 @@ public class OrganismeTable extends TableImpl<OrganismeRecord> {
      * Rename this table
      */
     @Override
+    @Nonnull
     public OrganismeTable rename(String name) {
         return new OrganismeTable(DSL.name(name), null);
     }
@@ -193,6 +205,7 @@ public class OrganismeTable extends TableImpl<OrganismeRecord> {
      * Rename this table
      */
     @Override
+    @Nonnull
     public OrganismeTable rename(Name name) {
         return new OrganismeTable(name, null);
     }
@@ -202,6 +215,7 @@ public class OrganismeTable extends TableImpl<OrganismeRecord> {
     // -------------------------------------------------------------------------
 
     @Override
+    @Nonnull
     public Row10<UUID, String, UUID, UUID, UUID, Integer, Integer, Boolean, LocalDateTime, LocalDateTime> fieldsRow() {
         return (Row10) super.fieldsRow();
     }

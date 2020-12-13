@@ -25,7 +25,7 @@ import orgarif.jooq.generated.tables.RepresentantTable;
 @SuppressWarnings({ "all", "unchecked", "rawtypes" })
 public class RepresentantRecord extends UpdatableRecordImpl<RepresentantRecord> implements Record8<UUID, UUID, UUID, UUID, Integer, String, LocalDateTime, LocalDateTime> {
 
-    private static final long serialVersionUID = 1040172791;
+    private static final long serialVersionUID = 1L;
 
     /**
      * Setter for <code>orgarif.representant.id</code>.
@@ -152,6 +152,7 @@ public class RepresentantRecord extends UpdatableRecordImpl<RepresentantRecord> 
     // -------------------------------------------------------------------------
 
     @Override
+    @Nonnull
     public Record1<UUID> key() {
         return (Record1) super.key();
     }
@@ -161,51 +162,61 @@ public class RepresentantRecord extends UpdatableRecordImpl<RepresentantRecord> 
     // -------------------------------------------------------------------------
 
     @Override
+    @Nonnull
     public Row8<UUID, UUID, UUID, UUID, Integer, String, LocalDateTime, LocalDateTime> fieldsRow() {
         return (Row8) super.fieldsRow();
     }
 
     @Override
+    @Nonnull
     public Row8<UUID, UUID, UUID, UUID, Integer, String, LocalDateTime, LocalDateTime> valuesRow() {
         return (Row8) super.valuesRow();
     }
 
     @Override
+    @Nonnull
     public Field<UUID> field1() {
         return RepresentantTable.REPRESENTANT.ID;
     }
 
     @Override
+    @Nonnull
     public Field<UUID> field2() {
         return RepresentantTable.REPRESENTANT.ELU_ID;
     }
 
     @Override
+    @Nonnull
     public Field<UUID> field3() {
         return RepresentantTable.REPRESENTANT.ORGANISME_ID;
     }
 
     @Override
+    @Nonnull
     public Field<UUID> field4() {
         return RepresentantTable.REPRESENTANT.INSTANCE_ID;
     }
 
     @Override
+    @Nonnull
     public Field<Integer> field5() {
         return RepresentantTable.REPRESENTANT.POSITION;
     }
 
     @Override
+    @Nonnull
     public Field<String> field6() {
         return RepresentantTable.REPRESENTANT.REPRESENTANT_OR_SUPPLEANT;
     }
 
     @Override
+    @Nonnull
     public Field<LocalDateTime> field7() {
         return RepresentantTable.REPRESENTANT.CREATION_DATE;
     }
 
     @Override
+    @Nonnull
     public Field<LocalDateTime> field8() {
         return RepresentantTable.REPRESENTANT.LAST_MODIFICATION_DATE;
     }
@@ -307,54 +318,63 @@ public class RepresentantRecord extends UpdatableRecordImpl<RepresentantRecord> 
     }
 
     @Override
+    @Nonnull
     public RepresentantRecord value1(@Nonnull UUID value) {
         setId(value);
         return this;
     }
 
     @Override
+    @Nonnull
     public RepresentantRecord value2(@Nonnull UUID value) {
         setEluId(value);
         return this;
     }
 
     @Override
+    @Nonnull
     public RepresentantRecord value3(@Nonnull UUID value) {
         setOrganismeId(value);
         return this;
     }
 
     @Override
+    @Nonnull
     public RepresentantRecord value4(@Nullable UUID value) {
         setInstanceId(value);
         return this;
     }
 
     @Override
+    @Nonnull
     public RepresentantRecord value5(@Nonnull Integer value) {
         setPosition(value);
         return this;
     }
 
     @Override
+    @Nonnull
     public RepresentantRecord value6(@Nonnull String value) {
         setRepresentantOrSuppleant(value);
         return this;
     }
 
     @Override
+    @Nonnull
     public RepresentantRecord value7(@Nonnull LocalDateTime value) {
         setCreationDate(value);
         return this;
     }
 
     @Override
+    @Nonnull
     public RepresentantRecord value8(@Nonnull LocalDateTime value) {
         setLastModificationDate(value);
         return this;
     }
 
     @Override
+    @Nonnull
     public RepresentantRecord values(@Nonnull UUID value1, @Nonnull UUID value2, @Nonnull UUID value3, @Nullable UUID value4, @Nonnull Integer value5, @Nonnull String value6, @Nonnull LocalDateTime value7, @Nonnull LocalDateTime value8) {
         value1(value1);
         value2(value2);
@@ -384,13 +404,13 @@ public class RepresentantRecord extends UpdatableRecordImpl<RepresentantRecord> 
     public RepresentantRecord(@Nonnull UUID id, @Nonnull UUID eluId, @Nonnull UUID organismeId, @Nullable UUID instanceId, @Nonnull Integer position, @Nonnull String representantOrSuppleant, @Nonnull LocalDateTime creationDate, @Nonnull LocalDateTime lastModificationDate) {
         super(RepresentantTable.REPRESENTANT);
 
-        set(0, id);
-        set(1, eluId);
-        set(2, organismeId);
-        set(3, instanceId);
-        set(4, position);
-        set(5, representantOrSuppleant);
-        set(6, creationDate);
-        set(7, lastModificationDate);
+        setId(id);
+        setEluId(eluId);
+        setOrganismeId(organismeId);
+        setInstanceId(instanceId);
+        setPosition(position);
+        setRepresentantOrSuppleant(representantOrSuppleant);
+        setCreationDate(creationDate);
+        setLastModificationDate(lastModificationDate);
     }
 }

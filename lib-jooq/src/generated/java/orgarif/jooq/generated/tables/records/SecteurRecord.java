@@ -23,7 +23,7 @@ import orgarif.jooq.generated.tables.SecteurTable;
 @SuppressWarnings({ "all", "unchecked", "rawtypes" })
 public class SecteurRecord extends UpdatableRecordImpl<SecteurRecord> implements Record2<UUID, String> {
 
-    private static final long serialVersionUID = 657885007;
+    private static final long serialVersionUID = 1L;
 
     /**
      * Setter for <code>orgarif.secteur.id</code>.
@@ -60,6 +60,7 @@ public class SecteurRecord extends UpdatableRecordImpl<SecteurRecord> implements
     // -------------------------------------------------------------------------
 
     @Override
+    @Nonnull
     public Record1<UUID> key() {
         return (Record1) super.key();
     }
@@ -69,21 +70,25 @@ public class SecteurRecord extends UpdatableRecordImpl<SecteurRecord> implements
     // -------------------------------------------------------------------------
 
     @Override
+    @Nonnull
     public Row2<UUID, String> fieldsRow() {
         return (Row2) super.fieldsRow();
     }
 
     @Override
+    @Nonnull
     public Row2<UUID, String> valuesRow() {
         return (Row2) super.valuesRow();
     }
 
     @Override
+    @Nonnull
     public Field<UUID> field1() {
         return SecteurTable.SECTEUR.ID;
     }
 
     @Override
+    @Nonnull
     public Field<String> field2() {
         return SecteurTable.SECTEUR.LIBELLE;
     }
@@ -113,18 +118,21 @@ public class SecteurRecord extends UpdatableRecordImpl<SecteurRecord> implements
     }
 
     @Override
+    @Nonnull
     public SecteurRecord value1(@Nonnull UUID value) {
         setId(value);
         return this;
     }
 
     @Override
+    @Nonnull
     public SecteurRecord value2(@Nonnull String value) {
         setLibelle(value);
         return this;
     }
 
     @Override
+    @Nonnull
     public SecteurRecord values(@Nonnull UUID value1, @Nonnull String value2) {
         value1(value1);
         value2(value2);
@@ -148,7 +156,7 @@ public class SecteurRecord extends UpdatableRecordImpl<SecteurRecord> implements
     public SecteurRecord(@Nonnull UUID id, @Nonnull String libelle) {
         super(SecteurTable.SECTEUR);
 
-        set(0, id);
-        set(1, libelle);
+        setId(id);
+        setLibelle(libelle);
     }
 }

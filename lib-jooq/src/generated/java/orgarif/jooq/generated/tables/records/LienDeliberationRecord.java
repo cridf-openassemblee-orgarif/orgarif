@@ -25,7 +25,7 @@ import orgarif.jooq.generated.tables.LienDeliberationTable;
 @SuppressWarnings({ "all", "unchecked", "rawtypes" })
 public class LienDeliberationRecord extends UpdatableRecordImpl<LienDeliberationRecord> implements Record6<UUID, UUID, UUID, UUID, LocalDateTime, LocalDateTime> {
 
-    private static final long serialVersionUID = 927031061;
+    private static final long serialVersionUID = 1L;
 
     /**
      * Setter for <code>orgarif.lien_deliberation.id</code>.
@@ -122,6 +122,7 @@ public class LienDeliberationRecord extends UpdatableRecordImpl<LienDeliberation
     // -------------------------------------------------------------------------
 
     @Override
+    @Nonnull
     public Record1<UUID> key() {
         return (Record1) super.key();
     }
@@ -131,41 +132,49 @@ public class LienDeliberationRecord extends UpdatableRecordImpl<LienDeliberation
     // -------------------------------------------------------------------------
 
     @Override
+    @Nonnull
     public Row6<UUID, UUID, UUID, UUID, LocalDateTime, LocalDateTime> fieldsRow() {
         return (Row6) super.fieldsRow();
     }
 
     @Override
+    @Nonnull
     public Row6<UUID, UUID, UUID, UUID, LocalDateTime, LocalDateTime> valuesRow() {
         return (Row6) super.valuesRow();
     }
 
     @Override
+    @Nonnull
     public Field<UUID> field1() {
         return LienDeliberationTable.LIEN_DELIBERATION.ID;
     }
 
     @Override
+    @Nonnull
     public Field<UUID> field2() {
         return LienDeliberationTable.LIEN_DELIBERATION.DELIBERATION_ID;
     }
 
     @Override
+    @Nonnull
     public Field<UUID> field3() {
         return LienDeliberationTable.LIEN_DELIBERATION.ORGANISME_ID;
     }
 
     @Override
+    @Nonnull
     public Field<UUID> field4() {
         return LienDeliberationTable.LIEN_DELIBERATION.INSTANCE_ID;
     }
 
     @Override
+    @Nonnull
     public Field<LocalDateTime> field5() {
         return LienDeliberationTable.LIEN_DELIBERATION.CREATION_DATE;
     }
 
     @Override
+    @Nonnull
     public Field<LocalDateTime> field6() {
         return LienDeliberationTable.LIEN_DELIBERATION.LAST_MODIFICATION_DATE;
     }
@@ -243,42 +252,49 @@ public class LienDeliberationRecord extends UpdatableRecordImpl<LienDeliberation
     }
 
     @Override
+    @Nonnull
     public LienDeliberationRecord value1(@Nonnull UUID value) {
         setId(value);
         return this;
     }
 
     @Override
+    @Nonnull
     public LienDeliberationRecord value2(@Nonnull UUID value) {
         setDeliberationId(value);
         return this;
     }
 
     @Override
+    @Nonnull
     public LienDeliberationRecord value3(@Nonnull UUID value) {
         setOrganismeId(value);
         return this;
     }
 
     @Override
+    @Nonnull
     public LienDeliberationRecord value4(@Nullable UUID value) {
         setInstanceId(value);
         return this;
     }
 
     @Override
+    @Nonnull
     public LienDeliberationRecord value5(@Nonnull LocalDateTime value) {
         setCreationDate(value);
         return this;
     }
 
     @Override
+    @Nonnull
     public LienDeliberationRecord value6(@Nonnull LocalDateTime value) {
         setLastModificationDate(value);
         return this;
     }
 
     @Override
+    @Nonnull
     public LienDeliberationRecord values(@Nonnull UUID value1, @Nonnull UUID value2, @Nonnull UUID value3, @Nullable UUID value4, @Nonnull LocalDateTime value5, @Nonnull LocalDateTime value6) {
         value1(value1);
         value2(value2);
@@ -306,11 +322,11 @@ public class LienDeliberationRecord extends UpdatableRecordImpl<LienDeliberation
     public LienDeliberationRecord(@Nonnull UUID id, @Nonnull UUID deliberationId, @Nonnull UUID organismeId, @Nullable UUID instanceId, @Nonnull LocalDateTime creationDate, @Nonnull LocalDateTime lastModificationDate) {
         super(LienDeliberationTable.LIEN_DELIBERATION);
 
-        set(0, id);
-        set(1, deliberationId);
-        set(2, organismeId);
-        set(3, instanceId);
-        set(4, creationDate);
-        set(5, lastModificationDate);
+        setId(id);
+        setDeliberationId(deliberationId);
+        setOrganismeId(organismeId);
+        setInstanceId(instanceId);
+        setCreationDate(creationDate);
+        setLastModificationDate(lastModificationDate);
     }
 }

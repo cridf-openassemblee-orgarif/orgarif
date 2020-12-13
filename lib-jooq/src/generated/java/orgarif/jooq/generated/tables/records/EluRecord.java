@@ -24,7 +24,7 @@ import orgarif.jooq.generated.tables.EluTable;
 @SuppressWarnings({ "all", "unchecked", "rawtypes" })
 public class EluRecord extends UpdatableRecordImpl<EluRecord> implements Record9<UUID, String, String, String, String, String, String, Boolean, LocalDateTime> {
 
-    private static final long serialVersionUID = -791737868;
+    private static final long serialVersionUID = 1L;
 
     /**
      * Setter for <code>orgarif.elu.id</code>.
@@ -166,6 +166,7 @@ public class EluRecord extends UpdatableRecordImpl<EluRecord> implements Record9
     // -------------------------------------------------------------------------
 
     @Override
+    @Nonnull
     public Record1<UUID> key() {
         return (Record1) super.key();
     }
@@ -175,56 +176,67 @@ public class EluRecord extends UpdatableRecordImpl<EluRecord> implements Record9
     // -------------------------------------------------------------------------
 
     @Override
+    @Nonnull
     public Row9<UUID, String, String, String, String, String, String, Boolean, LocalDateTime> fieldsRow() {
         return (Row9) super.fieldsRow();
     }
 
     @Override
+    @Nonnull
     public Row9<UUID, String, String, String, String, String, String, Boolean, LocalDateTime> valuesRow() {
         return (Row9) super.valuesRow();
     }
 
     @Override
+    @Nonnull
     public Field<UUID> field1() {
         return EluTable.ELU.ID;
     }
 
     @Override
+    @Nonnull
     public Field<String> field2() {
         return EluTable.ELU.CIVILITE;
     }
 
     @Override
+    @Nonnull
     public Field<String> field3() {
         return EluTable.ELU.PRENOM;
     }
 
     @Override
+    @Nonnull
     public Field<String> field4() {
         return EluTable.ELU.NOM;
     }
 
     @Override
+    @Nonnull
     public Field<String> field5() {
         return EluTable.ELU.GROUPE_POLITIQUE;
     }
 
     @Override
+    @Nonnull
     public Field<String> field6() {
         return EluTable.ELU.GROUPE_POLITIQUE_COURT;
     }
 
     @Override
+    @Nonnull
     public Field<String> field7() {
         return EluTable.ELU.IMAGE_URL;
     }
 
     @Override
+    @Nonnull
     public Field<Boolean> field8() {
         return EluTable.ELU.ACTIF;
     }
 
     @Override
+    @Nonnull
     public Field<LocalDateTime> field9() {
         return EluTable.ELU.CREATION_DATE;
     }
@@ -338,60 +350,70 @@ public class EluRecord extends UpdatableRecordImpl<EluRecord> implements Record9
     }
 
     @Override
+    @Nonnull
     public EluRecord value1(@Nonnull UUID value) {
         setId(value);
         return this;
     }
 
     @Override
+    @Nonnull
     public EluRecord value2(@Nonnull String value) {
         setCivilite(value);
         return this;
     }
 
     @Override
+    @Nonnull
     public EluRecord value3(@Nonnull String value) {
         setPrenom(value);
         return this;
     }
 
     @Override
+    @Nonnull
     public EluRecord value4(@Nonnull String value) {
         setNom(value);
         return this;
     }
 
     @Override
+    @Nonnull
     public EluRecord value5(@Nonnull String value) {
         setGroupePolitique(value);
         return this;
     }
 
     @Override
+    @Nonnull
     public EluRecord value6(@Nonnull String value) {
         setGroupePolitiqueCourt(value);
         return this;
     }
 
     @Override
+    @Nonnull
     public EluRecord value7(@Nonnull String value) {
         setImageUrl(value);
         return this;
     }
 
     @Override
+    @Nonnull
     public EluRecord value8(@Nonnull Boolean value) {
         setActif(value);
         return this;
     }
 
     @Override
+    @Nonnull
     public EluRecord value9(@Nonnull LocalDateTime value) {
         setCreationDate(value);
         return this;
     }
 
     @Override
+    @Nonnull
     public EluRecord values(@Nonnull UUID value1, @Nonnull String value2, @Nonnull String value3, @Nonnull String value4, @Nonnull String value5, @Nonnull String value6, @Nonnull String value7, @Nonnull Boolean value8, @Nonnull LocalDateTime value9) {
         value1(value1);
         value2(value2);
@@ -422,14 +444,14 @@ public class EluRecord extends UpdatableRecordImpl<EluRecord> implements Record9
     public EluRecord(@Nonnull UUID id, @Nonnull String civilite, @Nonnull String prenom, @Nonnull String nom, @Nonnull String groupePolitique, @Nonnull String groupePolitiqueCourt, @Nonnull String imageUrl, @Nonnull Boolean actif, @Nonnull LocalDateTime creationDate) {
         super(EluTable.ELU);
 
-        set(0, id);
-        set(1, civilite);
-        set(2, prenom);
-        set(3, nom);
-        set(4, groupePolitique);
-        set(5, groupePolitiqueCourt);
-        set(6, imageUrl);
-        set(7, actif);
-        set(8, creationDate);
+        setId(id);
+        setCivilite(civilite);
+        setPrenom(prenom);
+        setNom(nom);
+        setGroupePolitique(groupePolitique);
+        setGroupePolitiqueCourt(groupePolitiqueCourt);
+        setImageUrl(imageUrl);
+        setActif(actif);
+        setCreationDate(creationDate);
     }
 }

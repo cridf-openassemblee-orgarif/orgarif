@@ -9,6 +9,8 @@ import java.util.Arrays;
 import java.util.List;
 import java.util.UUID;
 
+import javax.annotation.Nonnull;
+
 import org.jooq.Field;
 import org.jooq.ForeignKey;
 import org.jooq.Index;
@@ -21,6 +23,7 @@ import org.jooq.TableField;
 import org.jooq.TableOptions;
 import org.jooq.UniqueKey;
 import org.jooq.impl.DSL;
+import org.jooq.impl.SQLDataType;
 import org.jooq.impl.TableImpl;
 
 import orgarif.jooq.generated.Indexes;
@@ -36,7 +39,7 @@ import orgarif.jooq.tools.jooq.CharToUUIDConverter;
 @SuppressWarnings({ "all", "unchecked", "rawtypes" })
 public class UserSessionLogTable extends TableImpl<UserSessionLogRecord> {
 
-    private static final long serialVersionUID = -1823957105;
+    private static final long serialVersionUID = 1L;
 
     /**
      * The reference instance of <code>orgarif.user_session_log</code>
@@ -47,6 +50,7 @@ public class UserSessionLogTable extends TableImpl<UserSessionLogRecord> {
      * The class holding records for this type
      */
     @Override
+    @Nonnull
     public Class<UserSessionLogRecord> getRecordType() {
         return UserSessionLogRecord.class;
     }
@@ -54,38 +58,39 @@ public class UserSessionLogTable extends TableImpl<UserSessionLogRecord> {
     /**
      * The column <code>orgarif.user_session_log.id</code>.
      */
-    public final TableField<UserSessionLogRecord, UUID> ID = createField(DSL.name("id"), org.jooq.impl.SQLDataType.CHAR(32).nullable(false), this, "", new CharToUUIDConverter());
+    public final TableField<UserSessionLogRecord, UUID> ID = createField(DSL.name("id"), SQLDataType.CHAR(32).nullable(false), this, "", new CharToUUIDConverter());
 
     /**
      * The column <code>orgarif.user_session_log.spring_session_id</code>.
      */
-    public final TableField<UserSessionLogRecord, String> SPRING_SESSION_ID = createField(DSL.name("spring_session_id"), org.jooq.impl.SQLDataType.VARCHAR(255).nullable(false), this, "");
+    public final TableField<UserSessionLogRecord, String> SPRING_SESSION_ID = createField(DSL.name("spring_session_id"), SQLDataType.VARCHAR(255).nullable(false), this, "");
 
     /**
      * The column <code>orgarif.user_session_log.user_id</code>.
      */
-    public final TableField<UserSessionLogRecord, UUID> USER_ID = createField(DSL.name("user_id"), org.jooq.impl.SQLDataType.CHAR(32).nullable(false), this, "", new CharToUUIDConverter());
+    public final TableField<UserSessionLogRecord, UUID> USER_ID = createField(DSL.name("user_id"), SQLDataType.CHAR(32).nullable(false), this, "", new CharToUUIDConverter());
 
     /**
      * The column <code>orgarif.user_session_log.deployment_log_id</code>.
      */
-    public final TableField<UserSessionLogRecord, UUID> DEPLOYMENT_LOG_ID = createField(DSL.name("deployment_log_id"), org.jooq.impl.SQLDataType.CHAR(32).nullable(false), this, "", new CharToUUIDConverter());
+    public final TableField<UserSessionLogRecord, UUID> DEPLOYMENT_LOG_ID = createField(DSL.name("deployment_log_id"), SQLDataType.CHAR(32).nullable(false), this, "", new CharToUUIDConverter());
 
     /**
      * The column <code>orgarif.user_session_log.date</code>.
      */
-    public final TableField<UserSessionLogRecord, LocalDateTime> DATE = createField(DSL.name("date"), org.jooq.impl.SQLDataType.LOCALDATETIME.nullable(false), this, "");
+    public final TableField<UserSessionLogRecord, LocalDateTime> DATE = createField(DSL.name("date"), SQLDataType.LOCALDATETIME(0).nullable(false), this, "");
 
     /**
      * The column <code>orgarif.user_session_log.ip</code>.
      */
-    public final TableField<UserSessionLogRecord, String> IP = createField(DSL.name("ip"), org.jooq.impl.SQLDataType.VARCHAR(255).nullable(false), this, "");
+    public final TableField<UserSessionLogRecord, String> IP = createField(DSL.name("ip"), SQLDataType.VARCHAR(255).nullable(false), this, "");
 
-    /**
-     * Create a <code>orgarif.user_session_log</code> table reference
-     */
-    public UserSessionLogTable() {
-        this(DSL.name("user_session_log"), null);
+    private UserSessionLogTable(Name alias, Table<UserSessionLogRecord> aliased) {
+        this(alias, aliased, null);
+    }
+
+    private UserSessionLogTable(Name alias, Table<UserSessionLogRecord> aliased, Field<?>[] parameters) {
+        super(alias, null, aliased, parameters, DSL.comment(""), TableOptions.table());
     }
 
     /**
@@ -102,12 +107,11 @@ public class UserSessionLogTable extends TableImpl<UserSessionLogRecord> {
         this(alias, USER_SESSION_LOG);
     }
 
-    private UserSessionLogTable(Name alias, Table<UserSessionLogRecord> aliased) {
-        this(alias, aliased, null);
-    }
-
-    private UserSessionLogTable(Name alias, Table<UserSessionLogRecord> aliased, Field<?>[] parameters) {
-        super(alias, null, aliased, parameters, DSL.comment(""), TableOptions.table());
+    /**
+     * Create a <code>orgarif.user_session_log</code> table reference
+     */
+    public UserSessionLogTable() {
+        this(DSL.name("user_session_log"), null);
     }
 
     public <O extends Record> UserSessionLogTable(Table<O> child, ForeignKey<O, UserSessionLogRecord> key) {
@@ -115,26 +119,31 @@ public class UserSessionLogTable extends TableImpl<UserSessionLogRecord> {
     }
 
     @Override
+    @Nonnull
     public Schema getSchema() {
         return OrgarifTable.ORGARIF;
     }
 
     @Override
+    @Nonnull
     public List<Index> getIndexes() {
         return Arrays.<Index>asList(Indexes.USER_SESSION_LOG_USER_ID);
     }
 
     @Override
+    @Nonnull
     public UniqueKey<UserSessionLogRecord> getPrimaryKey() {
         return Keys.KEY_USER_SESSION_LOG_PRIMARY;
     }
 
     @Override
+    @Nonnull
     public List<UniqueKey<UserSessionLogRecord>> getKeys() {
         return Arrays.<UniqueKey<UserSessionLogRecord>>asList(Keys.KEY_USER_SESSION_LOG_PRIMARY);
     }
 
     @Override
+    @Nonnull
     public List<ForeignKey<UserSessionLogRecord, ?>> getReferences() {
         return Arrays.<ForeignKey<UserSessionLogRecord, ?>>asList(Keys.USER_SESSION_LOG_IBFK_1);
     }
@@ -144,11 +153,13 @@ public class UserSessionLogTable extends TableImpl<UserSessionLogRecord> {
     }
 
     @Override
+    @Nonnull
     public UserSessionLogTable as(String alias) {
         return new UserSessionLogTable(DSL.name(alias), this);
     }
 
     @Override
+    @Nonnull
     public UserSessionLogTable as(Name alias) {
         return new UserSessionLogTable(alias, this);
     }
@@ -157,6 +168,7 @@ public class UserSessionLogTable extends TableImpl<UserSessionLogRecord> {
      * Rename this table
      */
     @Override
+    @Nonnull
     public UserSessionLogTable rename(String name) {
         return new UserSessionLogTable(DSL.name(name), null);
     }
@@ -165,6 +177,7 @@ public class UserSessionLogTable extends TableImpl<UserSessionLogRecord> {
      * Rename this table
      */
     @Override
+    @Nonnull
     public UserSessionLogTable rename(Name name) {
         return new UserSessionLogTable(name, null);
     }
@@ -174,6 +187,7 @@ public class UserSessionLogTable extends TableImpl<UserSessionLogRecord> {
     // -------------------------------------------------------------------------
 
     @Override
+    @Nonnull
     public Row6<UUID, String, UUID, UUID, LocalDateTime, String> fieldsRow() {
         return (Row6) super.fieldsRow();
     }

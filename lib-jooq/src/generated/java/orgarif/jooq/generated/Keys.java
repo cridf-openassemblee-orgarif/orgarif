@@ -7,6 +7,7 @@ package orgarif.jooq.generated;
 import org.jooq.ForeignKey;
 import org.jooq.TableField;
 import org.jooq.UniqueKey;
+import org.jooq.impl.DSL;
 import org.jooq.impl.Internal;
 
 import orgarif.jooq.generated.tables.AppUserTable;
@@ -42,100 +43,52 @@ import orgarif.jooq.generated.tables.records.UserSessionLogRecord;
 
 
 /**
- * A class modelling foreign key relationships and constraints of tables of 
- * the <code>orgarif</code> schema.
+ * A class modelling foreign key relationships and constraints of tables in 
+ * orgarif.
  */
 @SuppressWarnings({ "all", "unchecked", "rawtypes" })
 public class Keys {
 
     // -------------------------------------------------------------------------
-    // IDENTITY definitions
-    // -------------------------------------------------------------------------
-
-
-    // -------------------------------------------------------------------------
     // UNIQUE and PRIMARY KEY definitions
     // -------------------------------------------------------------------------
 
-    public static final UniqueKey<AppUserRecord> KEY_APP_USER_PRIMARY = UniqueKeys0.KEY_APP_USER_PRIMARY;
-    public static final UniqueKey<AppUserRecord> KEY_APP_USER_MAIL = UniqueKeys0.KEY_APP_USER_MAIL;
-    public static final UniqueKey<AppUserRecord> KEY_APP_USER_USERNAME = UniqueKeys0.KEY_APP_USER_USERNAME;
-    public static final UniqueKey<CommandLogRecord> KEY_COMMAND_LOG_PRIMARY = UniqueKeys0.KEY_COMMAND_LOG_PRIMARY;
-    public static final UniqueKey<DeliberationRecord> KEY_DELIBERATION_PRIMARY = UniqueKeys0.KEY_DELIBERATION_PRIMARY;
-    public static final UniqueKey<DeploymentLogRecord> KEY_DEPLOYMENT_LOG_PRIMARY = UniqueKeys0.KEY_DEPLOYMENT_LOG_PRIMARY;
-    public static final UniqueKey<EluRecord> KEY_ELU_PRIMARY = UniqueKeys0.KEY_ELU_PRIMARY;
-    public static final UniqueKey<InstanceRecord> KEY_INSTANCE_PRIMARY = UniqueKeys0.KEY_INSTANCE_PRIMARY;
-    public static final UniqueKey<LienDeliberationRecord> KEY_LIEN_DELIBERATION_PRIMARY = UniqueKeys0.KEY_LIEN_DELIBERATION_PRIMARY;
-    public static final UniqueKey<MagicLinkTokenRecord> KEY_MAGIC_LINK_TOKEN_PRIMARY = UniqueKeys0.KEY_MAGIC_LINK_TOKEN_PRIMARY;
-    public static final UniqueKey<MailLogRecord> KEY_MAIL_LOG_PRIMARY = UniqueKeys0.KEY_MAIL_LOG_PRIMARY;
-    public static final UniqueKey<NatureJuridiqueRecord> KEY_NATURE_JURIDIQUE_PRIMARY = UniqueKeys0.KEY_NATURE_JURIDIQUE_PRIMARY;
-    public static final UniqueKey<OrganismeRecord> KEY_ORGANISME_PRIMARY = UniqueKeys0.KEY_ORGANISME_PRIMARY;
-    public static final UniqueKey<RepresentantRecord> KEY_REPRESENTANT_PRIMARY = UniqueKeys0.KEY_REPRESENTANT_PRIMARY;
-    public static final UniqueKey<SecteurRecord> KEY_SECTEUR_PRIMARY = UniqueKeys0.KEY_SECTEUR_PRIMARY;
-    public static final UniqueKey<TypeStructureRecord> KEY_TYPE_STRUCTURE_PRIMARY = UniqueKeys0.KEY_TYPE_STRUCTURE_PRIMARY;
-    public static final UniqueKey<UserSessionLogRecord> KEY_USER_SESSION_LOG_PRIMARY = UniqueKeys0.KEY_USER_SESSION_LOG_PRIMARY;
+    public static final UniqueKey<AppUserRecord> KEY_APP_USER_MAIL = Internal.createUniqueKey(AppUserTable.APP_USER, DSL.name("KEY_app_user_mail"), new TableField[] { AppUserTable.APP_USER.MAIL }, true);
+    public static final UniqueKey<AppUserRecord> KEY_APP_USER_PRIMARY = Internal.createUniqueKey(AppUserTable.APP_USER, DSL.name("KEY_app_user_PRIMARY"), new TableField[] { AppUserTable.APP_USER.ID }, true);
+    public static final UniqueKey<AppUserRecord> KEY_APP_USER_USERNAME = Internal.createUniqueKey(AppUserTable.APP_USER, DSL.name("KEY_app_user_username"), new TableField[] { AppUserTable.APP_USER.USERNAME }, true);
+    public static final UniqueKey<CommandLogRecord> KEY_COMMAND_LOG_PRIMARY = Internal.createUniqueKey(CommandLogTable.COMMAND_LOG, DSL.name("KEY_command_log_PRIMARY"), new TableField[] { CommandLogTable.COMMAND_LOG.ID }, true);
+    public static final UniqueKey<DeliberationRecord> KEY_DELIBERATION_PRIMARY = Internal.createUniqueKey(DeliberationTable.DELIBERATION, DSL.name("KEY_deliberation_PRIMARY"), new TableField[] { DeliberationTable.DELIBERATION.ID }, true);
+    public static final UniqueKey<DeploymentLogRecord> KEY_DEPLOYMENT_LOG_PRIMARY = Internal.createUniqueKey(DeploymentLogTable.DEPLOYMENT_LOG, DSL.name("KEY_deployment_log_PRIMARY"), new TableField[] { DeploymentLogTable.DEPLOYMENT_LOG.ID }, true);
+    public static final UniqueKey<EluRecord> KEY_ELU_PRIMARY = Internal.createUniqueKey(EluTable.ELU, DSL.name("KEY_elu_PRIMARY"), new TableField[] { EluTable.ELU.ID }, true);
+    public static final UniqueKey<InstanceRecord> KEY_INSTANCE_PRIMARY = Internal.createUniqueKey(InstanceTable.INSTANCE, DSL.name("KEY_instance_PRIMARY"), new TableField[] { InstanceTable.INSTANCE.ID }, true);
+    public static final UniqueKey<LienDeliberationRecord> KEY_LIEN_DELIBERATION_PRIMARY = Internal.createUniqueKey(LienDeliberationTable.LIEN_DELIBERATION, DSL.name("KEY_lien_deliberation_PRIMARY"), new TableField[] { LienDeliberationTable.LIEN_DELIBERATION.ID }, true);
+    public static final UniqueKey<MagicLinkTokenRecord> KEY_MAGIC_LINK_TOKEN_PRIMARY = Internal.createUniqueKey(MagicLinkTokenTable.MAGIC_LINK_TOKEN, DSL.name("KEY_magic_link_token_PRIMARY"), new TableField[] { MagicLinkTokenTable.MAGIC_LINK_TOKEN.TOKEN }, true);
+    public static final UniqueKey<MailLogRecord> KEY_MAIL_LOG_PRIMARY = Internal.createUniqueKey(MailLogTable.MAIL_LOG, DSL.name("KEY_mail_log_PRIMARY"), new TableField[] { MailLogTable.MAIL_LOG.ID }, true);
+    public static final UniqueKey<NatureJuridiqueRecord> KEY_NATURE_JURIDIQUE_PRIMARY = Internal.createUniqueKey(NatureJuridiqueTable.NATURE_JURIDIQUE, DSL.name("KEY_nature_juridique_PRIMARY"), new TableField[] { NatureJuridiqueTable.NATURE_JURIDIQUE.ID }, true);
+    public static final UniqueKey<OrganismeRecord> KEY_ORGANISME_PRIMARY = Internal.createUniqueKey(OrganismeTable.ORGANISME, DSL.name("KEY_organisme_PRIMARY"), new TableField[] { OrganismeTable.ORGANISME.ID }, true);
+    public static final UniqueKey<RepresentantRecord> KEY_REPRESENTANT_PRIMARY = Internal.createUniqueKey(RepresentantTable.REPRESENTANT, DSL.name("KEY_representant_PRIMARY"), new TableField[] { RepresentantTable.REPRESENTANT.ID }, true);
+    public static final UniqueKey<SecteurRecord> KEY_SECTEUR_PRIMARY = Internal.createUniqueKey(SecteurTable.SECTEUR, DSL.name("KEY_secteur_PRIMARY"), new TableField[] { SecteurTable.SECTEUR.ID }, true);
+    public static final UniqueKey<TypeStructureRecord> KEY_TYPE_STRUCTURE_PRIMARY = Internal.createUniqueKey(TypeStructureTable.TYPE_STRUCTURE, DSL.name("KEY_type_structure_PRIMARY"), new TableField[] { TypeStructureTable.TYPE_STRUCTURE.ID }, true);
+    public static final UniqueKey<UserSessionLogRecord> KEY_USER_SESSION_LOG_PRIMARY = Internal.createUniqueKey(UserSessionLogTable.USER_SESSION_LOG, DSL.name("KEY_user_session_log_PRIMARY"), new TableField[] { UserSessionLogTable.USER_SESSION_LOG.ID }, true);
 
     // -------------------------------------------------------------------------
     // FOREIGN KEY definitions
     // -------------------------------------------------------------------------
 
-    public static final ForeignKey<CommandLogRecord, AppUserRecord> COMMAND_LOG_IBFK_1 = ForeignKeys0.COMMAND_LOG_IBFK_1;
-    public static final ForeignKey<CommandLogRecord, DeploymentLogRecord> COMMAND_LOG_IBFK_2 = ForeignKeys0.COMMAND_LOG_IBFK_2;
-    public static final ForeignKey<CommandLogRecord, UserSessionLogRecord> COMMAND_LOG_IBFK_3 = ForeignKeys0.COMMAND_LOG_IBFK_3;
-    public static final ForeignKey<InstanceRecord, OrganismeRecord> INSTANCE_IBFK_1 = ForeignKeys0.INSTANCE_IBFK_1;
-    public static final ForeignKey<LienDeliberationRecord, DeliberationRecord> LIEN_DELIBERATION_IBFK_1 = ForeignKeys0.LIEN_DELIBERATION_IBFK_1;
-    public static final ForeignKey<LienDeliberationRecord, OrganismeRecord> LIEN_DELIBERATION_IBFK_2 = ForeignKeys0.LIEN_DELIBERATION_IBFK_2;
-    public static final ForeignKey<LienDeliberationRecord, InstanceRecord> LIEN_DELIBERATION_IBFK_3 = ForeignKeys0.LIEN_DELIBERATION_IBFK_3;
-    public static final ForeignKey<MagicLinkTokenRecord, AppUserRecord> MAGIC_LINK_TOKEN_IBFK_1 = ForeignKeys0.MAGIC_LINK_TOKEN_IBFK_1;
-    public static final ForeignKey<MailLogRecord, DeploymentLogRecord> MAIL_LOG_IBFK_1 = ForeignKeys0.MAIL_LOG_IBFK_1;
-    public static final ForeignKey<OrganismeRecord, SecteurRecord> ORGANISME_IBFK_1 = ForeignKeys0.ORGANISME_IBFK_1;
-    public static final ForeignKey<OrganismeRecord, NatureJuridiqueRecord> ORGANISME_IBFK_2 = ForeignKeys0.ORGANISME_IBFK_2;
-    public static final ForeignKey<OrganismeRecord, TypeStructureRecord> ORGANISME_IBFK_3 = ForeignKeys0.ORGANISME_IBFK_3;
-    public static final ForeignKey<RepresentantRecord, EluRecord> REPRESENTANT_IBFK_1 = ForeignKeys0.REPRESENTANT_IBFK_1;
-    public static final ForeignKey<RepresentantRecord, OrganismeRecord> REPRESENTANT_IBFK_2 = ForeignKeys0.REPRESENTANT_IBFK_2;
-    public static final ForeignKey<RepresentantRecord, InstanceRecord> REPRESENTANT_IBFK_3 = ForeignKeys0.REPRESENTANT_IBFK_3;
-    public static final ForeignKey<UserSessionLogRecord, AppUserRecord> USER_SESSION_LOG_IBFK_1 = ForeignKeys0.USER_SESSION_LOG_IBFK_1;
-
-    // -------------------------------------------------------------------------
-    // [#1459] distribute members to avoid static initialisers > 64kb
-    // -------------------------------------------------------------------------
-
-    private static class UniqueKeys0 {
-        public static final UniqueKey<AppUserRecord> KEY_APP_USER_PRIMARY = Internal.createUniqueKey(AppUserTable.APP_USER, "KEY_app_user_PRIMARY", new TableField[] { AppUserTable.APP_USER.ID }, true);
-        public static final UniqueKey<AppUserRecord> KEY_APP_USER_MAIL = Internal.createUniqueKey(AppUserTable.APP_USER, "KEY_app_user_mail", new TableField[] { AppUserTable.APP_USER.MAIL }, true);
-        public static final UniqueKey<AppUserRecord> KEY_APP_USER_USERNAME = Internal.createUniqueKey(AppUserTable.APP_USER, "KEY_app_user_username", new TableField[] { AppUserTable.APP_USER.USERNAME }, true);
-        public static final UniqueKey<CommandLogRecord> KEY_COMMAND_LOG_PRIMARY = Internal.createUniqueKey(CommandLogTable.COMMAND_LOG, "KEY_command_log_PRIMARY", new TableField[] { CommandLogTable.COMMAND_LOG.ID }, true);
-        public static final UniqueKey<DeliberationRecord> KEY_DELIBERATION_PRIMARY = Internal.createUniqueKey(DeliberationTable.DELIBERATION, "KEY_deliberation_PRIMARY", new TableField[] { DeliberationTable.DELIBERATION.ID }, true);
-        public static final UniqueKey<DeploymentLogRecord> KEY_DEPLOYMENT_LOG_PRIMARY = Internal.createUniqueKey(DeploymentLogTable.DEPLOYMENT_LOG, "KEY_deployment_log_PRIMARY", new TableField[] { DeploymentLogTable.DEPLOYMENT_LOG.ID }, true);
-        public static final UniqueKey<EluRecord> KEY_ELU_PRIMARY = Internal.createUniqueKey(EluTable.ELU, "KEY_elu_PRIMARY", new TableField[] { EluTable.ELU.ID }, true);
-        public static final UniqueKey<InstanceRecord> KEY_INSTANCE_PRIMARY = Internal.createUniqueKey(InstanceTable.INSTANCE, "KEY_instance_PRIMARY", new TableField[] { InstanceTable.INSTANCE.ID }, true);
-        public static final UniqueKey<LienDeliberationRecord> KEY_LIEN_DELIBERATION_PRIMARY = Internal.createUniqueKey(LienDeliberationTable.LIEN_DELIBERATION, "KEY_lien_deliberation_PRIMARY", new TableField[] { LienDeliberationTable.LIEN_DELIBERATION.ID }, true);
-        public static final UniqueKey<MagicLinkTokenRecord> KEY_MAGIC_LINK_TOKEN_PRIMARY = Internal.createUniqueKey(MagicLinkTokenTable.MAGIC_LINK_TOKEN, "KEY_magic_link_token_PRIMARY", new TableField[] { MagicLinkTokenTable.MAGIC_LINK_TOKEN.TOKEN }, true);
-        public static final UniqueKey<MailLogRecord> KEY_MAIL_LOG_PRIMARY = Internal.createUniqueKey(MailLogTable.MAIL_LOG, "KEY_mail_log_PRIMARY", new TableField[] { MailLogTable.MAIL_LOG.ID }, true);
-        public static final UniqueKey<NatureJuridiqueRecord> KEY_NATURE_JURIDIQUE_PRIMARY = Internal.createUniqueKey(NatureJuridiqueTable.NATURE_JURIDIQUE, "KEY_nature_juridique_PRIMARY", new TableField[] { NatureJuridiqueTable.NATURE_JURIDIQUE.ID }, true);
-        public static final UniqueKey<OrganismeRecord> KEY_ORGANISME_PRIMARY = Internal.createUniqueKey(OrganismeTable.ORGANISME, "KEY_organisme_PRIMARY", new TableField[] { OrganismeTable.ORGANISME.ID }, true);
-        public static final UniqueKey<RepresentantRecord> KEY_REPRESENTANT_PRIMARY = Internal.createUniqueKey(RepresentantTable.REPRESENTANT, "KEY_representant_PRIMARY", new TableField[] { RepresentantTable.REPRESENTANT.ID }, true);
-        public static final UniqueKey<SecteurRecord> KEY_SECTEUR_PRIMARY = Internal.createUniqueKey(SecteurTable.SECTEUR, "KEY_secteur_PRIMARY", new TableField[] { SecteurTable.SECTEUR.ID }, true);
-        public static final UniqueKey<TypeStructureRecord> KEY_TYPE_STRUCTURE_PRIMARY = Internal.createUniqueKey(TypeStructureTable.TYPE_STRUCTURE, "KEY_type_structure_PRIMARY", new TableField[] { TypeStructureTable.TYPE_STRUCTURE.ID }, true);
-        public static final UniqueKey<UserSessionLogRecord> KEY_USER_SESSION_LOG_PRIMARY = Internal.createUniqueKey(UserSessionLogTable.USER_SESSION_LOG, "KEY_user_session_log_PRIMARY", new TableField[] { UserSessionLogTable.USER_SESSION_LOG.ID }, true);
-    }
-
-    private static class ForeignKeys0 {
-        public static final ForeignKey<CommandLogRecord, AppUserRecord> COMMAND_LOG_IBFK_1 = Internal.createForeignKey(Keys.KEY_APP_USER_PRIMARY, CommandLogTable.COMMAND_LOG, "command_log_ibfk_1", new TableField[] { CommandLogTable.COMMAND_LOG.USER_ID }, true);
-        public static final ForeignKey<CommandLogRecord, DeploymentLogRecord> COMMAND_LOG_IBFK_2 = Internal.createForeignKey(Keys.KEY_DEPLOYMENT_LOG_PRIMARY, CommandLogTable.COMMAND_LOG, "command_log_ibfk_2", new TableField[] { CommandLogTable.COMMAND_LOG.DEPLOYMENT_LOG_ID }, true);
-        public static final ForeignKey<CommandLogRecord, UserSessionLogRecord> COMMAND_LOG_IBFK_3 = Internal.createForeignKey(Keys.KEY_USER_SESSION_LOG_PRIMARY, CommandLogTable.COMMAND_LOG, "command_log_ibfk_3", new TableField[] { CommandLogTable.COMMAND_LOG.USER_SESSION_ID }, true);
-        public static final ForeignKey<InstanceRecord, OrganismeRecord> INSTANCE_IBFK_1 = Internal.createForeignKey(Keys.KEY_ORGANISME_PRIMARY, InstanceTable.INSTANCE, "instance_ibfk_1", new TableField[] { InstanceTable.INSTANCE.ORGANISME_ID }, true);
-        public static final ForeignKey<LienDeliberationRecord, DeliberationRecord> LIEN_DELIBERATION_IBFK_1 = Internal.createForeignKey(Keys.KEY_DELIBERATION_PRIMARY, LienDeliberationTable.LIEN_DELIBERATION, "lien_deliberation_ibfk_1", new TableField[] { LienDeliberationTable.LIEN_DELIBERATION.DELIBERATION_ID }, true);
-        public static final ForeignKey<LienDeliberationRecord, OrganismeRecord> LIEN_DELIBERATION_IBFK_2 = Internal.createForeignKey(Keys.KEY_ORGANISME_PRIMARY, LienDeliberationTable.LIEN_DELIBERATION, "lien_deliberation_ibfk_2", new TableField[] { LienDeliberationTable.LIEN_DELIBERATION.ORGANISME_ID }, true);
-        public static final ForeignKey<LienDeliberationRecord, InstanceRecord> LIEN_DELIBERATION_IBFK_3 = Internal.createForeignKey(Keys.KEY_INSTANCE_PRIMARY, LienDeliberationTable.LIEN_DELIBERATION, "lien_deliberation_ibfk_3", new TableField[] { LienDeliberationTable.LIEN_DELIBERATION.INSTANCE_ID }, true);
-        public static final ForeignKey<MagicLinkTokenRecord, AppUserRecord> MAGIC_LINK_TOKEN_IBFK_1 = Internal.createForeignKey(Keys.KEY_APP_USER_PRIMARY, MagicLinkTokenTable.MAGIC_LINK_TOKEN, "magic_link_token_ibfk_1", new TableField[] { MagicLinkTokenTable.MAGIC_LINK_TOKEN.USER_ID }, true);
-        public static final ForeignKey<MailLogRecord, DeploymentLogRecord> MAIL_LOG_IBFK_1 = Internal.createForeignKey(Keys.KEY_DEPLOYMENT_LOG_PRIMARY, MailLogTable.MAIL_LOG, "mail_log_ibfk_1", new TableField[] { MailLogTable.MAIL_LOG.DEPLOYMENT_LOG_ID }, true);
-        public static final ForeignKey<OrganismeRecord, SecteurRecord> ORGANISME_IBFK_1 = Internal.createForeignKey(Keys.KEY_SECTEUR_PRIMARY, OrganismeTable.ORGANISME, "organisme_ibfk_1", new TableField[] { OrganismeTable.ORGANISME.SECTEUR_ID }, true);
-        public static final ForeignKey<OrganismeRecord, NatureJuridiqueRecord> ORGANISME_IBFK_2 = Internal.createForeignKey(Keys.KEY_NATURE_JURIDIQUE_PRIMARY, OrganismeTable.ORGANISME, "organisme_ibfk_2", new TableField[] { OrganismeTable.ORGANISME.NATURE_JURIDIQUE_ID }, true);
-        public static final ForeignKey<OrganismeRecord, TypeStructureRecord> ORGANISME_IBFK_3 = Internal.createForeignKey(Keys.KEY_TYPE_STRUCTURE_PRIMARY, OrganismeTable.ORGANISME, "organisme_ibfk_3", new TableField[] { OrganismeTable.ORGANISME.TYPE_STRUCTURE_ID }, true);
-        public static final ForeignKey<RepresentantRecord, EluRecord> REPRESENTANT_IBFK_1 = Internal.createForeignKey(Keys.KEY_ELU_PRIMARY, RepresentantTable.REPRESENTANT, "representant_ibfk_1", new TableField[] { RepresentantTable.REPRESENTANT.ELU_ID }, true);
-        public static final ForeignKey<RepresentantRecord, OrganismeRecord> REPRESENTANT_IBFK_2 = Internal.createForeignKey(Keys.KEY_ORGANISME_PRIMARY, RepresentantTable.REPRESENTANT, "representant_ibfk_2", new TableField[] { RepresentantTable.REPRESENTANT.ORGANISME_ID }, true);
-        public static final ForeignKey<RepresentantRecord, InstanceRecord> REPRESENTANT_IBFK_3 = Internal.createForeignKey(Keys.KEY_INSTANCE_PRIMARY, RepresentantTable.REPRESENTANT, "representant_ibfk_3", new TableField[] { RepresentantTable.REPRESENTANT.INSTANCE_ID }, true);
-        public static final ForeignKey<UserSessionLogRecord, AppUserRecord> USER_SESSION_LOG_IBFK_1 = Internal.createForeignKey(Keys.KEY_APP_USER_PRIMARY, UserSessionLogTable.USER_SESSION_LOG, "user_session_log_ibfk_1", new TableField[] { UserSessionLogTable.USER_SESSION_LOG.USER_ID }, true);
-    }
+    public static final ForeignKey<CommandLogRecord, AppUserRecord> COMMAND_LOG_IBFK_1 = Internal.createForeignKey(CommandLogTable.COMMAND_LOG, DSL.name("command_log_ibfk_1"), new TableField[] { CommandLogTable.COMMAND_LOG.USER_ID }, Keys.KEY_APP_USER_PRIMARY, new TableField[] { AppUserTable.APP_USER.ID }, true);
+    public static final ForeignKey<CommandLogRecord, DeploymentLogRecord> COMMAND_LOG_IBFK_2 = Internal.createForeignKey(CommandLogTable.COMMAND_LOG, DSL.name("command_log_ibfk_2"), new TableField[] { CommandLogTable.COMMAND_LOG.DEPLOYMENT_LOG_ID }, Keys.KEY_DEPLOYMENT_LOG_PRIMARY, new TableField[] { DeploymentLogTable.DEPLOYMENT_LOG.ID }, true);
+    public static final ForeignKey<CommandLogRecord, UserSessionLogRecord> COMMAND_LOG_IBFK_3 = Internal.createForeignKey(CommandLogTable.COMMAND_LOG, DSL.name("command_log_ibfk_3"), new TableField[] { CommandLogTable.COMMAND_LOG.USER_SESSION_ID }, Keys.KEY_USER_SESSION_LOG_PRIMARY, new TableField[] { UserSessionLogTable.USER_SESSION_LOG.ID }, true);
+    public static final ForeignKey<InstanceRecord, OrganismeRecord> INSTANCE_IBFK_1 = Internal.createForeignKey(InstanceTable.INSTANCE, DSL.name("instance_ibfk_1"), new TableField[] { InstanceTable.INSTANCE.ORGANISME_ID }, Keys.KEY_ORGANISME_PRIMARY, new TableField[] { OrganismeTable.ORGANISME.ID }, true);
+    public static final ForeignKey<LienDeliberationRecord, DeliberationRecord> LIEN_DELIBERATION_IBFK_1 = Internal.createForeignKey(LienDeliberationTable.LIEN_DELIBERATION, DSL.name("lien_deliberation_ibfk_1"), new TableField[] { LienDeliberationTable.LIEN_DELIBERATION.DELIBERATION_ID }, Keys.KEY_DELIBERATION_PRIMARY, new TableField[] { DeliberationTable.DELIBERATION.ID }, true);
+    public static final ForeignKey<LienDeliberationRecord, OrganismeRecord> LIEN_DELIBERATION_IBFK_2 = Internal.createForeignKey(LienDeliberationTable.LIEN_DELIBERATION, DSL.name("lien_deliberation_ibfk_2"), new TableField[] { LienDeliberationTable.LIEN_DELIBERATION.ORGANISME_ID }, Keys.KEY_ORGANISME_PRIMARY, new TableField[] { OrganismeTable.ORGANISME.ID }, true);
+    public static final ForeignKey<LienDeliberationRecord, InstanceRecord> LIEN_DELIBERATION_IBFK_3 = Internal.createForeignKey(LienDeliberationTable.LIEN_DELIBERATION, DSL.name("lien_deliberation_ibfk_3"), new TableField[] { LienDeliberationTable.LIEN_DELIBERATION.INSTANCE_ID }, Keys.KEY_INSTANCE_PRIMARY, new TableField[] { InstanceTable.INSTANCE.ID }, true);
+    public static final ForeignKey<MagicLinkTokenRecord, AppUserRecord> MAGIC_LINK_TOKEN_IBFK_1 = Internal.createForeignKey(MagicLinkTokenTable.MAGIC_LINK_TOKEN, DSL.name("magic_link_token_ibfk_1"), new TableField[] { MagicLinkTokenTable.MAGIC_LINK_TOKEN.USER_ID }, Keys.KEY_APP_USER_PRIMARY, new TableField[] { AppUserTable.APP_USER.ID }, true);
+    public static final ForeignKey<MailLogRecord, DeploymentLogRecord> MAIL_LOG_IBFK_1 = Internal.createForeignKey(MailLogTable.MAIL_LOG, DSL.name("mail_log_ibfk_1"), new TableField[] { MailLogTable.MAIL_LOG.DEPLOYMENT_LOG_ID }, Keys.KEY_DEPLOYMENT_LOG_PRIMARY, new TableField[] { DeploymentLogTable.DEPLOYMENT_LOG.ID }, true);
+    public static final ForeignKey<OrganismeRecord, SecteurRecord> ORGANISME_IBFK_1 = Internal.createForeignKey(OrganismeTable.ORGANISME, DSL.name("organisme_ibfk_1"), new TableField[] { OrganismeTable.ORGANISME.SECTEUR_ID }, Keys.KEY_SECTEUR_PRIMARY, new TableField[] { SecteurTable.SECTEUR.ID }, true);
+    public static final ForeignKey<OrganismeRecord, NatureJuridiqueRecord> ORGANISME_IBFK_2 = Internal.createForeignKey(OrganismeTable.ORGANISME, DSL.name("organisme_ibfk_2"), new TableField[] { OrganismeTable.ORGANISME.NATURE_JURIDIQUE_ID }, Keys.KEY_NATURE_JURIDIQUE_PRIMARY, new TableField[] { NatureJuridiqueTable.NATURE_JURIDIQUE.ID }, true);
+    public static final ForeignKey<OrganismeRecord, TypeStructureRecord> ORGANISME_IBFK_3 = Internal.createForeignKey(OrganismeTable.ORGANISME, DSL.name("organisme_ibfk_3"), new TableField[] { OrganismeTable.ORGANISME.TYPE_STRUCTURE_ID }, Keys.KEY_TYPE_STRUCTURE_PRIMARY, new TableField[] { TypeStructureTable.TYPE_STRUCTURE.ID }, true);
+    public static final ForeignKey<RepresentantRecord, EluRecord> REPRESENTANT_IBFK_1 = Internal.createForeignKey(RepresentantTable.REPRESENTANT, DSL.name("representant_ibfk_1"), new TableField[] { RepresentantTable.REPRESENTANT.ELU_ID }, Keys.KEY_ELU_PRIMARY, new TableField[] { EluTable.ELU.ID }, true);
+    public static final ForeignKey<RepresentantRecord, OrganismeRecord> REPRESENTANT_IBFK_2 = Internal.createForeignKey(RepresentantTable.REPRESENTANT, DSL.name("representant_ibfk_2"), new TableField[] { RepresentantTable.REPRESENTANT.ORGANISME_ID }, Keys.KEY_ORGANISME_PRIMARY, new TableField[] { OrganismeTable.ORGANISME.ID }, true);
+    public static final ForeignKey<RepresentantRecord, InstanceRecord> REPRESENTANT_IBFK_3 = Internal.createForeignKey(RepresentantTable.REPRESENTANT, DSL.name("representant_ibfk_3"), new TableField[] { RepresentantTable.REPRESENTANT.INSTANCE_ID }, Keys.KEY_INSTANCE_PRIMARY, new TableField[] { InstanceTable.INSTANCE.ID }, true);
+    public static final ForeignKey<UserSessionLogRecord, AppUserRecord> USER_SESSION_LOG_IBFK_1 = Internal.createForeignKey(UserSessionLogTable.USER_SESSION_LOG, DSL.name("user_session_log_ibfk_1"), new TableField[] { UserSessionLogTable.USER_SESSION_LOG.USER_ID }, Keys.KEY_APP_USER_PRIMARY, new TableField[] { AppUserTable.APP_USER.ID }, true);
 }

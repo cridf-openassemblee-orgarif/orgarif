@@ -9,6 +9,8 @@ import java.util.Arrays;
 import java.util.List;
 import java.util.UUID;
 
+import javax.annotation.Nonnull;
+
 import org.jooq.Field;
 import org.jooq.ForeignKey;
 import org.jooq.Index;
@@ -21,6 +23,7 @@ import org.jooq.TableField;
 import org.jooq.TableOptions;
 import org.jooq.UniqueKey;
 import org.jooq.impl.DSL;
+import org.jooq.impl.SQLDataType;
 import org.jooq.impl.TableImpl;
 
 import orgarif.jooq.generated.Indexes;
@@ -36,7 +39,7 @@ import orgarif.jooq.tools.jooq.CharToUUIDConverter;
 @SuppressWarnings({ "all", "unchecked", "rawtypes" })
 public class InstanceTable extends TableImpl<InstanceRecord> {
 
-    private static final long serialVersionUID = 928244869;
+    private static final long serialVersionUID = 1L;
 
     /**
      * The reference instance of <code>orgarif.instance</code>
@@ -47,6 +50,7 @@ public class InstanceTable extends TableImpl<InstanceRecord> {
      * The class holding records for this type
      */
     @Override
+    @Nonnull
     public Class<InstanceRecord> getRecordType() {
         return InstanceRecord.class;
     }
@@ -54,43 +58,44 @@ public class InstanceTable extends TableImpl<InstanceRecord> {
     /**
      * The column <code>orgarif.instance.id</code>.
      */
-    public final TableField<InstanceRecord, UUID> ID = createField(DSL.name("id"), org.jooq.impl.SQLDataType.CHAR(32).nullable(false), this, "", new CharToUUIDConverter());
+    public final TableField<InstanceRecord, UUID> ID = createField(DSL.name("id"), SQLDataType.CHAR(32).nullable(false), this, "", new CharToUUIDConverter());
 
     /**
      * The column <code>orgarif.instance.nom</code>.
      */
-    public final TableField<InstanceRecord, String> NOM = createField(DSL.name("nom"), org.jooq.impl.SQLDataType.VARCHAR(255).nullable(false), this, "");
+    public final TableField<InstanceRecord, String> NOM = createField(DSL.name("nom"), SQLDataType.VARCHAR(255).nullable(false), this, "");
 
     /**
      * The column <code>orgarif.instance.organisme_id</code>.
      */
-    public final TableField<InstanceRecord, UUID> ORGANISME_ID = createField(DSL.name("organisme_id"), org.jooq.impl.SQLDataType.CHAR(32).nullable(false), this, "", new CharToUUIDConverter());
+    public final TableField<InstanceRecord, UUID> ORGANISME_ID = createField(DSL.name("organisme_id"), SQLDataType.CHAR(32).nullable(false), this, "", new CharToUUIDConverter());
 
     /**
      * The column <code>orgarif.instance.nombre_representants</code>.
      */
-    public final TableField<InstanceRecord, Integer> NOMBRE_REPRESENTANTS = createField(DSL.name("nombre_representants"), org.jooq.impl.SQLDataType.INTEGER, this, "");
+    public final TableField<InstanceRecord, Integer> NOMBRE_REPRESENTANTS = createField(DSL.name("nombre_representants"), SQLDataType.INTEGER, this, "");
 
     /**
      * The column <code>orgarif.instance.nombre_suppleants</code>.
      */
-    public final TableField<InstanceRecord, Integer> NOMBRE_SUPPLEANTS = createField(DSL.name("nombre_suppleants"), org.jooq.impl.SQLDataType.INTEGER, this, "");
+    public final TableField<InstanceRecord, Integer> NOMBRE_SUPPLEANTS = createField(DSL.name("nombre_suppleants"), SQLDataType.INTEGER, this, "");
 
     /**
      * The column <code>orgarif.instance.creation_date</code>.
      */
-    public final TableField<InstanceRecord, LocalDateTime> CREATION_DATE = createField(DSL.name("creation_date"), org.jooq.impl.SQLDataType.LOCALDATETIME.nullable(false), this, "");
+    public final TableField<InstanceRecord, LocalDateTime> CREATION_DATE = createField(DSL.name("creation_date"), SQLDataType.LOCALDATETIME(0).nullable(false), this, "");
 
     /**
      * The column <code>orgarif.instance.last_modification_date</code>.
      */
-    public final TableField<InstanceRecord, LocalDateTime> LAST_MODIFICATION_DATE = createField(DSL.name("last_modification_date"), org.jooq.impl.SQLDataType.LOCALDATETIME.nullable(false), this, "");
+    public final TableField<InstanceRecord, LocalDateTime> LAST_MODIFICATION_DATE = createField(DSL.name("last_modification_date"), SQLDataType.LOCALDATETIME(0).nullable(false), this, "");
 
-    /**
-     * Create a <code>orgarif.instance</code> table reference
-     */
-    public InstanceTable() {
-        this(DSL.name("instance"), null);
+    private InstanceTable(Name alias, Table<InstanceRecord> aliased) {
+        this(alias, aliased, null);
+    }
+
+    private InstanceTable(Name alias, Table<InstanceRecord> aliased, Field<?>[] parameters) {
+        super(alias, null, aliased, parameters, DSL.comment(""), TableOptions.table());
     }
 
     /**
@@ -107,12 +112,11 @@ public class InstanceTable extends TableImpl<InstanceRecord> {
         this(alias, INSTANCE);
     }
 
-    private InstanceTable(Name alias, Table<InstanceRecord> aliased) {
-        this(alias, aliased, null);
-    }
-
-    private InstanceTable(Name alias, Table<InstanceRecord> aliased, Field<?>[] parameters) {
-        super(alias, null, aliased, parameters, DSL.comment(""), TableOptions.table());
+    /**
+     * Create a <code>orgarif.instance</code> table reference
+     */
+    public InstanceTable() {
+        this(DSL.name("instance"), null);
     }
 
     public <O extends Record> InstanceTable(Table<O> child, ForeignKey<O, InstanceRecord> key) {
@@ -120,26 +124,31 @@ public class InstanceTable extends TableImpl<InstanceRecord> {
     }
 
     @Override
+    @Nonnull
     public Schema getSchema() {
         return OrgarifTable.ORGARIF;
     }
 
     @Override
+    @Nonnull
     public List<Index> getIndexes() {
         return Arrays.<Index>asList(Indexes.INSTANCE_INSTANCE_ORGANISME_ID_IDX);
     }
 
     @Override
+    @Nonnull
     public UniqueKey<InstanceRecord> getPrimaryKey() {
         return Keys.KEY_INSTANCE_PRIMARY;
     }
 
     @Override
+    @Nonnull
     public List<UniqueKey<InstanceRecord>> getKeys() {
         return Arrays.<UniqueKey<InstanceRecord>>asList(Keys.KEY_INSTANCE_PRIMARY);
     }
 
     @Override
+    @Nonnull
     public List<ForeignKey<InstanceRecord, ?>> getReferences() {
         return Arrays.<ForeignKey<InstanceRecord, ?>>asList(Keys.INSTANCE_IBFK_1);
     }
@@ -149,11 +158,13 @@ public class InstanceTable extends TableImpl<InstanceRecord> {
     }
 
     @Override
+    @Nonnull
     public InstanceTable as(String alias) {
         return new InstanceTable(DSL.name(alias), this);
     }
 
     @Override
+    @Nonnull
     public InstanceTable as(Name alias) {
         return new InstanceTable(alias, this);
     }
@@ -162,6 +173,7 @@ public class InstanceTable extends TableImpl<InstanceRecord> {
      * Rename this table
      */
     @Override
+    @Nonnull
     public InstanceTable rename(String name) {
         return new InstanceTable(DSL.name(name), null);
     }
@@ -170,6 +182,7 @@ public class InstanceTable extends TableImpl<InstanceRecord> {
      * Rename this table
      */
     @Override
+    @Nonnull
     public InstanceTable rename(Name name) {
         return new InstanceTable(name, null);
     }
@@ -179,6 +192,7 @@ public class InstanceTable extends TableImpl<InstanceRecord> {
     // -------------------------------------------------------------------------
 
     @Override
+    @Nonnull
     public Row7<UUID, String, UUID, Integer, Integer, LocalDateTime, LocalDateTime> fieldsRow() {
         return (Row7) super.fieldsRow();
     }

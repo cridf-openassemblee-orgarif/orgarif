@@ -25,7 +25,7 @@ import orgarif.jooq.generated.tables.CommandLogTable;
 @SuppressWarnings({ "all", "unchecked", "rawtypes" })
 public class CommandLogRecord extends UpdatableRecordImpl<CommandLogRecord> implements Record10<UUID, UUID, UUID, String, String, LocalDateTime, String, UUID, String, String> {
 
-    private static final long serialVersionUID = -634591483;
+    private static final long serialVersionUID = 1L;
 
     /**
      * Setter for <code>orgarif.command_log.id</code>.
@@ -182,6 +182,7 @@ public class CommandLogRecord extends UpdatableRecordImpl<CommandLogRecord> impl
     // -------------------------------------------------------------------------
 
     @Override
+    @Nonnull
     public Record1<UUID> key() {
         return (Record1) super.key();
     }
@@ -191,61 +192,73 @@ public class CommandLogRecord extends UpdatableRecordImpl<CommandLogRecord> impl
     // -------------------------------------------------------------------------
 
     @Override
+    @Nonnull
     public Row10<UUID, UUID, UUID, String, String, LocalDateTime, String, UUID, String, String> fieldsRow() {
         return (Row10) super.fieldsRow();
     }
 
     @Override
+    @Nonnull
     public Row10<UUID, UUID, UUID, String, String, LocalDateTime, String, UUID, String, String> valuesRow() {
         return (Row10) super.valuesRow();
     }
 
     @Override
+    @Nonnull
     public Field<UUID> field1() {
         return CommandLogTable.COMMAND_LOG.ID;
     }
 
     @Override
+    @Nonnull
     public Field<UUID> field2() {
         return CommandLogTable.COMMAND_LOG.USER_ID;
     }
 
     @Override
+    @Nonnull
     public Field<UUID> field3() {
         return CommandLogTable.COMMAND_LOG.DEPLOYMENT_LOG_ID;
     }
 
     @Override
+    @Nonnull
     public Field<String> field4() {
         return CommandLogTable.COMMAND_LOG.COMMAND_CLASS;
     }
 
     @Override
+    @Nonnull
     public Field<String> field5() {
         return CommandLogTable.COMMAND_LOG.JSON_COMMAND;
     }
 
     @Override
+    @Nonnull
     public Field<LocalDateTime> field6() {
         return CommandLogTable.COMMAND_LOG.DATE;
     }
 
     @Override
+    @Nonnull
     public Field<String> field7() {
         return CommandLogTable.COMMAND_LOG.IP;
     }
 
     @Override
+    @Nonnull
     public Field<UUID> field8() {
         return CommandLogTable.COMMAND_LOG.USER_SESSION_ID;
     }
 
     @Override
+    @Nonnull
     public Field<String> field9() {
         return CommandLogTable.COMMAND_LOG.JSON_RESULT;
     }
 
     @Override
+    @Nonnull
     public Field<String> field10() {
         return CommandLogTable.COMMAND_LOG.EXCEPTION_STACK_TRACE;
     }
@@ -371,66 +384,77 @@ public class CommandLogRecord extends UpdatableRecordImpl<CommandLogRecord> impl
     }
 
     @Override
+    @Nonnull
     public CommandLogRecord value1(@Nonnull UUID value) {
         setId(value);
         return this;
     }
 
     @Override
+    @Nonnull
     public CommandLogRecord value2(@Nullable UUID value) {
         setUserId(value);
         return this;
     }
 
     @Override
+    @Nonnull
     public CommandLogRecord value3(@Nonnull UUID value) {
         setDeploymentLogId(value);
         return this;
     }
 
     @Override
+    @Nonnull
     public CommandLogRecord value4(@Nonnull String value) {
         setCommandClass(value);
         return this;
     }
 
     @Override
+    @Nonnull
     public CommandLogRecord value5(@Nonnull String value) {
         setJsonCommand(value);
         return this;
     }
 
     @Override
+    @Nonnull
     public CommandLogRecord value6(@Nonnull LocalDateTime value) {
         setDate(value);
         return this;
     }
 
     @Override
+    @Nonnull
     public CommandLogRecord value7(@Nonnull String value) {
         setIp(value);
         return this;
     }
 
     @Override
+    @Nonnull
     public CommandLogRecord value8(@Nullable UUID value) {
         setUserSessionId(value);
         return this;
     }
 
     @Override
+    @Nonnull
     public CommandLogRecord value9(@Nullable String value) {
         setJsonResult(value);
         return this;
     }
 
     @Override
+    @Nonnull
     public CommandLogRecord value10(@Nullable String value) {
         setExceptionStackTrace(value);
         return this;
     }
 
     @Override
+    @Nonnull
     public CommandLogRecord values(@Nonnull UUID value1, @Nullable UUID value2, @Nonnull UUID value3, @Nonnull String value4, @Nonnull String value5, @Nonnull LocalDateTime value6, @Nonnull String value7, @Nullable UUID value8, @Nullable String value9, @Nullable String value10) {
         value1(value1);
         value2(value2);
@@ -462,15 +486,15 @@ public class CommandLogRecord extends UpdatableRecordImpl<CommandLogRecord> impl
     public CommandLogRecord(@Nonnull UUID id, @Nullable UUID userId, @Nonnull UUID deploymentLogId, @Nonnull String commandClass, @Nonnull String jsonCommand, @Nonnull LocalDateTime date, @Nonnull String ip, @Nullable UUID userSessionId, @Nullable String jsonResult, @Nullable String exceptionStackTrace) {
         super(CommandLogTable.COMMAND_LOG);
 
-        set(0, id);
-        set(1, userId);
-        set(2, deploymentLogId);
-        set(3, commandClass);
-        set(4, jsonCommand);
-        set(5, date);
-        set(6, ip);
-        set(7, userSessionId);
-        set(8, jsonResult);
-        set(9, exceptionStackTrace);
+        setId(id);
+        setUserId(userId);
+        setDeploymentLogId(deploymentLogId);
+        setCommandClass(commandClass);
+        setJsonCommand(jsonCommand);
+        setDate(date);
+        setIp(ip);
+        setUserSessionId(userSessionId);
+        setJsonResult(jsonResult);
+        setExceptionStackTrace(exceptionStackTrace);
     }
 }

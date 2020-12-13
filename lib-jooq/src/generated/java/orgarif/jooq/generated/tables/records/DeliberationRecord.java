@@ -25,7 +25,7 @@ import orgarif.jooq.generated.tables.DeliberationTable;
 @SuppressWarnings({ "all", "unchecked", "rawtypes" })
 public class DeliberationRecord extends UpdatableRecordImpl<DeliberationRecord> implements Record5<UUID, String, LocalDate, LocalDateTime, LocalDateTime> {
 
-    private static final long serialVersionUID = -1299076425;
+    private static final long serialVersionUID = 1L;
 
     /**
      * Setter for <code>orgarif.deliberation.id</code>.
@@ -107,6 +107,7 @@ public class DeliberationRecord extends UpdatableRecordImpl<DeliberationRecord> 
     // -------------------------------------------------------------------------
 
     @Override
+    @Nonnull
     public Record1<UUID> key() {
         return (Record1) super.key();
     }
@@ -116,36 +117,43 @@ public class DeliberationRecord extends UpdatableRecordImpl<DeliberationRecord> 
     // -------------------------------------------------------------------------
 
     @Override
+    @Nonnull
     public Row5<UUID, String, LocalDate, LocalDateTime, LocalDateTime> fieldsRow() {
         return (Row5) super.fieldsRow();
     }
 
     @Override
+    @Nonnull
     public Row5<UUID, String, LocalDate, LocalDateTime, LocalDateTime> valuesRow() {
         return (Row5) super.valuesRow();
     }
 
     @Override
+    @Nonnull
     public Field<UUID> field1() {
         return DeliberationTable.DELIBERATION.ID;
     }
 
     @Override
+    @Nonnull
     public Field<String> field2() {
         return DeliberationTable.DELIBERATION.LIBELLE;
     }
 
     @Override
+    @Nonnull
     public Field<LocalDate> field3() {
         return DeliberationTable.DELIBERATION.DELIBERATION_DATE;
     }
 
     @Override
+    @Nonnull
     public Field<LocalDateTime> field4() {
         return DeliberationTable.DELIBERATION.CREATION_DATE;
     }
 
     @Override
+    @Nonnull
     public Field<LocalDateTime> field5() {
         return DeliberationTable.DELIBERATION.LAST_MODIFICATION_DATE;
     }
@@ -211,36 +219,42 @@ public class DeliberationRecord extends UpdatableRecordImpl<DeliberationRecord> 
     }
 
     @Override
+    @Nonnull
     public DeliberationRecord value1(@Nonnull UUID value) {
         setId(value);
         return this;
     }
 
     @Override
+    @Nonnull
     public DeliberationRecord value2(@Nonnull String value) {
         setLibelle(value);
         return this;
     }
 
     @Override
+    @Nonnull
     public DeliberationRecord value3(@Nonnull LocalDate value) {
         setDeliberationDate(value);
         return this;
     }
 
     @Override
+    @Nonnull
     public DeliberationRecord value4(@Nonnull LocalDateTime value) {
         setCreationDate(value);
         return this;
     }
 
     @Override
+    @Nonnull
     public DeliberationRecord value5(@Nonnull LocalDateTime value) {
         setLastModificationDate(value);
         return this;
     }
 
     @Override
+    @Nonnull
     public DeliberationRecord values(@Nonnull UUID value1, @Nonnull String value2, @Nonnull LocalDate value3, @Nonnull LocalDateTime value4, @Nonnull LocalDateTime value5) {
         value1(value1);
         value2(value2);
@@ -267,10 +281,10 @@ public class DeliberationRecord extends UpdatableRecordImpl<DeliberationRecord> 
     public DeliberationRecord(@Nonnull UUID id, @Nonnull String libelle, @Nonnull LocalDate deliberationDate, @Nonnull LocalDateTime creationDate, @Nonnull LocalDateTime lastModificationDate) {
         super(DeliberationTable.DELIBERATION);
 
-        set(0, id);
-        set(1, libelle);
-        set(2, deliberationDate);
-        set(3, creationDate);
-        set(4, lastModificationDate);
+        setId(id);
+        setLibelle(libelle);
+        setDeliberationDate(deliberationDate);
+        setCreationDate(creationDate);
+        setLastModificationDate(lastModificationDate);
     }
 }

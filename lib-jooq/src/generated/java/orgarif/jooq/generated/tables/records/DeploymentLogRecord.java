@@ -25,7 +25,7 @@ import orgarif.jooq.generated.tables.DeploymentLogTable;
 @SuppressWarnings({ "all", "unchecked", "rawtypes" })
 public class DeploymentLogRecord extends UpdatableRecordImpl<DeploymentLogRecord> implements Record5<UUID, String, String, LocalDateTime, LocalDateTime> {
 
-    private static final long serialVersionUID = -422137223;
+    private static final long serialVersionUID = 1L;
 
     /**
      * Setter for <code>orgarif.deployment_log.id</code>.
@@ -107,6 +107,7 @@ public class DeploymentLogRecord extends UpdatableRecordImpl<DeploymentLogRecord
     // -------------------------------------------------------------------------
 
     @Override
+    @Nonnull
     public Record1<UUID> key() {
         return (Record1) super.key();
     }
@@ -116,36 +117,43 @@ public class DeploymentLogRecord extends UpdatableRecordImpl<DeploymentLogRecord
     // -------------------------------------------------------------------------
 
     @Override
+    @Nonnull
     public Row5<UUID, String, String, LocalDateTime, LocalDateTime> fieldsRow() {
         return (Row5) super.fieldsRow();
     }
 
     @Override
+    @Nonnull
     public Row5<UUID, String, String, LocalDateTime, LocalDateTime> valuesRow() {
         return (Row5) super.valuesRow();
     }
 
     @Override
+    @Nonnull
     public Field<UUID> field1() {
         return DeploymentLogTable.DEPLOYMENT_LOG.ID;
     }
 
     @Override
+    @Nonnull
     public Field<String> field2() {
         return DeploymentLogTable.DEPLOYMENT_LOG.BUILD_VERSION;
     }
 
     @Override
+    @Nonnull
     public Field<String> field3() {
         return DeploymentLogTable.DEPLOYMENT_LOG.SYSTEM_ZONE_ID;
     }
 
     @Override
+    @Nonnull
     public Field<LocalDateTime> field4() {
         return DeploymentLogTable.DEPLOYMENT_LOG.STARTUP_DATE;
     }
 
     @Override
+    @Nonnull
     public Field<LocalDateTime> field5() {
         return DeploymentLogTable.DEPLOYMENT_LOG.SHUTDOWN_DATE;
     }
@@ -211,36 +219,42 @@ public class DeploymentLogRecord extends UpdatableRecordImpl<DeploymentLogRecord
     }
 
     @Override
+    @Nonnull
     public DeploymentLogRecord value1(@Nonnull UUID value) {
         setId(value);
         return this;
     }
 
     @Override
+    @Nonnull
     public DeploymentLogRecord value2(@Nonnull String value) {
         setBuildVersion(value);
         return this;
     }
 
     @Override
+    @Nonnull
     public DeploymentLogRecord value3(@Nonnull String value) {
         setSystemZoneId(value);
         return this;
     }
 
     @Override
+    @Nonnull
     public DeploymentLogRecord value4(@Nonnull LocalDateTime value) {
         setStartupDate(value);
         return this;
     }
 
     @Override
+    @Nonnull
     public DeploymentLogRecord value5(@Nullable LocalDateTime value) {
         setShutdownDate(value);
         return this;
     }
 
     @Override
+    @Nonnull
     public DeploymentLogRecord values(@Nonnull UUID value1, @Nonnull String value2, @Nonnull String value3, @Nonnull LocalDateTime value4, @Nullable LocalDateTime value5) {
         value1(value1);
         value2(value2);
@@ -267,10 +281,10 @@ public class DeploymentLogRecord extends UpdatableRecordImpl<DeploymentLogRecord
     public DeploymentLogRecord(@Nonnull UUID id, @Nonnull String buildVersion, @Nonnull String systemZoneId, @Nonnull LocalDateTime startupDate, @Nullable LocalDateTime shutdownDate) {
         super(DeploymentLogTable.DEPLOYMENT_LOG);
 
-        set(0, id);
-        set(1, buildVersion);
-        set(2, systemZoneId);
-        set(3, startupDate);
-        set(4, shutdownDate);
+        setId(id);
+        setBuildVersion(buildVersion);
+        setSystemZoneId(systemZoneId);
+        setStartupDate(startupDate);
+        setShutdownDate(shutdownDate);
     }
 }

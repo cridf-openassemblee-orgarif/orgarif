@@ -10,6 +10,8 @@ import java.util.Arrays;
 import java.util.List;
 import java.util.UUID;
 
+import javax.annotation.Nonnull;
+
 import org.jooq.Field;
 import org.jooq.ForeignKey;
 import org.jooq.Name;
@@ -21,6 +23,7 @@ import org.jooq.TableField;
 import org.jooq.TableOptions;
 import org.jooq.UniqueKey;
 import org.jooq.impl.DSL;
+import org.jooq.impl.SQLDataType;
 import org.jooq.impl.TableImpl;
 
 import orgarif.jooq.generated.Keys;
@@ -35,7 +38,7 @@ import orgarif.jooq.tools.jooq.CharToUUIDConverter;
 @SuppressWarnings({ "all", "unchecked", "rawtypes" })
 public class DeliberationTable extends TableImpl<DeliberationRecord> {
 
-    private static final long serialVersionUID = 180474336;
+    private static final long serialVersionUID = 1L;
 
     /**
      * The reference instance of <code>orgarif.deliberation</code>
@@ -46,6 +49,7 @@ public class DeliberationTable extends TableImpl<DeliberationRecord> {
      * The class holding records for this type
      */
     @Override
+    @Nonnull
     public Class<DeliberationRecord> getRecordType() {
         return DeliberationRecord.class;
     }
@@ -53,33 +57,34 @@ public class DeliberationTable extends TableImpl<DeliberationRecord> {
     /**
      * The column <code>orgarif.deliberation.id</code>.
      */
-    public final TableField<DeliberationRecord, UUID> ID = createField(DSL.name("id"), org.jooq.impl.SQLDataType.CHAR(32).nullable(false), this, "", new CharToUUIDConverter());
+    public final TableField<DeliberationRecord, UUID> ID = createField(DSL.name("id"), SQLDataType.CHAR(32).nullable(false), this, "", new CharToUUIDConverter());
 
     /**
      * The column <code>orgarif.deliberation.libelle</code>.
      */
-    public final TableField<DeliberationRecord, String> LIBELLE = createField(DSL.name("libelle"), org.jooq.impl.SQLDataType.VARCHAR(255).nullable(false), this, "");
+    public final TableField<DeliberationRecord, String> LIBELLE = createField(DSL.name("libelle"), SQLDataType.VARCHAR(255).nullable(false), this, "");
 
     /**
      * The column <code>orgarif.deliberation.deliberation_date</code>.
      */
-    public final TableField<DeliberationRecord, LocalDate> DELIBERATION_DATE = createField(DSL.name("deliberation_date"), org.jooq.impl.SQLDataType.LOCALDATE.nullable(false), this, "");
+    public final TableField<DeliberationRecord, LocalDate> DELIBERATION_DATE = createField(DSL.name("deliberation_date"), SQLDataType.LOCALDATE.nullable(false), this, "");
 
     /**
      * The column <code>orgarif.deliberation.creation_date</code>.
      */
-    public final TableField<DeliberationRecord, LocalDateTime> CREATION_DATE = createField(DSL.name("creation_date"), org.jooq.impl.SQLDataType.LOCALDATETIME.nullable(false), this, "");
+    public final TableField<DeliberationRecord, LocalDateTime> CREATION_DATE = createField(DSL.name("creation_date"), SQLDataType.LOCALDATETIME(0).nullable(false), this, "");
 
     /**
      * The column <code>orgarif.deliberation.last_modification_date</code>.
      */
-    public final TableField<DeliberationRecord, LocalDateTime> LAST_MODIFICATION_DATE = createField(DSL.name("last_modification_date"), org.jooq.impl.SQLDataType.LOCALDATETIME.nullable(false), this, "");
+    public final TableField<DeliberationRecord, LocalDateTime> LAST_MODIFICATION_DATE = createField(DSL.name("last_modification_date"), SQLDataType.LOCALDATETIME(0).nullable(false), this, "");
 
-    /**
-     * Create a <code>orgarif.deliberation</code> table reference
-     */
-    public DeliberationTable() {
-        this(DSL.name("deliberation"), null);
+    private DeliberationTable(Name alias, Table<DeliberationRecord> aliased) {
+        this(alias, aliased, null);
+    }
+
+    private DeliberationTable(Name alias, Table<DeliberationRecord> aliased, Field<?>[] parameters) {
+        super(alias, null, aliased, parameters, DSL.comment(""), TableOptions.table());
     }
 
     /**
@@ -96,12 +101,11 @@ public class DeliberationTable extends TableImpl<DeliberationRecord> {
         this(alias, DELIBERATION);
     }
 
-    private DeliberationTable(Name alias, Table<DeliberationRecord> aliased) {
-        this(alias, aliased, null);
-    }
-
-    private DeliberationTable(Name alias, Table<DeliberationRecord> aliased, Field<?>[] parameters) {
-        super(alias, null, aliased, parameters, DSL.comment(""), TableOptions.table());
+    /**
+     * Create a <code>orgarif.deliberation</code> table reference
+     */
+    public DeliberationTable() {
+        this(DSL.name("deliberation"), null);
     }
 
     public <O extends Record> DeliberationTable(Table<O> child, ForeignKey<O, DeliberationRecord> key) {
@@ -109,26 +113,31 @@ public class DeliberationTable extends TableImpl<DeliberationRecord> {
     }
 
     @Override
+    @Nonnull
     public Schema getSchema() {
         return OrgarifTable.ORGARIF;
     }
 
     @Override
+    @Nonnull
     public UniqueKey<DeliberationRecord> getPrimaryKey() {
         return Keys.KEY_DELIBERATION_PRIMARY;
     }
 
     @Override
+    @Nonnull
     public List<UniqueKey<DeliberationRecord>> getKeys() {
         return Arrays.<UniqueKey<DeliberationRecord>>asList(Keys.KEY_DELIBERATION_PRIMARY);
     }
 
     @Override
+    @Nonnull
     public DeliberationTable as(String alias) {
         return new DeliberationTable(DSL.name(alias), this);
     }
 
     @Override
+    @Nonnull
     public DeliberationTable as(Name alias) {
         return new DeliberationTable(alias, this);
     }
@@ -137,6 +146,7 @@ public class DeliberationTable extends TableImpl<DeliberationRecord> {
      * Rename this table
      */
     @Override
+    @Nonnull
     public DeliberationTable rename(String name) {
         return new DeliberationTable(DSL.name(name), null);
     }
@@ -145,6 +155,7 @@ public class DeliberationTable extends TableImpl<DeliberationRecord> {
      * Rename this table
      */
     @Override
+    @Nonnull
     public DeliberationTable rename(Name name) {
         return new DeliberationTable(name, null);
     }
@@ -154,6 +165,7 @@ public class DeliberationTable extends TableImpl<DeliberationRecord> {
     // -------------------------------------------------------------------------
 
     @Override
+    @Nonnull
     public Row5<UUID, String, LocalDate, LocalDateTime, LocalDateTime> fieldsRow() {
         return (Row5) super.fieldsRow();
     }

@@ -24,7 +24,7 @@ import orgarif.jooq.generated.tables.MailLogTable;
 @SuppressWarnings({ "all", "unchecked", "rawtypes" })
 public class MailLogRecord extends UpdatableRecordImpl<MailLogRecord> implements Record11<UUID, String, UUID, String, UUID, String, String, String, String, String, LocalDateTime> {
 
-    private static final long serialVersionUID = -1992908591;
+    private static final long serialVersionUID = 1L;
 
     /**
      * Setter for <code>orgarif.mail_log.id</code>.
@@ -196,6 +196,7 @@ public class MailLogRecord extends UpdatableRecordImpl<MailLogRecord> implements
     // -------------------------------------------------------------------------
 
     @Override
+    @Nonnull
     public Record1<UUID> key() {
         return (Record1) super.key();
     }
@@ -205,66 +206,79 @@ public class MailLogRecord extends UpdatableRecordImpl<MailLogRecord> implements
     // -------------------------------------------------------------------------
 
     @Override
+    @Nonnull
     public Row11<UUID, String, UUID, String, UUID, String, String, String, String, String, LocalDateTime> fieldsRow() {
         return (Row11) super.fieldsRow();
     }
 
     @Override
+    @Nonnull
     public Row11<UUID, String, UUID, String, UUID, String, String, String, String, String, LocalDateTime> valuesRow() {
         return (Row11) super.valuesRow();
     }
 
     @Override
+    @Nonnull
     public Field<UUID> field1() {
         return MailLogTable.MAIL_LOG.ID;
     }
 
     @Override
+    @Nonnull
     public Field<String> field2() {
         return MailLogTable.MAIL_LOG.APPLICATION;
     }
 
     @Override
+    @Nonnull
     public Field<UUID> field3() {
         return MailLogTable.MAIL_LOG.DEPLOYMENT_LOG_ID;
     }
 
     @Override
+    @Nonnull
     public Field<String> field4() {
         return MailLogTable.MAIL_LOG.RECIPIENT_TYPE;
     }
 
     @Override
+    @Nonnull
     public Field<UUID> field5() {
         return MailLogTable.MAIL_LOG.USER_ID;
     }
 
     @Override
+    @Nonnull
     public Field<String> field6() {
         return MailLogTable.MAIL_LOG.REFERENCE;
     }
 
     @Override
+    @Nonnull
     public Field<String> field7() {
         return MailLogTable.MAIL_LOG.RECIPIENT_MAIL;
     }
 
     @Override
+    @Nonnull
     public Field<String> field8() {
         return MailLogTable.MAIL_LOG.DATA;
     }
 
     @Override
+    @Nonnull
     public Field<String> field9() {
         return MailLogTable.MAIL_LOG.SUBJECT;
     }
 
     @Override
+    @Nonnull
     public Field<String> field10() {
         return MailLogTable.MAIL_LOG.CONTENT;
     }
 
     @Override
+    @Nonnull
     public Field<LocalDateTime> field11() {
         return MailLogTable.MAIL_LOG.DATE;
     }
@@ -402,72 +416,84 @@ public class MailLogRecord extends UpdatableRecordImpl<MailLogRecord> implements
     }
 
     @Override
+    @Nonnull
     public MailLogRecord value1(@Nonnull UUID value) {
         setId(value);
         return this;
     }
 
     @Override
+    @Nonnull
     public MailLogRecord value2(@Nonnull String value) {
         setApplication(value);
         return this;
     }
 
     @Override
+    @Nonnull
     public MailLogRecord value3(@Nonnull UUID value) {
         setDeploymentLogId(value);
         return this;
     }
 
     @Override
+    @Nonnull
     public MailLogRecord value4(@Nonnull String value) {
         setRecipientType(value);
         return this;
     }
 
     @Override
+    @Nonnull
     public MailLogRecord value5(@Nonnull UUID value) {
         setUserId(value);
         return this;
     }
 
     @Override
+    @Nonnull
     public MailLogRecord value6(@Nonnull String value) {
         setReference(value);
         return this;
     }
 
     @Override
+    @Nonnull
     public MailLogRecord value7(@Nonnull String value) {
         setRecipientMail(value);
         return this;
     }
 
     @Override
+    @Nonnull
     public MailLogRecord value8(@Nonnull String value) {
         setData(value);
         return this;
     }
 
     @Override
+    @Nonnull
     public MailLogRecord value9(@Nonnull String value) {
         setSubject(value);
         return this;
     }
 
     @Override
+    @Nonnull
     public MailLogRecord value10(@Nonnull String value) {
         setContent(value);
         return this;
     }
 
     @Override
+    @Nonnull
     public MailLogRecord value11(@Nonnull LocalDateTime value) {
         setDate(value);
         return this;
     }
 
     @Override
+    @Nonnull
     public MailLogRecord values(@Nonnull UUID value1, @Nonnull String value2, @Nonnull UUID value3, @Nonnull String value4, @Nonnull UUID value5, @Nonnull String value6, @Nonnull String value7, @Nonnull String value8, @Nonnull String value9, @Nonnull String value10, @Nonnull LocalDateTime value11) {
         value1(value1);
         value2(value2);
@@ -500,16 +526,16 @@ public class MailLogRecord extends UpdatableRecordImpl<MailLogRecord> implements
     public MailLogRecord(@Nonnull UUID id, @Nonnull String application, @Nonnull UUID deploymentLogId, @Nonnull String recipientType, @Nonnull UUID userId, @Nonnull String reference, @Nonnull String recipientMail, @Nonnull String data, @Nonnull String subject, @Nonnull String content, @Nonnull LocalDateTime date) {
         super(MailLogTable.MAIL_LOG);
 
-        set(0, id);
-        set(1, application);
-        set(2, deploymentLogId);
-        set(3, recipientType);
-        set(4, userId);
-        set(5, reference);
-        set(6, recipientMail);
-        set(7, data);
-        set(8, subject);
-        set(9, content);
-        set(10, date);
+        setId(id);
+        setApplication(application);
+        setDeploymentLogId(deploymentLogId);
+        setRecipientType(recipientType);
+        setUserId(userId);
+        setReference(reference);
+        setRecipientMail(recipientMail);
+        setData(data);
+        setSubject(subject);
+        setContent(content);
+        setDate(date);
     }
 }

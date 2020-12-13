@@ -9,6 +9,8 @@ import java.util.Arrays;
 import java.util.List;
 import java.util.UUID;
 
+import javax.annotation.Nonnull;
+
 import org.jooq.Field;
 import org.jooq.ForeignKey;
 import org.jooq.Name;
@@ -20,6 +22,7 @@ import org.jooq.TableField;
 import org.jooq.TableOptions;
 import org.jooq.UniqueKey;
 import org.jooq.impl.DSL;
+import org.jooq.impl.SQLDataType;
 import org.jooq.impl.TableImpl;
 
 import orgarif.jooq.generated.Keys;
@@ -34,7 +37,7 @@ import orgarif.jooq.tools.jooq.CharToUUIDConverter;
 @SuppressWarnings({ "all", "unchecked", "rawtypes" })
 public class EluTable extends TableImpl<EluRecord> {
 
-    private static final long serialVersionUID = -1497926384;
+    private static final long serialVersionUID = 1L;
 
     /**
      * The reference instance of <code>orgarif.elu</code>
@@ -45,6 +48,7 @@ public class EluTable extends TableImpl<EluRecord> {
      * The class holding records for this type
      */
     @Override
+    @Nonnull
     public Class<EluRecord> getRecordType() {
         return EluRecord.class;
     }
@@ -52,53 +56,54 @@ public class EluTable extends TableImpl<EluRecord> {
     /**
      * The column <code>orgarif.elu.id</code>.
      */
-    public final TableField<EluRecord, UUID> ID = createField(DSL.name("id"), org.jooq.impl.SQLDataType.CHAR(32).nullable(false), this, "", new CharToUUIDConverter());
+    public final TableField<EluRecord, UUID> ID = createField(DSL.name("id"), SQLDataType.CHAR(32).nullable(false), this, "", new CharToUUIDConverter());
 
     /**
      * The column <code>orgarif.elu.civilite</code>.
      */
-    public final TableField<EluRecord, String> CIVILITE = createField(DSL.name("civilite"), org.jooq.impl.SQLDataType.VARCHAR(3).nullable(false), this, "");
+    public final TableField<EluRecord, String> CIVILITE = createField(DSL.name("civilite"), SQLDataType.VARCHAR(3).nullable(false), this, "");
 
     /**
      * The column <code>orgarif.elu.prenom</code>.
      */
-    public final TableField<EluRecord, String> PRENOM = createField(DSL.name("prenom"), org.jooq.impl.SQLDataType.VARCHAR(255).nullable(false), this, "");
+    public final TableField<EluRecord, String> PRENOM = createField(DSL.name("prenom"), SQLDataType.VARCHAR(255).nullable(false), this, "");
 
     /**
      * The column <code>orgarif.elu.nom</code>.
      */
-    public final TableField<EluRecord, String> NOM = createField(DSL.name("nom"), org.jooq.impl.SQLDataType.VARCHAR(255).nullable(false), this, "");
+    public final TableField<EluRecord, String> NOM = createField(DSL.name("nom"), SQLDataType.VARCHAR(255).nullable(false), this, "");
 
     /**
      * The column <code>orgarif.elu.groupe_politique</code>.
      */
-    public final TableField<EluRecord, String> GROUPE_POLITIQUE = createField(DSL.name("groupe_politique"), org.jooq.impl.SQLDataType.VARCHAR(255).nullable(false), this, "");
+    public final TableField<EluRecord, String> GROUPE_POLITIQUE = createField(DSL.name("groupe_politique"), SQLDataType.VARCHAR(255).nullable(false), this, "");
 
     /**
      * The column <code>orgarif.elu.groupe_politique_court</code>.
      */
-    public final TableField<EluRecord, String> GROUPE_POLITIQUE_COURT = createField(DSL.name("groupe_politique_court"), org.jooq.impl.SQLDataType.VARCHAR(255).nullable(false), this, "");
+    public final TableField<EluRecord, String> GROUPE_POLITIQUE_COURT = createField(DSL.name("groupe_politique_court"), SQLDataType.VARCHAR(255).nullable(false), this, "");
 
     /**
      * The column <code>orgarif.elu.image_url</code>.
      */
-    public final TableField<EluRecord, String> IMAGE_URL = createField(DSL.name("image_url"), org.jooq.impl.SQLDataType.VARCHAR(255).nullable(false), this, "");
+    public final TableField<EluRecord, String> IMAGE_URL = createField(DSL.name("image_url"), SQLDataType.VARCHAR(255).nullable(false), this, "");
 
     /**
      * The column <code>orgarif.elu.actif</code>.
      */
-    public final TableField<EluRecord, Boolean> ACTIF = createField(DSL.name("actif"), org.jooq.impl.SQLDataType.BOOLEAN.nullable(false), this, "");
+    public final TableField<EluRecord, Boolean> ACTIF = createField(DSL.name("actif"), SQLDataType.BOOLEAN.nullable(false), this, "");
 
     /**
      * The column <code>orgarif.elu.creation_date</code>.
      */
-    public final TableField<EluRecord, LocalDateTime> CREATION_DATE = createField(DSL.name("creation_date"), org.jooq.impl.SQLDataType.LOCALDATETIME.nullable(false), this, "");
+    public final TableField<EluRecord, LocalDateTime> CREATION_DATE = createField(DSL.name("creation_date"), SQLDataType.LOCALDATETIME(0).nullable(false), this, "");
 
-    /**
-     * Create a <code>orgarif.elu</code> table reference
-     */
-    public EluTable() {
-        this(DSL.name("elu"), null);
+    private EluTable(Name alias, Table<EluRecord> aliased) {
+        this(alias, aliased, null);
+    }
+
+    private EluTable(Name alias, Table<EluRecord> aliased, Field<?>[] parameters) {
+        super(alias, null, aliased, parameters, DSL.comment(""), TableOptions.table());
     }
 
     /**
@@ -115,12 +120,11 @@ public class EluTable extends TableImpl<EluRecord> {
         this(alias, ELU);
     }
 
-    private EluTable(Name alias, Table<EluRecord> aliased) {
-        this(alias, aliased, null);
-    }
-
-    private EluTable(Name alias, Table<EluRecord> aliased, Field<?>[] parameters) {
-        super(alias, null, aliased, parameters, DSL.comment(""), TableOptions.table());
+    /**
+     * Create a <code>orgarif.elu</code> table reference
+     */
+    public EluTable() {
+        this(DSL.name("elu"), null);
     }
 
     public <O extends Record> EluTable(Table<O> child, ForeignKey<O, EluRecord> key) {
@@ -128,26 +132,31 @@ public class EluTable extends TableImpl<EluRecord> {
     }
 
     @Override
+    @Nonnull
     public Schema getSchema() {
         return OrgarifTable.ORGARIF;
     }
 
     @Override
+    @Nonnull
     public UniqueKey<EluRecord> getPrimaryKey() {
         return Keys.KEY_ELU_PRIMARY;
     }
 
     @Override
+    @Nonnull
     public List<UniqueKey<EluRecord>> getKeys() {
         return Arrays.<UniqueKey<EluRecord>>asList(Keys.KEY_ELU_PRIMARY);
     }
 
     @Override
+    @Nonnull
     public EluTable as(String alias) {
         return new EluTable(DSL.name(alias), this);
     }
 
     @Override
+    @Nonnull
     public EluTable as(Name alias) {
         return new EluTable(alias, this);
     }
@@ -156,6 +165,7 @@ public class EluTable extends TableImpl<EluRecord> {
      * Rename this table
      */
     @Override
+    @Nonnull
     public EluTable rename(String name) {
         return new EluTable(DSL.name(name), null);
     }
@@ -164,6 +174,7 @@ public class EluTable extends TableImpl<EluRecord> {
      * Rename this table
      */
     @Override
+    @Nonnull
     public EluTable rename(Name name) {
         return new EluTable(name, null);
     }
@@ -173,6 +184,7 @@ public class EluTable extends TableImpl<EluRecord> {
     // -------------------------------------------------------------------------
 
     @Override
+    @Nonnull
     public Row9<UUID, String, String, String, String, String, String, Boolean, LocalDateTime> fieldsRow() {
         return (Row9) super.fieldsRow();
     }

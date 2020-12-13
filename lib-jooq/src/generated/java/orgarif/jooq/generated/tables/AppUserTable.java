@@ -9,6 +9,8 @@ import java.util.Arrays;
 import java.util.List;
 import java.util.UUID;
 
+import javax.annotation.Nonnull;
+
 import org.jooq.Field;
 import org.jooq.ForeignKey;
 import org.jooq.Index;
@@ -21,6 +23,7 @@ import org.jooq.TableField;
 import org.jooq.TableOptions;
 import org.jooq.UniqueKey;
 import org.jooq.impl.DSL;
+import org.jooq.impl.SQLDataType;
 import org.jooq.impl.TableImpl;
 
 import orgarif.jooq.generated.Indexes;
@@ -36,7 +39,7 @@ import orgarif.jooq.tools.jooq.CharToUUIDConverter;
 @SuppressWarnings({ "all", "unchecked", "rawtypes" })
 public class AppUserTable extends TableImpl<AppUserRecord> {
 
-    private static final long serialVersionUID = -1037450457;
+    private static final long serialVersionUID = 1L;
 
     /**
      * The reference instance of <code>orgarif.app_user</code>
@@ -47,6 +50,7 @@ public class AppUserTable extends TableImpl<AppUserRecord> {
      * The class holding records for this type
      */
     @Override
+    @Nonnull
     public Class<AppUserRecord> getRecordType() {
         return AppUserRecord.class;
     }
@@ -54,48 +58,49 @@ public class AppUserTable extends TableImpl<AppUserRecord> {
     /**
      * The column <code>orgarif.app_user.id</code>.
      */
-    public final TableField<AppUserRecord, UUID> ID = createField(DSL.name("id"), org.jooq.impl.SQLDataType.CHAR(32).nullable(false), this, "", new CharToUUIDConverter());
+    public final TableField<AppUserRecord, UUID> ID = createField(DSL.name("id"), SQLDataType.CHAR(32).nullable(false), this, "", new CharToUUIDConverter());
 
     /**
      * The column <code>orgarif.app_user.mail</code>.
      */
-    public final TableField<AppUserRecord, String> MAIL = createField(DSL.name("mail"), org.jooq.impl.SQLDataType.VARCHAR(255).nullable(false), this, "");
+    public final TableField<AppUserRecord, String> MAIL = createField(DSL.name("mail"), SQLDataType.VARCHAR(255).nullable(false), this, "");
 
     /**
      * The column <code>orgarif.app_user.password</code>.
      */
-    public final TableField<AppUserRecord, String> PASSWORD = createField(DSL.name("password"), org.jooq.impl.SQLDataType.VARCHAR(60).nullable(false), this, "");
+    public final TableField<AppUserRecord, String> PASSWORD = createField(DSL.name("password"), SQLDataType.VARCHAR(60).nullable(false), this, "");
 
     /**
      * The column <code>orgarif.app_user.username</code>.
      */
-    public final TableField<AppUserRecord, String> USERNAME = createField(DSL.name("username"), org.jooq.impl.SQLDataType.VARCHAR(255), this, "");
+    public final TableField<AppUserRecord, String> USERNAME = createField(DSL.name("username"), SQLDataType.VARCHAR(255), this, "");
 
     /**
      * The column <code>orgarif.app_user.language</code>.
      */
-    public final TableField<AppUserRecord, String> LANGUAGE = createField(DSL.name("language"), org.jooq.impl.SQLDataType.VARCHAR(2).nullable(false), this, "");
+    public final TableField<AppUserRecord, String> LANGUAGE = createField(DSL.name("language"), SQLDataType.VARCHAR(2).nullable(false), this, "");
 
     /**
      * The column <code>orgarif.app_user.admin</code>.
      */
-    public final TableField<AppUserRecord, Boolean> ADMIN = createField(DSL.name("admin"), org.jooq.impl.SQLDataType.BOOLEAN.nullable(false), this, "");
+    public final TableField<AppUserRecord, Boolean> ADMIN = createField(DSL.name("admin"), SQLDataType.BOOLEAN.nullable(false), this, "");
 
     /**
      * The column <code>orgarif.app_user.signup_date</code>.
      */
-    public final TableField<AppUserRecord, LocalDateTime> SIGNUP_DATE = createField(DSL.name("signup_date"), org.jooq.impl.SQLDataType.LOCALDATETIME.nullable(false), this, "");
+    public final TableField<AppUserRecord, LocalDateTime> SIGNUP_DATE = createField(DSL.name("signup_date"), SQLDataType.LOCALDATETIME(0).nullable(false), this, "");
 
     /**
      * The column <code>orgarif.app_user.dirty_mail</code>.
      */
-    public final TableField<AppUserRecord, String> DIRTY_MAIL = createField(DSL.name("dirty_mail"), org.jooq.impl.SQLDataType.VARCHAR(255), this, "");
+    public final TableField<AppUserRecord, String> DIRTY_MAIL = createField(DSL.name("dirty_mail"), SQLDataType.VARCHAR(255), this, "");
 
-    /**
-     * Create a <code>orgarif.app_user</code> table reference
-     */
-    public AppUserTable() {
-        this(DSL.name("app_user"), null);
+    private AppUserTable(Name alias, Table<AppUserRecord> aliased) {
+        this(alias, aliased, null);
+    }
+
+    private AppUserTable(Name alias, Table<AppUserRecord> aliased, Field<?>[] parameters) {
+        super(alias, null, aliased, parameters, DSL.comment(""), TableOptions.table());
     }
 
     /**
@@ -112,12 +117,11 @@ public class AppUserTable extends TableImpl<AppUserRecord> {
         this(alias, APP_USER);
     }
 
-    private AppUserTable(Name alias, Table<AppUserRecord> aliased) {
-        this(alias, aliased, null);
-    }
-
-    private AppUserTable(Name alias, Table<AppUserRecord> aliased, Field<?>[] parameters) {
-        super(alias, null, aliased, parameters, DSL.comment(""), TableOptions.table());
+    /**
+     * Create a <code>orgarif.app_user</code> table reference
+     */
+    public AppUserTable() {
+        this(DSL.name("app_user"), null);
     }
 
     public <O extends Record> AppUserTable(Table<O> child, ForeignKey<O, AppUserRecord> key) {
@@ -125,31 +129,37 @@ public class AppUserTable extends TableImpl<AppUserRecord> {
     }
 
     @Override
+    @Nonnull
     public Schema getSchema() {
         return OrgarifTable.ORGARIF;
     }
 
     @Override
+    @Nonnull
     public List<Index> getIndexes() {
         return Arrays.<Index>asList(Indexes.APP_USER_APP_USER_MAIL_IDX, Indexes.APP_USER_APP_USER_USERNAME_IDX);
     }
 
     @Override
+    @Nonnull
     public UniqueKey<AppUserRecord> getPrimaryKey() {
         return Keys.KEY_APP_USER_PRIMARY;
     }
 
     @Override
+    @Nonnull
     public List<UniqueKey<AppUserRecord>> getKeys() {
         return Arrays.<UniqueKey<AppUserRecord>>asList(Keys.KEY_APP_USER_PRIMARY, Keys.KEY_APP_USER_MAIL, Keys.KEY_APP_USER_USERNAME);
     }
 
     @Override
+    @Nonnull
     public AppUserTable as(String alias) {
         return new AppUserTable(DSL.name(alias), this);
     }
 
     @Override
+    @Nonnull
     public AppUserTable as(Name alias) {
         return new AppUserTable(alias, this);
     }
@@ -158,6 +168,7 @@ public class AppUserTable extends TableImpl<AppUserRecord> {
      * Rename this table
      */
     @Override
+    @Nonnull
     public AppUserTable rename(String name) {
         return new AppUserTable(DSL.name(name), null);
     }
@@ -166,6 +177,7 @@ public class AppUserTable extends TableImpl<AppUserRecord> {
      * Rename this table
      */
     @Override
+    @Nonnull
     public AppUserTable rename(Name name) {
         return new AppUserTable(name, null);
     }
@@ -175,6 +187,7 @@ public class AppUserTable extends TableImpl<AppUserRecord> {
     // -------------------------------------------------------------------------
 
     @Override
+    @Nonnull
     public Row8<UUID, String, String, String, String, Boolean, LocalDateTime, String> fieldsRow() {
         return (Row8) super.fieldsRow();
     }

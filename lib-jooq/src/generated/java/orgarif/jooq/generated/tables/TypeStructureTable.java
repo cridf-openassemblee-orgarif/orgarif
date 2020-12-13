@@ -8,6 +8,8 @@ import java.util.Arrays;
 import java.util.List;
 import java.util.UUID;
 
+import javax.annotation.Nonnull;
+
 import org.jooq.Field;
 import org.jooq.ForeignKey;
 import org.jooq.Name;
@@ -19,6 +21,7 @@ import org.jooq.TableField;
 import org.jooq.TableOptions;
 import org.jooq.UniqueKey;
 import org.jooq.impl.DSL;
+import org.jooq.impl.SQLDataType;
 import org.jooq.impl.TableImpl;
 
 import orgarif.jooq.generated.Keys;
@@ -33,7 +36,7 @@ import orgarif.jooq.tools.jooq.CharToUUIDConverter;
 @SuppressWarnings({ "all", "unchecked", "rawtypes" })
 public class TypeStructureTable extends TableImpl<TypeStructureRecord> {
 
-    private static final long serialVersionUID = -1528771586;
+    private static final long serialVersionUID = 1L;
 
     /**
      * The reference instance of <code>orgarif.type_structure</code>
@@ -44,6 +47,7 @@ public class TypeStructureTable extends TableImpl<TypeStructureRecord> {
      * The class holding records for this type
      */
     @Override
+    @Nonnull
     public Class<TypeStructureRecord> getRecordType() {
         return TypeStructureRecord.class;
     }
@@ -51,18 +55,19 @@ public class TypeStructureTable extends TableImpl<TypeStructureRecord> {
     /**
      * The column <code>orgarif.type_structure.id</code>.
      */
-    public final TableField<TypeStructureRecord, UUID> ID = createField(DSL.name("id"), org.jooq.impl.SQLDataType.CHAR(32).nullable(false), this, "", new CharToUUIDConverter());
+    public final TableField<TypeStructureRecord, UUID> ID = createField(DSL.name("id"), SQLDataType.CHAR(32).nullable(false), this, "", new CharToUUIDConverter());
 
     /**
      * The column <code>orgarif.type_structure.libelle</code>.
      */
-    public final TableField<TypeStructureRecord, String> LIBELLE = createField(DSL.name("libelle"), org.jooq.impl.SQLDataType.VARCHAR(255).nullable(false), this, "");
+    public final TableField<TypeStructureRecord, String> LIBELLE = createField(DSL.name("libelle"), SQLDataType.VARCHAR(255).nullable(false), this, "");
 
-    /**
-     * Create a <code>orgarif.type_structure</code> table reference
-     */
-    public TypeStructureTable() {
-        this(DSL.name("type_structure"), null);
+    private TypeStructureTable(Name alias, Table<TypeStructureRecord> aliased) {
+        this(alias, aliased, null);
+    }
+
+    private TypeStructureTable(Name alias, Table<TypeStructureRecord> aliased, Field<?>[] parameters) {
+        super(alias, null, aliased, parameters, DSL.comment(""), TableOptions.table());
     }
 
     /**
@@ -79,12 +84,11 @@ public class TypeStructureTable extends TableImpl<TypeStructureRecord> {
         this(alias, TYPE_STRUCTURE);
     }
 
-    private TypeStructureTable(Name alias, Table<TypeStructureRecord> aliased) {
-        this(alias, aliased, null);
-    }
-
-    private TypeStructureTable(Name alias, Table<TypeStructureRecord> aliased, Field<?>[] parameters) {
-        super(alias, null, aliased, parameters, DSL.comment(""), TableOptions.table());
+    /**
+     * Create a <code>orgarif.type_structure</code> table reference
+     */
+    public TypeStructureTable() {
+        this(DSL.name("type_structure"), null);
     }
 
     public <O extends Record> TypeStructureTable(Table<O> child, ForeignKey<O, TypeStructureRecord> key) {
@@ -92,26 +96,31 @@ public class TypeStructureTable extends TableImpl<TypeStructureRecord> {
     }
 
     @Override
+    @Nonnull
     public Schema getSchema() {
         return OrgarifTable.ORGARIF;
     }
 
     @Override
+    @Nonnull
     public UniqueKey<TypeStructureRecord> getPrimaryKey() {
         return Keys.KEY_TYPE_STRUCTURE_PRIMARY;
     }
 
     @Override
+    @Nonnull
     public List<UniqueKey<TypeStructureRecord>> getKeys() {
         return Arrays.<UniqueKey<TypeStructureRecord>>asList(Keys.KEY_TYPE_STRUCTURE_PRIMARY);
     }
 
     @Override
+    @Nonnull
     public TypeStructureTable as(String alias) {
         return new TypeStructureTable(DSL.name(alias), this);
     }
 
     @Override
+    @Nonnull
     public TypeStructureTable as(Name alias) {
         return new TypeStructureTable(alias, this);
     }
@@ -120,6 +129,7 @@ public class TypeStructureTable extends TableImpl<TypeStructureRecord> {
      * Rename this table
      */
     @Override
+    @Nonnull
     public TypeStructureTable rename(String name) {
         return new TypeStructureTable(DSL.name(name), null);
     }
@@ -128,6 +138,7 @@ public class TypeStructureTable extends TableImpl<TypeStructureRecord> {
      * Rename this table
      */
     @Override
+    @Nonnull
     public TypeStructureTable rename(Name name) {
         return new TypeStructureTable(name, null);
     }
@@ -137,6 +148,7 @@ public class TypeStructureTable extends TableImpl<TypeStructureRecord> {
     // -------------------------------------------------------------------------
 
     @Override
+    @Nonnull
     public Row2<UUID, String> fieldsRow() {
         return (Row2) super.fieldsRow();
     }

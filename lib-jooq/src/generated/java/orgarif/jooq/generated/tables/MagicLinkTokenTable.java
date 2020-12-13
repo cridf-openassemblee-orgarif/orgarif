@@ -9,6 +9,8 @@ import java.util.Arrays;
 import java.util.List;
 import java.util.UUID;
 
+import javax.annotation.Nonnull;
+
 import org.jooq.Field;
 import org.jooq.ForeignKey;
 import org.jooq.Index;
@@ -21,6 +23,7 @@ import org.jooq.TableField;
 import org.jooq.TableOptions;
 import org.jooq.UniqueKey;
 import org.jooq.impl.DSL;
+import org.jooq.impl.SQLDataType;
 import org.jooq.impl.TableImpl;
 
 import orgarif.jooq.generated.Indexes;
@@ -36,7 +39,7 @@ import orgarif.jooq.tools.jooq.CharToUUIDConverter;
 @SuppressWarnings({ "all", "unchecked", "rawtypes" })
 public class MagicLinkTokenTable extends TableImpl<MagicLinkTokenRecord> {
 
-    private static final long serialVersionUID = -790406563;
+    private static final long serialVersionUID = 1L;
 
     /**
      * The reference instance of <code>orgarif.magic_link_token</code>
@@ -47,6 +50,7 @@ public class MagicLinkTokenTable extends TableImpl<MagicLinkTokenRecord> {
      * The class holding records for this type
      */
     @Override
+    @Nonnull
     public Class<MagicLinkTokenRecord> getRecordType() {
         return MagicLinkTokenRecord.class;
     }
@@ -54,28 +58,29 @@ public class MagicLinkTokenTable extends TableImpl<MagicLinkTokenRecord> {
     /**
      * The column <code>orgarif.magic_link_token.token</code>.
      */
-    public final TableField<MagicLinkTokenRecord, String> TOKEN = createField(DSL.name("token"), org.jooq.impl.SQLDataType.VARCHAR(255).nullable(false), this, "");
+    public final TableField<MagicLinkTokenRecord, String> TOKEN = createField(DSL.name("token"), SQLDataType.VARCHAR(255).nullable(false), this, "");
 
     /**
      * The column <code>orgarif.magic_link_token.user_id</code>.
      */
-    public final TableField<MagicLinkTokenRecord, UUID> USER_ID = createField(DSL.name("user_id"), org.jooq.impl.SQLDataType.CHAR(32).nullable(false), this, "", new CharToUUIDConverter());
+    public final TableField<MagicLinkTokenRecord, UUID> USER_ID = createField(DSL.name("user_id"), SQLDataType.CHAR(32).nullable(false), this, "", new CharToUUIDConverter());
 
     /**
      * The column <code>orgarif.magic_link_token.creation_date</code>.
      */
-    public final TableField<MagicLinkTokenRecord, LocalDateTime> CREATION_DATE = createField(DSL.name("creation_date"), org.jooq.impl.SQLDataType.LOCALDATETIME.nullable(false), this, "");
+    public final TableField<MagicLinkTokenRecord, LocalDateTime> CREATION_DATE = createField(DSL.name("creation_date"), SQLDataType.LOCALDATETIME(0).nullable(false), this, "");
 
     /**
      * The column <code>orgarif.magic_link_token.validity</code>.
      */
-    public final TableField<MagicLinkTokenRecord, Boolean> VALIDITY = createField(DSL.name("validity"), org.jooq.impl.SQLDataType.BOOLEAN.nullable(false), this, "");
+    public final TableField<MagicLinkTokenRecord, Boolean> VALIDITY = createField(DSL.name("validity"), SQLDataType.BOOLEAN.nullable(false), this, "");
 
-    /**
-     * Create a <code>orgarif.magic_link_token</code> table reference
-     */
-    public MagicLinkTokenTable() {
-        this(DSL.name("magic_link_token"), null);
+    private MagicLinkTokenTable(Name alias, Table<MagicLinkTokenRecord> aliased) {
+        this(alias, aliased, null);
+    }
+
+    private MagicLinkTokenTable(Name alias, Table<MagicLinkTokenRecord> aliased, Field<?>[] parameters) {
+        super(alias, null, aliased, parameters, DSL.comment(""), TableOptions.table());
     }
 
     /**
@@ -92,12 +97,11 @@ public class MagicLinkTokenTable extends TableImpl<MagicLinkTokenRecord> {
         this(alias, MAGIC_LINK_TOKEN);
     }
 
-    private MagicLinkTokenTable(Name alias, Table<MagicLinkTokenRecord> aliased) {
-        this(alias, aliased, null);
-    }
-
-    private MagicLinkTokenTable(Name alias, Table<MagicLinkTokenRecord> aliased, Field<?>[] parameters) {
-        super(alias, null, aliased, parameters, DSL.comment(""), TableOptions.table());
+    /**
+     * Create a <code>orgarif.magic_link_token</code> table reference
+     */
+    public MagicLinkTokenTable() {
+        this(DSL.name("magic_link_token"), null);
     }
 
     public <O extends Record> MagicLinkTokenTable(Table<O> child, ForeignKey<O, MagicLinkTokenRecord> key) {
@@ -105,26 +109,31 @@ public class MagicLinkTokenTable extends TableImpl<MagicLinkTokenRecord> {
     }
 
     @Override
+    @Nonnull
     public Schema getSchema() {
         return OrgarifTable.ORGARIF;
     }
 
     @Override
+    @Nonnull
     public List<Index> getIndexes() {
         return Arrays.<Index>asList(Indexes.MAGIC_LINK_TOKEN_USER_ID);
     }
 
     @Override
+    @Nonnull
     public UniqueKey<MagicLinkTokenRecord> getPrimaryKey() {
         return Keys.KEY_MAGIC_LINK_TOKEN_PRIMARY;
     }
 
     @Override
+    @Nonnull
     public List<UniqueKey<MagicLinkTokenRecord>> getKeys() {
         return Arrays.<UniqueKey<MagicLinkTokenRecord>>asList(Keys.KEY_MAGIC_LINK_TOKEN_PRIMARY);
     }
 
     @Override
+    @Nonnull
     public List<ForeignKey<MagicLinkTokenRecord, ?>> getReferences() {
         return Arrays.<ForeignKey<MagicLinkTokenRecord, ?>>asList(Keys.MAGIC_LINK_TOKEN_IBFK_1);
     }
@@ -134,11 +143,13 @@ public class MagicLinkTokenTable extends TableImpl<MagicLinkTokenRecord> {
     }
 
     @Override
+    @Nonnull
     public MagicLinkTokenTable as(String alias) {
         return new MagicLinkTokenTable(DSL.name(alias), this);
     }
 
     @Override
+    @Nonnull
     public MagicLinkTokenTable as(Name alias) {
         return new MagicLinkTokenTable(alias, this);
     }
@@ -147,6 +158,7 @@ public class MagicLinkTokenTable extends TableImpl<MagicLinkTokenRecord> {
      * Rename this table
      */
     @Override
+    @Nonnull
     public MagicLinkTokenTable rename(String name) {
         return new MagicLinkTokenTable(DSL.name(name), null);
     }
@@ -155,6 +167,7 @@ public class MagicLinkTokenTable extends TableImpl<MagicLinkTokenRecord> {
      * Rename this table
      */
     @Override
+    @Nonnull
     public MagicLinkTokenTable rename(Name name) {
         return new MagicLinkTokenTable(name, null);
     }
@@ -164,6 +177,7 @@ public class MagicLinkTokenTable extends TableImpl<MagicLinkTokenRecord> {
     // -------------------------------------------------------------------------
 
     @Override
+    @Nonnull
     public Row4<String, UUID, LocalDateTime, Boolean> fieldsRow() {
         return (Row4) super.fieldsRow();
     }

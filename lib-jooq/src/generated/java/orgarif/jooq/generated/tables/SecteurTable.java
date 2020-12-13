@@ -8,6 +8,8 @@ import java.util.Arrays;
 import java.util.List;
 import java.util.UUID;
 
+import javax.annotation.Nonnull;
+
 import org.jooq.Field;
 import org.jooq.ForeignKey;
 import org.jooq.Name;
@@ -19,6 +21,7 @@ import org.jooq.TableField;
 import org.jooq.TableOptions;
 import org.jooq.UniqueKey;
 import org.jooq.impl.DSL;
+import org.jooq.impl.SQLDataType;
 import org.jooq.impl.TableImpl;
 
 import orgarif.jooq.generated.Keys;
@@ -33,7 +36,7 @@ import orgarif.jooq.tools.jooq.CharToUUIDConverter;
 @SuppressWarnings({ "all", "unchecked", "rawtypes" })
 public class SecteurTable extends TableImpl<SecteurRecord> {
 
-    private static final long serialVersionUID = 1020154827;
+    private static final long serialVersionUID = 1L;
 
     /**
      * The reference instance of <code>orgarif.secteur</code>
@@ -44,6 +47,7 @@ public class SecteurTable extends TableImpl<SecteurRecord> {
      * The class holding records for this type
      */
     @Override
+    @Nonnull
     public Class<SecteurRecord> getRecordType() {
         return SecteurRecord.class;
     }
@@ -51,18 +55,19 @@ public class SecteurTable extends TableImpl<SecteurRecord> {
     /**
      * The column <code>orgarif.secteur.id</code>.
      */
-    public final TableField<SecteurRecord, UUID> ID = createField(DSL.name("id"), org.jooq.impl.SQLDataType.CHAR(32).nullable(false), this, "", new CharToUUIDConverter());
+    public final TableField<SecteurRecord, UUID> ID = createField(DSL.name("id"), SQLDataType.CHAR(32).nullable(false), this, "", new CharToUUIDConverter());
 
     /**
      * The column <code>orgarif.secteur.libelle</code>.
      */
-    public final TableField<SecteurRecord, String> LIBELLE = createField(DSL.name("libelle"), org.jooq.impl.SQLDataType.VARCHAR(255).nullable(false), this, "");
+    public final TableField<SecteurRecord, String> LIBELLE = createField(DSL.name("libelle"), SQLDataType.VARCHAR(255).nullable(false), this, "");
 
-    /**
-     * Create a <code>orgarif.secteur</code> table reference
-     */
-    public SecteurTable() {
-        this(DSL.name("secteur"), null);
+    private SecteurTable(Name alias, Table<SecteurRecord> aliased) {
+        this(alias, aliased, null);
+    }
+
+    private SecteurTable(Name alias, Table<SecteurRecord> aliased, Field<?>[] parameters) {
+        super(alias, null, aliased, parameters, DSL.comment(""), TableOptions.table());
     }
 
     /**
@@ -79,12 +84,11 @@ public class SecteurTable extends TableImpl<SecteurRecord> {
         this(alias, SECTEUR);
     }
 
-    private SecteurTable(Name alias, Table<SecteurRecord> aliased) {
-        this(alias, aliased, null);
-    }
-
-    private SecteurTable(Name alias, Table<SecteurRecord> aliased, Field<?>[] parameters) {
-        super(alias, null, aliased, parameters, DSL.comment(""), TableOptions.table());
+    /**
+     * Create a <code>orgarif.secteur</code> table reference
+     */
+    public SecteurTable() {
+        this(DSL.name("secteur"), null);
     }
 
     public <O extends Record> SecteurTable(Table<O> child, ForeignKey<O, SecteurRecord> key) {
@@ -92,26 +96,31 @@ public class SecteurTable extends TableImpl<SecteurRecord> {
     }
 
     @Override
+    @Nonnull
     public Schema getSchema() {
         return OrgarifTable.ORGARIF;
     }
 
     @Override
+    @Nonnull
     public UniqueKey<SecteurRecord> getPrimaryKey() {
         return Keys.KEY_SECTEUR_PRIMARY;
     }
 
     @Override
+    @Nonnull
     public List<UniqueKey<SecteurRecord>> getKeys() {
         return Arrays.<UniqueKey<SecteurRecord>>asList(Keys.KEY_SECTEUR_PRIMARY);
     }
 
     @Override
+    @Nonnull
     public SecteurTable as(String alias) {
         return new SecteurTable(DSL.name(alias), this);
     }
 
     @Override
+    @Nonnull
     public SecteurTable as(Name alias) {
         return new SecteurTable(alias, this);
     }
@@ -120,6 +129,7 @@ public class SecteurTable extends TableImpl<SecteurRecord> {
      * Rename this table
      */
     @Override
+    @Nonnull
     public SecteurTable rename(String name) {
         return new SecteurTable(DSL.name(name), null);
     }
@@ -128,6 +138,7 @@ public class SecteurTable extends TableImpl<SecteurRecord> {
      * Rename this table
      */
     @Override
+    @Nonnull
     public SecteurTable rename(Name name) {
         return new SecteurTable(name, null);
     }
@@ -137,6 +148,7 @@ public class SecteurTable extends TableImpl<SecteurRecord> {
     // -------------------------------------------------------------------------
 
     @Override
+    @Nonnull
     public Row2<UUID, String> fieldsRow() {
         return (Row2) super.fieldsRow();
     }

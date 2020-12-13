@@ -9,6 +9,8 @@ import java.util.Arrays;
 import java.util.List;
 import java.util.UUID;
 
+import javax.annotation.Nonnull;
+
 import org.jooq.Field;
 import org.jooq.ForeignKey;
 import org.jooq.Index;
@@ -21,6 +23,7 @@ import org.jooq.TableField;
 import org.jooq.TableOptions;
 import org.jooq.UniqueKey;
 import org.jooq.impl.DSL;
+import org.jooq.impl.SQLDataType;
 import org.jooq.impl.TableImpl;
 
 import orgarif.jooq.generated.Indexes;
@@ -36,7 +39,7 @@ import orgarif.jooq.tools.jooq.CharToUUIDConverter;
 @SuppressWarnings({ "all", "unchecked", "rawtypes" })
 public class CommandLogTable extends TableImpl<CommandLogRecord> {
 
-    private static final long serialVersionUID = -1222548428;
+    private static final long serialVersionUID = 1L;
 
     /**
      * The reference instance of <code>orgarif.command_log</code>
@@ -47,6 +50,7 @@ public class CommandLogTable extends TableImpl<CommandLogRecord> {
      * The class holding records for this type
      */
     @Override
+    @Nonnull
     public Class<CommandLogRecord> getRecordType() {
         return CommandLogRecord.class;
     }
@@ -54,58 +58,59 @@ public class CommandLogTable extends TableImpl<CommandLogRecord> {
     /**
      * The column <code>orgarif.command_log.id</code>.
      */
-    public final TableField<CommandLogRecord, UUID> ID = createField(DSL.name("id"), org.jooq.impl.SQLDataType.CHAR(32).nullable(false), this, "", new CharToUUIDConverter());
+    public final TableField<CommandLogRecord, UUID> ID = createField(DSL.name("id"), SQLDataType.CHAR(32).nullable(false), this, "", new CharToUUIDConverter());
 
     /**
      * The column <code>orgarif.command_log.user_id</code>.
      */
-    public final TableField<CommandLogRecord, UUID> USER_ID = createField(DSL.name("user_id"), org.jooq.impl.SQLDataType.CHAR(32), this, "", new CharToUUIDConverter());
+    public final TableField<CommandLogRecord, UUID> USER_ID = createField(DSL.name("user_id"), SQLDataType.CHAR(32), this, "", new CharToUUIDConverter());
 
     /**
      * The column <code>orgarif.command_log.deployment_log_id</code>.
      */
-    public final TableField<CommandLogRecord, UUID> DEPLOYMENT_LOG_ID = createField(DSL.name("deployment_log_id"), org.jooq.impl.SQLDataType.CHAR(32).nullable(false), this, "", new CharToUUIDConverter());
+    public final TableField<CommandLogRecord, UUID> DEPLOYMENT_LOG_ID = createField(DSL.name("deployment_log_id"), SQLDataType.CHAR(32).nullable(false), this, "", new CharToUUIDConverter());
 
     /**
      * The column <code>orgarif.command_log.command_class</code>.
      */
-    public final TableField<CommandLogRecord, String> COMMAND_CLASS = createField(DSL.name("command_class"), org.jooq.impl.SQLDataType.VARCHAR(255).nullable(false), this, "");
+    public final TableField<CommandLogRecord, String> COMMAND_CLASS = createField(DSL.name("command_class"), SQLDataType.VARCHAR(255).nullable(false), this, "");
 
     /**
      * The column <code>orgarif.command_log.json_command</code>.
      */
-    public final TableField<CommandLogRecord, String> JSON_COMMAND = createField(DSL.name("json_command"), org.jooq.impl.SQLDataType.CLOB.nullable(false), this, "");
+    public final TableField<CommandLogRecord, String> JSON_COMMAND = createField(DSL.name("json_command"), SQLDataType.CLOB.nullable(false), this, "");
 
     /**
      * The column <code>orgarif.command_log.date</code>.
      */
-    public final TableField<CommandLogRecord, LocalDateTime> DATE = createField(DSL.name("date"), org.jooq.impl.SQLDataType.LOCALDATETIME.nullable(false), this, "");
+    public final TableField<CommandLogRecord, LocalDateTime> DATE = createField(DSL.name("date"), SQLDataType.LOCALDATETIME(0).nullable(false), this, "");
 
     /**
      * The column <code>orgarif.command_log.ip</code>.
      */
-    public final TableField<CommandLogRecord, String> IP = createField(DSL.name("ip"), org.jooq.impl.SQLDataType.VARCHAR(255).nullable(false), this, "");
+    public final TableField<CommandLogRecord, String> IP = createField(DSL.name("ip"), SQLDataType.VARCHAR(255).nullable(false), this, "");
 
     /**
      * The column <code>orgarif.command_log.user_session_id</code>.
      */
-    public final TableField<CommandLogRecord, UUID> USER_SESSION_ID = createField(DSL.name("user_session_id"), org.jooq.impl.SQLDataType.CHAR(32), this, "", new CharToUUIDConverter());
+    public final TableField<CommandLogRecord, UUID> USER_SESSION_ID = createField(DSL.name("user_session_id"), SQLDataType.CHAR(32), this, "", new CharToUUIDConverter());
 
     /**
      * The column <code>orgarif.command_log.json_result</code>.
      */
-    public final TableField<CommandLogRecord, String> JSON_RESULT = createField(DSL.name("json_result"), org.jooq.impl.SQLDataType.CLOB, this, "");
+    public final TableField<CommandLogRecord, String> JSON_RESULT = createField(DSL.name("json_result"), SQLDataType.CLOB, this, "");
 
     /**
      * The column <code>orgarif.command_log.exception_stack_trace</code>.
      */
-    public final TableField<CommandLogRecord, String> EXCEPTION_STACK_TRACE = createField(DSL.name("exception_stack_trace"), org.jooq.impl.SQLDataType.CLOB, this, "");
+    public final TableField<CommandLogRecord, String> EXCEPTION_STACK_TRACE = createField(DSL.name("exception_stack_trace"), SQLDataType.CLOB, this, "");
 
-    /**
-     * Create a <code>orgarif.command_log</code> table reference
-     */
-    public CommandLogTable() {
-        this(DSL.name("command_log"), null);
+    private CommandLogTable(Name alias, Table<CommandLogRecord> aliased) {
+        this(alias, aliased, null);
+    }
+
+    private CommandLogTable(Name alias, Table<CommandLogRecord> aliased, Field<?>[] parameters) {
+        super(alias, null, aliased, parameters, DSL.comment(""), TableOptions.table());
     }
 
     /**
@@ -122,12 +127,11 @@ public class CommandLogTable extends TableImpl<CommandLogRecord> {
         this(alias, COMMAND_LOG);
     }
 
-    private CommandLogTable(Name alias, Table<CommandLogRecord> aliased) {
-        this(alias, aliased, null);
-    }
-
-    private CommandLogTable(Name alias, Table<CommandLogRecord> aliased, Field<?>[] parameters) {
-        super(alias, null, aliased, parameters, DSL.comment(""), TableOptions.table());
+    /**
+     * Create a <code>orgarif.command_log</code> table reference
+     */
+    public CommandLogTable() {
+        this(DSL.name("command_log"), null);
     }
 
     public <O extends Record> CommandLogTable(Table<O> child, ForeignKey<O, CommandLogRecord> key) {
@@ -135,26 +139,31 @@ public class CommandLogTable extends TableImpl<CommandLogRecord> {
     }
 
     @Override
+    @Nonnull
     public Schema getSchema() {
         return OrgarifTable.ORGARIF;
     }
 
     @Override
+    @Nonnull
     public List<Index> getIndexes() {
         return Arrays.<Index>asList(Indexes.COMMAND_LOG_DEPLOYMENT_LOG_ID, Indexes.COMMAND_LOG_USER_ID, Indexes.COMMAND_LOG_USER_SESSION_ID);
     }
 
     @Override
+    @Nonnull
     public UniqueKey<CommandLogRecord> getPrimaryKey() {
         return Keys.KEY_COMMAND_LOG_PRIMARY;
     }
 
     @Override
+    @Nonnull
     public List<UniqueKey<CommandLogRecord>> getKeys() {
         return Arrays.<UniqueKey<CommandLogRecord>>asList(Keys.KEY_COMMAND_LOG_PRIMARY);
     }
 
     @Override
+    @Nonnull
     public List<ForeignKey<CommandLogRecord, ?>> getReferences() {
         return Arrays.<ForeignKey<CommandLogRecord, ?>>asList(Keys.COMMAND_LOG_IBFK_1, Keys.COMMAND_LOG_IBFK_2, Keys.COMMAND_LOG_IBFK_3);
     }
@@ -172,11 +181,13 @@ public class CommandLogTable extends TableImpl<CommandLogRecord> {
     }
 
     @Override
+    @Nonnull
     public CommandLogTable as(String alias) {
         return new CommandLogTable(DSL.name(alias), this);
     }
 
     @Override
+    @Nonnull
     public CommandLogTable as(Name alias) {
         return new CommandLogTable(alias, this);
     }
@@ -185,6 +196,7 @@ public class CommandLogTable extends TableImpl<CommandLogRecord> {
      * Rename this table
      */
     @Override
+    @Nonnull
     public CommandLogTable rename(String name) {
         return new CommandLogTable(DSL.name(name), null);
     }
@@ -193,6 +205,7 @@ public class CommandLogTable extends TableImpl<CommandLogRecord> {
      * Rename this table
      */
     @Override
+    @Nonnull
     public CommandLogTable rename(Name name) {
         return new CommandLogTable(name, null);
     }
@@ -202,6 +215,7 @@ public class CommandLogTable extends TableImpl<CommandLogRecord> {
     // -------------------------------------------------------------------------
 
     @Override
+    @Nonnull
     public Row10<UUID, UUID, UUID, String, String, LocalDateTime, String, UUID, String, String> fieldsRow() {
         return (Row10) super.fieldsRow();
     }
