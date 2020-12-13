@@ -81,21 +81,27 @@ export const CreateDeliberationAndAddLienComponent = (props: {
             label="Libellé"
             initialValue={props.libelle}
           />
-          <LocalDateInput
-            label="Date de délibération"
-            name="deliberationDate"
-            autoFocus
-          />
-          {displayError !== '' && (
-            <div
-              css={css`
-                color: ${colors.errorRed};
-                font-weight: bold;
-              `}
-            >
-              {displayError}
-            </div>
-          )}
+          <div
+            css={css`
+              padding-top: 10px;
+            `}
+          >
+            <LocalDateInput
+              label="Date de délibération"
+              name="deliberationDate"
+              autoFocus
+            />
+            {displayError !== '' && (
+              <div
+                css={css`
+                  color: ${colors.errorRed};
+                  font-weight: bold;
+                `}
+              >
+                {displayError}
+              </div>
+            )}
+          </div>
         </DialogContent>
         <DialogActions>
           <Button onClick={props.close} color="primary">

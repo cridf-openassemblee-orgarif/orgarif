@@ -4,6 +4,7 @@ import * as React from 'react';
 import { useState } from 'react';
 import { InstanceId, OrganismeId } from '../../domain/id';
 import { LienDeliberationInfos } from '../../domain/organisme';
+import { formatLocaleDate } from '../../simple-fr';
 import { stringifyNominalString } from '../../utils/nominal-class';
 import { AddLienDeliberationComponent } from './AddLienDeliberationComponent';
 
@@ -40,7 +41,8 @@ export const EditLienDeliberationsListComponent = (props: {
               padding: 10px 0;
             `}
           >
-            {d.deliberation.libelle} du {d.deliberation.deliberationDate}
+            {d.deliberation.libelle} du{' '}
+            {formatLocaleDate(d.deliberation.deliberationDate)}
           </div>
         ))}
       </div>

@@ -5,10 +5,8 @@ import { useState } from 'react';
 import InputMask from 'react-input-mask';
 import { LocalDate } from '../../domain/time';
 import { Errors } from '../../errors';
-import { formatDate } from '../../simple-fr';
+import { formatLocaleDate } from '../../simple-fr';
 import { instanciateNominalString } from '../../utils/nominal-class';
-
-export const localDateToString = formatDate;
 
 export const stringToLocalDate = (value: string): LocalDate => {
   const parts = value.split('/');
@@ -25,10 +23,10 @@ export const LocalDateInput = (props: {
   autoFocus?: boolean;
 }) => {
   const [value] = useState(
-    props.initialValue ? localDateToString(props.initialValue) : undefined
+    props.initialValue ? formatLocaleDate(props.initialValue) : undefined
   );
   return (
-    <InputMask mask="99/99/9999" value={value} disabled={false}>
+    <InputMask mask="99/99/9999" value={value}>
       {() => (
         <TextField
           name={props.name}

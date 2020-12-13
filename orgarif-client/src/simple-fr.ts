@@ -2,7 +2,7 @@ import { LocalDate } from './domain/time';
 import { Errors } from './errors';
 import { stringifyNominalString } from './utils/nominal-class';
 
-export const formatDate = (value: LocalDate) => {
+export const formatLocaleDate = (value: LocalDate) => {
   const parts = stringifyNominalString(value).split('-');
   if (parts.length !== 3) {
     throw Errors._41dcf9d3();
