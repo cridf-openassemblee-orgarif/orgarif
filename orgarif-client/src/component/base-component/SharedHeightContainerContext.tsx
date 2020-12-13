@@ -2,7 +2,7 @@
 import * as React from 'react';
 import { PropsWithChildren, useState } from 'react';
 import { ClientUid } from '../../domain/client-id';
-import { Dict, dictValues, getOrNull, set } from '../../domain/nominal-class';
+import { Dict, dictValues, getOrNull, set } from '../../utils/nominal-class';
 import { compareByNumber } from '../../utils';
 
 export interface SharedHeightContextInterface {

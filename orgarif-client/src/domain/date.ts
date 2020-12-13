@@ -1,3 +1,3 @@
-import { NominalString } from './nominal-class';
+import { NominalString } from '../utils/nominal-class';
 
 export type ZoneId = NominalString<'ZoneId'>;

@@ -15,7 +15,7 @@ import {
   Dict,
   getOrNull,
   stringifyNominalString
-} from '../../domain/nominal-class';
+} from '../../utils/nominal-class';
 import { Representant, RepresentantOrSuppleant } from '../../domain/organisme';
 import { colors } from '../../styles/vars';
 import { EluComponent } from '../EluComponent';

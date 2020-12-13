@@ -3,7 +3,7 @@ import { css } from '@emotion/react';
 import * as React from 'react';
 import { useState } from 'react';
 import { InstanceId, OrganismeId } from '../../domain/id';
-import { stringifyNominalString } from '../../domain/nominal-class';
+import { stringifyNominalString } from '../../utils/nominal-class';
 import { LienDeliberationInfos } from '../../domain/organisme';
 import { AddLienDeliberationComponent } from './AddLienDeliberationComponent';
 

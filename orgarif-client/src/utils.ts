@@ -2,7 +2,7 @@ import { ClientUid } from './domain/client-id';
 import {
   instanciateNominalString,
   stringifyNominalString
-} from './domain/nominal-class';
+} from './utils/nominal-class';
 import { LocalDate } from './domain/time';
 
 export function assertUnreachable(x: never): never {

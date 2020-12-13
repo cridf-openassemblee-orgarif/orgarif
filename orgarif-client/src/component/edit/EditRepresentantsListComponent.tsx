@@ -7,7 +7,7 @@ import {
   Dict,
   instanciateNominalString,
   stringifyNominalString
-} from '../../domain/nominal-class';
+} from '../../utils/nominal-class';
 import { Representant, RepresentantOrSuppleant } from '../../domain/organisme';
 import { SharedHeightContainer } from '../base-component/SharedHeightContainer';
 import { AddRepresentantComponent } from './AddRepresentantComponent';

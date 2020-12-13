@@ -2,7 +2,7 @@
 import { css } from '@emotion/react';
 import * as React from 'react';
 import { useRecoilValue } from 'recoil';
-import { get, stringifyNominalString } from '../domain/nominal-class';
+import { get, stringifyNominalString } from '../utils/nominal-class';
 import {
   FullInstance,
   FullOrganisme,

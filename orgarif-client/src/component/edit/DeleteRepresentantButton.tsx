@@ -3,7 +3,7 @@ import * as React from 'react';
 import { appContext } from '../../ApplicationContext';
 import { RepresentantListId } from '../../domain/client-id';
 import { InstanceId, OrganismeId, RepresentantId } from '../../domain/id';
-import { Dict, get, setOld } from '../../domain/nominal-class';
+import { Dict, get, setOld } from '../../utils/nominal-class';
 import { Representant, RepresentantOrSuppleant } from '../../domain/organisme';
 import { DeleteButton } from '../base-component/DeleteButton';
 import { representantListId } from './DragAndDropContainer';

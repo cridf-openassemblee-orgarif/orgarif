@@ -3,7 +3,7 @@ import TextField from '@material-ui/core/TextField';
 import * as React from 'react';
 import { useState } from 'react';
 import InputMask from 'react-input-mask';
-import { instanciateNominalString } from '../../domain/nominal-class';
+import { instanciateNominalString } from '../../utils/nominal-class';
 import { LocalDate } from '../../domain/time';
 import { Errors } from '../../errors';
 import { formatDate } from '../../simple-fr';

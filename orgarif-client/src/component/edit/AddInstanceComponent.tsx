@@ -4,7 +4,7 @@ import { useRef } from 'react';
 import { appContext } from '../../ApplicationContext';
 import { RepresentantListId } from '../../domain/client-id';
 import { OrganismeId } from '../../domain/id';
-import { Dict, setOld } from '../../domain/nominal-class';
+import { Dict, setOld } from '../../utils/nominal-class';
 import { FullInstance, Representant } from '../../domain/organisme';
 import { SimpleForm } from '../base-component/SimpleForm';
 import { TextInput } from '../base-component/TextInput';

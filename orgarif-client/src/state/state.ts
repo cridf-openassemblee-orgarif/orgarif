@@ -12,7 +12,7 @@ import {
   SecteurId,
   TypeStructureId
 } from '../domain/id';
-import { Dict, setOld } from '../domain/nominal-class';
+import { Dict, setOld } from '../utils/nominal-class';
 import { compareByString } from '../utils';
 
 export const state = {

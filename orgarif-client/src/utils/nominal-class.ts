@@ -70,3 +70,20 @@ export const deleteItemOld = <K extends NominalItem, T>(
 ) => {
   delete dict[key];
 };
+
+export const deleteItem = <K extends NominalItem, T>(
+  dict: Dict<K, T>,
+  key: K
+) => {
+  const newDict = { ...dict };
+  delete newDict[key];
+  return newDict;
+};
+
+export const pairsToDict = <I extends NominalItem, T>(pairs: [I, T][]) => {
+  const dict = {} as Dict<I, T>;
+  pairs.forEach(pair => {
+    dict[pair[0]] = pair[1];
+  });
+  return dict;
+};

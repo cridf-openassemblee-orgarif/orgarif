@@ -11,7 +11,7 @@ import {
   instanciateNominalString,
   setOld,
   stringifyNominalString
-} from '../../domain/nominal-class';
+} from '../../utils/nominal-class';
 import {
   FullOrganisme,
   Representant,

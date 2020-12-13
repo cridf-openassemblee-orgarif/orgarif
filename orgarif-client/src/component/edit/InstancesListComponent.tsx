@@ -11,7 +11,7 @@ import {
 } from 'react-beautiful-dnd';
 import { RepresentantListId } from '../../domain/client-id';
 import { OrganismeId } from '../../domain/id';
-import { Dict, stringifyNominalString } from '../../domain/nominal-class';
+import { Dict, stringifyNominalString } from '../../utils/nominal-class';
 import { FullInstance, Representant } from '../../domain/organisme';
 import { colors } from '../../styles/vars';
 import { NombreRepresentantsComponent } from '../NombreRepresentantsComponent';

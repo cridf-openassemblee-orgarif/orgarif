@@ -18,7 +18,7 @@ import {
   Dict,
   instanciateNominalString,
   setOld
-} from '../../domain/nominal-class';
+} from '../../utils/nominal-class';
 import {
   FullInstance,
   FullOrganisme,

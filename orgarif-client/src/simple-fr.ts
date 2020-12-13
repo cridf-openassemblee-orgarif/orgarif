@@ -1,4 +1,4 @@
-import { stringifyNominalString } from './domain/nominal-class';
+import { stringifyNominalString } from './utils/nominal-class';
 import { LocalDate } from './domain/time';
 import { Errors } from './errors';
 
