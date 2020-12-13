@@ -12,7 +12,7 @@ import {
   SecteurId,
   TypeStructureId
 } from '../domain/id';
-import { Dict, set } from '../domain/nominal-class';
+import { Dict, setOld } from '../domain/nominal-class';
 import { compareByString } from '../utils';
 
 export const state = {
@@ -24,7 +24,7 @@ export const state = {
     key: 'elusById',
     get: ({ get }) => {
       const map: Dict<EluId, Elu> = {};
-      get(state.elus).forEach(e => set(map, e.id, e));
+      get(state.elus).forEach(e => setOld(map, e.id, e));
       return map;
     }
   }),
@@ -38,7 +38,7 @@ export const state = {
     key: 'natureJuridiquesById',
     get: ({ get }) => {
       const map: Dict<NatureJuridiqueId, NatureJuridique> = {};
-      get(state.natureJuridiques).forEach(n => set(map, n.id, n));
+      get(state.natureJuridiques).forEach(n => setOld(map, n.id, n));
       return map;
     }
   }),
@@ -56,7 +56,7 @@ export const state = {
     key: 'secteursById',
     get: ({ get }) => {
       const map: Dict<SecteurId, Secteur> = {};
-      get(state.secteurs).forEach(s => set(map, s.id, s));
+      get(state.secteurs).forEach(s => setOld(map, s.id, s));
       return map;
     }
   }),
@@ -70,7 +70,7 @@ export const state = {
     key: 'typeStructuresById',
     get: ({ get }) => {
       const map: Dict<TypeStructureId, TypeStructure> = {};
-      get(state.typeStructures).forEach(t => set(map, t.id, t));
+      get(state.typeStructures).forEach(t => setOld(map, t.id, t));
       return map;
     }
   }),

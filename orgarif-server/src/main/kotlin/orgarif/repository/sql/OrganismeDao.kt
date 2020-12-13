@@ -63,6 +63,12 @@ class OrganismeDao(val jooq: DSLContext) {
                 .execute()
     }
 
+    fun updatePartageRepresentants(id: OrganismeId, partageRepresentants: Boolean) {
+        jooq.update(ORGANISME)
+                .set(ORGANISME.PARTAGE_REPRESENTANTS, partageRepresentants)
+                .where(ORGANISME.ID.equal(id.rawId))
+                .execute()
+    }
 
     fun updateSecteurId(id: OrganismeId, secteurId: SecteurId?) {
         jooq.update(ORGANISME)

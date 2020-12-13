@@ -9,7 +9,7 @@ import {
   Dict,
   get,
   instanciateNominalString,
-  set,
+  setOld,
   stringifyNominalString
 } from '../../domain/nominal-class';
 import {
@@ -94,10 +94,10 @@ export const DragAndDropContainer = (
     };
     const sourceList = [...get(props.representantsLists, sourceId)];
     const movedItem = sourceList.splice(result.source.index, 1)[0];
-    set(newLists, sourceId, sourceList);
+    setOld(newLists, sourceId, sourceList);
     const destinationList = [...get(newLists, destinationId)];
     destinationList.splice(result.destination.index, 0, movedItem);
-    set(newLists, destinationId, destinationList);
+    setOld(newLists, destinationId, destinationList);
     props.setRepresentantsLists(newLists);
 
     const [organismeId, instanceId, representantOrSuppleant] = extract(

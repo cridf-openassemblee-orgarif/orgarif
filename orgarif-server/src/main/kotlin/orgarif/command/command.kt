@@ -124,6 +124,9 @@ data class RegisterCommandResponse(val result: RegisterResult,
 data class UpdateOrganismeNatureJuridiqueCommand(val id: OrganismeId,
                                                  val natureJuridiqueId: NatureJuridiqueId?) : Command()
 
+data class UpdateOrganismePartageRepresentantsCommand(val id: OrganismeId,
+                                                      val partageRepresentants: Boolean) : Command()
+
 data class UpdateOrganismeSecteurCommand(val id: OrganismeId,
                                          val secteurId: SecteurId?) : Command()
 

@@ -7,21 +7,18 @@ import { Router as ReactRouter } from 'react-router-dom';
 import 'react-toastify/dist/ReactToastify.min.css';
 import { RecoilRoot } from 'recoil';
 import { appContext } from './ApplicationContext';
+import { SharedHeightContainerContext } from './component/base-component/SharedHeightContainerContext';
 import { Root } from './container/Root';
 import { ApplicationRouter } from './routing/ApplicationRouter';
 import { globalStyles } from './styles/common-styles';
 import './styles/ReactToastify-additional.css';
-import { colors, fonts } from './styles/vars';
 
 global.log = (logged: any) => console.log(logged);
 
 const muiTheme = createMuiTheme({
-  palette: {
-    secondary: { main: colors.errorRed }
-  },
   typography: {
-    fontSize: fonts.baseSize,
-    htmlFontSize: fonts.baseSize
+    // fontSize: fonts.baseSize,
+    // htmlFontSize: fonts.baseSize
   }
 });
 ReactDOM.render(
@@ -31,7 +28,9 @@ ReactDOM.render(
       <StylesProvider injectFirst>
         <MuiThemeProvider theme={muiTheme}>
           <Root>
-            <ApplicationRouter />
+            <SharedHeightContainerContext>
+              <ApplicationRouter />
+            </SharedHeightContainerContext>
           </Root>
         </MuiThemeProvider>
       </StylesProvider>

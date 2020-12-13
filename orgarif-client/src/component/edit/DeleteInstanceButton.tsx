@@ -3,7 +3,7 @@ import * as React from 'react';
 import { appContext } from '../../ApplicationContext';
 import { RepresentantListId } from '../../domain/client-id';
 import { InstanceId, OrganismeId } from '../../domain/id';
-import { deleteItem, Dict } from '../../domain/nominal-class';
+import { deleteItemOld, Dict } from '../../domain/nominal-class';
 import { FullInstance, Representant } from '../../domain/organisme';
 import { DeleteButton } from '../base-component/DeleteButton';
 import { representantListId } from './DragAndDropContainer';
@@ -28,7 +28,7 @@ export const DeleteInstanceButton = (props: {
         );
         props.setInstances(newInstances);
         const newRepresentantsLists = { ...props.representantsLists };
-        deleteItem(
+        deleteItemOld(
           newRepresentantsLists,
           representantListId(
             props.organismeId,
@@ -36,12 +36,18 @@ export const DeleteInstanceButton = (props: {
             'representant'
           )
         );
-        deleteItem(
+        deleteItemOld(
           newRepresentantsLists,
           representantListId(props.organismeId, props.instanceId, 'suppleant')
         );
         props.setRepresentantsLists(newRepresentantsLists);
       });
   };
-  return <DeleteButton label={"Supprimer l'instance"} onDelete={onDelete} />;
+  return (
+    <DeleteButton
+      label={"Supprimer l'instance"}
+      onDelete={onDelete}
+      size="large"
+    />
+  );
 };

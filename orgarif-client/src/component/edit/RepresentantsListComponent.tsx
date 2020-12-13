@@ -17,14 +17,14 @@ import {
   stringifyNominalString
 } from '../../domain/nominal-class';
 import { Representant, RepresentantOrSuppleant } from '../../domain/organisme';
+import { colors } from '../../styles/vars';
 import { EluComponent } from '../EluComponent';
 import { DeleteRepresentantButton } from './DeleteRepresentantButton';
 import { DragAndDropItem, representantListId } from './DragAndDropContainer';
-const padding = 8;
 
 const dragType: DragAndDropItem = 'representant';
 
-export const DragableRepresentantsListComponent = (props: {
+export const RepresentantsListComponent = (props: {
   organismeId: OrganismeId;
   instanceId: InstanceId | undefined;
   representantOrSuppleant: RepresentantOrSuppleant;
@@ -32,6 +32,7 @@ export const DragableRepresentantsListComponent = (props: {
   setRepresentantsLists: (
     lists: Dict<RepresentantListId, Representant[]>
   ) => void;
+  emptyListLabel: string;
 }) => {
   const listId = representantListId(
     props.organismeId,
@@ -55,10 +56,30 @@ export const DragableRepresentantsListComponent = (props: {
           ref={provided.innerRef}
           {...provided.droppableProps}
           css={css`
-            background: ${snapshot.isDraggingOver ? 'lightblue' : 'lightgrey'};
-            padding: ${padding}px;
+            // background: ${snapshot.isDraggingOver
+              ? 'lightblue'
+              : 'lightgrey'};
           `}
         >
+          {representants.length === 0 && (
+            <div
+              css={css`
+                margin: 10px 10px 6px 10px;
+                padding: 10px;
+                height: 44px;
+                border: 3px solid
+                  ${snapshot.isDraggingOver
+                    ? colors.lightblue
+                    : colors.clearGrey};
+                border-radius: 4px;
+                background: ${snapshot.isDraggingOver
+                  ? colors.lightblue
+                  : 'none'};
+              `}
+            >
+              {!snapshot.isDraggingOver && props.emptyListLabel}
+            </div>
+          )}
           {representants.map((r, index) => (
             <Draggable
               key={stringifyNominalString(r.id)}
@@ -72,33 +93,34 @@ export const DragableRepresentantsListComponent = (props: {
                 <div
                   ref={providedDraggable.innerRef}
                   {...providedDraggable.draggableProps}
+                  {...providedDraggable.dragHandleProps}
                   css={css`
                     user-select: none;
-                    padding: ${2 * padding}px;
-                    margin: 0 0 ${padding}px 0;
+                    padding: 10px 20px;
+                    margin: 4px 10px;
                     background: ${snapshotDraggable.isDragging
-                      ? 'lightgreen'
-                      : 'grey'};
+                      ? colors.dragableMoving
+                      : colors.clearGrey};
                   `}
                 >
+                  {/*<div>{r.id}</div>*/}
+                  <EluComponent eluId={r.eluId} />
                   <div
                     css={css`
-                      width: 20px;
-                      height: 20px;
-                      background: red;
+                      position: absolute;
+                      top: 8px;
+                      right: 8px;
                     `}
-                    {...providedDraggable.dragHandleProps}
-                  />
-                  <div>{r.id}</div>
-                  <EluComponent eluId={r.eluId} />
-                  <DeleteRepresentantButton
-                    representantId={r.id}
-                    organismeId={props.organismeId}
-                    instanceId={props.instanceId}
-                    representantOrSuppleant={props.representantOrSuppleant}
-                    representantsLists={props.representantsLists}
-                    setRepresentantsLists={props.setRepresentantsLists}
-                  />
+                  >
+                    <DeleteRepresentantButton
+                      representantId={r.id}
+                      organismeId={props.organismeId}
+                      instanceId={props.instanceId}
+                      representantOrSuppleant={props.representantOrSuppleant}
+                      representantsLists={props.representantsLists}
+                      setRepresentantsLists={props.setRepresentantsLists}
+                    />
+                  </div>
                 </div>
               )}
             </Draggable>

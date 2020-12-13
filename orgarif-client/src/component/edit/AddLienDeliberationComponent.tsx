@@ -14,6 +14,7 @@ import {
 } from '../../domain/organisme';
 import { LocalDate } from '../../domain/time';
 import { Errors } from '../../errors';
+import { colors } from '../../styles/vars';
 import { compareByLocalDate, defer } from '../../utils';
 import { CreateDeliberationAndAddLienComponent } from './CreateDeliberationAndAddLienComponent';
 
@@ -161,6 +162,9 @@ export const AddLienDeliberationComponent = (props: {
               label="Ajouter délibération"
               variant="outlined"
               size={'small'}
+              css={css`
+                background: ${colors.white};
+              `}
             />
             {loading && (
               <div

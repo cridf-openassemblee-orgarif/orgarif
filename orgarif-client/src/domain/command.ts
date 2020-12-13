@@ -104,6 +104,11 @@ export interface UpdateOrganismeNatureJuridiqueCommand {
   natureJuridiqueId: NatureJuridiqueId | undefined;
 }
 
+export interface UpdateOrganismePartageRepresentantsCommand {
+  id: OrganismeId;
+  partageRepresentants: boolean;
+}
+
 export interface UpdateOrganismeSecteurCommand {
   id: OrganismeId;
   secteurId: SecteurId | undefined;

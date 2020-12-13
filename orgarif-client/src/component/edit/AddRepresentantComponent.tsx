@@ -1,4 +1,5 @@
 /** @jsxImportSource @emotion/react */
+import { css } from '@emotion/core';
 import TextField from '@material-ui/core/TextField';
 import Autocomplete from '@material-ui/lab/Autocomplete';
 import * as React from 'react';
@@ -8,9 +9,10 @@ import { appContext } from '../../ApplicationContext';
 import { RepresentantListId } from '../../domain/client-id';
 import { Elu } from '../../domain/elu';
 import { EluId, InstanceId, OrganismeId } from '../../domain/id';
-import { Dict, get, set } from '../../domain/nominal-class';
+import { Dict, get, setOld } from '../../domain/nominal-class';
 import { Representant, RepresentantOrSuppleant } from '../../domain/organisme';
 import { state } from '../../state/state';
+import { colors } from '../../styles/vars';
 import { representantListId } from './DragAndDropContainer';
 
 export const AddRepresentantComponent = (props: {
@@ -51,7 +53,7 @@ export const AddRepresentantComponent = (props: {
           ...get(props.representantsLists, listId),
           representant
         ];
-        set(newRepresentantsLists, listId, newRepresentants);
+        setOld(newRepresentantsLists, listId, newRepresentants);
         props.setRepresentantsLists(newRepresentantsLists);
         setValue(null);
         setInputValue('');
@@ -77,6 +79,9 @@ export const AddRepresentantComponent = (props: {
           {...params}
           label="Ajouter représentant"
           variant="outlined"
+          css={css`
+            background: ${colors.white};
+          `}
         />
       )}
       size={'small'}

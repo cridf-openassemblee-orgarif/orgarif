@@ -41,6 +41,7 @@ class CommandEndpoint(
         val moveRepresentantCommandHandler: MoveRepresentantCommandHandler,
         val registerCommandHandler: RegisterCommandHandler,
         val updateOrganismeNatureJuridiqueCommandHandler: UpdateOrganismeNatureJuridiqueCommandHandler,
+        val updateOrganismePartageRepresentantsCommandHandler: UpdateOrganismePartageRepresentantsCommandHandler,
         val updateOrganismeSecteurCommandHandler: UpdateOrganismeSecteurCommandHandler,
         val updateOrganismeTypeStructureCommandCommandHandler: UpdateOrganismeTypeStructureCommandHandler,
 ) {
@@ -131,6 +132,7 @@ class CommandEndpoint(
         is MoveRepresentantCommand -> moveRepresentantCommandHandler
         is RegisterCommand -> registerCommandHandler
         is UpdateOrganismeNatureJuridiqueCommand -> updateOrganismeNatureJuridiqueCommandHandler
+        is UpdateOrganismePartageRepresentantsCommand -> updateOrganismePartageRepresentantsCommandHandler
         is UpdateOrganismeSecteurCommand -> updateOrganismeSecteurCommandHandler
         is UpdateOrganismeTypeStructureCommand -> updateOrganismeTypeStructureCommandCommandHandler
     } as CommandHandler<Command, CommandResponse>

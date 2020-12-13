@@ -24,6 +24,8 @@ object CommandConfiguration {
         // TODO loggedIn
         is UpdateOrganismeNatureJuridiqueCommand -> AuthenticationLevel.neutral
         // TODO loggedIn
+        is UpdateOrganismePartageRepresentantsCommand-> AuthenticationLevel.neutral
+        // TODO loggedIn
         is UpdateOrganismeSecteurCommand -> AuthenticationLevel.neutral
         // TODO loggedIn
         is UpdateOrganismeTypeStructureCommand -> AuthenticationLevel.neutral

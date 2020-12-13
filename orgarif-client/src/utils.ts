@@ -24,6 +24,12 @@ export const getCookie = (cookieName: string) => {
   return undefined;
 };
 
+export const compareByNumber = <T>(l: (o: T) => number) => (o1: T, o2: T) => {
+  if (l(o1) > l(o2)) return 1;
+  else if (l(o1) < l(o2)) return -1;
+  else return 0;
+};
+
 export const compareByString = <T>(l: (o: T) => string) => (o1: T, o2: T) =>
   l(o1).localeCompare(l(o2));
 

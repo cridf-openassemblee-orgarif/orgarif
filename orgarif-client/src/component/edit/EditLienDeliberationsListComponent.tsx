@@ -16,18 +16,34 @@ export const EditLienDeliberationsListComponent = (props: {
     LienDeliberationInfos[]
   >(props.lienDeliberations);
   return (
-    <div>
-      <h3>Délibérations</h3>
-      {lienDeliberations.map(d => (
-        <div
-          key={stringifyNominalString(d.id)}
-          css={css`
-            padding: 10px 0;
-          `}
-        >
-          {d.deliberation.libelle} du {d.deliberation.deliberationDate}
-        </div>
-      ))}
+    <div
+      css={css`
+        padding: 20px 10px 20px 10px;
+      `}
+    >
+      <h3
+        css={css`
+          padding-left: 40px;
+        `}
+      >
+        Délibérations
+      </h3>
+      <div
+        css={css`
+          margin: 20px 0;
+        `}
+      >
+        {lienDeliberations.map(d => (
+          <div
+            key={stringifyNominalString(d.id)}
+            css={css`
+              padding: 10px 0;
+            `}
+          >
+            {d.deliberation.libelle} du {d.deliberation.deliberationDate}
+          </div>
+        ))}
+      </div>
       <AddLienDeliberationComponent
         organismeId={props.organismeId}
         instanceId={props.instanceId}

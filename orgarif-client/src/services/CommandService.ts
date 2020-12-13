@@ -18,6 +18,7 @@ import {
   RegisterCommand,
   RegisterCommandResponse,
   UpdateOrganismeNatureJuridiqueCommand,
+  UpdateOrganismePartageRepresentantsCommand,
   UpdateOrganismeSecteurCommand,
   UpdateOrganismeTypeStructureCommand
 } from '../domain/command';
@@ -74,6 +75,11 @@ export class CommandService {
     command: UpdateOrganismeNatureJuridiqueCommand
   ): Promise<void> =>
     this.command('UpdateOrganismeNatureJuridiqueCommand', command);
+
+  public updateOrganismePartageRepresentantsCommand = (
+    command: UpdateOrganismePartageRepresentantsCommand
+  ): Promise<void> =>
+    this.command('UpdateOrganismePartageRepresentantsCommand', command);
 
   public updateOrganismeSecteurCommand = (
     command: UpdateOrganismeSecteurCommand

@@ -41,7 +41,8 @@ export const get = <K extends NominalItem, T>(dict: Dict<K, T>, key: K): T => {
   return r;
 };
 
-export const set = <K extends NominalItem, T>(
+// FIXME remove usage pour set
+export const setOld = <K extends NominalItem, T>(
   dict: Dict<K, T>,
   key: K,
   value: T
@@ -49,7 +50,21 @@ export const set = <K extends NominalItem, T>(
   dict[key] = value;
 };
 
-export const deleteItem = <K extends NominalItem, T>(
+export const set = <K extends NominalItem, T>(
+  dict: Dict<K, T>,
+  key: K,
+  value: T
+) => {
+  const newDict = { ...dict };
+  newDict[key] = value;
+  return newDict;
+};
+
+export const dictValues = <K extends NominalItem, T>(dict: Dict<K, T>) =>
+  Object.values(dict) as T[];
+
+// FIXME remove usage pour un deleteItem immuable
+export const deleteItemOld = <K extends NominalItem, T>(
   dict: Dict<K, T>,
   key: K
 ) => {

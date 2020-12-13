@@ -1,6 +1,6 @@
 /** @jsxImportSource @emotion/react */
+import { css } from '@emotion/react';
 import { createStyles, FormControl, Select, Theme } from '@material-ui/core';
-import InputLabel from '@material-ui/core/InputLabel';
 import MenuItem from '@material-ui/core/MenuItem/MenuItem';
 import makeStyles from '@material-ui/core/styles/makeStyles';
 import * as React from 'react';
@@ -32,28 +32,43 @@ export const SelectInput = (props: {
   const inputId = clientUid();
   const classes = useStyles();
   return (
-    <FormControl
-      variant="outlined"
-      className={classes.formControl}
-      fullWidth={true}
-      size={'small'}
+    <div
+      css={css`
+        display: flex;
+      `}
     >
-      <InputLabel id={stringifyNominalString(inputId)}>
-        {props.label}
-      </InputLabel>
-      <Select
-        labelId={stringifyNominalString(inputId)}
-        id={'demo-simple-select-outlined'}
-        value={props.value}
-        onChange={props.onChange}
-        label={props.label}
+      <div
+        css={css`
+          flex: 25%;
+          font-size: 1rem;
+          text-align: right;
+          padding: 19px 10px 0 0;
+        `}
       >
-        {props.options.map((o, i) => (
-          <MenuItem key={i} value={o.value}>
-            {o.label}
-          </MenuItem>
-        ))}
-      </Select>
-    </FormControl>
+        {props.label}
+      </div>
+      <FormControl
+        variant="outlined"
+        className={classes.formControl}
+        fullWidth={true}
+        size={'small'}
+        css={css`
+          flex: 75%;
+        `}
+      >
+        <Select
+          labelId={stringifyNominalString(inputId)}
+          id={stringifyNominalString(inputId)}
+          value={props.value}
+          onChange={props.onChange}
+        >
+          {props.options.map((o, i) => (
+            <MenuItem key={i} value={o.value}>
+              {o.label}
+            </MenuItem>
+          ))}
+        </Select>
+      </FormControl>
+    </div>
   );
 };

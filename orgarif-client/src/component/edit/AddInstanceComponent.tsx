@@ -4,7 +4,7 @@ import { useRef } from 'react';
 import { appContext } from '../../ApplicationContext';
 import { RepresentantListId } from '../../domain/client-id';
 import { OrganismeId } from '../../domain/id';
-import { Dict, set } from '../../domain/nominal-class';
+import { Dict, setOld } from '../../domain/nominal-class';
 import { FullInstance, Representant } from '../../domain/organisme';
 import { SimpleForm } from '../base-component/SimpleForm';
 import { TextInput } from '../base-component/TextInput';
@@ -39,12 +39,12 @@ export const AddInstanceComponent = (props: {
         const newInstances = [...props.instances, instance];
         props.setInstances(newInstances);
         const newRepresentantsLists = { ...props.representantsLists };
-        set(
+        setOld(
           newRepresentantsLists,
           representantListId(props.organismeId, r.id, 'representant'),
           []
         );
-        set(
+        setOld(
           newRepresentantsLists,
           representantListId(props.organismeId, r.id, 'suppleant'),
           []

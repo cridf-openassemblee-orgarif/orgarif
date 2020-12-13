@@ -1,5 +1,7 @@
 /** @jsxImportSource @emotion/react */
 import { css } from '@emotion/react';
+import { FormControlLabel } from '@material-ui/core';
+import Checkbox from '@material-ui/core/Checkbox';
 import * as React from 'react';
 import { useEffect, useState } from 'react';
 import { useRecoilValue } from 'recoil';
@@ -15,7 +17,7 @@ import {
 import {
   Dict,
   instanciateNominalString,
-  set
+  setOld
 } from '../../domain/nominal-class';
 import {
   FullInstance,
@@ -26,17 +28,16 @@ import { state } from '../../state/state';
 import { SelectInput, SelectOption } from '../base-component/SelectInput';
 import { NombreRepresentantsComponent } from '../NombreRepresentantsComponent';
 import { AddInstanceComponent } from './AddInstanceComponent';
-import { DragableInstancesListComponent } from './DragableInstancesListComponent';
 import {
   DragAndDropContainer,
   representantListId
 } from './DragAndDropContainer';
 import { EditLienDeliberationsListComponent } from './EditLienDeliberationsListComponent';
 import { EditRepresentantsListComponent } from './EditRepresentantsListComponent';
+import { InstancesListComponent } from './InstancesListComponent';
 
 const classes = {
   categories: css`
-    flex: 1;
     padding: 0 20px;
   `
 };
@@ -77,6 +78,22 @@ export const EditCategoryComponent = <C extends Category, I extends OrgarifId>(
   );
 };
 
+export const useWindowHeight = () => {
+  const [height, setHeight] = useState(0);
+
+  useEffect(() => {
+    const handleResize = () => setHeight(window.innerHeight);
+
+    window.addEventListener('resize', () => handleResize());
+
+    handleResize();
+
+    return () => window.removeEventListener('resize', handleResize);
+  });
+
+  return height;
+};
+
 export const EditOrganismeComponent = (props: {
   organisme: FullOrganisme;
   setLoading: (l: boolean) => void;
@@ -88,20 +105,23 @@ export const EditOrganismeComponent = (props: {
   const [representantsLists, setRepresentantsLists] = useState<
     Dict<RepresentantListId, Representant[]>
   >({});
+  const [partageRepresentants, setPartageRepresentants] = useState(
+    organisme.infos.partageRepresentants
+  );
   useEffect(() => {
     const initialLists: Dict<RepresentantListId, Representant[]> = {};
-    set(
+    setOld(
       initialLists,
       representantListId(organisme.infos.id, undefined, 'representant'),
       organisme.representants
     );
-    set(
+    setOld(
       initialLists,
       representantListId(organisme.infos.id, undefined, 'suppleant'),
       organisme.suppleants
     );
     organisme.instances.forEach(instance => {
-      set(
+      setOld(
         initialLists,
         representantListId(
           organisme.infos.id,
@@ -110,7 +130,7 @@ export const EditOrganismeComponent = (props: {
         ),
         instance.representants
       );
-      set(
+      setOld(
         initialLists,
         representantListId(organisme.infos.id, instance.infos.id, 'suppleant'),
         instance.suppleants
@@ -129,11 +149,18 @@ export const EditOrganismeComponent = (props: {
           width: 100%;
         `}
       >
-        <h2>{organisme.infos.nom}</h2>
+        <h2
+          css={css`
+            font-size: 2rem;
+            padding: 20px 50px;
+          `}
+        >
+          {organisme.infos.nom}
+        </h2>
         <div
           css={css`
-            display: flex;
-            width: 100%;
+            width: 50%;
+            margin-bottom: 40px;
           `}
         >
           <div css={classes.categories}>
@@ -184,67 +211,162 @@ export const EditOrganismeComponent = (props: {
               }
             />
           </div>
-        </div>
-        <NombreRepresentantsComponent
-          nombreRepresentants={organisme.infos.nombreRepresentants}
-          nombreSuppleants={organisme.infos.nombreSuppleants}
-        />
-        <div
-          css={css`
-            width: 100%;
-            display: flex;
-          `}
-        >
-          <div
-            css={css`
-              flex: 1;
-            `}
-          >
-            <EditRepresentantsListComponent
-              organismeId={organisme.infos.id}
-              instanceId={undefined}
-              representantOrSuppleant="representant"
-              representantsLists={representantsLists}
-              setRepresentantsLists={setRepresentantsLists}
-            />
+          <div css={classes.categories}>
+            <div
+              css={css`
+                display: flex;
+              `}
+            >
+              <div
+                css={css`
+                  flex: 25%;
+                  font-size: 1rem;
+                  text-align: right;
+                  padding: 19px 10px 0 0;
+                `}
+              >
+                Ajouter une instance
+              </div>
+              <div
+                css={css`
+                  flex: 75%;
+                  padding: 8px 6px 0 4px;
+                `}
+              >
+                <AddInstanceComponent
+                  organismeId={organisme.infos.id}
+                  instances={instances}
+                  setInstances={setInstances}
+                  representantsLists={representantsLists}
+                  setRepresentantsLists={setRepresentantsLists}
+                />
+              </div>
+            </div>
           </div>
-          <div
-            css={css`
-              flex: 1;
-            `}
-          >
-            <EditRepresentantsListComponent
-              organismeId={organisme.infos.id}
-              instanceId={undefined}
-              representantOrSuppleant="suppleant"
-              representantsLists={representantsLists}
-              setRepresentantsLists={setRepresentantsLists}
-            />
-          </div>
+          {instances.length !== 0 && (
+            <div css={classes.categories}>
+              <div
+                css={css`
+                  display: flex;
+                `}
+              >
+                <div
+                  css={css`
+                    flex: 25%;
+                    font-size: 1rem;
+                    text-align: right;
+                    padding: 19px 10px 0 0;
+                  `}
+                />
+                <div
+                  css={css`
+                    flex: 75%;
+                    padding: 8px 6px 0 4px;
+                  `}
+                >
+                  <FormControlLabel
+                    control={
+                      <Checkbox
+                        checked={partageRepresentants}
+                        onChange={() => {
+                          appContext
+                            .commandService()
+                            .updateOrganismePartageRepresentantsCommand({
+                              id: props.organisme.infos.id,
+                              partageRepresentants: !partageRepresentants
+                            })
+                            .then(() =>
+                              setPartageRepresentants(!partageRepresentants)
+                            );
+                        }}
+                        name="checkedB"
+                        color="primary"
+                      />
+                    }
+                    label="Partage des représentants"
+                  />
+                </div>
+              </div>
+            </div>
+          )}
         </div>
-        <EditLienDeliberationsListComponent
-          lienDeliberations={organisme.lienDeliberations}
-          organismeId={organisme.infos.id}
-        />
+        {(instances.length === 0 || partageRepresentants) && (
+          <React.Fragment>
+            <NombreRepresentantsComponent
+              nombreRepresentants={organisme.infos.nombreRepresentants}
+              nombreSuppleants={organisme.infos.nombreSuppleants}
+            />
+            <div
+              css={css`
+                width: 50%;
+                margin: 10px 50px;
+                padding: 0 40px;
+                display: flex;
+              `}
+            >
+              <div
+                css={css`
+                  flex: 1;
+                `}
+              >
+                <EditRepresentantsListComponent
+                  organismeId={organisme.infos.id}
+                  instanceId={undefined}
+                  representantOrSuppleant="representant"
+                  representantsLists={representantsLists}
+                  setRepresentantsLists={setRepresentantsLists}
+                  label={'Représentants'}
+                  emptyListLabel={'Pas de représentant'}
+                />
+              </div>
+              <div
+                css={css`
+                  flex: 1;
+                  padding-bottom: 30px;
+                `}
+              >
+                <EditRepresentantsListComponent
+                  organismeId={organisme.infos.id}
+                  instanceId={undefined}
+                  representantOrSuppleant="suppleant"
+                  representantsLists={representantsLists}
+                  setRepresentantsLists={setRepresentantsLists}
+                  label={'Suppléants'}
+                  emptyListLabel={'Pas de suppléant'}
+                />
+              </div>
+            </div>
+          </React.Fragment>
+        )}
         {instances.length !== 0 && (
-          <div>
-            <h3>Instances</h3>
-            <DragableInstancesListComponent
+          <div
+            css={css`
+              margin: 0 20px;
+            `}
+          >
+            <InstancesListComponent
               organismeId={organisme.infos.id}
               instances={instances}
               setInstances={setInstances}
               representantsLists={representantsLists}
+              partageRepresentants={partageRepresentants}
               setRepresentantsLists={setRepresentantsLists}
             />
           </div>
         )}
-        <AddInstanceComponent
-          organismeId={organisme.infos.id}
-          instances={instances}
-          setInstances={setInstances}
-          representantsLists={representantsLists}
-          setRepresentantsLists={setRepresentantsLists}
-        />
+        <div
+          css={css`
+            width: 50%;
+            margin: 10px 50px;
+            padding: 0 40px;
+            display: flex;
+          `}
+        >
+          <EditLienDeliberationsListComponent
+            lienDeliberations={organisme.lienDeliberations}
+            organismeId={organisme.infos.id}
+          />
+        </div>
       </div>
     </DragAndDropContainer>
   );
