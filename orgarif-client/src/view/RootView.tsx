@@ -31,9 +31,8 @@ export const RootView = () => {
           </RouteLink>
           <h3>Par secteur</h3>
           {secteurs.map(s => (
-            <div>
+            <div key={stringifyNominalString(s.id)}>
               <RouteLink
-                key={stringifyNominalString(s.id)}
                 route={{
                   name: 'ListOrganismesBySecteurRoute',
                   secteurId: s.id

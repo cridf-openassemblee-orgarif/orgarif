@@ -4,30 +4,19 @@ import orgarif.domain.AuthenticationLevel
 
 object CommandConfiguration {
     fun authenticationLevel(command: Command) = when (command) {
-        // TODO loggedIn
-        is AddInstanceCommand -> AuthenticationLevel.neutral
-        // TODO loggedIn
-        is AddLienDeliberationCommand -> AuthenticationLevel.neutral
-        // TODO loggedIn
-        is AddRepresentantCommand -> AuthenticationLevel.neutral
-        // TODO loggedIn
-        is CreateDeliberationAndAddLienCommand -> AuthenticationLevel.neutral
-        // TODO loggedIn
-        is CreateOrganismeCommand -> AuthenticationLevel.neutral
-        // TODO loggedIn
-        is DeleteInstanceCommand -> AuthenticationLevel.neutral
-        // TODO loggedIn
-        is DeleteRepresentantCommand -> AuthenticationLevel.neutral
+        is AddInstanceCommand -> AuthenticationLevel.loggedIn
+        is AddLienDeliberationCommand -> AuthenticationLevel.loggedIn
+        is AddRepresentantCommand -> AuthenticationLevel.loggedIn
+        is CreateDeliberationAndAddLienCommand -> AuthenticationLevel.loggedIn
+        is CreateOrganismeCommand -> AuthenticationLevel.loggedIn
+        is DeleteInstanceCommand -> AuthenticationLevel.loggedIn
+        is DeleteRepresentantCommand -> AuthenticationLevel.loggedIn
         is LoginCommand -> AuthenticationLevel.loggedOut
-        is MoveRepresentantCommand -> AuthenticationLevel.neutral
+        is MoveRepresentantCommand -> AuthenticationLevel.loggedIn
         is RegisterCommand -> AuthenticationLevel.loggedOut
-        // TODO loggedIn
-        is UpdateOrganismeNatureJuridiqueCommand -> AuthenticationLevel.neutral
-        // TODO loggedIn
-        is UpdateOrganismePartageRepresentantsCommand-> AuthenticationLevel.neutral
-        // TODO loggedIn
-        is UpdateOrganismeSecteurCommand -> AuthenticationLevel.neutral
-        // TODO loggedIn
-        is UpdateOrganismeTypeStructureCommand -> AuthenticationLevel.neutral
+        is UpdateOrganismeNatureJuridiqueCommand -> AuthenticationLevel.loggedIn
+        is UpdateOrganismePartageRepresentantsCommand-> AuthenticationLevel.loggedIn
+        is UpdateOrganismeSecteurCommand -> AuthenticationLevel.loggedIn
+        is UpdateOrganismeTypeStructureCommand -> AuthenticationLevel.loggedIn
     }
 }
