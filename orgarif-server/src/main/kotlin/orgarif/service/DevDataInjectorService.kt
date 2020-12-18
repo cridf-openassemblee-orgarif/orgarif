@@ -23,7 +23,7 @@ class DevDataInjectorService(@Value("\${developerMail}") val developerMail: Stri
             mailPrefix to mailSuffix
         }
         insertUser("dev", false, mailPrefix, mailSuffix)
-        insertUser("admin", false, mailPrefix, mailSuffix)
+        insertUser("admin", true, mailPrefix, mailSuffix)
     }
 
     private fun insertUser(username: String, admin: Boolean, mailPrefix: String, mailSuffix: String) {
