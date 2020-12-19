@@ -4,13 +4,15 @@ import com.google.common.base.Charsets
 import com.google.common.base.Strings
 import com.google.common.io.Files
 import mu.KotlinLogging
+import org.springframework.core.env.Environment
+import org.springframework.stereotype.Service
 import orgarif.OrgarifApplication
 import orgarif.domain.ApplicationEnvironment
 import orgarif.domain.DeploymentLogId
 import orgarif.repository.sql.DeploymentLogDao
-import org.springframework.core.env.Environment
-import org.springframework.stereotype.Service
 import java.io.File
+import java.io.FileInputStream
+import java.util.*
 
 @Service
 class ApplicationInstance(val deploymentLogDao: DeploymentLogDao,
@@ -36,13 +38,24 @@ class ApplicationInstance(val deploymentLogDao: DeploymentLogDao,
         ApplicationEnvironment.valueOf(profiles.first())
     }
 
+    val buildProperties by lazy {
+        File(System.getProperty("user.dir") + "/build.properties").let { file ->
+            if (file.exists()) {
+                Properties().apply {
+                    load(FileInputStream(file))
+                }
+            } else {
+                null
+            }
+        }
+    }
+
     val gitRevisionLabel: String by lazy {
-        val buildVersionFile = File(System.getProperty("user.dir") + "/gitRevision")
-        val buildDiffFile = File(System.getProperty("user.dir") + "/gitDiff")
-        if (buildVersionFile.exists() && buildDiffFile.exists()) {
+        val buildDiffFile = File(System.getProperty("user.dir") + "/git.diff")
+        val buildProps = buildProperties
+        if (buildProps != null && buildDiffFile.exists()) {
             val buildDiff = Files.asCharSource(buildDiffFile, Charsets.UTF_8).readFirstLine()
-            Files.asCharSource(buildVersionFile, Charsets.UTF_8).readFirstLine() +
-                    if (!Strings.isNullOrEmpty(buildDiff)) " + DIFF" else ""
+            buildProps.getProperty("shortGitRevision") + (if (!Strings.isNullOrEmpty(buildDiff)) " + DIFF" else "")
         } else {
             "[dev]"
         }

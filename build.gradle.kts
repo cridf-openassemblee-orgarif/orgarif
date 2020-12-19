@@ -1,5 +1,5 @@
 val buildPropertiesFile by extra("${rootProject.buildDir}/build.properties")
-val buildGitDiffFile by extra("${rootProject.buildDir}/gitDiff")
+val buildGitDiffFile by extra("${rootProject.buildDir}/git.diff")
 
 fun String.runCommand(workingDir: File = file("./")): String {
     val parts = this.split("\\s".toRegex())
