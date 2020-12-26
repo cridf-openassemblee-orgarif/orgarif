@@ -8,6 +8,10 @@ import org.jooq.meta.mysql.MySQLDatabase
 import org.jooq.meta.postgres.PostgresDatabase
 import orgarif.jooq.tools.Config
 import orgarif.jooq.tools.jooq.CharToUUIDConverter
+import orgarif.jooq.tools.jooq.TimestampToInstantConverter
+import orgarif.jooq.tools.jooq.TimestampWithTimeZoneToInstantConverter
+import java.time.Instant
+import java.util.*
 import javax.annotation.Nonnull
 import javax.annotation.Nullable
 import kotlin.reflect.KClass
@@ -54,22 +58,36 @@ object JooqConfiguration {
                                         }
                                     }
                                     .apply {
-                                        if (Config.driver == Config.Driver.mysql) {
-                                            withForcedTypes(
-                                                    ForcedType().apply {
-                                                        userType = java.util.UUID::class.java.name
-                                                        includeTypes = "CHAR\\(32\\)"
-                                                        includeExpression = ".*\\.*id\$"
-                                                        converter = CharToUUIDConverter::class.java.name
-                                                    },
-                                                    ForcedType().apply {
-                                                        name = "BOOLEAN"
-                                                        includeTypes = "(?i:TINYINT\\(1\\))"
-                                                    }
-                                            )
+                                        val timeStampForcedType = ForcedType().apply {
+                                            userType = Instant::class.java.name
+                                            includeTypes = "TIMESTAMP"
+                                            converter = TimestampToInstantConverter::class.java.name
                                         }
+                                        val forcedTypes = when (Config.driver) {
+                                            Config.Driver.psql -> {
+                                                val timestampWithTimeZoneForcedType = ForcedType().apply {
+                                                    userType = Instant::class.java.name
+                                                    includeTypes = "TIMESTAMP\\ WITH\\ TIME\\ ZONE"
+                                                    converter = TimestampWithTimeZoneToInstantConverter::class.java.name
+                                                }
+                                                listOf(timeStampForcedType, timestampWithTimeZoneForcedType)
+                                            }
+                                            Config.Driver.mysql -> {
+                                                val booleanForcedType = ForcedType().apply {
+                                                    name = "BOOLEAN"
+                                                    includeTypes = "(?i:TINYINT\\(1\\))"
+                                                }
+                                                val uuidForcedType = ForcedType().apply {
+                                                    userType = UUID::class.java.name
+                                                    includeTypes = "CHAR\\(32\\)"
+                                                    includeExpression = ".*\\.*id\$"
+                                                    converter = CharToUUIDConverter::class.java.name
+                                                }
+                                                listOf(timeStampForcedType, booleanForcedType, uuidForcedType)
+                                            }
+                                        }
+                                        withForcedTypes(forcedTypes)
                                     }
-
                             )
                             .apply {
                                 if (generatorStrategyClass != null) {
