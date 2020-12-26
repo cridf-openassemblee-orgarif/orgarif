@@ -4,7 +4,7 @@
 package orgarif.jooq.generated.tables;
 
 
-import java.time.LocalDateTime;
+import java.time.Instant;
 import java.util.Arrays;
 import java.util.List;
 import java.util.UUID;
@@ -31,6 +31,7 @@ import orgarif.jooq.generated.Keys;
 import orgarif.jooq.generated.OrgarifTable;
 import orgarif.jooq.generated.tables.records.MagicLinkTokenRecord;
 import orgarif.jooq.tools.jooq.CharToUUIDConverter;
+import orgarif.jooq.tools.jooq.TimestampToInstantConverter;
 
 
 /**
@@ -68,7 +69,7 @@ public class MagicLinkTokenTable extends TableImpl<MagicLinkTokenRecord> {
     /**
      * The column <code>orgarif.magic_link_token.creation_date</code>.
      */
-    public final TableField<MagicLinkTokenRecord, LocalDateTime> CREATION_DATE = createField(DSL.name("creation_date"), SQLDataType.LOCALDATETIME(0).nullable(false), this, "");
+    public final TableField<MagicLinkTokenRecord, Instant> CREATION_DATE = createField(DSL.name("creation_date"), SQLDataType.LOCALDATETIME(0).nullable(false), this, "", new TimestampToInstantConverter());
 
     /**
      * The column <code>orgarif.magic_link_token.validity</code>.
@@ -178,7 +179,7 @@ public class MagicLinkTokenTable extends TableImpl<MagicLinkTokenRecord> {
 
     @Override
     @Nonnull
-    public Row4<String, UUID, LocalDateTime, Boolean> fieldsRow() {
+    public Row4<String, UUID, Instant, Boolean> fieldsRow() {
         return (Row4) super.fieldsRow();
     }
 }

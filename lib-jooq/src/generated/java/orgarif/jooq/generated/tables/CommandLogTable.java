@@ -4,7 +4,7 @@
 package orgarif.jooq.generated.tables;
 
 
-import java.time.LocalDateTime;
+import java.time.Instant;
 import java.util.Arrays;
 import java.util.List;
 import java.util.UUID;
@@ -31,6 +31,7 @@ import orgarif.jooq.generated.Keys;
 import orgarif.jooq.generated.OrgarifTable;
 import orgarif.jooq.generated.tables.records.CommandLogRecord;
 import orgarif.jooq.tools.jooq.CharToUUIDConverter;
+import orgarif.jooq.tools.jooq.TimestampToInstantConverter;
 
 
 /**
@@ -83,7 +84,7 @@ public class CommandLogTable extends TableImpl<CommandLogRecord> {
     /**
      * The column <code>orgarif.command_log.date</code>.
      */
-    public final TableField<CommandLogRecord, LocalDateTime> DATE = createField(DSL.name("date"), SQLDataType.LOCALDATETIME(0).nullable(false), this, "");
+    public final TableField<CommandLogRecord, Instant> DATE = createField(DSL.name("date"), SQLDataType.LOCALDATETIME(0).nullable(false), this, "", new TimestampToInstantConverter());
 
     /**
      * The column <code>orgarif.command_log.ip</code>.
@@ -216,7 +217,7 @@ public class CommandLogTable extends TableImpl<CommandLogRecord> {
 
     @Override
     @Nonnull
-    public Row10<UUID, UUID, UUID, String, String, LocalDateTime, String, UUID, String, String> fieldsRow() {
+    public Row10<UUID, UUID, UUID, String, String, Instant, String, UUID, String, String> fieldsRow() {
         return (Row10) super.fieldsRow();
     }
 }

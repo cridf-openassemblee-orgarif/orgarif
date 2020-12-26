@@ -4,7 +4,7 @@
 package orgarif.jooq.generated.tables;
 
 
-import java.time.LocalDateTime;
+import java.time.Instant;
 import java.util.Arrays;
 import java.util.List;
 import java.util.UUID;
@@ -31,6 +31,7 @@ import orgarif.jooq.generated.Keys;
 import orgarif.jooq.generated.OrgarifTable;
 import orgarif.jooq.generated.tables.records.OrganismeRecord;
 import orgarif.jooq.tools.jooq.CharToUUIDConverter;
+import orgarif.jooq.tools.jooq.TimestampToInstantConverter;
 
 
 /**
@@ -98,12 +99,12 @@ public class OrganismeTable extends TableImpl<OrganismeRecord> {
     /**
      * The column <code>orgarif.organisme.creation_date</code>.
      */
-    public final TableField<OrganismeRecord, LocalDateTime> CREATION_DATE = createField(DSL.name("creation_date"), SQLDataType.LOCALDATETIME(0).nullable(false), this, "");
+    public final TableField<OrganismeRecord, Instant> CREATION_DATE = createField(DSL.name("creation_date"), SQLDataType.LOCALDATETIME(0).nullable(false), this, "", new TimestampToInstantConverter());
 
     /**
      * The column <code>orgarif.organisme.last_modification_date</code>.
      */
-    public final TableField<OrganismeRecord, LocalDateTime> LAST_MODIFICATION_DATE = createField(DSL.name("last_modification_date"), SQLDataType.LOCALDATETIME(0).nullable(false), this, "");
+    public final TableField<OrganismeRecord, Instant> LAST_MODIFICATION_DATE = createField(DSL.name("last_modification_date"), SQLDataType.LOCALDATETIME(0).nullable(false), this, "", new TimestampToInstantConverter());
 
     private OrganismeTable(Name alias, Table<OrganismeRecord> aliased) {
         this(alias, aliased, null);
@@ -216,7 +217,7 @@ public class OrganismeTable extends TableImpl<OrganismeRecord> {
 
     @Override
     @Nonnull
-    public Row10<UUID, String, UUID, UUID, UUID, Integer, Integer, Boolean, LocalDateTime, LocalDateTime> fieldsRow() {
+    public Row10<UUID, String, UUID, UUID, UUID, Integer, Integer, Boolean, Instant, Instant> fieldsRow() {
         return (Row10) super.fieldsRow();
     }
 }

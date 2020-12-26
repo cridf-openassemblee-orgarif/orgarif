@@ -4,7 +4,7 @@
 package orgarif.jooq.generated.tables;
 
 
-import java.time.LocalDateTime;
+import java.time.Instant;
 import java.util.Arrays;
 import java.util.List;
 import java.util.UUID;
@@ -31,6 +31,7 @@ import orgarif.jooq.generated.Keys;
 import orgarif.jooq.generated.OrgarifTable;
 import orgarif.jooq.generated.tables.records.LienDeliberationRecord;
 import orgarif.jooq.tools.jooq.CharToUUIDConverter;
+import orgarif.jooq.tools.jooq.TimestampToInstantConverter;
 
 
 /**
@@ -78,12 +79,12 @@ public class LienDeliberationTable extends TableImpl<LienDeliberationRecord> {
     /**
      * The column <code>orgarif.lien_deliberation.creation_date</code>.
      */
-    public final TableField<LienDeliberationRecord, LocalDateTime> CREATION_DATE = createField(DSL.name("creation_date"), SQLDataType.LOCALDATETIME(0).nullable(false), this, "");
+    public final TableField<LienDeliberationRecord, Instant> CREATION_DATE = createField(DSL.name("creation_date"), SQLDataType.LOCALDATETIME(0).nullable(false), this, "", new TimestampToInstantConverter());
 
     /**
      * The column <code>orgarif.lien_deliberation.last_modification_date</code>.
      */
-    public final TableField<LienDeliberationRecord, LocalDateTime> LAST_MODIFICATION_DATE = createField(DSL.name("last_modification_date"), SQLDataType.LOCALDATETIME(0).nullable(false), this, "");
+    public final TableField<LienDeliberationRecord, Instant> LAST_MODIFICATION_DATE = createField(DSL.name("last_modification_date"), SQLDataType.LOCALDATETIME(0).nullable(false), this, "", new TimestampToInstantConverter());
 
     private LienDeliberationTable(Name alias, Table<LienDeliberationRecord> aliased) {
         this(alias, aliased, null);
@@ -196,7 +197,7 @@ public class LienDeliberationTable extends TableImpl<LienDeliberationRecord> {
 
     @Override
     @Nonnull
-    public Row6<UUID, UUID, UUID, UUID, LocalDateTime, LocalDateTime> fieldsRow() {
+    public Row6<UUID, UUID, UUID, UUID, Instant, Instant> fieldsRow() {
         return (Row6) super.fieldsRow();
     }
 }

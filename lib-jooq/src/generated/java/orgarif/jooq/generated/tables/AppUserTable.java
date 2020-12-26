@@ -4,7 +4,7 @@
 package orgarif.jooq.generated.tables;
 
 
-import java.time.LocalDateTime;
+import java.time.Instant;
 import java.util.Arrays;
 import java.util.List;
 import java.util.UUID;
@@ -31,6 +31,7 @@ import orgarif.jooq.generated.Keys;
 import orgarif.jooq.generated.OrgarifTable;
 import orgarif.jooq.generated.tables.records.AppUserRecord;
 import orgarif.jooq.tools.jooq.CharToUUIDConverter;
+import orgarif.jooq.tools.jooq.TimestampToInstantConverter;
 
 
 /**
@@ -88,7 +89,7 @@ public class AppUserTable extends TableImpl<AppUserRecord> {
     /**
      * The column <code>orgarif.app_user.signup_date</code>.
      */
-    public final TableField<AppUserRecord, LocalDateTime> SIGNUP_DATE = createField(DSL.name("signup_date"), SQLDataType.LOCALDATETIME(0).nullable(false), this, "");
+    public final TableField<AppUserRecord, Instant> SIGNUP_DATE = createField(DSL.name("signup_date"), SQLDataType.LOCALDATETIME(0).nullable(false), this, "", new TimestampToInstantConverter());
 
     /**
      * The column <code>orgarif.app_user.dirty_mail</code>.
@@ -188,7 +189,7 @@ public class AppUserTable extends TableImpl<AppUserRecord> {
 
     @Override
     @Nonnull
-    public Row8<UUID, String, String, String, String, Boolean, LocalDateTime, String> fieldsRow() {
+    public Row8<UUID, String, String, String, String, Boolean, Instant, String> fieldsRow() {
         return (Row8) super.fieldsRow();
     }
 }

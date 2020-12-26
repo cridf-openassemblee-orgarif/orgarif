@@ -4,8 +4,8 @@
 package orgarif.jooq.generated.tables;
 
 
+import java.time.Instant;
 import java.time.LocalDate;
-import java.time.LocalDateTime;
 import java.util.Arrays;
 import java.util.List;
 import java.util.UUID;
@@ -30,6 +30,7 @@ import orgarif.jooq.generated.Keys;
 import orgarif.jooq.generated.OrgarifTable;
 import orgarif.jooq.generated.tables.records.DeliberationRecord;
 import orgarif.jooq.tools.jooq.CharToUUIDConverter;
+import orgarif.jooq.tools.jooq.TimestampToInstantConverter;
 
 
 /**
@@ -72,12 +73,12 @@ public class DeliberationTable extends TableImpl<DeliberationRecord> {
     /**
      * The column <code>orgarif.deliberation.creation_date</code>.
      */
-    public final TableField<DeliberationRecord, LocalDateTime> CREATION_DATE = createField(DSL.name("creation_date"), SQLDataType.LOCALDATETIME(0).nullable(false), this, "");
+    public final TableField<DeliberationRecord, Instant> CREATION_DATE = createField(DSL.name("creation_date"), SQLDataType.LOCALDATETIME(0).nullable(false), this, "", new TimestampToInstantConverter());
 
     /**
      * The column <code>orgarif.deliberation.last_modification_date</code>.
      */
-    public final TableField<DeliberationRecord, LocalDateTime> LAST_MODIFICATION_DATE = createField(DSL.name("last_modification_date"), SQLDataType.LOCALDATETIME(0).nullable(false), this, "");
+    public final TableField<DeliberationRecord, Instant> LAST_MODIFICATION_DATE = createField(DSL.name("last_modification_date"), SQLDataType.LOCALDATETIME(0).nullable(false), this, "", new TimestampToInstantConverter());
 
     private DeliberationTable(Name alias, Table<DeliberationRecord> aliased) {
         this(alias, aliased, null);
@@ -166,7 +167,7 @@ public class DeliberationTable extends TableImpl<DeliberationRecord> {
 
     @Override
     @Nonnull
-    public Row5<UUID, String, LocalDate, LocalDateTime, LocalDateTime> fieldsRow() {
+    public Row5<UUID, String, LocalDate, Instant, Instant> fieldsRow() {
         return (Row5) super.fieldsRow();
     }
 }

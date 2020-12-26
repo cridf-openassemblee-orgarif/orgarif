@@ -4,7 +4,7 @@
 package orgarif.jooq.generated.tables;
 
 
-import java.time.LocalDateTime;
+import java.time.Instant;
 import java.util.Arrays;
 import java.util.List;
 import java.util.UUID;
@@ -29,6 +29,7 @@ import orgarif.jooq.generated.Keys;
 import orgarif.jooq.generated.OrgarifTable;
 import orgarif.jooq.generated.tables.records.EluRecord;
 import orgarif.jooq.tools.jooq.CharToUUIDConverter;
+import orgarif.jooq.tools.jooq.TimestampToInstantConverter;
 
 
 /**
@@ -96,7 +97,7 @@ public class EluTable extends TableImpl<EluRecord> {
     /**
      * The column <code>orgarif.elu.creation_date</code>.
      */
-    public final TableField<EluRecord, LocalDateTime> CREATION_DATE = createField(DSL.name("creation_date"), SQLDataType.LOCALDATETIME(0).nullable(false), this, "");
+    public final TableField<EluRecord, Instant> CREATION_DATE = createField(DSL.name("creation_date"), SQLDataType.LOCALDATETIME(0).nullable(false), this, "", new TimestampToInstantConverter());
 
     private EluTable(Name alias, Table<EluRecord> aliased) {
         this(alias, aliased, null);
@@ -185,7 +186,7 @@ public class EluTable extends TableImpl<EluRecord> {
 
     @Override
     @Nonnull
-    public Row9<UUID, String, String, String, String, String, String, Boolean, LocalDateTime> fieldsRow() {
+    public Row9<UUID, String, String, String, String, String, String, Boolean, Instant> fieldsRow() {
         return (Row9) super.fieldsRow();
     }
 }

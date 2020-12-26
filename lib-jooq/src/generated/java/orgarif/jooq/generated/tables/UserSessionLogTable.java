@@ -4,7 +4,7 @@
 package orgarif.jooq.generated.tables;
 
 
-import java.time.LocalDateTime;
+import java.time.Instant;
 import java.util.Arrays;
 import java.util.List;
 import java.util.UUID;
@@ -31,6 +31,7 @@ import orgarif.jooq.generated.Keys;
 import orgarif.jooq.generated.OrgarifTable;
 import orgarif.jooq.generated.tables.records.UserSessionLogRecord;
 import orgarif.jooq.tools.jooq.CharToUUIDConverter;
+import orgarif.jooq.tools.jooq.TimestampToInstantConverter;
 
 
 /**
@@ -78,7 +79,7 @@ public class UserSessionLogTable extends TableImpl<UserSessionLogRecord> {
     /**
      * The column <code>orgarif.user_session_log.date</code>.
      */
-    public final TableField<UserSessionLogRecord, LocalDateTime> DATE = createField(DSL.name("date"), SQLDataType.LOCALDATETIME(0).nullable(false), this, "");
+    public final TableField<UserSessionLogRecord, Instant> DATE = createField(DSL.name("date"), SQLDataType.LOCALDATETIME(0).nullable(false), this, "", new TimestampToInstantConverter());
 
     /**
      * The column <code>orgarif.user_session_log.ip</code>.
@@ -188,7 +189,7 @@ public class UserSessionLogTable extends TableImpl<UserSessionLogRecord> {
 
     @Override
     @Nonnull
-    public Row6<UUID, String, UUID, UUID, LocalDateTime, String> fieldsRow() {
+    public Row6<UUID, String, UUID, UUID, Instant, String> fieldsRow() {
         return (Row6) super.fieldsRow();
     }
 }

@@ -4,7 +4,7 @@
 package orgarif.jooq.generated.tables;
 
 
-import java.time.LocalDateTime;
+import java.time.Instant;
 import java.util.Arrays;
 import java.util.List;
 import java.util.UUID;
@@ -29,6 +29,7 @@ import orgarif.jooq.generated.Keys;
 import orgarif.jooq.generated.OrgarifTable;
 import orgarif.jooq.generated.tables.records.DeploymentLogRecord;
 import orgarif.jooq.tools.jooq.CharToUUIDConverter;
+import orgarif.jooq.tools.jooq.TimestampToInstantConverter;
 
 
 /**
@@ -71,12 +72,12 @@ public class DeploymentLogTable extends TableImpl<DeploymentLogRecord> {
     /**
      * The column <code>orgarif.deployment_log.startup_date</code>.
      */
-    public final TableField<DeploymentLogRecord, LocalDateTime> STARTUP_DATE = createField(DSL.name("startup_date"), SQLDataType.LOCALDATETIME(0).nullable(false), this, "");
+    public final TableField<DeploymentLogRecord, Instant> STARTUP_DATE = createField(DSL.name("startup_date"), SQLDataType.LOCALDATETIME(0).nullable(false), this, "", new TimestampToInstantConverter());
 
     /**
      * The column <code>orgarif.deployment_log.shutdown_date</code>.
      */
-    public final TableField<DeploymentLogRecord, LocalDateTime> SHUTDOWN_DATE = createField(DSL.name("shutdown_date"), SQLDataType.LOCALDATETIME(0), this, "");
+    public final TableField<DeploymentLogRecord, Instant> SHUTDOWN_DATE = createField(DSL.name("shutdown_date"), SQLDataType.LOCALDATETIME(0), this, "", new TimestampToInstantConverter());
 
     private DeploymentLogTable(Name alias, Table<DeploymentLogRecord> aliased) {
         this(alias, aliased, null);
@@ -165,7 +166,7 @@ public class DeploymentLogTable extends TableImpl<DeploymentLogRecord> {
 
     @Override
     @Nonnull
-    public Row5<UUID, String, String, LocalDateTime, LocalDateTime> fieldsRow() {
+    public Row5<UUID, String, String, Instant, Instant> fieldsRow() {
         return (Row5) super.fieldsRow();
     }
 }
