@@ -23,7 +23,7 @@ class MagicLinkTokenDao(val jooq: DSLContext) {
         val record = MagicLinkTokenRecord().apply {
             token = r.token
             userId = r.userId.rawId
-            creationDate = r.creationDate.atOffset(ZoneOffset.UTC).toLocalDateTime()
+            creationDate = r.creationDate
             validity = r.validity
         }
         jooq.insertInto(MAGIC_LINK_TOKEN).set(record).execute()
@@ -45,7 +45,7 @@ class MagicLinkTokenDao(val jooq: DSLContext) {
     private fun map(r: MagicLinkTokenRecord) = Record(
             r.token,
             r.userId.toTypeId(),
-            r.creationDate.toInstant(ZoneOffset.UTC),
+            r.creationDate,
             r.validity)
 
 }

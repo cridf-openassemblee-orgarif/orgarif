@@ -30,8 +30,8 @@ class InstanceDao(val jooq: DSLContext) {
             organismeId = r.organismeId.rawId
             nombreRepresentants = r.nombreRepresentants
             nombreSuppleants = r.nombreSuppleants
-            creationDate = r.creationDate.atOffset(ZoneOffset.UTC).toLocalDateTime()
-            lastModificationDate = r.lastModificationDate.atOffset(ZoneOffset.UTC).toLocalDateTime()
+            creationDate = r.creationDate
+            lastModificationDate = r.lastModificationDate
         }
         jooq.insertInto(INSTANCE).set(record).execute()
     }
@@ -60,7 +60,7 @@ class InstanceDao(val jooq: DSLContext) {
             r.organismeId.toTypeId(),
             r.nombreRepresentants,
             r.nombreSuppleants,
-            r.creationDate.toInstant(ZoneOffset.UTC),
-            r.lastModificationDate.toInstant(ZoneOffset.UTC))
+            r.creationDate,
+            r.lastModificationDate)
 
 }

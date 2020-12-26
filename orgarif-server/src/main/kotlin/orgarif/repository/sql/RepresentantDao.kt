@@ -34,8 +34,8 @@ class RepresentantDao(val jooq: DSLContext) {
             instanceId = r.instanceId?.rawId
             position = r.position
             representantOrSuppleant = r.representantOrSuppleant.name
-            creationDate = r.creationDate.atOffset(ZoneOffset.UTC).toLocalDateTime()
-            lastModificationDate = r.lastModificationDate.atOffset(ZoneOffset.UTC).toLocalDateTime()
+            creationDate = r.creationDate
+            lastModificationDate = r.lastModificationDate
         }
         jooq.insertInto(REPRESENTANT).set(record).execute()
     }
@@ -92,7 +92,7 @@ class RepresentantDao(val jooq: DSLContext) {
     fun updatePosition(id: RepresentantId, newPosition: Int, date: Instant) {
         jooq.update(REPRESENTANT)
                 .set(REPRESENTANT.POSITION, newPosition)
-                .set(REPRESENTANT.LAST_MODIFICATION_DATE, date.atOffset(ZoneOffset.UTC).toLocalDateTime())
+                .set(REPRESENTANT.LAST_MODIFICATION_DATE, date)
                 .where(REPRESENTANT.ID.equal(id.rawId))
                 .execute()
     }
@@ -108,7 +108,7 @@ class RepresentantDao(val jooq: DSLContext) {
         r.instanceId = instanceId?.rawId
         r.position = position
         r.representantOrSuppleant = representantOrSuppleant.name
-        r.lastModificationDate = date.atOffset(ZoneOffset.UTC).toLocalDateTime()
+        r.lastModificationDate = date
         jooq.update(REPRESENTANT)
                 .set(r)
                 .where(REPRESENTANT.ID.equal(id.rawId))
@@ -134,7 +134,7 @@ class RepresentantDao(val jooq: DSLContext) {
             r.instanceId?.toTypeId(),
             r.position,
             RepresentantOrSuppleant.valueOf(r.representantOrSuppleant),
-            r.creationDate.toInstant(ZoneOffset.UTC),
-            r.lastModificationDate.toInstant(ZoneOffset.UTC))
+            r.creationDate,
+            r.lastModificationDate)
 
 }

@@ -23,13 +23,13 @@ class DeploymentLogDao(val jooq: DSLContext) {
         dtr.id = r.id.rawId
         dtr.buildVersion = r.buildVersion
         dtr.systemZoneId = r.systemZoneId.id
-        dtr.startupDate = r.startupDate.atOffset(ZoneOffset.UTC).toLocalDateTime()
+        dtr.startupDate = r.startupDate
         jooq.insertInto(DEPLOYMENT_LOG).set(dtr).execute()
     }
 
     fun updateShutdownTime(id: DeploymentLogId, shutdownDate: Instant) =
             jooq.update(DEPLOYMENT_LOG)
-                    .set(DEPLOYMENT_LOG.SHUTDOWN_DATE, shutdownDate.atOffset(ZoneOffset.UTC).toLocalDateTime())
+                    .set(DEPLOYMENT_LOG.SHUTDOWN_DATE, shutdownDate)
                     .where(DEPLOYMENT_LOG.ID.equal(id.rawId))
                     .execute()
 

@@ -40,7 +40,7 @@ class UserDao(val jooq: DSLContext) {
             password = hashedPassword.hash
             language = r.language.name
             admin = r.admin
-            signupDate = r.signupDate.atOffset(ZoneOffset.UTC).toLocalDateTime()
+            signupDate = r.signupDate
             dirtyMail = r.dirtyMail
         }
 
@@ -106,7 +106,7 @@ class UserDao(val jooq: DSLContext) {
             mail = r.mail,
             username = r.username,
             language = Language.valueOf(r.language),
-            signupDate = r.signupDate.toInstant(ZoneOffset.UTC),
+            signupDate = r.signupDate,
             admin = r.admin,
             dirtyMail = r.dirtyMail)
 

@@ -37,8 +37,8 @@ class OrganismeDao(val jooq: DSLContext) {
             nombreRepresentants = r.nombreRepresentants
             nombreSuppleants = r.nombreSuppleants
             partageRepresentants = r.partageRepresentants
-            creationDate = r.creationDate.atOffset(ZoneOffset.UTC).toLocalDateTime()
-            lastModificationDate = r.lastModificationDate.atOffset(ZoneOffset.UTC).toLocalDateTime()
+            creationDate = r.creationDate
+            lastModificationDate = r.lastModificationDate
         }
         val test = "test" as String?
         test
@@ -106,7 +106,7 @@ class OrganismeDao(val jooq: DSLContext) {
             r.nombreRepresentants,
             r.nombreSuppleants,
             r.partageRepresentants,
-            r.creationDate.toInstant(ZoneOffset.UTC),
-            r.lastModificationDate.toInstant(ZoneOffset.UTC))
+            r.creationDate,
+            r.lastModificationDate)
 
 }

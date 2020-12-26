@@ -25,8 +25,8 @@ class DeliberationDao(val jooq: DSLContext) {
             id = r.id.rawId
             libelle = r.libelle
             deliberationDate = r.deliberationDate
-            creationDate = r.creationDate.atOffset(ZoneOffset.UTC).toLocalDateTime()
-            lastModificationDate = r.lastModificationDate.atOffset(ZoneOffset.UTC).toLocalDateTime()
+            creationDate = r.creationDate
+            lastModificationDate = r.lastModificationDate
         }
         jooq.insertInto(DELIBERATION).set(record).execute()
     }
@@ -48,7 +48,7 @@ class DeliberationDao(val jooq: DSLContext) {
             r.id.toTypeId(),
             r.libelle,
             r.deliberationDate,
-            r.creationDate.toInstant(ZoneOffset.UTC),
-            r.lastModificationDate.toInstant(ZoneOffset.UTC))
+            r.creationDate,
+            r.lastModificationDate)
 
 }

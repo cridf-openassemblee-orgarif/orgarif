@@ -35,7 +35,7 @@ class EluDao(val jooq: DSLContext) {
             groupePolitiqueCourt = r.groupePolitiqueCourt
             imageUrl = r.imageUrl
             actif = r.actif
-            creationDate = r.creationDate.atOffset(ZoneOffset.UTC).toLocalDateTime()
+            creationDate = r.creationDate
         }
         jooq.insertInto(ELU).set(record).execute()
     }
@@ -66,6 +66,6 @@ class EluDao(val jooq: DSLContext) {
             r.groupePolitiqueCourt,
             r.imageUrl,
             r.actif,
-            r.creationDate.toInstant(ZoneOffset.UTC))
+            r.creationDate)
 
 }

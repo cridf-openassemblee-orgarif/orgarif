@@ -27,7 +27,7 @@ class UserSessionLogDao(val jooq: DSLContext) {
             springSessionId = r.springSessionId
             userId = r.userId.rawId
             deploymentLogId = r.deploymentLogId.rawId
-            date = r.date.atOffset(ZoneOffset.UTC).toLocalDateTime()
+            date = r.date
             ip = r.ip
         }
         jooq.insertInto(USER_SESSION_LOG).set(slr).execute()

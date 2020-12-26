@@ -51,7 +51,7 @@ class MailLogDao(val jooq: DSLContext) {
             data = r.data
             subject = r.subject
             content = r.content
-            date = r.date.atOffset(ZoneOffset.UTC).toLocalDateTime()
+            date = r.date
         }
         jooq.insertInto(MAIL_LOG).set(record).execute()
     }
@@ -100,13 +100,13 @@ class MailLogDao(val jooq: DSLContext) {
             r.data,
             r.subject,
             r.content,
-            r.date.toInstant(ZoneOffset.UTC))
+            r.date)
 
     fun mapHistoryPartialRecord(r: org.jooq.Record) = HistoryPartialRecord(
             r.get(MAIL_LOG.ID).toTypeId(),
             MailReference.valueOf(r.get(MAIL_LOG.REFERENCE)),
             r.get(MAIL_LOG.SUBJECT),
-            r.get(MAIL_LOG.DATE).toInstant(ZoneOffset.UTC))
+            r.get(MAIL_LOG.DATE))
 
     fun mapContentPartialRecord(r: org.jooq.Record) = ContentPartialRecord(
             r.get(MAIL_LOG.USER_ID).toTypeId(),

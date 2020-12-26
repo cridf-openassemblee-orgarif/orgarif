@@ -34,7 +34,7 @@ class CommandLogDao(val jooq: DSLContext) {
             deploymentLogId = r.deploymentLogId.rawId
             commandClass = r.commandClass.name
             jsonCommand = r.jsonCommand
-            date = r.date.atOffset(ZoneOffset.UTC).toLocalDateTime()
+            date = r.date
             ip = r.ip
             userSessionId = r.userSessionId?.rawId
         }
@@ -61,7 +61,7 @@ class CommandLogDao(val jooq: DSLContext) {
             r.deploymentLogId.toTypeId(),
             Class.forName(r.commandClass),
             r.jsonCommand,
-            r.date.toInstant(ZoneOffset.UTC),
+            r.date,
             r.ip,
             r.userSessionId.toTypeId(),
             r.jsonResult,
