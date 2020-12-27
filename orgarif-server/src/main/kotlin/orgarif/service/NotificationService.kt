@@ -1,9 +1,9 @@
 package orgarif.service
 
 import mu.KotlinLogging
+import org.springframework.stereotype.Service
 import orgarif.domain.ApplicationEnvironment
 import orgarif.service.utils.ApplicationTaskExecutor
-import org.springframework.stereotype.Service
 
 @Service
 class NotificationService(val applicationInstance: ApplicationInstance,

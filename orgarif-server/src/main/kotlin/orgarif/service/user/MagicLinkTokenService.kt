@@ -1,11 +1,11 @@
 package orgarif.service.user
 
 import mu.KotlinLogging
+import org.springframework.stereotype.Service
 import orgarif.domain.UserId
 import orgarif.repository.sql.MagicLinkTokenDao
 import orgarif.repository.sql.UserDao
 import orgarif.service.DateService
-import org.springframework.stereotype.Service
 import java.math.BigInteger
 import java.security.SecureRandom
 import java.time.Duration

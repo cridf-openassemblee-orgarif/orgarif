@@ -1,10 +1,10 @@
 package orgarif.config
 
 import mu.KotlinLogging
-import orgarif.domain.ApplicationEnvironment
-import orgarif.service.ApplicationInstance
 import org.springframework.session.Session
 import org.springframework.session.SessionRepository
+import orgarif.domain.ApplicationEnvironment
+import orgarif.service.ApplicationInstance
 
 // [doc] from https://sdqali.in/blog/2016/11/02/handling-deserialization-errors-in-spring-redis-sessions/
 // and https://github.com/spring-projects/spring-session/issues/280

@@ -1,6 +1,5 @@
 package orgarif.repository.sql
 
-import okhttp3.internal.UTC
 import org.jooq.DSLContext
 import org.springframework.stereotype.Repository
 import orgarif.domain.CommandLogId
@@ -11,7 +10,6 @@ import orgarif.jooq.generated.Tables.COMMAND_LOG
 import orgarif.jooq.generated.tables.records.CommandLogRecord
 import orgarif.utils.toTypeId
 import java.time.Instant
-import java.time.ZoneOffset
 
 @Repository
 class CommandLogDao(val jooq: DSLContext) {
@@ -57,13 +55,13 @@ class CommandLogDao(val jooq: DSLContext) {
 
     private fun map(r: CommandLogRecord) = Record(
             r.id.toTypeId(),
-            r.userId.toTypeId(),
+            r.userId?.toTypeId(),
             r.deploymentLogId.toTypeId(),
             Class.forName(r.commandClass),
             r.jsonCommand,
             r.date,
             r.ip,
-            r.userSessionId.toTypeId(),
+            r.userSessionId?.toTypeId(),
             r.jsonResult,
             r.exceptionStackTrace)
 

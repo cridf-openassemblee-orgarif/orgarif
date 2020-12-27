@@ -1,10 +1,10 @@
 package orgarif.config
 
-import orgarif.domain.UserSession
-import orgarif.utils.Serializer.deserialize
 import org.springframework.core.convert.converter.Converter
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken
 import org.springframework.security.core.context.SecurityContextImpl
+import orgarif.domain.UserSession
+import orgarif.utils.Serializer.deserialize
 import java.util.*
 
 class JsonDeserializingService : Converter<ByteArray, Any> {

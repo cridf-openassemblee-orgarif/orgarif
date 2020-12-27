@@ -1,12 +1,12 @@
 package orgarif.command
 
+import org.springframework.security.crypto.password.PasswordEncoder
+import org.springframework.stereotype.Service
 import orgarif.domain.LoginResult
 import orgarif.domain.UserInfos
 import orgarif.repository.sql.UserDao
 import orgarif.service.user.UserService
 import orgarif.service.user.UserSessionService
-import org.springframework.security.crypto.password.PasswordEncoder
-import org.springframework.stereotype.Service
 import javax.servlet.http.HttpServletRequest
 import javax.servlet.http.HttpServletResponse
 

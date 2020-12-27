@@ -4,13 +4,10 @@ import org.jooq.DSLContext
 import org.springframework.stereotype.Repository
 import orgarif.domain.InstanceId
 import orgarif.domain.OrganismeId
-import orgarif.domain.RepresentantId
-import orgarif.jooq.generated.Tables
 import orgarif.jooq.generated.Tables.INSTANCE
 import orgarif.jooq.generated.tables.records.InstanceRecord
 import orgarif.utils.toTypeId
 import java.time.Instant
-import java.time.ZoneOffset
 
 @Repository
 class InstanceDao(val jooq: DSLContext) {

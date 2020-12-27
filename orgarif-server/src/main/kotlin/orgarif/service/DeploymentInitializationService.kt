@@ -1,7 +1,7 @@
 package orgarif.service
 
-import orgarif.domain.ApplicationEnvironment
 import org.springframework.stereotype.Service
+import orgarif.domain.ApplicationEnvironment
 
 @Service
 class DeploymentInitializationService(val applicationInstance: ApplicationInstance,

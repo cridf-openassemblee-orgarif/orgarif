@@ -1,5 +1,9 @@
 package orgarif.service.user
 
+import org.springframework.security.authentication.UsernamePasswordAuthenticationToken
+import org.springframework.security.core.context.SecurityContextHolder
+import org.springframework.security.web.csrf.CookieCsrfTokenRepository
+import org.springframework.stereotype.Service
 import orgarif.domain.AuthResult
 import orgarif.domain.UserSession
 import orgarif.domain.UserSessionId
@@ -8,10 +12,6 @@ import orgarif.repository.sql.UserSessionLogDao
 import orgarif.service.ApplicationInstance
 import orgarif.service.DateService
 import orgarif.service.RandomService
-import org.springframework.security.authentication.UsernamePasswordAuthenticationToken
-import org.springframework.security.core.context.SecurityContextHolder
-import org.springframework.security.web.csrf.CookieCsrfTokenRepository
-import org.springframework.stereotype.Service
 import java.time.Duration
 import javax.servlet.http.HttpServletRequest
 import javax.servlet.http.HttpServletResponse

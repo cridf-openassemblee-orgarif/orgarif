@@ -1,11 +1,11 @@
 package orgarif.service.user
 
+import org.springframework.security.authentication.AnonymousAuthenticationToken
+import org.springframework.security.core.context.SecurityContextHolder
 import orgarif.domain.Session
 import orgarif.domain.UserSession
 import orgarif.error.AppErrors
 import orgarif.error.OrgarifSecurityException
-import org.springframework.security.authentication.AnonymousAuthenticationToken
-import org.springframework.security.core.context.SecurityContextHolder
 
 object UserSessionHelper {
 

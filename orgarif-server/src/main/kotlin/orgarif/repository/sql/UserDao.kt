@@ -12,7 +12,6 @@ import orgarif.jooq.generated.Tables.APP_USER
 import orgarif.jooq.generated.tables.records.AppUserRecord
 import orgarif.utils.toTypeId
 import java.time.Instant
-import java.time.ZoneOffset
 
 @Repository
 class UserDao(val jooq: DSLContext) {
@@ -33,7 +32,7 @@ class UserDao(val jooq: DSLContext) {
 
     @Throws(MailAlreadyRegisteredException::class)
     fun insert(r: Record, hashedPassword: HashedPassword) {
-        val aur = AppUserRecord().apply {
+        val ur = AppUserRecord().apply {
             id = r.id.rawId
             mail = r.mail
             username = r.username
@@ -45,7 +44,7 @@ class UserDao(val jooq: DSLContext) {
         }
 
         try {
-            jooq.insertInto(APP_USER).set(aur).execute()
+            jooq.insertInto(APP_USER).set(ur).execute()
         } catch (e: DuplicateKeyException) {
             handleDuplicateKeyException(e, r.mail)
         }

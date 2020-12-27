@@ -1,12 +1,12 @@
 package orgarif.service
 
 import mu.KotlinLogging
-import orgarif.service.MailService.MailJetMail
-import orgarif.service.utils.ApplicationTaskExecutor
 import okhttp3.Credentials
 import org.springframework.beans.factory.annotation.Value
 import org.springframework.stereotype.Service
 import orgarif.config.ApplicationConstants
+import orgarif.service.MailService.MailJetMail
+import orgarif.service.utils.ApplicationTaskExecutor
 
 @Service
 class DebugMailService(@Value("\${mailjet.url}") val url: String,

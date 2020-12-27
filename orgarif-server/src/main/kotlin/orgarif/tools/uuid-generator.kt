@@ -1,9 +1,10 @@
 package orgarif.tools
 
-import java.util.*
+import orgarif.service.RandomService
 
 fun main() {
-    val id = UUID.randomUUID()
-    println(id)
-    println(id.toString().replace("-", ""))
+    val uuid = RandomService().randomUUID()
+    println(uuid.toString())
+    println(uuid.toString().replace("-", ""))
+    println(uuid.toString().replace("-", "").substring(0, 6))
 }

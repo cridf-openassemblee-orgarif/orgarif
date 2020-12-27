@@ -8,8 +8,6 @@ import org.springframework.web.servlet.config.annotation.ResourceHandlerRegistry
 import org.springframework.web.servlet.config.annotation.WebMvcConfigurer
 import java.time.Duration
 import java.time.temporal.ChronoUnit
-import java.util.*
-import javax.servlet.DispatcherType
 import javax.servlet.ServletContext
 
 @Configuration

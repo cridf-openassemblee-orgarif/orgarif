@@ -9,7 +9,6 @@ import orgarif.jooq.generated.tables.records.DeliberationRecord
 import orgarif.utils.toTypeId
 import java.time.Instant
 import java.time.LocalDate
-import java.time.ZoneOffset
 
 @Repository
 class DeliberationDao(val jooq: DSLContext) {

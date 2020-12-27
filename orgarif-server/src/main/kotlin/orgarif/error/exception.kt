@@ -1,9 +1,9 @@
 package orgarif.error
 
-import orgarif.domain.OrgarifId
-import orgarif.domain.RequestErrorId
 import org.apache.commons.lang3.exception.ExceptionUtils
 import org.slf4j.event.Level
+import orgarif.domain.OrgarifId
+import orgarif.domain.RequestErrorId
 import java.time.Instant
 
 data class RequestError(val id: RequestErrorId,
@@ -29,6 +29,7 @@ class ItemIdNotFoundException(val id: OrgarifId<*>) : Exception()
 class ItemNotFoundException(val itemClass: Class<*>, val reference: String) : Exception()
 class OrgarifNotFoundException : Exception()
 class OrgarifSerializationLocalDateException(val date: String) : Exception()
+
 // TODO[error] tjs utiliser des runtime donc ? a cause de kt
 class MessageNotSentException(message: String) : RuntimeException(message)
 class OrgarifSecurityException(message: String) : Exception(message)

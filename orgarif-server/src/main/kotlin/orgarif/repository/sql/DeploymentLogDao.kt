@@ -1,13 +1,12 @@
 package orgarif.repository.sql
 
+import org.jooq.DSLContext
+import org.springframework.stereotype.Repository
 import orgarif.domain.DeploymentLogId
 import orgarif.jooq.generated.Tables.DEPLOYMENT_LOG
 import orgarif.jooq.generated.tables.records.DeploymentLogRecord
-import org.jooq.DSLContext
-import org.springframework.stereotype.Repository
 import java.time.Instant
 import java.time.ZoneId
-import java.time.ZoneOffset
 
 @Repository
 class DeploymentLogDao(val jooq: DSLContext) {
@@ -19,12 +18,13 @@ class DeploymentLogDao(val jooq: DSLContext) {
                       val shutdownDate: Instant?)
 
     fun insert(r: Record) {
-        val dtr = DeploymentLogRecord()
-        dtr.id = r.id.rawId
-        dtr.buildVersion = r.buildVersion
-        dtr.systemZoneId = r.systemZoneId.id
-        dtr.startupDate = r.startupDate
-        jooq.insertInto(DEPLOYMENT_LOG).set(dtr).execute()
+        val lr = DeploymentLogRecord().apply {
+            id = r.id.rawId
+            buildVersion = r.buildVersion
+            systemZoneId = r.systemZoneId.id
+            startupDate = r.startupDate
+        }
+        jooq.insertInto(DEPLOYMENT_LOG).set(lr).execute()
     }
 
     fun updateShutdownTime(id: DeploymentLogId, shutdownDate: Instant) =

@@ -3,7 +3,6 @@ package orgarif.jooq.tools.jooq
 import org.jooq.Converter
 import java.time.Instant
 import java.time.LocalDateTime
-import java.time.OffsetDateTime
 import java.time.ZoneOffset
 
 class TimestampToInstantConverter : Converter<LocalDateTime, Instant> {

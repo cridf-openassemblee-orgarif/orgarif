@@ -7,10 +7,7 @@ import orgarif.domain.EluId
 import orgarif.jooq.generated.Tables.ELU
 import orgarif.jooq.generated.tables.records.EluRecord
 import orgarif.utils.toTypeId
-
 import java.time.Instant
-import java.time.ZoneOffset
-import java.util.*
 
 @Repository
 class EluDao(val jooq: DSLContext) {

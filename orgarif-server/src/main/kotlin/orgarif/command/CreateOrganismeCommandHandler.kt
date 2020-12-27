@@ -2,12 +2,9 @@ package orgarif.command
 
 import org.springframework.stereotype.Service
 import orgarif.domain.OrganismeId
-import orgarif.domain.UserSession
 import orgarif.repository.sql.OrganismeDao
 import orgarif.service.DateService
 import orgarif.service.RandomService
-import javax.servlet.http.HttpServletRequest
-import javax.servlet.http.HttpServletResponse
 
 @Service
 class CreateOrganismeCommandHandler(val organismeDao: OrganismeDao,

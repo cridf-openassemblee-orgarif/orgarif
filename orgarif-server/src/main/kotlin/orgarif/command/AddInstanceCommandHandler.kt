@@ -2,14 +2,12 @@ package orgarif.command
 
 import org.springframework.stereotype.Service
 import orgarif.domain.InstanceId
-import orgarif.domain.RepresentantId
 import orgarif.repository.sql.InstanceDao
-import orgarif.repository.sql.RepresentantDao
 import orgarif.service.DateService
 import orgarif.service.RandomService
 
 @Service
-class AddInstanceCommandHandler(val instanceDao:InstanceDao,
+class AddInstanceCommandHandler(val instanceDao: InstanceDao,
                                 val randomService: RandomService,
                                 val dateService: DateService) :
         NeutralCommandHandler<AddInstanceCommand, AddInstanceCommandResponse>() {

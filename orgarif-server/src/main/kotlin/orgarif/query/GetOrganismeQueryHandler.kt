@@ -1,8 +1,6 @@
 package orgarif.query
 
 import org.springframework.stereotype.Service
-import orgarif.query.*
-import orgarif.repository.sql.OrganismeDao
 import orgarif.service.organisme.OrganismeService
 
 @Service

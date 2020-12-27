@@ -1,6 +1,5 @@
 package orgarif.service
 
-import orgarif.domain.MimeType
 import okhttp3.MediaType
 import okhttp3.MediaType.Companion.toMediaType
 import okhttp3.OkHttpClient
@@ -8,6 +7,7 @@ import okhttp3.Request
 import okhttp3.RequestBody.Companion.toRequestBody
 import okhttp3.Response
 import org.springframework.stereotype.Service
+import orgarif.domain.MimeType
 
 @Service
 class HttpService(val okHttpClient: OkHttpClient) {

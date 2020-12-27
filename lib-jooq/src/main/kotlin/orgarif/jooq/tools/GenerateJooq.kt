@@ -10,7 +10,6 @@ import orgarif.dbtooling.LocalDatasource
 import orgarif.dbtooling.jooq.JooqConfiguration
 import orgarif.dbtooling.util.ShellRunner
 import orgarif.jooq.tools.jooq.JooqGeneratorStrategy
-import java.io.File
 import java.nio.file.Files
 import java.nio.file.Paths
 import java.util.*
@@ -41,7 +40,7 @@ fun main() {
 }
 
 fun psqlGenerate() {
-    val generationDatabaseName = Config.runDatabase + "-" + UUID.randomUUID()
+    val generationDatabaseName = Config.runDatabase + "-" + UUID.randomUUID().toString().replace("-", "")
     logger.info { "Generation via base $generationDatabaseName" }
     try {
         DatabaseInitializer.createDb(Config.runDatabase)

@@ -6,10 +6,7 @@ import orgarif.domain.UserId
 import orgarif.jooq.generated.Tables.MAGIC_LINK_TOKEN
 import orgarif.jooq.generated.tables.records.MagicLinkTokenRecord
 import orgarif.utils.toTypeId
-import java.lang.IllegalArgumentException
-
 import java.time.Instant
-import java.time.ZoneOffset
 
 @Repository
 class MagicLinkTokenDao(val jooq: DSLContext) {

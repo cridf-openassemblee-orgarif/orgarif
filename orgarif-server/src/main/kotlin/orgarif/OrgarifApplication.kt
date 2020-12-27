@@ -1,11 +1,11 @@
 package orgarif
 
-import orgarif.domain.ApplicationEnvironment
 import org.springframework.boot.SpringApplication
 import org.springframework.boot.autoconfigure.SpringBootApplication
 import org.springframework.boot.autoconfigure.security.servlet.UserDetailsServiceAutoConfiguration
 import org.springframework.context.annotation.ComponentScan
 import org.springframework.session.jdbc.config.annotation.web.http.EnableJdbcHttpSession
+import orgarif.domain.ApplicationEnvironment
 import java.util.*
 
 @SpringBootApplication(exclude = [UserDetailsServiceAutoConfiguration::class])

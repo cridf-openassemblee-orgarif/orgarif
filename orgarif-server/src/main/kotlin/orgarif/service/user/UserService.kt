@@ -1,6 +1,7 @@
 package orgarif.service.user
 
 import mu.KotlinLogging
+import org.springframework.stereotype.Service
 import orgarif.command.RegisterCommand
 import orgarif.domain.HashedPassword
 import orgarif.domain.Language
@@ -12,7 +13,6 @@ import orgarif.service.DateService
 import orgarif.service.LocaleService
 import orgarif.service.NotificationService
 import orgarif.service.RandomService
-import org.springframework.stereotype.Service
 import javax.servlet.http.HttpServletRequest
 import javax.servlet.http.HttpServletResponse
 

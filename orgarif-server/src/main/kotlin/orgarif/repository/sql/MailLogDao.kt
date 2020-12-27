@@ -1,18 +1,15 @@
 package orgarif.repository.sql
 
+import org.jooq.DSLContext
+import org.springframework.stereotype.Repository
 import orgarif.domain.DeploymentLogId
 import orgarif.domain.MailLogId
 import orgarif.domain.MailReference
 import orgarif.domain.UserId
 import orgarif.jooq.generated.Tables.MAIL_LOG
 import orgarif.jooq.generated.tables.records.MailLogRecord
-import org.jooq.DSLContext
-import org.springframework.stereotype.Repository
 import orgarif.utils.toTypeId
-import java.lang.IllegalArgumentException
-
 import java.time.Instant
-import java.time.ZoneOffset
 import java.util.*
 
 @Repository

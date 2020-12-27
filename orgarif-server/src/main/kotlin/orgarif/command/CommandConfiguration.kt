@@ -15,7 +15,7 @@ object CommandConfiguration {
         is MoveRepresentantCommand -> AuthenticationLevel.admin
         is RegisterCommand -> AuthenticationLevel.loggedOut
         is UpdateOrganismeNatureJuridiqueCommand -> AuthenticationLevel.admin
-        is UpdateOrganismePartageRepresentantsCommand-> AuthenticationLevel.admin
+        is UpdateOrganismePartageRepresentantsCommand -> AuthenticationLevel.admin
         is UpdateOrganismeSecteurCommand -> AuthenticationLevel.admin
         is UpdateOrganismeTypeStructureCommand -> AuthenticationLevel.admin
     }

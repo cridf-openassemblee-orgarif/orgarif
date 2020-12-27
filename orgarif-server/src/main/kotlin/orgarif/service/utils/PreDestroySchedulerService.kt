@@ -1,8 +1,8 @@
 package orgarif.service.utils
 
 import mu.KotlinLogging
-import orgarif.service.ApplicationInstance
 import org.springframework.stereotype.Service
+import orgarif.service.ApplicationInstance
 import javax.annotation.PreDestroy
 
 @Service

@@ -1,6 +1,8 @@
 package orgarif.service.changepassword
 
 import mu.KotlinLogging
+import org.springframework.beans.factory.annotation.Value
+import org.springframework.stereotype.Service
 import orgarif.config.ApplicationConstants
 import orgarif.controller.IndexController
 import orgarif.controller.InvalidateMagicLinkTokenController
@@ -11,8 +13,6 @@ import orgarif.service.HttpService
 import orgarif.service.MailService
 import orgarif.service.user.MagicLinkTokenService
 import orgarif.utils.Serializer.serialize
-import org.springframework.beans.factory.annotation.Value
-import org.springframework.stereotype.Service
 
 @Service
 class LostPasswordMailSenderService(@Value("\${app.url}") val appUrl: String,

@@ -2,15 +2,10 @@ package orgarif.repository.sql
 
 import org.jooq.DSLContext
 import org.springframework.stereotype.Repository
-import orgarif.domain.SecteurId
 import orgarif.domain.TypeStructureId
-import orgarif.jooq.generated.Tables.SECTEUR
 import orgarif.jooq.generated.Tables.TYPE_STRUCTURE
-import orgarif.jooq.generated.tables.records.SecteurRecord
 import orgarif.jooq.generated.tables.records.TypeStructureRecord
 import orgarif.utils.toTypeId
-
-import java.util.*
 
 @Repository
 class TypeStructureDao(val jooq: DSLContext) {

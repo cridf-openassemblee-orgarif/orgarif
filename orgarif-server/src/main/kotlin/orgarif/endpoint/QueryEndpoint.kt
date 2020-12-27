@@ -5,10 +5,6 @@ import org.springframework.web.bind.annotation.RestController
 import orgarif.domain.AuthenticationLevel
 import orgarif.error.OrgarifSecurityException
 import orgarif.query.*
-import orgarif.query.IsLoginAlreadyTakenQueryHandler
-import orgarif.query.ListOrganismesQueryHandler
-import orgarif.query.GetOrganismeQueryHandler
-import orgarif.query.SearchDeliberationQueryHandler
 import orgarif.repository.sql.UserDao
 import orgarif.service.user.UserSessionHelper
 import orgarif.utils.Serializer

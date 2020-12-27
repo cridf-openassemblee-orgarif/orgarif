@@ -11,7 +11,6 @@ import orgarif.jooq.generated.Tables.ORGANISME
 import orgarif.jooq.generated.tables.records.OrganismeRecord
 import orgarif.utils.toTypeId
 import java.time.Instant
-import java.time.ZoneOffset
 
 @Repository
 class OrganismeDao(val jooq: DSLContext) {
@@ -40,8 +39,6 @@ class OrganismeDao(val jooq: DSLContext) {
             creationDate = r.creationDate
             lastModificationDate = r.lastModificationDate
         }
-        val test = "test" as String?
-        test
         jooq.insertInto(ORGANISME).set(record).execute()
     }
 
@@ -100,9 +97,9 @@ class OrganismeDao(val jooq: DSLContext) {
     private fun map(r: OrganismeRecord) = Record(
             r.id.toTypeId(),
             r.nom,
-            r.secteurId.toTypeId(),
-            r.natureJuridiqueId.toTypeId(),
-            r.typeStructureId.toTypeId(),
+            r.secteurId?.toTypeId(),
+            r.natureJuridiqueId?.toTypeId(),
+            r.typeStructureId?.toTypeId(),
             r.nombreRepresentants,
             r.nombreSuppleants,
             r.partageRepresentants,

@@ -11,7 +11,6 @@ import orgarif.jooq.generated.Tables.REPRESENTANT
 import orgarif.jooq.generated.tables.records.RepresentantRecord
 import orgarif.utils.toTypeId
 import java.time.Instant
-import java.time.ZoneOffset
 
 
 @Repository
@@ -103,12 +102,13 @@ class RepresentantDao(val jooq: DSLContext) {
                            position: Int,
                            representantOrSuppleant: RepresentantOrSuppleant,
                            date: Instant) {
-        val r = RepresentantRecord()
-        r.organismeId = organismeId.rawId
-        r.instanceId = instanceId?.rawId
-        r.position = position
-        r.representantOrSuppleant = representantOrSuppleant.name
-        r.lastModificationDate = date
+        val r = RepresentantRecord().also {
+            it.organismeId = organismeId.rawId
+            it.instanceId = instanceId?.rawId
+            it.position = position
+            it.representantOrSuppleant = representantOrSuppleant.name
+            it.lastModificationDate = date
+        }
         jooq.update(REPRESENTANT)
                 .set(r)
                 .where(REPRESENTANT.ID.equal(id.rawId))

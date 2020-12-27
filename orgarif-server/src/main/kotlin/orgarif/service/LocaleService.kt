@@ -1,7 +1,7 @@
 package orgarif.service
 
-import orgarif.domain.Language
 import org.springframework.stereotype.Service
+import orgarif.domain.Language
 import java.util.*
 
 @Service
