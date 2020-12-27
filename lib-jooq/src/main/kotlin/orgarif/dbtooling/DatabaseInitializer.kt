@@ -38,8 +38,7 @@ object DatabaseInitializer {
             }.let { Unit }
 
     fun initialize(databaseName: String, sqlFilesPath: URL) {
-        val sqlQueries = File(sqlFilesPath.path).listFiles()
-                .filter { it.name.endsWith(".sql") }
+        val sqlQueries = listSqlFiles(File(sqlFilesPath.path))
                 .map {
                     ByteStreams
                             .toByteArray(it.inputStream())
@@ -60,6 +59,17 @@ object DatabaseInitializer {
         createTablesFile.toFile().parentFile.mkdirs()
         Files.write(createTablesFile, sb.toString().toByteArray(Charsets.UTF_8))
     }
+
+    private fun listSqlFiles(sqlFilesDir: File): List<File> =
+            sqlFilesDir.listFiles().flatMap {
+                if (it.isDirectory) {
+                    listSqlFiles(it)
+                } else if (it.name.endsWith(".sql")) {
+                    listOf(it)
+                } else {
+                    emptyList()
+                }
+            }
 
     private fun createTables(dependencies: Set<DependenciesParser.TableDependencies>,
                              alreadyCreated: Set<Table<*>>,
