@@ -42,8 +42,22 @@ class QueryEndpoint(
                 handler.doHandle(query, userSession)
             }
             AuthenticationLevel.admin -> {
-                if (!UserSessionHelper.isAdmin()) {
+                // FIXMENOW ici should use UserSessionHelper mais tire question du userDao
+                // set virer dépendance à UserDao
+//                if (!UserSessionHelper.isAdmin()) {
+//                    throw OrgarifSecurityException("$userSession ${query.javaClass.simpleName}")
+//                }
+                if (!UserSessionHelper.isAuthenticated()) {
                     throw OrgarifSecurityException("$userSession ${query.javaClass.simpleName}")
+                }
+                let {
+                    val user = UserSessionHelper.getUserSession().userId.let {
+                        userDao.fetch(it)
+                                ?: throw IllegalArgumentException("$it")
+                    }
+                    if (!user.admin) {
+                        throw OrgarifSecurityException("$userSession ${query.javaClass.simpleName}")
+                    }
                 }
                 handler.doHandle(query, userSession)
             }

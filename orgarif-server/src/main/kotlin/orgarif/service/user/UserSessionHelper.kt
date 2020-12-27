@@ -13,7 +13,14 @@ object UserSessionHelper {
             .let { it != null && it !is AnonymousAuthenticationToken && it.isAuthenticated }
 
     // TODO[secu]
-    fun isAdmin() = true
+    fun isAdmin(): Boolean {
+//        if (!isAuthenticated()) {
+//         return false
+//        }
+//        val userSession = getUserSession()
+//        return userSession.admin
+        TODO()
+    }
 
     fun assertIsAdmin() {
         if (!isAuthenticated()) {

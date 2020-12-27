@@ -11,6 +11,7 @@ import orgarif.domain.AuthenticationLevel
 import orgarif.domain.CommandLogId
 import orgarif.error.OrgarifSecurityException
 import orgarif.repository.sql.CommandLogDao
+import orgarif.repository.sql.UserDao
 import orgarif.service.ApplicationInstance
 import orgarif.service.DateService
 import orgarif.service.RandomService
@@ -24,6 +25,8 @@ import javax.servlet.http.HttpServletResponse
 @RestController
 class CommandEndpoint(
         val commandLogDao: CommandLogDao,
+        val userDao: UserDao,
+
         val applicationInstance: ApplicationInstance,
         val ipService: IpService,
         val dateService: DateService,
@@ -93,8 +96,22 @@ class CommandEndpoint(
                     handler.handle(command, userSession, request, response)
                 }
                 AuthenticationLevel.admin -> {
-                    if (!UserSessionHelper.isAdmin()) {
+                    // FIXMENOW ici should use UserSessionHelper mais tire question du userDao
+                    // set virer dépendance à UserDao
+//                    if (!UserSessionHelper.isAdmin()) {
+//                        throw OrgarifSecurityException("$userSession ${command.javaClass.simpleName}")
+//                    }
+                    if (!UserSessionHelper.isAuthenticated()) {
                         throw OrgarifSecurityException("$userSession ${command.javaClass.simpleName}")
+                    }
+                    let {
+                        val user = UserSessionHelper.getUserSession().userId.let {
+                            userDao.fetch(it)
+                                    ?: throw IllegalArgumentException("$it")
+                        }
+                        if (!user.admin) {
+                            throw OrgarifSecurityException("$userSession ${command.javaClass.simpleName}")
+                        }
                     }
                     handler.handle(command, userSession, request, response)
                 }
