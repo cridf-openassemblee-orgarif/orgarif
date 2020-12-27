@@ -22,9 +22,10 @@ import {
 import { state } from '../../state/state';
 import {
   Dict,
+  dict,
   instanciateNominalString,
-  mutableSet,
-  set
+  set,
+  setMutable
 } from '../../utils/nominal-class';
 import { pipe } from '../../utils/Pipe';
 import { SelectInput, SelectOption } from '../base-component/SelectInput';
@@ -104,14 +105,14 @@ export const EditOrganismeComponent = (props: {
   const [instances, setInstances] = useState<FullInstance[]>(
     organisme.instances
   );
-  const [representantsLists, setRepresentantsLists] = useState<
-    Dict<RepresentantListId, Representant[]>
-  >({});
+  const [representantsLists, setRepresentantsLists] = useState(
+    dict<RepresentantListId, Representant[]>()
+  );
   const [partageRepresentants, setPartageRepresentants] = useState(
     organisme.infos.partageRepresentants
   );
   useEffect(() => {
-    const representants: Dict<RepresentantListId, Representant[]> = pipe({})
+    const representants = pipe(dict<RepresentantListId, Representant[]>())
       .map(list =>
         set(
           list,
@@ -128,7 +129,7 @@ export const EditOrganismeComponent = (props: {
       )
       .unwrap();
     organisme.instances.forEach(instance => {
-      mutableSet(
+      setMutable(
         representants,
         representantListId(
           organisme.infos.id,
@@ -137,7 +138,7 @@ export const EditOrganismeComponent = (props: {
         ),
         instance.representants
       );
-      mutableSet(
+      setMutable(
         representants,
         representantListId(organisme.infos.id, instance.infos.id, 'suppleant'),
         instance.suppleants

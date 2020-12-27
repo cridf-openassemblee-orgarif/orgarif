@@ -13,7 +13,7 @@ import { RouteLink } from '../routing/RouteLink';
 import { ListOrganismesBySecteurRoute } from '../routing/routes';
 import { state } from '../state/state';
 import { colors } from '../styles/vars';
-import { get, stringifyNominalString } from '../utils/nominal-class';
+import { getValue, stringifyNominalString } from '../utils/nominal-class';
 
 export const ListOrganismesBySecteurView = (props: {
   routeParams: ListOrganismesBySecteurRoute;
@@ -22,7 +22,7 @@ export const ListOrganismesBySecteurView = (props: {
     undefined
   );
   const secteurById = useRecoilValue(state.secteursById);
-  const secteur = get(secteurById, props.routeParams.secteurId);
+  const secteur = getValue(secteurById, props.routeParams.secteurId);
   useEffect(() => {
     appContext
       .queryService()

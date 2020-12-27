@@ -10,7 +10,7 @@ import {
 } from '../domain/organisme';
 import { state } from '../state/state';
 import { colors } from '../styles/vars';
-import { get, stringifyNominalString } from '../utils/nominal-class';
+import { getValue, stringifyNominalString } from '../utils/nominal-class';
 import { EluComponent } from './EluComponent';
 
 const classes = {
@@ -140,20 +140,24 @@ export const OrganismeComponent = (props: { organisme: FullOrganisme }) => {
           <div css={classes.categories}>
             Nature juridique :{' '}
             {
-              get(natureJuridiquesById, organisme.infos.natureJuridiqueId)
+              getValue(natureJuridiquesById, organisme.infos.natureJuridiqueId)
                 .libelle
             }
           </div>
         )}
         {organisme.infos.secteurId && (
           <div css={classes.categories}>
-            Secteur : {get(secteursById, organisme.infos.secteurId).libelle}
+            Secteur :{' '}
+            {getValue(secteursById, organisme.infos.secteurId).libelle}
           </div>
         )}
         {organisme.infos.typeStructureId && (
           <div css={classes.categories}>
             Type de structure :{' '}
-            {get(typeStructuresById, organisme.infos.typeStructureId).libelle}
+            {
+              getValue(typeStructuresById, organisme.infos.typeStructureId)
+                .libelle
+            }
           </div>
         )}
       </div>

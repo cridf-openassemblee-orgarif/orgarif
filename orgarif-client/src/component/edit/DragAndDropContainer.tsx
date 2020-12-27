@@ -14,7 +14,7 @@ import { Errors } from '../../errors';
 import { assertUnreachable } from '../../utils';
 import {
   Dict,
-  get,
+  getValue,
   instanciateNominalString,
   set,
   stringifyNominalString
@@ -94,12 +94,12 @@ export const DragAndDropContainer = (
     const resultIndex = result.destination.index;
     const newLists = pipe(props.representantsLists)
       .map(list => {
-        const sourceList = [...get(list, sourceId)];
+        const sourceList = [...getValue(list, sourceId)];
         const movedItem = sourceList.splice(sourceIndex, 1)[0];
         return { list: set(list, sourceId, sourceList), movedItem };
       })
       .map(({ list, movedItem }) => {
-        const destinationList = [...get(list, destinationId)];
+        const destinationList = [...getValue(list, destinationId)];
         destinationList.splice(resultIndex, 0, movedItem);
         return set(list, destinationId, destinationList);
       })

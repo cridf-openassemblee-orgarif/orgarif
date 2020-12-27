@@ -3,7 +3,7 @@ import * as React from 'react';
 import { PropsWithChildren, useState } from 'react';
 import { ClientUid } from '../../domain/client-id';
 import { compareByNumber } from '../../utils';
-import { Dict, dictValues, getOrNull, set } from '../../utils/nominal-class';
+import { dict, Dict, dictValues, get, set } from '../../utils/nominal-class';
 
 export interface SharedHeightContextInterface {
   getHeights: (
@@ -30,13 +30,13 @@ export const SharedHeightContainerContext = (props: PropsWithChildren<{}>) => {
     {} as Dict<ClientUid, Dict<ClientUid, number>>
   );
   const getHeights = (groupId: ClientUid, componentId: ClientUid) => {
-    const groupeHeights = getOrNull(heightsDict, groupId);
+    const groupeHeights = get(heightsDict, groupId);
     if (!groupeHeights) {
       return {};
     }
     return {
       groupHeight: dictValues(groupeHeights).sort(compareByNumber(i => -i))[0],
-      componentHeight: getOrNull(groupeHeights, componentId)
+      componentHeight: get(groupeHeights, componentId)
     };
   };
   const pushHeight = (
@@ -45,7 +45,7 @@ export const SharedHeightContainerContext = (props: PropsWithChildren<{}>) => {
     height: number
   ) => {
     const groupHeights = set(
-      getOrNull(heightsDict, groupId) ?? ({} as Dict<ClientUid, number>),
+      get(heightsDict, groupId) ?? dict<ClientUid, number>(),
       componentId,
       height
     );
