@@ -19,9 +19,13 @@ export type Route =
 
 type AuthenticationLevel = 'neutral' | 'loggedIn' | 'loggedOut' | 'admin';
 
+interface ViewParameters<R extends Route> {
+  routeParams: R;
+}
+
 interface RouteProps {
   path: string;
-  component: FunctionComponent<any>;
+  component: FunctionComponent<ViewParameters<any>>;
   authenticationLevel: AuthenticationLevel;
   onEnter?: () => void;
 }

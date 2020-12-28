@@ -16,7 +16,6 @@ export const ApplicationRouter = () => (
           path={r.path}
           render={(routerProps: RouteComponentProps<any>) => {
             return React.createElement(r.component, {
-              // @ts-ignore
               routeParams: routerProps.match.params
             });
           }}
