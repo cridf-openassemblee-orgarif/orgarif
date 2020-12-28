@@ -10,7 +10,7 @@ class InstantDeserializer : StdDeserializer<Instant>(Instant::class.java) {
 
     override fun deserialize(p: JsonParser, ctxt: DeserializationContext): Instant {
         val node: JsonNode = p.codec.readTree(p)
-        return Instant.ofEpochMilli(node.asLong())
+        return Instant.ofEpochMilli(node.longValue())
     }
 
 }
