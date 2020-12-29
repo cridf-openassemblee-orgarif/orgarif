@@ -70,9 +70,14 @@ object DependenciesParser {
                 }
         val addReferencesMap = otherQueries.map { it.second }.filterNotNull().groupBy { it.first }
         val dependencies = createQueries
-                .map {
-                    TableDependencies(it.first, References(it.second.tables + (addReferencesMap[it.first]?.flatMap { it.second.tables }
-                            ?: emptySet())), it.third)
+                .map { (table, references, createTableQuery) ->
+                    val referenceTables = references.tables +
+                            (addReferencesMap[table]?.flatMap { it.second.tables } ?: emptySet())
+                    // we doesn't need to know that a table references itself
+                    val filteredReferenceTables = referenceTables
+                            .filter { it != table }
+                            .toSet()
+                    TableDependencies(table, References(filteredReferenceTables), createTableQuery)
                 }
                 .toSet()
         val result = Dependencies(dependencies, otherQueries.map { it.first })
@@ -110,7 +115,8 @@ object DependenciesParser {
                 val chain = tableChain.map { it.name }.joinToString(" -> ")
                 throw IllegalStateException("Cyclic reference ${startTable.name} -> $chain -> ${table.name}")
             }
-            checkReferences(startTable, map, tableChain + table)
+            // TODO is useless actually - check
+            // checkReferences(startTable, map, tableChain + table)
         }
     }
 
