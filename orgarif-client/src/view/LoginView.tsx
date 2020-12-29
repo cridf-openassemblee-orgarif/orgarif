@@ -1,9 +1,11 @@
 /** @jsxImportSource @emotion/react */
 import { css } from '@emotion/react';
+import Button from '@material-ui/core/Button';
 import * as React from 'react';
 import { useState } from 'react';
 import { useRecoilState } from 'recoil';
 import { appContext } from '../ApplicationContext';
+import { applicationBootstrapData } from '../constants';
 import { MainContainer } from '../container/MainContainer';
 import { LoginResult } from '../domain/user';
 import { Errors } from '../errors';
@@ -62,6 +64,35 @@ export const LoginView = () => {
           >
             {loginResult !== 'LOGGED_IN' && !userInfos && (
               <LoginForm onSubmit={login} />
+            )}
+            {!userInfos && applicationBootstrapData.env === 'dev' && (
+              <div
+                css={css`
+                  margin-top: 20px;
+                `}
+              >
+                dev authent :{' '}
+                <Button
+                  onClick={() =>
+                    login({
+                      login: 'dev',
+                      password: 'dev'
+                    })
+                  }
+                >
+                  dev
+                </Button>
+                <Button
+                  onClick={() =>
+                    login({
+                      login: 'admin',
+                      password: 'admin'
+                    })
+                  }
+                >
+                  admin
+                </Button>
+              </div>
             )}
             {userInfos && (
               <div
