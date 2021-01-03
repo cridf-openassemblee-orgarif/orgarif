@@ -128,3 +128,20 @@ export const associateBy = <K extends NominalItem, T>(
   a.forEach(i => setMutable(d, key(i), i));
   return d;
 };
+
+export const groupBy = <K extends NominalItem, T>(
+  a: T[],
+  key: (i: T) => K
+): Dict<K, T[]> => {
+  const map = dict<K, T[]>();
+  a.forEach(item => {
+    const k = key(item);
+    const existing = get(map, k);
+    const list = existing ? existing : [];
+    if (!existing) {
+      setMutable(map, k, list);
+    }
+    list.push(item);
+  });
+  return map;
+};

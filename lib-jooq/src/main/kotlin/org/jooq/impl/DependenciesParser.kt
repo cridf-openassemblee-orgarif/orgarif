@@ -127,7 +127,7 @@ object DependenciesParser {
             if (Config.driver == Config.Driver.mysql
                     && table != null
                     && table.name in listOf("spring_session", "spring_session_attributes"))
-                TableImpl<Record>(QualifiedName(arrayOf(table.name.toUpperCase())))
+                DSL.table(table.name.toUpperCase())
             else
                 table
 }
