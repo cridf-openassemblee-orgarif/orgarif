@@ -29,7 +29,7 @@ object DatabaseCleaner {
         LocalDatasource.get(databaseName).connection.createStatement().use { statement ->
             dropTables(reversed, emptySet(), statement, sb)
         }
-        val cleanTablesFile = Paths.get(System.getProperty("user.dir"), "/lib-jooq/build/db/clean-tables.sql")
+        val cleanTablesFile = Paths.get(System.getProperty("user.dir"), "/jooq-lib/build/db/clean-tables.sql")
         cleanTablesFile.toFile().parentFile.mkdirs()
         Files.write(cleanTablesFile, sb.toString().toByteArray(Charsets.UTF_8))
     }

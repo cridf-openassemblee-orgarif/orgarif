@@ -23,7 +23,7 @@ plugins {
 }
 
 dependencies {
-    implementation(project(":lib-jooq"))
+    implementation(project(":jooq-lib"))
 
     // kotlin
     implementation("org.jetbrains.kotlin:kotlin-stdlib-jdk8:$kotlinVersion")

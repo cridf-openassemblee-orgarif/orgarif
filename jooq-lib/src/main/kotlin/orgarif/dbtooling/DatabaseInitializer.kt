@@ -55,7 +55,7 @@ object DatabaseInitializer {
                 sb.appendLine()
             }
         }
-        val createTablesFile = Paths.get(System.getProperty("user.dir"), "/lib-jooq/build/db/create-tables.sql")
+        val createTablesFile = Paths.get(System.getProperty("user.dir"), "/jooq-lib/build/db/create-tables.sql")
         createTablesFile.toFile().parentFile.mkdirs()
         Files.write(createTablesFile, sb.toString().toByteArray(Charsets.UTF_8))
     }

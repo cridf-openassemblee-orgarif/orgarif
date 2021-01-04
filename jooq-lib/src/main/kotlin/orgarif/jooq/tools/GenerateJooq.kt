@@ -75,7 +75,7 @@ fun generateJooq(databaseName: String, schemas: Set<String>) {
             schemas = schemas,
             excludeTables = setOf("SPRING_SESSION", "SPRING_SESSION_ATTRIBUTES"),
             generatedPackageName = "jooq",
-            generatedCodePath = "lib-jooq/src/generated/java",
+            generatedCodePath = "jooq-lib/src/generated/java",
             generatorStrategyClass = JooqGeneratorStrategy::class))
 }
 
@@ -95,7 +95,7 @@ fun generateDiff(databaseName: String) {
                 "--target-user=${System.getProperty("user.name")}",
                 "--target-no-password")
         val diff = commandResult.lines.fold("") { acc, s -> acc + "\n" + s }
-        val file = Paths.get(System.getProperty("user.dir"), "/lib-jooq/build/db-diff/diff-" +
+        val file = Paths.get(System.getProperty("user.dir"), "/jooq-lib/build/db-diff/diff-" +
                 hashRunDatabase.substring(0, 8) + "-" + hashGenerateDatabase.substring(0, 8) + ".sql")
         logger.info { "Writing diff to $file" }
         file.toFile().parentFile.mkdirs()

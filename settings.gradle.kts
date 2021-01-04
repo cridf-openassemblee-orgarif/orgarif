@@ -1,6 +1,6 @@
 rootProject.name = "orgarif"
 
-include("orgarif-client", "lib-jooq", "orgarif-server")
+include("orgarif-client", "jooq-lib", "orgarif-server")
 
 pluginManagement {
     repositories {

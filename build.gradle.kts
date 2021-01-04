@@ -20,7 +20,7 @@ tasks {
     }
 
     register("build") {
-        dependsOn(":clean", ":orgarif-client:build", ":lib-jooq:build", ":orgarif-server:build", ":copyFiles", ":writeBuildPropertiesFile")
+        dependsOn(":clean", ":orgarif-client:build", ":jooq-lib:build", ":orgarif-server:build", ":copyFiles", ":writeBuildPropertiesFile")
     }
 
     register<Copy>("copyFiles") {
