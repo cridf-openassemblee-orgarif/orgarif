@@ -11,6 +11,9 @@ import java.util.UUID;
 
 import javax.annotation.Nonnull;
 
+import jooqutils.jooq.CharToUUIDConverter;
+import jooqutils.jooq.TimestampToInstantConverter;
+
 import org.jooq.Field;
 import org.jooq.ForeignKey;
 import org.jooq.Index;
@@ -30,8 +33,6 @@ import orgarif.jooq.generated.Indexes;
 import orgarif.jooq.generated.Keys;
 import orgarif.jooq.generated.OrgarifTable;
 import orgarif.jooq.generated.tables.records.OrganismeRecord;
-import orgarif.jooq.tools.jooq.CharToUUIDConverter;
-import orgarif.jooq.tools.jooq.TimestampToInstantConverter;
 
 
 /**
