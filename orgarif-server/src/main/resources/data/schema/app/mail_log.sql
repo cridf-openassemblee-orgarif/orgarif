@@ -15,4 +15,4 @@ CREATE TABLE mail_log
     FOREIGN KEY (deployment_log_id) REFERENCES deployment_log (id)
 );
 
-CREATE INDEX ON mail_log (user_id);
+CREATE INDEX mail_log_user_id_idx ON mail_log (user_id);

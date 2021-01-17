@@ -7,6 +7,7 @@ group = "orgarif"
 
 repositories {
     mavenCentral()
+    mavenLocal()
 }
 
 val kotlinVersion = "1.4.0"
@@ -28,14 +29,10 @@ dependencies {
     implementation("org.jetbrains.kotlin:kotlin-stdlib-jdk8:$kotlinVersion")
     implementation("org.jetbrains.kotlin:kotlin-reflect:$kotlinVersion")
 
+    api("jooq-utils:jooq-utils:0.0.1-SNAPSHOT")
+
     implementation("io.github.microutils:kotlin-logging:1.4.6")
     implementation("ch.qos.logback:logback-classic:1.2.3")
-
-    implementation("com.google.guava:guava:29.0-jre")
-
-    implementation("org.jooq:jooq:3.14.4")
-    implementation("org.jooq:jooq-meta:3.14.4")
-    implementation("org.jooq:jooq-codegen:3.14.4")
 
     implementation("mysql:mysql-connector-java:8.0.22")
 }

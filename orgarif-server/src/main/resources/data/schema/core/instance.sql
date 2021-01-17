@@ -10,4 +10,4 @@ CREATE TABLE instance
     FOREIGN KEY (organisme_id) REFERENCES organisme (id)
 );
 
-CREATE INDEX ON instance (organisme_id);
+CREATE INDEX instance_organisme_id_idx ON instance (organisme_id);

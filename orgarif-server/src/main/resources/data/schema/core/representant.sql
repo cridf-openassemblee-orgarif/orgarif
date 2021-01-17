@@ -13,5 +13,5 @@ CREATE TABLE representant
     FOREIGN KEY (instance_id) REFERENCES instance (id)
 );
 
-CREATE INDEX ON representant (organisme_id);
-CREATE INDEX ON representant (instance_id);
+CREATE INDEX representant_organisme_id_idx ON representant (organisme_id);
+CREATE INDEX representant_instance_id_idx ON representant (instance_id);

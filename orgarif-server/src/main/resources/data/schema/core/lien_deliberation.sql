@@ -11,4 +11,4 @@ CREATE TABLE lien_deliberation
     FOREIGN KEY (instance_id) REFERENCES instance (id)
 );
 
-CREATE INDEX ON lien_deliberation (organisme_id);
+CREATE INDEX lien_deliberation_organisme_id_idx ON lien_deliberation (organisme_id);

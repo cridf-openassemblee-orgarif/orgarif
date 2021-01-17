@@ -11,5 +11,5 @@ CREATE TABLE app_user
     dirty_mail  VARCHAR(255)
 );
 
-CREATE INDEX ON app_user (username);
-CREATE INDEX ON app_user (mail);
+CREATE INDEX app_user_username_idx ON app_user (username);
+CREATE INDEX app_user_mail_idx ON app_user (mail);
