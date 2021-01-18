@@ -26,7 +26,7 @@ object ResetDatabase {
         DatabaseInitializer.createDb(configuration)
         logger.info { "Clean database \"${configuration.databaseName}\"" }
         DatabaseCleaner.clean(configuration, sqlCleanResultPath)
-        logger.info { "Initialize database \"${configuration.databaseName}\"" }
+        logger.info { "Initialize database schema \"${configuration.databaseName}\"" }
         DatabaseInitializer.initializeSchema(configuration, sqlFilesPath, sqlInitiateSchemaResultPath)
     }
 }
