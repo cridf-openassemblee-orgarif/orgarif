@@ -21,7 +21,7 @@ import {
   UpdateOrganismePartageRepresentantsCommand,
   UpdateOrganismeSecteurCommand,
   UpdateOrganismeTypeStructureCommand
-} from '../domain/command';
+} from '../domain/commands';
 
 export class CommandService {
   public addInstanceCommand = (

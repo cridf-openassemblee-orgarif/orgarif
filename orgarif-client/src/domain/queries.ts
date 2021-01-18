@@ -1,4 +1,4 @@
-import { OrganismeId, SecteurId } from './id';
+import { OrganismeId, SecteurId } from './ids';
 import { DeliberationInfos, FullOrganisme, OrganismeInfos } from './organisme';
 
 export interface GetOrganismeQuery {

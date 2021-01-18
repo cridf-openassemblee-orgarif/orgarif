@@ -18,7 +18,7 @@ export type OrgarifId =
   | SecteurId
   | TypeStructureId
   | UserId
-  | UserSessionId;
+  | UserSessionId
 
 export type CommandLogId = NominalString<'CommandLogId'>;
 export type DeliberationId = NominalString<'DeliberationId'>;

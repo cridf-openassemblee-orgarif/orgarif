@@ -7,13 +7,13 @@ import { useEffect, useState } from 'react';
 import { useRecoilValue } from 'recoil';
 import { appContext } from '../../ApplicationContext';
 import { Category } from '../../domain/bootstrap-data';
-import { RepresentantListId } from '../../domain/client-id';
+import { RepresentantListId } from '../../domain/client-ids';
 import {
   NatureJuridiqueId,
   OrgarifId,
   SecteurId,
   TypeStructureId
-} from '../../domain/id';
+} from '../../domain/ids';
 import {
   FullInstance,
   FullOrganisme,

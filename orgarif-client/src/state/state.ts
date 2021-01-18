@@ -11,7 +11,7 @@ import {
   NatureJuridiqueId,
   SecteurId,
   TypeStructureId
-} from '../domain/id';
+} from '../domain/ids';
 import { compareByString } from '../utils';
 import { Dict, pairsToDict } from '../utils/nominal-class';
 

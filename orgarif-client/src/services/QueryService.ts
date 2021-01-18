@@ -9,7 +9,7 @@ import {
   ListOrganismesQueryResponse,
   SearchDeliberationQuery,
   SearchDeliberationQueryResponse
-} from '../domain/query';
+} from '../domain/queries';
 
 export class QueryService {
   public getOrganismeQuery = (

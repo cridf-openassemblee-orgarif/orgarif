@@ -3,8 +3,8 @@ import * as React from 'react';
 import { PropsWithChildren } from 'react';
 import { DragDropContext, DropResult } from 'react-beautiful-dnd';
 import { appContext } from '../../ApplicationContext';
-import { RepresentantListId } from '../../domain/client-id';
-import { InstanceId, OrganismeId, RepresentantId } from '../../domain/id';
+import { RepresentantListId } from '../../domain/client-ids';
+import { InstanceId, OrganismeId, RepresentantId } from '../../domain/ids';
 import {
   FullOrganisme,
   Representant,

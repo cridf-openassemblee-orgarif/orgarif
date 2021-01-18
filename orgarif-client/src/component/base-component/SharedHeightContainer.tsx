@@ -2,7 +2,7 @@
 import { css } from '@emotion/react';
 import * as React from 'react';
 import { PropsWithChildren, useEffect, useRef, useState } from 'react';
-import { ClientUid } from '../../domain/client-id';
+import { ClientUid } from '../../domain/client-ids';
 import { clientUid } from '../../utils';
 import {
   HeightContext,

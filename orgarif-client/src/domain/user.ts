@@ -1,5 +1,5 @@
 import { ZoneId } from './date';
-import { UserId } from './id';
+import { UserId } from './ids';
 
 export type FilteredPdl = '************';
 

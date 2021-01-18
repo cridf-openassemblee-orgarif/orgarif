@@ -8,7 +8,7 @@ import {
   RepresentantId,
   SecteurId,
   TypeStructureId
-} from './id';
+} from './ids';
 import { Instant, LocalDate } from './time';
 
 export type RepresentantOrSuppleant = 'representant' | 'suppleant';

@@ -2,7 +2,7 @@
 import { css } from '@emotion/react';
 import * as React from 'react';
 import { useState } from 'react';
-import { InstanceId, OrganismeId } from '../../domain/id';
+import { InstanceId, OrganismeId } from '../../domain/ids';
 import { LienDeliberationInfos } from '../../domain/organisme';
 import { formatLocaleDate } from '../../simple-fr';
 import { stringifyNominalString } from '../../utils/nominal-class';

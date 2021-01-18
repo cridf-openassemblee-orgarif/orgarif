@@ -1,5 +1,5 @@
 import { FunctionComponent } from 'react';
-import { OrganismeId, SecteurId } from '../domain/id';
+import { OrganismeId, SecteurId } from '../domain/ids';
 import { EditOrganismeView } from '../view/EditOrganismeView';
 import { ListOrganismesBySecteurView } from '../view/ListOrganismesBySecteurView';
 import { ListOrganismesView } from '../view/ListOrganismesView';

@@ -9,7 +9,7 @@ import {
   RepresentantId,
   SecteurId,
   TypeStructureId
-} from './id';
+} from './ids';
 import { RepresentantOrSuppleant } from './organisme';
 import { LocalDate } from './time';
 

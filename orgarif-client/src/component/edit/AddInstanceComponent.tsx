@@ -2,8 +2,8 @@
 import * as React from 'react';
 import { useRef } from 'react';
 import { appContext } from '../../ApplicationContext';
-import { RepresentantListId } from '../../domain/client-id';
-import { OrganismeId } from '../../domain/id';
+import { RepresentantListId } from '../../domain/client-ids';
+import { OrganismeId } from '../../domain/ids';
 import { FullInstance, Representant } from '../../domain/organisme';
 import { Dict, set } from '../../utils/nominal-class';
 import { pipe } from '../../utils/Pipe';

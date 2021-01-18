@@ -8,7 +8,7 @@ import DialogContent from '@material-ui/core/DialogContent';
 import * as React from 'react';
 import { useState } from 'react';
 import { appContext } from '../../ApplicationContext';
-import { InstanceId, OrganismeId } from '../../domain/id';
+import { InstanceId, OrganismeId } from '../../domain/ids';
 import {
   DeliberationInfos,
   LienDeliberationInfos

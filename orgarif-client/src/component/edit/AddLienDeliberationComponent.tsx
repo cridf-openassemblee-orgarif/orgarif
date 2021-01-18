@@ -7,7 +7,7 @@ import * as React from 'react';
 import { ChangeEvent, useState } from 'react';
 import { appContext } from '../../ApplicationContext';
 import { SharedConstants } from '../../constants';
-import { DeliberationId, InstanceId, OrganismeId } from '../../domain/id';
+import { DeliberationId, InstanceId, OrganismeId } from '../../domain/ids';
 import {
   DeliberationInfos,
   LienDeliberationInfos

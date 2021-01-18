@@ -1,4 +1,4 @@
-import { EluId } from './id';
+import { EluId } from './ids';
 import { Instant } from './time';
 
 export type Civilite = 'M' | 'Mme';

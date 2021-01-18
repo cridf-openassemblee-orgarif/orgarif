@@ -18,7 +18,7 @@ fun main() {
     )
     val idClasses: List<Class<out OrgarifId<*>>> = reflections.getSubTypesOf(OrgarifId::class.java)
         .sortedBy { it.simpleName }
-    stringBuilder.appendLine("import { NominalString } from './nominal-class';")
+    stringBuilder.appendLine("import { NominalString } from '../utils/nominal-class';")
     stringBuilder.appendLine()
     stringBuilder.appendLine("export type OrgarifId =")
     idClasses.forEach {
@@ -28,6 +28,6 @@ fun main() {
     idClasses.forEach {
         stringBuilder.appendLine("export type ${it.simpleName} = NominalString<'${it.simpleName}'>;")
     }
-    val path = System.getProperty("user.dir") + "/orgarif-client/src/domain/id.ts"
+    val path = System.getProperty("user.dir") + "/orgarif-client/src/domain/ids.ts"
     Files.write(Paths.get(path), stringBuilder.toString().toByteArray(Charsets.UTF_8))
 }

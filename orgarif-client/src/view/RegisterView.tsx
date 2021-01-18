@@ -5,7 +5,7 @@ import { useState } from 'react';
 import { useRecoilState } from 'recoil';
 import { appContext } from '../ApplicationContext';
 import { MainContainer } from '../container/MainContainer';
-import { RegisterCommand } from '../domain/command';
+import { RegisterCommand } from '../domain/commands';
 import { RegisterResult } from '../domain/user';
 import { Errors } from '../errors';
 import { RegisterForm, RegisterFormDto } from '../form/RegisterForm';

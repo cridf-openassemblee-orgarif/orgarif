@@ -1,7 +1,7 @@
 /** @jsxImportSource @emotion/react */
 import * as React from 'react';
 import { PropsWithChildren, useState } from 'react';
-import { ClientUid } from '../../domain/client-id';
+import { ClientUid } from '../../domain/client-ids';
 import { compareByNumber } from '../../utils';
 import { dict, Dict, dictValues, get, set } from '../../utils/nominal-class';
 

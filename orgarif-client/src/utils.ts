@@ -1,4 +1,4 @@
-import { ClientUid } from './domain/client-id';
+import { ClientUid } from './domain/client-ids';
 import { LocalDate } from './domain/time';
 import {
   instanciateNominalString,
