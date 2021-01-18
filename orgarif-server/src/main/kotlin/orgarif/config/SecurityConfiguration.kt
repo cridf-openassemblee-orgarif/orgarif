@@ -12,8 +12,7 @@ import orgarif.controller.IndexController.Companion.logoutRoute
 
 @Configuration
 @EnableWebSecurity
-class SecurityConfiguration(@Value("\${forceHttps}") val forceHttps: Boolean,
-                            @Value("\${app.url}") val appUrl: String,
+class SecurityConfiguration(@Value("\${app.url}") val appUrl: String,
                             val cookieCsrfTokenRepository: CookieCsrfTokenRepository) : WebSecurityConfigurerAdapter() {
 
     override fun configure(web: WebSecurity) {
@@ -25,9 +24,6 @@ class SecurityConfiguration(@Value("\${forceHttps}") val forceHttps: Boolean,
     }
 
     override fun configure(http: HttpSecurity) {
-        if (forceHttps) {
-            http.requiresChannel().anyRequest().requiresSecure()
-        }
         with(http) {
             with(csrf()) {
                 csrfTokenRepository(cookieCsrfTokenRepository)
