@@ -71,16 +71,16 @@ export const LoginView = () => {
                   margin-top: 20px;
                 `}
               >
-                dev authent :{' '}
+                dev user authent :{' '}
                 <Button
                   onClick={() =>
                     login({
-                      login: 'dev',
-                      password: 'dev'
+                      login: 'user',
+                      password: 'user'
                     })
                   }
                 >
-                  dev
+                  user
                 </Button>
                 <Button
                   onClick={() =>

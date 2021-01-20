@@ -22,7 +22,7 @@ class DevDataInjectorService(@Value("\${developerMail}") val developerMail: Stri
             val mailSuffix = developerMail.substring(arobaseIndex)
             mailPrefix to mailSuffix
         }
-        insertUser("dev", false, mailPrefix, mailSuffix)
+        insertUser("user", false, mailPrefix, mailSuffix)
         insertUser("admin", true, mailPrefix, mailSuffix)
     }
 
