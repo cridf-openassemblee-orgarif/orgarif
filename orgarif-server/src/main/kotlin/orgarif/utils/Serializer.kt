@@ -69,14 +69,16 @@ object Serializer {
     }
 
     fun addOrgarifUuidIdsDeserializers(module: SimpleModule) {
-        val reflections = Reflections(ConfigurationBuilder()
+        val reflections = Reflections(
+            ConfigurationBuilder()
                 .filterInputsBy(FilterBuilder().includePackage(idsPackage))
-                .setUrls(ClasspathHelper.forPackage(idsPackage)))
+                .setUrls(ClasspathHelper.forPackage(idsPackage))
+        )
         val idClasses: Set<Class<out OrgarifUuidId>> = reflections.getSubTypesOf(OrgarifUuidId::class.java)
         idClasses
-                .forEach {
-                    addOrgarifUuidIdDeserializers(module, Reflection.createKotlinClass(it) as KClass<out OrgarifUuidId>)
-                }
+            .forEach {
+                addOrgarifUuidIdDeserializers(module, Reflection.createKotlinClass(it) as KClass<out OrgarifUuidId>)
+            }
     }
 
     fun <T : OrgarifUuidId> addOrgarifUuidIdDeserializers(module: SimpleModule, idKclass: KClass<T>) {
@@ -85,14 +87,16 @@ object Serializer {
     }
 
     fun addOrgarifStringIdsDeserializers(module: SimpleModule) {
-        val reflections = Reflections(ConfigurationBuilder()
+        val reflections = Reflections(
+            ConfigurationBuilder()
                 .filterInputsBy(FilterBuilder().includePackage(idsPackage))
-                .setUrls(ClasspathHelper.forPackage(idsPackage)))
+                .setUrls(ClasspathHelper.forPackage(idsPackage))
+        )
         val idClasses: Set<Class<out OrgarifStringId>> = reflections.getSubTypesOf(OrgarifStringId::class.java)
         idClasses
-                .forEach {
-                    addOrgarifStringIdDeserializers(module, Reflection.createKotlinClass(it) as KClass<out OrgarifStringId>)
-                }
+            .forEach {
+                addOrgarifStringIdDeserializers(module, Reflection.createKotlinClass(it) as KClass<out OrgarifStringId>)
+            }
     }
 
     fun <T : OrgarifStringId> addOrgarifStringIdDeserializers(module: SimpleModule, idKclass: KClass<T>) {

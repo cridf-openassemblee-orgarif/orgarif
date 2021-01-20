@@ -29,19 +29,23 @@ class HttpService(val okHttpClient: OkHttpClient) {
 
     data class BytesResponse(val code: Int, val bytes: ByteArray?)
 
-    fun getString(url: String,
-                  vararg headers: Pair<Header, String>): StringResponse =
-            doGet(url, *headers).use {
-                // string() calls close()
-                StringResponse(it.code, it.body?.string())
-            }
+    fun getString(
+        url: String,
+        vararg headers: Pair<Header, String>
+    ): StringResponse =
+        doGet(url, *headers).use {
+            // string() calls close()
+            StringResponse(it.code, it.body?.string())
+        }
 
-    fun getBytes(url: String,
-                 vararg headers: Pair<Header, String>): BytesResponse =
-            doGet(url, *headers).use {
-                // bytes() calls close()
-                BytesResponse(it.code, it.body?.bytes())
-            }
+    fun getBytes(
+        url: String,
+        vararg headers: Pair<Header, String>
+    ): BytesResponse =
+        doGet(url, *headers).use {
+            // bytes() calls close()
+            BytesResponse(it.code, it.body?.bytes())
+        }
 
     private fun doGet(url: String, vararg headers: Pair<Header, String>): Response {
         val requestBuilder = Request.Builder()
@@ -51,62 +55,76 @@ class HttpService(val okHttpClient: OkHttpClient) {
         return okHttpClient.newCall(requestBuilder.build()).execute()
     }
 
-    fun post(url: String,
-             body: String,
-             httpMediaType: HttpMediaType,
-             vararg headers: Pair<Header, String>): EmptyResponse =
-            doPost(url, body, httpMediaType, *headers).use {
-                EmptyResponse(it.code)
-            }
+    fun post(
+        url: String,
+        body: String,
+        httpMediaType: HttpMediaType,
+        vararg headers: Pair<Header, String>
+    ): EmptyResponse =
+        doPost(url, body, httpMediaType, *headers).use {
+            EmptyResponse(it.code)
+        }
 
-    fun postAndReturnString(url: String,
-                            body: String,
-                            httpMediaType: HttpMediaType,
-                            vararg headers: Pair<Header, String>): StringResponse =
-            doPost(url, body, httpMediaType, *headers).use {
-                // string() calls close()
-                StringResponse(it.code, it.body?.string())
-            }
+    fun postAndReturnString(
+        url: String,
+        body: String,
+        httpMediaType: HttpMediaType,
+        vararg headers: Pair<Header, String>
+    ): StringResponse =
+        doPost(url, body, httpMediaType, *headers).use {
+            // string() calls close()
+            StringResponse(it.code, it.body?.string())
+        }
 
-    fun postAndReturnBytes(url: String,
-                           body: String,
-                           httpMediaType: HttpMediaType,
-                           vararg headers: Pair<Header, String>): BytesResponse =
-            doPost(url, body, httpMediaType, *headers).use {
-                // bytes() calls close()
-                BytesResponse(it.code, it.body?.bytes())
-            }
+    fun postAndReturnBytes(
+        url: String,
+        body: String,
+        httpMediaType: HttpMediaType,
+        vararg headers: Pair<Header, String>
+    ): BytesResponse =
+        doPost(url, body, httpMediaType, *headers).use {
+            // bytes() calls close()
+            BytesResponse(it.code, it.body?.bytes())
+        }
 
-    private fun doPost(url: String,
-                       body: String,
-                       httpMediaType: HttpMediaType,
-                       vararg headers: Pair<Header, String>): Response {
+    private fun doPost(
+        url: String,
+        body: String,
+        httpMediaType: HttpMediaType,
+        vararg headers: Pair<Header, String>
+    ): Response {
         val requestBuilder = requestBuilder(url, httpMediaType, *headers)
         requestBuilder.post(body.toRequestBody(httpMediaType.mediaType))
         return okHttpClient.newCall(requestBuilder.build()).execute()
     }
 
-    fun putAndReturnString(url: String,
-                           body: String,
-                           httpMediaType: HttpMediaType,
-                           vararg headers: Pair<Header, String>): StringResponse =
-            doPut(url, body, httpMediaType, *headers).use {
-                // string() calls close()
-                StringResponse(it.code, it.body?.string())
-            }
+    fun putAndReturnString(
+        url: String,
+        body: String,
+        httpMediaType: HttpMediaType,
+        vararg headers: Pair<Header, String>
+    ): StringResponse =
+        doPut(url, body, httpMediaType, *headers).use {
+            // string() calls close()
+            StringResponse(it.code, it.body?.string())
+        }
 
-    private fun doPut(url: String,
-                      body: String,
-                      httpMediaType: HttpMediaType,
-                      vararg headers: Pair<Header, String>): Response {
+    private fun doPut(
+        url: String,
+        body: String,
+        httpMediaType: HttpMediaType,
+        vararg headers: Pair<Header, String>
+    ): Response {
         val requestBuilder = requestBuilder(url, httpMediaType, *headers)
         requestBuilder.put(body.toRequestBody(httpMediaType.mediaType))
         return okHttpClient.newCall(requestBuilder.build()).execute()
     }
 
-    private fun requestBuilder(url: String,
-                               httpMediaType: HttpMediaType,
-                               vararg headers: Pair<Header, String>) = Request.Builder().apply {
+    private fun requestBuilder(
+        url: String,
+        httpMediaType: HttpMediaType,
+        vararg headers: Pair<Header, String>
+    ) = Request.Builder().apply {
         url(url)
         if (httpMediaType.mediaType == HttpMediaType.json.mediaType) {
             addHeader(Header.ACCEPT.header, HttpMediaType.json.mediaType.toString())

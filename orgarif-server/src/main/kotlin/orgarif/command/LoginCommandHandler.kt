@@ -11,20 +11,22 @@ import javax.servlet.http.HttpServletRequest
 import javax.servlet.http.HttpServletResponse
 
 @Service
-class LoginCommandHandler(val userDao: UserDao,
-                          val userService: UserService,
-                          val userSessionService: UserSessionService,
-                          val passwordEncoder: PasswordEncoder) :
-        LoggedOutServletCommandHandler<LoginCommand, LoginCommandResponse>() {
+class LoginCommandHandler(
+    val userDao: UserDao,
+    val userService: UserService,
+    val userSessionService: UserSessionService,
+    val passwordEncoder: PasswordEncoder
+) :
+    LoggedOutServletCommandHandler<LoginCommand, LoginCommandResponse>() {
 
     override fun handle(command: LoginCommand, request: HttpServletRequest, response: HttpServletResponse):
             LoginCommandResponse {
         val cleanLogin = UserService.cleanMail(command.login)
         val user = userDao.fetchByMail(cleanLogin)
-                ?: userDao.fetchByUsername(cleanLogin)
-                ?: return LoginCommandResponse(LoginResult.USER_NOT_FOUND, null, null)
+            ?: userDao.fetchByUsername(cleanLogin)
+            ?: return LoginCommandResponse(LoginResult.USER_NOT_FOUND, null, null)
         val userPassword = userDao.fetchPassword(user.id)
-                ?: throw IllegalStateException("${user.id}")
+            ?: throw IllegalStateException("${user.id}")
         if (!passwordEncoder.matches(command.password.password.trim(), userPassword.hash)) {
             return LoginCommandResponse(LoginResult.BAD_PASSWORD, null, null)
         }

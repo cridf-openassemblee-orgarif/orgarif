@@ -11,11 +11,13 @@ import java.nio.file.Paths
 
 fun main() {
     val stringBuilder = StringBuilder()
-    val reflections = Reflections(ConfigurationBuilder()
+    val reflections = Reflections(
+        ConfigurationBuilder()
             .filterInputsBy(FilterBuilder().includePackage(idsPackage))
-            .setUrls(ClasspathHelper.forPackage(idsPackage)))
+            .setUrls(ClasspathHelper.forPackage(idsPackage))
+    )
     val idClasses: List<Class<out OrgarifId<*>>> = reflections.getSubTypesOf(OrgarifId::class.java)
-            .sortedBy { it.simpleName }
+        .sortedBy { it.simpleName }
     stringBuilder.appendLine("import { NominalString } from './nominal-class';")
     stringBuilder.appendLine()
     stringBuilder.appendLine("export type OrgarifId =")

@@ -7,14 +7,14 @@ import orgarif.domain.OrgarifSecurityId
 import kotlin.reflect.KClass
 
 class OrgarifSecurityIdDeserializer<T : OrgarifSecurityId>(val orgarifSecurityIdClass: KClass<T>) :
-        StdDeserializer<T>(orgarifSecurityIdClass.java) {
+    StdDeserializer<T>(orgarifSecurityIdClass.java) {
 
     companion object {
         fun <T : OrgarifSecurityId> deserialize(orgarifSecurityIdClass: KClass<T>, value: String) =
-                orgarifSecurityIdClass.constructors.first().call(value)
+            orgarifSecurityIdClass.constructors.first().call(value)
     }
 
     override fun deserialize(p: JsonParser, ctxt: DeserializationContext): T =
-            deserialize(orgarifSecurityIdClass, p.valueAsString)
+        deserialize(orgarifSecurityIdClass, p.valueAsString)
 
 }

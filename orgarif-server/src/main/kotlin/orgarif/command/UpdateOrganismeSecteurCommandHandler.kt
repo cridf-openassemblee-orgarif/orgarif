@@ -5,7 +5,7 @@ import orgarif.repository.sql.OrganismeDao
 
 @Service
 class UpdateOrganismeSecteurCommandHandler(val organismeDao: OrganismeDao) :
-        NeutralCommandHandler<UpdateOrganismeSecteurCommand, EmptyCommandResponse>() {
+    NeutralCommandHandler<UpdateOrganismeSecteurCommand, EmptyCommandResponse>() {
 
     override fun handle(command: UpdateOrganismeSecteurCommand):
             EmptyCommandResponse {

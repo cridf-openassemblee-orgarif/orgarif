@@ -14,9 +14,11 @@ import java.util.*
 import javax.servlet.http.HttpServletResponse
 
 @RestController
-class ApplicationErrorController(val errorAttributes: ErrorAttributes,
-                                 val randomService: RandomService,
-                                 val applicationExceptionHandler: ApplicationExceptionHandler) : ErrorController {
+class ApplicationErrorController(
+    val errorAttributes: ErrorAttributes,
+    val randomService: RandomService,
+    val applicationExceptionHandler: ApplicationExceptionHandler
+) : ErrorController {
 
     private val logger = KotlinLogging.logger {}
 
@@ -62,13 +64,17 @@ class ApplicationErrorController(val errorAttributes: ErrorAttributes,
             else -> response.status to initialError
         }
         val date = errorMap["timestamp"] as Date
-        return applicationExceptionHandler.render(request, response,
-                RequestError(errorId,
-                        status,
-                        error,
-                        errorMap["message"] as String,
-                        date.toInstant(),
-                        ReadableStackTrace(exception)))
+        return applicationExceptionHandler.render(
+            request, response,
+            RequestError(
+                errorId,
+                status,
+                error,
+                errorMap["message"] as String,
+                date.toInstant(),
+                ReadableStackTrace(exception)
+            )
+        )
     }
 
 }

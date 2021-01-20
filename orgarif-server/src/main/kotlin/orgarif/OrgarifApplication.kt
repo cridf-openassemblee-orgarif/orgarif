@@ -20,9 +20,13 @@ class OrgarifApplication {
             System.setProperty("logging.config", "classpath:logback-webapp-$env.xml")
             TimeZone.setDefault(TimeZone.getTimeZone("UTC"))
             val app = SpringApplication(OrgarifApplication::class.java)
-            app.setDefaultProperties(mapOf("spring.profiles.default" to
-                    ApplicationEnvironment.dev.name + ',' +
-                    springUserProfile()))
+            app.setDefaultProperties(
+                mapOf(
+                    "spring.profiles.default" to
+                            ApplicationEnvironment.dev.name + ',' +
+                            springUserProfile()
+                )
+            )
             app.run(*args)
         }
 

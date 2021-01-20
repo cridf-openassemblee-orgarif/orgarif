@@ -9,8 +9,10 @@ import orgarif.service.ApplicationInstance
 // [doc] from https://sdqali.in/blog/2016/11/02/handling-deserialization-errors-in-spring-redis-sessions/
 // and https://github.com/spring-projects/spring-session/issues/280
 // updated for spring boot 2...
-class SafeSessionRepository(val applicationInstance: ApplicationInstance,
-                            val repository: SessionRepository<Session>) : SessionRepository<Session> by repository {
+class SafeSessionRepository(
+    val applicationInstance: ApplicationInstance,
+    val repository: SessionRepository<Session>
+) : SessionRepository<Session> by repository {
 
     private val logger = KotlinLogging.logger {}
 

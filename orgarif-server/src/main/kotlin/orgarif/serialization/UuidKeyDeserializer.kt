@@ -8,6 +8,6 @@ import java.util.*
 class UuidKeyDeserializer : KeyDeserializer() {
 
     override fun deserializeKey(key: String, ctxt: DeserializationContext?): UUID =
-            deserializeUuid(key)
+        deserializeUuid(key)
 
 }

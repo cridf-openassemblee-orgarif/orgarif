@@ -9,14 +9,14 @@ import orgarif.utils.Serializer.serialize
 class JsonSerializingService : Converter<Any, ByteArray> {
 
     override fun convert(source: Any) =
-            if (source is SecurityContextImpl && source.authentication is UsernamePasswordAuthenticationToken) {
-                if (source.authentication.principal is Session) {
-                    serialize(source.authentication.principal).toByteArray()
-                } else {
-                    throw IllegalArgumentException("Unexpected session : ${source.authentication.principal}")
-                }
+        if (source is SecurityContextImpl && source.authentication is UsernamePasswordAuthenticationToken) {
+            if (source.authentication.principal is Session) {
+                serialize(source.authentication.principal).toByteArray()
             } else {
-                throw IllegalArgumentException("Unexpected session : $source")
+                throw IllegalArgumentException("Unexpected session : ${source.authentication.principal}")
             }
+        } else {
+            throw IllegalArgumentException("Unexpected session : $source")
+        }
 
 }

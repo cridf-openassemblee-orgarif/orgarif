@@ -15,8 +15,8 @@ operator fun StringBuffer.plusAssign(adding: Any) {
 }
 
 inline fun <reified R : OrgarifStringId> String.toTypeId(): R =
-        R::class.constructors.first().call(this)
+    R::class.constructors.first().call(this)
 
 inline fun <reified R : OrgarifUuidId> UUID.toTypeId(): R =
-        R::class.constructors.first().call(this)
+    R::class.constructors.first().call(this)
 

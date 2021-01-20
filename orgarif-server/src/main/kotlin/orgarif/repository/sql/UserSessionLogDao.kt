@@ -13,12 +13,14 @@ import java.time.Instant
 @Repository
 class UserSessionLogDao(val jooq: DSLContext) {
 
-    data class Record(val id: UserSessionId,
-                      val springSessionId: String,
-                      val userId: UserId,
-                      val deploymentLogId: DeploymentLogId,
-                      val date: Instant,
-                      val ip: String)
+    data class Record(
+        val id: UserSessionId,
+        val springSessionId: String,
+        val userId: UserId,
+        val deploymentLogId: DeploymentLogId,
+        val date: Instant,
+        val ip: String
+    )
 
     fun insert(r: Record) {
         val lr = UserSessionLogRecord().apply {

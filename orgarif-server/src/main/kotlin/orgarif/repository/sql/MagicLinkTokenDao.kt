@@ -11,10 +11,12 @@ import java.time.Instant
 @Repository
 class MagicLinkTokenDao(val jooq: DSLContext) {
 
-    data class Record(val token: String,
-                      val userId: UserId,
-                      val creationDate: Instant,
-                      val validity: Boolean)
+    data class Record(
+        val token: String,
+        val userId: UserId,
+        val creationDate: Instant,
+        val validity: Boolean
+    )
 
     fun insert(r: Record) {
         val record = MagicLinkTokenRecord().apply {
@@ -27,22 +29,23 @@ class MagicLinkTokenDao(val jooq: DSLContext) {
     }
 
     fun fetchOrNull(magicToken: String) =
-            jooq.selectFrom(MAGIC_LINK_TOKEN)
-                    .where(MAGIC_LINK_TOKEN.TOKEN.equal(magicToken))
-                    .fetchOne()
-                    ?.let(this::map)
+        jooq.selectFrom(MAGIC_LINK_TOKEN)
+            .where(MAGIC_LINK_TOKEN.TOKEN.equal(magicToken))
+            .fetchOne()
+            ?.let(this::map)
 
     fun updateValidity(token: String, validity: Boolean) {
         jooq.update(MAGIC_LINK_TOKEN)
-                .set(MAGIC_LINK_TOKEN.VALIDITY, validity)
-                .where(MAGIC_LINK_TOKEN.TOKEN.equal(token))
-                .execute()
+            .set(MAGIC_LINK_TOKEN.VALIDITY, validity)
+            .where(MAGIC_LINK_TOKEN.TOKEN.equal(token))
+            .execute()
     }
 
     private fun map(r: MagicLinkTokenRecord) = Record(
-            r.token,
-            r.userId.toTypeId(),
-            r.creationDate,
-            r.validity)
+        r.token,
+        r.userId.toTypeId(),
+        r.creationDate,
+        r.validity
+    )
 
 }

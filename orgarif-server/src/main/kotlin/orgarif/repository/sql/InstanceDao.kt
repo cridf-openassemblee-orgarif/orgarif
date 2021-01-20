@@ -12,13 +12,15 @@ import java.time.Instant
 @Repository
 class InstanceDao(val jooq: DSLContext) {
 
-    data class Record(val id: InstanceId,
-                      val nom: String,
-                      val organismeId: OrganismeId,
-                      val nombreRepresentants: Int?,
-                      val nombreSuppleants: Int?,
-                      val creationDate: Instant,
-                      val lastModificationDate: Instant)
+    data class Record(
+        val id: InstanceId,
+        val nom: String,
+        val organismeId: OrganismeId,
+        val nombreRepresentants: Int?,
+        val nombreSuppleants: Int?,
+        val creationDate: Instant,
+        val lastModificationDate: Instant
+    )
 
     fun insert(r: Record) {
         val record = InstanceRecord().apply {
@@ -34,30 +36,31 @@ class InstanceDao(val jooq: DSLContext) {
     }
 
     fun fetchOrNull(id: InstanceId) =
-            jooq.selectFrom(INSTANCE)
-                    .where(INSTANCE.ID.equal(id.rawId))
-                    .fetchOne()
-                    ?.let(this::map)
+        jooq.selectFrom(INSTANCE)
+            .where(INSTANCE.ID.equal(id.rawId))
+            .fetchOne()
+            ?.let(this::map)
 
     fun fetchByOrganismeId(organismeId: OrganismeId) =
-            jooq.selectFrom(INSTANCE)
-                    .where(INSTANCE.ORGANISME_ID.equal(organismeId.rawId))
-                    .fetch()
-                    .map(this::map)
+        jooq.selectFrom(INSTANCE)
+            .where(INSTANCE.ORGANISME_ID.equal(organismeId.rawId))
+            .fetch()
+            .map(this::map)
 
     fun delete(id: InstanceId) {
         jooq.deleteFrom(INSTANCE)
-                .where(INSTANCE.ID.equal(id.rawId))
-                .execute()
+            .where(INSTANCE.ID.equal(id.rawId))
+            .execute()
     }
 
     private fun map(r: InstanceRecord) = Record(
-            r.id.toTypeId(),
-            r.nom,
-            r.organismeId.toTypeId(),
-            r.nombreRepresentants,
-            r.nombreSuppleants,
-            r.creationDate,
-            r.lastModificationDate)
+        r.id.toTypeId(),
+        r.nom,
+        r.organismeId.toTypeId(),
+        r.nombreRepresentants,
+        r.nombreSuppleants,
+        r.creationDate,
+        r.lastModificationDate
+    )
 
 }

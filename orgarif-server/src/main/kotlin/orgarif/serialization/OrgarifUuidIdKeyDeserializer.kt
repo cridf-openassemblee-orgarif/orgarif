@@ -8,6 +8,6 @@ import kotlin.reflect.KClass
 class OrgarifUuidIdKeyDeserializer<T : OrgarifUuidId>(val orgarifUuidIdClass: KClass<T>) : KeyDeserializer() {
 
     override fun deserializeKey(key: String, ctxt: DeserializationContext?) =
-            OrgarifUuidIdDeserializer.deserialize(orgarifUuidIdClass, key)
+        OrgarifUuidIdDeserializer.deserialize(orgarifUuidIdClass, key)
 
 }

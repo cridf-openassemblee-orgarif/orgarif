@@ -16,17 +16,19 @@ import java.time.Instant
 @Repository
 class UserDao(val jooq: DSLContext) {
 
-    data class Record(val id: UserId,
-                      val mail: String,
-                      val username: String?,
-                      val language: Language,
-                      val admin: Boolean,
-                      val signupDate: Instant,
-            // [doc] because some mail provider could choose to support character which usually aren't
-            // differentiated from another or usually just supported
-            // TODO[user] ou osef, trace est gardée dans le command log ?
-            // d'autant plus que formerMails ne va pas garder les deux...
-                      val dirtyMail: String?) {
+    data class Record(
+        val id: UserId,
+        val mail: String,
+        val username: String?,
+        val language: Language,
+        val admin: Boolean,
+        val signupDate: Instant,
+        // [doc] because some mail provider could choose to support character which usually aren't
+        // differentiated from another or usually just supported
+        // TODO[user] ou osef, trace est gardée dans le command log ?
+        // d'autant plus que formerMails ne va pas garder les deux...
+        val dirtyMail: String?
+    ) {
         override fun toString() = "User($id|$mail)"
     }
 
@@ -61,52 +63,53 @@ class UserDao(val jooq: DSLContext) {
 
     fun updatePassword(id: UserId, password: HashedPassword) {
         jooq.update(APP_USER)
-                .set(APP_USER.PASSWORD, password.hash)
-                .where(APP_USER.ID.equal(id.rawId))
-                .execute()
+            .set(APP_USER.PASSWORD, password.hash)
+            .where(APP_USER.ID.equal(id.rawId))
+            .execute()
     }
 
     fun fetch(id: UserId) =
-            jooq.selectFrom(APP_USER)
-                    .where(APP_USER.ID.equal(id.rawId))
-                    .fetchOne()
-                    ?.let(this::map)
+        jooq.selectFrom(APP_USER)
+            .where(APP_USER.ID.equal(id.rawId))
+            .fetchOne()
+            ?.let(this::map)
 
     fun doesLoginExist(login: String): Boolean =
-            jooq.selectCount()
-                    .from(APP_USER)
-                    .where(APP_USER.MAIL.equal(login))
-                    .or(APP_USER.USERNAME.equal(login))
-                    .fetchSingle()
-                    .let { it.value1() > 0 }
+        jooq.selectCount()
+            .from(APP_USER)
+            .where(APP_USER.MAIL.equal(login))
+            .or(APP_USER.USERNAME.equal(login))
+            .fetchSingle()
+            .let { it.value1() > 0 }
 
     fun fetchByMail(mail: String): Record? =
-            jooq.selectFrom(APP_USER)
-                    .where(APP_USER.MAIL.equal(mail))
-                    .fetchOne()
-                    ?.let(this::map)
+        jooq.selectFrom(APP_USER)
+            .where(APP_USER.MAIL.equal(mail))
+            .fetchOne()
+            ?.let(this::map)
 
     fun fetchByUsername(username: String): Record? =
-            jooq.selectFrom(APP_USER)
-                    .where(lower(APP_USER.USERNAME).equal(lower(username)))
-                    .fetchOne()
-                    ?.let(this::map)
+        jooq.selectFrom(APP_USER)
+            .where(lower(APP_USER.USERNAME).equal(lower(username)))
+            .fetchOne()
+            ?.let(this::map)
 
     fun fetchPassword(id: UserId): HashedPassword? =
-            jooq.select(APP_USER.PASSWORD)
-                    .from(APP_USER)
-                    .where(APP_USER.ID.equal(id.rawId))
-                    .fetchOne()
-                    ?.value1()
-                    ?.let { HashedPassword(it) }
+        jooq.select(APP_USER.PASSWORD)
+            .from(APP_USER)
+            .where(APP_USER.ID.equal(id.rawId))
+            .fetchOne()
+            ?.value1()
+            ?.let { HashedPassword(it) }
 
     fun map(r: AppUserRecord) = Record(
-            id = r.id.toTypeId(),
-            mail = r.mail,
-            username = r.username,
-            language = Language.valueOf(r.language),
-            signupDate = r.signupDate,
-            admin = r.admin,
-            dirtyMail = r.dirtyMail)
+        id = r.id.toTypeId(),
+        mail = r.mail,
+        username = r.username,
+        language = Language.valueOf(r.language),
+        signupDate = r.signupDate,
+        admin = r.admin,
+        dirtyMail = r.dirtyMail
+    )
 
 }

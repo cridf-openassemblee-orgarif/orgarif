@@ -5,9 +5,9 @@ import orgarif.repository.sql.OrganismeDao
 
 @Service
 class ListOrganismesBySecteurQueryHandler(val organismeDao: OrganismeDao) :
-        QueryHandler<ListOrganismesBySecteurQuery, ListOrganismesBySecteurQueryResponse>() {
+    QueryHandler<ListOrganismesBySecteurQuery, ListOrganismesBySecteurQueryResponse>() {
 
     override fun handle(query: ListOrganismesBySecteurQuery) =
-            ListOrganismesBySecteurQueryResponse(organismeDao.fetchBySecteurId(query.secteurId))
+        ListOrganismesBySecteurQueryResponse(organismeDao.fetchBySecteurId(query.secteurId))
 
 }

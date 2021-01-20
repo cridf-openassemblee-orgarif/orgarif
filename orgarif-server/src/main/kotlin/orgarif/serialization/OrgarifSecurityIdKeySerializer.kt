@@ -8,6 +8,6 @@ import orgarif.domain.OrgarifSecurityId
 class OrgarifSecurityIdKeySerializer : StdSerializer<OrgarifSecurityId>(OrgarifSecurityId::class.java) {
 
     override fun serialize(value: OrgarifSecurityId, gen: JsonGenerator, provider: SerializerProvider) =
-            gen.writeFieldName(value.rawId)
+        gen.writeFieldName(value.rawId)
 
 }

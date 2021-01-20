@@ -5,9 +5,9 @@ import orgarif.service.organisme.OrganismeService
 
 @Service
 class GetOrganismeQueryHandler(val organismeService: OrganismeService) :
-        QueryHandler<GetOrganismeQuery, GetOrganismeQueryResponse>() {
+    QueryHandler<GetOrganismeQuery, GetOrganismeQueryResponse>() {
 
     override fun handle(query: GetOrganismeQuery) =
-            GetOrganismeQueryResponse(organismeService.fetchFullOrganisme(query.id))
+        GetOrganismeQueryResponse(organismeService.fetchFullOrganisme(query.id))
 
 }

@@ -6,9 +6,11 @@ import orgarif.domain.ApplicationEnvironment
 import orgarif.service.utils.ApplicationTaskExecutor
 
 @Service
-class NotificationService(val applicationInstance: ApplicationInstance,
-                          val taskExecutor: ApplicationTaskExecutor,
-                          val httpService: HttpService) {
+class NotificationService(
+    val applicationInstance: ApplicationInstance,
+    val taskExecutor: ApplicationTaskExecutor,
+    val httpService: HttpService
+) {
 
     private val logger = KotlinLogging.logger {}
 

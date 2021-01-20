@@ -48,10 +48,14 @@ class ApplicationConfiguration(@Value("\${reverseProxy}") val reverseProxy: Bool
     @Bean(name = ["springSessionConversionService"])
     fun sessionConversionService(): GenericConversionService {
         val conversionService = GenericConversionService()
-        conversionService.addConverter(Any::class.java, ByteArray::class.java,
-                JsonSerializingService())
-        conversionService.addConverter(ByteArray::class.java, Any::class.java,
-                JsonDeserializingService())
+        conversionService.addConverter(
+            Any::class.java, ByteArray::class.java,
+            JsonSerializingService()
+        )
+        conversionService.addConverter(
+            ByteArray::class.java, Any::class.java,
+            JsonDeserializingService()
+        )
         return conversionService
     }
 

@@ -13,11 +13,13 @@ import java.time.LocalDate
 @Repository
 class DeliberationDao(val jooq: DSLContext) {
 
-    data class Record(val id: DeliberationId,
-                      val libelle: String,
-                      val deliberationDate: LocalDate,
-                      val creationDate: Instant,
-                      val lastModificationDate: Instant)
+    data class Record(
+        val id: DeliberationId,
+        val libelle: String,
+        val deliberationDate: LocalDate,
+        val creationDate: Instant,
+        val lastModificationDate: Instant
+    )
 
     fun insert(r: Record) {
         val record = DeliberationRecord().apply {
@@ -31,23 +33,24 @@ class DeliberationDao(val jooq: DSLContext) {
     }
 
     fun fetch(id: DeliberationId) =
-            jooq.selectFrom(DELIBERATION)
-                    .where(DELIBERATION.ID.equal(id.rawId))
-                    .fetchOne()
-                    ?.let(this::map)
-                    ?: throw IllegalArgumentException("$id")
+        jooq.selectFrom(DELIBERATION)
+            .where(DELIBERATION.ID.equal(id.rawId))
+            .fetchOne()
+            ?.let(this::map)
+            ?: throw IllegalArgumentException("$id")
 
     fun search(searchToken: String): List<Record> =
-            jooq.selectFrom(DELIBERATION)
-                    .where(lower(DELIBERATION.LIBELLE).like("%${searchToken.toLowerCase()}%"))
-                    .fetch()
-                    .map(this::map)
+        jooq.selectFrom(DELIBERATION)
+            .where(lower(DELIBERATION.LIBELLE).like("%${searchToken.toLowerCase()}%"))
+            .fetch()
+            .map(this::map)
 
     fun map(r: DeliberationRecord) = Record(
-            r.id.toTypeId(),
-            r.libelle,
-            r.deliberationDate,
-            r.creationDate,
-            r.lastModificationDate)
+        r.id.toTypeId(),
+        r.libelle,
+        r.deliberationDate,
+        r.creationDate,
+        r.lastModificationDate
+    )
 
 }

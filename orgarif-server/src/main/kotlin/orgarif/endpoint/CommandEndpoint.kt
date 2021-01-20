@@ -24,38 +24,40 @@ import javax.servlet.http.HttpServletResponse
 
 @RestController
 class CommandEndpoint(
-        val commandLogDao: CommandLogDao,
-        val userDao: UserDao,
+    val commandLogDao: CommandLogDao,
+    val userDao: UserDao,
 
-        val applicationInstance: ApplicationInstance,
-        val ipService: IpService,
-        val dateService: DateService,
-        val randomService: RandomService,
-        val transactionManager: PlatformTransactionManager,
+    val applicationInstance: ApplicationInstance,
+    val ipService: IpService,
+    val dateService: DateService,
+    val randomService: RandomService,
+    val transactionManager: PlatformTransactionManager,
 
-        val addInstanceCommandHandler: AddInstanceCommandHandler,
-        val addLienDeliberationCommandHandler: AddLienDeliberationCommandHandler,
-        val addRepresentantCommandHandler: AddRepresentantCommandHandler,
-        val createDeliberationAndAddLienCommandHandler: CreateDeliberationAndAddLienCommandHandler,
-        val createOrganismeCommandHandler: CreateOrganismeCommandHandler,
-        val deleteInstanceCommandHandler: DeleteInstanceCommandHandler,
-        val deleteRepresentantCommandHandler: DeleteRepresentantCommandHandler,
-        val loginCommandHandler: LoginCommandHandler,
-        val moveRepresentantCommandHandler: MoveRepresentantCommandHandler,
-        val registerCommandHandler: RegisterCommandHandler,
-        val updateOrganismeNatureJuridiqueCommandHandler: UpdateOrganismeNatureJuridiqueCommandHandler,
-        val updateOrganismePartageRepresentantsCommandHandler: UpdateOrganismePartageRepresentantsCommandHandler,
-        val updateOrganismeSecteurCommandHandler: UpdateOrganismeSecteurCommandHandler,
-        val updateOrganismeTypeStructureCommandCommandHandler: UpdateOrganismeTypeStructureCommandHandler,
+    val addInstanceCommandHandler: AddInstanceCommandHandler,
+    val addLienDeliberationCommandHandler: AddLienDeliberationCommandHandler,
+    val addRepresentantCommandHandler: AddRepresentantCommandHandler,
+    val createDeliberationAndAddLienCommandHandler: CreateDeliberationAndAddLienCommandHandler,
+    val createOrganismeCommandHandler: CreateOrganismeCommandHandler,
+    val deleteInstanceCommandHandler: DeleteInstanceCommandHandler,
+    val deleteRepresentantCommandHandler: DeleteRepresentantCommandHandler,
+    val loginCommandHandler: LoginCommandHandler,
+    val moveRepresentantCommandHandler: MoveRepresentantCommandHandler,
+    val registerCommandHandler: RegisterCommandHandler,
+    val updateOrganismeNatureJuridiqueCommandHandler: UpdateOrganismeNatureJuridiqueCommandHandler,
+    val updateOrganismePartageRepresentantsCommandHandler: UpdateOrganismePartageRepresentantsCommandHandler,
+    val updateOrganismeSecteurCommandHandler: UpdateOrganismeSecteurCommandHandler,
+    val updateOrganismeTypeStructureCommandCommandHandler: UpdateOrganismeTypeStructureCommandHandler,
 ) {
 
     private val logger = KotlinLogging.logger {}
 
     // TODO[test] serait BIEN de blinder de test ces transactions & stacktrace logging =s
     @PostMapping("/command")
-    fun handle(@RequestBody jsonCommand: String,
-               request: HttpServletRequest,
-               response: HttpServletResponse): CommandResponse? {
+    fun handle(
+        @RequestBody jsonCommand: String,
+        request: HttpServletRequest,
+        response: HttpServletResponse
+    ): CommandResponse? {
         val command = deserialize<Command>(jsonCommand)
         val handler = handler(command)
         val userSession = if (UserSessionHelper.isAuthenticated()) UserSessionHelper.getUserSession() else null
@@ -65,7 +67,8 @@ class CommandEndpoint(
         // TODO[test] faire insert après en one shot putain ?
         // [doc] first si doit se planter trop serieusement ? peut arriver ?
         val commandLogId = CommandLogId(randomService.randomUUID())
-        commandLogDao.insert(CommandLogDao.Record(
+        commandLogDao.insert(
+            CommandLogDao.Record(
                 id = commandLogId,
                 userId = userSession?.userId,
                 deploymentLogId = applicationInstance.deploymentId,
@@ -75,7 +78,9 @@ class CommandEndpoint(
                 ip = ipService.getClientIp(request),
                 userSessionId = userSession?.sessionId,
                 jsonResult = null,
-                exceptionStackTrace = null))
+                exceptionStackTrace = null
+            )
+        )
         val transaction = transactionManager.getTransaction(null)
         try {
             val result = when (CommandConfiguration.authenticationLevel(command)) {
@@ -107,7 +112,7 @@ class CommandEndpoint(
                     let {
                         val user = UserSessionHelper.getUserSession().userId.let {
                             userDao.fetch(it)
-                                    ?: throw IllegalArgumentException("$it")
+                                ?: throw IllegalArgumentException("$it")
                         }
                         if (!user.admin) {
                             throw OrgarifSecurityException("$userSession ${command.javaClass.simpleName}")

@@ -17,15 +17,17 @@ import java.util.*
 
 // TODO clean les !!
 @Service
-class MailService(@Value("\${mailjet.url}") val url: String,
-                  @Value("\${mailjet.api-key}") val apiKey: String,
-                  @Value("\${mailjet.secret-key}") val secretKey: String,
-                  @Value("\${devLogMail}") val devLogMail: String,
-                  val applicationInstance: ApplicationInstance,
-                  val httpService: HttpService,
-                  val mailLogDao: MailLogDao,
-                  val dateService: DateService,
-                  val randomService: RandomService) {
+class MailService(
+    @Value("\${mailjet.url}") val url: String,
+    @Value("\${mailjet.api-key}") val apiKey: String,
+    @Value("\${mailjet.secret-key}") val secretKey: String,
+    @Value("\${devLogMail}") val devLogMail: String,
+    val applicationInstance: ApplicationInstance,
+    val httpService: HttpService,
+    val mailLogDao: MailLogDao,
+    val dateService: DateService,
+    val randomService: RandomService
+) {
 
     private val logger = KotlinLogging.logger {}
 
@@ -39,23 +41,29 @@ class MailService(@Value("\${mailjet.url}") val url: String,
     }
 
     // TODO[mailjet] plutôt au serializer de mettre la maj au départ
-    data class MailJetMail(val Email: String,
-                           val Name: String)
+    data class MailJetMail(
+        val Email: String,
+        val Name: String
+    )
 
     // TODO[mailjet] possib de limiter les strings ?
-    data class MailJetAttachment(val ContentType: String,
-                                 val Filename: String,
-                                 val Base64Content: String)
+    data class MailJetAttachment(
+        val ContentType: String,
+        val Filename: String,
+        val Base64Content: String
+    )
 
-    private data class MailJetMessage(val From: MailJetMail,
-                                      val To: List<MailJetMail>,
-                                      val Subject: String,
-            //                          val TextPart: String,
-                                      val HTMLPart: String,
-                                      val Attachments: List<MailJetAttachment>,
-                                      val CustomID: String,
-                                      val CustomCampaign: String,
-                                      val EventPayload: String)
+    private data class MailJetMessage(
+        val From: MailJetMail,
+        val To: List<MailJetMail>,
+        val Subject: String,
+        //                          val TextPart: String,
+        val HTMLPart: String,
+        val Attachments: List<MailJetAttachment>,
+        val CustomID: String,
+        val CustomCampaign: String,
+        val EventPayload: String
+    )
 
     private data class MailJetMessages(val Messages: List<MailJetMessage>)
 
@@ -68,11 +76,19 @@ class MailService(@Value("\${mailjet.url}") val url: String,
             return convert(field!!.name)
         }
 
-        override fun nameForGetterMethod(config: MapperConfig<*>?, method: AnnotatedMethod?, defaultName: String): String {
+        override fun nameForGetterMethod(
+            config: MapperConfig<*>?,
+            method: AnnotatedMethod?,
+            defaultName: String
+        ): String {
             return convert(method!!.name.toString())
         }
 
-        override fun nameForSetterMethod(config: MapperConfig<*>?, method: AnnotatedMethod?, defaultName: String): String {
+        override fun nameForSetterMethod(
+            config: MapperConfig<*>?,
+            method: AnnotatedMethod?,
+            defaultName: String
+        ): String {
             return convert(method!!.name.toString())
         }
 
@@ -85,24 +101,30 @@ class MailService(@Value("\${mailjet.url}") val url: String,
         doLog, doNotLog
     }
 
-    data class MailLogProperties(val deploymentLogId: DeploymentLogId,
-                                 val userId: UserId,
-                                 val jsonData: String)
+    data class MailLogProperties(
+        val deploymentLogId: DeploymentLogId,
+        val userId: UserId,
+        val jsonData: String
+    )
 
-    data class Attachment(val filename: String,
-                          val content: ByteArray,
-                          val contentType: MimeType)
+    data class Attachment(
+        val filename: String,
+        val content: ByteArray,
+        val contentType: MimeType
+    )
 
-    fun sendMail(senderName: String,
-                 senderMail: String,
-                 recipientName: String,
-                 recipientMail: String,
-                 mailSubject: String,
-                 mailContent: String,
-                 mailReference: MailReference,
-                 logMail: MailLog,
-                 mailLogProperties: MailLogProperties? = null,
-                 attachments: List<Attachment>? = null): MailLogId? {
+    fun sendMail(
+        senderName: String,
+        senderMail: String,
+        recipientName: String,
+        recipientMail: String,
+        mailSubject: String,
+        mailContent: String,
+        mailReference: MailReference,
+        logMail: MailLog,
+        mailLogProperties: MailLogProperties? = null,
+        attachments: List<Attachment>? = null
+    ): MailLogId? {
         if (applicationInstance.env == ApplicationEnvironment.dev && recipientMail != devLogMail) {
             throw IllegalArgumentException("Mail send canceled en env dev to ${recipientMail}")
         }
@@ -115,13 +137,21 @@ class MailService(@Value("\${mailjet.url}") val url: String,
         val mailJetAttachments = (attachments ?: emptyList()).map {
             MailJetAttachment(it.contentType.fullType, it.filename, Base64.getEncoder().encodeToString(it.content))
         }
-        val body = MailJetMessages(listOf(MailJetMessage(MailJetMail(senderMail, senderName),
-                listOf(MailJetMail(recipientMail, recipientName)), subject, mailContent, mailJetAttachments,
-                mailLogIdToString(mailLogId), mailReference.name, payload)))
+        val body = MailJetMessages(
+            listOf(
+                MailJetMessage(
+                    MailJetMail(senderMail, senderName),
+                    listOf(MailJetMail(recipientMail, recipientName)), subject, mailContent, mailJetAttachments,
+                    mailLogIdToString(mailLogId), mailReference.name, payload
+                )
+            )
+        )
         val json = mailJetObjectMapper.writeValueAsString(body)
         val response = try {
-            httpService.postAndReturnString(url, json, HttpService.HttpMediaType.json,
-                    HttpService.Header.AUTHORIZATION to Credentials.basic(apiKey, secretKey))
+            httpService.postAndReturnString(
+                url, json, HttpService.HttpMediaType.json,
+                HttpService.Header.AUTHORIZATION to Credentials.basic(apiKey, secretKey)
+            )
         } catch (e: Exception) {
             logger.error {
                 "Failed to send mail to $recipientMail. Mail log properties & content is following =>"
@@ -142,7 +172,9 @@ class MailService(@Value("\${mailjet.url}") val url: String,
             MailLog.doLog -> {
                 mailLogProperties ?: throw IllegalArgumentException("$recipientMail $mailSubject")
                 try {
-                    mailLogDao.insert(MailLogDao.Record(mailLogId,
+                    mailLogDao.insert(
+                        MailLogDao.Record(
+                            mailLogId,
                             mailLogProperties.deploymentLogId,
                             mailLogProperties.userId,
                             mailReference,
@@ -150,7 +182,9 @@ class MailService(@Value("\${mailjet.url}") val url: String,
                             mailLogProperties.jsonData,
                             subject,
                             mailContent,
-                            dateService.now()))
+                            dateService.now()
+                        )
+                    )
                     logger.info { "Mail sent & logged to $recipientMail" }
                 } catch (e: Exception) {
                     logger.error {

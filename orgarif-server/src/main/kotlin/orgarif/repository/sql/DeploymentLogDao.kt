@@ -11,11 +11,13 @@ import java.time.ZoneId
 @Repository
 class DeploymentLogDao(val jooq: DSLContext) {
 
-    data class Record(val id: DeploymentLogId,
-                      val buildVersion: String,
-                      val systemZoneId: ZoneId,
-                      val startupDate: Instant,
-                      val shutdownDate: Instant?)
+    data class Record(
+        val id: DeploymentLogId,
+        val buildVersion: String,
+        val systemZoneId: ZoneId,
+        val startupDate: Instant,
+        val shutdownDate: Instant?
+    )
 
     fun insert(r: Record) {
         val lr = DeploymentLogRecord().apply {
@@ -28,9 +30,9 @@ class DeploymentLogDao(val jooq: DSLContext) {
     }
 
     fun updateShutdownTime(id: DeploymentLogId, shutdownDate: Instant) =
-            jooq.update(DEPLOYMENT_LOG)
-                    .set(DEPLOYMENT_LOG.SHUTDOWN_DATE, shutdownDate)
-                    .where(DEPLOYMENT_LOG.ID.equal(id.rawId))
-                    .execute()
+        jooq.update(DEPLOYMENT_LOG)
+            .set(DEPLOYMENT_LOG.SHUTDOWN_DATE, shutdownDate)
+            .where(DEPLOYMENT_LOG.ID.equal(id.rawId))
+            .execute()
 
 }

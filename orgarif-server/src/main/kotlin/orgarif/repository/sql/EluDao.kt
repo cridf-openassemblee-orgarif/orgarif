@@ -12,15 +12,17 @@ import java.time.Instant
 @Repository
 class EluDao(val jooq: DSLContext) {
 
-    data class Record(val id: EluId,
-                      val civilite: Civilite,
-                      val prenom: String,
-                      val nom: String,
-                      val groupePolitique: String,
-                      val groupePolitiqueCourt: String,
-                      val imageUrl: String,
-                      val actif: Boolean,
-                      val creationDate: Instant)
+    data class Record(
+        val id: EluId,
+        val civilite: Civilite,
+        val prenom: String,
+        val nom: String,
+        val groupePolitique: String,
+        val groupePolitiqueCourt: String,
+        val imageUrl: String,
+        val actif: Boolean,
+        val creationDate: Instant
+    )
 
     fun insert(r: Record) {
         val record = EluRecord().apply {
@@ -38,31 +40,32 @@ class EluDao(val jooq: DSLContext) {
     }
 
     fun fetch(id: EluId) =
-            jooq.selectFrom(ELU)
-                    .where(ELU.ID.equal(id.rawId))
-                    .fetchOne()
-                    ?.let(this::map)
+        jooq.selectFrom(ELU)
+            .where(ELU.ID.equal(id.rawId))
+            .fetchOne()
+            ?.let(this::map)
 
     fun fetchAll() =
-            jooq.selectFrom(ELU)
-                    .fetch()
-                    .map(this::map)
+        jooq.selectFrom(ELU)
+            .fetch()
+            .map(this::map)
 
     fun delete(id: EluId) {
         jooq.delete(ELU)
-                .where(ELU.ID.equal(id.rawId))
-                .execute()
+            .where(ELU.ID.equal(id.rawId))
+            .execute()
     }
 
     private fun map(r: EluRecord) = Record(
-            r.id.toTypeId(),
-            Civilite.valueOf(r.civilite),
-            r.prenom,
-            r.nom,
-            r.groupePolitique,
-            r.groupePolitiqueCourt,
-            r.imageUrl,
-            r.actif,
-            r.creationDate)
+        r.id.toTypeId(),
+        Civilite.valueOf(r.civilite),
+        r.prenom,
+        r.nom,
+        r.groupePolitique,
+        r.groupePolitiqueCourt,
+        r.imageUrl,
+        r.actif,
+        r.creationDate
+    )
 
 }

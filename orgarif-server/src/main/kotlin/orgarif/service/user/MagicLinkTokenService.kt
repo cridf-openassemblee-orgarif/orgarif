@@ -14,10 +14,12 @@ import javax.servlet.http.HttpServletRequest
 import javax.servlet.http.HttpServletResponse
 
 @Service
-class MagicLinkTokenService(val magicLinkTokenDao: MagicLinkTokenDao,
-                            val userSessionService: UserSessionService,
-                            val userDao: UserDao,
-                            val dateService: DateService) {
+class MagicLinkTokenService(
+    val magicLinkTokenDao: MagicLinkTokenDao,
+    val userSessionService: UserSessionService,
+    val userDao: UserDao,
+    val dateService: DateService
+) {
 
     private val logger = KotlinLogging.logger {}
 
@@ -32,14 +34,16 @@ class MagicLinkTokenService(val magicLinkTokenDao: MagicLinkTokenDao,
         return token
     }
 
-    fun connectUser(magicToken: String,
-                    request: HttpServletRequest,
-                    response: HttpServletResponse) {
+    fun connectUser(
+        magicToken: String,
+        request: HttpServletRequest,
+        response: HttpServletResponse
+    ) {
         val token = magicLinkTokenDao.fetchOrNull(magicToken)
-                ?: run {
-                    logger.warn { "Token doesn't exist $magicToken" }
-                    return
-                }
+            ?: run {
+                logger.warn { "Token doesn't exist $magicToken" }
+                return
+            }
         if (!token.validity) {
             logger.warn { "Invalidated token $token" }
             return

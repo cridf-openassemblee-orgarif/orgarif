@@ -9,29 +9,37 @@ import orgarif.service.DateService
 import orgarif.service.RandomService
 
 @Service
-class CreateDeliberationAndAddLienCommandHandler(val deliberationDao: DeliberationDao,
-                                                 val lienDeliberationDao: LienDeliberationDao,
-                                                 val randomService: RandomService,
-                                                 val dateService: DateService) :
-        NeutralCommandHandler<CreateDeliberationAndAddLienCommand, CreateDeliberationAndAddLienCommandResponse>() {
+class CreateDeliberationAndAddLienCommandHandler(
+    val deliberationDao: DeliberationDao,
+    val lienDeliberationDao: LienDeliberationDao,
+    val randomService: RandomService,
+    val dateService: DateService
+) :
+    NeutralCommandHandler<CreateDeliberationAndAddLienCommand, CreateDeliberationAndAddLienCommandResponse>() {
 
     override fun handle(command: CreateDeliberationAndAddLienCommand): CreateDeliberationAndAddLienCommandResponse {
         val deliberationId = DeliberationId(randomService.randomUUID())
         val now = dateService.now()
-        deliberationDao.insert(DeliberationDao.Record(
+        deliberationDao.insert(
+            DeliberationDao.Record(
                 id = deliberationId,
                 libelle = command.libelle,
                 deliberationDate = command.deliberationDate,
                 creationDate = now,
-                lastModificationDate = now))
+                lastModificationDate = now
+            )
+        )
         val lienDeliberationId = LienDeliberationId(randomService.randomUUID())
-        lienDeliberationDao.insert(LienDeliberationDao.Record(
+        lienDeliberationDao.insert(
+            LienDeliberationDao.Record(
                 id = lienDeliberationId,
                 deliberationId = deliberationId,
                 organismeId = command.organismeId,
                 instanceId = command.instanceId,
                 creationDate = now,
-                lastModificationDate = now))
+                lastModificationDate = now
+            )
+        )
         return CreateDeliberationAndAddLienCommandResponse(deliberationId, lienDeliberationId)
     }
 

@@ -10,8 +10,10 @@ import orgarif.utils.toTypeId
 @Repository
 class TypeStructureDao(val jooq: DSLContext) {
 
-    data class Record(val id: TypeStructureId,
-                      val libelle: String)
+    data class Record(
+        val id: TypeStructureId,
+        val libelle: String
+    )
 
     fun insert(r: Record) {
         val record = TypeStructureRecord().apply {
@@ -22,12 +24,13 @@ class TypeStructureDao(val jooq: DSLContext) {
     }
 
     fun fetchAll() =
-            jooq.selectFrom(TYPE_STRUCTURE)
-                    .fetch()
-                    .map(this::map)
+        jooq.selectFrom(TYPE_STRUCTURE)
+            .fetch()
+            .map(this::map)
 
     private fun map(r: TypeStructureRecord) = Record(
-            r.id.toTypeId(),
-            r.libelle)
+        r.id.toTypeId(),
+        r.libelle
+    )
 
 }

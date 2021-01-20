@@ -12,23 +12,33 @@ typealias OrganismeInfos = OrganismeDao.Record
 
 typealias InstanceInfos = InstanceDao.Record
 
-data class Representant(val id: RepresentantId,
-                        val eluId: EluId)
+data class Representant(
+    val id: RepresentantId,
+    val eluId: EluId
+)
 
-data class DeliberationInfos(val id: DeliberationId,
-                             val libelle: String,
-                             val deliberationDate: LocalDate)
+data class DeliberationInfos(
+    val id: DeliberationId,
+    val libelle: String,
+    val deliberationDate: LocalDate
+)
 
-data class LienDeliberationInfos(val id: LienDeliberationId,
-                                 val deliberation: DeliberationInfos)
+data class LienDeliberationInfos(
+    val id: LienDeliberationId,
+    val deliberation: DeliberationInfos
+)
 
-data class FullInstance(val infos: InstanceInfos,
-                        val lienDeliberations: List<LienDeliberationInfos>,
-                        val representants: List<Representant>,
-                        val suppleants: List<Representant>)
+data class FullInstance(
+    val infos: InstanceInfos,
+    val lienDeliberations: List<LienDeliberationInfos>,
+    val representants: List<Representant>,
+    val suppleants: List<Representant>
+)
 
-data class FullOrganisme(val infos: OrganismeInfos,
-                         val lienDeliberations: List<LienDeliberationInfos>,
-                         val representants: List<Representant>,
-                         val suppleants: List<Representant>,
-                         val instances: List<FullInstance>)
+data class FullOrganisme(
+    val infos: OrganismeInfos,
+    val lienDeliberations: List<LienDeliberationInfos>,
+    val representants: List<Representant>,
+    val suppleants: List<Representant>,
+    val instances: List<FullInstance>
+)

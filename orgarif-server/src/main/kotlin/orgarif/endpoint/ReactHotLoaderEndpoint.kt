@@ -12,9 +12,11 @@ import javax.servlet.http.HttpServletRequest
 import javax.servlet.http.HttpServletResponse
 
 @RestController
-class ReactHotLoaderEndpoint(@Value("\${assets.webpackDevHost}") val assetsWebpackDevHost: String,
-                             val applicationInstance: ApplicationInstance,
-                             val httpService: HttpService) {
+class ReactHotLoaderEndpoint(
+    @Value("\${assets.webpackDevHost}") val assetsWebpackDevHost: String,
+    val applicationInstance: ApplicationInstance,
+    val httpService: HttpService
+) {
 
     @GetMapping("/*.hot-update.*")
     fun handle(request: HttpServletRequest, response: HttpServletResponse) {

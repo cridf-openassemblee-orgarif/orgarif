@@ -7,15 +7,18 @@ import orgarif.service.DateService
 import orgarif.service.RandomService
 
 @Service
-class CreateOrganismeCommandHandler(val organismeDao: OrganismeDao,
-                                    val randomService: RandomService,
-                                    val dateService: DateService) :
-        NeutralCommandHandler<CreateOrganismeCommand, CreateOrganismeCommandResponse>() {
+class CreateOrganismeCommandHandler(
+    val organismeDao: OrganismeDao,
+    val randomService: RandomService,
+    val dateService: DateService
+) :
+    NeutralCommandHandler<CreateOrganismeCommand, CreateOrganismeCommandResponse>() {
 
     override fun handle(command: CreateOrganismeCommand): CreateOrganismeCommandResponse {
         val organismeId = OrganismeId(randomService.randomUUID())
         val now = dateService.now()
-        organismeDao.insert(OrganismeDao.Record(
+        organismeDao.insert(
+            OrganismeDao.Record(
                 id = organismeId,
                 nom = command.nom,
                 secteurId = null,
@@ -25,7 +28,9 @@ class CreateOrganismeCommandHandler(val organismeDao: OrganismeDao,
                 nombreSuppleants = null,
                 partageRepresentants = false,
                 creationDate = now,
-                lastModificationDate = now))
+                lastModificationDate = now
+            )
+        )
         return CreateOrganismeCommandResponse(organismeId)
     }
 

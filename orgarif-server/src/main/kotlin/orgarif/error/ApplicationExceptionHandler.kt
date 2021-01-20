@@ -23,9 +23,11 @@ import orgarif.utils.Serializer
 import javax.servlet.http.HttpServletResponse
 
 @ControllerAdvice
-class ApplicationExceptionHandler(val applicationInstance: ApplicationInstance,
-                                  val dateService: DateService,
-                                  val randomService: RandomService) {
+class ApplicationExceptionHandler(
+    val applicationInstance: ApplicationInstance,
+    val dateService: DateService,
+    val randomService: RandomService
+) {
 
     private val logger = KotlinLogging.logger {}
 
@@ -37,12 +39,13 @@ class ApplicationExceptionHandler(val applicationInstance: ApplicationInstance,
         // pr log userid, mail, ip
         val id = RequestErrorId(randomService.randomUUID())
         val readableStackTrace =
-                if (applicationInstance.env == ApplicationEnvironment.dev ||
-                        (UserSessionHelper.isAuthenticated() && UserSessionHelper.isAdmin())) {
-                    ReadableStackTrace(exception)
-                } else {
-                    null
-                }
+            if (applicationInstance.env == ApplicationEnvironment.dev ||
+                (UserSessionHelper.isAuthenticated() && UserSessionHelper.isAdmin())
+            ) {
+                ReadableStackTrace(exception)
+            } else {
+                null
+            }
         val cause = exception.cause
         val subCause = cause?.cause
         when {
@@ -54,26 +57,42 @@ class ApplicationExceptionHandler(val applicationInstance: ApplicationInstance,
                             subCause.message
                 }
                 // TODO[secu] un système de code pour front
-                return render(request, response, RequestError(id, 500, "Error",
-                        "File exceeds max authorized size", dateService.now(), readableStackTrace))
+                return render(
+                    request, response, RequestError(
+                        id, 500, "Error",
+                        "File exceeds max authorized size", dateService.now(), readableStackTrace
+                    )
+                )
             }
             exception is DisplayMessageException -> {
                 // TODO[secu] ce "DisplayError" est used en front
                 logger.info { "[user message exception] ${exception.logMessage}" }
-                return render(request, response, RequestError(id, 500, "DisplayError",
-                        exception.displayMessage, dateService.now(), readableStackTrace))
+                return render(
+                    request, response, RequestError(
+                        id, 500, "DisplayError",
+                        exception.displayMessage, dateService.now(), readableStackTrace
+                    )
+                )
             }
             exception is JsonMappingException -> {
                 when (cause) {
                     is OrgarifSerializationLocalDateException -> {
-                        return render(request, response, RequestError(id, 400, "SerializationError",
+                        return render(
+                            request, response, RequestError(
+                                id, 400, "SerializationError",
                                 // on ne met pas la date dans le message car non formattée ce n'est pas clair
                                 // (2020-33-33 vs 33/33/2020)
-                                "La date n'est pas valide.", dateService.now(), readableStackTrace))
+                                "La date n'est pas valide.", dateService.now(), readableStackTrace
+                            )
+                        )
                     }
                     else -> {
-                        return render(request, response, RequestError(id, 500, "Erreur", "Erreur inconnue",
-                                dateService.now(), readableStackTrace))
+                        return render(
+                            request, response, RequestError(
+                                id, 500, "Erreur", "Erreur inconnue",
+                                dateService.now(), readableStackTrace
+                            )
+                        )
                     }
                 }
             }
@@ -85,15 +104,21 @@ class ApplicationExceptionHandler(val applicationInstance: ApplicationInstance,
                 }
                 // TODO[secu] i18n, et i18n de spring
                 // centraliser les strings user qui viennent du back
-                return render(request, response, RequestError(id, 500, "Erreur", "Erreur inconnue",
-                        dateService.now(), readableStackTrace))
+                return render(
+                    request, response, RequestError(
+                        id, 500, "Erreur", "Erreur inconnue",
+                        dateService.now(), readableStackTrace
+                    )
+                )
             }
         }
     }
 
-    fun render(request: WebRequest,
-               response: HttpServletResponse,
-               requestError: RequestError): ModelAndView {
+    fun render(
+        request: WebRequest,
+        response: HttpServletResponse,
+        requestError: RequestError
+    ): ModelAndView {
         val mav = ModelAndView()
         response.status = requestError.status
         val stackTrace = requestError.stackTrace

@@ -13,8 +13,10 @@ class SessionConfiguration {
     @Primary
     @Bean
     @Suppress("UNCHECKED_CAST")
-    fun <S : Session?> safeSessionRepository(applicationInstance: ApplicationInstance,
-                                             sessionRepository: SessionRepository<S>) =
-            SafeSessionRepository(applicationInstance, sessionRepository as SessionRepository<Session>)
+    fun <S : Session?> safeSessionRepository(
+        applicationInstance: ApplicationInstance,
+        sessionRepository: SessionRepository<S>
+    ) =
+        SafeSessionRepository(applicationInstance, sessionRepository as SessionRepository<Session>)
 
 }

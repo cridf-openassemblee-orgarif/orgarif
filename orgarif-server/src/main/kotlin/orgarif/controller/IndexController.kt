@@ -25,20 +25,21 @@ import javax.servlet.http.HttpServletResponse
 
 @Controller
 class IndexController(
-        @Value("\${assets.webpackDevHost}") val assetsWebpackDevHost: String,
-        @Value("\${assets.useBuildFiles}") val assetsUseBuildFiles: Boolean,
+    @Value("\${assets.webpackDevHost}") val assetsWebpackDevHost: String,
+    @Value("\${assets.useBuildFiles}") val assetsUseBuildFiles: Boolean,
 
 
-        val userDao: UserDao,
-        val secteurDao: SecteurDao,
-        val natureJuridiqueDao: NatureJuridiqueDao,
-        val typeStructureDao: TypeStructureDao,
-        val eluDao: EluDao,
+    val userDao: UserDao,
+    val secteurDao: SecteurDao,
+    val natureJuridiqueDao: NatureJuridiqueDao,
+    val typeStructureDao: TypeStructureDao,
+    val eluDao: EluDao,
 
-        val localeService: LocaleService,
-        val userService: UserService,
-        val applicationInstance: ApplicationInstance,
-        val magicLinkTokenService: MagicLinkTokenService) {
+    val localeService: LocaleService,
+    val userService: UserService,
+    val applicationInstance: ApplicationInstance,
+    val magicLinkTokenService: MagicLinkTokenService
+) {
 
     companion object {
         // TODO [] mapping avec front
@@ -54,17 +55,17 @@ class IndexController(
 
     val assets by lazy {
         File(System.getProperty("user.dir") + "/asset-manifest.json")
-                .let { Files.readString(it.toPath()) }
-                .let { JSONObject(it ?: throw RuntimeException()) }
-                .let { it.getJSONArray("entrypoints") }
-                .map { "/$it" }
+            .let { Files.readString(it.toPath()) }
+            .let { JSONObject(it ?: throw RuntimeException()) }
+            .let { it.getJSONArray("entrypoints") }
+            .map { "/$it" }
     }
     val jsAssets by lazy {
         if (assetsUseBuildFiles) {
             assets.filter { it.endsWith(".js") }
         } else {
             listOf("bundle.js", "0.chunk.js", "main.chunk.js")
-                    .map { "$assetsWebpackDevHost/static/js/$it" }
+                .map { "$assetsWebpackDevHost/static/js/$it" }
         }
     }
     val cssAssets by lazy {
@@ -84,19 +85,24 @@ class IndexController(
         if (magicToken != null) {
             val queryString = rewriteQueryString(request.parameterMap)
             magicLinkTokenService.connectUser(magicToken, request, response)
-            return ModelAndView("redirect:" + request.requestURI +
-                    if (queryString.isNotBlank()) "?$queryString" else "")
+            return ModelAndView(
+                "redirect:" + request.requestURI +
+                        if (queryString.isNotBlank()) "?$queryString" else ""
+            )
         }
         val userInfos = if (UserSessionHelper.isAuthenticated()) {
             val userSession = UserSessionHelper.getUserSession()
             val user = userDao.fetch(userSession.userId)
-                    ?: throw IllegalStateException()
+                ?: throw IllegalStateException()
             UserInfos.fromUser(user)
         } else null
-        val categories = OrganismeCategories(secteurDao.fetchAll(), natureJuridiqueDao.fetchAll(),
-                typeStructureDao.fetchAll())
+        val categories = OrganismeCategories(
+            secteurDao.fetchAll(), natureJuridiqueDao.fetchAll(),
+            typeStructureDao.fetchAll()
+        )
         val elus = eluDao.fetchAll()
-        mav.model["bootstrapData"] = serialize(ApplicationBootstrapData(applicationInstance.env, userInfos, categories, elus))
+        mav.model["bootstrapData"] =
+            serialize(ApplicationBootstrapData(applicationInstance.env, userInfos, categories, elus))
         mav.model["deploymentId"] = applicationInstance.deploymentId.rawId
         mav.model["gitRevisionLabel"] = applicationInstance.gitRevisionLabel
         mav.model["jsAssets"] = jsAssets
@@ -108,21 +114,21 @@ class IndexController(
 
     fun rewriteQueryString(parameterMap: Map<String, Array<String>>): String {
         val params = parameterMap.keys
-                .filter { it != magicTokenParameterName }
+            .filter { it != magicTokenParameterName }
         return if (params.isEmpty()) {
             ""
         } else {
             params
-                    .flatMap { paramName ->
-                        // TODO[fmk] fonctionne bien ? is needed ?
-                        // tester serieusement et comparer avec UriEncoder
-                        // test prout= chaine vide
-                        val paramValues = parameterMap.getValue(paramName)
-                        paramValues.map {
-                            URLEncoder.encode(paramName, Charsets.UTF_8.name()) + "=" +
-                                    URLEncoder.encode(it, Charsets.UTF_8.name())
-                        }
-                    }.reduce { acc, s -> acc + "&" + s }
+                .flatMap { paramName ->
+                    // TODO[fmk] fonctionne bien ? is needed ?
+                    // tester serieusement et comparer avec UriEncoder
+                    // test prout= chaine vide
+                    val paramValues = parameterMap.getValue(paramName)
+                    paramValues.map {
+                        URLEncoder.encode(paramName, Charsets.UTF_8.name()) + "=" +
+                                URLEncoder.encode(it, Charsets.UTF_8.name())
+                    }
+                }.reduce { acc, s -> acc + "&" + s }
         }
     }
 

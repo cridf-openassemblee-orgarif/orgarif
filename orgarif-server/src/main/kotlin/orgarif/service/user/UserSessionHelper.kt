@@ -10,7 +10,7 @@ import orgarif.error.OrgarifSecurityException
 object UserSessionHelper {
 
     fun isAuthenticated() = SecurityContextHolder.getContext().authentication
-            .let { it != null && it !is AnonymousAuthenticationToken && it.isAuthenticated }
+        .let { it != null && it !is AnonymousAuthenticationToken && it.isAuthenticated }
 
     // TODO[secu]
     fun isAdmin(): Boolean {

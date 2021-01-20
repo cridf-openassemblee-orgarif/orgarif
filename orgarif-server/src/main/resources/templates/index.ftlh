@@ -11,13 +11,13 @@
         var securityCsrfToken = '${_csrf.token?no_esc}';
     </script>
     <#list cssAssets as cssAsset>
-    <link href="${cssAsset?no_esc}" rel="stylesheet">
+        <link href="${cssAsset?no_esc}" rel="stylesheet">
     </#list>
 </head>
 <body>
 <div id="root"></div>
 <#list jsAssets as jsAsset>
-<script src="${jsAsset?no_esc}"></script>
+    <script src="${jsAsset?no_esc}"></script>
 </#list>
 </body>
 </html>

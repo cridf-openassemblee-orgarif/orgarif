@@ -12,15 +12,17 @@ import orgarif.controller.IndexController.Companion.logoutRoute
 
 @Configuration
 @EnableWebSecurity
-class SecurityConfiguration(@Value("\${app.url}") val appUrl: String,
-                            val cookieCsrfTokenRepository: CookieCsrfTokenRepository) : WebSecurityConfigurerAdapter() {
+class SecurityConfiguration(
+    @Value("\${app.url}") val appUrl: String,
+    val cookieCsrfTokenRepository: CookieCsrfTokenRepository
+) : WebSecurityConfigurerAdapter() {
 
     override fun configure(web: WebSecurity) {
         // TODO[fmk] est necessaire en fait ??
         // "/**/*" match "/*" ou pas ?
         web.ignoring()
-                .antMatchers(ApplicationConstants.staticResourcesPath + "/*")
-                .antMatchers(ApplicationConstants.staticResourcesPath + "/**/*")
+            .antMatchers(ApplicationConstants.staticResourcesPath + "/*")
+            .antMatchers(ApplicationConstants.staticResourcesPath + "/**/*")
     }
 
     override fun configure(http: HttpSecurity) {

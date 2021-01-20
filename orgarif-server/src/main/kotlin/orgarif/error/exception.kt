@@ -6,12 +6,14 @@ import orgarif.domain.OrgarifId
 import orgarif.domain.RequestErrorId
 import java.time.Instant
 
-data class RequestError(val id: RequestErrorId,
-                        val status: Int,
-                        val error: String,
-                        val message: String,
-                        val instant: Instant,
-                        val stackTrace: ReadableStackTrace?)
+data class RequestError(
+    val id: RequestErrorId,
+    val status: Int,
+    val error: String,
+    val message: String,
+    val instant: Instant,
+    val stackTrace: ReadableStackTrace?
+)
 
 data class ReadableStackTrace(val exception: Throwable?) {
     fun toReadableString(): String? = if (exception != null) ExceptionUtils.getStackTrace(exception) else null
@@ -21,7 +23,7 @@ data class ReadableStackTrace(val exception: Throwable?) {
 //class DisplayMessageException(displayMessage: String, logMessage: String) : Exception(message)
 // user message exception
 class DisplayMessageException(val displayMessage: String, val logMessage: String, val logLevel: Level) :
-        Exception(logMessage)
+    Exception(logMessage)
 
 // [doc] contient mail pour ne pas créer d'affichage confusant (user peut avoir modifié son mail)
 class MailAlreadyRegisteredException(mail: String) : Exception()

@@ -12,18 +12,20 @@ import java.time.LocalDate
 import java.util.*
 
 @Service
-class InitialDataInjector(@Value("\${injectFakeData}") val injectFakeData: Boolean,
-                          val organismeDao: OrganismeDao,
-                          val secteurDao: SecteurDao,
-                          val natureJuridiqueDao: NatureJuridiqueDao,
-                          val typeStructureDao: TypeStructureDao,
-                          val representantDao: RepresentantDao,
-                          val instanceDao: InstanceDao,
-                          val eluDao: EluDao,
-                          val deliberationDao: DeliberationDao,
-                          val lienDeliberationDao: LienDeliberationDao,
-                          val randomService: RandomService,
-                          val dateService: DateService) {
+class InitialDataInjector(
+    @Value("\${injectFakeData}") val injectFakeData: Boolean,
+    val organismeDao: OrganismeDao,
+    val secteurDao: SecteurDao,
+    val natureJuridiqueDao: NatureJuridiqueDao,
+    val typeStructureDao: TypeStructureDao,
+    val representantDao: RepresentantDao,
+    val instanceDao: InstanceDao,
+    val eluDao: EluDao,
+    val deliberationDao: DeliberationDao,
+    val lienDeliberationDao: LienDeliberationDao,
+    val randomService: RandomService,
+    val dateService: DateService
+) {
 
     val fakeOrganismeId1 = OrganismeId(deserializeUuid("ced8c29ba05b4ceca05f5104b9c84e28"))
     val fakeOrganismeId2 = OrganismeId(deserializeUuid("2bb58ac22d384db08d5754439d72e3c9"))
@@ -43,7 +45,8 @@ class InitialDataInjector(@Value("\${injectFakeData}") val injectFakeData: Boole
         val typeStructures = fetchOrInjectTypeStructure()
         if (injectFakeData) {
             if (organismeDao.fetchOrNull(fakeOrganismeId1) == null) {
-                organismeDao.insert(OrganismeDao.Record(
+                organismeDao.insert(
+                    OrganismeDao.Record(
                         id = fakeOrganismeId1,
                         nom = "Organisme de test 1",
                         secteurId = secteurs.random().id,
@@ -53,18 +56,24 @@ class InitialDataInjector(@Value("\${injectFakeData}") val injectFakeData: Boole
                         nombreSuppleants = nombreRepresentants,
                         partageRepresentants = false,
                         creationDate = now,
-                        lastModificationDate = now))
+                        lastModificationDate = now
+                    )
+                )
                 val deliberationId = deliberation("Délibération organisme 1")
-                lienDeliberationDao.insert(LienDeliberationDao.Record(
+                lienDeliberationDao.insert(
+                    LienDeliberationDao.Record(
                         id = LienDeliberationId(randomService.randomUUID()),
                         deliberationId = deliberationId,
                         organismeId = fakeOrganismeId1,
                         instanceId = null,
                         creationDate = now,
-                        lastModificationDate = now))
+                        lastModificationDate = now
+                    )
+                )
             }
             if (organismeDao.fetchOrNull(fakeOrganismeId2) == null) {
-                organismeDao.insert(OrganismeDao.Record(
+                organismeDao.insert(
+                    OrganismeDao.Record(
                         id = fakeOrganismeId2,
                         nom = "Organisme de test 2",
                         secteurId = secteurs.random().id,
@@ -74,50 +83,68 @@ class InitialDataInjector(@Value("\${injectFakeData}") val injectFakeData: Boole
                         nombreSuppleants = null,
                         partageRepresentants = false,
                         creationDate = now,
-                        lastModificationDate = now))
+                        lastModificationDate = now
+                    )
+                )
                 val deliberationId1 = deliberation("Délibération organisme 2")
-                lienDeliberationDao.insert(LienDeliberationDao.Record(
+                lienDeliberationDao.insert(
+                    LienDeliberationDao.Record(
                         id = LienDeliberationId(randomService.randomUUID()),
                         deliberationId = deliberationId1,
                         organismeId = fakeOrganismeId2,
                         instanceId = null,
                         creationDate = now,
-                        lastModificationDate = now))
-                instanceDao.insert(InstanceDao.Record(
+                        lastModificationDate = now
+                    )
+                )
+                instanceDao.insert(
+                    InstanceDao.Record(
                         id = fakeOrganisme2InstanceId1,
                         nom = "Instance 1",
                         organismeId = fakeOrganismeId2,
                         nombreRepresentants = nombreRepresentants,
                         nombreSuppleants = nombreRepresentants,
                         creationDate = now,
-                        lastModificationDate = now))
+                        lastModificationDate = now
+                    )
+                )
                 val deliberationId2 = deliberation("Délibération instance 1 organisme 2")
-                lienDeliberationDao.insert(LienDeliberationDao.Record(
+                lienDeliberationDao.insert(
+                    LienDeliberationDao.Record(
                         id = LienDeliberationId(randomService.randomUUID()),
                         deliberationId = deliberationId2,
                         organismeId = fakeOrganismeId2,
                         instanceId = fakeOrganisme2InstanceId1,
                         creationDate = now,
-                        lastModificationDate = now))
-                instanceDao.insert(InstanceDao.Record(
+                        lastModificationDate = now
+                    )
+                )
+                instanceDao.insert(
+                    InstanceDao.Record(
                         id = fakeOrganisme2InstanceId2,
                         nom = "Instance 2",
                         organismeId = fakeOrganismeId2,
                         nombreRepresentants = nombreRepresentants,
                         nombreSuppleants = nombreRepresentants,
                         creationDate = now,
-                        lastModificationDate = now))
+                        lastModificationDate = now
+                    )
+                )
                 val deliberationId3 = deliberation("Délibération instance 2 organisme 2")
-                lienDeliberationDao.insert(LienDeliberationDao.Record(
+                lienDeliberationDao.insert(
+                    LienDeliberationDao.Record(
                         id = LienDeliberationId(randomService.randomUUID()),
                         deliberationId = deliberationId3,
                         organismeId = fakeOrganismeId2,
                         instanceId = fakeOrganisme2InstanceId2,
                         creationDate = now,
-                        lastModificationDate = now))
+                        lastModificationDate = now
+                    )
+                )
             }
             if (organismeDao.fetchOrNull(fakeOrganismeId3) == null) {
-                organismeDao.insert(OrganismeDao.Record(
+                organismeDao.insert(
+                    OrganismeDao.Record(
                         id = fakeOrganismeId3,
                         nom = "Organisme de test 3",
                         secteurId = secteurs.random().id,
@@ -127,47 +154,64 @@ class InitialDataInjector(@Value("\${injectFakeData}") val injectFakeData: Boole
                         nombreSuppleants = nombreRepresentants,
                         partageRepresentants = true,
                         creationDate = now,
-                        lastModificationDate = now))
+                        lastModificationDate = now
+                    )
+                )
                 val deliberationId1 = deliberation("Délibération organisme 3")
-                lienDeliberationDao.insert(LienDeliberationDao.Record(
+                lienDeliberationDao.insert(
+                    LienDeliberationDao.Record(
                         id = LienDeliberationId(randomService.randomUUID()),
                         deliberationId = deliberationId1,
                         organismeId = fakeOrganismeId3,
                         instanceId = null,
                         creationDate = now,
-                        lastModificationDate = now))
-                instanceDao.insert(InstanceDao.Record(
+                        lastModificationDate = now
+                    )
+                )
+                instanceDao.insert(
+                    InstanceDao.Record(
                         id = fakeOrganisme3InstanceId1,
                         nom = "Instance 1",
                         organismeId = fakeOrganismeId3,
                         nombreRepresentants = null,
                         nombreSuppleants = null,
                         creationDate = now,
-                        lastModificationDate = now))
+                        lastModificationDate = now
+                    )
+                )
                 val deliberationId2 = deliberation("Délibération instance 1 organisme 3")
-                lienDeliberationDao.insert(LienDeliberationDao.Record(
+                lienDeliberationDao.insert(
+                    LienDeliberationDao.Record(
                         id = LienDeliberationId(randomService.randomUUID()),
                         deliberationId = deliberationId2,
                         organismeId = fakeOrganismeId3,
                         instanceId = fakeOrganisme3InstanceId1,
                         creationDate = now,
-                        lastModificationDate = now))
-                instanceDao.insert(InstanceDao.Record(
+                        lastModificationDate = now
+                    )
+                )
+                instanceDao.insert(
+                    InstanceDao.Record(
                         id = fakeOrganisme3InstanceId2,
                         nom = "Instance 2",
                         organismeId = fakeOrganismeId3,
                         nombreRepresentants = null,
                         nombreSuppleants = null,
                         creationDate = now,
-                        lastModificationDate = now))
+                        lastModificationDate = now
+                    )
+                )
                 val deliberationId3 = deliberation("Délibération instance 2 organisme 3")
-                lienDeliberationDao.insert(LienDeliberationDao.Record(
+                lienDeliberationDao.insert(
+                    LienDeliberationDao.Record(
                         id = LienDeliberationId(randomService.randomUUID()),
                         deliberationId = deliberationId3,
                         organismeId = fakeOrganismeId3,
                         instanceId = fakeOrganisme3InstanceId2,
                         creationDate = now,
-                        lastModificationDate = now))
+                        lastModificationDate = now
+                    )
+                )
             }
             injectRepresentants()
         }
@@ -176,13 +220,16 @@ class InitialDataInjector(@Value("\${injectFakeData}") val injectFakeData: Boole
     private fun deliberation(libelle: String): DeliberationId {
         val id = DeliberationId(randomService.randomUUID())
         val now = dateService.now()
-        deliberationDao.insert(DeliberationDao.Record(
+        deliberationDao.insert(
+            DeliberationDao.Record(
                 id = id,
                 libelle = libelle,
                 deliberationDate = LocalDate.of(2020, 1, 1)
-                        .plusDays(random.nextInt(100).toLong()),
+                    .plusDays(random.nextInt(100).toLong()),
                 creationDate = now,
-                lastModificationDate = now))
+                lastModificationDate = now
+            )
+        )
         return id
     }
 
@@ -198,14 +245,16 @@ class InitialDataInjector(@Value("\${injectFakeData}") val injectFakeData: Boole
                 return
             }
             if (organismeDao.fetchOrNull(fakeOrganismeId1) == null ||
-                    instanceDao.fetchOrNull(fakeOrganisme2InstanceId1) == null ||
-                    instanceDao.fetchOrNull(fakeOrganisme2InstanceId2) == null ||
-                    organismeDao.fetchOrNull(fakeOrganismeId3) == null) {
+                instanceDao.fetchOrNull(fakeOrganisme2InstanceId1) == null ||
+                instanceDao.fetchOrNull(fakeOrganisme2InstanceId2) == null ||
+                organismeDao.fetchOrNull(fakeOrganismeId3) == null
+            ) {
                 return
             }
             val now = dateService.now()
             elus.shuffled().subList(0, nombreRepresentants * 2).forEachIndexed { index, e ->
-                representantDao.insert(RepresentantDao.Record(
+                representantDao.insert(
+                    RepresentantDao.Record(
                         id = RepresentantId(randomService.randomUUID()),
                         eluId = e.id,
                         organismeId = fakeOrganismeId1,
@@ -215,10 +264,12 @@ class InitialDataInjector(@Value("\${injectFakeData}") val injectFakeData: Boole
                         else RepresentantOrSuppleant.suppleant,
                         creationDate = now,
                         lastModificationDate = now
-                ))
+                    )
+                )
             }
             elus.shuffled().subList(0, nombreRepresentants * 2).forEachIndexed { index, e ->
-                representantDao.insert(RepresentantDao.Record(
+                representantDao.insert(
+                    RepresentantDao.Record(
                         id = RepresentantId(randomService.randomUUID()),
                         eluId = e.id,
                         organismeId = fakeOrganismeId2,
@@ -228,10 +279,12 @@ class InitialDataInjector(@Value("\${injectFakeData}") val injectFakeData: Boole
                         else RepresentantOrSuppleant.suppleant,
                         creationDate = now,
                         lastModificationDate = now
-                ))
+                    )
+                )
             }
             elus.shuffled().subList(0, nombreRepresentants * 2).forEachIndexed { index, e ->
-                representantDao.insert(RepresentantDao.Record(
+                representantDao.insert(
+                    RepresentantDao.Record(
                         id = RepresentantId(randomService.randomUUID()),
                         eluId = e.id,
                         organismeId = fakeOrganismeId2,
@@ -241,10 +294,12 @@ class InitialDataInjector(@Value("\${injectFakeData}") val injectFakeData: Boole
                         else RepresentantOrSuppleant.suppleant,
                         creationDate = now,
                         lastModificationDate = now
-                ))
+                    )
+                )
             }
             elus.shuffled().subList(0, nombreRepresentants * 2).forEachIndexed { index, e ->
-                representantDao.insert(RepresentantDao.Record(
+                representantDao.insert(
+                    RepresentantDao.Record(
                         id = RepresentantId(randomService.randomUUID()),
                         eluId = e.id,
                         organismeId = fakeOrganismeId3,
@@ -254,37 +309,40 @@ class InitialDataInjector(@Value("\${injectFakeData}") val injectFakeData: Boole
                         else RepresentantOrSuppleant.suppleant,
                         creationDate = now,
                         lastModificationDate = now
-                ))
+                    )
+                )
             }
         }
     }
 
     fun fetchOrInjectSecteurs() = secteurDao.fetchAll().let {
         if (it.isEmpty()) {
-            listOf("Lycées",
-                    "Culture - Patrimoine - Création",
-                    "Enseignement supérieur - Recherche",
-                    "Développement économique - Attractivité",
-                    "Emploi - Formation professionnelle - Apprentissage",
-                    "Écologie - Développement durable - Aménagement",
-                    "Agriculture - Ruralité",
-                    "Stratégie institutionnelle - Grand Paris",
-                    "Transports - Mobilités durables",
-                    "Logement - Handicap",
-                    "Solidarités - Santé - Famille",
-                    "Sports - Loisirs - Jeunesse - Citoyenneté - Vie associative",
-                    "Tourisme",
-                    "Affaires européennes",
-                    "Finances - Évaluation des politiques publiques",
-                    "Administration générale")
-                    .map {
-                        val r = SecteurDao.Record(
-                                SecteurId(randomService.randomUUID()),
-                                it
-                        )
-                        secteurDao.insert(r)
-                        r
-                    }
+            listOf(
+                "Lycées",
+                "Culture - Patrimoine - Création",
+                "Enseignement supérieur - Recherche",
+                "Développement économique - Attractivité",
+                "Emploi - Formation professionnelle - Apprentissage",
+                "Écologie - Développement durable - Aménagement",
+                "Agriculture - Ruralité",
+                "Stratégie institutionnelle - Grand Paris",
+                "Transports - Mobilités durables",
+                "Logement - Handicap",
+                "Solidarités - Santé - Famille",
+                "Sports - Loisirs - Jeunesse - Citoyenneté - Vie associative",
+                "Tourisme",
+                "Affaires européennes",
+                "Finances - Évaluation des politiques publiques",
+                "Administration générale"
+            )
+                .map {
+                    val r = SecteurDao.Record(
+                        SecteurId(randomService.randomUUID()),
+                        it
+                    )
+                    secteurDao.insert(r)
+                    r
+                }
         } else {
             it
         }
@@ -292,30 +350,32 @@ class InitialDataInjector(@Value("\${injectFakeData}") val injectFakeData: Boole
 
     fun fetchOrInjectNatureJuridiques() = natureJuridiqueDao.fetchAll().let {
         if (it.isEmpty()) {
-            listOf("Association",
-                    "Fondation reconnue d'utilité publique (FRUP)",
-                    "Association reconnue d'utilité publique (ARUP)",
-                    "Établissement public industriel et commercial (EPIC)",
-                    "Syndicat mixte ",
-                    "Groupement d'intérêt public (GIP)",
-                    "Société d'économie mixte (SEM)",
-                    "Société anonyme (SA)",
-                    "Établissement public de coopération culturelle (EPCC)",
-                    "Établissement public à caractère scientifique, culturel et professionnel (EPCSCP)",
-                    "Établissement public administratif (EPA)",
-                    "Établissement public (EP)",
-                    "Jury",
-                    "Société coopérative d'intérêt collectif (SCIC)",
-                    "Établissement public de santé (EPS)",
-                    "Commission d'appel d'offres")
-                    .map {
-                        val r = NatureJuridiqueDao.Record(
-                                NatureJuridiqueId(randomService.randomUUID()),
-                                it
-                        )
-                        natureJuridiqueDao.insert(r)
-                        r
-                    }
+            listOf(
+                "Association",
+                "Fondation reconnue d'utilité publique (FRUP)",
+                "Association reconnue d'utilité publique (ARUP)",
+                "Établissement public industriel et commercial (EPIC)",
+                "Syndicat mixte ",
+                "Groupement d'intérêt public (GIP)",
+                "Société d'économie mixte (SEM)",
+                "Société anonyme (SA)",
+                "Établissement public de coopération culturelle (EPCC)",
+                "Établissement public à caractère scientifique, culturel et professionnel (EPCSCP)",
+                "Établissement public administratif (EPA)",
+                "Établissement public (EP)",
+                "Jury",
+                "Société coopérative d'intérêt collectif (SCIC)",
+                "Établissement public de santé (EPS)",
+                "Commission d'appel d'offres"
+            )
+                .map {
+                    val r = NatureJuridiqueDao.Record(
+                        NatureJuridiqueId(randomService.randomUUID()),
+                        it
+                    )
+                    natureJuridiqueDao.insert(r)
+                    r
+                }
         } else {
             it
         }
@@ -323,32 +383,34 @@ class InitialDataInjector(@Value("\${injectFakeData}") val injectFakeData: Boole
 
     fun fetchOrInjectTypeStructure() = typeStructureDao.fetchAll().let {
         if (it.isEmpty()) {
-            listOf("Dispositif régional",
-                    "Lycée",
-                    "Université",
-                    "Communauté d'universités et établissements (COMUE)",
-                    "Pôle de compétitivité",
-                    "Groupement d'établissements (GRETA)",
-                    "Mission locale",
-                    "Maison de l'emploi",
-                    "Établissement public d'aménagement (EPA)",
-                    "Commission consultative de l'environnement (CCE) ",
-                    "Commission locale de l'eau (CLE)",
-                    "Commission de suivi de site (CSS)",
-                    "Commission locale d'information (CLI)",
-                    "Commission locale d'information et de surveillance (CLIS)",
-                    "Parc naturel régional (PNR)",
-                    "Centre de formation en travail social (CFTS)",
-                    "Commission de coordination des politiques publiques de santé (CCPPS)",
-                    "Base de plein air et de loisirs (BPAL)")
-                    .map {
-                        val r = TypeStructureDao.Record(
-                                TypeStructureId(randomService.randomUUID()),
-                                it
-                        )
-                        typeStructureDao.insert(r)
-                        r
-                    }
+            listOf(
+                "Dispositif régional",
+                "Lycée",
+                "Université",
+                "Communauté d'universités et établissements (COMUE)",
+                "Pôle de compétitivité",
+                "Groupement d'établissements (GRETA)",
+                "Mission locale",
+                "Maison de l'emploi",
+                "Établissement public d'aménagement (EPA)",
+                "Commission consultative de l'environnement (CCE) ",
+                "Commission locale de l'eau (CLE)",
+                "Commission de suivi de site (CSS)",
+                "Commission locale d'information (CLI)",
+                "Commission locale d'information et de surveillance (CLIS)",
+                "Parc naturel régional (PNR)",
+                "Centre de formation en travail social (CFTS)",
+                "Commission de coordination des politiques publiques de santé (CCPPS)",
+                "Base de plein air et de loisirs (BPAL)"
+            )
+                .map {
+                    val r = TypeStructureDao.Record(
+                        TypeStructureId(randomService.randomUUID()),
+                        it
+                    )
+                    typeStructureDao.insert(r)
+                    r
+                }
         } else {
             it
         }

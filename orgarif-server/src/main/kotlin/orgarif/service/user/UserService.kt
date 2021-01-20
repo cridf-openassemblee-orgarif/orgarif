@@ -17,22 +17,24 @@ import javax.servlet.http.HttpServletRequest
 import javax.servlet.http.HttpServletResponse
 
 @Service
-class UserService(val userDao: UserDao,
+class UserService(
+    val userDao: UserDao,
 
-                  val localeService: LocaleService,
-                  val dateService: DateService,
-                  val randomService: RandomService,
-                  val userSessionService: UserSessionService,
-                  val notificationService: NotificationService) {
+    val localeService: LocaleService,
+    val dateService: DateService,
+    val randomService: RandomService,
+    val userSessionService: UserSessionService,
+    val notificationService: NotificationService
+) {
 
     private val logger = KotlinLogging.logger {}
 
     companion object {
         // pas de suppression des accents qui sont supportés par la RFC...
         fun cleanMail(mail: String) = mail
-                .trim()
-                .toLowerCase()
-                .replace(" ", "")
+            .trim()
+            .toLowerCase()
+            .replace(" ", "")
 
         // TODO[fmk] ces validations vont ailleurs aussi. Also :
         // * ne doivent pas dépasser les 255 chars de la db
@@ -44,9 +46,12 @@ class UserService(val userDao: UserDao,
             val dirtyMail = c.mail.trim()
             val cleanMail = cleanMail(c.mail)
             // do not clone forces to update cleaning =)
-            return Pair(c.copy(
-                    mail = cleanMail),
-                    if (dirtyMail != cleanMail) dirtyMail else null)
+            return Pair(
+                c.copy(
+                    mail = cleanMail
+                ),
+                if (dirtyMail != cleanMail) dirtyMail else null
+            )
         }
 
 //        fun cleanIdentityDto(dto: IdentityDto): IdentityDto {
@@ -63,34 +68,41 @@ class UserService(val userDao: UserDao,
     }
 
     @Throws(MailAlreadyRegisteredException::class)
-    fun createAndAuthenticateUser(command: RegisterCommand,
-                                  hashedPassword: HashedPassword,
-                                  request: HttpServletRequest,
-                                  response: HttpServletResponse): RegisterAndAuthenticateResult {
+    fun createAndAuthenticateUser(
+        command: RegisterCommand,
+        hashedPassword: HashedPassword,
+        request: HttpServletRequest,
+        response: HttpServletResponse
+    ): RegisterAndAuthenticateResult {
         val (cleanCommand, dirtyMail) = cleanRegisterUserDto(command)
         val locale = localeService.selectLanguage(request.locales)
         val user = createUser(command, hashedPassword, locale, dirtyMail)
         val authResult = userSessionService.authenticateUser(user, request, response)
         notificationService.notify(
-                "${user.mail} just suscribed.",
-                NotificationService.Channel.NEW_USER)
+            "${user.mail} just suscribed.",
+            NotificationService.Channel.NEW_USER
+        )
         return RegisterAndAuthenticateResult(user, authResult)
     }
 
     // TODO[user]
     // question des services tiers qui peuvent faire péter transaction
     @Throws(MailAlreadyRegisteredException::class)
-    fun createUser(command: RegisterCommand,
-                   hashedPassword: HashedPassword,
-                   language: Language,
-                   dirtyMail: String?): UserDao.Record {
-        val user = UserDao.Record(id = UserId(randomService.randomUUID()),
-                mail = command.mail,
-                username = null,
-                language = language,
-                signupDate = dateService.now(),
-                admin = false,
-                dirtyMail = dirtyMail)
+    fun createUser(
+        command: RegisterCommand,
+        hashedPassword: HashedPassword,
+        language: Language,
+        dirtyMail: String?
+    ): UserDao.Record {
+        val user = UserDao.Record(
+            id = UserId(randomService.randomUUID()),
+            mail = command.mail,
+            username = null,
+            language = language,
+            signupDate = dateService.now(),
+            admin = false,
+            dirtyMail = dirtyMail
+        )
         userDao.insert(user, hashedPassword)
         return user
     }

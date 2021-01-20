@@ -15,36 +15,45 @@ import orgarif.service.user.MagicLinkTokenService
 import orgarif.utils.Serializer.serialize
 
 @Service
-class LostPasswordMailSenderService(@Value("\${app.url}") val appUrl: String,
-                                    val applicationInstance: ApplicationInstance,
-                                    val httpService: HttpService,
-                                    val magicLinkTokenService: MagicLinkTokenService,
-                                    val mailService: MailService) {
+class LostPasswordMailSenderService(
+    @Value("\${app.url}") val appUrl: String,
+    val applicationInstance: ApplicationInstance,
+    val httpService: HttpService,
+    val magicLinkTokenService: MagicLinkTokenService,
+    val mailService: MailService
+) {
 
     private val logger = KotlinLogging.logger {}
 
-    data class LostPasswordMailPayload(val url: String,
-                                       val invalidateTokenUrl: String)
+    data class LostPasswordMailPayload(
+        val url: String,
+        val invalidateTokenUrl: String
+    )
 
     fun sendMail(user: UserDao.Record) {
         val magicToken = magicLinkTokenService.createToken(user.id)
-        val magicUrl = "$appUrl${IndexController.loginUpdatePasswordRoute}?${IndexController.magicTokenParameterName}=$magicToken"
-        val invalidateUrl = "$appUrl${InvalidateMagicLinkTokenController.invalidateTokenUri}?${IndexController.magicTokenParameterName}=$magicToken"
+        val magicUrl =
+            "$appUrl${IndexController.loginUpdatePasswordRoute}?${IndexController.magicTokenParameterName}=$magicToken"
+        val invalidateUrl =
+            "$appUrl${InvalidateMagicLinkTokenController.invalidateTokenUri}?${IndexController.magicTokenParameterName}=$magicToken"
         val data = LostPasswordMailPayload(magicUrl, invalidateUrl)
         val mailContent = fetchMailContent(data)
         logger.info { "Send lost password mail to $user" }
-        mailService.sendMail(ApplicationConstants.applicationMailSenderName,
-                ApplicationConstants.applicationMail,
-                user.mail,
-                user.mail,
-                "Change your password",
-                mailContent,
-                MailReference.LOST_PASSWORD,
-                MailService.MailLog.doLog,
-                MailService.MailLogProperties(
-                        applicationInstance.deploymentId,
-                        user.id,
-                        serialize(data)))
+        mailService.sendMail(
+            ApplicationConstants.applicationMailSenderName,
+            ApplicationConstants.applicationMail,
+            user.mail,
+            user.mail,
+            "Change your password",
+            mailContent,
+            MailReference.LOST_PASSWORD,
+            MailService.MailLog.doLog,
+            MailService.MailLogProperties(
+                applicationInstance.deploymentId,
+                user.id,
+                serialize(data)
+            )
+        )
     }
 
     fun fetchMailContent(data: LostPasswordMailPayload): String {

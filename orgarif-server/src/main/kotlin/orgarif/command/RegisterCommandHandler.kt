@@ -11,9 +11,11 @@ import javax.servlet.http.HttpServletRequest
 import javax.servlet.http.HttpServletResponse
 
 @Service
-class RegisterCommandHandler(val userService: UserService,
-                             val passwordEncoder: PasswordEncoder) :
-        LoggedOutServletCommandHandler<RegisterCommand, RegisterCommandResponse>() {
+class RegisterCommandHandler(
+    val userService: UserService,
+    val passwordEncoder: PasswordEncoder
+) :
+    LoggedOutServletCommandHandler<RegisterCommand, RegisterCommandResponse>() {
 
     companion object {
         fun validatePassword(password: String) {
@@ -31,8 +33,10 @@ class RegisterCommandHandler(val userService: UserService,
         } catch (e: MailAlreadyRegisteredException) {
             return RegisterCommandResponse(RegisterResult.MAIL_ALREADY_EXISTS, null)
         }
-        return RegisterCommandResponse(RegisterResult.REGISTERED,
-                UserInfos.fromUser(registerAndAuthenticateResult.user))
+        return RegisterCommandResponse(
+            RegisterResult.REGISTERED,
+            UserInfos.fromUser(registerAndAuthenticateResult.user)
+        )
     }
 
 }

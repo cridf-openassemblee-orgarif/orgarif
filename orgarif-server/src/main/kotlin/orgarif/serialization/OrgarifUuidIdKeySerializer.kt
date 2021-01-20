@@ -9,6 +9,6 @@ import orgarif.utils.OrgarifStringUtils
 class OrgarifUuidIdKeySerializer : StdSerializer<OrgarifUuidId>(OrgarifUuidId::class.java) {
 
     override fun serialize(value: OrgarifUuidId, gen: JsonGenerator, provider: SerializerProvider) =
-            gen.writeFieldName(OrgarifStringUtils.serializeUuid(value.rawId))
+        gen.writeFieldName(OrgarifStringUtils.serializeUuid(value.rawId))
 
 }

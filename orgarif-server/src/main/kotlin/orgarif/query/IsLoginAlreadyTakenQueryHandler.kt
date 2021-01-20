@@ -5,9 +5,9 @@ import orgarif.repository.sql.UserDao
 
 @Service
 class IsLoginAlreadyTakenQueryHandler(val userDao: UserDao) :
-        QueryHandler<IsLoginAlreadyTakenQuery, IsLoginAlreadyTakenQueryResponse>() {
+    QueryHandler<IsLoginAlreadyTakenQuery, IsLoginAlreadyTakenQueryResponse>() {
 
     override fun handle(query: IsLoginAlreadyTakenQuery) =
-            IsLoginAlreadyTakenQueryResponse(userDao.doesLoginExist(query.login))
+        IsLoginAlreadyTakenQueryResponse(userDao.doesLoginExist(query.login))
 
 }

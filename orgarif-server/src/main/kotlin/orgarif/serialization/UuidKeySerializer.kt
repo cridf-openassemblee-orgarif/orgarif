@@ -9,6 +9,6 @@ import java.util.*
 class UuidKeySerializer : StdSerializer<UUID>(UUID::class.java) {
 
     override fun serialize(value: UUID, gen: JsonGenerator, provider: SerializerProvider) =
-            gen.writeFieldName(OrgarifStringUtils.serializeUuid(value))
+        gen.writeFieldName(OrgarifStringUtils.serializeUuid(value))
 
 }

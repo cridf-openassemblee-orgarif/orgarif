@@ -14,16 +14,18 @@ import java.time.Instant
 @Repository
 class CommandLogDao(val jooq: DSLContext) {
 
-    data class Record(val id: CommandLogId,
-                      val userId: UserId?,
-                      val deploymentLogId: DeploymentLogId,
-                      val commandClass: Class<*>,
-                      val jsonCommand: String,
-                      val date: Instant,
-                      val ip: String,
-                      val userSessionId: UserSessionId?,
-                      val jsonResult: String?,
-                      val exceptionStackTrace: String?)
+    data class Record(
+        val id: CommandLogId,
+        val userId: UserId?,
+        val deploymentLogId: DeploymentLogId,
+        val commandClass: Class<*>,
+        val jsonCommand: String,
+        val date: Instant,
+        val ip: String,
+        val userSessionId: UserSessionId?,
+        val jsonResult: String?,
+        val exceptionStackTrace: String?
+    )
 
     fun insert(r: Record) {
         val clr = CommandLogRecord().apply {
@@ -41,28 +43,29 @@ class CommandLogDao(val jooq: DSLContext) {
 
     fun updateExceptionStackTrace(id: CommandLogId, exceptionStackTrace: String) {
         jooq.update(COMMAND_LOG)
-                .set(COMMAND_LOG.EXCEPTION_STACK_TRACE, exceptionStackTrace)
-                .where(COMMAND_LOG.ID.equal(id.rawId))
-                .execute()
+            .set(COMMAND_LOG.EXCEPTION_STACK_TRACE, exceptionStackTrace)
+            .where(COMMAND_LOG.ID.equal(id.rawId))
+            .execute()
     }
 
     fun updateResult(id: CommandLogId, jsonResult: String) {
         jooq.update(COMMAND_LOG)
-                .set(COMMAND_LOG.JSON_RESULT, jsonResult)
-                .where(COMMAND_LOG.ID.equal(id.rawId))
-                .execute()
+            .set(COMMAND_LOG.JSON_RESULT, jsonResult)
+            .where(COMMAND_LOG.ID.equal(id.rawId))
+            .execute()
     }
 
     private fun map(r: CommandLogRecord) = Record(
-            r.id.toTypeId(),
-            r.userId?.toTypeId(),
-            r.deploymentLogId.toTypeId(),
-            Class.forName(r.commandClass),
-            r.jsonCommand,
-            r.date,
-            r.ip,
-            r.userSessionId?.toTypeId(),
-            r.jsonResult,
-            r.exceptionStackTrace)
+        r.id.toTypeId(),
+        r.userId?.toTypeId(),
+        r.deploymentLogId.toTypeId(),
+        Class.forName(r.commandClass),
+        r.jsonCommand,
+        r.date,
+        r.ip,
+        r.userSessionId?.toTypeId(),
+        r.jsonResult,
+        r.exceptionStackTrace
+    )
 
 }

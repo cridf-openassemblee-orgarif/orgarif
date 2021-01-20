@@ -15,23 +15,25 @@ import java.io.FileInputStream
 import java.util.*
 
 @Service
-class ApplicationInstance(val deploymentLogDao: DeploymentLogDao,
-                          val environment: Environment,
-                          val dateService: DateService,
-                          val randomService: RandomService) {
+class ApplicationInstance(
+    val deploymentLogDao: DeploymentLogDao,
+    val environment: Environment,
+    val dateService: DateService,
+    val randomService: RandomService
+) {
 
     private val logger = KotlinLogging.logger { }
 
     val env = run {
         val profiles = environment.activeProfiles
-                .let {
-                    if (it.isEmpty()) {
-                        environment.defaultProfiles
-                    } else {
-                        it
-                    }
+            .let {
+                if (it.isEmpty()) {
+                    environment.defaultProfiles
+                } else {
+                    it
                 }
-                .filter { it != OrgarifApplication.springUserProfile() }
+            }
+            .filter { it != OrgarifApplication.springUserProfile() }
         if (profiles.size != 1) {
             throw IllegalStateException("Spring profiles : $profiles")
         }
@@ -65,8 +67,12 @@ class ApplicationInstance(val deploymentLogDao: DeploymentLogDao,
     // launch
     val deploymentId by lazy {
         val deploymentId = DeploymentLogId(randomService.randomUUID())
-        deploymentLogDao.insert(DeploymentLogDao.Record(deploymentId, gitRevisionLabel,
-                dateService.serverZoneId(), dateService.now(), shutdownDate = null))
+        deploymentLogDao.insert(
+            DeploymentLogDao.Record(
+                deploymentId, gitRevisionLabel,
+                dateService.serverZoneId(), dateService.now(), shutdownDate = null
+            )
+        )
         deploymentId
     }
 

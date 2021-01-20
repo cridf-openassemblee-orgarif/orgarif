@@ -20,9 +20,9 @@ class WebConfiguration(val env: Environment) : WebMvcConfigurer, ServletContextI
 
     override fun addResourceHandlers(registry: ResourceHandlerRegistry) {
         registry
-                .addResourceHandler(ApplicationConstants.staticResourcesPath + "/**")
-                .addResourceLocations("classpath:/static/", "file:static/")
-                .setCachePeriod(cacheTimeToLive.seconds.toInt())
+            .addResourceHandler(ApplicationConstants.staticResourcesPath + "/**")
+            .addResourceLocations("classpath:/static/", "file:static/")
+            .setCachePeriod(cacheTimeToLive.seconds.toInt())
     }
 
     override fun onStartup(servletContext: ServletContext) {

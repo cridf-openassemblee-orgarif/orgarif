@@ -39,6 +39,6 @@ class ApplicationBeans {
 
     @Bean
     fun applicationTaskExecutor(@Suppress("DEPRECATION") taskExecutor: TaskExecutor) =
-            ApplicationTaskExecutor(taskExecutor, "main-executor")
+        ApplicationTaskExecutor(taskExecutor, "main-executor")
 
 }

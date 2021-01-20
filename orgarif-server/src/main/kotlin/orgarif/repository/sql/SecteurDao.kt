@@ -11,8 +11,10 @@ import orgarif.utils.toTypeId
 @Repository
 class SecteurDao(val jooq: DSLContext) {
 
-    data class Record(val id: SecteurId,
-                      val libelle: String)
+    data class Record(
+        val id: SecteurId,
+        val libelle: String
+    )
 
     fun insert(r: Record) {
         val record = SecteurRecord().apply {
@@ -23,12 +25,13 @@ class SecteurDao(val jooq: DSLContext) {
     }
 
     fun fetchAll() =
-            jooq.selectFrom(SECTEUR)
-                    .fetch()
-                    .map(this::map)
+        jooq.selectFrom(SECTEUR)
+            .fetch()
+            .map(this::map)
 
     private fun map(r: SecteurRecord) = Record(
-            r.id.toTypeId(),
-            r.libelle)
+        r.id.toTypeId(),
+        r.libelle
+    )
 
 }

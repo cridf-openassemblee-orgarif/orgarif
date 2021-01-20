@@ -15,16 +15,18 @@ import java.time.Instant
 @Repository
 class OrganismeDao(val jooq: DSLContext) {
 
-    data class Record(val id: OrganismeId,
-                      val nom: String,
-                      val secteurId: SecteurId?,
-                      val natureJuridiqueId: NatureJuridiqueId?,
-                      val typeStructureId: TypeStructureId?,
-                      val nombreRepresentants: Int?,
-                      val nombreSuppleants: Int?,
-                      val partageRepresentants: Boolean,
-                      val creationDate: Instant,
-                      val lastModificationDate: Instant)
+    data class Record(
+        val id: OrganismeId,
+        val nom: String,
+        val secteurId: SecteurId?,
+        val natureJuridiqueId: NatureJuridiqueId?,
+        val typeStructureId: TypeStructureId?,
+        val nombreRepresentants: Int?,
+        val nombreSuppleants: Int?,
+        val partageRepresentants: Boolean,
+        val creationDate: Instant,
+        val lastModificationDate: Instant
+    )
 
     fun insert(r: Record) {
         val record = OrganismeRecord().apply {
@@ -43,67 +45,68 @@ class OrganismeDao(val jooq: DSLContext) {
     }
 
     fun fetchOrNull(id: OrganismeId) =
-            jooq.selectFrom(ORGANISME)
-                    .where(ORGANISME.ID.equal(id.rawId))
-                    .fetchOne()
-                    ?.let(this::map)
+        jooq.selectFrom(ORGANISME)
+            .where(ORGANISME.ID.equal(id.rawId))
+            .fetchOne()
+            ?.let(this::map)
 
     fun fetch(id: OrganismeId) =
-            fetchOrNull(id)
-                    ?: throw IllegalArgumentException("$id")
+        fetchOrNull(id)
+            ?: throw IllegalArgumentException("$id")
 
     fun updateNatureJuridiqueId(id: OrganismeId, natureJuridiqueId: NatureJuridiqueId?) {
         jooq.update(ORGANISME)
-                .set(ORGANISME.NATURE_JURIDIQUE_ID, natureJuridiqueId?.rawId)
-                .where(ORGANISME.ID.equal(id.rawId))
-                .execute()
+            .set(ORGANISME.NATURE_JURIDIQUE_ID, natureJuridiqueId?.rawId)
+            .where(ORGANISME.ID.equal(id.rawId))
+            .execute()
     }
 
     fun updatePartageRepresentants(id: OrganismeId, partageRepresentants: Boolean) {
         jooq.update(ORGANISME)
-                .set(ORGANISME.PARTAGE_REPRESENTANTS, partageRepresentants)
-                .where(ORGANISME.ID.equal(id.rawId))
-                .execute()
+            .set(ORGANISME.PARTAGE_REPRESENTANTS, partageRepresentants)
+            .where(ORGANISME.ID.equal(id.rawId))
+            .execute()
     }
 
     fun updateSecteurId(id: OrganismeId, secteurId: SecteurId?) {
         jooq.update(ORGANISME)
-                .set(ORGANISME.SECTEUR_ID, secteurId?.rawId)
-                .where(ORGANISME.ID.equal(id.rawId))
-                .execute()
+            .set(ORGANISME.SECTEUR_ID, secteurId?.rawId)
+            .where(ORGANISME.ID.equal(id.rawId))
+            .execute()
     }
 
 
     fun updateTypeStructureId(id: OrganismeId, typeStructureId: TypeStructureId?) {
         jooq.update(ORGANISME)
-                .set(ORGANISME.TYPE_STRUCTURE_ID, typeStructureId?.rawId)
-                .where(ORGANISME.ID.equal(id.rawId))
-                .execute()
+            .set(ORGANISME.TYPE_STRUCTURE_ID, typeStructureId?.rawId)
+            .where(ORGANISME.ID.equal(id.rawId))
+            .execute()
     }
 
     fun fetchAll() =
-            jooq.selectFrom(ORGANISME)
-                    .orderBy(ORGANISME.CREATION_DATE.desc())
-                    .fetch()
-                    .map(this::map)
+        jooq.selectFrom(ORGANISME)
+            .orderBy(ORGANISME.CREATION_DATE.desc())
+            .fetch()
+            .map(this::map)
 
     fun fetchBySecteurId(secteurId: SecteurId) =
-            jooq.selectFrom(ORGANISME)
-                    .where(ORGANISME.SECTEUR_ID.equal(secteurId.rawId))
-                    .orderBy(ORGANISME.CREATION_DATE.desc())
-                    .fetch()
-                    .map(this::map)
+        jooq.selectFrom(ORGANISME)
+            .where(ORGANISME.SECTEUR_ID.equal(secteurId.rawId))
+            .orderBy(ORGANISME.CREATION_DATE.desc())
+            .fetch()
+            .map(this::map)
 
     private fun map(r: OrganismeRecord) = Record(
-            r.id.toTypeId(),
-            r.nom,
-            r.secteurId?.toTypeId(),
-            r.natureJuridiqueId?.toTypeId(),
-            r.typeStructureId?.toTypeId(),
-            r.nombreRepresentants,
-            r.nombreSuppleants,
-            r.partageRepresentants,
-            r.creationDate,
-            r.lastModificationDate)
+        r.id.toTypeId(),
+        r.nom,
+        r.secteurId?.toTypeId(),
+        r.natureJuridiqueId?.toTypeId(),
+        r.typeStructureId?.toTypeId(),
+        r.nombreRepresentants,
+        r.nombreSuppleants,
+        r.partageRepresentants,
+        r.creationDate,
+        r.lastModificationDate
+    )
 
 }

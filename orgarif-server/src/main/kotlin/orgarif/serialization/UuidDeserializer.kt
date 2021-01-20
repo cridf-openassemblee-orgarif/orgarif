@@ -9,6 +9,6 @@ import java.util.*
 class UuidDeserializer : StdDeserializer<UUID>(UUID::class.java) {
 
     override fun deserialize(p: JsonParser, ctxt: DeserializationContext): UUID =
-            deserializeUuid(p.valueAsString)
+        deserializeUuid(p.valueAsString)
 
 }

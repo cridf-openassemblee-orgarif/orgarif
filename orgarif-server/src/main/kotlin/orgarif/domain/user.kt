@@ -10,11 +10,13 @@ enum class Language {
     en, test
 }
 
-data class UserInfos(val id: UserId,
-                     val mail: String,
-        // [doc] is null if false, so "admin" field won't be obviously serialized for common users
-        // TODO[secu] test
-                     val admin: Boolean?) {
+data class UserInfos(
+    val id: UserId,
+    val mail: String,
+    // [doc] is null if false, so "admin" field won't be obviously serialized for common users
+    // TODO[secu] test
+    val admin: Boolean?
+) {
     companion object {
         fun fromUser(user: UserDao.Record) = UserInfos(user.id, user.mail, if (user.admin) true else null)
     }
@@ -40,14 +42,18 @@ sealed class Session
  * Convert former into new session in [UserSessionHelper]
  */
 @JsonTypeName("UserSession-v0")
-data class UserSession(val sessionId: UserSessionId,
-                       val userId: UserId) : Session() {
+data class UserSession(
+    val sessionId: UserSessionId,
+    val userId: UserId
+) : Session() {
     // [doc] for logback and spring sessions
     override fun toString() = "[${serializeUuid(userId.rawId)}|${serializeUuid(sessionId.rawId)}]"
 }
 
-data class AuthResult(val userSession: UserSession,
-                      val csrfToken: String)
+data class AuthResult(
+    val userSession: UserSession,
+    val csrfToken: String
+)
 
 enum class LoginResult {
     LOGGED_IN, USER_NOT_FOUND, BAD_PASSWORD

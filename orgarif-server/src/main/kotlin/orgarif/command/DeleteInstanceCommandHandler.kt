@@ -6,10 +6,12 @@ import orgarif.repository.sql.LienDeliberationDao
 import orgarif.repository.sql.RepresentantDao
 
 @Service
-class DeleteInstanceCommandHandler(val representantDao: RepresentantDao,
-                                   val lienDeliberationDao: LienDeliberationDao,
-                                   val instanceDao: InstanceDao) :
-        NeutralCommandHandler<DeleteInstanceCommand, EmptyCommandResponse>() {
+class DeleteInstanceCommandHandler(
+    val representantDao: RepresentantDao,
+    val lienDeliberationDao: LienDeliberationDao,
+    val instanceDao: InstanceDao
+) :
+    NeutralCommandHandler<DeleteInstanceCommand, EmptyCommandResponse>() {
 
     override fun handle(command: DeleteInstanceCommand): EmptyCommandResponse {
         representantDao.deleteByInstanceId(command.id)

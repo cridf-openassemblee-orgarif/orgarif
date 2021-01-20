@@ -13,13 +13,14 @@ import javax.servlet.http.HttpServletRequest
 
 @RestController
 class QueryEndpoint(
-        val getOrganismeQueryHandler: GetOrganismeQueryHandler,
-        val isLoginAlreadyTakenQueryHandler: IsLoginAlreadyTakenQueryHandler,
-        val listOrganismesBySecteurQueryHandler: ListOrganismesBySecteurQueryHandler,
-        val listOrganismesQueryHandler: ListOrganismesQueryHandler,
-        val searchDeliberationQueryHandler: SearchDeliberationQueryHandler,
+    val getOrganismeQueryHandler: GetOrganismeQueryHandler,
+    val isLoginAlreadyTakenQueryHandler: IsLoginAlreadyTakenQueryHandler,
+    val listOrganismesBySecteurQueryHandler: ListOrganismesBySecteurQueryHandler,
+    val listOrganismesQueryHandler: ListOrganismesQueryHandler,
+    val searchDeliberationQueryHandler: SearchDeliberationQueryHandler,
 
-        val userDao: UserDao) {
+    val userDao: UserDao
+) {
 
     @GetMapping("/query")
     fun handle(request: HttpServletRequest): QueryResponse {
@@ -53,7 +54,7 @@ class QueryEndpoint(
                 let {
                     val user = UserSessionHelper.getUserSession().userId.let {
                         userDao.fetch(it)
-                                ?: throw IllegalArgumentException("$it")
+                            ?: throw IllegalArgumentException("$it")
                     }
                     if (!user.admin) {
                         throw OrgarifSecurityException("$userSession ${query.javaClass.simpleName}")

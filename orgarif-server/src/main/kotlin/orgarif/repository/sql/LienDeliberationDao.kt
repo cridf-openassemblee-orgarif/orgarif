@@ -14,12 +14,14 @@ import java.time.Instant
 @Repository
 class LienDeliberationDao(val jooq: DSLContext) {
 
-    data class Record(val id: LienDeliberationId,
-                      val deliberationId: DeliberationId,
-                      val organismeId: OrganismeId,
-                      val instanceId: InstanceId?,
-                      val creationDate: Instant,
-                      val lastModificationDate: Instant)
+    data class Record(
+        val id: LienDeliberationId,
+        val deliberationId: DeliberationId,
+        val organismeId: OrganismeId,
+        val instanceId: InstanceId?,
+        val creationDate: Instant,
+        val lastModificationDate: Instant
+    )
 
     fun insert(r: Record) {
         val record = LienDeliberationRecord().apply {
@@ -35,16 +37,17 @@ class LienDeliberationDao(val jooq: DSLContext) {
 
     fun deleteByInstanceId(instanceId: InstanceId) {
         jooq.deleteFrom(LIEN_DELIBERATION)
-                .where(LIEN_DELIBERATION.INSTANCE_ID.equal(instanceId.rawId))
-                .execute()
+            .where(LIEN_DELIBERATION.INSTANCE_ID.equal(instanceId.rawId))
+            .execute()
     }
 
     fun map(r: LienDeliberationRecord) = Record(
-            r.id.toTypeId(),
-            r.deliberationId.toTypeId(),
-            r.organismeId.toTypeId(),
-            r.instanceId?.toTypeId(),
-            r.creationDate,
-            r.lastModificationDate)
+        r.id.toTypeId(),
+        r.deliberationId.toTypeId(),
+        r.organismeId.toTypeId(),
+        r.instanceId?.toTypeId(),
+        r.creationDate,
+        r.lastModificationDate
+    )
 
 }

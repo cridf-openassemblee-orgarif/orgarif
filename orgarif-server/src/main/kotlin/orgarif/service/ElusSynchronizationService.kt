@@ -12,17 +12,19 @@ import orgarif.utils.Serializer.deserialize
 import orgarif.utils.toTypeId
 
 @Service
-open class ElusSynchronizationService(@Value("\${doSynchronizeElus}")
-                                      val doSynchronizeElus: Boolean,
-                                      @Value("\${elusSynchronizationUrl}")
-                                      val elusSynchronizationUrl: String,
+open class ElusSynchronizationService(
+    @Value("\${doSynchronizeElus}")
+    val doSynchronizeElus: Boolean,
+    @Value("\${elusSynchronizationUrl}")
+    val elusSynchronizationUrl: String,
 
-                                      val eluDao: EluDao,
+    val eluDao: EluDao,
 
-                                      val taskExecutor: AsyncTaskExecutor,
-                                      val httpService: HttpService,
-                                      val dateService: DateService,
-                                      val initialDataInjector: InitialDataInjector) {
+    val taskExecutor: AsyncTaskExecutor,
+    val httpService: HttpService,
+    val dateService: DateService,
+    val initialDataInjector: InitialDataInjector
+) {
 
     private val logger = KotlinLogging.logger {}
 
@@ -39,15 +41,17 @@ open class ElusSynchronizationService(@Value("\${doSynchronizeElus}")
         M, MME
     }
 
-    data class OpenassembleeElu(val id: String,
-                                val uid: String,
-                                val civilite: OpenassembleeCivilite,
-                                val nom: String,
-                                val prenom: String,
-                                val groupePolitique: String,
-                                val groupePolitiqueCourt: String,
-                                val image: String,
-                                val actif: Boolean)
+    data class OpenassembleeElu(
+        val id: String,
+        val uid: String,
+        val civilite: OpenassembleeCivilite,
+        val nom: String,
+        val prenom: String,
+        val groupePolitique: String,
+        val groupePolitiqueCourt: String,
+        val image: String,
+        val actif: Boolean
+    )
 
     data class Data(val elus: List<OpenassembleeElu>)
 
@@ -55,8 +59,8 @@ open class ElusSynchronizationService(@Value("\${doSynchronizeElus}")
         logger.info { "Synchronize elus avec SIGER" }
         val elusJons = try {
             httpService
-                    .getString(elusSynchronizationUrl)
-                    .body
+                .getString(elusSynchronizationUrl)
+                .body
         } catch (e: Exception) {
             logger.error { "Could not synchronize élus." }
             return
@@ -74,23 +78,23 @@ open class ElusSynchronizationService(@Value("\${doSynchronizeElus}")
         val now = dateService.now()
         val data = deserialize<Data>(elusJons)
         val newElus = data.elus
-                .map { r ->
-                    val civilite = when (r.civilite) {
-                        OpenassembleeCivilite.M -> Civilite.M
-                        OpenassembleeCivilite.MME -> Civilite.Mme
-                    }
-                    EluDao.Record(
-                            id = deserializeUuid(r.uid).toTypeId(),
-                            civilite = civilite,
-                            prenom = r.prenom,
-                            nom = r.nom,
-                            groupePolitique = r.groupePolitique,
-                            groupePolitiqueCourt = r.groupePolitiqueCourt,
-                            imageUrl = r.image,
-                            actif = r.actif,
-                            creationDate = now
-                    )
+            .map { r ->
+                val civilite = when (r.civilite) {
+                    OpenassembleeCivilite.M -> Civilite.M
+                    OpenassembleeCivilite.MME -> Civilite.Mme
                 }
+                EluDao.Record(
+                    id = deserializeUuid(r.uid).toTypeId(),
+                    civilite = civilite,
+                    prenom = r.prenom,
+                    nom = r.nom,
+                    groupePolitique = r.groupePolitique,
+                    groupePolitiqueCourt = r.groupePolitiqueCourt,
+                    imageUrl = r.image,
+                    actif = r.actif,
+                    creationDate = now
+                )
+            }
         val existingElus = eluDao.fetchAll().associateBy { it.id }
         val r = newElus.map { newElu ->
             val existing = existingElus[newElu.id]

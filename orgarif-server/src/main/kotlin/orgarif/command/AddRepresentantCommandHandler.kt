@@ -7,20 +7,23 @@ import orgarif.service.DateService
 import orgarif.service.RandomService
 
 @Service
-class AddRepresentantCommandHandler(val representantDao: RepresentantDao,
-                                    val randomService: RandomService,
-                                    val dateService: DateService) :
-        NeutralCommandHandler<AddRepresentantCommand, AddRepresentantCommandResponse>() {
+class AddRepresentantCommandHandler(
+    val representantDao: RepresentantDao,
+    val randomService: RandomService,
+    val dateService: DateService
+) :
+    NeutralCommandHandler<AddRepresentantCommand, AddRepresentantCommandResponse>() {
 
     override fun handle(command: AddRepresentantCommand): AddRepresentantCommandResponse {
         val representantId = RepresentantId(randomService.randomUUID())
         val now = dateService.now()
         val newPosition = representantDao.fetchCurrentPositionByOrganismeInstanceRepresentantOrSuppleant(
-                command.organismeId,
-                command.instanceId,
-                command.representantOrSuppleant
+            command.organismeId,
+            command.instanceId,
+            command.representantOrSuppleant
         )?.let { it + 1 } ?: 0
-        representantDao.insert(RepresentantDao.Record(
+        representantDao.insert(
+            RepresentantDao.Record(
                 id = representantId,
                 eluId = command.eluId,
                 organismeId = command.organismeId,
@@ -28,7 +31,9 @@ class AddRepresentantCommandHandler(val representantDao: RepresentantDao,
                 position = newPosition,
                 representantOrSuppleant = command.representantOrSuppleant,
                 creationDate = now,
-                lastModificationDate = now))
+                lastModificationDate = now
+            )
+        )
         return AddRepresentantCommandResponse(representantId)
     }
 
