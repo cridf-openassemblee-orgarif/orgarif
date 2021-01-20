@@ -19,7 +19,7 @@ import org.jooq.ForeignKey;
 import org.jooq.Index;
 import org.jooq.Name;
 import org.jooq.Record;
-import org.jooq.Row10;
+import org.jooq.Row12;
 import org.jooq.Schema;
 import org.jooq.Table;
 import org.jooq.TableField;
@@ -83,11 +83,6 @@ public class CommandLogTable extends TableImpl<CommandLogRecord> {
     public final TableField<CommandLogRecord, String> JSON_COMMAND = createField(DSL.name("json_command"), SQLDataType.CLOB.nullable(false), this, "");
 
     /**
-     * The column <code>orgarif.command_log.date</code>.
-     */
-    public final TableField<CommandLogRecord, Instant> DATE = createField(DSL.name("date"), SQLDataType.LOCALDATETIME(0).nullable(false), this, "", new TimestampToInstantConverter());
-
-    /**
      * The column <code>orgarif.command_log.ip</code>.
      */
     public final TableField<CommandLogRecord, String> IP = createField(DSL.name("ip"), SQLDataType.VARCHAR(255).nullable(false), this, "");
@@ -98,6 +93,11 @@ public class CommandLogTable extends TableImpl<CommandLogRecord> {
     public final TableField<CommandLogRecord, UUID> USER_SESSION_ID = createField(DSL.name("user_session_id"), SQLDataType.CHAR(32), this, "", new CharToUUIDConverter());
 
     /**
+     * The column <code>orgarif.command_log.resulting_ids</code>.
+     */
+    public final TableField<CommandLogRecord, String> RESULTING_IDS = createField(DSL.name("resulting_ids"), SQLDataType.CLOB, this, "");
+
+    /**
      * The column <code>orgarif.command_log.json_result</code>.
      */
     public final TableField<CommandLogRecord, String> JSON_RESULT = createField(DSL.name("json_result"), SQLDataType.CLOB, this, "");
@@ -106,6 +106,16 @@ public class CommandLogTable extends TableImpl<CommandLogRecord> {
      * The column <code>orgarif.command_log.exception_stack_trace</code>.
      */
     public final TableField<CommandLogRecord, String> EXCEPTION_STACK_TRACE = createField(DSL.name("exception_stack_trace"), SQLDataType.CLOB, this, "");
+
+    /**
+     * The column <code>orgarif.command_log.start_date</code>.
+     */
+    public final TableField<CommandLogRecord, Instant> START_DATE = createField(DSL.name("start_date"), SQLDataType.LOCALDATETIME(0).nullable(false), this, "", new TimestampToInstantConverter());
+
+    /**
+     * The column <code>orgarif.command_log.end_date</code>.
+     */
+    public final TableField<CommandLogRecord, Instant> END_DATE = createField(DSL.name("end_date"), SQLDataType.LOCALDATETIME(0), this, "", new TimestampToInstantConverter());
 
     private CommandLogTable(Name alias, Table<CommandLogRecord> aliased) {
         this(alias, aliased, null);
@@ -213,12 +223,12 @@ public class CommandLogTable extends TableImpl<CommandLogRecord> {
     }
 
     // -------------------------------------------------------------------------
-    // Row10 type methods
+    // Row12 type methods
     // -------------------------------------------------------------------------
 
     @Override
     @Nonnull
-    public Row10<UUID, UUID, UUID, String, String, Instant, String, UUID, String, String> fieldsRow() {
-        return (Row10) super.fieldsRow();
+    public Row12<UUID, UUID, UUID, String, String, String, UUID, String, String, String, Instant, Instant> fieldsRow() {
+        return (Row12) super.fieldsRow();
     }
 }
