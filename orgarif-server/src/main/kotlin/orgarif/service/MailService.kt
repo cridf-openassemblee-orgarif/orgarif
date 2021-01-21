@@ -128,7 +128,7 @@ class MailService(
         if (applicationInstance.env == ApplicationEnvironment.dev && recipientMail != devLogMail) {
             throw IllegalArgumentException("Mail send canceled en env dev to ${recipientMail}")
         }
-        val mailLogId = MailLogId(randomService.randomUUID())
+        val mailLogId = randomService.id<MailLogId>()
         val payload = mailJetObjectMapper.writeValueAsString(MailJetEventPayload(applicationInstance.env.name))
         val subject = if (applicationInstance.env == ApplicationEnvironment.prod)
             mailSubject

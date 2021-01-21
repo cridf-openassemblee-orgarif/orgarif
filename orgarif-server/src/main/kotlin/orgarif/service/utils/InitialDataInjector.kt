@@ -62,7 +62,7 @@ class InitialDataInjector(
                 val deliberationId = deliberation("Délibération organisme 1")
                 lienDeliberationDao.insert(
                     LienDeliberationDao.Record(
-                        id = LienDeliberationId(randomService.randomUUID()),
+                        id = randomService.id(),
                         deliberationId = deliberationId,
                         organismeId = fakeOrganismeId1,
                         instanceId = null,
@@ -89,7 +89,7 @@ class InitialDataInjector(
                 val deliberationId1 = deliberation("Délibération organisme 2")
                 lienDeliberationDao.insert(
                     LienDeliberationDao.Record(
-                        id = LienDeliberationId(randomService.randomUUID()),
+                        id = randomService.id(),
                         deliberationId = deliberationId1,
                         organismeId = fakeOrganismeId2,
                         instanceId = null,
@@ -111,7 +111,7 @@ class InitialDataInjector(
                 val deliberationId2 = deliberation("Délibération instance 1 organisme 2")
                 lienDeliberationDao.insert(
                     LienDeliberationDao.Record(
-                        id = LienDeliberationId(randomService.randomUUID()),
+                        id = randomService.id(),
                         deliberationId = deliberationId2,
                         organismeId = fakeOrganismeId2,
                         instanceId = fakeOrganisme2InstanceId1,
@@ -133,7 +133,7 @@ class InitialDataInjector(
                 val deliberationId3 = deliberation("Délibération instance 2 organisme 2")
                 lienDeliberationDao.insert(
                     LienDeliberationDao.Record(
-                        id = LienDeliberationId(randomService.randomUUID()),
+                        id = randomService.id(),
                         deliberationId = deliberationId3,
                         organismeId = fakeOrganismeId2,
                         instanceId = fakeOrganisme2InstanceId2,
@@ -160,7 +160,7 @@ class InitialDataInjector(
                 val deliberationId1 = deliberation("Délibération organisme 3")
                 lienDeliberationDao.insert(
                     LienDeliberationDao.Record(
-                        id = LienDeliberationId(randomService.randomUUID()),
+                        id = randomService.id(),
                         deliberationId = deliberationId1,
                         organismeId = fakeOrganismeId3,
                         instanceId = null,
@@ -182,7 +182,7 @@ class InitialDataInjector(
                 val deliberationId2 = deliberation("Délibération instance 1 organisme 3")
                 lienDeliberationDao.insert(
                     LienDeliberationDao.Record(
-                        id = LienDeliberationId(randomService.randomUUID()),
+                        id = randomService.id(),
                         deliberationId = deliberationId2,
                         organismeId = fakeOrganismeId3,
                         instanceId = fakeOrganisme3InstanceId1,
@@ -204,7 +204,7 @@ class InitialDataInjector(
                 val deliberationId3 = deliberation("Délibération instance 2 organisme 3")
                 lienDeliberationDao.insert(
                     LienDeliberationDao.Record(
-                        id = LienDeliberationId(randomService.randomUUID()),
+                        id = randomService.id(),
                         deliberationId = deliberationId3,
                         organismeId = fakeOrganismeId3,
                         instanceId = fakeOrganisme3InstanceId2,
@@ -218,7 +218,7 @@ class InitialDataInjector(
     }
 
     private fun deliberation(libelle: String): DeliberationId {
-        val id = DeliberationId(randomService.randomUUID())
+        val id = randomService.id<DeliberationId>()
         val now = dateService.now()
         deliberationDao.insert(
             DeliberationDao.Record(
@@ -255,7 +255,7 @@ class InitialDataInjector(
             elus.shuffled().subList(0, nombreRepresentants * 2).forEachIndexed { index, e ->
                 representantDao.insert(
                     RepresentantDao.Record(
-                        id = RepresentantId(randomService.randomUUID()),
+                        id = randomService.id(),
                         eluId = e.id,
                         organismeId = fakeOrganismeId1,
                         instanceId = null,
@@ -270,7 +270,7 @@ class InitialDataInjector(
             elus.shuffled().subList(0, nombreRepresentants * 2).forEachIndexed { index, e ->
                 representantDao.insert(
                     RepresentantDao.Record(
-                        id = RepresentantId(randomService.randomUUID()),
+                        id = randomService.id(),
                         eluId = e.id,
                         organismeId = fakeOrganismeId2,
                         instanceId = fakeOrganisme2InstanceId1,
@@ -285,7 +285,7 @@ class InitialDataInjector(
             elus.shuffled().subList(0, nombreRepresentants * 2).forEachIndexed { index, e ->
                 representantDao.insert(
                     RepresentantDao.Record(
-                        id = RepresentantId(randomService.randomUUID()),
+                        id = randomService.id(),
                         eluId = e.id,
                         organismeId = fakeOrganismeId2,
                         instanceId = fakeOrganisme2InstanceId2,
@@ -300,7 +300,7 @@ class InitialDataInjector(
             elus.shuffled().subList(0, nombreRepresentants * 2).forEachIndexed { index, e ->
                 representantDao.insert(
                     RepresentantDao.Record(
-                        id = RepresentantId(randomService.randomUUID()),
+                        id = randomService.id(),
                         eluId = e.id,
                         organismeId = fakeOrganismeId3,
                         instanceId = null,
@@ -337,7 +337,7 @@ class InitialDataInjector(
             )
                 .map {
                     val r = SecteurDao.Record(
-                        SecteurId(randomService.randomUUID()),
+                        randomService.id(),
                         it
                     )
                     secteurDao.insert(r)
@@ -370,7 +370,7 @@ class InitialDataInjector(
             )
                 .map {
                     val r = NatureJuridiqueDao.Record(
-                        NatureJuridiqueId(randomService.randomUUID()),
+                        randomService.id(),
                         it
                     )
                     natureJuridiqueDao.insert(r)
@@ -405,7 +405,7 @@ class InitialDataInjector(
             )
                 .map {
                     val r = TypeStructureDao.Record(
-                        TypeStructureId(randomService.randomUUID()),
+                        randomService.id(),
                         it
                     )
                     typeStructureDao.insert(r)

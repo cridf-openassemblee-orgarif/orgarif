@@ -95,7 +95,7 @@ class UserService(
         dirtyMail: String?
     ): UserDao.Record {
         val user = UserDao.Record(
-            id = UserId(randomService.randomUUID()),
+            id = randomService.id(),
             mail = command.mail,
             username = null,
             language = language,

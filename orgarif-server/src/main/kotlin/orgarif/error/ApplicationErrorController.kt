@@ -44,7 +44,7 @@ class ApplicationErrorController(
         val initialError = errorMap["error"] as String
         val exception = errorAttributes.getError(request)
         // TODO[secu] rewrite return applicationExceptionHandler.render(..., when() {})
-        val errorId = RequestErrorId(randomService.randomUUID())
+        val errorId = randomService.id<RequestErrorId>()
         val (status, error) = when (response.status) {
             // when we directly reach the /error url !
             // we'are arrived here with a status 200

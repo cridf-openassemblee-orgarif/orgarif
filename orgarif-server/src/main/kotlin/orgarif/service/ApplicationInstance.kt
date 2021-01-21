@@ -66,7 +66,7 @@ class ApplicationInstance(
     // [doc] deploymentId insertion is lazy in development, which permits a database cleaning during the application
     // launch
     val deploymentId by lazy {
-        val deploymentId = DeploymentLogId(randomService.randomUUID())
+        val deploymentId = randomService.id<DeploymentLogId>()
         deploymentLogDao.insert(
             DeploymentLogDao.Record(
                 deploymentId, gitRevisionLabel,

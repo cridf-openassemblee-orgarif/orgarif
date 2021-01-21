@@ -15,7 +15,7 @@ class AddLienDeliberationCommandHandler(
     NeutralCommandHandler<AddLienDeliberationCommand, AddLienDeliberationCommandResponse>() {
 
     override fun handle(command: AddLienDeliberationCommand): AddLienDeliberationCommandResponse {
-        val id = LienDeliberationId(randomService.randomUUID())
+        val id = randomService.id<LienDeliberationId>()
         val now = dateService.now()
         lienDeliberationDao.insert(
             LienDeliberationDao.Record(

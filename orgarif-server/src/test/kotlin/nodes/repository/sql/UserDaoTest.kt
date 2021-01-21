@@ -12,6 +12,7 @@ import org.springframework.boot.test.context.SpringBootTest
 import org.springframework.test.context.ActiveProfiles
 import org.springframework.test.context.junit4.SpringJUnit4ClassRunner
 import orgarif.TestData
+import orgarif.service.RandomService
 import java.time.Instant
 import java.util.*
 
@@ -23,11 +24,14 @@ internal class UserDaoTest {
     @Autowired
     lateinit var userDao: UserDao
 
+    @Autowired
+    lateinit var randomService: RandomService
+
     @Ignore
     @Test
     fun `test conflict`() {
         try {
-            userDao.insert(TestData.dummyUser, HashedPassword("sdv"))
+            userDao.insert(TestData.dummyUser(randomService.id()), HashedPassword("sdv"))
             throw RuntimeException()
         } catch (e: MailAlreadyRegisteredException) {
         }

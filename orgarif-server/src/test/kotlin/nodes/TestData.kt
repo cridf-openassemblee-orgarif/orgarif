@@ -9,8 +9,8 @@ import java.util.*
 
 object TestData {
 
-    val dummyUser = UserDao.Record(
-        id = UserId(UUID.randomUUID()),
+    fun dummyUser(userId: UserId) = UserDao.Record(
+        id = userId,
         mail = "mail",
         username = "username",
         language = Language.en,

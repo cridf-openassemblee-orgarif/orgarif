@@ -36,7 +36,7 @@ class UserSessionService(
         request: HttpServletRequest,
         response: HttpServletResponse
     ): AuthResult {
-        val sessionId = UserSessionId(randomService.randomUUID())
+        val sessionId = randomService.id<UserSessionId>()
 
         // create the session if doesn't exist
         val session = request.getSession(true)

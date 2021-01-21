@@ -15,7 +15,7 @@ class AddInstanceCommandHandler(
     NeutralCommandHandler<AddInstanceCommand, AddInstanceCommandResponse>() {
 
     override fun handle(command: AddInstanceCommand): AddInstanceCommandResponse {
-        val instanceId = InstanceId(randomService.randomUUID())
+        val instanceId = randomService.id<InstanceId>()
         val now = dateService.now()
         instanceDao.insert(
             InstanceDao.Record(

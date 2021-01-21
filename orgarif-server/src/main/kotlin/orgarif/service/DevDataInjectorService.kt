@@ -32,7 +32,7 @@ class DevDataInjectorService(
         if (userDao.fetchByUsername(username) == null) {
             userDao.insert(
                 UserDao.Record(
-                    id = UserId(randomService.randomUUID()),
+                    id = randomService.id(),
                     mail = "$mailPrefix+$username$mailSuffix",
                     username = username,
                     language = Language.en,

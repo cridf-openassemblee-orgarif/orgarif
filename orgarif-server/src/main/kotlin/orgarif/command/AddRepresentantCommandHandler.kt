@@ -15,7 +15,7 @@ class AddRepresentantCommandHandler(
     NeutralCommandHandler<AddRepresentantCommand, AddRepresentantCommandResponse>() {
 
     override fun handle(command: AddRepresentantCommand): AddRepresentantCommandResponse {
-        val representantId = RepresentantId(randomService.randomUUID())
+        val representantId = randomService.id<RepresentantId>()
         val now = dateService.now()
         val newPosition = representantDao.fetchCurrentPositionByOrganismeInstanceRepresentantOrSuppleant(
             command.organismeId,

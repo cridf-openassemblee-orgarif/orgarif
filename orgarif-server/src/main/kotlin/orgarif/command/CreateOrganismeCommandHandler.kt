@@ -15,7 +15,7 @@ class CreateOrganismeCommandHandler(
     NeutralCommandHandler<CreateOrganismeCommand, CreateOrganismeCommandResponse>() {
 
     override fun handle(command: CreateOrganismeCommand): CreateOrganismeCommandResponse {
-        val organismeId = OrganismeId(randomService.randomUUID())
+        val organismeId = randomService.id<OrganismeId>()
         val now = dateService.now()
         organismeDao.insert(
             OrganismeDao.Record(

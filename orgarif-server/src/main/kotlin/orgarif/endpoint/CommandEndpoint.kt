@@ -14,6 +14,7 @@ import orgarif.repository.sql.CommandLogDao
 import orgarif.repository.sql.UserDao
 import orgarif.service.ApplicationInstance
 import orgarif.service.DateService
+import orgarif.service.IdCreationLoggerService
 import orgarif.service.RandomService
 import orgarif.service.user.IpService
 import orgarif.service.user.UserSessionHelper
@@ -32,6 +33,7 @@ class CommandEndpoint(
     val dateService: DateService,
     val randomService: RandomService,
     val transactionManager: PlatformTransactionManager,
+    val idCreationLoggerService: IdCreationLoggerService,
 
     val addInstanceCommandHandler: AddInstanceCommandHandler,
     val addLienDeliberationCommandHandler: AddLienDeliberationCommandHandler,
@@ -66,7 +68,7 @@ class CommandEndpoint(
         // l'ip peut évoluer au sein de la même session, a du sens de le réenregistrer ici
         // TODO[test] faire insert après en one shot putain ?
         // [doc] first si doit se planter trop serieusement ? peut arriver ?
-        val commandLogId = CommandLogId(randomService.randomUUID())
+        val commandLogId = randomService.id<CommandLogId>()
         commandLogDao.insert(
             CommandLogDao.Record(
                 id = commandLogId,
@@ -74,15 +76,19 @@ class CommandEndpoint(
                 deploymentLogId = applicationInstance.deploymentId,
                 commandClass = command.javaClass,
                 jsonCommand = filteredJsonCommand,
-                date = dateService.now(),
                 ip = ipService.getClientIp(request),
                 userSessionId = userSession?.sessionId,
+                resultingIds = null,
                 jsonResult = null,
-                exceptionStackTrace = null
+                exceptionStackTrace = null,
+                startDate = dateService.now(),
+                endDate = null
             )
         )
         val transaction = transactionManager.getTransaction(null)
+
         try {
+            idCreationLoggerService.enableLogging()
             val result = when (CommandConfiguration.authenticationLevel(command)) {
                 AuthenticationLevel.loggedOut -> {
                     if (userSession != null) {
@@ -124,7 +130,11 @@ class CommandEndpoint(
             transactionManager.commit(transaction)
             if (result !is EmptyCommandResponse) {
                 try {
-                    commandLogDao.updateResult(commandLogId, serialize(result))
+                    commandLogDao.updateResult(
+                        commandLogId, idCreationLoggerService.getIdsString(),
+                        serialize(result),
+                        dateService.now()
+                    )
                 } catch (e: Exception) {
                     logger.error(e) { "Exception in command result log..." }
                 }
@@ -133,11 +143,17 @@ class CommandEndpoint(
         } catch (e: Exception) {
             transactionManager.rollback(transaction)
             try {
-                commandLogDao.updateExceptionStackTrace(commandLogId, ExceptionUtils.getStackTrace(e))
+                commandLogDao.updateExceptionStackTrace(
+                    commandLogId,
+                    ExceptionUtils.getStackTrace(e),
+                    dateService.now()
+                )
             } catch (e2: Exception) {
                 logger.error(e2) { "Exception in command exception log..." }
             }
             throw e
+        } finally {
+            idCreationLoggerService.clean()
         }
     }
 

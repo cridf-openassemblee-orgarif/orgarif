@@ -11,6 +11,7 @@ import org.springframework.test.context.ActiveProfiles
 //@RunWith(SpringJUnit4ClassRunner::class)
 internal class OrgarifApplicationTest {
 
+    // TODO needs test db handling
     @Test
     fun `context does load`() {
     }

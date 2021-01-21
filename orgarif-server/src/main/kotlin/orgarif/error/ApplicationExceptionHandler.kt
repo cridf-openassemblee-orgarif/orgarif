@@ -37,7 +37,7 @@ class ApplicationExceptionHandler(
     fun defaultErrorHandler(request: WebRequest, response: HttpServletResponse, exception: Exception): ModelAndView {
         // TODO[secu] traitements exceptions
         // pr log userid, mail, ip
-        val id = RequestErrorId(randomService.randomUUID())
+        val id = randomService.id<RequestErrorId>()
         val readableStackTrace =
             if (applicationInstance.env == ApplicationEnvironment.dev ||
                 (UserSessionHelper.isAuthenticated() && UserSessionHelper.isAdmin())

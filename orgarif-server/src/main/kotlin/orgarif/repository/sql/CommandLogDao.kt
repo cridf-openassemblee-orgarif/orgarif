@@ -20,11 +20,13 @@ class CommandLogDao(val jooq: DSLContext) {
         val deploymentLogId: DeploymentLogId,
         val commandClass: Class<*>,
         val jsonCommand: String,
-        val date: Instant,
         val ip: String,
         val userSessionId: UserSessionId?,
+        val resultingIds: String?,
         val jsonResult: String?,
-        val exceptionStackTrace: String?
+        val exceptionStackTrace: String?,
+        val startDate: Instant,
+        val endDate: Instant?
     )
 
     fun insert(r: Record) {
@@ -34,23 +36,30 @@ class CommandLogDao(val jooq: DSLContext) {
             deploymentLogId = r.deploymentLogId.rawId
             commandClass = r.commandClass.name
             jsonCommand = r.jsonCommand
-            date = r.date
             ip = r.ip
             userSessionId = r.userSessionId?.rawId
+            resultingIds = r.resultingIds
+            jsonResult = r.jsonResult
+            exceptionStackTrace = r.exceptionStackTrace
+            startDate = r.startDate
+            endDate = r.endDate
         }
         jooq.insertInto(COMMAND_LOG).set(clr).execute()
     }
 
-    fun updateExceptionStackTrace(id: CommandLogId, exceptionStackTrace: String) {
+    fun updateExceptionStackTrace(id: CommandLogId, exceptionStackTrace: String, endDate: Instant) {
         jooq.update(COMMAND_LOG)
             .set(COMMAND_LOG.EXCEPTION_STACK_TRACE, exceptionStackTrace)
+            .set(COMMAND_LOG.END_DATE, endDate)
             .where(COMMAND_LOG.ID.equal(id.rawId))
             .execute()
     }
 
-    fun updateResult(id: CommandLogId, jsonResult: String) {
+    fun updateResult(id: CommandLogId, resultingIds: String, jsonResult: String, endDate: Instant) {
         jooq.update(COMMAND_LOG)
+            .set(COMMAND_LOG.RESULTING_IDS, resultingIds)
             .set(COMMAND_LOG.JSON_RESULT, jsonResult)
+            .set(COMMAND_LOG.END_DATE, endDate)
             .where(COMMAND_LOG.ID.equal(id.rawId))
             .execute()
     }
@@ -61,11 +70,13 @@ class CommandLogDao(val jooq: DSLContext) {
         r.deploymentLogId.toTypeId(),
         Class.forName(r.commandClass),
         r.jsonCommand,
-        r.date,
         r.ip,
         r.userSessionId?.toTypeId(),
+        r.resultingIds,
         r.jsonResult,
-        r.exceptionStackTrace
+        r.exceptionStackTrace,
+        r.startDate,
+        r.endDate
     )
 
 }
