@@ -1,5 +1,6 @@
 package orgarif.config
 
+import mu.KotlinLogging
 import org.apache.catalina.connector.Request
 import org.apache.catalina.connector.Response
 import org.apache.catalina.valves.ValveBase
@@ -17,6 +18,8 @@ import orgarif.error.ApplicationExceptionHandlerExceptionResolver
 
 @Configuration
 class ApplicationConfiguration(@Value("\${reverseProxy}") val reverseProxy: Boolean) {
+
+    val logger = KotlinLogging.logger {}
 
     @Bean
     fun webMvcRegistrations() = object : WebMvcRegistrations {
@@ -36,8 +39,13 @@ class ApplicationConfiguration(@Value("\${reverseProxy}") val reverseProxy: Bool
         val factory = TomcatServletWebServerFactory()
         factory.addContextValves(object : ValveBase() {
             override fun invoke(request: Request, response: Response) {
+                // because the application is deployed behind a proxy
+                // TODO why Spring seems not to handle it with server.forward-headers-strategy=framework ?
                 if (reverseProxy) {
                     request.isSecure = request.getHeader("X-Forwarded-Proto") == "https"
+                }
+                if ("//" in request.request.requestURI) {
+                    logger.error { "Request contains double slash and will fail : \"${request.request.requestURI}\"" }
                 }
                 getNext().invoke(request, response)
             }
