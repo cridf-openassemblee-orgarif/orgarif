@@ -11,8 +11,7 @@ import java.util.UUID;
 
 import javax.annotation.Nonnull;
 
-import jooqutils.jooq.CharToUUIDConverter;
-import jooqutils.jooq.TimestampToInstantConverter;
+import jooqutils.jooq.TimestampWithTimeZoneToInstantConverter;
 
 import org.jooq.Field;
 import org.jooq.ForeignKey;
@@ -31,7 +30,7 @@ import org.jooq.impl.TableImpl;
 
 import orgarif.jooq.generated.Indexes;
 import orgarif.jooq.generated.Keys;
-import orgarif.jooq.generated.OrgarifTable;
+import orgarif.jooq.generated.PublicTable;
 import orgarif.jooq.generated.tables.records.MailLogRecord;
 
 
@@ -44,7 +43,7 @@ public class MailLogTable extends TableImpl<MailLogRecord> {
     private static final long serialVersionUID = 1L;
 
     /**
-     * The reference instance of <code>orgarif.mail_log</code>
+     * The reference instance of <code>public.mail_log</code>
      */
     public static final MailLogTable MAIL_LOG = new MailLogTable();
 
@@ -58,59 +57,59 @@ public class MailLogTable extends TableImpl<MailLogRecord> {
     }
 
     /**
-     * The column <code>orgarif.mail_log.id</code>.
+     * The column <code>public.mail_log.id</code>.
      */
-    public final TableField<MailLogRecord, UUID> ID = createField(DSL.name("id"), SQLDataType.CHAR(32).nullable(false), this, "", new CharToUUIDConverter());
+    public final TableField<MailLogRecord, UUID> ID = createField(DSL.name("id"), SQLDataType.UUID.nullable(false), this, "");
 
     /**
-     * The column <code>orgarif.mail_log.application</code>.
+     * The column <code>public.mail_log.application</code>.
      */
     public final TableField<MailLogRecord, String> APPLICATION = createField(DSL.name("application"), SQLDataType.VARCHAR(255).nullable(false), this, "");
 
     /**
-     * The column <code>orgarif.mail_log.deployment_log_id</code>.
+     * The column <code>public.mail_log.deployment_log_id</code>.
      */
-    public final TableField<MailLogRecord, UUID> DEPLOYMENT_LOG_ID = createField(DSL.name("deployment_log_id"), SQLDataType.CHAR(32).nullable(false), this, "", new CharToUUIDConverter());
+    public final TableField<MailLogRecord, UUID> DEPLOYMENT_LOG_ID = createField(DSL.name("deployment_log_id"), SQLDataType.UUID.nullable(false), this, "");
 
     /**
-     * The column <code>orgarif.mail_log.recipient_type</code>.
+     * The column <code>public.mail_log.recipient_type</code>.
      */
     public final TableField<MailLogRecord, String> RECIPIENT_TYPE = createField(DSL.name("recipient_type"), SQLDataType.VARCHAR(255).nullable(false), this, "");
 
     /**
-     * The column <code>orgarif.mail_log.user_id</code>.
+     * The column <code>public.mail_log.user_id</code>.
      */
-    public final TableField<MailLogRecord, UUID> USER_ID = createField(DSL.name("user_id"), SQLDataType.CHAR(32).nullable(false), this, "", new CharToUUIDConverter());
+    public final TableField<MailLogRecord, UUID> USER_ID = createField(DSL.name("user_id"), SQLDataType.UUID.nullable(false), this, "");
 
     /**
-     * The column <code>orgarif.mail_log.reference</code>.
+     * The column <code>public.mail_log.reference</code>.
      */
     public final TableField<MailLogRecord, String> REFERENCE = createField(DSL.name("reference"), SQLDataType.VARCHAR(255).nullable(false), this, "");
 
     /**
-     * The column <code>orgarif.mail_log.recipient_mail</code>.
+     * The column <code>public.mail_log.recipient_mail</code>.
      */
     public final TableField<MailLogRecord, String> RECIPIENT_MAIL = createField(DSL.name("recipient_mail"), SQLDataType.VARCHAR(255).nullable(false), this, "");
 
     /**
-     * The column <code>orgarif.mail_log.data</code>.
+     * The column <code>public.mail_log.data</code>.
      */
     public final TableField<MailLogRecord, String> DATA = createField(DSL.name("data"), SQLDataType.CLOB.nullable(false), this, "");
 
     /**
-     * The column <code>orgarif.mail_log.subject</code>.
+     * The column <code>public.mail_log.subject</code>.
      */
     public final TableField<MailLogRecord, String> SUBJECT = createField(DSL.name("subject"), SQLDataType.CLOB.nullable(false), this, "");
 
     /**
-     * The column <code>orgarif.mail_log.content</code>.
+     * The column <code>public.mail_log.content</code>.
      */
     public final TableField<MailLogRecord, String> CONTENT = createField(DSL.name("content"), SQLDataType.CLOB.nullable(false), this, "");
 
     /**
-     * The column <code>orgarif.mail_log.date</code>.
+     * The column <code>public.mail_log.date</code>.
      */
-    public final TableField<MailLogRecord, Instant> DATE = createField(DSL.name("date"), SQLDataType.LOCALDATETIME(0).nullable(false), this, "", new TimestampToInstantConverter());
+    public final TableField<MailLogRecord, Instant> DATE = createField(DSL.name("date"), SQLDataType.TIMESTAMPWITHTIMEZONE(6).nullable(false), this, "", new TimestampWithTimeZoneToInstantConverter());
 
     private MailLogTable(Name alias, Table<MailLogRecord> aliased) {
         this(alias, aliased, null);
@@ -121,21 +120,21 @@ public class MailLogTable extends TableImpl<MailLogRecord> {
     }
 
     /**
-     * Create an aliased <code>orgarif.mail_log</code> table reference
+     * Create an aliased <code>public.mail_log</code> table reference
      */
     public MailLogTable(String alias) {
         this(DSL.name(alias), MAIL_LOG);
     }
 
     /**
-     * Create an aliased <code>orgarif.mail_log</code> table reference
+     * Create an aliased <code>public.mail_log</code> table reference
      */
     public MailLogTable(Name alias) {
         this(alias, MAIL_LOG);
     }
 
     /**
-     * Create a <code>orgarif.mail_log</code> table reference
+     * Create a <code>public.mail_log</code> table reference
      */
     public MailLogTable() {
         this(DSL.name("mail_log"), null);
@@ -148,35 +147,35 @@ public class MailLogTable extends TableImpl<MailLogRecord> {
     @Override
     @Nonnull
     public Schema getSchema() {
-        return OrgarifTable.ORGARIF;
+        return PublicTable.PUBLIC;
     }
 
     @Override
     @Nonnull
     public List<Index> getIndexes() {
-        return Arrays.<Index>asList(Indexes.MAIL_LOG_DEPLOYMENT_LOG_ID, Indexes.MAIL_LOG_MAIL_LOG_USER_ID_IDX);
+        return Arrays.<Index>asList(Indexes.MAIL_LOG_USER_ID_IDX);
     }
 
     @Override
     @Nonnull
     public UniqueKey<MailLogRecord> getPrimaryKey() {
-        return Keys.KEY_MAIL_LOG_PRIMARY;
+        return Keys.MAIL_LOG_PKEY;
     }
 
     @Override
     @Nonnull
     public List<UniqueKey<MailLogRecord>> getKeys() {
-        return Arrays.<UniqueKey<MailLogRecord>>asList(Keys.KEY_MAIL_LOG_PRIMARY);
+        return Arrays.<UniqueKey<MailLogRecord>>asList(Keys.MAIL_LOG_PKEY);
     }
 
     @Override
     @Nonnull
     public List<ForeignKey<MailLogRecord, ?>> getReferences() {
-        return Arrays.<ForeignKey<MailLogRecord, ?>>asList(Keys.MAIL_LOG_IBFK_1);
+        return Arrays.<ForeignKey<MailLogRecord, ?>>asList(Keys.MAIL_LOG__MAIL_LOG_DEPLOYMENT_LOG_ID_FKEY);
     }
 
     public DeploymentLogTable deploymentLog() {
-        return new DeploymentLogTable(this, Keys.MAIL_LOG_IBFK_1);
+        return new DeploymentLogTable(this, Keys.MAIL_LOG__MAIL_LOG_DEPLOYMENT_LOG_ID_FKEY);
     }
 
     @Override

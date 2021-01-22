@@ -28,14 +28,14 @@ public class DeploymentLogRecord extends UpdatableRecordImpl<DeploymentLogRecord
     private static final long serialVersionUID = 1L;
 
     /**
-     * Setter for <code>orgarif.deployment_log.id</code>.
+     * Setter for <code>public.deployment_log.id</code>.
      */
     public void setId(@Nonnull UUID value) {
         set(0, value);
     }
 
     /**
-     * Getter for <code>orgarif.deployment_log.id</code>.
+     * Getter for <code>public.deployment_log.id</code>.
      */
     @Nonnull
     public UUID getId() {
@@ -43,14 +43,14 @@ public class DeploymentLogRecord extends UpdatableRecordImpl<DeploymentLogRecord
     }
 
     /**
-     * Setter for <code>orgarif.deployment_log.build_version</code>.
+     * Setter for <code>public.deployment_log.build_version</code>.
      */
     public void setBuildVersion(@Nonnull String value) {
         set(1, value);
     }
 
     /**
-     * Getter for <code>orgarif.deployment_log.build_version</code>.
+     * Getter for <code>public.deployment_log.build_version</code>.
      */
     @Nonnull
     public String getBuildVersion() {
@@ -58,14 +58,14 @@ public class DeploymentLogRecord extends UpdatableRecordImpl<DeploymentLogRecord
     }
 
     /**
-     * Setter for <code>orgarif.deployment_log.system_zone_id</code>.
+     * Setter for <code>public.deployment_log.system_zone_id</code>.
      */
     public void setSystemZoneId(@Nonnull String value) {
         set(2, value);
     }
 
     /**
-     * Getter for <code>orgarif.deployment_log.system_zone_id</code>.
+     * Getter for <code>public.deployment_log.system_zone_id</code>.
      */
     @Nonnull
     public String getSystemZoneId() {
@@ -73,14 +73,14 @@ public class DeploymentLogRecord extends UpdatableRecordImpl<DeploymentLogRecord
     }
 
     /**
-     * Setter for <code>orgarif.deployment_log.startup_date</code>.
+     * Setter for <code>public.deployment_log.startup_date</code>.
      */
     public void setStartupDate(@Nonnull Instant value) {
         set(3, value);
     }
 
     /**
-     * Getter for <code>orgarif.deployment_log.startup_date</code>.
+     * Getter for <code>public.deployment_log.startup_date</code>.
      */
     @Nonnull
     public Instant getStartupDate() {
@@ -88,14 +88,14 @@ public class DeploymentLogRecord extends UpdatableRecordImpl<DeploymentLogRecord
     }
 
     /**
-     * Setter for <code>orgarif.deployment_log.shutdown_date</code>.
+     * Setter for <code>public.deployment_log.shutdown_date</code>.
      */
     public void setShutdownDate(@Nullable Instant value) {
         set(4, value);
     }
 
     /**
-     * Getter for <code>orgarif.deployment_log.shutdown_date</code>.
+     * Getter for <code>public.deployment_log.shutdown_date</code>.
      */
     @Nullable
     public Instant getShutdownDate() {

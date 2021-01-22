@@ -10,8 +10,6 @@ import java.util.UUID;
 
 import javax.annotation.Nonnull;
 
-import jooqutils.jooq.CharToUUIDConverter;
-
 import org.jooq.Field;
 import org.jooq.ForeignKey;
 import org.jooq.Name;
@@ -27,7 +25,7 @@ import org.jooq.impl.SQLDataType;
 import org.jooq.impl.TableImpl;
 
 import orgarif.jooq.generated.Keys;
-import orgarif.jooq.generated.OrgarifTable;
+import orgarif.jooq.generated.PublicTable;
 import orgarif.jooq.generated.tables.records.NatureJuridiqueRecord;
 
 
@@ -40,7 +38,7 @@ public class NatureJuridiqueTable extends TableImpl<NatureJuridiqueRecord> {
     private static final long serialVersionUID = 1L;
 
     /**
-     * The reference instance of <code>orgarif.nature_juridique</code>
+     * The reference instance of <code>public.nature_juridique</code>
      */
     public static final NatureJuridiqueTable NATURE_JURIDIQUE = new NatureJuridiqueTable();
 
@@ -54,12 +52,12 @@ public class NatureJuridiqueTable extends TableImpl<NatureJuridiqueRecord> {
     }
 
     /**
-     * The column <code>orgarif.nature_juridique.id</code>.
+     * The column <code>public.nature_juridique.id</code>.
      */
-    public final TableField<NatureJuridiqueRecord, UUID> ID = createField(DSL.name("id"), SQLDataType.CHAR(32).nullable(false), this, "", new CharToUUIDConverter());
+    public final TableField<NatureJuridiqueRecord, UUID> ID = createField(DSL.name("id"), SQLDataType.UUID.nullable(false), this, "");
 
     /**
-     * The column <code>orgarif.nature_juridique.libelle</code>.
+     * The column <code>public.nature_juridique.libelle</code>.
      */
     public final TableField<NatureJuridiqueRecord, String> LIBELLE = createField(DSL.name("libelle"), SQLDataType.VARCHAR(255).nullable(false), this, "");
 
@@ -72,21 +70,21 @@ public class NatureJuridiqueTable extends TableImpl<NatureJuridiqueRecord> {
     }
 
     /**
-     * Create an aliased <code>orgarif.nature_juridique</code> table reference
+     * Create an aliased <code>public.nature_juridique</code> table reference
      */
     public NatureJuridiqueTable(String alias) {
         this(DSL.name(alias), NATURE_JURIDIQUE);
     }
 
     /**
-     * Create an aliased <code>orgarif.nature_juridique</code> table reference
+     * Create an aliased <code>public.nature_juridique</code> table reference
      */
     public NatureJuridiqueTable(Name alias) {
         this(alias, NATURE_JURIDIQUE);
     }
 
     /**
-     * Create a <code>orgarif.nature_juridique</code> table reference
+     * Create a <code>public.nature_juridique</code> table reference
      */
     public NatureJuridiqueTable() {
         this(DSL.name("nature_juridique"), null);
@@ -99,19 +97,19 @@ public class NatureJuridiqueTable extends TableImpl<NatureJuridiqueRecord> {
     @Override
     @Nonnull
     public Schema getSchema() {
-        return OrgarifTable.ORGARIF;
+        return PublicTable.PUBLIC;
     }
 
     @Override
     @Nonnull
     public UniqueKey<NatureJuridiqueRecord> getPrimaryKey() {
-        return Keys.KEY_NATURE_JURIDIQUE_PRIMARY;
+        return Keys.NATURE_JURIDIQUE_PKEY;
     }
 
     @Override
     @Nonnull
     public List<UniqueKey<NatureJuridiqueRecord>> getKeys() {
-        return Arrays.<UniqueKey<NatureJuridiqueRecord>>asList(Keys.KEY_NATURE_JURIDIQUE_PRIMARY);
+        return Arrays.<UniqueKey<NatureJuridiqueRecord>>asList(Keys.NATURE_JURIDIQUE_PKEY);
     }
 
     @Override

@@ -11,7 +11,6 @@ import java.util.UUID;
 
 import javax.annotation.Nonnull;
 
-import jooqutils.jooq.CharToUUIDConverter;
 import jooqutils.jooq.TimestampToInstantConverter;
 
 import org.jooq.Field;
@@ -29,7 +28,7 @@ import org.jooq.impl.SQLDataType;
 import org.jooq.impl.TableImpl;
 
 import orgarif.jooq.generated.Keys;
-import orgarif.jooq.generated.OrgarifTable;
+import orgarif.jooq.generated.PublicTable;
 import orgarif.jooq.generated.tables.records.EluRecord;
 
 
@@ -42,7 +41,7 @@ public class EluTable extends TableImpl<EluRecord> {
     private static final long serialVersionUID = 1L;
 
     /**
-     * The reference instance of <code>orgarif.elu</code>
+     * The reference instance of <code>public.elu</code>
      */
     public static final EluTable ELU = new EluTable();
 
@@ -56,49 +55,49 @@ public class EluTable extends TableImpl<EluRecord> {
     }
 
     /**
-     * The column <code>orgarif.elu.id</code>.
+     * The column <code>public.elu.id</code>.
      */
-    public final TableField<EluRecord, UUID> ID = createField(DSL.name("id"), SQLDataType.CHAR(32).nullable(false), this, "", new CharToUUIDConverter());
+    public final TableField<EluRecord, UUID> ID = createField(DSL.name("id"), SQLDataType.UUID.nullable(false), this, "");
 
     /**
-     * The column <code>orgarif.elu.civilite</code>.
+     * The column <code>public.elu.civilite</code>.
      */
     public final TableField<EluRecord, String> CIVILITE = createField(DSL.name("civilite"), SQLDataType.VARCHAR(3).nullable(false), this, "");
 
     /**
-     * The column <code>orgarif.elu.prenom</code>.
+     * The column <code>public.elu.prenom</code>.
      */
     public final TableField<EluRecord, String> PRENOM = createField(DSL.name("prenom"), SQLDataType.VARCHAR(255).nullable(false), this, "");
 
     /**
-     * The column <code>orgarif.elu.nom</code>.
+     * The column <code>public.elu.nom</code>.
      */
     public final TableField<EluRecord, String> NOM = createField(DSL.name("nom"), SQLDataType.VARCHAR(255).nullable(false), this, "");
 
     /**
-     * The column <code>orgarif.elu.groupe_politique</code>.
+     * The column <code>public.elu.groupe_politique</code>.
      */
     public final TableField<EluRecord, String> GROUPE_POLITIQUE = createField(DSL.name("groupe_politique"), SQLDataType.VARCHAR(255).nullable(false), this, "");
 
     /**
-     * The column <code>orgarif.elu.groupe_politique_court</code>.
+     * The column <code>public.elu.groupe_politique_court</code>.
      */
     public final TableField<EluRecord, String> GROUPE_POLITIQUE_COURT = createField(DSL.name("groupe_politique_court"), SQLDataType.VARCHAR(255).nullable(false), this, "");
 
     /**
-     * The column <code>orgarif.elu.image_url</code>.
+     * The column <code>public.elu.image_url</code>.
      */
     public final TableField<EluRecord, String> IMAGE_URL = createField(DSL.name("image_url"), SQLDataType.VARCHAR(255).nullable(false), this, "");
 
     /**
-     * The column <code>orgarif.elu.actif</code>.
+     * The column <code>public.elu.actif</code>.
      */
     public final TableField<EluRecord, Boolean> ACTIF = createField(DSL.name("actif"), SQLDataType.BOOLEAN.nullable(false), this, "");
 
     /**
-     * The column <code>orgarif.elu.creation_date</code>.
+     * The column <code>public.elu.creation_date</code>.
      */
-    public final TableField<EluRecord, Instant> CREATION_DATE = createField(DSL.name("creation_date"), SQLDataType.LOCALDATETIME(0).nullable(false), this, "", new TimestampToInstantConverter());
+    public final TableField<EluRecord, Instant> CREATION_DATE = createField(DSL.name("creation_date"), SQLDataType.LOCALDATETIME(6).nullable(false), this, "", new TimestampToInstantConverter());
 
     private EluTable(Name alias, Table<EluRecord> aliased) {
         this(alias, aliased, null);
@@ -109,21 +108,21 @@ public class EluTable extends TableImpl<EluRecord> {
     }
 
     /**
-     * Create an aliased <code>orgarif.elu</code> table reference
+     * Create an aliased <code>public.elu</code> table reference
      */
     public EluTable(String alias) {
         this(DSL.name(alias), ELU);
     }
 
     /**
-     * Create an aliased <code>orgarif.elu</code> table reference
+     * Create an aliased <code>public.elu</code> table reference
      */
     public EluTable(Name alias) {
         this(alias, ELU);
     }
 
     /**
-     * Create a <code>orgarif.elu</code> table reference
+     * Create a <code>public.elu</code> table reference
      */
     public EluTable() {
         this(DSL.name("elu"), null);
@@ -136,19 +135,19 @@ public class EluTable extends TableImpl<EluRecord> {
     @Override
     @Nonnull
     public Schema getSchema() {
-        return OrgarifTable.ORGARIF;
+        return PublicTable.PUBLIC;
     }
 
     @Override
     @Nonnull
     public UniqueKey<EluRecord> getPrimaryKey() {
-        return Keys.KEY_ELU_PRIMARY;
+        return Keys.ELU_PKEY;
     }
 
     @Override
     @Nonnull
     public List<UniqueKey<EluRecord>> getKeys() {
-        return Arrays.<UniqueKey<EluRecord>>asList(Keys.KEY_ELU_PRIMARY);
+        return Arrays.<UniqueKey<EluRecord>>asList(Keys.ELU_PKEY);
     }
 
     @Override

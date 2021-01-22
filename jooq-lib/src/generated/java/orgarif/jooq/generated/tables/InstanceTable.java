@@ -11,7 +11,6 @@ import java.util.UUID;
 
 import javax.annotation.Nonnull;
 
-import jooqutils.jooq.CharToUUIDConverter;
 import jooqutils.jooq.TimestampToInstantConverter;
 
 import org.jooq.Field;
@@ -31,7 +30,7 @@ import org.jooq.impl.TableImpl;
 
 import orgarif.jooq.generated.Indexes;
 import orgarif.jooq.generated.Keys;
-import orgarif.jooq.generated.OrgarifTable;
+import orgarif.jooq.generated.PublicTable;
 import orgarif.jooq.generated.tables.records.InstanceRecord;
 
 
@@ -44,7 +43,7 @@ public class InstanceTable extends TableImpl<InstanceRecord> {
     private static final long serialVersionUID = 1L;
 
     /**
-     * The reference instance of <code>orgarif.instance</code>
+     * The reference instance of <code>public.instance</code>
      */
     public static final InstanceTable INSTANCE = new InstanceTable();
 
@@ -58,39 +57,39 @@ public class InstanceTable extends TableImpl<InstanceRecord> {
     }
 
     /**
-     * The column <code>orgarif.instance.id</code>.
+     * The column <code>public.instance.id</code>.
      */
-    public final TableField<InstanceRecord, UUID> ID = createField(DSL.name("id"), SQLDataType.CHAR(32).nullable(false), this, "", new CharToUUIDConverter());
+    public final TableField<InstanceRecord, UUID> ID = createField(DSL.name("id"), SQLDataType.UUID.nullable(false), this, "");
 
     /**
-     * The column <code>orgarif.instance.nom</code>.
+     * The column <code>public.instance.nom</code>.
      */
     public final TableField<InstanceRecord, String> NOM = createField(DSL.name("nom"), SQLDataType.VARCHAR(255).nullable(false), this, "");
 
     /**
-     * The column <code>orgarif.instance.organisme_id</code>.
+     * The column <code>public.instance.organisme_id</code>.
      */
-    public final TableField<InstanceRecord, UUID> ORGANISME_ID = createField(DSL.name("organisme_id"), SQLDataType.CHAR(32).nullable(false), this, "", new CharToUUIDConverter());
+    public final TableField<InstanceRecord, UUID> ORGANISME_ID = createField(DSL.name("organisme_id"), SQLDataType.UUID.nullable(false), this, "");
 
     /**
-     * The column <code>orgarif.instance.nombre_representants</code>.
+     * The column <code>public.instance.nombre_representants</code>.
      */
     public final TableField<InstanceRecord, Integer> NOMBRE_REPRESENTANTS = createField(DSL.name("nombre_representants"), SQLDataType.INTEGER, this, "");
 
     /**
-     * The column <code>orgarif.instance.nombre_suppleants</code>.
+     * The column <code>public.instance.nombre_suppleants</code>.
      */
     public final TableField<InstanceRecord, Integer> NOMBRE_SUPPLEANTS = createField(DSL.name("nombre_suppleants"), SQLDataType.INTEGER, this, "");
 
     /**
-     * The column <code>orgarif.instance.creation_date</code>.
+     * The column <code>public.instance.creation_date</code>.
      */
-    public final TableField<InstanceRecord, Instant> CREATION_DATE = createField(DSL.name("creation_date"), SQLDataType.LOCALDATETIME(0).nullable(false), this, "", new TimestampToInstantConverter());
+    public final TableField<InstanceRecord, Instant> CREATION_DATE = createField(DSL.name("creation_date"), SQLDataType.LOCALDATETIME(6).nullable(false), this, "", new TimestampToInstantConverter());
 
     /**
-     * The column <code>orgarif.instance.last_modification_date</code>.
+     * The column <code>public.instance.last_modification_date</code>.
      */
-    public final TableField<InstanceRecord, Instant> LAST_MODIFICATION_DATE = createField(DSL.name("last_modification_date"), SQLDataType.LOCALDATETIME(0).nullable(false), this, "", new TimestampToInstantConverter());
+    public final TableField<InstanceRecord, Instant> LAST_MODIFICATION_DATE = createField(DSL.name("last_modification_date"), SQLDataType.LOCALDATETIME(6).nullable(false), this, "", new TimestampToInstantConverter());
 
     private InstanceTable(Name alias, Table<InstanceRecord> aliased) {
         this(alias, aliased, null);
@@ -101,21 +100,21 @@ public class InstanceTable extends TableImpl<InstanceRecord> {
     }
 
     /**
-     * Create an aliased <code>orgarif.instance</code> table reference
+     * Create an aliased <code>public.instance</code> table reference
      */
     public InstanceTable(String alias) {
         this(DSL.name(alias), INSTANCE);
     }
 
     /**
-     * Create an aliased <code>orgarif.instance</code> table reference
+     * Create an aliased <code>public.instance</code> table reference
      */
     public InstanceTable(Name alias) {
         this(alias, INSTANCE);
     }
 
     /**
-     * Create a <code>orgarif.instance</code> table reference
+     * Create a <code>public.instance</code> table reference
      */
     public InstanceTable() {
         this(DSL.name("instance"), null);
@@ -128,35 +127,35 @@ public class InstanceTable extends TableImpl<InstanceRecord> {
     @Override
     @Nonnull
     public Schema getSchema() {
-        return OrgarifTable.ORGARIF;
+        return PublicTable.PUBLIC;
     }
 
     @Override
     @Nonnull
     public List<Index> getIndexes() {
-        return Arrays.<Index>asList(Indexes.INSTANCE_INSTANCE_ORGANISME_ID_IDX);
+        return Arrays.<Index>asList(Indexes.INSTANCE_ORGANISME_ID_IDX);
     }
 
     @Override
     @Nonnull
     public UniqueKey<InstanceRecord> getPrimaryKey() {
-        return Keys.KEY_INSTANCE_PRIMARY;
+        return Keys.INSTANCE_PKEY;
     }
 
     @Override
     @Nonnull
     public List<UniqueKey<InstanceRecord>> getKeys() {
-        return Arrays.<UniqueKey<InstanceRecord>>asList(Keys.KEY_INSTANCE_PRIMARY);
+        return Arrays.<UniqueKey<InstanceRecord>>asList(Keys.INSTANCE_PKEY);
     }
 
     @Override
     @Nonnull
     public List<ForeignKey<InstanceRecord, ?>> getReferences() {
-        return Arrays.<ForeignKey<InstanceRecord, ?>>asList(Keys.INSTANCE_IBFK_1);
+        return Arrays.<ForeignKey<InstanceRecord, ?>>asList(Keys.INSTANCE__INSTANCE_ORGANISME_ID_FKEY);
     }
 
     public OrganismeTable organisme() {
-        return new OrganismeTable(this, Keys.INSTANCE_IBFK_1);
+        return new OrganismeTable(this, Keys.INSTANCE__INSTANCE_ORGANISME_ID_FKEY);
     }
 
     @Override

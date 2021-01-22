@@ -12,7 +12,6 @@ import java.util.UUID;
 
 import javax.annotation.Nonnull;
 
-import jooqutils.jooq.CharToUUIDConverter;
 import jooqutils.jooq.TimestampToInstantConverter;
 
 import org.jooq.Field;
@@ -30,7 +29,7 @@ import org.jooq.impl.SQLDataType;
 import org.jooq.impl.TableImpl;
 
 import orgarif.jooq.generated.Keys;
-import orgarif.jooq.generated.OrgarifTable;
+import orgarif.jooq.generated.PublicTable;
 import orgarif.jooq.generated.tables.records.DeliberationRecord;
 
 
@@ -43,7 +42,7 @@ public class DeliberationTable extends TableImpl<DeliberationRecord> {
     private static final long serialVersionUID = 1L;
 
     /**
-     * The reference instance of <code>orgarif.deliberation</code>
+     * The reference instance of <code>public.deliberation</code>
      */
     public static final DeliberationTable DELIBERATION = new DeliberationTable();
 
@@ -57,29 +56,29 @@ public class DeliberationTable extends TableImpl<DeliberationRecord> {
     }
 
     /**
-     * The column <code>orgarif.deliberation.id</code>.
+     * The column <code>public.deliberation.id</code>.
      */
-    public final TableField<DeliberationRecord, UUID> ID = createField(DSL.name("id"), SQLDataType.CHAR(32).nullable(false), this, "", new CharToUUIDConverter());
+    public final TableField<DeliberationRecord, UUID> ID = createField(DSL.name("id"), SQLDataType.UUID.nullable(false), this, "");
 
     /**
-     * The column <code>orgarif.deliberation.libelle</code>.
+     * The column <code>public.deliberation.libelle</code>.
      */
     public final TableField<DeliberationRecord, String> LIBELLE = createField(DSL.name("libelle"), SQLDataType.VARCHAR(255).nullable(false), this, "");
 
     /**
-     * The column <code>orgarif.deliberation.deliberation_date</code>.
+     * The column <code>public.deliberation.deliberation_date</code>.
      */
     public final TableField<DeliberationRecord, LocalDate> DELIBERATION_DATE = createField(DSL.name("deliberation_date"), SQLDataType.LOCALDATE.nullable(false), this, "");
 
     /**
-     * The column <code>orgarif.deliberation.creation_date</code>.
+     * The column <code>public.deliberation.creation_date</code>.
      */
-    public final TableField<DeliberationRecord, Instant> CREATION_DATE = createField(DSL.name("creation_date"), SQLDataType.LOCALDATETIME(0).nullable(false), this, "", new TimestampToInstantConverter());
+    public final TableField<DeliberationRecord, Instant> CREATION_DATE = createField(DSL.name("creation_date"), SQLDataType.LOCALDATETIME(6).nullable(false), this, "", new TimestampToInstantConverter());
 
     /**
-     * The column <code>orgarif.deliberation.last_modification_date</code>.
+     * The column <code>public.deliberation.last_modification_date</code>.
      */
-    public final TableField<DeliberationRecord, Instant> LAST_MODIFICATION_DATE = createField(DSL.name("last_modification_date"), SQLDataType.LOCALDATETIME(0).nullable(false), this, "", new TimestampToInstantConverter());
+    public final TableField<DeliberationRecord, Instant> LAST_MODIFICATION_DATE = createField(DSL.name("last_modification_date"), SQLDataType.LOCALDATETIME(6).nullable(false), this, "", new TimestampToInstantConverter());
 
     private DeliberationTable(Name alias, Table<DeliberationRecord> aliased) {
         this(alias, aliased, null);
@@ -90,21 +89,21 @@ public class DeliberationTable extends TableImpl<DeliberationRecord> {
     }
 
     /**
-     * Create an aliased <code>orgarif.deliberation</code> table reference
+     * Create an aliased <code>public.deliberation</code> table reference
      */
     public DeliberationTable(String alias) {
         this(DSL.name(alias), DELIBERATION);
     }
 
     /**
-     * Create an aliased <code>orgarif.deliberation</code> table reference
+     * Create an aliased <code>public.deliberation</code> table reference
      */
     public DeliberationTable(Name alias) {
         this(alias, DELIBERATION);
     }
 
     /**
-     * Create a <code>orgarif.deliberation</code> table reference
+     * Create a <code>public.deliberation</code> table reference
      */
     public DeliberationTable() {
         this(DSL.name("deliberation"), null);
@@ -117,19 +116,19 @@ public class DeliberationTable extends TableImpl<DeliberationRecord> {
     @Override
     @Nonnull
     public Schema getSchema() {
-        return OrgarifTable.ORGARIF;
+        return PublicTable.PUBLIC;
     }
 
     @Override
     @Nonnull
     public UniqueKey<DeliberationRecord> getPrimaryKey() {
-        return Keys.KEY_DELIBERATION_PRIMARY;
+        return Keys.DELIBERATION_PKEY;
     }
 
     @Override
     @Nonnull
     public List<UniqueKey<DeliberationRecord>> getKeys() {
-        return Arrays.<UniqueKey<DeliberationRecord>>asList(Keys.KEY_DELIBERATION_PRIMARY);
+        return Arrays.<UniqueKey<DeliberationRecord>>asList(Keys.DELIBERATION_PKEY);
     }
 
     @Override

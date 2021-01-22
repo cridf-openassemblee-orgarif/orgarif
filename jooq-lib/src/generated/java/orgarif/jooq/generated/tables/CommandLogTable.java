@@ -11,12 +11,10 @@ import java.util.UUID;
 
 import javax.annotation.Nonnull;
 
-import jooqutils.jooq.CharToUUIDConverter;
 import jooqutils.jooq.TimestampToInstantConverter;
 
 import org.jooq.Field;
 import org.jooq.ForeignKey;
-import org.jooq.Index;
 import org.jooq.Name;
 import org.jooq.Record;
 import org.jooq.Row12;
@@ -29,9 +27,8 @@ import org.jooq.impl.DSL;
 import org.jooq.impl.SQLDataType;
 import org.jooq.impl.TableImpl;
 
-import orgarif.jooq.generated.Indexes;
 import orgarif.jooq.generated.Keys;
-import orgarif.jooq.generated.OrgarifTable;
+import orgarif.jooq.generated.PublicTable;
 import orgarif.jooq.generated.tables.records.CommandLogRecord;
 
 
@@ -44,7 +41,7 @@ public class CommandLogTable extends TableImpl<CommandLogRecord> {
     private static final long serialVersionUID = 1L;
 
     /**
-     * The reference instance of <code>orgarif.command_log</code>
+     * The reference instance of <code>public.command_log</code>
      */
     public static final CommandLogTable COMMAND_LOG = new CommandLogTable();
 
@@ -58,64 +55,64 @@ public class CommandLogTable extends TableImpl<CommandLogRecord> {
     }
 
     /**
-     * The column <code>orgarif.command_log.id</code>.
+     * The column <code>public.command_log.id</code>.
      */
-    public final TableField<CommandLogRecord, UUID> ID = createField(DSL.name("id"), SQLDataType.CHAR(32).nullable(false), this, "", new CharToUUIDConverter());
+    public final TableField<CommandLogRecord, UUID> ID = createField(DSL.name("id"), SQLDataType.UUID.nullable(false), this, "");
 
     /**
-     * The column <code>orgarif.command_log.user_id</code>.
+     * The column <code>public.command_log.user_id</code>.
      */
-    public final TableField<CommandLogRecord, UUID> USER_ID = createField(DSL.name("user_id"), SQLDataType.CHAR(32), this, "", new CharToUUIDConverter());
+    public final TableField<CommandLogRecord, UUID> USER_ID = createField(DSL.name("user_id"), SQLDataType.UUID, this, "");
 
     /**
-     * The column <code>orgarif.command_log.deployment_log_id</code>.
+     * The column <code>public.command_log.deployment_log_id</code>.
      */
-    public final TableField<CommandLogRecord, UUID> DEPLOYMENT_LOG_ID = createField(DSL.name("deployment_log_id"), SQLDataType.CHAR(32).nullable(false), this, "", new CharToUUIDConverter());
+    public final TableField<CommandLogRecord, UUID> DEPLOYMENT_LOG_ID = createField(DSL.name("deployment_log_id"), SQLDataType.UUID.nullable(false), this, "");
 
     /**
-     * The column <code>orgarif.command_log.command_class</code>.
+     * The column <code>public.command_log.command_class</code>.
      */
     public final TableField<CommandLogRecord, String> COMMAND_CLASS = createField(DSL.name("command_class"), SQLDataType.VARCHAR(255).nullable(false), this, "");
 
     /**
-     * The column <code>orgarif.command_log.json_command</code>.
+     * The column <code>public.command_log.json_command</code>.
      */
     public final TableField<CommandLogRecord, String> JSON_COMMAND = createField(DSL.name("json_command"), SQLDataType.CLOB.nullable(false), this, "");
 
     /**
-     * The column <code>orgarif.command_log.ip</code>.
+     * The column <code>public.command_log.ip</code>.
      */
     public final TableField<CommandLogRecord, String> IP = createField(DSL.name("ip"), SQLDataType.VARCHAR(255).nullable(false), this, "");
 
     /**
-     * The column <code>orgarif.command_log.user_session_id</code>.
+     * The column <code>public.command_log.user_session_id</code>.
      */
-    public final TableField<CommandLogRecord, UUID> USER_SESSION_ID = createField(DSL.name("user_session_id"), SQLDataType.CHAR(32), this, "", new CharToUUIDConverter());
+    public final TableField<CommandLogRecord, UUID> USER_SESSION_ID = createField(DSL.name("user_session_id"), SQLDataType.UUID, this, "");
 
     /**
-     * The column <code>orgarif.command_log.resulting_ids</code>.
+     * The column <code>public.command_log.resulting_ids</code>.
      */
     public final TableField<CommandLogRecord, String> RESULTING_IDS = createField(DSL.name("resulting_ids"), SQLDataType.CLOB, this, "");
 
     /**
-     * The column <code>orgarif.command_log.json_result</code>.
+     * The column <code>public.command_log.json_result</code>.
      */
     public final TableField<CommandLogRecord, String> JSON_RESULT = createField(DSL.name("json_result"), SQLDataType.CLOB, this, "");
 
     /**
-     * The column <code>orgarif.command_log.exception_stack_trace</code>.
+     * The column <code>public.command_log.exception_stack_trace</code>.
      */
     public final TableField<CommandLogRecord, String> EXCEPTION_STACK_TRACE = createField(DSL.name("exception_stack_trace"), SQLDataType.CLOB, this, "");
 
     /**
-     * The column <code>orgarif.command_log.start_date</code>.
+     * The column <code>public.command_log.start_date</code>.
      */
-    public final TableField<CommandLogRecord, Instant> START_DATE = createField(DSL.name("start_date"), SQLDataType.LOCALDATETIME(0).nullable(false), this, "", new TimestampToInstantConverter());
+    public final TableField<CommandLogRecord, Instant> START_DATE = createField(DSL.name("start_date"), SQLDataType.LOCALDATETIME(6).nullable(false), this, "", new TimestampToInstantConverter());
 
     /**
-     * The column <code>orgarif.command_log.end_date</code>.
+     * The column <code>public.command_log.end_date</code>.
      */
-    public final TableField<CommandLogRecord, Instant> END_DATE = createField(DSL.name("end_date"), SQLDataType.LOCALDATETIME(0), this, "", new TimestampToInstantConverter());
+    public final TableField<CommandLogRecord, Instant> END_DATE = createField(DSL.name("end_date"), SQLDataType.LOCALDATETIME(6), this, "", new TimestampToInstantConverter());
 
     private CommandLogTable(Name alias, Table<CommandLogRecord> aliased) {
         this(alias, aliased, null);
@@ -126,21 +123,21 @@ public class CommandLogTable extends TableImpl<CommandLogRecord> {
     }
 
     /**
-     * Create an aliased <code>orgarif.command_log</code> table reference
+     * Create an aliased <code>public.command_log</code> table reference
      */
     public CommandLogTable(String alias) {
         this(DSL.name(alias), COMMAND_LOG);
     }
 
     /**
-     * Create an aliased <code>orgarif.command_log</code> table reference
+     * Create an aliased <code>public.command_log</code> table reference
      */
     public CommandLogTable(Name alias) {
         this(alias, COMMAND_LOG);
     }
 
     /**
-     * Create a <code>orgarif.command_log</code> table reference
+     * Create a <code>public.command_log</code> table reference
      */
     public CommandLogTable() {
         this(DSL.name("command_log"), null);
@@ -153,43 +150,37 @@ public class CommandLogTable extends TableImpl<CommandLogRecord> {
     @Override
     @Nonnull
     public Schema getSchema() {
-        return OrgarifTable.ORGARIF;
-    }
-
-    @Override
-    @Nonnull
-    public List<Index> getIndexes() {
-        return Arrays.<Index>asList(Indexes.COMMAND_LOG_DEPLOYMENT_LOG_ID, Indexes.COMMAND_LOG_USER_ID, Indexes.COMMAND_LOG_USER_SESSION_ID);
+        return PublicTable.PUBLIC;
     }
 
     @Override
     @Nonnull
     public UniqueKey<CommandLogRecord> getPrimaryKey() {
-        return Keys.KEY_COMMAND_LOG_PRIMARY;
+        return Keys.COMMAND_LOG_PKEY;
     }
 
     @Override
     @Nonnull
     public List<UniqueKey<CommandLogRecord>> getKeys() {
-        return Arrays.<UniqueKey<CommandLogRecord>>asList(Keys.KEY_COMMAND_LOG_PRIMARY);
+        return Arrays.<UniqueKey<CommandLogRecord>>asList(Keys.COMMAND_LOG_PKEY);
     }
 
     @Override
     @Nonnull
     public List<ForeignKey<CommandLogRecord, ?>> getReferences() {
-        return Arrays.<ForeignKey<CommandLogRecord, ?>>asList(Keys.COMMAND_LOG_IBFK_1, Keys.COMMAND_LOG_IBFK_2, Keys.COMMAND_LOG_IBFK_3);
+        return Arrays.<ForeignKey<CommandLogRecord, ?>>asList(Keys.COMMAND_LOG__COMMAND_LOG_USER_ID_FKEY, Keys.COMMAND_LOG__COMMAND_LOG_DEPLOYMENT_LOG_ID_FKEY, Keys.COMMAND_LOG__COMMAND_LOG_USER_SESSION_ID_FKEY);
     }
 
     public AppUserTable appUser() {
-        return new AppUserTable(this, Keys.COMMAND_LOG_IBFK_1);
+        return new AppUserTable(this, Keys.COMMAND_LOG__COMMAND_LOG_USER_ID_FKEY);
     }
 
     public DeploymentLogTable deploymentLog() {
-        return new DeploymentLogTable(this, Keys.COMMAND_LOG_IBFK_2);
+        return new DeploymentLogTable(this, Keys.COMMAND_LOG__COMMAND_LOG_DEPLOYMENT_LOG_ID_FKEY);
     }
 
     public UserSessionLogTable userSessionLog() {
-        return new UserSessionLogTable(this, Keys.COMMAND_LOG_IBFK_3);
+        return new UserSessionLogTable(this, Keys.COMMAND_LOG__COMMAND_LOG_USER_SESSION_ID_FKEY);
     }
 
     @Override

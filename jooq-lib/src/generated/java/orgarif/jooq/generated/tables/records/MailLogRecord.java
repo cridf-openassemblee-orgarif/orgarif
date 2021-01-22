@@ -27,14 +27,14 @@ public class MailLogRecord extends UpdatableRecordImpl<MailLogRecord> implements
     private static final long serialVersionUID = 1L;
 
     /**
-     * Setter for <code>orgarif.mail_log.id</code>.
+     * Setter for <code>public.mail_log.id</code>.
      */
     public void setId(@Nonnull UUID value) {
         set(0, value);
     }
 
     /**
-     * Getter for <code>orgarif.mail_log.id</code>.
+     * Getter for <code>public.mail_log.id</code>.
      */
     @Nonnull
     public UUID getId() {
@@ -42,14 +42,14 @@ public class MailLogRecord extends UpdatableRecordImpl<MailLogRecord> implements
     }
 
     /**
-     * Setter for <code>orgarif.mail_log.application</code>.
+     * Setter for <code>public.mail_log.application</code>.
      */
     public void setApplication(@Nonnull String value) {
         set(1, value);
     }
 
     /**
-     * Getter for <code>orgarif.mail_log.application</code>.
+     * Getter for <code>public.mail_log.application</code>.
      */
     @Nonnull
     public String getApplication() {
@@ -57,14 +57,14 @@ public class MailLogRecord extends UpdatableRecordImpl<MailLogRecord> implements
     }
 
     /**
-     * Setter for <code>orgarif.mail_log.deployment_log_id</code>.
+     * Setter for <code>public.mail_log.deployment_log_id</code>.
      */
     public void setDeploymentLogId(@Nonnull UUID value) {
         set(2, value);
     }
 
     /**
-     * Getter for <code>orgarif.mail_log.deployment_log_id</code>.
+     * Getter for <code>public.mail_log.deployment_log_id</code>.
      */
     @Nonnull
     public UUID getDeploymentLogId() {
@@ -72,14 +72,14 @@ public class MailLogRecord extends UpdatableRecordImpl<MailLogRecord> implements
     }
 
     /**
-     * Setter for <code>orgarif.mail_log.recipient_type</code>.
+     * Setter for <code>public.mail_log.recipient_type</code>.
      */
     public void setRecipientType(@Nonnull String value) {
         set(3, value);
     }
 
     /**
-     * Getter for <code>orgarif.mail_log.recipient_type</code>.
+     * Getter for <code>public.mail_log.recipient_type</code>.
      */
     @Nonnull
     public String getRecipientType() {
@@ -87,14 +87,14 @@ public class MailLogRecord extends UpdatableRecordImpl<MailLogRecord> implements
     }
 
     /**
-     * Setter for <code>orgarif.mail_log.user_id</code>.
+     * Setter for <code>public.mail_log.user_id</code>.
      */
     public void setUserId(@Nonnull UUID value) {
         set(4, value);
     }
 
     /**
-     * Getter for <code>orgarif.mail_log.user_id</code>.
+     * Getter for <code>public.mail_log.user_id</code>.
      */
     @Nonnull
     public UUID getUserId() {
@@ -102,14 +102,14 @@ public class MailLogRecord extends UpdatableRecordImpl<MailLogRecord> implements
     }
 
     /**
-     * Setter for <code>orgarif.mail_log.reference</code>.
+     * Setter for <code>public.mail_log.reference</code>.
      */
     public void setReference(@Nonnull String value) {
         set(5, value);
     }
 
     /**
-     * Getter for <code>orgarif.mail_log.reference</code>.
+     * Getter for <code>public.mail_log.reference</code>.
      */
     @Nonnull
     public String getReference() {
@@ -117,14 +117,14 @@ public class MailLogRecord extends UpdatableRecordImpl<MailLogRecord> implements
     }
 
     /**
-     * Setter for <code>orgarif.mail_log.recipient_mail</code>.
+     * Setter for <code>public.mail_log.recipient_mail</code>.
      */
     public void setRecipientMail(@Nonnull String value) {
         set(6, value);
     }
 
     /**
-     * Getter for <code>orgarif.mail_log.recipient_mail</code>.
+     * Getter for <code>public.mail_log.recipient_mail</code>.
      */
     @Nonnull
     public String getRecipientMail() {
@@ -132,14 +132,14 @@ public class MailLogRecord extends UpdatableRecordImpl<MailLogRecord> implements
     }
 
     /**
-     * Setter for <code>orgarif.mail_log.data</code>.
+     * Setter for <code>public.mail_log.data</code>.
      */
     public void setData(@Nonnull String value) {
         set(7, value);
     }
 
     /**
-     * Getter for <code>orgarif.mail_log.data</code>.
+     * Getter for <code>public.mail_log.data</code>.
      */
     @Nonnull
     public String getData() {
@@ -147,14 +147,14 @@ public class MailLogRecord extends UpdatableRecordImpl<MailLogRecord> implements
     }
 
     /**
-     * Setter for <code>orgarif.mail_log.subject</code>.
+     * Setter for <code>public.mail_log.subject</code>.
      */
     public void setSubject(@Nonnull String value) {
         set(8, value);
     }
 
     /**
-     * Getter for <code>orgarif.mail_log.subject</code>.
+     * Getter for <code>public.mail_log.subject</code>.
      */
     @Nonnull
     public String getSubject() {
@@ -162,14 +162,14 @@ public class MailLogRecord extends UpdatableRecordImpl<MailLogRecord> implements
     }
 
     /**
-     * Setter for <code>orgarif.mail_log.content</code>.
+     * Setter for <code>public.mail_log.content</code>.
      */
     public void setContent(@Nonnull String value) {
         set(9, value);
     }
 
     /**
-     * Getter for <code>orgarif.mail_log.content</code>.
+     * Getter for <code>public.mail_log.content</code>.
      */
     @Nonnull
     public String getContent() {
@@ -177,14 +177,14 @@ public class MailLogRecord extends UpdatableRecordImpl<MailLogRecord> implements
     }
 
     /**
-     * Setter for <code>orgarif.mail_log.date</code>.
+     * Setter for <code>public.mail_log.date</code>.
      */
     public void setDate(@Nonnull Instant value) {
         set(10, value);
     }
 
     /**
-     * Getter for <code>orgarif.mail_log.date</code>.
+     * Getter for <code>public.mail_log.date</code>.
      */
     @Nonnull
     public Instant getDate() {

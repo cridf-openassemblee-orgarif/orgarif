@@ -22,83 +22,83 @@ import orgarif.jooq.generated.tables.UserSessionLogTable;
 
 
 /**
- * Convenience access to all tables in orgarif.
+ * Convenience access to all tables in public.
  */
 @SuppressWarnings({ "all", "unchecked", "rawtypes" })
 public class Tables {
 
     /**
-     * The table <code>orgarif.app_user</code>.
+     * The table <code>public.app_user</code>.
      */
     public static final AppUserTable APP_USER = AppUserTable.APP_USER;
 
     /**
-     * The table <code>orgarif.command_log</code>.
+     * The table <code>public.command_log</code>.
      */
     public static final CommandLogTable COMMAND_LOG = CommandLogTable.COMMAND_LOG;
 
     /**
-     * The table <code>orgarif.deliberation</code>.
+     * The table <code>public.deliberation</code>.
      */
     public static final DeliberationTable DELIBERATION = DeliberationTable.DELIBERATION;
 
     /**
-     * The table <code>orgarif.deployment_log</code>.
+     * The table <code>public.deployment_log</code>.
      */
     public static final DeploymentLogTable DEPLOYMENT_LOG = DeploymentLogTable.DEPLOYMENT_LOG;
 
     /**
-     * The table <code>orgarif.elu</code>.
+     * The table <code>public.elu</code>.
      */
     public static final EluTable ELU = EluTable.ELU;
 
     /**
-     * The table <code>orgarif.instance</code>.
+     * The table <code>public.instance</code>.
      */
     public static final InstanceTable INSTANCE = InstanceTable.INSTANCE;
 
     /**
-     * The table <code>orgarif.lien_deliberation</code>.
+     * The table <code>public.lien_deliberation</code>.
      */
     public static final LienDeliberationTable LIEN_DELIBERATION = LienDeliberationTable.LIEN_DELIBERATION;
 
     /**
-     * The table <code>orgarif.magic_link_token</code>.
+     * The table <code>public.magic_link_token</code>.
      */
     public static final MagicLinkTokenTable MAGIC_LINK_TOKEN = MagicLinkTokenTable.MAGIC_LINK_TOKEN;
 
     /**
-     * The table <code>orgarif.mail_log</code>.
+     * The table <code>public.mail_log</code>.
      */
     public static final MailLogTable MAIL_LOG = MailLogTable.MAIL_LOG;
 
     /**
-     * The table <code>orgarif.nature_juridique</code>.
+     * The table <code>public.nature_juridique</code>.
      */
     public static final NatureJuridiqueTable NATURE_JURIDIQUE = NatureJuridiqueTable.NATURE_JURIDIQUE;
 
     /**
-     * The table <code>orgarif.organisme</code>.
+     * The table <code>public.organisme</code>.
      */
     public static final OrganismeTable ORGANISME = OrganismeTable.ORGANISME;
 
     /**
-     * The table <code>orgarif.representant</code>.
+     * The table <code>public.representant</code>.
      */
     public static final RepresentantTable REPRESENTANT = RepresentantTable.REPRESENTANT;
 
     /**
-     * The table <code>orgarif.secteur</code>.
+     * The table <code>public.secteur</code>.
      */
     public static final SecteurTable SECTEUR = SecteurTable.SECTEUR;
 
     /**
-     * The table <code>orgarif.type_structure</code>.
+     * The table <code>public.type_structure</code>.
      */
     public static final TypeStructureTable TYPE_STRUCTURE = TypeStructureTable.TYPE_STRUCTURE;
 
     /**
-     * The table <code>orgarif.user_session_log</code>.
+     * The table <code>public.user_session_log</code>.
      */
     public static final UserSessionLogTable USER_SESSION_LOG = UserSessionLogTable.USER_SESSION_LOG;
 }

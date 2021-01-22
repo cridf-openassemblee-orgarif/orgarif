@@ -10,8 +10,6 @@ import java.util.UUID;
 
 import javax.annotation.Nonnull;
 
-import jooqutils.jooq.CharToUUIDConverter;
-
 import org.jooq.Field;
 import org.jooq.ForeignKey;
 import org.jooq.Name;
@@ -27,7 +25,7 @@ import org.jooq.impl.SQLDataType;
 import org.jooq.impl.TableImpl;
 
 import orgarif.jooq.generated.Keys;
-import orgarif.jooq.generated.OrgarifTable;
+import orgarif.jooq.generated.PublicTable;
 import orgarif.jooq.generated.tables.records.SecteurRecord;
 
 
@@ -40,7 +38,7 @@ public class SecteurTable extends TableImpl<SecteurRecord> {
     private static final long serialVersionUID = 1L;
 
     /**
-     * The reference instance of <code>orgarif.secteur</code>
+     * The reference instance of <code>public.secteur</code>
      */
     public static final SecteurTable SECTEUR = new SecteurTable();
 
@@ -54,12 +52,12 @@ public class SecteurTable extends TableImpl<SecteurRecord> {
     }
 
     /**
-     * The column <code>orgarif.secteur.id</code>.
+     * The column <code>public.secteur.id</code>.
      */
-    public final TableField<SecteurRecord, UUID> ID = createField(DSL.name("id"), SQLDataType.CHAR(32).nullable(false), this, "", new CharToUUIDConverter());
+    public final TableField<SecteurRecord, UUID> ID = createField(DSL.name("id"), SQLDataType.UUID.nullable(false), this, "");
 
     /**
-     * The column <code>orgarif.secteur.libelle</code>.
+     * The column <code>public.secteur.libelle</code>.
      */
     public final TableField<SecteurRecord, String> LIBELLE = createField(DSL.name("libelle"), SQLDataType.VARCHAR(255).nullable(false), this, "");
 
@@ -72,21 +70,21 @@ public class SecteurTable extends TableImpl<SecteurRecord> {
     }
 
     /**
-     * Create an aliased <code>orgarif.secteur</code> table reference
+     * Create an aliased <code>public.secteur</code> table reference
      */
     public SecteurTable(String alias) {
         this(DSL.name(alias), SECTEUR);
     }
 
     /**
-     * Create an aliased <code>orgarif.secteur</code> table reference
+     * Create an aliased <code>public.secteur</code> table reference
      */
     public SecteurTable(Name alias) {
         this(alias, SECTEUR);
     }
 
     /**
-     * Create a <code>orgarif.secteur</code> table reference
+     * Create a <code>public.secteur</code> table reference
      */
     public SecteurTable() {
         this(DSL.name("secteur"), null);
@@ -99,19 +97,19 @@ public class SecteurTable extends TableImpl<SecteurRecord> {
     @Override
     @Nonnull
     public Schema getSchema() {
-        return OrgarifTable.ORGARIF;
+        return PublicTable.PUBLIC;
     }
 
     @Override
     @Nonnull
     public UniqueKey<SecteurRecord> getPrimaryKey() {
-        return Keys.KEY_SECTEUR_PRIMARY;
+        return Keys.SECTEUR_PKEY;
     }
 
     @Override
     @Nonnull
     public List<UniqueKey<SecteurRecord>> getKeys() {
-        return Arrays.<UniqueKey<SecteurRecord>>asList(Keys.KEY_SECTEUR_PRIMARY);
+        return Arrays.<UniqueKey<SecteurRecord>>asList(Keys.SECTEUR_PKEY);
     }
 
     @Override

@@ -28,14 +28,14 @@ public class InstanceRecord extends UpdatableRecordImpl<InstanceRecord> implemen
     private static final long serialVersionUID = 1L;
 
     /**
-     * Setter for <code>orgarif.instance.id</code>.
+     * Setter for <code>public.instance.id</code>.
      */
     public void setId(@Nonnull UUID value) {
         set(0, value);
     }
 
     /**
-     * Getter for <code>orgarif.instance.id</code>.
+     * Getter for <code>public.instance.id</code>.
      */
     @Nonnull
     public UUID getId() {
@@ -43,14 +43,14 @@ public class InstanceRecord extends UpdatableRecordImpl<InstanceRecord> implemen
     }
 
     /**
-     * Setter for <code>orgarif.instance.nom</code>.
+     * Setter for <code>public.instance.nom</code>.
      */
     public void setNom(@Nonnull String value) {
         set(1, value);
     }
 
     /**
-     * Getter for <code>orgarif.instance.nom</code>.
+     * Getter for <code>public.instance.nom</code>.
      */
     @Nonnull
     public String getNom() {
@@ -58,14 +58,14 @@ public class InstanceRecord extends UpdatableRecordImpl<InstanceRecord> implemen
     }
 
     /**
-     * Setter for <code>orgarif.instance.organisme_id</code>.
+     * Setter for <code>public.instance.organisme_id</code>.
      */
     public void setOrganismeId(@Nonnull UUID value) {
         set(2, value);
     }
 
     /**
-     * Getter for <code>orgarif.instance.organisme_id</code>.
+     * Getter for <code>public.instance.organisme_id</code>.
      */
     @Nonnull
     public UUID getOrganismeId() {
@@ -73,14 +73,14 @@ public class InstanceRecord extends UpdatableRecordImpl<InstanceRecord> implemen
     }
 
     /**
-     * Setter for <code>orgarif.instance.nombre_representants</code>.
+     * Setter for <code>public.instance.nombre_representants</code>.
      */
     public void setNombreRepresentants(@Nullable Integer value) {
         set(3, value);
     }
 
     /**
-     * Getter for <code>orgarif.instance.nombre_representants</code>.
+     * Getter for <code>public.instance.nombre_representants</code>.
      */
     @Nullable
     public Integer getNombreRepresentants() {
@@ -88,14 +88,14 @@ public class InstanceRecord extends UpdatableRecordImpl<InstanceRecord> implemen
     }
 
     /**
-     * Setter for <code>orgarif.instance.nombre_suppleants</code>.
+     * Setter for <code>public.instance.nombre_suppleants</code>.
      */
     public void setNombreSuppleants(@Nullable Integer value) {
         set(4, value);
     }
 
     /**
-     * Getter for <code>orgarif.instance.nombre_suppleants</code>.
+     * Getter for <code>public.instance.nombre_suppleants</code>.
      */
     @Nullable
     public Integer getNombreSuppleants() {
@@ -103,14 +103,14 @@ public class InstanceRecord extends UpdatableRecordImpl<InstanceRecord> implemen
     }
 
     /**
-     * Setter for <code>orgarif.instance.creation_date</code>.
+     * Setter for <code>public.instance.creation_date</code>.
      */
     public void setCreationDate(@Nonnull Instant value) {
         set(5, value);
     }
 
     /**
-     * Getter for <code>orgarif.instance.creation_date</code>.
+     * Getter for <code>public.instance.creation_date</code>.
      */
     @Nonnull
     public Instant getCreationDate() {
@@ -118,14 +118,14 @@ public class InstanceRecord extends UpdatableRecordImpl<InstanceRecord> implemen
     }
 
     /**
-     * Setter for <code>orgarif.instance.last_modification_date</code>.
+     * Setter for <code>public.instance.last_modification_date</code>.
      */
     public void setLastModificationDate(@Nonnull Instant value) {
         set(6, value);
     }
 
     /**
-     * Getter for <code>orgarif.instance.last_modification_date</code>.
+     * Getter for <code>public.instance.last_modification_date</code>.
      */
     @Nonnull
     public Instant getLastModificationDate() {

@@ -11,12 +11,10 @@ import java.util.UUID;
 
 import javax.annotation.Nonnull;
 
-import jooqutils.jooq.CharToUUIDConverter;
-import jooqutils.jooq.TimestampToInstantConverter;
+import jooqutils.jooq.TimestampWithTimeZoneToInstantConverter;
 
 import org.jooq.Field;
 import org.jooq.ForeignKey;
-import org.jooq.Index;
 import org.jooq.Name;
 import org.jooq.Record;
 import org.jooq.Row6;
@@ -29,9 +27,8 @@ import org.jooq.impl.DSL;
 import org.jooq.impl.SQLDataType;
 import org.jooq.impl.TableImpl;
 
-import orgarif.jooq.generated.Indexes;
 import orgarif.jooq.generated.Keys;
-import orgarif.jooq.generated.OrgarifTable;
+import orgarif.jooq.generated.PublicTable;
 import orgarif.jooq.generated.tables.records.UserSessionLogRecord;
 
 
@@ -44,7 +41,7 @@ public class UserSessionLogTable extends TableImpl<UserSessionLogRecord> {
     private static final long serialVersionUID = 1L;
 
     /**
-     * The reference instance of <code>orgarif.user_session_log</code>
+     * The reference instance of <code>public.user_session_log</code>
      */
     public static final UserSessionLogTable USER_SESSION_LOG = new UserSessionLogTable();
 
@@ -58,32 +55,32 @@ public class UserSessionLogTable extends TableImpl<UserSessionLogRecord> {
     }
 
     /**
-     * The column <code>orgarif.user_session_log.id</code>.
+     * The column <code>public.user_session_log.id</code>.
      */
-    public final TableField<UserSessionLogRecord, UUID> ID = createField(DSL.name("id"), SQLDataType.CHAR(32).nullable(false), this, "", new CharToUUIDConverter());
+    public final TableField<UserSessionLogRecord, UUID> ID = createField(DSL.name("id"), SQLDataType.UUID.nullable(false), this, "");
 
     /**
-     * The column <code>orgarif.user_session_log.spring_session_id</code>.
+     * The column <code>public.user_session_log.spring_session_id</code>.
      */
     public final TableField<UserSessionLogRecord, String> SPRING_SESSION_ID = createField(DSL.name("spring_session_id"), SQLDataType.VARCHAR(255).nullable(false), this, "");
 
     /**
-     * The column <code>orgarif.user_session_log.user_id</code>.
+     * The column <code>public.user_session_log.user_id</code>.
      */
-    public final TableField<UserSessionLogRecord, UUID> USER_ID = createField(DSL.name("user_id"), SQLDataType.CHAR(32).nullable(false), this, "", new CharToUUIDConverter());
+    public final TableField<UserSessionLogRecord, UUID> USER_ID = createField(DSL.name("user_id"), SQLDataType.UUID.nullable(false), this, "");
 
     /**
-     * The column <code>orgarif.user_session_log.deployment_log_id</code>.
+     * The column <code>public.user_session_log.deployment_log_id</code>.
      */
-    public final TableField<UserSessionLogRecord, UUID> DEPLOYMENT_LOG_ID = createField(DSL.name("deployment_log_id"), SQLDataType.CHAR(32).nullable(false), this, "", new CharToUUIDConverter());
+    public final TableField<UserSessionLogRecord, UUID> DEPLOYMENT_LOG_ID = createField(DSL.name("deployment_log_id"), SQLDataType.UUID.nullable(false), this, "");
 
     /**
-     * The column <code>orgarif.user_session_log.date</code>.
+     * The column <code>public.user_session_log.date</code>.
      */
-    public final TableField<UserSessionLogRecord, Instant> DATE = createField(DSL.name("date"), SQLDataType.LOCALDATETIME(0).nullable(false), this, "", new TimestampToInstantConverter());
+    public final TableField<UserSessionLogRecord, Instant> DATE = createField(DSL.name("date"), SQLDataType.TIMESTAMPWITHTIMEZONE(6).nullable(false), this, "", new TimestampWithTimeZoneToInstantConverter());
 
     /**
-     * The column <code>orgarif.user_session_log.ip</code>.
+     * The column <code>public.user_session_log.ip</code>.
      */
     public final TableField<UserSessionLogRecord, String> IP = createField(DSL.name("ip"), SQLDataType.VARCHAR(255).nullable(false), this, "");
 
@@ -96,21 +93,21 @@ public class UserSessionLogTable extends TableImpl<UserSessionLogRecord> {
     }
 
     /**
-     * Create an aliased <code>orgarif.user_session_log</code> table reference
+     * Create an aliased <code>public.user_session_log</code> table reference
      */
     public UserSessionLogTable(String alias) {
         this(DSL.name(alias), USER_SESSION_LOG);
     }
 
     /**
-     * Create an aliased <code>orgarif.user_session_log</code> table reference
+     * Create an aliased <code>public.user_session_log</code> table reference
      */
     public UserSessionLogTable(Name alias) {
         this(alias, USER_SESSION_LOG);
     }
 
     /**
-     * Create a <code>orgarif.user_session_log</code> table reference
+     * Create a <code>public.user_session_log</code> table reference
      */
     public UserSessionLogTable() {
         this(DSL.name("user_session_log"), null);
@@ -123,35 +120,29 @@ public class UserSessionLogTable extends TableImpl<UserSessionLogRecord> {
     @Override
     @Nonnull
     public Schema getSchema() {
-        return OrgarifTable.ORGARIF;
-    }
-
-    @Override
-    @Nonnull
-    public List<Index> getIndexes() {
-        return Arrays.<Index>asList(Indexes.USER_SESSION_LOG_USER_ID);
+        return PublicTable.PUBLIC;
     }
 
     @Override
     @Nonnull
     public UniqueKey<UserSessionLogRecord> getPrimaryKey() {
-        return Keys.KEY_USER_SESSION_LOG_PRIMARY;
+        return Keys.USER_SESSION_LOG_PKEY;
     }
 
     @Override
     @Nonnull
     public List<UniqueKey<UserSessionLogRecord>> getKeys() {
-        return Arrays.<UniqueKey<UserSessionLogRecord>>asList(Keys.KEY_USER_SESSION_LOG_PRIMARY);
+        return Arrays.<UniqueKey<UserSessionLogRecord>>asList(Keys.USER_SESSION_LOG_PKEY);
     }
 
     @Override
     @Nonnull
     public List<ForeignKey<UserSessionLogRecord, ?>> getReferences() {
-        return Arrays.<ForeignKey<UserSessionLogRecord, ?>>asList(Keys.USER_SESSION_LOG_IBFK_1);
+        return Arrays.<ForeignKey<UserSessionLogRecord, ?>>asList(Keys.USER_SESSION_LOG__USER_SESSION_LOG_USER_ID_FKEY);
     }
 
     public AppUserTable appUser() {
-        return new AppUserTable(this, Keys.USER_SESSION_LOG_IBFK_1);
+        return new AppUserTable(this, Keys.USER_SESSION_LOG__USER_SESSION_LOG_USER_ID_FKEY);
     }
 
     @Override

@@ -28,14 +28,14 @@ public class OrganismeRecord extends UpdatableRecordImpl<OrganismeRecord> implem
     private static final long serialVersionUID = 1L;
 
     /**
-     * Setter for <code>orgarif.organisme.id</code>.
+     * Setter for <code>public.organisme.id</code>.
      */
     public void setId(@Nonnull UUID value) {
         set(0, value);
     }
 
     /**
-     * Getter for <code>orgarif.organisme.id</code>.
+     * Getter for <code>public.organisme.id</code>.
      */
     @Nonnull
     public UUID getId() {
@@ -43,14 +43,14 @@ public class OrganismeRecord extends UpdatableRecordImpl<OrganismeRecord> implem
     }
 
     /**
-     * Setter for <code>orgarif.organisme.nom</code>.
+     * Setter for <code>public.organisme.nom</code>.
      */
     public void setNom(@Nonnull String value) {
         set(1, value);
     }
 
     /**
-     * Getter for <code>orgarif.organisme.nom</code>.
+     * Getter for <code>public.organisme.nom</code>.
      */
     @Nonnull
     public String getNom() {
@@ -58,14 +58,14 @@ public class OrganismeRecord extends UpdatableRecordImpl<OrganismeRecord> implem
     }
 
     /**
-     * Setter for <code>orgarif.organisme.secteur_id</code>.
+     * Setter for <code>public.organisme.secteur_id</code>.
      */
     public void setSecteurId(@Nullable UUID value) {
         set(2, value);
     }
 
     /**
-     * Getter for <code>orgarif.organisme.secteur_id</code>.
+     * Getter for <code>public.organisme.secteur_id</code>.
      */
     @Nullable
     public UUID getSecteurId() {
@@ -73,14 +73,14 @@ public class OrganismeRecord extends UpdatableRecordImpl<OrganismeRecord> implem
     }
 
     /**
-     * Setter for <code>orgarif.organisme.nature_juridique_id</code>.
+     * Setter for <code>public.organisme.nature_juridique_id</code>.
      */
     public void setNatureJuridiqueId(@Nullable UUID value) {
         set(3, value);
     }
 
     /**
-     * Getter for <code>orgarif.organisme.nature_juridique_id</code>.
+     * Getter for <code>public.organisme.nature_juridique_id</code>.
      */
     @Nullable
     public UUID getNatureJuridiqueId() {
@@ -88,14 +88,14 @@ public class OrganismeRecord extends UpdatableRecordImpl<OrganismeRecord> implem
     }
 
     /**
-     * Setter for <code>orgarif.organisme.type_structure_id</code>.
+     * Setter for <code>public.organisme.type_structure_id</code>.
      */
     public void setTypeStructureId(@Nullable UUID value) {
         set(4, value);
     }
 
     /**
-     * Getter for <code>orgarif.organisme.type_structure_id</code>.
+     * Getter for <code>public.organisme.type_structure_id</code>.
      */
     @Nullable
     public UUID getTypeStructureId() {
@@ -103,14 +103,14 @@ public class OrganismeRecord extends UpdatableRecordImpl<OrganismeRecord> implem
     }
 
     /**
-     * Setter for <code>orgarif.organisme.nombre_representants</code>.
+     * Setter for <code>public.organisme.nombre_representants</code>.
      */
     public void setNombreRepresentants(@Nullable Integer value) {
         set(5, value);
     }
 
     /**
-     * Getter for <code>orgarif.organisme.nombre_representants</code>.
+     * Getter for <code>public.organisme.nombre_representants</code>.
      */
     @Nullable
     public Integer getNombreRepresentants() {
@@ -118,14 +118,14 @@ public class OrganismeRecord extends UpdatableRecordImpl<OrganismeRecord> implem
     }
 
     /**
-     * Setter for <code>orgarif.organisme.nombre_suppleants</code>.
+     * Setter for <code>public.organisme.nombre_suppleants</code>.
      */
     public void setNombreSuppleants(@Nullable Integer value) {
         set(6, value);
     }
 
     /**
-     * Getter for <code>orgarif.organisme.nombre_suppleants</code>.
+     * Getter for <code>public.organisme.nombre_suppleants</code>.
      */
     @Nullable
     public Integer getNombreSuppleants() {
@@ -133,14 +133,14 @@ public class OrganismeRecord extends UpdatableRecordImpl<OrganismeRecord> implem
     }
 
     /**
-     * Setter for <code>orgarif.organisme.partage_representants</code>.
+     * Setter for <code>public.organisme.partage_representants</code>.
      */
     public void setPartageRepresentants(@Nonnull Boolean value) {
         set(7, value);
     }
 
     /**
-     * Getter for <code>orgarif.organisme.partage_representants</code>.
+     * Getter for <code>public.organisme.partage_representants</code>.
      */
     @Nonnull
     public Boolean getPartageRepresentants() {
@@ -148,14 +148,14 @@ public class OrganismeRecord extends UpdatableRecordImpl<OrganismeRecord> implem
     }
 
     /**
-     * Setter for <code>orgarif.organisme.creation_date</code>.
+     * Setter for <code>public.organisme.creation_date</code>.
      */
     public void setCreationDate(@Nonnull Instant value) {
         set(8, value);
     }
 
     /**
-     * Getter for <code>orgarif.organisme.creation_date</code>.
+     * Getter for <code>public.organisme.creation_date</code>.
      */
     @Nonnull
     public Instant getCreationDate() {
@@ -163,14 +163,14 @@ public class OrganismeRecord extends UpdatableRecordImpl<OrganismeRecord> implem
     }
 
     /**
-     * Setter for <code>orgarif.organisme.last_modification_date</code>.
+     * Setter for <code>public.organisme.last_modification_date</code>.
      */
     public void setLastModificationDate(@Nonnull Instant value) {
         set(9, value);
     }
 
     /**
-     * Getter for <code>orgarif.organisme.last_modification_date</code>.
+     * Getter for <code>public.organisme.last_modification_date</code>.
      */
     @Nonnull
     public Instant getLastModificationDate() {

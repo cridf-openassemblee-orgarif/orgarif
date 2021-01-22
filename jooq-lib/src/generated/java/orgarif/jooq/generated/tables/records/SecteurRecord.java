@@ -26,14 +26,14 @@ public class SecteurRecord extends UpdatableRecordImpl<SecteurRecord> implements
     private static final long serialVersionUID = 1L;
 
     /**
-     * Setter for <code>orgarif.secteur.id</code>.
+     * Setter for <code>public.secteur.id</code>.
      */
     public void setId(@Nonnull UUID value) {
         set(0, value);
     }
 
     /**
-     * Getter for <code>orgarif.secteur.id</code>.
+     * Getter for <code>public.secteur.id</code>.
      */
     @Nonnull
     public UUID getId() {
@@ -41,14 +41,14 @@ public class SecteurRecord extends UpdatableRecordImpl<SecteurRecord> implements
     }
 
     /**
-     * Setter for <code>orgarif.secteur.libelle</code>.
+     * Setter for <code>public.secteur.libelle</code>.
      */
     public void setLibelle(@Nonnull String value) {
         set(1, value);
     }
 
     /**
-     * Getter for <code>orgarif.secteur.libelle</code>.
+     * Getter for <code>public.secteur.libelle</code>.
      */
     @Nonnull
     public String getLibelle() {

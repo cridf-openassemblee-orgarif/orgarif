@@ -26,14 +26,14 @@ public class NatureJuridiqueRecord extends UpdatableRecordImpl<NatureJuridiqueRe
     private static final long serialVersionUID = 1L;
 
     /**
-     * Setter for <code>orgarif.nature_juridique.id</code>.
+     * Setter for <code>public.nature_juridique.id</code>.
      */
     public void setId(@Nonnull UUID value) {
         set(0, value);
     }
 
     /**
-     * Getter for <code>orgarif.nature_juridique.id</code>.
+     * Getter for <code>public.nature_juridique.id</code>.
      */
     @Nonnull
     public UUID getId() {
@@ -41,14 +41,14 @@ public class NatureJuridiqueRecord extends UpdatableRecordImpl<NatureJuridiqueRe
     }
 
     /**
-     * Setter for <code>orgarif.nature_juridique.libelle</code>.
+     * Setter for <code>public.nature_juridique.libelle</code>.
      */
     public void setLibelle(@Nonnull String value) {
         set(1, value);
     }
 
     /**
-     * Getter for <code>orgarif.nature_juridique.libelle</code>.
+     * Getter for <code>public.nature_juridique.libelle</code>.
      */
     @Nonnull
     public String getLibelle() {

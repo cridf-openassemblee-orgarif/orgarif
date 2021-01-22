@@ -11,8 +11,7 @@ import java.util.UUID;
 
 import javax.annotation.Nonnull;
 
-import jooqutils.jooq.CharToUUIDConverter;
-import jooqutils.jooq.TimestampToInstantConverter;
+import jooqutils.jooq.TimestampWithTimeZoneToInstantConverter;
 
 import org.jooq.Field;
 import org.jooq.ForeignKey;
@@ -31,7 +30,7 @@ import org.jooq.impl.TableImpl;
 
 import orgarif.jooq.generated.Indexes;
 import orgarif.jooq.generated.Keys;
-import orgarif.jooq.generated.OrgarifTable;
+import orgarif.jooq.generated.PublicTable;
 import orgarif.jooq.generated.tables.records.AppUserRecord;
 
 
@@ -44,7 +43,7 @@ public class AppUserTable extends TableImpl<AppUserRecord> {
     private static final long serialVersionUID = 1L;
 
     /**
-     * The reference instance of <code>orgarif.app_user</code>
+     * The reference instance of <code>public.app_user</code>
      */
     public static final AppUserTable APP_USER = new AppUserTable();
 
@@ -58,42 +57,42 @@ public class AppUserTable extends TableImpl<AppUserRecord> {
     }
 
     /**
-     * The column <code>orgarif.app_user.id</code>.
+     * The column <code>public.app_user.id</code>.
      */
-    public final TableField<AppUserRecord, UUID> ID = createField(DSL.name("id"), SQLDataType.CHAR(32).nullable(false), this, "", new CharToUUIDConverter());
+    public final TableField<AppUserRecord, UUID> ID = createField(DSL.name("id"), SQLDataType.UUID.nullable(false), this, "");
 
     /**
-     * The column <code>orgarif.app_user.mail</code>.
+     * The column <code>public.app_user.mail</code>.
      */
     public final TableField<AppUserRecord, String> MAIL = createField(DSL.name("mail"), SQLDataType.VARCHAR(255).nullable(false), this, "");
 
     /**
-     * The column <code>orgarif.app_user.password</code>.
+     * The column <code>public.app_user.password</code>.
      */
     public final TableField<AppUserRecord, String> PASSWORD = createField(DSL.name("password"), SQLDataType.VARCHAR(60).nullable(false), this, "");
 
     /**
-     * The column <code>orgarif.app_user.username</code>.
+     * The column <code>public.app_user.username</code>.
      */
     public final TableField<AppUserRecord, String> USERNAME = createField(DSL.name("username"), SQLDataType.VARCHAR(255), this, "");
 
     /**
-     * The column <code>orgarif.app_user.language</code>.
+     * The column <code>public.app_user.language</code>.
      */
     public final TableField<AppUserRecord, String> LANGUAGE = createField(DSL.name("language"), SQLDataType.VARCHAR(2).nullable(false), this, "");
 
     /**
-     * The column <code>orgarif.app_user.admin</code>.
+     * The column <code>public.app_user.admin</code>.
      */
     public final TableField<AppUserRecord, Boolean> ADMIN = createField(DSL.name("admin"), SQLDataType.BOOLEAN.nullable(false), this, "");
 
     /**
-     * The column <code>orgarif.app_user.signup_date</code>.
+     * The column <code>public.app_user.signup_date</code>.
      */
-    public final TableField<AppUserRecord, Instant> SIGNUP_DATE = createField(DSL.name("signup_date"), SQLDataType.LOCALDATETIME(0).nullable(false), this, "", new TimestampToInstantConverter());
+    public final TableField<AppUserRecord, Instant> SIGNUP_DATE = createField(DSL.name("signup_date"), SQLDataType.TIMESTAMPWITHTIMEZONE(6).nullable(false), this, "", new TimestampWithTimeZoneToInstantConverter());
 
     /**
-     * The column <code>orgarif.app_user.dirty_mail</code>.
+     * The column <code>public.app_user.dirty_mail</code>.
      */
     public final TableField<AppUserRecord, String> DIRTY_MAIL = createField(DSL.name("dirty_mail"), SQLDataType.VARCHAR(255), this, "");
 
@@ -106,21 +105,21 @@ public class AppUserTable extends TableImpl<AppUserRecord> {
     }
 
     /**
-     * Create an aliased <code>orgarif.app_user</code> table reference
+     * Create an aliased <code>public.app_user</code> table reference
      */
     public AppUserTable(String alias) {
         this(DSL.name(alias), APP_USER);
     }
 
     /**
-     * Create an aliased <code>orgarif.app_user</code> table reference
+     * Create an aliased <code>public.app_user</code> table reference
      */
     public AppUserTable(Name alias) {
         this(alias, APP_USER);
     }
 
     /**
-     * Create a <code>orgarif.app_user</code> table reference
+     * Create a <code>public.app_user</code> table reference
      */
     public AppUserTable() {
         this(DSL.name("app_user"), null);
@@ -133,25 +132,25 @@ public class AppUserTable extends TableImpl<AppUserRecord> {
     @Override
     @Nonnull
     public Schema getSchema() {
-        return OrgarifTable.ORGARIF;
+        return PublicTable.PUBLIC;
     }
 
     @Override
     @Nonnull
     public List<Index> getIndexes() {
-        return Arrays.<Index>asList(Indexes.APP_USER_APP_USER_MAIL_IDX, Indexes.APP_USER_APP_USER_USERNAME_IDX);
+        return Arrays.<Index>asList(Indexes.APP_USER_MAIL_IDX, Indexes.APP_USER_USERNAME_IDX);
     }
 
     @Override
     @Nonnull
     public UniqueKey<AppUserRecord> getPrimaryKey() {
-        return Keys.KEY_APP_USER_PRIMARY;
+        return Keys.APP_USER_PKEY;
     }
 
     @Override
     @Nonnull
     public List<UniqueKey<AppUserRecord>> getKeys() {
-        return Arrays.<UniqueKey<AppUserRecord>>asList(Keys.KEY_APP_USER_PRIMARY, Keys.KEY_APP_USER_MAIL, Keys.KEY_APP_USER_USERNAME);
+        return Arrays.<UniqueKey<AppUserRecord>>asList(Keys.APP_USER_PKEY, Keys.APP_USER_MAIL_KEY, Keys.APP_USER_USERNAME_KEY);
     }
 
     @Override

@@ -11,12 +11,10 @@ import java.util.UUID;
 
 import javax.annotation.Nonnull;
 
-import jooqutils.jooq.CharToUUIDConverter;
-import jooqutils.jooq.TimestampToInstantConverter;
+import jooqutils.jooq.TimestampWithTimeZoneToInstantConverter;
 
 import org.jooq.Field;
 import org.jooq.ForeignKey;
-import org.jooq.Index;
 import org.jooq.Name;
 import org.jooq.Record;
 import org.jooq.Row4;
@@ -29,9 +27,8 @@ import org.jooq.impl.DSL;
 import org.jooq.impl.SQLDataType;
 import org.jooq.impl.TableImpl;
 
-import orgarif.jooq.generated.Indexes;
 import orgarif.jooq.generated.Keys;
-import orgarif.jooq.generated.OrgarifTable;
+import orgarif.jooq.generated.PublicTable;
 import orgarif.jooq.generated.tables.records.MagicLinkTokenRecord;
 
 
@@ -44,7 +41,7 @@ public class MagicLinkTokenTable extends TableImpl<MagicLinkTokenRecord> {
     private static final long serialVersionUID = 1L;
 
     /**
-     * The reference instance of <code>orgarif.magic_link_token</code>
+     * The reference instance of <code>public.magic_link_token</code>
      */
     public static final MagicLinkTokenTable MAGIC_LINK_TOKEN = new MagicLinkTokenTable();
 
@@ -58,22 +55,22 @@ public class MagicLinkTokenTable extends TableImpl<MagicLinkTokenRecord> {
     }
 
     /**
-     * The column <code>orgarif.magic_link_token.token</code>.
+     * The column <code>public.magic_link_token.token</code>.
      */
     public final TableField<MagicLinkTokenRecord, String> TOKEN = createField(DSL.name("token"), SQLDataType.VARCHAR(255).nullable(false), this, "");
 
     /**
-     * The column <code>orgarif.magic_link_token.user_id</code>.
+     * The column <code>public.magic_link_token.user_id</code>.
      */
-    public final TableField<MagicLinkTokenRecord, UUID> USER_ID = createField(DSL.name("user_id"), SQLDataType.CHAR(32).nullable(false), this, "", new CharToUUIDConverter());
+    public final TableField<MagicLinkTokenRecord, UUID> USER_ID = createField(DSL.name("user_id"), SQLDataType.UUID.nullable(false), this, "");
 
     /**
-     * The column <code>orgarif.magic_link_token.creation_date</code>.
+     * The column <code>public.magic_link_token.creation_date</code>.
      */
-    public final TableField<MagicLinkTokenRecord, Instant> CREATION_DATE = createField(DSL.name("creation_date"), SQLDataType.LOCALDATETIME(0).nullable(false), this, "", new TimestampToInstantConverter());
+    public final TableField<MagicLinkTokenRecord, Instant> CREATION_DATE = createField(DSL.name("creation_date"), SQLDataType.TIMESTAMPWITHTIMEZONE(6).nullable(false), this, "", new TimestampWithTimeZoneToInstantConverter());
 
     /**
-     * The column <code>orgarif.magic_link_token.validity</code>.
+     * The column <code>public.magic_link_token.validity</code>.
      */
     public final TableField<MagicLinkTokenRecord, Boolean> VALIDITY = createField(DSL.name("validity"), SQLDataType.BOOLEAN.nullable(false), this, "");
 
@@ -86,21 +83,21 @@ public class MagicLinkTokenTable extends TableImpl<MagicLinkTokenRecord> {
     }
 
     /**
-     * Create an aliased <code>orgarif.magic_link_token</code> table reference
+     * Create an aliased <code>public.magic_link_token</code> table reference
      */
     public MagicLinkTokenTable(String alias) {
         this(DSL.name(alias), MAGIC_LINK_TOKEN);
     }
 
     /**
-     * Create an aliased <code>orgarif.magic_link_token</code> table reference
+     * Create an aliased <code>public.magic_link_token</code> table reference
      */
     public MagicLinkTokenTable(Name alias) {
         this(alias, MAGIC_LINK_TOKEN);
     }
 
     /**
-     * Create a <code>orgarif.magic_link_token</code> table reference
+     * Create a <code>public.magic_link_token</code> table reference
      */
     public MagicLinkTokenTable() {
         this(DSL.name("magic_link_token"), null);
@@ -113,35 +110,29 @@ public class MagicLinkTokenTable extends TableImpl<MagicLinkTokenRecord> {
     @Override
     @Nonnull
     public Schema getSchema() {
-        return OrgarifTable.ORGARIF;
-    }
-
-    @Override
-    @Nonnull
-    public List<Index> getIndexes() {
-        return Arrays.<Index>asList(Indexes.MAGIC_LINK_TOKEN_USER_ID);
+        return PublicTable.PUBLIC;
     }
 
     @Override
     @Nonnull
     public UniqueKey<MagicLinkTokenRecord> getPrimaryKey() {
-        return Keys.KEY_MAGIC_LINK_TOKEN_PRIMARY;
+        return Keys.MAGIC_LINK_TOKEN_PKEY;
     }
 
     @Override
     @Nonnull
     public List<UniqueKey<MagicLinkTokenRecord>> getKeys() {
-        return Arrays.<UniqueKey<MagicLinkTokenRecord>>asList(Keys.KEY_MAGIC_LINK_TOKEN_PRIMARY);
+        return Arrays.<UniqueKey<MagicLinkTokenRecord>>asList(Keys.MAGIC_LINK_TOKEN_PKEY);
     }
 
     @Override
     @Nonnull
     public List<ForeignKey<MagicLinkTokenRecord, ?>> getReferences() {
-        return Arrays.<ForeignKey<MagicLinkTokenRecord, ?>>asList(Keys.MAGIC_LINK_TOKEN_IBFK_1);
+        return Arrays.<ForeignKey<MagicLinkTokenRecord, ?>>asList(Keys.MAGIC_LINK_TOKEN__MAGIC_LINK_TOKEN_USER_ID_FKEY);
     }
 
     public AppUserTable appUser() {
-        return new AppUserTable(this, Keys.MAGIC_LINK_TOKEN_IBFK_1);
+        return new AppUserTable(this, Keys.MAGIC_LINK_TOKEN__MAGIC_LINK_TOKEN_USER_ID_FKEY);
     }
 
     @Override

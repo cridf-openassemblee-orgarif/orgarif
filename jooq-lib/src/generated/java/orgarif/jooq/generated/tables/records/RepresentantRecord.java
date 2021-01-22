@@ -28,14 +28,14 @@ public class RepresentantRecord extends UpdatableRecordImpl<RepresentantRecord> 
     private static final long serialVersionUID = 1L;
 
     /**
-     * Setter for <code>orgarif.representant.id</code>.
+     * Setter for <code>public.representant.id</code>.
      */
     public void setId(@Nonnull UUID value) {
         set(0, value);
     }
 
     /**
-     * Getter for <code>orgarif.representant.id</code>.
+     * Getter for <code>public.representant.id</code>.
      */
     @Nonnull
     public UUID getId() {
@@ -43,14 +43,14 @@ public class RepresentantRecord extends UpdatableRecordImpl<RepresentantRecord> 
     }
 
     /**
-     * Setter for <code>orgarif.representant.elu_id</code>.
+     * Setter for <code>public.representant.elu_id</code>.
      */
     public void setEluId(@Nonnull UUID value) {
         set(1, value);
     }
 
     /**
-     * Getter for <code>orgarif.representant.elu_id</code>.
+     * Getter for <code>public.representant.elu_id</code>.
      */
     @Nonnull
     public UUID getEluId() {
@@ -58,14 +58,14 @@ public class RepresentantRecord extends UpdatableRecordImpl<RepresentantRecord> 
     }
 
     /**
-     * Setter for <code>orgarif.representant.organisme_id</code>.
+     * Setter for <code>public.representant.organisme_id</code>.
      */
     public void setOrganismeId(@Nonnull UUID value) {
         set(2, value);
     }
 
     /**
-     * Getter for <code>orgarif.representant.organisme_id</code>.
+     * Getter for <code>public.representant.organisme_id</code>.
      */
     @Nonnull
     public UUID getOrganismeId() {
@@ -73,14 +73,14 @@ public class RepresentantRecord extends UpdatableRecordImpl<RepresentantRecord> 
     }
 
     /**
-     * Setter for <code>orgarif.representant.instance_id</code>.
+     * Setter for <code>public.representant.instance_id</code>.
      */
     public void setInstanceId(@Nullable UUID value) {
         set(3, value);
     }
 
     /**
-     * Getter for <code>orgarif.representant.instance_id</code>.
+     * Getter for <code>public.representant.instance_id</code>.
      */
     @Nullable
     public UUID getInstanceId() {
@@ -88,14 +88,14 @@ public class RepresentantRecord extends UpdatableRecordImpl<RepresentantRecord> 
     }
 
     /**
-     * Setter for <code>orgarif.representant.position</code>.
+     * Setter for <code>public.representant.position</code>.
      */
     public void setPosition(@Nonnull Integer value) {
         set(4, value);
     }
 
     /**
-     * Getter for <code>orgarif.representant.position</code>.
+     * Getter for <code>public.representant.position</code>.
      */
     @Nonnull
     public Integer getPosition() {
@@ -103,14 +103,14 @@ public class RepresentantRecord extends UpdatableRecordImpl<RepresentantRecord> 
     }
 
     /**
-     * Setter for <code>orgarif.representant.representant_or_suppleant</code>.
+     * Setter for <code>public.representant.representant_or_suppleant</code>.
      */
     public void setRepresentantOrSuppleant(@Nonnull String value) {
         set(5, value);
     }
 
     /**
-     * Getter for <code>orgarif.representant.representant_or_suppleant</code>.
+     * Getter for <code>public.representant.representant_or_suppleant</code>.
      */
     @Nonnull
     public String getRepresentantOrSuppleant() {
@@ -118,14 +118,14 @@ public class RepresentantRecord extends UpdatableRecordImpl<RepresentantRecord> 
     }
 
     /**
-     * Setter for <code>orgarif.representant.creation_date</code>.
+     * Setter for <code>public.representant.creation_date</code>.
      */
     public void setCreationDate(@Nonnull Instant value) {
         set(6, value);
     }
 
     /**
-     * Getter for <code>orgarif.representant.creation_date</code>.
+     * Getter for <code>public.representant.creation_date</code>.
      */
     @Nonnull
     public Instant getCreationDate() {
@@ -133,14 +133,14 @@ public class RepresentantRecord extends UpdatableRecordImpl<RepresentantRecord> 
     }
 
     /**
-     * Setter for <code>orgarif.representant.last_modification_date</code>.
+     * Setter for <code>public.representant.last_modification_date</code>.
      */
     public void setLastModificationDate(@Nonnull Instant value) {
         set(7, value);
     }
 
     /**
-     * Getter for <code>orgarif.representant.last_modification_date</code>.
+     * Getter for <code>public.representant.last_modification_date</code>.
      */
     @Nonnull
     public Instant getLastModificationDate() {

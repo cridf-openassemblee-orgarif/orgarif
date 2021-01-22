@@ -11,7 +11,6 @@ import java.util.UUID;
 
 import javax.annotation.Nonnull;
 
-import jooqutils.jooq.CharToUUIDConverter;
 import jooqutils.jooq.TimestampToInstantConverter;
 
 import org.jooq.Field;
@@ -31,7 +30,7 @@ import org.jooq.impl.TableImpl;
 
 import orgarif.jooq.generated.Indexes;
 import orgarif.jooq.generated.Keys;
-import orgarif.jooq.generated.OrgarifTable;
+import orgarif.jooq.generated.PublicTable;
 import orgarif.jooq.generated.tables.records.LienDeliberationRecord;
 
 
@@ -44,7 +43,7 @@ public class LienDeliberationTable extends TableImpl<LienDeliberationRecord> {
     private static final long serialVersionUID = 1L;
 
     /**
-     * The reference instance of <code>orgarif.lien_deliberation</code>
+     * The reference instance of <code>public.lien_deliberation</code>
      */
     public static final LienDeliberationTable LIEN_DELIBERATION = new LienDeliberationTable();
 
@@ -58,34 +57,34 @@ public class LienDeliberationTable extends TableImpl<LienDeliberationRecord> {
     }
 
     /**
-     * The column <code>orgarif.lien_deliberation.id</code>.
+     * The column <code>public.lien_deliberation.id</code>.
      */
-    public final TableField<LienDeliberationRecord, UUID> ID = createField(DSL.name("id"), SQLDataType.CHAR(32).nullable(false), this, "", new CharToUUIDConverter());
+    public final TableField<LienDeliberationRecord, UUID> ID = createField(DSL.name("id"), SQLDataType.UUID.nullable(false), this, "");
 
     /**
-     * The column <code>orgarif.lien_deliberation.deliberation_id</code>.
+     * The column <code>public.lien_deliberation.deliberation_id</code>.
      */
-    public final TableField<LienDeliberationRecord, UUID> DELIBERATION_ID = createField(DSL.name("deliberation_id"), SQLDataType.CHAR(32).nullable(false), this, "", new CharToUUIDConverter());
+    public final TableField<LienDeliberationRecord, UUID> DELIBERATION_ID = createField(DSL.name("deliberation_id"), SQLDataType.UUID.nullable(false), this, "");
 
     /**
-     * The column <code>orgarif.lien_deliberation.organisme_id</code>.
+     * The column <code>public.lien_deliberation.organisme_id</code>.
      */
-    public final TableField<LienDeliberationRecord, UUID> ORGANISME_ID = createField(DSL.name("organisme_id"), SQLDataType.CHAR(32).nullable(false), this, "", new CharToUUIDConverter());
+    public final TableField<LienDeliberationRecord, UUID> ORGANISME_ID = createField(DSL.name("organisme_id"), SQLDataType.UUID.nullable(false), this, "");
 
     /**
-     * The column <code>orgarif.lien_deliberation.instance_id</code>.
+     * The column <code>public.lien_deliberation.instance_id</code>.
      */
-    public final TableField<LienDeliberationRecord, UUID> INSTANCE_ID = createField(DSL.name("instance_id"), SQLDataType.CHAR(32), this, "", new CharToUUIDConverter());
+    public final TableField<LienDeliberationRecord, UUID> INSTANCE_ID = createField(DSL.name("instance_id"), SQLDataType.UUID, this, "");
 
     /**
-     * The column <code>orgarif.lien_deliberation.creation_date</code>.
+     * The column <code>public.lien_deliberation.creation_date</code>.
      */
-    public final TableField<LienDeliberationRecord, Instant> CREATION_DATE = createField(DSL.name("creation_date"), SQLDataType.LOCALDATETIME(0).nullable(false), this, "", new TimestampToInstantConverter());
+    public final TableField<LienDeliberationRecord, Instant> CREATION_DATE = createField(DSL.name("creation_date"), SQLDataType.LOCALDATETIME(6).nullable(false), this, "", new TimestampToInstantConverter());
 
     /**
-     * The column <code>orgarif.lien_deliberation.last_modification_date</code>.
+     * The column <code>public.lien_deliberation.last_modification_date</code>.
      */
-    public final TableField<LienDeliberationRecord, Instant> LAST_MODIFICATION_DATE = createField(DSL.name("last_modification_date"), SQLDataType.LOCALDATETIME(0).nullable(false), this, "", new TimestampToInstantConverter());
+    public final TableField<LienDeliberationRecord, Instant> LAST_MODIFICATION_DATE = createField(DSL.name("last_modification_date"), SQLDataType.LOCALDATETIME(6).nullable(false), this, "", new TimestampToInstantConverter());
 
     private LienDeliberationTable(Name alias, Table<LienDeliberationRecord> aliased) {
         this(alias, aliased, null);
@@ -96,21 +95,21 @@ public class LienDeliberationTable extends TableImpl<LienDeliberationRecord> {
     }
 
     /**
-     * Create an aliased <code>orgarif.lien_deliberation</code> table reference
+     * Create an aliased <code>public.lien_deliberation</code> table reference
      */
     public LienDeliberationTable(String alias) {
         this(DSL.name(alias), LIEN_DELIBERATION);
     }
 
     /**
-     * Create an aliased <code>orgarif.lien_deliberation</code> table reference
+     * Create an aliased <code>public.lien_deliberation</code> table reference
      */
     public LienDeliberationTable(Name alias) {
         this(alias, LIEN_DELIBERATION);
     }
 
     /**
-     * Create a <code>orgarif.lien_deliberation</code> table reference
+     * Create a <code>public.lien_deliberation</code> table reference
      */
     public LienDeliberationTable() {
         this(DSL.name("lien_deliberation"), null);
@@ -123,43 +122,43 @@ public class LienDeliberationTable extends TableImpl<LienDeliberationRecord> {
     @Override
     @Nonnull
     public Schema getSchema() {
-        return OrgarifTable.ORGARIF;
+        return PublicTable.PUBLIC;
     }
 
     @Override
     @Nonnull
     public List<Index> getIndexes() {
-        return Arrays.<Index>asList(Indexes.LIEN_DELIBERATION_DELIBERATION_ID, Indexes.LIEN_DELIBERATION_INSTANCE_ID, Indexes.LIEN_DELIBERATION_LIEN_DELIBERATION_ORGANISME_ID_IDX);
+        return Arrays.<Index>asList(Indexes.LIEN_DELIBERATION_ORGANISME_ID_IDX);
     }
 
     @Override
     @Nonnull
     public UniqueKey<LienDeliberationRecord> getPrimaryKey() {
-        return Keys.KEY_LIEN_DELIBERATION_PRIMARY;
+        return Keys.LIEN_DELIBERATION_PKEY;
     }
 
     @Override
     @Nonnull
     public List<UniqueKey<LienDeliberationRecord>> getKeys() {
-        return Arrays.<UniqueKey<LienDeliberationRecord>>asList(Keys.KEY_LIEN_DELIBERATION_PRIMARY);
+        return Arrays.<UniqueKey<LienDeliberationRecord>>asList(Keys.LIEN_DELIBERATION_PKEY);
     }
 
     @Override
     @Nonnull
     public List<ForeignKey<LienDeliberationRecord, ?>> getReferences() {
-        return Arrays.<ForeignKey<LienDeliberationRecord, ?>>asList(Keys.LIEN_DELIBERATION_IBFK_1, Keys.LIEN_DELIBERATION_IBFK_2, Keys.LIEN_DELIBERATION_IBFK_3);
+        return Arrays.<ForeignKey<LienDeliberationRecord, ?>>asList(Keys.LIEN_DELIBERATION__LIEN_DELIBERATION_DELIBERATION_ID_FKEY, Keys.LIEN_DELIBERATION__LIEN_DELIBERATION_ORGANISME_ID_FKEY, Keys.LIEN_DELIBERATION__LIEN_DELIBERATION_INSTANCE_ID_FKEY);
     }
 
     public DeliberationTable deliberation() {
-        return new DeliberationTable(this, Keys.LIEN_DELIBERATION_IBFK_1);
+        return new DeliberationTable(this, Keys.LIEN_DELIBERATION__LIEN_DELIBERATION_DELIBERATION_ID_FKEY);
     }
 
     public OrganismeTable organisme() {
-        return new OrganismeTable(this, Keys.LIEN_DELIBERATION_IBFK_2);
+        return new OrganismeTable(this, Keys.LIEN_DELIBERATION__LIEN_DELIBERATION_ORGANISME_ID_FKEY);
     }
 
     public InstanceTable instance() {
-        return new InstanceTable(this, Keys.LIEN_DELIBERATION_IBFK_3);
+        return new InstanceTable(this, Keys.LIEN_DELIBERATION__LIEN_DELIBERATION_INSTANCE_ID_FKEY);
     }
 
     @Override

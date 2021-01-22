@@ -28,14 +28,14 @@ public class DeliberationRecord extends UpdatableRecordImpl<DeliberationRecord> 
     private static final long serialVersionUID = 1L;
 
     /**
-     * Setter for <code>orgarif.deliberation.id</code>.
+     * Setter for <code>public.deliberation.id</code>.
      */
     public void setId(@Nonnull UUID value) {
         set(0, value);
     }
 
     /**
-     * Getter for <code>orgarif.deliberation.id</code>.
+     * Getter for <code>public.deliberation.id</code>.
      */
     @Nonnull
     public UUID getId() {
@@ -43,14 +43,14 @@ public class DeliberationRecord extends UpdatableRecordImpl<DeliberationRecord> 
     }
 
     /**
-     * Setter for <code>orgarif.deliberation.libelle</code>.
+     * Setter for <code>public.deliberation.libelle</code>.
      */
     public void setLibelle(@Nonnull String value) {
         set(1, value);
     }
 
     /**
-     * Getter for <code>orgarif.deliberation.libelle</code>.
+     * Getter for <code>public.deliberation.libelle</code>.
      */
     @Nonnull
     public String getLibelle() {
@@ -58,14 +58,14 @@ public class DeliberationRecord extends UpdatableRecordImpl<DeliberationRecord> 
     }
 
     /**
-     * Setter for <code>orgarif.deliberation.deliberation_date</code>.
+     * Setter for <code>public.deliberation.deliberation_date</code>.
      */
     public void setDeliberationDate(@Nonnull LocalDate value) {
         set(2, value);
     }
 
     /**
-     * Getter for <code>orgarif.deliberation.deliberation_date</code>.
+     * Getter for <code>public.deliberation.deliberation_date</code>.
      */
     @Nonnull
     public LocalDate getDeliberationDate() {
@@ -73,14 +73,14 @@ public class DeliberationRecord extends UpdatableRecordImpl<DeliberationRecord> 
     }
 
     /**
-     * Setter for <code>orgarif.deliberation.creation_date</code>.
+     * Setter for <code>public.deliberation.creation_date</code>.
      */
     public void setCreationDate(@Nonnull Instant value) {
         set(3, value);
     }
 
     /**
-     * Getter for <code>orgarif.deliberation.creation_date</code>.
+     * Getter for <code>public.deliberation.creation_date</code>.
      */
     @Nonnull
     public Instant getCreationDate() {
@@ -88,14 +88,14 @@ public class DeliberationRecord extends UpdatableRecordImpl<DeliberationRecord> 
     }
 
     /**
-     * Setter for <code>orgarif.deliberation.last_modification_date</code>.
+     * Setter for <code>public.deliberation.last_modification_date</code>.
      */
     public void setLastModificationDate(@Nonnull Instant value) {
         set(4, value);
     }
 
     /**
-     * Getter for <code>orgarif.deliberation.last_modification_date</code>.
+     * Getter for <code>public.deliberation.last_modification_date</code>.
      */
     @Nonnull
     public Instant getLastModificationDate() {

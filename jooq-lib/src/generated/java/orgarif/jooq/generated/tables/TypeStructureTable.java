@@ -10,8 +10,6 @@ import java.util.UUID;
 
 import javax.annotation.Nonnull;
 
-import jooqutils.jooq.CharToUUIDConverter;
-
 import org.jooq.Field;
 import org.jooq.ForeignKey;
 import org.jooq.Name;
@@ -27,7 +25,7 @@ import org.jooq.impl.SQLDataType;
 import org.jooq.impl.TableImpl;
 
 import orgarif.jooq.generated.Keys;
-import orgarif.jooq.generated.OrgarifTable;
+import orgarif.jooq.generated.PublicTable;
 import orgarif.jooq.generated.tables.records.TypeStructureRecord;
 
 
@@ -40,7 +38,7 @@ public class TypeStructureTable extends TableImpl<TypeStructureRecord> {
     private static final long serialVersionUID = 1L;
 
     /**
-     * The reference instance of <code>orgarif.type_structure</code>
+     * The reference instance of <code>public.type_structure</code>
      */
     public static final TypeStructureTable TYPE_STRUCTURE = new TypeStructureTable();
 
@@ -54,12 +52,12 @@ public class TypeStructureTable extends TableImpl<TypeStructureRecord> {
     }
 
     /**
-     * The column <code>orgarif.type_structure.id</code>.
+     * The column <code>public.type_structure.id</code>.
      */
-    public final TableField<TypeStructureRecord, UUID> ID = createField(DSL.name("id"), SQLDataType.CHAR(32).nullable(false), this, "", new CharToUUIDConverter());
+    public final TableField<TypeStructureRecord, UUID> ID = createField(DSL.name("id"), SQLDataType.UUID.nullable(false), this, "");
 
     /**
-     * The column <code>orgarif.type_structure.libelle</code>.
+     * The column <code>public.type_structure.libelle</code>.
      */
     public final TableField<TypeStructureRecord, String> LIBELLE = createField(DSL.name("libelle"), SQLDataType.VARCHAR(255).nullable(false), this, "");
 
@@ -72,21 +70,21 @@ public class TypeStructureTable extends TableImpl<TypeStructureRecord> {
     }
 
     /**
-     * Create an aliased <code>orgarif.type_structure</code> table reference
+     * Create an aliased <code>public.type_structure</code> table reference
      */
     public TypeStructureTable(String alias) {
         this(DSL.name(alias), TYPE_STRUCTURE);
     }
 
     /**
-     * Create an aliased <code>orgarif.type_structure</code> table reference
+     * Create an aliased <code>public.type_structure</code> table reference
      */
     public TypeStructureTable(Name alias) {
         this(alias, TYPE_STRUCTURE);
     }
 
     /**
-     * Create a <code>orgarif.type_structure</code> table reference
+     * Create a <code>public.type_structure</code> table reference
      */
     public TypeStructureTable() {
         this(DSL.name("type_structure"), null);
@@ -99,19 +97,19 @@ public class TypeStructureTable extends TableImpl<TypeStructureRecord> {
     @Override
     @Nonnull
     public Schema getSchema() {
-        return OrgarifTable.ORGARIF;
+        return PublicTable.PUBLIC;
     }
 
     @Override
     @Nonnull
     public UniqueKey<TypeStructureRecord> getPrimaryKey() {
-        return Keys.KEY_TYPE_STRUCTURE_PRIMARY;
+        return Keys.TYPE_STRUCTURE_PKEY;
     }
 
     @Override
     @Nonnull
     public List<UniqueKey<TypeStructureRecord>> getKeys() {
-        return Arrays.<UniqueKey<TypeStructureRecord>>asList(Keys.KEY_TYPE_STRUCTURE_PRIMARY);
+        return Arrays.<UniqueKey<TypeStructureRecord>>asList(Keys.TYPE_STRUCTURE_PKEY);
     }
 
     @Override

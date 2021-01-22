@@ -10,18 +10,14 @@ import org.jooq.impl.DSL;
 import org.jooq.impl.Internal;
 
 import orgarif.jooq.generated.tables.AppUserTable;
-import orgarif.jooq.generated.tables.CommandLogTable;
 import orgarif.jooq.generated.tables.InstanceTable;
 import orgarif.jooq.generated.tables.LienDeliberationTable;
-import orgarif.jooq.generated.tables.MagicLinkTokenTable;
 import orgarif.jooq.generated.tables.MailLogTable;
-import orgarif.jooq.generated.tables.OrganismeTable;
 import orgarif.jooq.generated.tables.RepresentantTable;
-import orgarif.jooq.generated.tables.UserSessionLogTable;
 
 
 /**
- * A class modelling indexes of tables in orgarif.
+ * A class modelling indexes of tables in public.
  */
 @SuppressWarnings({ "all", "unchecked", "rawtypes" })
 public class Indexes {
@@ -30,23 +26,11 @@ public class Indexes {
     // INDEX definitions
     // -------------------------------------------------------------------------
 
-    public static final Index APP_USER_APP_USER_MAIL_IDX = Internal.createIndex(DSL.name("app_user_mail_idx"), AppUserTable.APP_USER, new OrderField[] { AppUserTable.APP_USER.MAIL }, false);
-    public static final Index APP_USER_APP_USER_USERNAME_IDX = Internal.createIndex(DSL.name("app_user_username_idx"), AppUserTable.APP_USER, new OrderField[] { AppUserTable.APP_USER.USERNAME }, false);
-    public static final Index LIEN_DELIBERATION_DELIBERATION_ID = Internal.createIndex(DSL.name("deliberation_id"), LienDeliberationTable.LIEN_DELIBERATION, new OrderField[] { LienDeliberationTable.LIEN_DELIBERATION.DELIBERATION_ID }, false);
-    public static final Index COMMAND_LOG_DEPLOYMENT_LOG_ID = Internal.createIndex(DSL.name("deployment_log_id"), CommandLogTable.COMMAND_LOG, new OrderField[] { CommandLogTable.COMMAND_LOG.DEPLOYMENT_LOG_ID }, false);
-    public static final Index MAIL_LOG_DEPLOYMENT_LOG_ID = Internal.createIndex(DSL.name("deployment_log_id"), MailLogTable.MAIL_LOG, new OrderField[] { MailLogTable.MAIL_LOG.DEPLOYMENT_LOG_ID }, false);
-    public static final Index REPRESENTANT_ELU_ID = Internal.createIndex(DSL.name("elu_id"), RepresentantTable.REPRESENTANT, new OrderField[] { RepresentantTable.REPRESENTANT.ELU_ID }, false);
-    public static final Index LIEN_DELIBERATION_INSTANCE_ID = Internal.createIndex(DSL.name("instance_id"), LienDeliberationTable.LIEN_DELIBERATION, new OrderField[] { LienDeliberationTable.LIEN_DELIBERATION.INSTANCE_ID }, false);
-    public static final Index INSTANCE_INSTANCE_ORGANISME_ID_IDX = Internal.createIndex(DSL.name("instance_organisme_id_idx"), InstanceTable.INSTANCE, new OrderField[] { InstanceTable.INSTANCE.ORGANISME_ID }, false);
-    public static final Index LIEN_DELIBERATION_LIEN_DELIBERATION_ORGANISME_ID_IDX = Internal.createIndex(DSL.name("lien_deliberation_organisme_id_idx"), LienDeliberationTable.LIEN_DELIBERATION, new OrderField[] { LienDeliberationTable.LIEN_DELIBERATION.ORGANISME_ID }, false);
-    public static final Index MAIL_LOG_MAIL_LOG_USER_ID_IDX = Internal.createIndex(DSL.name("mail_log_user_id_idx"), MailLogTable.MAIL_LOG, new OrderField[] { MailLogTable.MAIL_LOG.USER_ID }, false);
-    public static final Index ORGANISME_NATURE_JURIDIQUE_ID = Internal.createIndex(DSL.name("nature_juridique_id"), OrganismeTable.ORGANISME, new OrderField[] { OrganismeTable.ORGANISME.NATURE_JURIDIQUE_ID }, false);
-    public static final Index REPRESENTANT_REPRESENTANT_INSTANCE_ID_IDX = Internal.createIndex(DSL.name("representant_instance_id_idx"), RepresentantTable.REPRESENTANT, new OrderField[] { RepresentantTable.REPRESENTANT.INSTANCE_ID }, false);
-    public static final Index REPRESENTANT_REPRESENTANT_ORGANISME_ID_IDX = Internal.createIndex(DSL.name("representant_organisme_id_idx"), RepresentantTable.REPRESENTANT, new OrderField[] { RepresentantTable.REPRESENTANT.ORGANISME_ID }, false);
-    public static final Index ORGANISME_SECTEUR_ID = Internal.createIndex(DSL.name("secteur_id"), OrganismeTable.ORGANISME, new OrderField[] { OrganismeTable.ORGANISME.SECTEUR_ID }, false);
-    public static final Index ORGANISME_TYPE_STRUCTURE_ID = Internal.createIndex(DSL.name("type_structure_id"), OrganismeTable.ORGANISME, new OrderField[] { OrganismeTable.ORGANISME.TYPE_STRUCTURE_ID }, false);
-    public static final Index COMMAND_LOG_USER_ID = Internal.createIndex(DSL.name("user_id"), CommandLogTable.COMMAND_LOG, new OrderField[] { CommandLogTable.COMMAND_LOG.USER_ID }, false);
-    public static final Index MAGIC_LINK_TOKEN_USER_ID = Internal.createIndex(DSL.name("user_id"), MagicLinkTokenTable.MAGIC_LINK_TOKEN, new OrderField[] { MagicLinkTokenTable.MAGIC_LINK_TOKEN.USER_ID }, false);
-    public static final Index USER_SESSION_LOG_USER_ID = Internal.createIndex(DSL.name("user_id"), UserSessionLogTable.USER_SESSION_LOG, new OrderField[] { UserSessionLogTable.USER_SESSION_LOG.USER_ID }, false);
-    public static final Index COMMAND_LOG_USER_SESSION_ID = Internal.createIndex(DSL.name("user_session_id"), CommandLogTable.COMMAND_LOG, new OrderField[] { CommandLogTable.COMMAND_LOG.USER_SESSION_ID }, false);
+    public static final Index APP_USER_MAIL_IDX = Internal.createIndex(DSL.name("app_user_mail_idx"), AppUserTable.APP_USER, new OrderField[] { AppUserTable.APP_USER.MAIL }, false);
+    public static final Index APP_USER_USERNAME_IDX = Internal.createIndex(DSL.name("app_user_username_idx"), AppUserTable.APP_USER, new OrderField[] { AppUserTable.APP_USER.USERNAME }, false);
+    public static final Index INSTANCE_ORGANISME_ID_IDX = Internal.createIndex(DSL.name("instance_organisme_id_idx"), InstanceTable.INSTANCE, new OrderField[] { InstanceTable.INSTANCE.ORGANISME_ID }, false);
+    public static final Index LIEN_DELIBERATION_ORGANISME_ID_IDX = Internal.createIndex(DSL.name("lien_deliberation_organisme_id_idx"), LienDeliberationTable.LIEN_DELIBERATION, new OrderField[] { LienDeliberationTable.LIEN_DELIBERATION.ORGANISME_ID }, false);
+    public static final Index MAIL_LOG_USER_ID_IDX = Internal.createIndex(DSL.name("mail_log_user_id_idx"), MailLogTable.MAIL_LOG, new OrderField[] { MailLogTable.MAIL_LOG.USER_ID }, false);
+    public static final Index REPRESENTANT_INSTANCE_ID_IDX = Internal.createIndex(DSL.name("representant_instance_id_idx"), RepresentantTable.REPRESENTANT, new OrderField[] { RepresentantTable.REPRESENTANT.INSTANCE_ID }, false);
+    public static final Index REPRESENTANT_ORGANISME_ID_IDX = Internal.createIndex(DSL.name("representant_organisme_id_idx"), RepresentantTable.REPRESENTANT, new OrderField[] { RepresentantTable.REPRESENTANT.ORGANISME_ID }, false);
 }

@@ -11,8 +11,7 @@ import java.util.UUID;
 
 import javax.annotation.Nonnull;
 
-import jooqutils.jooq.CharToUUIDConverter;
-import jooqutils.jooq.TimestampToInstantConverter;
+import jooqutils.jooq.TimestampWithTimeZoneToInstantConverter;
 
 import org.jooq.Field;
 import org.jooq.ForeignKey;
@@ -29,7 +28,7 @@ import org.jooq.impl.SQLDataType;
 import org.jooq.impl.TableImpl;
 
 import orgarif.jooq.generated.Keys;
-import orgarif.jooq.generated.OrgarifTable;
+import orgarif.jooq.generated.PublicTable;
 import orgarif.jooq.generated.tables.records.DeploymentLogRecord;
 
 
@@ -42,7 +41,7 @@ public class DeploymentLogTable extends TableImpl<DeploymentLogRecord> {
     private static final long serialVersionUID = 1L;
 
     /**
-     * The reference instance of <code>orgarif.deployment_log</code>
+     * The reference instance of <code>public.deployment_log</code>
      */
     public static final DeploymentLogTable DEPLOYMENT_LOG = new DeploymentLogTable();
 
@@ -56,29 +55,29 @@ public class DeploymentLogTable extends TableImpl<DeploymentLogRecord> {
     }
 
     /**
-     * The column <code>orgarif.deployment_log.id</code>.
+     * The column <code>public.deployment_log.id</code>.
      */
-    public final TableField<DeploymentLogRecord, UUID> ID = createField(DSL.name("id"), SQLDataType.CHAR(32).nullable(false), this, "", new CharToUUIDConverter());
+    public final TableField<DeploymentLogRecord, UUID> ID = createField(DSL.name("id"), SQLDataType.UUID.nullable(false), this, "");
 
     /**
-     * The column <code>orgarif.deployment_log.build_version</code>.
+     * The column <code>public.deployment_log.build_version</code>.
      */
     public final TableField<DeploymentLogRecord, String> BUILD_VERSION = createField(DSL.name("build_version"), SQLDataType.VARCHAR(255).nullable(false), this, "");
 
     /**
-     * The column <code>orgarif.deployment_log.system_zone_id</code>.
+     * The column <code>public.deployment_log.system_zone_id</code>.
      */
     public final TableField<DeploymentLogRecord, String> SYSTEM_ZONE_ID = createField(DSL.name("system_zone_id"), SQLDataType.VARCHAR(255).nullable(false), this, "");
 
     /**
-     * The column <code>orgarif.deployment_log.startup_date</code>.
+     * The column <code>public.deployment_log.startup_date</code>.
      */
-    public final TableField<DeploymentLogRecord, Instant> STARTUP_DATE = createField(DSL.name("startup_date"), SQLDataType.LOCALDATETIME(0).nullable(false), this, "", new TimestampToInstantConverter());
+    public final TableField<DeploymentLogRecord, Instant> STARTUP_DATE = createField(DSL.name("startup_date"), SQLDataType.TIMESTAMPWITHTIMEZONE(6).nullable(false), this, "", new TimestampWithTimeZoneToInstantConverter());
 
     /**
-     * The column <code>orgarif.deployment_log.shutdown_date</code>.
+     * The column <code>public.deployment_log.shutdown_date</code>.
      */
-    public final TableField<DeploymentLogRecord, Instant> SHUTDOWN_DATE = createField(DSL.name("shutdown_date"), SQLDataType.LOCALDATETIME(0), this, "", new TimestampToInstantConverter());
+    public final TableField<DeploymentLogRecord, Instant> SHUTDOWN_DATE = createField(DSL.name("shutdown_date"), SQLDataType.TIMESTAMPWITHTIMEZONE(6), this, "", new TimestampWithTimeZoneToInstantConverter());
 
     private DeploymentLogTable(Name alias, Table<DeploymentLogRecord> aliased) {
         this(alias, aliased, null);
@@ -89,21 +88,21 @@ public class DeploymentLogTable extends TableImpl<DeploymentLogRecord> {
     }
 
     /**
-     * Create an aliased <code>orgarif.deployment_log</code> table reference
+     * Create an aliased <code>public.deployment_log</code> table reference
      */
     public DeploymentLogTable(String alias) {
         this(DSL.name(alias), DEPLOYMENT_LOG);
     }
 
     /**
-     * Create an aliased <code>orgarif.deployment_log</code> table reference
+     * Create an aliased <code>public.deployment_log</code> table reference
      */
     public DeploymentLogTable(Name alias) {
         this(alias, DEPLOYMENT_LOG);
     }
 
     /**
-     * Create a <code>orgarif.deployment_log</code> table reference
+     * Create a <code>public.deployment_log</code> table reference
      */
     public DeploymentLogTable() {
         this(DSL.name("deployment_log"), null);
@@ -116,19 +115,19 @@ public class DeploymentLogTable extends TableImpl<DeploymentLogRecord> {
     @Override
     @Nonnull
     public Schema getSchema() {
-        return OrgarifTable.ORGARIF;
+        return PublicTable.PUBLIC;
     }
 
     @Override
     @Nonnull
     public UniqueKey<DeploymentLogRecord> getPrimaryKey() {
-        return Keys.KEY_DEPLOYMENT_LOG_PRIMARY;
+        return Keys.DEPLOYMENT_LOG_PKEY;
     }
 
     @Override
     @Nonnull
     public List<UniqueKey<DeploymentLogRecord>> getKeys() {
-        return Arrays.<UniqueKey<DeploymentLogRecord>>asList(Keys.KEY_DEPLOYMENT_LOG_PRIMARY);
+        return Arrays.<UniqueKey<DeploymentLogRecord>>asList(Keys.DEPLOYMENT_LOG_PKEY);
     }
 
     @Override

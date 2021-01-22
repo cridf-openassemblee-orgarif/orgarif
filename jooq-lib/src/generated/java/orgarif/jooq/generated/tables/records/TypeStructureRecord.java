@@ -26,14 +26,14 @@ public class TypeStructureRecord extends UpdatableRecordImpl<TypeStructureRecord
     private static final long serialVersionUID = 1L;
 
     /**
-     * Setter for <code>orgarif.type_structure.id</code>.
+     * Setter for <code>public.type_structure.id</code>.
      */
     public void setId(@Nonnull UUID value) {
         set(0, value);
     }
 
     /**
-     * Getter for <code>orgarif.type_structure.id</code>.
+     * Getter for <code>public.type_structure.id</code>.
      */
     @Nonnull
     public UUID getId() {
@@ -41,14 +41,14 @@ public class TypeStructureRecord extends UpdatableRecordImpl<TypeStructureRecord
     }
 
     /**
-     * Setter for <code>orgarif.type_structure.libelle</code>.
+     * Setter for <code>public.type_structure.libelle</code>.
      */
     public void setLibelle(@Nonnull String value) {
         set(1, value);
     }
 
     /**
-     * Getter for <code>orgarif.type_structure.libelle</code>.
+     * Getter for <code>public.type_structure.libelle</code>.
      */
     @Nonnull
     public String getLibelle() {

@@ -27,14 +27,14 @@ public class UserSessionLogRecord extends UpdatableRecordImpl<UserSessionLogReco
     private static final long serialVersionUID = 1L;
 
     /**
-     * Setter for <code>orgarif.user_session_log.id</code>.
+     * Setter for <code>public.user_session_log.id</code>.
      */
     public void setId(@Nonnull UUID value) {
         set(0, value);
     }
 
     /**
-     * Getter for <code>orgarif.user_session_log.id</code>.
+     * Getter for <code>public.user_session_log.id</code>.
      */
     @Nonnull
     public UUID getId() {
@@ -42,14 +42,14 @@ public class UserSessionLogRecord extends UpdatableRecordImpl<UserSessionLogReco
     }
 
     /**
-     * Setter for <code>orgarif.user_session_log.spring_session_id</code>.
+     * Setter for <code>public.user_session_log.spring_session_id</code>.
      */
     public void setSpringSessionId(@Nonnull String value) {
         set(1, value);
     }
 
     /**
-     * Getter for <code>orgarif.user_session_log.spring_session_id</code>.
+     * Getter for <code>public.user_session_log.spring_session_id</code>.
      */
     @Nonnull
     public String getSpringSessionId() {
@@ -57,14 +57,14 @@ public class UserSessionLogRecord extends UpdatableRecordImpl<UserSessionLogReco
     }
 
     /**
-     * Setter for <code>orgarif.user_session_log.user_id</code>.
+     * Setter for <code>public.user_session_log.user_id</code>.
      */
     public void setUserId(@Nonnull UUID value) {
         set(2, value);
     }
 
     /**
-     * Getter for <code>orgarif.user_session_log.user_id</code>.
+     * Getter for <code>public.user_session_log.user_id</code>.
      */
     @Nonnull
     public UUID getUserId() {
@@ -72,14 +72,14 @@ public class UserSessionLogRecord extends UpdatableRecordImpl<UserSessionLogReco
     }
 
     /**
-     * Setter for <code>orgarif.user_session_log.deployment_log_id</code>.
+     * Setter for <code>public.user_session_log.deployment_log_id</code>.
      */
     public void setDeploymentLogId(@Nonnull UUID value) {
         set(3, value);
     }
 
     /**
-     * Getter for <code>orgarif.user_session_log.deployment_log_id</code>.
+     * Getter for <code>public.user_session_log.deployment_log_id</code>.
      */
     @Nonnull
     public UUID getDeploymentLogId() {
@@ -87,14 +87,14 @@ public class UserSessionLogRecord extends UpdatableRecordImpl<UserSessionLogReco
     }
 
     /**
-     * Setter for <code>orgarif.user_session_log.date</code>.
+     * Setter for <code>public.user_session_log.date</code>.
      */
     public void setDate(@Nonnull Instant value) {
         set(4, value);
     }
 
     /**
-     * Getter for <code>orgarif.user_session_log.date</code>.
+     * Getter for <code>public.user_session_log.date</code>.
      */
     @Nonnull
     public Instant getDate() {
@@ -102,14 +102,14 @@ public class UserSessionLogRecord extends UpdatableRecordImpl<UserSessionLogReco
     }
 
     /**
-     * Setter for <code>orgarif.user_session_log.ip</code>.
+     * Setter for <code>public.user_session_log.ip</code>.
      */
     public void setIp(@Nonnull String value) {
         set(5, value);
     }
 
     /**
-     * Getter for <code>orgarif.user_session_log.ip</code>.
+     * Getter for <code>public.user_session_log.ip</code>.
      */
     @Nonnull
     public String getIp() {

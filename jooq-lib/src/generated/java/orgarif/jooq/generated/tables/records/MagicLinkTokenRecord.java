@@ -27,14 +27,14 @@ public class MagicLinkTokenRecord extends UpdatableRecordImpl<MagicLinkTokenReco
     private static final long serialVersionUID = 1L;
 
     /**
-     * Setter for <code>orgarif.magic_link_token.token</code>.
+     * Setter for <code>public.magic_link_token.token</code>.
      */
     public void setToken(@Nonnull String value) {
         set(0, value);
     }
 
     /**
-     * Getter for <code>orgarif.magic_link_token.token</code>.
+     * Getter for <code>public.magic_link_token.token</code>.
      */
     @Nonnull
     public String getToken() {
@@ -42,14 +42,14 @@ public class MagicLinkTokenRecord extends UpdatableRecordImpl<MagicLinkTokenReco
     }
 
     /**
-     * Setter for <code>orgarif.magic_link_token.user_id</code>.
+     * Setter for <code>public.magic_link_token.user_id</code>.
      */
     public void setUserId(@Nonnull UUID value) {
         set(1, value);
     }
 
     /**
-     * Getter for <code>orgarif.magic_link_token.user_id</code>.
+     * Getter for <code>public.magic_link_token.user_id</code>.
      */
     @Nonnull
     public UUID getUserId() {
@@ -57,14 +57,14 @@ public class MagicLinkTokenRecord extends UpdatableRecordImpl<MagicLinkTokenReco
     }
 
     /**
-     * Setter for <code>orgarif.magic_link_token.creation_date</code>.
+     * Setter for <code>public.magic_link_token.creation_date</code>.
      */
     public void setCreationDate(@Nonnull Instant value) {
         set(2, value);
     }
 
     /**
-     * Getter for <code>orgarif.magic_link_token.creation_date</code>.
+     * Getter for <code>public.magic_link_token.creation_date</code>.
      */
     @Nonnull
     public Instant getCreationDate() {
@@ -72,14 +72,14 @@ public class MagicLinkTokenRecord extends UpdatableRecordImpl<MagicLinkTokenReco
     }
 
     /**
-     * Setter for <code>orgarif.magic_link_token.validity</code>.
+     * Setter for <code>public.magic_link_token.validity</code>.
      */
     public void setValidity(@Nonnull Boolean value) {
         set(3, value);
     }
 
     /**
-     * Getter for <code>orgarif.magic_link_token.validity</code>.
+     * Getter for <code>public.magic_link_token.validity</code>.
      */
     @Nonnull
     public Boolean getValidity() {

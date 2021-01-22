@@ -27,9 +27,9 @@ public class DefaultCatalog extends CatalogImpl {
     public static final DefaultCatalog DEFAULT_CATALOG = new DefaultCatalog();
 
     /**
-     * The schema <code>orgarif</code>.
+     * The schema <code>public</code>.
      */
-    public final OrgarifTable ORGARIF = OrgarifTable.ORGARIF;
+    public final PublicTable PUBLIC = PublicTable.PUBLIC;
 
     /**
      * No further instances allowed
@@ -42,6 +42,6 @@ public class DefaultCatalog extends CatalogImpl {
     @Nonnull
     public final List<Schema> getSchemas() {
         return Arrays.<Schema>asList(
-            OrgarifTable.ORGARIF);
+            PublicTable.PUBLIC);
     }
 }

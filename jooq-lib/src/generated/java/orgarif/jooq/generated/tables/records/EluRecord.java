@@ -27,14 +27,14 @@ public class EluRecord extends UpdatableRecordImpl<EluRecord> implements Record9
     private static final long serialVersionUID = 1L;
 
     /**
-     * Setter for <code>orgarif.elu.id</code>.
+     * Setter for <code>public.elu.id</code>.
      */
     public void setId(@Nonnull UUID value) {
         set(0, value);
     }
 
     /**
-     * Getter for <code>orgarif.elu.id</code>.
+     * Getter for <code>public.elu.id</code>.
      */
     @Nonnull
     public UUID getId() {
@@ -42,14 +42,14 @@ public class EluRecord extends UpdatableRecordImpl<EluRecord> implements Record9
     }
 
     /**
-     * Setter for <code>orgarif.elu.civilite</code>.
+     * Setter for <code>public.elu.civilite</code>.
      */
     public void setCivilite(@Nonnull String value) {
         set(1, value);
     }
 
     /**
-     * Getter for <code>orgarif.elu.civilite</code>.
+     * Getter for <code>public.elu.civilite</code>.
      */
     @Nonnull
     public String getCivilite() {
@@ -57,14 +57,14 @@ public class EluRecord extends UpdatableRecordImpl<EluRecord> implements Record9
     }
 
     /**
-     * Setter for <code>orgarif.elu.prenom</code>.
+     * Setter for <code>public.elu.prenom</code>.
      */
     public void setPrenom(@Nonnull String value) {
         set(2, value);
     }
 
     /**
-     * Getter for <code>orgarif.elu.prenom</code>.
+     * Getter for <code>public.elu.prenom</code>.
      */
     @Nonnull
     public String getPrenom() {
@@ -72,14 +72,14 @@ public class EluRecord extends UpdatableRecordImpl<EluRecord> implements Record9
     }
 
     /**
-     * Setter for <code>orgarif.elu.nom</code>.
+     * Setter for <code>public.elu.nom</code>.
      */
     public void setNom(@Nonnull String value) {
         set(3, value);
     }
 
     /**
-     * Getter for <code>orgarif.elu.nom</code>.
+     * Getter for <code>public.elu.nom</code>.
      */
     @Nonnull
     public String getNom() {
@@ -87,14 +87,14 @@ public class EluRecord extends UpdatableRecordImpl<EluRecord> implements Record9
     }
 
     /**
-     * Setter for <code>orgarif.elu.groupe_politique</code>.
+     * Setter for <code>public.elu.groupe_politique</code>.
      */
     public void setGroupePolitique(@Nonnull String value) {
         set(4, value);
     }
 
     /**
-     * Getter for <code>orgarif.elu.groupe_politique</code>.
+     * Getter for <code>public.elu.groupe_politique</code>.
      */
     @Nonnull
     public String getGroupePolitique() {
@@ -102,14 +102,14 @@ public class EluRecord extends UpdatableRecordImpl<EluRecord> implements Record9
     }
 
     /**
-     * Setter for <code>orgarif.elu.groupe_politique_court</code>.
+     * Setter for <code>public.elu.groupe_politique_court</code>.
      */
     public void setGroupePolitiqueCourt(@Nonnull String value) {
         set(5, value);
     }
 
     /**
-     * Getter for <code>orgarif.elu.groupe_politique_court</code>.
+     * Getter for <code>public.elu.groupe_politique_court</code>.
      */
     @Nonnull
     public String getGroupePolitiqueCourt() {
@@ -117,14 +117,14 @@ public class EluRecord extends UpdatableRecordImpl<EluRecord> implements Record9
     }
 
     /**
-     * Setter for <code>orgarif.elu.image_url</code>.
+     * Setter for <code>public.elu.image_url</code>.
      */
     public void setImageUrl(@Nonnull String value) {
         set(6, value);
     }
 
     /**
-     * Getter for <code>orgarif.elu.image_url</code>.
+     * Getter for <code>public.elu.image_url</code>.
      */
     @Nonnull
     public String getImageUrl() {
@@ -132,14 +132,14 @@ public class EluRecord extends UpdatableRecordImpl<EluRecord> implements Record9
     }
 
     /**
-     * Setter for <code>orgarif.elu.actif</code>.
+     * Setter for <code>public.elu.actif</code>.
      */
     public void setActif(@Nonnull Boolean value) {
         set(7, value);
     }
 
     /**
-     * Getter for <code>orgarif.elu.actif</code>.
+     * Getter for <code>public.elu.actif</code>.
      */
     @Nonnull
     public Boolean getActif() {
@@ -147,14 +147,14 @@ public class EluRecord extends UpdatableRecordImpl<EluRecord> implements Record9
     }
 
     /**
-     * Setter for <code>orgarif.elu.creation_date</code>.
+     * Setter for <code>public.elu.creation_date</code>.
      */
     public void setCreationDate(@Nonnull Instant value) {
         set(8, value);
     }
 
     /**
-     * Getter for <code>orgarif.elu.creation_date</code>.
+     * Getter for <code>public.elu.creation_date</code>.
      */
     @Nonnull
     public Instant getCreationDate() {

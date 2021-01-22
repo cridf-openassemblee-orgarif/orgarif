@@ -28,14 +28,14 @@ public class CommandLogRecord extends UpdatableRecordImpl<CommandLogRecord> impl
     private static final long serialVersionUID = 1L;
 
     /**
-     * Setter for <code>orgarif.command_log.id</code>.
+     * Setter for <code>public.command_log.id</code>.
      */
     public void setId(@Nonnull UUID value) {
         set(0, value);
     }
 
     /**
-     * Getter for <code>orgarif.command_log.id</code>.
+     * Getter for <code>public.command_log.id</code>.
      */
     @Nonnull
     public UUID getId() {
@@ -43,14 +43,14 @@ public class CommandLogRecord extends UpdatableRecordImpl<CommandLogRecord> impl
     }
 
     /**
-     * Setter for <code>orgarif.command_log.user_id</code>.
+     * Setter for <code>public.command_log.user_id</code>.
      */
     public void setUserId(@Nullable UUID value) {
         set(1, value);
     }
 
     /**
-     * Getter for <code>orgarif.command_log.user_id</code>.
+     * Getter for <code>public.command_log.user_id</code>.
      */
     @Nullable
     public UUID getUserId() {
@@ -58,14 +58,14 @@ public class CommandLogRecord extends UpdatableRecordImpl<CommandLogRecord> impl
     }
 
     /**
-     * Setter for <code>orgarif.command_log.deployment_log_id</code>.
+     * Setter for <code>public.command_log.deployment_log_id</code>.
      */
     public void setDeploymentLogId(@Nonnull UUID value) {
         set(2, value);
     }
 
     /**
-     * Getter for <code>orgarif.command_log.deployment_log_id</code>.
+     * Getter for <code>public.command_log.deployment_log_id</code>.
      */
     @Nonnull
     public UUID getDeploymentLogId() {
@@ -73,14 +73,14 @@ public class CommandLogRecord extends UpdatableRecordImpl<CommandLogRecord> impl
     }
 
     /**
-     * Setter for <code>orgarif.command_log.command_class</code>.
+     * Setter for <code>public.command_log.command_class</code>.
      */
     public void setCommandClass(@Nonnull String value) {
         set(3, value);
     }
 
     /**
-     * Getter for <code>orgarif.command_log.command_class</code>.
+     * Getter for <code>public.command_log.command_class</code>.
      */
     @Nonnull
     public String getCommandClass() {
@@ -88,14 +88,14 @@ public class CommandLogRecord extends UpdatableRecordImpl<CommandLogRecord> impl
     }
 
     /**
-     * Setter for <code>orgarif.command_log.json_command</code>.
+     * Setter for <code>public.command_log.json_command</code>.
      */
     public void setJsonCommand(@Nonnull String value) {
         set(4, value);
     }
 
     /**
-     * Getter for <code>orgarif.command_log.json_command</code>.
+     * Getter for <code>public.command_log.json_command</code>.
      */
     @Nonnull
     public String getJsonCommand() {
@@ -103,14 +103,14 @@ public class CommandLogRecord extends UpdatableRecordImpl<CommandLogRecord> impl
     }
 
     /**
-     * Setter for <code>orgarif.command_log.ip</code>.
+     * Setter for <code>public.command_log.ip</code>.
      */
     public void setIp(@Nonnull String value) {
         set(5, value);
     }
 
     /**
-     * Getter for <code>orgarif.command_log.ip</code>.
+     * Getter for <code>public.command_log.ip</code>.
      */
     @Nonnull
     public String getIp() {
@@ -118,14 +118,14 @@ public class CommandLogRecord extends UpdatableRecordImpl<CommandLogRecord> impl
     }
 
     /**
-     * Setter for <code>orgarif.command_log.user_session_id</code>.
+     * Setter for <code>public.command_log.user_session_id</code>.
      */
     public void setUserSessionId(@Nullable UUID value) {
         set(6, value);
     }
 
     /**
-     * Getter for <code>orgarif.command_log.user_session_id</code>.
+     * Getter for <code>public.command_log.user_session_id</code>.
      */
     @Nullable
     public UUID getUserSessionId() {
@@ -133,14 +133,14 @@ public class CommandLogRecord extends UpdatableRecordImpl<CommandLogRecord> impl
     }
 
     /**
-     * Setter for <code>orgarif.command_log.resulting_ids</code>.
+     * Setter for <code>public.command_log.resulting_ids</code>.
      */
     public void setResultingIds(@Nullable String value) {
         set(7, value);
     }
 
     /**
-     * Getter for <code>orgarif.command_log.resulting_ids</code>.
+     * Getter for <code>public.command_log.resulting_ids</code>.
      */
     @Nullable
     public String getResultingIds() {
@@ -148,14 +148,14 @@ public class CommandLogRecord extends UpdatableRecordImpl<CommandLogRecord> impl
     }
 
     /**
-     * Setter for <code>orgarif.command_log.json_result</code>.
+     * Setter for <code>public.command_log.json_result</code>.
      */
     public void setJsonResult(@Nullable String value) {
         set(8, value);
     }
 
     /**
-     * Getter for <code>orgarif.command_log.json_result</code>.
+     * Getter for <code>public.command_log.json_result</code>.
      */
     @Nullable
     public String getJsonResult() {
@@ -163,14 +163,14 @@ public class CommandLogRecord extends UpdatableRecordImpl<CommandLogRecord> impl
     }
 
     /**
-     * Setter for <code>orgarif.command_log.exception_stack_trace</code>.
+     * Setter for <code>public.command_log.exception_stack_trace</code>.
      */
     public void setExceptionStackTrace(@Nullable String value) {
         set(9, value);
     }
 
     /**
-     * Getter for <code>orgarif.command_log.exception_stack_trace</code>.
+     * Getter for <code>public.command_log.exception_stack_trace</code>.
      */
     @Nullable
     public String getExceptionStackTrace() {
@@ -178,14 +178,14 @@ public class CommandLogRecord extends UpdatableRecordImpl<CommandLogRecord> impl
     }
 
     /**
-     * Setter for <code>orgarif.command_log.start_date</code>.
+     * Setter for <code>public.command_log.start_date</code>.
      */
     public void setStartDate(@Nonnull Instant value) {
         set(10, value);
     }
 
     /**
-     * Getter for <code>orgarif.command_log.start_date</code>.
+     * Getter for <code>public.command_log.start_date</code>.
      */
     @Nonnull
     public Instant getStartDate() {
@@ -193,14 +193,14 @@ public class CommandLogRecord extends UpdatableRecordImpl<CommandLogRecord> impl
     }
 
     /**
-     * Setter for <code>orgarif.command_log.end_date</code>.
+     * Setter for <code>public.command_log.end_date</code>.
      */
     public void setEndDate(@Nullable Instant value) {
         set(11, value);
     }
 
     /**
-     * Getter for <code>orgarif.command_log.end_date</code>.
+     * Getter for <code>public.command_log.end_date</code>.
      */
     @Nullable
     public Instant getEndDate() {

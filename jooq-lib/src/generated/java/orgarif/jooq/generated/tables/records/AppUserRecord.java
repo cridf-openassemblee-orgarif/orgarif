@@ -28,14 +28,14 @@ public class AppUserRecord extends UpdatableRecordImpl<AppUserRecord> implements
     private static final long serialVersionUID = 1L;
 
     /**
-     * Setter for <code>orgarif.app_user.id</code>.
+     * Setter for <code>public.app_user.id</code>.
      */
     public void setId(@Nonnull UUID value) {
         set(0, value);
     }
 
     /**
-     * Getter for <code>orgarif.app_user.id</code>.
+     * Getter for <code>public.app_user.id</code>.
      */
     @Nonnull
     public UUID getId() {
@@ -43,14 +43,14 @@ public class AppUserRecord extends UpdatableRecordImpl<AppUserRecord> implements
     }
 
     /**
-     * Setter for <code>orgarif.app_user.mail</code>.
+     * Setter for <code>public.app_user.mail</code>.
      */
     public void setMail(@Nonnull String value) {
         set(1, value);
     }
 
     /**
-     * Getter for <code>orgarif.app_user.mail</code>.
+     * Getter for <code>public.app_user.mail</code>.
      */
     @Nonnull
     public String getMail() {
@@ -58,14 +58,14 @@ public class AppUserRecord extends UpdatableRecordImpl<AppUserRecord> implements
     }
 
     /**
-     * Setter for <code>orgarif.app_user.password</code>.
+     * Setter for <code>public.app_user.password</code>.
      */
     public void setPassword(@Nonnull String value) {
         set(2, value);
     }
 
     /**
-     * Getter for <code>orgarif.app_user.password</code>.
+     * Getter for <code>public.app_user.password</code>.
      */
     @Nonnull
     public String getPassword() {
@@ -73,14 +73,14 @@ public class AppUserRecord extends UpdatableRecordImpl<AppUserRecord> implements
     }
 
     /**
-     * Setter for <code>orgarif.app_user.username</code>.
+     * Setter for <code>public.app_user.username</code>.
      */
     public void setUsername(@Nullable String value) {
         set(3, value);
     }
 
     /**
-     * Getter for <code>orgarif.app_user.username</code>.
+     * Getter for <code>public.app_user.username</code>.
      */
     @Nullable
     public String getUsername() {
@@ -88,14 +88,14 @@ public class AppUserRecord extends UpdatableRecordImpl<AppUserRecord> implements
     }
 
     /**
-     * Setter for <code>orgarif.app_user.language</code>.
+     * Setter for <code>public.app_user.language</code>.
      */
     public void setLanguage(@Nonnull String value) {
         set(4, value);
     }
 
     /**
-     * Getter for <code>orgarif.app_user.language</code>.
+     * Getter for <code>public.app_user.language</code>.
      */
     @Nonnull
     public String getLanguage() {
@@ -103,14 +103,14 @@ public class AppUserRecord extends UpdatableRecordImpl<AppUserRecord> implements
     }
 
     /**
-     * Setter for <code>orgarif.app_user.admin</code>.
+     * Setter for <code>public.app_user.admin</code>.
      */
     public void setAdmin(@Nonnull Boolean value) {
         set(5, value);
     }
 
     /**
-     * Getter for <code>orgarif.app_user.admin</code>.
+     * Getter for <code>public.app_user.admin</code>.
      */
     @Nonnull
     public Boolean getAdmin() {
@@ -118,14 +118,14 @@ public class AppUserRecord extends UpdatableRecordImpl<AppUserRecord> implements
     }
 
     /**
-     * Setter for <code>orgarif.app_user.signup_date</code>.
+     * Setter for <code>public.app_user.signup_date</code>.
      */
     public void setSignupDate(@Nonnull Instant value) {
         set(6, value);
     }
 
     /**
-     * Getter for <code>orgarif.app_user.signup_date</code>.
+     * Getter for <code>public.app_user.signup_date</code>.
      */
     @Nonnull
     public Instant getSignupDate() {
@@ -133,14 +133,14 @@ public class AppUserRecord extends UpdatableRecordImpl<AppUserRecord> implements
     }
 
     /**
-     * Setter for <code>orgarif.app_user.dirty_mail</code>.
+     * Setter for <code>public.app_user.dirty_mail</code>.
      */
     public void setDirtyMail(@Nullable String value) {
         set(7, value);
     }
 
     /**
-     * Getter for <code>orgarif.app_user.dirty_mail</code>.
+     * Getter for <code>public.app_user.dirty_mail</code>.
      */
     @Nullable
     public String getDirtyMail() {

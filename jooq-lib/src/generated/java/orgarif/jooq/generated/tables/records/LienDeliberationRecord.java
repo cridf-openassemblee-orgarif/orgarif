@@ -28,14 +28,14 @@ public class LienDeliberationRecord extends UpdatableRecordImpl<LienDeliberation
     private static final long serialVersionUID = 1L;
 
     /**
-     * Setter for <code>orgarif.lien_deliberation.id</code>.
+     * Setter for <code>public.lien_deliberation.id</code>.
      */
     public void setId(@Nonnull UUID value) {
         set(0, value);
     }
 
     /**
-     * Getter for <code>orgarif.lien_deliberation.id</code>.
+     * Getter for <code>public.lien_deliberation.id</code>.
      */
     @Nonnull
     public UUID getId() {
@@ -43,14 +43,14 @@ public class LienDeliberationRecord extends UpdatableRecordImpl<LienDeliberation
     }
 
     /**
-     * Setter for <code>orgarif.lien_deliberation.deliberation_id</code>.
+     * Setter for <code>public.lien_deliberation.deliberation_id</code>.
      */
     public void setDeliberationId(@Nonnull UUID value) {
         set(1, value);
     }
 
     /**
-     * Getter for <code>orgarif.lien_deliberation.deliberation_id</code>.
+     * Getter for <code>public.lien_deliberation.deliberation_id</code>.
      */
     @Nonnull
     public UUID getDeliberationId() {
@@ -58,14 +58,14 @@ public class LienDeliberationRecord extends UpdatableRecordImpl<LienDeliberation
     }
 
     /**
-     * Setter for <code>orgarif.lien_deliberation.organisme_id</code>.
+     * Setter for <code>public.lien_deliberation.organisme_id</code>.
      */
     public void setOrganismeId(@Nonnull UUID value) {
         set(2, value);
     }
 
     /**
-     * Getter for <code>orgarif.lien_deliberation.organisme_id</code>.
+     * Getter for <code>public.lien_deliberation.organisme_id</code>.
      */
     @Nonnull
     public UUID getOrganismeId() {
@@ -73,14 +73,14 @@ public class LienDeliberationRecord extends UpdatableRecordImpl<LienDeliberation
     }
 
     /**
-     * Setter for <code>orgarif.lien_deliberation.instance_id</code>.
+     * Setter for <code>public.lien_deliberation.instance_id</code>.
      */
     public void setInstanceId(@Nullable UUID value) {
         set(3, value);
     }
 
     /**
-     * Getter for <code>orgarif.lien_deliberation.instance_id</code>.
+     * Getter for <code>public.lien_deliberation.instance_id</code>.
      */
     @Nullable
     public UUID getInstanceId() {
@@ -88,14 +88,14 @@ public class LienDeliberationRecord extends UpdatableRecordImpl<LienDeliberation
     }
 
     /**
-     * Setter for <code>orgarif.lien_deliberation.creation_date</code>.
+     * Setter for <code>public.lien_deliberation.creation_date</code>.
      */
     public void setCreationDate(@Nonnull Instant value) {
         set(4, value);
     }
 
     /**
-     * Getter for <code>orgarif.lien_deliberation.creation_date</code>.
+     * Getter for <code>public.lien_deliberation.creation_date</code>.
      */
     @Nonnull
     public Instant getCreationDate() {
@@ -103,14 +103,14 @@ public class LienDeliberationRecord extends UpdatableRecordImpl<LienDeliberation
     }
 
     /**
-     * Setter for <code>orgarif.lien_deliberation.last_modification_date</code>.
+     * Setter for <code>public.lien_deliberation.last_modification_date</code>.
      */
     public void setLastModificationDate(@Nonnull Instant value) {
         set(5, value);
     }
 
     /**
-     * Getter for <code>orgarif.lien_deliberation.last_modification_date</code>.
+     * Getter for <code>public.lien_deliberation.last_modification_date</code>.
      */
     @Nonnull
     public Instant getLastModificationDate() {
