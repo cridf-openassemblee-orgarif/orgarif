@@ -131,7 +131,8 @@ class CommandEndpoint(
             if (result !is EmptyCommandResponse) {
                 try {
                     commandLogDao.updateResult(
-                        commandLogId, idCreationLoggerService.getIdsString(),
+                        commandLogId,
+                        idCreationLoggerService.getIdsString(),
                         serialize(result),
                         dateService.now()
                     )

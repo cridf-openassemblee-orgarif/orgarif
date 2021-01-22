@@ -9,7 +9,7 @@ import orgarif.domain.UserId
 import orgarif.repository.sql.UserDao
 
 @Service
-class DevDataInjectorService(
+class DevInitialDataInjectorService(
     @Value("\${developerMail}") val developerMail: String,
     val userDao: UserDao,
     val dateService: DateService,

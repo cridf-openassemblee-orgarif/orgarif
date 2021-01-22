@@ -12,7 +12,7 @@ import java.nio.file.Path
 
 fun main() {
     System.setProperty("logback.configurationFile", "logback-jooq-tooling.xml")
-    ResetDatabase.resetDatabase()
+    ResetDatabase.resetDatabaseSchemaAndInitialData(configuration)
     ResetDatabase.logger.info { "[OK] reset database \"${configuration.databaseName}\"" }
 }
 
@@ -20,7 +20,7 @@ object ResetDatabase {
     // TODO[doc] de la possibilité de supprimer dossier generated s'il y a un pb
     internal val logger = KotlinLogging.logger {}
 
-    fun resetDatabase() {
+    fun resetDatabaseSchemaAndInitialData(configuration: DatabaseConfiguration) {
         logger.info { "Reset database \"${configuration.databaseName}\", using data directory : ${sqlFilesPath}" }
         logger.info { "Create database \"${configuration.databaseName}\"" }
         DatabaseInitializer.createDb(configuration)

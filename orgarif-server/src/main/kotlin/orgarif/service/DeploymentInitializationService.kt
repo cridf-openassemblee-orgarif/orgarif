@@ -6,12 +6,12 @@ import orgarif.domain.ApplicationEnvironment
 @Service
 class DeploymentInitializationService(
     val applicationInstance: ApplicationInstance,
-    val devDataInjectorService: DevDataInjectorService
+    val devInitialDataInjectorService: DevInitialDataInjectorService
 ) {
 
     init {
         if (applicationInstance.env == ApplicationEnvironment.dev) {
-            devDataInjectorService.initiateDevUsers()
+            devInitialDataInjectorService.initiateDevUsers()
         }
     }
 

@@ -12,7 +12,7 @@ import orgarif.utils.Serializer.deserialize
 import orgarif.utils.toTypeId
 
 @Service
-open class ElusSynchronizationService(
+class ElusSynchronizationService(
     @Value("\${doSynchronizeElus}")
     val doSynchronizeElus: Boolean,
     @Value("\${elusSynchronizationUrl}")
@@ -55,7 +55,7 @@ open class ElusSynchronizationService(
 
     data class Data(val elus: List<OpenassembleeElu>)
 
-    open fun sync() {
+    fun sync() {
         logger.info { "Synchronize elus avec SIGER" }
         val elusJons = try {
             httpService
@@ -74,7 +74,7 @@ open class ElusSynchronizationService(
         insert, update, unmodified
     }
 
-    open fun handleElusJson(elusJons: String): Int {
+    fun handleElusJson(elusJons: String): Int {
         val now = dateService.now()
         val data = deserialize<Data>(elusJons)
         val newElus = data.elus

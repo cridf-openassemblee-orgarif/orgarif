@@ -62,7 +62,7 @@ object GenerateJooq {
     fun jooqLibTargetDir(path: String): File {
         val userDir = System.getProperty("user.dir")
         // FIXMENOW un moyen propre de faire ça ?
-        if ("jooq-lib" in userDir) {
+        if ("orgarif-server" in userDir) {
             return File("$userDir/build/" + path)
         } else {
             return File("$userDir/jooq-lib/build/" + path)
