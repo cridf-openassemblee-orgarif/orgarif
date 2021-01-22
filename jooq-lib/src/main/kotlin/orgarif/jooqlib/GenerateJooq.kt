@@ -27,12 +27,12 @@ object GenerateJooq {
             load(FileInputStream(webServerSrcFile("resources/application-dev-${System.getenv("USER")}.properties")))
         }
         DatabaseConfiguration(
-            DatabaseConfiguration.Driver.mysql,
+            DatabaseConfiguration.Driver.psql,
             // TODO comment truc intelligent ?
             "orgarif",
             properties.getProperty("database.user"),
             properties.getProperty("database.password"),
-            emptySet(),
+            setOf("public"),
             null
         )
     }
@@ -80,7 +80,7 @@ object GenerateJooq {
         logger.info { "Generate Jooq code" }
         JooqGeneration.generateJooq(
             configuration,
-            setOf("SPRING_SESSION", "SPRING_SESSION_ATTRIBUTES"),
+            setOf("spring_session", "spring_session_attributes"),
             "orgarif.jooq",
             "jooq-lib/src/generated/java"
         )

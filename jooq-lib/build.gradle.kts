@@ -34,5 +34,5 @@ dependencies {
     implementation("io.github.microutils:kotlin-logging:1.4.6")
     implementation("ch.qos.logback:logback-classic:1.2.3")
 
-    implementation("mysql:mysql-connector-java:8.0.22")
+    implementation("org.postgresql:postgresql:42.2.18")
 }

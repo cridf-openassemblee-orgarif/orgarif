@@ -14,11 +14,6 @@ import orgarif.utils.Serializer
 @Configuration
 class ApplicationBeans {
 
-    // [doc] with mysql, without that line jooq tries to operate on the database (=schema on mysql)
-    // used to generate the jooq code
-    @Autowired
-    fun configureJooq(jooq: DSLContext) = jooq.configuration().settings().withRenderSchema(false)
-
     @Bean
     @Primary
     fun jackson() = Serializer.objectMapper

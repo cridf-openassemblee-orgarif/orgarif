@@ -36,7 +36,7 @@ dependencies {
     implementation("org.springframework.boot:spring-boot-starter-security")
     implementation("org.springframework.session:spring-session-jdbc")
 
-    implementation("mysql:mysql-connector-java:8.0.22")
+    implementation("org.postgresql:postgresql:42.2.18")
 
     // logs
     implementation("io.github.microutils:kotlin-logging:1.4.6")
