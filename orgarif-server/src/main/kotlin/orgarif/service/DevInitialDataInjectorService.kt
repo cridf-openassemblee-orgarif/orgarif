@@ -6,7 +6,7 @@ import org.springframework.stereotype.Service
 import orgarif.domain.HashedPassword
 import orgarif.domain.Language
 import orgarif.domain.UserId
-import orgarif.repository.sql.UserDao
+import orgarif.repository.UserDao
 
 @Service
 class DevInitialDataInjectorService(

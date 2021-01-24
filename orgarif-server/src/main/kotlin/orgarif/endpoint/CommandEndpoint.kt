@@ -10,8 +10,8 @@ import orgarif.command.*
 import orgarif.domain.AuthenticationLevel
 import orgarif.domain.CommandLogId
 import orgarif.error.OrgarifSecurityException
-import orgarif.repository.sql.CommandLogDao
-import orgarif.repository.sql.UserDao
+import orgarif.repository.CommandLogDao
+import orgarif.repository.UserDao
 import orgarif.service.ApplicationInstance
 import orgarif.service.DateService
 import orgarif.service.IdCreationLoggerService

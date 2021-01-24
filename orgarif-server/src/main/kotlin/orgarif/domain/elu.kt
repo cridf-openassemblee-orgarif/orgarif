@@ -1,6 +1,6 @@
 package orgarif.domain
 
-import orgarif.repository.sql.EluDao
+import orgarif.repository.EluDao
 
 enum class Civilite { M, Mme }
 

@@ -1,4 +1,4 @@
-package orgarif.repository.sql
+package orgarif.repository
 
 import org.jooq.DSLContext
 import org.springframework.stereotype.Repository

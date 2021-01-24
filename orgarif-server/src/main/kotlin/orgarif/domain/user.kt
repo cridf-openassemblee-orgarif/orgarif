@@ -2,7 +2,7 @@ package orgarif.domain
 
 import com.fasterxml.jackson.annotation.JsonTypeInfo
 import com.fasterxml.jackson.annotation.JsonTypeName
-import orgarif.repository.sql.UserDao
+import orgarif.repository.UserDao
 import orgarif.utils.OrgarifStringUtils.filteredPassword
 import orgarif.utils.OrgarifStringUtils.serializeUuid
 

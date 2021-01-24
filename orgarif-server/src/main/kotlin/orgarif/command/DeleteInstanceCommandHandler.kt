@@ -1,9 +1,9 @@
 package orgarif.command
 
 import org.springframework.stereotype.Service
-import orgarif.repository.sql.InstanceDao
-import orgarif.repository.sql.LienDeliberationDao
-import orgarif.repository.sql.RepresentantDao
+import orgarif.repository.InstanceDao
+import orgarif.repository.LienDeliberationDao
+import orgarif.repository.RepresentantDao
 
 @Service
 class DeleteInstanceCommandHandler(

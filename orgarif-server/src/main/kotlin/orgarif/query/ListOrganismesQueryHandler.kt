@@ -1,7 +1,7 @@
 package orgarif.query
 
 import org.springframework.stereotype.Service
-import orgarif.repository.sql.OrganismeDao
+import orgarif.repository.OrganismeDao
 
 @Service
 class ListOrganismesQueryHandler(val organismeDao: OrganismeDao) :

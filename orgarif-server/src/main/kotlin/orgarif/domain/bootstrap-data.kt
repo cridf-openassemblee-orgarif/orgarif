@@ -1,8 +1,8 @@
 package orgarif.domain
 
-import orgarif.repository.sql.NatureJuridiqueDao
-import orgarif.repository.sql.SecteurDao
-import orgarif.repository.sql.TypeStructureDao
+import orgarif.repository.NatureJuridiqueDao
+import orgarif.repository.SecteurDao
+import orgarif.repository.TypeStructureDao
 
 typealias Secteur = SecteurDao.Record
 typealias NatureJuridique = NatureJuridiqueDao.Record

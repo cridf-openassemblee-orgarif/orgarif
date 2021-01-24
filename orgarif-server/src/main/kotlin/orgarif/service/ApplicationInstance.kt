@@ -9,7 +9,7 @@ import org.springframework.stereotype.Service
 import orgarif.OrgarifApplication
 import orgarif.domain.ApplicationEnvironment
 import orgarif.domain.DeploymentLogId
-import orgarif.repository.sql.DeploymentLogDao
+import orgarif.repository.DeploymentLogDao
 import java.io.File
 import java.io.FileInputStream
 import java.util.*

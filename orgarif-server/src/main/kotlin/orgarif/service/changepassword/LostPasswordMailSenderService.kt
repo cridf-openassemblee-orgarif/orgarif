@@ -7,7 +7,7 @@ import orgarif.config.ApplicationConstants
 import orgarif.controller.IndexController
 import orgarif.controller.InvalidateMagicLinkTokenController
 import orgarif.domain.MailReference
-import orgarif.repository.sql.UserDao
+import orgarif.repository.UserDao
 import orgarif.service.ApplicationInstance
 import orgarif.service.HttpService
 import orgarif.service.MailService

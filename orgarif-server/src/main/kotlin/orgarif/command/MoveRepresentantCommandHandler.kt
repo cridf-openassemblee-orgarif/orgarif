@@ -3,8 +3,8 @@ package orgarif.command
 import mu.KotlinLogging
 import org.springframework.stereotype.Service
 import orgarif.domain.RepresentantId
-import orgarif.repository.sql.EluDao
-import orgarif.repository.sql.RepresentantDao
+import orgarif.repository.EluDao
+import orgarif.repository.RepresentantDao
 import orgarif.service.DateService
 import orgarif.service.RandomService
 import orgarif.utils.OrgarifStringUtils.serializeUuid

@@ -8,7 +8,7 @@ import orgarif.domain.Language
 import orgarif.domain.RegisterAndAuthenticateResult
 import orgarif.domain.UserId
 import orgarif.error.MailAlreadyRegisteredException
-import orgarif.repository.sql.UserDao
+import orgarif.repository.UserDao
 import orgarif.service.DateService
 import orgarif.service.LocaleService
 import orgarif.service.NotificationService

@@ -10,7 +10,7 @@ import org.springframework.web.servlet.ModelAndView
 import orgarif.domain.ApplicationBootstrapData
 import orgarif.domain.OrganismeCategories
 import orgarif.domain.UserInfos
-import orgarif.repository.sql.*
+import orgarif.repository.*
 import orgarif.service.ApplicationInstance
 import orgarif.service.LocaleService
 import orgarif.service.user.MagicLinkTokenService

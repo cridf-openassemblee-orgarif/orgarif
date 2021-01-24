@@ -7,8 +7,8 @@ import org.springframework.stereotype.Service
 import orgarif.domain.AuthResult
 import orgarif.domain.UserSession
 import orgarif.domain.UserSessionId
-import orgarif.repository.sql.UserDao
-import orgarif.repository.sql.UserSessionLogDao
+import orgarif.repository.UserDao
+import orgarif.repository.UserSessionLogDao
 import orgarif.service.ApplicationInstance
 import orgarif.service.DateService
 import orgarif.service.RandomService

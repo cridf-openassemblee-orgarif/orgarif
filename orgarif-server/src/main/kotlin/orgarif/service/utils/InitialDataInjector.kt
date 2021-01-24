@@ -4,7 +4,7 @@ import RepresentantOrSuppleant
 import org.springframework.beans.factory.annotation.Value
 import org.springframework.stereotype.Service
 import orgarif.domain.*
-import orgarif.repository.sql.*
+import orgarif.repository.*
 import orgarif.service.DateService
 import orgarif.service.RandomService
 import orgarif.utils.OrgarifStringUtils.deserializeUuid

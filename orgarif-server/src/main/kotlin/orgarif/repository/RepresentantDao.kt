@@ -1,4 +1,4 @@
-package orgarif.repository.sql
+package orgarif.repository
 
 import RepresentantOrSuppleant
 import org.jooq.DSLContext

@@ -1,4 +1,4 @@
-package orgarif.repository.sql
+package orgarif.repository
 
 import orgarif.domain.HashedPassword
 import orgarif.domain.Language

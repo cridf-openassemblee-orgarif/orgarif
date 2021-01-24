@@ -3,7 +3,7 @@ package orgarif.query
 import DeliberationInfos
 import org.springframework.stereotype.Service
 import orgarif.config.SharedConstants
-import orgarif.repository.sql.DeliberationDao
+import orgarif.repository.DeliberationDao
 
 @Service
 class SearchDeliberationQueryHandler(val deliberationDao: DeliberationDao) :

@@ -2,8 +2,8 @@ import orgarif.domain.DeliberationId
 import orgarif.domain.EluId
 import orgarif.domain.LienDeliberationId
 import orgarif.domain.RepresentantId
-import orgarif.repository.sql.InstanceDao
-import orgarif.repository.sql.OrganismeDao
+import orgarif.repository.InstanceDao
+import orgarif.repository.OrganismeDao
 import java.time.LocalDate
 
 enum class RepresentantOrSuppleant { representant, suppleant }

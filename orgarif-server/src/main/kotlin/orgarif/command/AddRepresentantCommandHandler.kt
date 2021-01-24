@@ -2,7 +2,7 @@ package orgarif.command
 
 import org.springframework.stereotype.Service
 import orgarif.domain.RepresentantId
-import orgarif.repository.sql.RepresentantDao
+import orgarif.repository.RepresentantDao
 import orgarif.service.DateService
 import orgarif.service.RandomService
 

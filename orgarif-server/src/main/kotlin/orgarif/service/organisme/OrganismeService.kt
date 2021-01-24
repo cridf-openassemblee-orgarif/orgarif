@@ -8,7 +8,7 @@ import Representant
 import RepresentantOrSuppleant
 import org.springframework.stereotype.Service
 import orgarif.domain.OrganismeId
-import orgarif.repository.sql.*
+import orgarif.repository.*
 
 @Service
 class OrganismeService(

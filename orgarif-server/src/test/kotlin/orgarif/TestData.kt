@@ -3,7 +3,7 @@ package orgarif
 import orgarif.config.ApplicationConstants
 import orgarif.domain.Language
 import orgarif.domain.UserId
-import orgarif.repository.sql.UserDao
+import orgarif.repository.UserDao
 import java.time.LocalDateTime
 import java.util.*
 

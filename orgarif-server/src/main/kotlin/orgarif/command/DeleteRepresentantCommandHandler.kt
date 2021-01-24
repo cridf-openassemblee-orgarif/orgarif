@@ -1,7 +1,7 @@
 package orgarif.command
 
 import org.springframework.stereotype.Service
-import orgarif.repository.sql.RepresentantDao
+import orgarif.repository.RepresentantDao
 
 @Service
 class DeleteRepresentantCommandHandler(val representantDao: RepresentantDao) :

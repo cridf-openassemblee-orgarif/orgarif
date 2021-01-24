@@ -5,7 +5,7 @@ import org.springframework.beans.factory.annotation.Value
 import org.springframework.core.task.AsyncTaskExecutor
 import org.springframework.stereotype.Service
 import orgarif.domain.Civilite
-import orgarif.repository.sql.EluDao
+import orgarif.repository.EluDao
 import orgarif.service.utils.InitialDataInjector
 import orgarif.utils.OrgarifStringUtils.deserializeUuid
 import orgarif.utils.Serializer.deserialize

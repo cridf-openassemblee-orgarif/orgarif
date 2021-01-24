@@ -1,7 +1,7 @@
 package orgarif.query
 
 import org.springframework.stereotype.Service
-import orgarif.repository.sql.UserDao
+import orgarif.repository.UserDao
 
 @Service
 class IsLoginAlreadyTakenQueryHandler(val userDao: UserDao) :

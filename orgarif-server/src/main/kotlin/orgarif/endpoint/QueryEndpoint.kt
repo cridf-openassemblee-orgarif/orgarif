@@ -5,7 +5,7 @@ import org.springframework.web.bind.annotation.RestController
 import orgarif.domain.AuthenticationLevel
 import orgarif.error.OrgarifSecurityException
 import orgarif.query.*
-import orgarif.repository.sql.UserDao
+import orgarif.repository.UserDao
 import orgarif.service.user.UserSessionHelper
 import orgarif.utils.Serializer
 import java.net.URLDecoder
