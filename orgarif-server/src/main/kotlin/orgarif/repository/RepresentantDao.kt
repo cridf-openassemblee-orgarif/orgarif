@@ -106,14 +106,14 @@ class RepresentantDao(val jooq: DSLContext) {
         instanceId: InstanceId?,
         position: Int,
         representantOrSuppleant: RepresentantOrSuppleant,
-        date: Instant
+        modificationDate: Instant
     ) {
         val r = RepresentantRecord().also {
             it.organismeId = organismeId.rawId
             it.instanceId = instanceId?.rawId
             it.position = position
             it.representantOrSuppleant = representantOrSuppleant.name
-            it.lastModificationDate = date
+            it.lastModificationDate = modificationDate
         }
         jooq.update(REPRESENTANT)
             .set(r)
