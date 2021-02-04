@@ -20,6 +20,11 @@ class OrgarifApplication {
             val env = System.getenv("env") ?: ApplicationEnvironment.dev.name
             System.setProperty("logging.config", "classpath:logback-webapp-$env.xml")
             TimeZone.setDefault(TimeZone.getTimeZone("UTC"))
+            Flyway
+                .configure()
+                .dataSource("jdbc:postgresql://localhost:5432/orgarif", "mlo", "")
+                .load()
+                .migrate()
             val app = SpringApplication(OrgarifApplication::class.java)
             app.setDefaultProperties(
                 mapOf(
@@ -28,8 +33,6 @@ class OrgarifApplication {
                             springUserProfile()
                 )
             )
-            val flyway = Flyway.configure().dataSource("localhost", "mlo", "").load()
-            flyway.migrate()
             app.run(*args)
         }
 
