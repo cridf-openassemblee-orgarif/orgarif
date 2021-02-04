@@ -1,5 +1,6 @@
 package orgarif
 
+import org.flywaydb.core.Flyway
 import org.springframework.boot.SpringApplication
 import org.springframework.boot.autoconfigure.SpringBootApplication
 import org.springframework.boot.autoconfigure.security.servlet.UserDetailsServiceAutoConfiguration
@@ -27,6 +28,8 @@ class OrgarifApplication {
                             springUserProfile()
                 )
             )
+            val flyway = Flyway.configure().dataSource("localhost", "mlo", "").load()
+            flyway.migrate()
             app.run(*args)
         }
 

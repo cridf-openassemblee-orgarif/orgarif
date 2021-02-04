@@ -48,6 +48,7 @@ dependencies {
     implementation("org.reflections:reflections:0.9.10")
     implementation("com.squareup.okhttp3:okhttp:4.2.2")
     implementation("org.json:json:20201115")
+    implementation("org.flywaydb:flyway-core:7.5.2")
 
     testImplementation("org.springframework.boot:spring-boot-starter-test")
     testImplementation("junit:junit:4.13.1")
