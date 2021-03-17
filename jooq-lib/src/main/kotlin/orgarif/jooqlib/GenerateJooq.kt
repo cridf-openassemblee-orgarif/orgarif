@@ -28,8 +28,9 @@ object GenerateJooq {
         }
         DatabaseConfiguration(
             DatabaseConfiguration.Driver.psql,
-            // TODO comment truc intelligent ?
-            "orgarif",
+            properties.getProperty("database.host"),
+            properties.getProperty("database.port").toInt(),
+            properties.getProperty("database.name"),
             properties.getProperty("database.user"),
             properties.getProperty("database.password"),
             setOf("public"),

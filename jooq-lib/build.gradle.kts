@@ -1,5 +1,5 @@
 plugins {
-    kotlin("jvm") version "1.4.0"
+    kotlin("jvm") version "1.4.31"
 }
 
 group = "orgarif"
@@ -10,7 +10,7 @@ repositories {
     mavenLocal()
 }
 
-val kotlinVersion = "1.4.0"
+val kotlinVersion = "1.4.31"
 
 tasks {
     register<JavaExec>("generateJooq") {
@@ -18,6 +18,14 @@ tasks {
     }
     register<JavaExec>("resetDatabase") {
         main = "orgarif.jooq.tools.ResetDatabaseKt"
+    }
+    withType<org.jetbrains.kotlin.gradle.tasks.KotlinCompile> {
+        kotlinOptions {
+            jvmTarget = "15"
+        }
+    }
+    withType<Test> {
+        useJUnitPlatform()
     }
 }
 
@@ -29,7 +37,7 @@ dependencies {
     implementation("org.jetbrains.kotlin:kotlin-stdlib-jdk8:$kotlinVersion")
     implementation("org.jetbrains.kotlin:kotlin-reflect:$kotlinVersion")
 
-    api("jooq-utils:jooq-utils:0.0.1-SNAPSHOT")
+    api("jooq-utils:jooq-utils:0.0.2-SNAPSHOT")
 
     implementation("io.github.microutils:kotlin-logging:1.4.6")
     implementation("ch.qos.logback:logback-classic:1.2.3")

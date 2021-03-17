@@ -4,7 +4,7 @@ import org.jetbrains.kotlin.gradle.tasks.KotlinCompile
 // TODO[build] find a way to declare it just once
 // don't forget to change the second one until then !
 object Versions {
-    val kotlinVersion = "1.4.0"
+    val kotlinVersion = "1.4.31"
 }
 
 buildscript {
@@ -14,12 +14,31 @@ buildscript {
 }
 
 plugins {
-    val kotlinVersion = "1.4.0"
+    val kotlinVersion = "1.4.31"
     id("org.jetbrains.kotlin.jvm") version kotlinVersion
     id("io.spring.dependency-management") version "1.0.9.RELEASE"
     id("org.springframework.boot") version "2.4.0"
     // so we don't need to open Spring components classes
-    id("org.jetbrains.kotlin.plugin.spring") version "1.4.0"
+    id("org.jetbrains.kotlin.plugin.spring") version "1.4.31"
+}
+
+repositories {
+    mavenLocal()
+    mavenCentral()
+    maven("https://repo.spring.io/milestone")
+    maven("https://repo.spring.io/snapshot")
+}
+
+tasks {
+    withType<KotlinCompile> {
+        kotlinOptions {
+            jvmTarget = "15"
+        }
+    }
+
+    withType<Test> {
+        useJUnitPlatform()
+    }
 }
 
 dependencies {
@@ -54,23 +73,4 @@ dependencies {
     testImplementation("junit:junit:4.13.1")
 //    testImplementation("org.junit.jupiter:junit-jupiter-api")
 //    testRuntimeOnly("org.junit.jupiter:junit-jupiter-engine")
-}
-
-repositories {
-    mavenLocal()
-    mavenCentral()
-    maven("https://repo.spring.io/milestone")
-    maven("https://repo.spring.io/snapshot")
-}
-
-tasks {
-    withType<KotlinCompile> {
-        kotlinOptions {
-            jvmTarget = "13"
-        }
-    }
-
-    withType<Test> {
-        useJUnitPlatform()
-    }
 }
