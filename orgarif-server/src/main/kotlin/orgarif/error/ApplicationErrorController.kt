@@ -1,6 +1,8 @@
 package orgarif.error
 
 import mu.KotlinLogging
+import org.springframework.beans.factory.annotation.Value
+import org.springframework.boot.web.error.ErrorAttributeOptions
 import org.springframework.boot.web.servlet.error.ErrorAttributes
 import org.springframework.boot.web.servlet.error.ErrorController
 import org.springframework.web.bind.annotation.RequestMapping
@@ -26,16 +28,20 @@ class ApplicationErrorController(
         private const val errorRoute = "/error"
     }
 
-    override fun getErrorPath(): String {
-        return errorRoute
-    }
-
     // TODO[secu] de la nécessité de tester ce truc là, il était pété en silence =x
     // encore une fois..
     // TODO[secu] si acces direct on redirect
     @RequestMapping(errorRoute)
     fun error(request: WebRequest, response: HttpServletResponse): ModelAndView {
-        val errorMap = errorAttributes.getErrorAttributes(request, false)
+        val errorMap = errorAttributes.getErrorAttributes(
+            request,
+            ErrorAttributeOptions.of(
+                ErrorAttributeOptions.Include.BINDING_ERRORS,
+                ErrorAttributeOptions.Include.EXCEPTION,
+                ErrorAttributeOptions.Include.MESSAGE,
+                ErrorAttributeOptions.Include.STACK_TRACE
+            )
+        )
         // [doc] in case logout is quickly called twice
         if (response.status == 403 && errorMap["path"] == IndexController.logoutRoute) {
             logger.trace { "Some user logged out twice" }
@@ -51,6 +57,7 @@ class ApplicationErrorController(
             200 -> 404 to "Not Found"
             500 -> {
                 // TODO[secu] on passe ici dans quel cas ?
+                // si // dans l'url
                 // SecurityException par ex apparemment
 //                when (exception) {
 //                    is ErrorDisplayException -> Triple(response.status, initialError, null)

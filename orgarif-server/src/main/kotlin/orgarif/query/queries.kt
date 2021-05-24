@@ -13,29 +13,6 @@ sealed class Query
 
 sealed class QueryResponse
 
-interface QueryHandlerInterface<Q : Query, R : QueryResponse> {
-    fun doHandle(query: Q, userSession: UserSession?): R
-}
-
-abstract class QueryHandler<Q : Query, R : QueryResponse> : QueryHandlerInterface<Q, R> {
-    override fun doHandle(query: Q, userSession: UserSession?): R {
-        return handle(query)
-    }
-
-    abstract fun handle(query: Q): R
-}
-
-abstract class LoggedInQueryHandler<Q : Query, R : QueryResponse> : QueryHandlerInterface<Q, R> {
-    override fun doHandle(query: Q, userSession: UserSession?): R {
-        if (userSession == null) {
-            throw RuntimeException()
-        }
-        return handle(query, userSession)
-    }
-
-    abstract fun handle(query: Q, userSession: UserSession): R
-}
-
 data class GetOrganismeQuery(val id: OrganismeId) : Query()
 
 data class GetOrganismeQueryResponse(val organisme: FullOrganisme) : QueryResponse()

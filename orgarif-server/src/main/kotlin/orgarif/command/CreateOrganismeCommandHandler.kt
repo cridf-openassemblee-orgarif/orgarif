@@ -12,7 +12,7 @@ class CreateOrganismeCommandHandler(
     val randomService: RandomService,
     val dateService: DateService
 ) :
-    NeutralCommandHandler<CreateOrganismeCommand, CreateOrganismeCommandResponse>() {
+    CommandHandler.Handler<CreateOrganismeCommand, CreateOrganismeCommandResponse>() {
 
     override fun handle(command: CreateOrganismeCommand): CreateOrganismeCommandResponse {
         val organismeId = randomService.id<OrganismeId>()

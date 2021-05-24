@@ -4,8 +4,6 @@ import RepresentantOrSuppleant
 import com.fasterxml.jackson.annotation.JsonTypeInfo
 import orgarif.domain.*
 import java.time.LocalDate
-import javax.servlet.http.HttpServletRequest
-import javax.servlet.http.HttpServletResponse
 
 @JsonTypeInfo(use = JsonTypeInfo.Id.NAME, include = JsonTypeInfo.As.PROPERTY, property = "objectType")
 sealed class Command
@@ -13,79 +11,6 @@ sealed class Command
 sealed class CommandResponse
 
 object EmptyCommandResponse : CommandResponse()
-
-interface CommandHandler<C : Command, R : CommandResponse> {
-    fun handle(command: C, userSession: UserSession?, request: HttpServletRequest, response: HttpServletResponse): R
-}
-
-abstract class LoggedOutServletCommandHandler<C : Command, R : CommandResponse> : CommandHandler<C, R> {
-    override fun handle(
-        command: C,
-        userSession: UserSession?,
-        request: HttpServletRequest,
-        response: HttpServletResponse
-    ): R {
-        if (userSession != null) {
-            throw RuntimeException()
-        }
-        return handle(command, request, response)
-    }
-
-    abstract fun handle(command: C, request: HttpServletRequest, response: HttpServletResponse): R
-}
-
-//abstract class UserSessionCommandHandler<C : Command, R : CommandResponse> : CommandHandler<C, R> {
-//    override fun doHandle(command: C, userSession: UserSession?, request: HttpServletRequest, response: HttpServletResponse): R {
-//        return handle(command, userSession)
-//    }
-//
-//    abstract fun handle(command: C, userSession: UserSession?): R
-//}
-
-abstract class LoggedOutCommandHandler<C : Command, R : CommandResponse> : CommandHandler<C, R> {
-    override fun handle(
-        command: C,
-        userSession: UserSession?,
-        request: HttpServletRequest,
-        response: HttpServletResponse
-    ): R {
-        if (userSession != null) {
-            throw RuntimeException()
-        }
-        return handle(command)
-    }
-
-    abstract fun handle(command: C): R
-}
-
-abstract class LoggedInCommandHandler<C : Command, R : CommandResponse> : CommandHandler<C, R> {
-    override fun handle(
-        command: C,
-        userSession: UserSession?,
-        request: HttpServletRequest,
-        response: HttpServletResponse
-    ): R {
-        if (userSession == null) {
-            throw RuntimeException()
-        }
-        return handle(command, userSession)
-    }
-
-    abstract fun handle(command: C, userSession: UserSession): R
-}
-
-abstract class NeutralCommandHandler<C : Command, R : CommandResponse> : CommandHandler<C, R> {
-    override fun handle(
-        command: C,
-        userSession: UserSession?,
-        request: HttpServletRequest,
-        response: HttpServletResponse
-    ): R {
-        return handle(command)
-    }
-
-    abstract fun handle(command: C): R
-}
 
 data class AddInstanceCommand(
     val nomInstance: String,

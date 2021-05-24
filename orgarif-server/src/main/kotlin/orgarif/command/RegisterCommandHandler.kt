@@ -5,17 +5,15 @@ import org.springframework.stereotype.Service
 import orgarif.domain.HashedPassword
 import orgarif.domain.RegisterResult
 import orgarif.domain.UserInfos
+import orgarif.domain.UserSession
 import orgarif.error.MailAlreadyRegisteredException
 import orgarif.service.user.UserService
 import javax.servlet.http.HttpServletRequest
 import javax.servlet.http.HttpServletResponse
 
 @Service
-class RegisterCommandHandler(
-    val userService: UserService,
-    val passwordEncoder: PasswordEncoder
-) :
-    LoggedOutServletCommandHandler<RegisterCommand, RegisterCommandResponse>() {
+class RegisterCommandHandler(val userService: UserService, val passwordEncoder: PasswordEncoder) :
+    CommandHandler<RegisterCommand, RegisterCommandResponse> {
 
     companion object {
         fun validatePassword(password: String) {
@@ -23,8 +21,18 @@ class RegisterCommandHandler(
         }
     }
 
-    override fun handle(command: RegisterCommand, request: HttpServletRequest, response: HttpServletResponse):
-            RegisterCommandResponse {
+    override fun handle(
+        command: RegisterCommand,
+        userSession: UserSession?,
+        request: HttpServletRequest,
+        response: HttpServletResponse
+    ): RegisterCommandResponse {
+        if (userSession != null) {
+            // FIXMENOW je trouve pas le mot
+            // OrgarifCommonException
+            // OrgarifStandardException
+            throw RuntimeException()
+        }
         UserService.validateRegisterUserDto(command)
         validatePassword(command.password.password)
         val hashedPassword = HashedPassword(passwordEncoder.encode(command.password.password))

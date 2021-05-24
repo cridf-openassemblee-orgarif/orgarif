@@ -2,6 +2,7 @@ package orgarif.endpoint
 
 import org.springframework.web.bind.annotation.GetMapping
 import org.springframework.web.bind.annotation.RestController
+import orgarif.command.QueryHandler
 import orgarif.domain.AuthenticationLevel
 import orgarif.error.OrgarifSecurityException
 import orgarif.query.*
@@ -29,13 +30,7 @@ class QueryEndpoint(
         val userSession = if (UserSessionHelper.isAuthenticated()) UserSessionHelper.getUserSession() else null
         val handler = handler(query)
         return when (QueryConfiguration.authenticationLevel(query)) {
-            AuthenticationLevel.loggedOut -> {
-                if (userSession != null) {
-                    throw RuntimeException()
-                }
-                handler.doHandle(query, null)
-            }
-            AuthenticationLevel.neutral -> handler.doHandle(query, userSession)
+            AuthenticationLevel.anonymous -> handler.doHandle(query, userSession)
             AuthenticationLevel.loggedIn -> {
                 if (userSession == null) {
                     throw RuntimeException()
@@ -66,7 +61,7 @@ class QueryEndpoint(
     }
 
     @Suppress("UNCHECKED_CAST")
-    private fun handler(query: Query): QueryHandlerInterface<Query, QueryResponse> = when (query) {
+    private fun handler(query: Query) = when (query) {
         is GetOrganismeQuery -> getOrganismeQueryHandler
         is IsLoginAlreadyTakenQuery -> isLoginAlreadyTakenQueryHandler
         is ListOrganismesBySecteurQuery -> listOrganismesBySecteurQueryHandler

@@ -90,13 +90,7 @@ class CommandEndpoint(
         try {
             idCreationLoggerService.enableLogging()
             val result = when (CommandConfiguration.authenticationLevel(command)) {
-                AuthenticationLevel.loggedOut -> {
-                    if (userSession != null) {
-                        throw RuntimeException()
-                    }
-                    handler.handle(command, null, request, response)
-                }
-                AuthenticationLevel.neutral ->
+                AuthenticationLevel.anonymous ->
                     handler.handle(command, userSession, request, response)
                 AuthenticationLevel.loggedIn -> {
                     // TODO[secu] un peu double sécu car implem dans les classes aussi mais bon
@@ -159,7 +153,7 @@ class CommandEndpoint(
     }
 
     @Suppress("UNCHECKED_CAST")
-    private fun handler(command: Command): CommandHandler<Command, CommandResponse> = when (command) {
+    private fun handler(command: Command) = when (command) {
         is AddInstanceCommand -> addInstanceCommandHandler
         is AddLienDeliberationCommand -> addLienDeliberationCommandHandler
         is AddRepresentantCommand -> addRepresentantCommandHandler

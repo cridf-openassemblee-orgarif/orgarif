@@ -11,7 +11,7 @@ class DeleteInstanceCommandHandler(
     val lienDeliberationDao: LienDeliberationDao,
     val instanceDao: InstanceDao
 ) :
-    NeutralCommandHandler<DeleteInstanceCommand, EmptyCommandResponse>() {
+    CommandHandler.Handler<DeleteInstanceCommand, EmptyCommandResponse>() {
 
     override fun handle(command: DeleteInstanceCommand): EmptyCommandResponse {
         representantDao.deleteByInstanceId(command.id)

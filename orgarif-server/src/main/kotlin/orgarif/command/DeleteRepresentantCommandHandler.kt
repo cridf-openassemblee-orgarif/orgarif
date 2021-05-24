@@ -5,7 +5,7 @@ import orgarif.repository.RepresentantDao
 
 @Service
 class DeleteRepresentantCommandHandler(val representantDao: RepresentantDao) :
-    NeutralCommandHandler<DeleteRepresentantCommand, EmptyCommandResponse>() {
+    CommandHandler.Handler<DeleteRepresentantCommand, EmptyCommandResponse>() {
 
     override fun handle(command: DeleteRepresentantCommand): EmptyCommandResponse {
         representantDao.delete(command.id)

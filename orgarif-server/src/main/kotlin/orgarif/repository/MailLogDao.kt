@@ -13,7 +13,6 @@ import java.time.Instant
 import java.util.*
 
 @Repository
-
 class MailLogDao(val jooq: DSLContext) {
 
     data class Record(
@@ -64,10 +63,10 @@ class MailLogDao(val jooq: DSLContext) {
             .fetch()
             .map(this::map)
 
-    fun fetchContent(id: UUID): ContentPartialRecord? =
+    fun fetchContent(id: MailLogId): ContentPartialRecord? =
         jooq.select(*contentPartialRecordFields)
             .from(MAIL_LOG)
-            .where(MAIL_LOG.ID.equal(id))
+            .where(MAIL_LOG.ID.equal(id.rawId))
             .fetchOne()
             ?.let(this::mapContentPartialRecord)
             ?: throw IllegalArgumentException("$id")

@@ -17,7 +17,7 @@ class MoveRepresentantCommandHandler(
     val randomService: RandomService,
     val dateService: DateService
 ) :
-    NeutralCommandHandler<MoveRepresentantCommand, EmptyCommandResponse>() {
+    CommandHandler.Handler<MoveRepresentantCommand, EmptyCommandResponse>() {
 
     private val logger = KotlinLogging.logger {}
 

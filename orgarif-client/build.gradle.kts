@@ -1,16 +1,11 @@
-import com.moowork.gradle.node.npm.NpmTask
+import com.github.gradle.node.yarn.task.YarnTask
 
 plugins {
-    id("com.moowork.node") version "1.3.1"
+    id("com.github.node-gradle.node") version "3.1.0"
 }
 
-tasks.register<NpmTask>("start") {
-    setArgs(listOf("start"))
-}
-
-tasks.register<NpmTask>("build") {
-    setDependsOn(listOf("yarn"))
-    setArgs(listOf("run", "build"))
+tasks.register<YarnTask>("build") {
+    args.value(listOf("build"))
 }
 
 tasks.register<Delete>("clean") {

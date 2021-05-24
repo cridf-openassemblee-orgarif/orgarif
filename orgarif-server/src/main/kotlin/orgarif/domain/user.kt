@@ -23,7 +23,7 @@ data class UserInfos(
 }
 
 enum class AuthenticationLevel {
-    neutral, loggedIn, loggedOut, admin
+    anonymous, loggedIn, admin
 }
 
 @JsonTypeInfo(use = JsonTypeInfo.Id.NAME, include = JsonTypeInfo.As.PROPERTY, property = "objectType")

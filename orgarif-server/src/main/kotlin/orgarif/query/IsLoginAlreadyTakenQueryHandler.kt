@@ -1,11 +1,12 @@
 package orgarif.query
 
 import org.springframework.stereotype.Service
+import orgarif.command.QueryHandler
 import orgarif.repository.UserDao
 
 @Service
 class IsLoginAlreadyTakenQueryHandler(val userDao: UserDao) :
-    QueryHandler<IsLoginAlreadyTakenQuery, IsLoginAlreadyTakenQueryResponse>() {
+    QueryHandler.Handler<IsLoginAlreadyTakenQuery, IsLoginAlreadyTakenQueryResponse>() {
 
     override fun handle(query: IsLoginAlreadyTakenQuery) =
         IsLoginAlreadyTakenQueryResponse(userDao.doesLoginExist(query.login))

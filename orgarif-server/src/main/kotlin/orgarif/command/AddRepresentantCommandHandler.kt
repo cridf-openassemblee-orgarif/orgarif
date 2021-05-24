@@ -12,7 +12,7 @@ class AddRepresentantCommandHandler(
     val randomService: RandomService,
     val dateService: DateService
 ) :
-    NeutralCommandHandler<AddRepresentantCommand, AddRepresentantCommandResponse>() {
+    CommandHandler.Handler<AddRepresentantCommand, AddRepresentantCommandResponse>() {
 
     override fun handle(command: AddRepresentantCommand): AddRepresentantCommandResponse {
         val representantId = randomService.id<RepresentantId>()

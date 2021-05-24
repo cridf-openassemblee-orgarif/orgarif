@@ -1,5 +1,5 @@
 plugins {
-    kotlin("jvm") version "1.4.0"
+    kotlin("jvm") version "1.5.0"
 }
 
 group = "orgarif"
@@ -10,7 +10,7 @@ repositories {
     mavenLocal()
 }
 
-val kotlinVersion = "1.4.0"
+val kotlinVersion = "1.5.0"
 
 tasks {
     register<JavaExec>("generateJooq") {

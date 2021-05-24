@@ -15,7 +15,7 @@ class CreateDeliberationAndAddLienCommandHandler(
     val randomService: RandomService,
     val dateService: DateService
 ) :
-    NeutralCommandHandler<CreateDeliberationAndAddLienCommand, CreateDeliberationAndAddLienCommandResponse>() {
+    CommandHandler.Handler<CreateDeliberationAndAddLienCommand, CreateDeliberationAndAddLienCommandResponse>() {
 
     override fun handle(command: CreateDeliberationAndAddLienCommand): CreateDeliberationAndAddLienCommandResponse {
         val deliberationId = randomService.id<DeliberationId>()

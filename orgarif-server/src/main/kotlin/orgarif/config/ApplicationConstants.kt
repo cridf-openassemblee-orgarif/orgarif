@@ -3,6 +3,7 @@ package orgarif.config
 import java.time.ZoneId
 
 object ApplicationConstants {
+    // FIXMENOW remove !
     const val springMvcModelKeyStackTrace = "stackTrace"
 
     const val applicationMailSenderName = "Mail automatique Orgarif"

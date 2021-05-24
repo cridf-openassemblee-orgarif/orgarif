@@ -15,6 +15,7 @@ data class RequestError(
     val stackTrace: ReadableStackTrace?
 )
 
+// FIXMENOW pv remove a priori, avec le ReadableStackTraceSerializer
 data class ReadableStackTrace(val exception: Throwable?) {
     fun toReadableString(): String? = if (exception != null) ExceptionUtils.getStackTrace(exception) else null
 }

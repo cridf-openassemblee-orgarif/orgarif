@@ -6,7 +6,7 @@ import orgarif.service.DateService
 
 @Service
 class UpdateOrganismeNatureJuridiqueCommandHandler(val organismeDao: OrganismeDao, val dateService: DateService) :
-    NeutralCommandHandler<UpdateOrganismeNatureJuridiqueCommand, EmptyCommandResponse>() {
+    CommandHandler.Handler<UpdateOrganismeNatureJuridiqueCommand, EmptyCommandResponse>() {
 
     override fun handle(command: UpdateOrganismeNatureJuridiqueCommand):
             EmptyCommandResponse {
