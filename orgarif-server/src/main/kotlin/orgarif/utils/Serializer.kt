@@ -5,6 +5,11 @@ import com.fasterxml.jackson.databind.ObjectMapper
 import com.fasterxml.jackson.databind.module.SimpleModule
 import com.fasterxml.jackson.module.kotlin.KotlinModule
 import com.fasterxml.jackson.module.kotlin.readValue
+import kotlinx.serialization.ExperimentalSerializationApi
+import kotlinx.serialization.encodeToString
+import kotlinx.serialization.decodeFromString
+import kotlinx.serialization.json.Json
+import kotlinx.serialization.modules.SerializersModule
 import org.reflections.Reflections
 import org.reflections.util.ClasspathHelper
 import org.reflections.util.ConfigurationBuilder
@@ -23,13 +28,19 @@ import kotlin.reflect.KClass
 
 object Serializer {
 
+    private val module = SerializersModule {
+//        contextual(UUIDSerializerNg)
+    }
+
     val idsPackage = OrgarifId::class.java.packageName
 
     val objectMapper: ObjectMapper = ObjectMapper().apply { configure(this) }
 
-    fun serialize(value: Any): String = objectMapper.writeValueAsString(value)
+    val format = Json { serializersModule = module }
 
-    inline fun <reified T> deserialize(json: String): T = objectMapper.readValue(json)
+    inline fun <reified T> serialize(value: T): String = Json.encodeToString(value)
+
+    inline fun <reified T> deserialize(json: String): T = Json.decodeFromString(json)
 
     fun configure(objectMapper: ObjectMapper) {
         val module = SimpleModule().apply {

@@ -2,31 +2,41 @@ package orgarif.command
 
 import RepresentantOrSuppleant
 import com.fasterxml.jackson.annotation.JsonTypeInfo
+import kotlinx.serialization.Serializable
 import orgarif.domain.*
 import java.time.LocalDate
+import javax.servlet.http.HttpServletRequest
+import javax.servlet.http.HttpServletResponse
 
 @JsonTypeInfo(use = JsonTypeInfo.Id.NAME, include = JsonTypeInfo.As.PROPERTY, property = "objectType")
+@Serializable
 sealed class Command
 
 sealed class CommandResponse
 
+@Serializable
 object EmptyCommandResponse : CommandResponse()
 
+@Serializable
 data class AddInstanceCommand(
     val nomInstance: String,
     val organismeId: OrganismeId
 ) : Command()
 
+@Serializable
 data class AddInstanceCommandResponse(val id: InstanceId) : CommandResponse()
 
+@Serializable
 data class AddLienDeliberationCommand(
     val deliberationId: DeliberationId,
     val organismeId: OrganismeId,
     val instanceId: InstanceId?
 ) : Command()
 
+@Serializable
 data class AddLienDeliberationCommandResponse(val lienDeliberationId: LienDeliberationId) : CommandResponse()
 
+@Serializable
 data class AddRepresentantCommand(
     val eluId: EluId,
     val organismeId: OrganismeId,
@@ -34,6 +44,7 @@ data class AddRepresentantCommand(
     val representantOrSuppleant: RepresentantOrSuppleant
 ) : Command()
 
+@Serializable
 data class AddRepresentantCommandResponse(val id: RepresentantId) : CommandResponse()
 
 data class CreateDeliberationAndAddLienCommand(

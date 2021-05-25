@@ -1,5 +1,6 @@
 package orgarif
 
+import kotlinx.serialization.json.Json
 import org.springframework.boot.SpringApplication
 import org.springframework.boot.autoconfigure.SpringBootApplication
 import org.springframework.boot.autoconfigure.security.servlet.UserDetailsServiceAutoConfiguration
@@ -14,6 +15,7 @@ import java.util.*
 class OrgarifApplication {
 
     companion object {
+
         @JvmStatic
         fun main(args: Array<String>) {
             val env = System.getenv("env") ?: ApplicationEnvironment.dev.name

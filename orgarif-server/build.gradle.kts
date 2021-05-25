@@ -10,6 +10,7 @@ object Versions {
 plugins {
     val kotlinVersion = "1.5.0"
     kotlin("jvm") version kotlinVersion
+    kotlin("plugin.serialization") version kotlinVersion
     id("io.spring.dependency-management") version "1.0.11.RELEASE"
     id("org.springframework.boot") version "2.5.0"
     // so we don't need to open Spring components classes
@@ -41,6 +42,7 @@ dependencies {
     // kotlin
     implementation("org.jetbrains.kotlin:kotlin-stdlib:$kotlinVersion")
     implementation("org.jetbrains.kotlin:kotlin-reflect:$kotlinVersion")
+    implementation("org.jetbrains.kotlinx:kotlinx-serialization-json:1.2.1")
 
     // spring
     implementation("org.springframework.boot:spring-boot-starter-web")
@@ -57,6 +59,7 @@ dependencies {
     // utils
     implementation("org.apache.commons:commons-lang3:3.6")
     implementation("commons-codec:commons-codec:1.14")
+    // FIXMENOW remove ?
     implementation("com.fasterxml.jackson.module:jackson-module-kotlin:2.11.0")
     implementation("org.reflections:reflections:0.9.10")
     implementation("com.squareup.okhttp3:okhttp:4.2.2")
