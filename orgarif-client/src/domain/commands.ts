@@ -1,4 +1,4 @@
-import { LoginResult, RegisterResult, UserInfos } from '../domain/user';
+import { LoginResult, RegisterResult, UserInfos } from './user';
 import {
   DeliberationId,
   EluId,

@@ -7,7 +7,6 @@ import jooqutils.JooqGeneration
 import mu.KotlinLogging
 import java.io.File
 import java.io.FileInputStream
-import java.nio.file.Path
 import java.nio.file.Paths
 import java.util.*
 
