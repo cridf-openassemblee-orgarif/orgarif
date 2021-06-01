@@ -1,8 +1,6 @@
-package orgarif.command
+package orgarif.query
 
 import orgarif.domain.UserSession
-import orgarif.query.Query
-import orgarif.query.QueryResponse
 
 
 interface QueryHandler<Q : Query, R : QueryResponse> {

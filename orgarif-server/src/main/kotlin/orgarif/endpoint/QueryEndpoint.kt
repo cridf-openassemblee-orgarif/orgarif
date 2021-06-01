@@ -2,7 +2,7 @@ package orgarif.endpoint
 
 import org.springframework.web.bind.annotation.GetMapping
 import org.springframework.web.bind.annotation.RestController
-import orgarif.command.QueryHandler
+import orgarif.query.QueryHandler
 import orgarif.domain.AuthenticationLevel
 import orgarif.error.OrgarifSecurityException
 import orgarif.query.*
