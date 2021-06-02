@@ -4,6 +4,7 @@ import mu.KotlinLogging
 import org.springframework.beans.factory.annotation.Value
 import org.springframework.stereotype.Service
 import orgarif.config.ApplicationConstants
+import orgarif.config.Routes
 import orgarif.controller.IndexController
 import orgarif.controller.InvalidateMagicLinkTokenController
 import orgarif.domain.MailReference
@@ -33,7 +34,7 @@ class LostPasswordMailSenderService(
     fun sendMail(user: UserDao.Record) {
         val magicToken = magicLinkTokenService.createToken(user.id)
         val magicUrl =
-            "$appUrl${IndexController.loginUpdatePasswordRoute}?${IndexController.magicTokenParameterName}=$magicToken"
+            "$appUrl${Routes.loginUpdatePassword}?${IndexController.magicTokenParameterName}=$magicToken"
         val invalidateUrl =
             "$appUrl${InvalidateMagicLinkTokenController.invalidateTokenUri}?${IndexController.magicTokenParameterName}=$magicToken"
         val data = LostPasswordMailPayload(magicUrl, invalidateUrl)

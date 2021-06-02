@@ -7,6 +7,7 @@ import org.springframework.beans.factory.annotation.Value
 import org.springframework.stereotype.Controller
 import org.springframework.web.bind.annotation.GetMapping
 import org.springframework.web.servlet.ModelAndView
+import orgarif.config.Routes
 import orgarif.domain.ApplicationBootstrapData
 import orgarif.domain.OrganismeCategories
 import orgarif.domain.UserInfos
@@ -28,7 +29,6 @@ class IndexController(
     @Value("\${assets.webpackDevHost}") val assetsWebpackDevHost: String,
     @Value("\${assets.useBuildFiles}") val assetsUseBuildFiles: Boolean,
 
-
     val userDao: UserDao,
     val secteurDao: SecteurDao,
     val natureJuridiqueDao: NatureJuridiqueDao,
@@ -42,12 +42,6 @@ class IndexController(
 ) {
 
     companion object {
-        // TODO [] mapping avec front
-        const val rootRoute = "/"
-        const val loginRoute = "/login"
-        const val logoutRoute = "/logout"
-        const val loginUpdatePasswordRoute = "/login/mot-de-passe"
-        const val newPasswordRoute = "/mot-de-passe-perdu"
         const val magicTokenParameterName = "magicToken"
 
         val statics = BeansWrapperBuilder(Configuration.DEFAULT_INCOMPATIBLE_IMPROVEMENTS).build().staticModels
@@ -64,7 +58,7 @@ class IndexController(
         if (assetsUseBuildFiles) {
             assets.filter { it.endsWith(".js") }
         } else {
-            listOf("bundle.js", "0.chunk.js", "main.chunk.js")
+            listOf("bundle.js", "vendors~main.chunk.js", "main.chunk.js")
                 .map { "$assetsWebpackDevHost/static/js/$it" }
         }
     }
@@ -76,10 +70,10 @@ class IndexController(
         }
     }
 
-    @GetMapping(logoutRoute)
-    fun redirect() = "redirect:/"
+    @GetMapping(Routes.logout)
+    fun redirect() = "redirect:${Routes.root}"
 
-    @GetMapping("/", "/**/{path:[^\\.]*}")
+    @GetMapping(Routes.root, "/**/{path:[^\\.]*}")
     fun index(request: HttpServletRequest, response: HttpServletResponse, mav: ModelAndView): ModelAndView {
         val magicToken = request.getParameter(magicTokenParameterName)
         if (magicToken != null) {
@@ -131,5 +125,5 @@ class IndexController(
                 }.reduce { acc, s -> acc + "&" + s }
         }
     }
-
 }
+

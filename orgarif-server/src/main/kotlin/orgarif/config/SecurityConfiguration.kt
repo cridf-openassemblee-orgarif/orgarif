@@ -7,8 +7,6 @@ import org.springframework.security.config.annotation.web.builders.WebSecurity
 import org.springframework.security.config.annotation.web.configuration.EnableWebSecurity
 import org.springframework.security.config.annotation.web.configuration.WebSecurityConfigurerAdapter
 import org.springframework.security.web.csrf.CookieCsrfTokenRepository
-import orgarif.controller.IndexController.Companion.loginRoute
-import orgarif.controller.IndexController.Companion.logoutRoute
 
 @Configuration
 @EnableWebSecurity
@@ -35,11 +33,11 @@ class SecurityConfiguration(
                 authenticationEntryPoint { _, response, _ -> response.sendError(403, "Access Denied") }
             }
             with(logout()) {
-                logoutUrl(logoutRoute)
+                logoutUrl(Routes.logout)
                 logoutSuccessHandler { _, response, _ ->
                     response.status = 200
                     // [doc] appUrl is used, or else Spring redirects to http
-                    response.sendRedirect(appUrl + loginRoute)
+                    response.sendRedirect(appUrl + Routes.login)
                 }
                 permitAll()
             }

@@ -9,6 +9,7 @@ import org.springframework.web.bind.annotation.RequestMapping
 import org.springframework.web.bind.annotation.RestController
 import org.springframework.web.context.request.WebRequest
 import org.springframework.web.servlet.ModelAndView
+import orgarif.config.Routes
 import orgarif.controller.IndexController
 import orgarif.domain.RequestErrorId
 import orgarif.service.RandomService
@@ -43,7 +44,7 @@ class ApplicationErrorController(
             )
         )
         // [doc] in case logout is quickly called twice
-        if (response.status == 403 && errorMap["path"] == IndexController.logoutRoute) {
+        if (response.status == 403 && errorMap["path"] == Routes.logout) {
             logger.trace { "Some user logged out twice" }
             return ModelAndView("redirect:/")
         }
