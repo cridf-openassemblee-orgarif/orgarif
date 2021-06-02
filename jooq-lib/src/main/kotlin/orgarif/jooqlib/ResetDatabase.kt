@@ -3,16 +3,16 @@ package orgarif.jooqlib
 import jooqutils.DatabaseCleaner
 import jooqutils.DatabaseConfiguration
 import jooqutils.DatabaseInitializer
-import orgarif.jooqlib.GenerateJooq.configuration
-import orgarif.jooqlib.GenerateJooq.sqlFilesPath
+import orgarif.jooqlib.GenerateJooqAndDiff.configuration
+import orgarif.jooqlib.GenerateJooqAndDiff.sqlCleanResultFile
+import orgarif.jooqlib.GenerateJooqAndDiff.sqlInitiateSchemaResultFile
+import orgarif.jooqlib.GenerateJooqAndDiff.sqlInsertFilesDir
+import orgarif.jooqlib.GenerateJooqAndDiff.sqlSchemaFilesDir
 import mu.KotlinLogging
-import orgarif.jooqlib.GenerateJooq.sqlCleanResultPath
-import orgarif.jooqlib.GenerateJooq.sqlInitiateSchemaResultPath
-import java.nio.file.Path
 
 fun main() {
     System.setProperty("logback.configurationFile", "logback-jooq-tooling.xml")
-    ResetDatabase.resetDatabaseSchemaAndInitialData(configuration)
+    ResetDatabase.resetDatabaseSchema(configuration, true)
     ResetDatabase.logger.info { "[OK] reset database \"${configuration.databaseName}\"" }
 }
 
@@ -20,14 +20,17 @@ object ResetDatabase {
     // TODO[doc] de la possibilité de supprimer dossier generated s'il y a un pb
     internal val logger = KotlinLogging.logger {}
 
-    fun resetDatabaseSchemaAndInitialData(configuration: DatabaseConfiguration) {
-        logger.info { "Reset database \"${configuration.databaseName}\", using data directory : ${sqlFilesPath}" }
+    fun resetDatabaseSchema(configuration: DatabaseConfiguration, insertInitialData: Boolean) {
+        logger.info { "Reset database \"${configuration.databaseName}\", using directory : $sqlSchemaFilesDir" }
         logger.info { "Create database \"${configuration.databaseName}\"" }
         DatabaseInitializer.createDb(configuration)
         logger.info { "Clean database \"${configuration.databaseName}\"" }
-        DatabaseCleaner.clean(configuration, sqlCleanResultPath)
+        DatabaseCleaner.clean(configuration, sqlCleanResultFile)
         logger.info { "Initialize database schema \"${configuration.databaseName}\"" }
-        DatabaseInitializer.initializeSchema(configuration, sqlFilesPath, sqlInitiateSchemaResultPath)
+        DatabaseInitializer.initializeSchema(configuration, sqlSchemaFilesDir, sqlInitiateSchemaResultFile)
+        if (insertInitialData) {
+            logger.info { "Insert initial data, using directory : $sqlInsertFilesDir" }
+            DatabaseInitializer.insert(configuration, sqlInsertFilesDir)
+        }
     }
 }
-

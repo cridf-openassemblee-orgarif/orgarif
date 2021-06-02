@@ -1,0 +1,27 @@
+server.port: 8300
+# localhost database
+database:
+  host: localhost
+  port: 5432
+  name: orgarif
+#---------------------------------------------------------------------------
+#env: dev
+# TODO[config] pas les / à la fin des urls
+# configuration validation
+app.url: http://devorgarif:8300
+#---------------------------------------------------------------------------
+injectFakeData: true
+#---------------------------------------------------------------------------
+assets:
+  webpackDevHost: http://localhost:3300
+  useBuildFiles: false
+#---------------------------------------------------------------------------
+mailjet:
+  api-key:
+  secret-key:
+#---------------------------------------------------------------------------
+intercom.secretKey:
+#---------------------------------------------------------------------------
+doSynchronizeElus: true
+elusSynchronizationUrl: http://127.0.0.1:8080/api/publicdata/v2/elus
+#---------------------------------------------------------------------------

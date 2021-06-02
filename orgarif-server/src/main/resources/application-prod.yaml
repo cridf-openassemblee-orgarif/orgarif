@@ -1,0 +1,32 @@
+app.url: https://orgarif.mlorber.net
+logging.config: classpath:logback-prod.xml
+reverseProxy: true
+#---------------------------------------------------------------------------
+database:
+  host: ${POSTGRESQL_ADDON_HOST}
+  port: ${POSTGRESQL_ADDON_PORT}
+  name: ${POSTGRESQL_ADDON_DB}
+  user: ${POSTGRESQL_ADDON_USER}
+  password: ${POSTGRESQL_ADDON_PASSWORD}
+spring:
+  datasource:
+    tomcat:
+      initialSize: 5
+      minIdle: 5
+      maxIdle: 10
+      maxActive: 10
+#---------------------------------------------------------------------------
+assets.useBuildFiles: true
+#---------------------------------------------------------------------------
+injectFakeData: false
+#---------------------------------------------------------------------------
+doSynchronizeElus: true
+elusSynchronizationUrl: https://siger.mlorber.net/api/publicdata/v2/elus
+#---------------------------------------------------------------------------
+mailjet:
+  url: https://api.mailjet.com/v3.1/send
+  api-key:
+  secret-key:
+#---------------------------------------------------------------------------
+intercom.secretKey:
+#---------------------------------------------------------------------------
