@@ -1,0 +1,13 @@
+# Gradle
+/.gradle
+/build
+/jooq-lib/build
+/orgarif-client/.gradle
+/orgarif-client/build
+/orgarif-server/build
+
+# Intellj
+/.idea
+
+# npm
+/orgarif-client/node_modules

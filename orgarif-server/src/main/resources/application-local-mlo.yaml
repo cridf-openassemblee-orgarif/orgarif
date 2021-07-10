@@ -1,0 +1,6 @@
+database:
+  user: mlo
+  password:
+assets.useBuildFiles: true
+mail:
+  devDestination: mp.lorber+log-orgarif@gmail.com
