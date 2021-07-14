@@ -1,4 +1,4 @@
-package orgarif.endpoint
+package orgarif.controller
 
 import mu.KotlinLogging
 import org.apache.commons.lang3.exception.ExceptionUtils
@@ -16,7 +16,6 @@ import orgarif.service.ApplicationInstance
 import orgarif.service.DateService
 import orgarif.service.IdCreationLoggerService
 import orgarif.service.RandomService
-import orgarif.service.user.IpService
 import orgarif.service.user.UserSessionHelper
 import orgarif.utils.Serializer.deserialize
 import orgarif.utils.Serializer.serialize
@@ -24,12 +23,11 @@ import javax.servlet.http.HttpServletRequest
 import javax.servlet.http.HttpServletResponse
 
 @RestController
-class CommandEndpoint(
+class CommandController(
     val commandLogDao: CommandLogDao,
     val userDao: UserDao,
 
     val applicationInstance: ApplicationInstance,
-    val ipService: IpService,
     val dateService: DateService,
     val randomService: RandomService,
     val transactionManager: PlatformTransactionManager,
@@ -76,7 +74,7 @@ class CommandEndpoint(
                 deploymentLogId = applicationInstance.deploymentId,
                 commandClass = command.javaClass,
                 jsonCommand = filteredJsonCommand,
-                ip = ipService.getClientIp(request),
+                ip = request.remoteAddr,
                 userSessionId = userSession?.sessionId,
                 resultingIds = null,
                 jsonResult = null,

@@ -20,7 +20,6 @@ import javax.servlet.http.HttpServletResponse
 class UserSessionService(
     val cookieCsrfTokenRepository: CookieCsrfTokenRepository,
     val userDao: UserDao,
-    val ipService: IpService,
     val userSessionLogDao: UserSessionLogDao,
     val applicationInstance: ApplicationInstance,
     val dateService: DateService,
@@ -43,7 +42,7 @@ class UserSessionService(
         session.maxInactiveInterval = sessionDuration.seconds.toInt()
 
         val now = dateService.now()
-        val ip = ipService.getClientIp(request)
+        val ip = request.remoteAddr
         userSessionLogDao.insert(
             UserSessionLogDao.Record(
                 sessionId, session.id, user.id,

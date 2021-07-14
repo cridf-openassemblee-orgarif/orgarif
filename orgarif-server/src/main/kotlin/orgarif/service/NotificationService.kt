@@ -15,8 +15,8 @@ class NotificationService(
     private val logger = KotlinLogging.logger {}
 
     enum class Channel {
-        NEW_USER,
-        INFO,
+        newUser,
+        info,
     }
 
     fun notify(message: String, channel: Channel) {

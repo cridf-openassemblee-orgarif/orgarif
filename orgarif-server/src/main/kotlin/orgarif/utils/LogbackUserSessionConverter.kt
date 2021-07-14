@@ -7,8 +7,6 @@ import java.lang.reflect.Method
 
 class LogbackUserSessionConverter : ClassicConverter() {
 
-    var method: Method? = null
-
     override fun convert(event: ILoggingEvent) =
         if (SecurityContextHolder.getContext().authentication != null
             && SecurityContextHolder.getContext().authentication.isAuthenticated

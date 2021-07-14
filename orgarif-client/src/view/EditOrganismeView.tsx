@@ -13,9 +13,8 @@ import { EditOrganismeRoute } from '../routing/routes';
 export const EditOrganismeView = (props: {
   routeParams: EditOrganismeRoute;
 }) => {
-  const [organisme, setOrganisme] = useState<FullOrganisme | undefined>(
-    undefined
-  );
+  const [organisme, setOrganisme] =
+    useState<FullOrganisme | undefined>(undefined);
   const [loading, setLoading] = useState(false);
   useEffect(() => {
     setLoading(true);

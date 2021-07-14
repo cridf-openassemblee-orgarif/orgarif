@@ -78,7 +78,8 @@ data class MoveRepresentantCommand(
 
 data class RegisterCommand(
     val mail: String,
-    val password: PlainStringPassword
+    val password: PlainStringPassword,
+    val displayName: String
 ) : Command()
 
 data class RegisterCommandResponse(

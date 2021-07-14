@@ -12,7 +12,7 @@ import org.springframework.test.context.junit4.SpringJUnit4ClassRunner
 internal class OrgarifApplicationSpringContextTest {
 
     init {
-        ResetTestDatabase.reset()
+        ResetTestDatabase.reset(false)
     }
 
     @Test

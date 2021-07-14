@@ -16,9 +16,8 @@ import { assertUnreachable } from '../utils';
 
 export const LoginView = () => {
   const [userInfos, setUserInfos] = useRecoilState(state.userInfos);
-  const [loginResult, setLoginResult] = useState<LoginResult | undefined>(
-    undefined
-  );
+  const [loginResult, setLoginResult] =
+    useState<LoginResult | undefined>(undefined);
   const login = (data: LoginFormDto) => {
     appContext
       .commandService()
@@ -26,15 +25,16 @@ export const LoginView = () => {
       .then(r => {
         setLoginResult(r.result);
         switch (r.result) {
-          case 'LOGGED_IN':
+          case 'loggedIn':
             if (!r.userinfos) {
               throw Errors._198c103e();
             }
             appContext.csrfTokenService().refreshToken();
             setUserInfos(r.userinfos);
+            appContext.applicationHistory().goTo({ name: 'RootRoute' });
             break;
-          case 'USER_NOT_FOUND':
-          case 'BAD_PASSWORD':
+          case 'userNotFound':
+          case 'badPassword':
             break;
           default:
             assertUnreachable(r.result);
@@ -62,7 +62,7 @@ export const LoginView = () => {
               width: 400px;
             `}
           >
-            {loginResult !== 'LOGGED_IN' && !userInfos && (
+            {loginResult !== 'loggedIn' && !userInfos && (
               <LoginForm onSubmit={login} />
             )}
             {!userInfos && applicationBootstrapData.env === 'dev' && (
@@ -120,11 +120,11 @@ export const LoginView = () => {
               >
                 {(() => {
                   switch (loginResult) {
-                    case 'LOGGED_IN':
+                    case 'loggedIn':
                       return null;
-                    case 'USER_NOT_FOUND':
+                    case 'userNotFound':
                       return <div>Utilisateur non trouvé</div>;
-                    case 'BAD_PASSWORD':
+                    case 'badPassword':
                       return <div>Mauvais mot de passe</div>;
                     default:
                       assertUnreachable(loginResult);

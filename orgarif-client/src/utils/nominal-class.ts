@@ -12,15 +12,15 @@ export const stringifyNominalString = (value: NominalString<any> | string) =>
   value as string;
 
 export const numberifyNominalNumber = (value: NominalNumber<any>) =>
-  (value as unknown) as number;
+  value as unknown as number;
 
 export const instanciateNominalString = <T extends NominalString<any>>(
   value: string
-) => (value as unknown) as T;
+) => value as unknown as T;
 
 export const instanciateNominalNumber = <T extends NominalNumber<any>>(
   value: number
-) => (value as unknown) as T;
+) => value as unknown as T;
 
 export class Dict<K extends NominalItem, T> {
   private _typeGuardKey!: K;
@@ -70,15 +70,15 @@ export const setMutable = <K extends NominalItem, T>(
 };
 
 export const dictKeys = <K extends NominalItem, T>(dict: Dict<K, T>) =>
-  (Object.keys(dict) as unknown) as K[];
+  Object.keys(dict) as unknown as K[];
 
 export const dictValues = <K extends NominalItem, T>(dict: Dict<K, T>) =>
   Object.values(dict) as T[];
 
 export const dictEntries = <K extends NominalItem, T>(dict: Dict<K, T>) =>
-  (Object.entries(dict) as unknown) as [K, T][];
+  Object.entries(dict) as unknown as [K, T][];
 
-// FIXME remove usage pour un deleteItem immuable
+// FIXME remove usage for an immutable deleteItem
 export const deleteItemOld = <K extends NominalItem, T>(
   dict: Dict<K, T>,
   key: K

@@ -23,8 +23,8 @@ class MagicLinkTokenService(
 
     private val logger = KotlinLogging.logger {}
 
-    // TODO[magictoken] ça va en db aussi ça
-    // mettre moins et afficher un message quand c'est plus bon...
+    // TODO[magictoken] is going in database too
+    // use a shorter validity + display a clear message on the front when it became invalid
 //    val validityDuration = Duration.of(15, ChronoUnit.MINUTES)
     val validityDuration = Duration.of(24, ChronoUnit.HOURS)
 
@@ -54,7 +54,7 @@ class MagicLinkTokenService(
         }
         val user = userDao.fetch(token.userId) ?: throw IllegalArgumentException("No user for token $token")
         userSessionService.authenticateUser(user, request, response)
-        // TODO[magictoken] update pour invalidate ?? si non doc
+        // TODO[magictoken] update to invalidate ?? if not, doc
     }
 
     fun invalidate(magicToken: String) {

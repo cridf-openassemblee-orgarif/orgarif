@@ -1,0 +1,11 @@
+database:
+  host: orgarif-psql
+  user: docker-psql-user
+  password: docker-psql-password
+# TODO param docker compose
+mail:
+  devDestination: mp.lorber+log-orgarif@gmail.com
+pgquarrel:
+assets:
+  browserWebpackDevHost: http://localhost:3300
+  serverWebpackDevHost: http://orgarif-client:3300

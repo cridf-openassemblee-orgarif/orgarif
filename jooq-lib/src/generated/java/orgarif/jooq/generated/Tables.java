@@ -18,6 +18,7 @@ import orgarif.jooq.generated.tables.OrganismeTable;
 import orgarif.jooq.generated.tables.RepresentantTable;
 import orgarif.jooq.generated.tables.SecteurTable;
 import orgarif.jooq.generated.tables.TypeStructureTable;
+import orgarif.jooq.generated.tables.UserFileTable;
 import orgarif.jooq.generated.tables.UserSessionLogTable;
 
 
@@ -96,6 +97,11 @@ public class Tables {
      * The table <code>public.type_structure</code>.
      */
     public static final TypeStructureTable TYPE_STRUCTURE = TypeStructureTable.TYPE_STRUCTURE;
+
+    /**
+     * The table <code>public.user_file</code>.
+     */
+    public static final UserFileTable USER_FILE = UserFileTable.USER_FILE;
 
     /**
      * The table <code>public.user_session_log</code>.

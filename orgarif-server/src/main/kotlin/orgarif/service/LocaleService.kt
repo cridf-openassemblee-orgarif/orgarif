@@ -19,7 +19,7 @@ class LocaleService(val notificationService: NotificationService) {
         }
         notificationService.notify(
             "No locale found in user locales $locales",
-            NotificationService.Channel.INFO
+            NotificationService.Channel.info
         )
         return Language.en
     }

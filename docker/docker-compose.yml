@@ -1,0 +1,23 @@
+services:
+  orgarif-client:
+    build: orgarif-client
+    ports:
+      - "3300:3300"
+    volumes:
+      - ../:/repo
+  orgarif-server:
+    build: orgarif-server
+    ports:
+      - "8300:8300"
+    depends_on:
+      - orgarif-psql
+    environment:
+      ORGARIF_DEV_ADDITIONAL_CONFIG: dev-docker
+    volumes:
+      - ../:/repo
+  orgarif-psql:
+    image: postgres:13.3
+    environment:
+      POSTGRES_USER: docker-psql-user
+      POSTGRES_DB: orgarif
+      POSTGRES_PASSWORD: docker-psql-password

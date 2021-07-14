@@ -17,8 +17,9 @@ export type OrgarifId =
   | RequestErrorId
   | SecteurId
   | TypeStructureId
+  | UserFileId
   | UserId
-  | UserSessionId
+  | UserSessionId;
 
 export type CommandLogId = NominalString<'CommandLogId'>;
 export type DeliberationId = NominalString<'DeliberationId'>;
@@ -36,5 +37,6 @@ export type RepresentantId = NominalString<'RepresentantId'>;
 export type RequestErrorId = NominalString<'RequestErrorId'>;
 export type SecteurId = NominalString<'SecteurId'>;
 export type TypeStructureId = NominalString<'TypeStructureId'>;
+export type UserFileId = NominalString<'UserFileId'>;
 export type UserId = NominalString<'UserId'>;
 export type UserSessionId = NominalString<'UserSessionId'>;

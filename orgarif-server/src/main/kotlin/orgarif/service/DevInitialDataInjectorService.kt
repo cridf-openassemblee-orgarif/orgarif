@@ -9,8 +9,9 @@ import orgarif.domain.UserId
 import orgarif.repository.UserDao
 
 @Service
+// TODO naming fake / sample
 class DevInitialDataInjectorService(
-    @Value("\${developerMail}") val developerMail: String,
+    @Value("\${mail.devDestination}") val developerDestinationMail: String,
     val userDao: UserDao,
     val dateService: DateService,
     val randomService: RandomService,
@@ -19,9 +20,10 @@ class DevInitialDataInjectorService(
 
     fun initiateDevUsers() {
         val (mailPrefix, mailSuffix) = run {
-            val arobaseIndex = developerMail.indexOf('@')
-            val mailPrefix = developerMail.substring(0, arobaseIndex)
-            val mailSuffix = developerMail.substring(arobaseIndex)
+            // FIXME double + if some + in conf (which is the case...) !
+            val arobaseIndex = developerDestinationMail.indexOf('@')
+            val mailPrefix = developerDestinationMail.substring(0, arobaseIndex)
+            val mailSuffix = developerDestinationMail.substring(arobaseIndex)
             mailPrefix to mailSuffix
         }
         insertUser("user", false, mailPrefix, mailSuffix)
@@ -35,10 +37,12 @@ class DevInitialDataInjectorService(
                     id = randomService.id(),
                     mail = "$mailPrefix+$username$mailSuffix",
                     username = username,
+                    displayName = username,
                     language = Language.en,
                     signupDate = dateService.now(),
                     admin = admin,
-                    dirtyMail = null
+                    dirtyMail = null,
+                    formerMails = emptyList()
                 ), HashedPassword(passwordEncoder.encode(username))
             )
         }

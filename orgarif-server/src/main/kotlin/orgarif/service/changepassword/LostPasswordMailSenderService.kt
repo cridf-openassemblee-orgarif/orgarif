@@ -13,6 +13,7 @@ import orgarif.service.HttpService
 import orgarif.service.MailService
 import orgarif.service.user.MagicLinkTokenService
 import orgarif.utils.Serializer.serialize
+import orgarif.config.Routes
 
 @Service
 class LostPasswordMailSenderService(
@@ -33,7 +34,7 @@ class LostPasswordMailSenderService(
     fun sendMail(user: UserDao.Record) {
         val magicToken = magicLinkTokenService.createToken(user.id)
         val magicUrl =
-            "$appUrl${IndexController.loginUpdatePasswordRoute}?${IndexController.magicTokenParameterName}=$magicToken"
+            "$appUrl${Routes.loginUpdatePassword}?${IndexController.magicTokenParameterName}=$magicToken"
         val invalidateUrl =
             "$appUrl${InvalidateMagicLinkTokenController.invalidateTokenUri}?${IndexController.magicTokenParameterName}=$magicToken"
         val data = LostPasswordMailPayload(magicUrl, invalidateUrl)
@@ -46,7 +47,7 @@ class LostPasswordMailSenderService(
             user.mail,
             "Change your password",
             mailContent,
-            MailReference.LOST_PASSWORD,
+            MailReference.lostPassword,
             MailService.MailLog.doLog,
             MailService.MailLogProperties(
                 applicationInstance.deploymentId,
@@ -65,7 +66,7 @@ class LostPasswordMailSenderService(
 //            else -> throw RuntimeException("Node server responded ${httpResponse.code}, message : ${httpResponse.body}")
 //        }
         // TODO[user]
-        return "coucou"
+        return "bonjour"
     }
 
 }

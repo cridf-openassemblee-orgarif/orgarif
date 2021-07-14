@@ -3,7 +3,7 @@ package orgarif.service.utils
 import mu.KotlinLogging
 import org.springframework.core.task.TaskExecutor
 
-// TODO[fmk] executorName vs le nom du thread d'executor
+// TODO[fmk] executorName vs the name of executor thread
 class ApplicationTaskExecutor(val taskExecutor: TaskExecutor, val executorName: String) {
 
     private val logger = KotlinLogging.logger {}
@@ -12,9 +12,9 @@ class ApplicationTaskExecutor(val taskExecutor: TaskExecutor, val executorName: 
         taskExecutor.execute {
             try {
                 task()
-                // TODO[error] de l'intérêt d'isoler la gestion des erreurs
-                // sauf que là async, donc pas de mess à l'user par ex
-                // une branch dans mes schemas, ça...
+                // TODO[error] about error handling centralization...
+                // but is async here, no message to the user (for example)
+                // => it's a branch in error exception handling doc schema
             } catch (e: Throwable) {
                 logger.warn(e) { "Uncaught exception in $executorName taskExecutor" }
             }

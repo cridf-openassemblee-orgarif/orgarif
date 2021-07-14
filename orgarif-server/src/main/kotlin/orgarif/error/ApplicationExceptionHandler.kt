@@ -35,8 +35,8 @@ class ApplicationExceptionHandler(
 
     @ExceptionHandler(Exception::class)
     fun defaultErrorHandler(request: WebRequest, response: HttpServletResponse, exception: Exception): ModelAndView {
-        // TODO[secu] traitements exceptions
-        // pr log userid, mail, ip
+        // TODO[secu] handle exceptions
+        // log userid, mail, ip
         val id = randomService.id<RequestErrorId>()
         val readableStackTrace =
             if (applicationInstance.env == ApplicationEnvironment.dev ||
@@ -106,7 +106,7 @@ class ApplicationExceptionHandler(
                 // centraliser les strings user qui viennent du back
                 return render(
                     request, response, RequestError(
-                        id, 500, "Erreur", "Erreur inconnue",
+                        id, 500, "Error", "Unknown error",
                         dateService.now(), readableStackTrace
                     )
                 )

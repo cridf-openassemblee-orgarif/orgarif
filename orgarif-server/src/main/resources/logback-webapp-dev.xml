@@ -4,7 +4,7 @@
     <appender name="stdout" class="ch.qos.logback.core.ConsoleAppender">
         <encoder name="enc" class="ch.qos.logback.core.encoder.LayoutWrappingEncoder">
             <layout class="orgarif.utils.LogbackPatternLayout">
-                <pattern>%d{MM-dd HH:mm:ss} %-5level %-36logger{36} %m %userSession%n</pattern>
+                <pattern>%d{MM-dd HH:mm:ss} %-5level %-36logger{36} %m %userSession%ip%n</pattern>
             </layout>
         </encoder>
     </appender>
@@ -20,5 +20,4 @@
     <!-- Spring noise -->
     <logger name="orgarif.error.ApplicationExceptionHandlerExceptionResolver" level="WARN"/>
     <logger name="org.spring.aop.framework.CglibAopProxy" level="INFO"/>
-    <!--    <logger name="orgarif.command.MoveRepresentantCommandHandler" level="DEBUG"/>-->
 </configuration>

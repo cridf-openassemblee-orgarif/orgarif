@@ -42,10 +42,10 @@ class MagicLinkTokenDao(val jooq: DSLContext) {
     }
 
     private fun map(r: MagicLinkTokenRecord) = Record(
-        r.token,
-        r.userId.toTypeId(),
-        r.creationDate,
-        r.validity
+        token = r.token,
+        userId = r.userId.toTypeId(),
+        creationDate = r.creationDate,
+        validity = r.validity
     )
 
 }

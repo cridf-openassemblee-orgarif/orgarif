@@ -1,13 +1,9 @@
 import { ZoneId } from './date';
 import { UserId } from './ids';
 
-export type FilteredPdl = '************';
+export type LoginResult = 'loggedIn' | 'userNotFound' | 'badPassword';
 
-export type Civility = 'MR' | 'MRS';
-
-export type LoginResult = 'LOGGED_IN' | 'USER_NOT_FOUND' | 'BAD_PASSWORD';
-
-export type RegisterResult = 'REGISTERED' | 'MAIL_ALREADY_EXISTS';
+export type RegisterResult = 'registered' | 'mailAlreadyExists';
 
 export interface UserInfos {
   id: UserId;

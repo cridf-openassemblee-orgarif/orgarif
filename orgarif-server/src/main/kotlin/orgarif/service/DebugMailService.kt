@@ -13,7 +13,8 @@ class DebugMailService(
     @Value("\${mailjet.url}") val url: String,
     @Value("\${mailjet.api-key}") val apiKey: String,
     @Value("\${mailjet.secret-key}") val secretKey: String,
-    @Value("\${devLogMail}") val devLogMail: String,
+    @Value("\${mail.devLogSender}") val devLogSenderMail: String,
+    @Value("\${mail.devDestination}") val devDestinationMail: String,
     val applicationInstance: ApplicationInstance,
     val httpService: HttpService,
     val taskExecutor: ApplicationTaskExecutor
@@ -40,8 +41,8 @@ class DebugMailService(
             val body = DebugMailJetMessages(
                 listOf(
                     DebugMailJetMessage(
-                        MailJetMail(ApplicationConstants.applicationMail, "Orgarif app"),
-                        listOf(MailJetMail(devLogMail, "dev Orgarif")),
+                        MailJetMail(devLogSenderMail, "Orgarif app"),
+                        listOf(MailJetMail(devDestinationMail, "dev orgarif")),
                         "[${applicationInstance.env}] $mailSubject", mailContent, monitoringCategory
                     )
                 )
@@ -50,7 +51,7 @@ class DebugMailService(
             val r = try {
                 httpService.postAndReturnString(
                     url, json, HttpService.HttpMediaType.json,
-                    HttpService.Header.AUTHORIZATION to Credentials.basic(apiKey, secretKey)
+                    HttpService.Header.authorization to Credentials.basic(apiKey, secretKey)
                 )
             } catch (e: Exception) {
                 logger.error { "Failed to send debug mail" }

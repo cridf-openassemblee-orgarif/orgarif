@@ -20,14 +20,16 @@ class UserDao(val jooq: DSLContext) {
         val id: UserId,
         val mail: String,
         val username: String?,
+        val displayName: String,
         val language: Language,
         val admin: Boolean,
         val signupDate: Instant,
         // [doc] because some mail provider could choose to support character which usually aren't
         // differentiated from another or usually just supported
-        // TODO[user] ou osef, trace est gardée dans le command log ?
-        // d'autant plus que formerMails ne va pas garder les deux...
-        val dirtyMail: String?
+        // TODO[user] or we don't care, trace is kept in command log ?
+        // + former mails won't keep both
+        val dirtyMail: String?,
+        val formerMails: List<String>
     ) {
         override fun toString() = "User($id|$mail)"
     }
@@ -39,10 +41,12 @@ class UserDao(val jooq: DSLContext) {
             mail = r.mail
             username = r.username
             password = hashedPassword.hash
+            displayName = r.displayName
             language = r.language.name
             admin = r.admin
             signupDate = r.signupDate
             dirtyMail = r.dirtyMail
+            formerMails = r.formerMails.toTypedArray()
         }
 
         try {
@@ -106,10 +110,12 @@ class UserDao(val jooq: DSLContext) {
         id = r.id.toTypeId(),
         mail = r.mail,
         username = r.username,
+        displayName = r.displayName,
         language = Language.valueOf(r.language),
         signupDate = r.signupDate,
         admin = r.admin,
-        dirtyMail = r.dirtyMail
+        dirtyMail = r.dirtyMail,
+        formerMails = r.formerMails.toList()
     )
 
 }

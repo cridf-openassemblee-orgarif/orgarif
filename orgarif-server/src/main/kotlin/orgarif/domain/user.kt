@@ -13,12 +13,18 @@ enum class Language {
 data class UserInfos(
     val id: UserId,
     val mail: String,
+    val displayName: String,
     // [doc] is null if false, so "admin" field won't be obviously serialized for common users
     // TODO[secu] test
     val admin: Boolean?
 ) {
     companion object {
-        fun fromUser(user: UserDao.Record) = UserInfos(user.id, user.mail, if (user.admin) true else null)
+        fun fromUser(user: UserDao.Record) = UserInfos(
+            user.id,
+            user.mail,
+            user.displayName,
+            if (user.admin) true else null
+        )
     }
 }
 
@@ -31,8 +37,8 @@ sealed class Session
 
 // TODO[doc] to update :
 // UserSessionHelper.authenticateUser
-// UserSessionHelper.getUserSession (devrait péter)
-// TODO[fmk] check cette méthode
+// UserSessionHelper.getUserSession (should fail)
+// TODO[fmk] check this method
 /**
  * To update UserSession :
  * @JsonTypeName("UserSession-vX")
@@ -56,21 +62,21 @@ data class AuthResult(
 )
 
 enum class LoginResult {
-    LOGGED_IN, USER_NOT_FOUND, BAD_PASSWORD
+    loggedIn, userNotFound, badPassword
 }
 
 enum class RegisterResult {
-    REGISTERED, MAIL_ALREADY_EXISTS
+    registered, mailAlreadyExists
 }
 
 enum class UpdateIdentityResult {
-    UPDATED, MAIL_ALREADY_EXISTS
+    updated, mailAlreadyExists
 }
 
 data class RegisterAndAuthenticateResult(val user: UserDao.Record, val authResult: AuthResult)
 
 enum class SendLostPasswordMailResponse {
-    UNKNOWN_LOGIN, OK
+    unknownLogin, ok
 }
 
 // TODO[secu] check no pwd in logs, db... test ?

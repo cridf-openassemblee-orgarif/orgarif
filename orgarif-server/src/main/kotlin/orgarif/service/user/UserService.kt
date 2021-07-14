@@ -30,16 +30,17 @@ class UserService(
     private val logger = KotlinLogging.logger {}
 
     companion object {
-        // pas de suppression des accents qui sont supportés par la RFC...
+        // [doc] no automatic accent suppression : they're supported by the RFC...
         fun cleanMail(mail: String) = mail
             .trim()
             .toLowerCase()
             .replace(" ", "")
 
-        // TODO[fmk] ces validations vont ailleurs aussi. Also :
-        // * ne doivent pas dépasser les 255 chars de la db
+        // TODO[fmk] those validations should be done in another place too. Also :
+        // * should not be longer than 255 chars (because of the database)
         fun validateRegisterUserDto(c: RegisterCommand) {
             if (c.mail.isBlank()) throw IllegalArgumentException("Mail is blank")
+            if (c.displayName.isBlank()) throw IllegalArgumentException("Display name is blank")
         }
 
         fun cleanRegisterUserDto(c: RegisterCommand): Pair<RegisterCommand, String?> {
@@ -48,12 +49,14 @@ class UserService(
             // do not clone forces to update cleaning =)
             return Pair(
                 c.copy(
-                    mail = cleanMail
+                    mail = cleanMail,
+                    displayName = c.displayName.trim()
                 ),
                 if (dirtyMail != cleanMail) dirtyMail else null
             )
         }
 
+        // TODO
 //        fun cleanIdentityDto(dto: IdentityDto): IdentityDto {
 //            val dirtyMail = dto.mail.trim()
 //            val cleanMail = cleanMail(dto.mail)
@@ -80,13 +83,13 @@ class UserService(
         val authResult = userSessionService.authenticateUser(user, request, response)
         notificationService.notify(
             "${user.mail} just suscribed.",
-            NotificationService.Channel.NEW_USER
+            NotificationService.Channel.newUser
         )
         return RegisterAndAuthenticateResult(user, authResult)
     }
 
     // TODO[user]
-    // question des services tiers qui peuvent faire péter transaction
+    // about the call to apis which could break the db transaction
     @Throws(MailAlreadyRegisteredException::class)
     fun createUser(
         command: RegisterCommand,
@@ -98,10 +101,12 @@ class UserService(
             id = randomService.id(),
             mail = command.mail,
             username = null,
+            displayName = command.displayName,
             language = language,
             signupDate = dateService.now(),
             admin = false,
-            dirtyMail = dirtyMail
+            dirtyMail = dirtyMail,
+            formerMails = emptyList()
         )
         userDao.insert(user, hashedPassword)
         return user

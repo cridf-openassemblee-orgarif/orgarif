@@ -15,9 +15,8 @@ import { assertUnreachable } from '../utils';
 
 export const RegisterView = () => {
   const [userInfos, setUserInfos] = useRecoilState(state.userInfos);
-  const [registerResult, setRegisterResult] = useState<
-    RegisterResult | undefined
-  >(undefined);
+  const [registerResult, setRegisterResult] =
+    useState<RegisterResult | undefined>(undefined);
   const register = (registerInput: RegisterFormDto) => {
     const registerCommand: RegisterCommand = registerInput;
     appContext
@@ -25,14 +24,14 @@ export const RegisterView = () => {
       .registerCommand(registerCommand)
       .then(r => {
         switch (r.result) {
-          case 'REGISTERED':
+          case 'registered':
             if (!r.userinfos) {
               throw Errors._db434940();
             }
             appContext.csrfTokenService().refreshToken();
             setUserInfos(r.userinfos);
             break;
-          case 'MAIL_ALREADY_EXISTS':
+          case 'mailAlreadyExists':
             break;
           default:
             assertUnreachable(r.result);
@@ -61,7 +60,7 @@ export const RegisterView = () => {
               width: 400px;
             `}
           >
-            {registerResult !== 'REGISTERED' && !userInfos && (
+            {registerResult !== 'registered' && !userInfos && (
               <RegisterForm onSubmit={register} />
             )}
             {userInfos && (
@@ -81,7 +80,7 @@ export const RegisterView = () => {
                 </RouteLink>
               </div>
             )}
-            {registerResult === 'MAIL_ALREADY_EXISTS' && (
+            {registerResult === 'mailAlreadyExists' && (
               <div
                 css={css`
                   text-align: center;
