@@ -28,7 +28,7 @@ class RegisterCommandHandler(val userService: UserService, val passwordEncoder: 
         response: HttpServletResponse
     ): RegisterCommandResponse {
         if (userSession != null) {
-            // FIXMENOW je trouve pas le mot
+            // FIXME can't find the wooord
             // OrgarifCommonException
             // OrgarifStandardException
             throw RuntimeException()
@@ -39,10 +39,10 @@ class RegisterCommandHandler(val userService: UserService, val passwordEncoder: 
         val registerAndAuthenticateResult = try {
             userService.createAndAuthenticateUser(command, hashedPassword, request, response)
         } catch (e: MailAlreadyRegisteredException) {
-            return RegisterCommandResponse(RegisterResult.MAIL_ALREADY_EXISTS, null)
+            return RegisterCommandResponse(RegisterResult.mailAlreadyExists, null)
         }
         return RegisterCommandResponse(
-            RegisterResult.REGISTERED,
+            RegisterResult.registered,
             UserInfos.fromUser(registerAndAuthenticateResult.user)
         )
     }

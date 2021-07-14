@@ -3,7 +3,6 @@ package orgarif.service
 import org.junit.Assert
 import org.junit.Assert.assertEquals
 import org.junit.Test
-import orgarif.domain.OrganismeId
 import orgarif.domain.UserId
 
 internal class IdCreationLoggerServiceTest {
@@ -15,7 +14,6 @@ internal class IdCreationLoggerServiceTest {
         val randomService = TestRandomService(service)
         service.enableLogging()
         randomService.id<UserId>()
-        randomService.id<OrganismeId>()
         randomService.id<UserId>()
         assertEquals(
             """

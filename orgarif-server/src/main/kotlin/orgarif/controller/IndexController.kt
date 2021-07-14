@@ -2,21 +2,22 @@ package orgarif.controller
 
 import freemarker.ext.beans.BeansWrapperBuilder
 import freemarker.template.Configuration
-import org.json.JSONObject
-import org.springframework.beans.factory.annotation.Value
-import org.springframework.stereotype.Controller
-import org.springframework.web.bind.annotation.GetMapping
-import org.springframework.web.servlet.ModelAndView
+import orgarif.config.Routes
 import orgarif.domain.ApplicationBootstrapData
-import orgarif.domain.OrganismeCategories
 import orgarif.domain.UserInfos
-import orgarif.repository.*
 import orgarif.service.ApplicationInstance
 import orgarif.service.LocaleService
 import orgarif.service.user.MagicLinkTokenService
 import orgarif.service.user.UserService
 import orgarif.service.user.UserSessionHelper
 import orgarif.utils.Serializer.serialize
+import org.json.JSONObject
+import org.springframework.beans.factory.annotation.Value
+import org.springframework.stereotype.Controller
+import org.springframework.web.bind.annotation.GetMapping
+import org.springframework.web.servlet.ModelAndView
+import orgarif.domain.OrganismeCategories
+import orgarif.repository.*
 import java.io.File
 import java.net.URLEncoder
 import java.nio.file.Files
@@ -25,9 +26,8 @@ import javax.servlet.http.HttpServletResponse
 
 @Controller
 class IndexController(
-    @Value("\${assets.webpackDevHost}") val assetsWebpackDevHost: String,
+    @Value("\${assets.browserWebpackDevHost}") val assetsBrowserWebpackDevHost: String,
     @Value("\${assets.useBuildFiles}") val assetsUseBuildFiles: Boolean,
-
 
     val userDao: UserDao,
     val secteurDao: SecteurDao,
@@ -42,18 +42,12 @@ class IndexController(
 ) {
 
     companion object {
-        // TODO [] mapping avec front
-        const val rootRoute = "/"
-        const val loginRoute = "/login"
-        const val logoutRoute = "/logout"
-        const val loginUpdatePasswordRoute = "/login/mot-de-passe"
-        const val newPasswordRoute = "/mot-de-passe-perdu"
         const val magicTokenParameterName = "magicToken"
 
         val statics = BeansWrapperBuilder(Configuration.DEFAULT_INCOMPATIBLE_IMPROVEMENTS).build().staticModels
     }
 
-    val assets by lazy {
+    val buildAssets by lazy {
         File(System.getProperty("user.dir") + "/asset-manifest.json")
             .let { Files.readString(it.toPath()) }
             .let { JSONObject(it ?: throw RuntimeException()) }
@@ -62,24 +56,24 @@ class IndexController(
     }
     val jsAssets by lazy {
         if (assetsUseBuildFiles) {
-            assets.filter { it.endsWith(".js") }
+            buildAssets.filter { it.endsWith(".js") }
         } else {
-            listOf("bundle.js", "0.chunk.js", "main.chunk.js")
-                .map { "$assetsWebpackDevHost/static/js/$it" }
+            listOf("bundle.js", "vendors~main.chunk.js", "main.chunk.js")
+                .map { "$assetsBrowserWebpackDevHost/static/js/$it" }
         }
     }
     val cssAssets by lazy {
         if (assetsUseBuildFiles) {
-            assets.filter { it.endsWith(".css") }
+            buildAssets.filter { it.endsWith(".css") }
         } else {
             emptyList()
         }
     }
 
-    @GetMapping(logoutRoute)
-    fun redirect() = "redirect:/"
+    @GetMapping(Routes.logout)
+    fun redirect() = "redirect:${Routes.root}"
 
-    @GetMapping("/", "/**/{path:[^\\.]*}")
+    @GetMapping(Routes.root, "/**/{path:[^\\.]*}")
     fun index(request: HttpServletRequest, response: HttpServletResponse, mav: ModelAndView): ModelAndView {
         val magicToken = request.getParameter(magicTokenParameterName)
         if (magicToken != null) {
@@ -120,9 +114,9 @@ class IndexController(
         } else {
             params
                 .flatMap { paramName ->
-                    // TODO[fmk] fonctionne bien ? is needed ?
-                    // tester serieusement et comparer avec UriEncoder
-                    // test prout= chaine vide
+                    // TODO[fmk] works correctly ? is needed ?
+                    // srsly test & compare with UriEncoder
+                    // + test smthg= (with emtpy string)
                     val paramValues = parameterMap.getValue(paramName)
                     paramValues.map {
                         URLEncoder.encode(paramName, Charsets.UTF_8.name()) + "=" +
@@ -131,5 +125,6 @@ class IndexController(
                 }.reduce { acc, s -> acc + "&" + s }
         }
     }
-
 }
+
+

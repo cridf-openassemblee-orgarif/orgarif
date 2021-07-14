@@ -106,9 +106,8 @@ export const DragAndDropContainer = (
       .unwrap();
     props.setRepresentantsLists(newLists);
 
-    const [organismeId, instanceId, representantOrSuppleant] = extract(
-      destinationId
-    );
+    const [organismeId, instanceId, representantOrSuppleant] =
+      extract(destinationId);
 
     appContext
       .commandService()

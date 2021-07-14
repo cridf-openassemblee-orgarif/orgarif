@@ -3,14 +3,14 @@ package orgarif.error
 import org.springframework.web.servlet.mvc.method.annotation.ExceptionHandlerExceptionResolver
 import javax.servlet.http.HttpServletRequest
 
-// ne chope pas les exceptions "internes" Spring qui sortent en 401, 403, ...
-// DefaultHandlerExceptionResolver les résout, et sont handlés par le ApplicationErrorController
-// liste précise des choses gérées automatiquement là :
+// doesn't catch Spring "internal" exceptions : 401, 403...
+// DefaultHandlerExceptionResolver resolve them, they are handled by ApplicationErrorController
+// precise list of stuff automatically handled there :
 // http://docs.spring.io/spring/docs/3.2.x/spring-framework-reference/html/mvc.html#mvc-ann-rest-spring-mvc-exceptions
-// (ou ouvrir DefaultHandlerExceptionResolver...)
-// On override cette classe pour éviter les logs qu'elle fait en plus de notre @ControllerAdvice + @ExceptionHandler
-// On pourrait par ailleurs mettre le code du @ControllerAdvice ici, mais on bypasserait complètement les autres
-// mécanismes possibles... Notamment le handling au sein d'un controller (non utilisé à l'écriture de ces lignes...)
+// (or open DefaultHandlerExceptionResolver...)
+// We override this class to avoid logs it's doing additionnaly to our @ControllerAdvice + @ExceptionHandler
+// We actually could put code from @ControllerAdvice here, but we'd completely bypass the other possible mecanisms...
+// Especially the handling from a controller (which isn't use in the fmk code base yet)
 class ApplicationExceptionHandlerExceptionResolver : ExceptionHandlerExceptionResolver() {
 
     override fun logException(ex: Exception, request: HttpServletRequest) {

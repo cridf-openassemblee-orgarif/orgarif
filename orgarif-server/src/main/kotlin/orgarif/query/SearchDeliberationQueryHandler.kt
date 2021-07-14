@@ -2,7 +2,6 @@ package orgarif.query
 
 import DeliberationInfos
 import org.springframework.stereotype.Service
-import orgarif.command.QueryHandler
 import orgarif.config.SharedConstants
 import orgarif.repository.DeliberationDao
 

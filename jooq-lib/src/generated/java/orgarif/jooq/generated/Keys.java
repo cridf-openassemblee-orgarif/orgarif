@@ -24,6 +24,7 @@ import orgarif.jooq.generated.tables.OrganismeTable;
 import orgarif.jooq.generated.tables.RepresentantTable;
 import orgarif.jooq.generated.tables.SecteurTable;
 import orgarif.jooq.generated.tables.TypeStructureTable;
+import orgarif.jooq.generated.tables.UserFileTable;
 import orgarif.jooq.generated.tables.UserSessionLogTable;
 import orgarif.jooq.generated.tables.records.AppUserRecord;
 import orgarif.jooq.generated.tables.records.CommandLogRecord;
@@ -39,6 +40,7 @@ import orgarif.jooq.generated.tables.records.OrganismeRecord;
 import orgarif.jooq.generated.tables.records.RepresentantRecord;
 import orgarif.jooq.generated.tables.records.SecteurRecord;
 import orgarif.jooq.generated.tables.records.TypeStructureRecord;
+import orgarif.jooq.generated.tables.records.UserFileRecord;
 import orgarif.jooq.generated.tables.records.UserSessionLogRecord;
 
 
@@ -69,6 +71,7 @@ public class Keys {
     public static final UniqueKey<RepresentantRecord> REPRESENTANT_PKEY = Internal.createUniqueKey(RepresentantTable.REPRESENTANT, DSL.name("representant_pkey"), new TableField[] { RepresentantTable.REPRESENTANT.ID }, true);
     public static final UniqueKey<SecteurRecord> SECTEUR_PKEY = Internal.createUniqueKey(SecteurTable.SECTEUR, DSL.name("secteur_pkey"), new TableField[] { SecteurTable.SECTEUR.ID }, true);
     public static final UniqueKey<TypeStructureRecord> TYPE_STRUCTURE_PKEY = Internal.createUniqueKey(TypeStructureTable.TYPE_STRUCTURE, DSL.name("type_structure_pkey"), new TableField[] { TypeStructureTable.TYPE_STRUCTURE.ID }, true);
+    public static final UniqueKey<UserFileRecord> USER_FILE_PKEY = Internal.createUniqueKey(UserFileTable.USER_FILE, DSL.name("user_file_pkey"), new TableField[] { UserFileTable.USER_FILE.ID }, true);
     public static final UniqueKey<UserSessionLogRecord> USER_SESSION_LOG_PKEY = Internal.createUniqueKey(UserSessionLogTable.USER_SESSION_LOG, DSL.name("user_session_log_pkey"), new TableField[] { UserSessionLogTable.USER_SESSION_LOG.ID }, true);
 
     // -------------------------------------------------------------------------
@@ -90,5 +93,6 @@ public class Keys {
     public static final ForeignKey<RepresentantRecord, EluRecord> REPRESENTANT__REPRESENTANT_ELU_ID_FKEY = Internal.createForeignKey(RepresentantTable.REPRESENTANT, DSL.name("representant_elu_id_fkey"), new TableField[] { RepresentantTable.REPRESENTANT.ELU_ID }, Keys.ELU_PKEY, new TableField[] { EluTable.ELU.ID }, true);
     public static final ForeignKey<RepresentantRecord, InstanceRecord> REPRESENTANT__REPRESENTANT_INSTANCE_ID_FKEY = Internal.createForeignKey(RepresentantTable.REPRESENTANT, DSL.name("representant_instance_id_fkey"), new TableField[] { RepresentantTable.REPRESENTANT.INSTANCE_ID }, Keys.INSTANCE_PKEY, new TableField[] { InstanceTable.INSTANCE.ID }, true);
     public static final ForeignKey<RepresentantRecord, OrganismeRecord> REPRESENTANT__REPRESENTANT_ORGANISME_ID_FKEY = Internal.createForeignKey(RepresentantTable.REPRESENTANT, DSL.name("representant_organisme_id_fkey"), new TableField[] { RepresentantTable.REPRESENTANT.ORGANISME_ID }, Keys.ORGANISME_PKEY, new TableField[] { OrganismeTable.ORGANISME.ID }, true);
+    public static final ForeignKey<UserFileRecord, AppUserRecord> USER_FILE__USER_FILE_USER_ID_FKEY = Internal.createForeignKey(UserFileTable.USER_FILE, DSL.name("user_file_user_id_fkey"), new TableField[] { UserFileTable.USER_FILE.USER_ID }, Keys.APP_USER_PKEY, new TableField[] { AppUserTable.APP_USER.ID }, true);
     public static final ForeignKey<UserSessionLogRecord, AppUserRecord> USER_SESSION_LOG__USER_SESSION_LOG_USER_ID_FKEY = Internal.createForeignKey(UserSessionLogTable.USER_SESSION_LOG, DSL.name("user_session_log_user_id_fkey"), new TableField[] { UserSessionLogTable.USER_SESSION_LOG.USER_ID }, Keys.APP_USER_PKEY, new TableField[] { AppUserTable.APP_USER.ID }, true);
 }

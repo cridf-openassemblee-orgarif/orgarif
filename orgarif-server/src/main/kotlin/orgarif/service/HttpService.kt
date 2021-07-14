@@ -19,8 +19,8 @@ class HttpService(val okHttpClient: OkHttpClient) {
     }
 
     enum class Header(val header: String) {
-        AUTHORIZATION("Authorization"),
-        ACCEPT("Accept")
+        authorization("Authorization"),
+        accept("Accept")
     }
 
     data class EmptyResponse(val code: Int)
@@ -127,7 +127,7 @@ class HttpService(val okHttpClient: OkHttpClient) {
     ) = Request.Builder().apply {
         url(url)
         if (httpMediaType.mediaType == HttpMediaType.json.mediaType) {
-            addHeader(Header.ACCEPT.header, HttpMediaType.json.mediaType.toString())
+            addHeader(Header.accept.header, HttpMediaType.json.mediaType.toString())
         }
         headers.forEach { addHeader(it.first.header, it.second) }
     }

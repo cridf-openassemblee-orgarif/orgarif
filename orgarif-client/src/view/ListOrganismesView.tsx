@@ -13,9 +13,8 @@ import { colors } from '../styles/vars';
 import { stringifyNominalString } from '../utils/nominal-class';
 
 export const ListOrganismesView = () => {
-  const [organismes, setOrganismes] = useState<OrganismeInfos[] | undefined>(
-    undefined
-  );
+  const [organismes, setOrganismes] =
+    useState<OrganismeInfos[] | undefined>(undefined);
   useEffect(() => {
     appContext
       .queryService()

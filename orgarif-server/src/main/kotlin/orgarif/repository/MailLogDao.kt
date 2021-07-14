@@ -94,15 +94,15 @@ class MailLogDao(val jooq: DSLContext) {
 //                    .map(this::map)
 
     fun map(r: MailLogRecord) = Record(
-        r.id.toTypeId(),
-        r.deploymentLogId.toTypeId(),
-        r.userId.toTypeId(),
-        MailReference.valueOf(r.reference),
-        r.recipientMail,
-        r.data,
-        r.subject,
-        r.content,
-        r.date
+        id = r.id.toTypeId(),
+        deploymentLogId = r.deploymentLogId.toTypeId(),
+        userId = r.userId.toTypeId(),
+        reference = MailReference.valueOf(r.reference),
+        recipientMail = r.recipientMail,
+        data = r.data,
+        subject = r.subject,
+        content = r.content,
+        date = r.date
     )
 
     fun mapHistoryPartialRecord(r: org.jooq.Record) = HistoryPartialRecord(

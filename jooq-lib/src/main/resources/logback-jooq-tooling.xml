@@ -12,5 +12,4 @@
     </root>
 
     <logger name="orgarif" level="INFO"/>
-<!--    <logger name="jooqutils" level="DEBUG"/>-->
 </configuration>

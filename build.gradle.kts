@@ -1,13 +1,10 @@
-val buildPropertiesFile by extra("${rootProject.buildDir}/build.properties")
-val buildGitDiffFile by extra("${rootProject.buildDir}/git.diff")
-
 fun String.runCommand(workingDir: File = file("./")): String {
     val parts = this.split("\\s".toRegex())
     val proc = ProcessBuilder(*parts.toTypedArray())
-            .directory(workingDir)
-            .redirectOutput(ProcessBuilder.Redirect.PIPE)
-            .redirectError(ProcessBuilder.Redirect.PIPE)
-            .start()
+        .directory(workingDir)
+        .redirectOutput(ProcessBuilder.Redirect.PIPE)
+        .redirectError(ProcessBuilder.Redirect.PIPE)
+        .start()
     val waitForTimeout = 3L
     proc.waitFor(waitForTimeout, TimeUnit.SECONDS)
     return proc.inputStream.bufferedReader().readText().trim()
@@ -20,10 +17,16 @@ tasks {
     }
 
     register("build") {
-        dependsOn(":clean", ":orgarif-client:build", ":jooq-lib:build", ":orgarif-server:build", ":copyFiles", ":writeBuildPropertiesFile")
+        dependsOn(
+            ":clean",
+            ":orgarif-client:build",
+            ":jooq-lib:build",
+            ":orgarif-server:build",
+            ":copyConfigurationFiles"
+        )
     }
 
-    register<Copy>("copyFiles") {
+    register<Copy>("copyConfigurationFiles") {
         dependsOn(":orgarif-server:build", ":orgarif-client:build")
         from("orgarif-server/build/libs") {
             include("orgarif-server.jar")
@@ -32,22 +35,28 @@ tasks {
         from("orgarif-client/build/static") {
             into("static/")
         }
+        val shortGitRevision by lazy { "git log -1 --pretty=%h".runCommand() }
+        val gitRevision by lazy { "git rev-parse HEAD".runCommand() }
+        from("orgarif-server/src/main/resources") {
+            include(
+                "*.yaml",
+                "*.xml",
+                "*.properties"
+            )
+            filter { it.replace("GRADLE_BUILD_GIT_REVISION", shortGitRevision) }
+        }
         into("build")
         doLast {
-            delete("build/kotlin")
-        }
-    }
-
-    register("writeBuildPropertiesFile") {
-        dependsOn(":copyFiles")
-        doLast {
-            val shortGitRevision = "git log -1 --pretty=%h".runCommand()
-            val gitRevision = "git rev-parse HEAD".runCommand()
-            File(buildPropertiesFile).writeText("""
+            val buildPropertiesFile by extra("${rootProject.buildDir}/build.properties")
+            val buildGitDiffFile by extra("${rootProject.buildDir}/git.diff")
+            File(buildPropertiesFile).writeText(
+                """
                 shortGitRevision=$shortGitRevision
                 gitRevision=$gitRevision
-            """.trimIndent())
+            """.trimIndent()
+            )
             File(buildGitDiffFile).writeText("git diff HEAD".runCommand())
+            delete("build/kotlin")
         }
     }
 }

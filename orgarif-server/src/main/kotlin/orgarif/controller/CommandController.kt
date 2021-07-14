@@ -1,4 +1,4 @@
-package orgarif.endpoint
+package orgarif.controller
 
 import mu.KotlinLogging
 import org.apache.commons.lang3.exception.ExceptionUtils
@@ -16,7 +16,6 @@ import orgarif.service.ApplicationInstance
 import orgarif.service.DateService
 import orgarif.service.IdCreationLoggerService
 import orgarif.service.RandomService
-import orgarif.service.user.IpService
 import orgarif.service.user.UserSessionHelper
 import orgarif.utils.Serializer.deserialize
 import orgarif.utils.Serializer.serialize
@@ -24,12 +23,11 @@ import javax.servlet.http.HttpServletRequest
 import javax.servlet.http.HttpServletResponse
 
 @RestController
-class CommandEndpoint(
+class CommandController(
     val commandLogDao: CommandLogDao,
     val userDao: UserDao,
 
     val applicationInstance: ApplicationInstance,
-    val ipService: IpService,
     val dateService: DateService,
     val randomService: RandomService,
     val transactionManager: PlatformTransactionManager,
@@ -53,7 +51,7 @@ class CommandEndpoint(
 
     private val logger = KotlinLogging.logger {}
 
-    // TODO[test] serait BIEN de blinder de test ces transactions & stacktrace logging =s
+    // TODO[test] test these transactions & stacktrace logging !
     @PostMapping("/command")
     fun handle(
         @RequestBody jsonCommand: String,
@@ -65,9 +63,8 @@ class CommandEndpoint(
         val userSession = if (UserSessionHelper.isAuthenticated()) UserSessionHelper.getUserSession() else null
         // [doc] is filtered from sensitive data (passwords) because of serializers
         val filteredJsonCommand = serialize(command)
-        // l'ip peut évoluer au sein de la même session, a du sens de le réenregistrer ici
-        // TODO[test] faire insert après en one shot putain ?
-        // [doc] first si doit se planter trop serieusement ? peut arriver ?
+        // TODO[test] make an only insert at the end, with no update ?
+        // or make an insert first to protect from some errors (? isolate its transactionl)
         val commandLogId = randomService.id<CommandLogId>()
         commandLogDao.insert(
             CommandLogDao.Record(
@@ -76,7 +73,8 @@ class CommandEndpoint(
                 deploymentLogId = applicationInstance.deploymentId,
                 commandClass = command.javaClass,
                 jsonCommand = filteredJsonCommand,
-                ip = ipService.getClientIp(request),
+                // the ip can evolve within a session, it makes sense to save it here
+                ip = request.remoteAddr,
                 userSessionId = userSession?.sessionId,
                 resultingIds = null,
                 jsonResult = null,
@@ -90,22 +88,11 @@ class CommandEndpoint(
         try {
             idCreationLoggerService.enableLogging()
             val result = when (CommandConfiguration.authenticationLevel(command)) {
-                AuthenticationLevel.anonymous ->
-                    handler.handle(command, userSession, request, response)
+                AuthenticationLevel.anonymous,
                 AuthenticationLevel.loggedIn -> {
-                    // TODO[secu] un peu double sécu car implem dans les classes aussi mais bon
-                    // ou alors pas la meme exception
-                    if (userSession == null) {
-                        throw RuntimeException()
-                    }
                     handler.handle(command, userSession, request, response)
                 }
                 AuthenticationLevel.admin -> {
-                    // FIXMENOW ici should use UserSessionHelper mais tire question du userDao
-                    // set virer dépendance à UserDao
-//                    if (!UserSessionHelper.isAdmin()) {
-//                        throw OrgarifSecurityException("$userSession ${command.javaClass.simpleName}")
-//                    }
                     if (!UserSessionHelper.isAuthenticated()) {
                         throw OrgarifSecurityException("$userSession ${command.javaClass.simpleName}")
                     }

@@ -6,6 +6,7 @@ import orgarif.domain.OrgarifId
 import orgarif.domain.RequestErrorId
 import java.time.Instant
 
+// FIXME can remove ? ReadableStackTrace ? and ReadableStackTraceSerializer ?
 data class RequestError(
     val id: RequestErrorId,
     val status: Int,
@@ -15,7 +16,6 @@ data class RequestError(
     val stackTrace: ReadableStackTrace?
 )
 
-// FIXMENOW pv remove a priori, avec le ReadableStackTraceSerializer
 data class ReadableStackTrace(val exception: Throwable?) {
     fun toReadableString(): String? = if (exception != null) ExceptionUtils.getStackTrace(exception) else null
 }
@@ -26,14 +26,14 @@ data class ReadableStackTrace(val exception: Throwable?) {
 class DisplayMessageException(val displayMessage: String, val logMessage: String, val logLevel: Level) :
     Exception(logMessage)
 
-// [doc] contient mail pour ne pas créer d'affichage confusant (user peut avoir modifié son mail)
+// [doc] contains mail to be clear on the front ? Not really needed it smartly handled on the front ?
 class MailAlreadyRegisteredException(mail: String) : Exception()
 class ItemIdNotFoundException(val id: OrgarifId<*>) : Exception()
 class ItemNotFoundException(val itemClass: Class<*>, val reference: String) : Exception()
 class OrgarifNotFoundException : Exception()
 class OrgarifSerializationLocalDateException(val date: String) : Exception()
 
-// TODO[error] tjs utiliser des runtime donc ? a cause de kt
+// TODO[error] always use runtime ? because of kt
 class MessageNotSentException(message: String) : RuntimeException(message)
 class OrgarifSecurityException(message: String) : Exception(message)
 class UserLoggedOutException : Exception()

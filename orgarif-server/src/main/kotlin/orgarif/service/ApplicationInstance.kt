@@ -22,9 +22,8 @@ class ApplicationInstance(
     val randomService: RandomService
 ) {
 
-    private val logger = KotlinLogging.logger { }
-
     val env = run {
+        val environments = ApplicationEnvironment.values().map { it.name }
         val profiles = environment.activeProfiles
             .let {
                 if (it.isEmpty()) {
@@ -34,14 +33,15 @@ class ApplicationInstance(
                 }
             }
             .filter { it != OrgarifApplication.springUserProfile() }
+            .filter { it in environments }
         if (profiles.size != 1) {
             throw IllegalStateException("Spring profiles : $profiles")
         }
         ApplicationEnvironment.valueOf(profiles.first())
     }
 
-    val buildProperties by lazy {
-        File(System.getProperty("user.dir") + "/build.properties").let { file ->
+    val gitRevisionProperties by lazy {
+        File(System.getProperty("user.dir") + "/git-revision.properties").let { file ->
             if (file.exists()) {
                 Properties().apply {
                     load(FileInputStream(file))
@@ -54,10 +54,10 @@ class ApplicationInstance(
 
     val gitRevisionLabel: String by lazy {
         val buildDiffFile = File(System.getProperty("user.dir") + "/git.diff")
-        val buildProps = buildProperties
-        if (buildProps != null && buildDiffFile.exists()) {
+        val notNullGitRevisionProperties = gitRevisionProperties
+        if (notNullGitRevisionProperties != null && buildDiffFile.exists()) {
             val buildDiff = Files.asCharSource(buildDiffFile, Charsets.UTF_8).readFirstLine()
-            buildProps.getProperty("shortGitRevision") + (if (!Strings.isNullOrEmpty(buildDiff)) " + DIFF" else "")
+            notNullGitRevisionProperties.getProperty("shortGitRevision") + (if (!Strings.isNullOrEmpty(buildDiff)) " + DIFF" else "")
         } else {
             "[dev]"
         }
@@ -74,13 +74,6 @@ class ApplicationInstance(
             )
         )
         deploymentId
-    }
-
-    init {
-        if (env !in listOf(ApplicationEnvironment.dev, ApplicationEnvironment.test)) {
-            // [doc] this log is also gonna trigger the deploymentId insertion at startup
-            logger.info { "Deployed build \"$gitRevisionLabel\", env \"$env\", deployment id $deploymentId" }
-        }
     }
 
     fun setShutdownTime() {

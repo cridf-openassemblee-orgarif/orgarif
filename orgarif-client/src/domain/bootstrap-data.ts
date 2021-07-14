@@ -1,6 +1,11 @@
 import { ApplicationEnvironment } from './application';
 import { Elu } from './elu';
-import { NatureJuridiqueId, OrgarifId, SecteurId, TypeStructureId } from './ids';
+import {
+  NatureJuridiqueId,
+  OrgarifId,
+  SecteurId,
+  TypeStructureId
+} from './ids';
 import { UserInfos } from './user';
 
 export interface Category {

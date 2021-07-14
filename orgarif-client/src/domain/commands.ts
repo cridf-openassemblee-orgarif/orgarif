@@ -1,4 +1,3 @@
-import { LoginResult, RegisterResult, UserInfos } from '../domain/user';
 import {
   DeliberationId,
   EluId,
@@ -12,6 +11,7 @@ import {
 } from './ids';
 import { RepresentantOrSuppleant } from './organisme';
 import { LocalDate } from './time';
+import { LoginResult, RegisterResult, UserInfos } from './user';
 
 export interface AddInstanceCommand {
   nomInstance: string;
@@ -97,6 +97,7 @@ export interface RegisterCommand {
 export interface RegisterCommandResponse {
   result: RegisterResult;
   userinfos?: UserInfos;
+  displayName: string;
 }
 
 export interface UpdateOrganismeNatureJuridiqueCommand {

@@ -15,13 +15,12 @@ import orgarif.error.MessageNotSentException
 import orgarif.repository.MailLogDao
 import java.util.*
 
-// TODO clean les !!
 @Service
 class MailService(
     @Value("\${mailjet.url}") val url: String,
     @Value("\${mailjet.api-key}") val apiKey: String,
     @Value("\${mailjet.secret-key}") val secretKey: String,
-    @Value("\${devLogMail}") val devLogMail: String,
+    @Value("\${mail.devLogSender}") val devLogSenderMail: String,
     val applicationInstance: ApplicationInstance,
     val httpService: HttpService,
     val mailLogDao: MailLogDao,
@@ -40,13 +39,13 @@ class MailService(
         }
     }
 
-    // TODO[mailjet] plutôt au serializer de mettre la maj au départ
+    // TODO[mailjet] the uppercase on first letter : ask it to the serializer ?
     data class MailJetMail(
         val Email: String,
         val Name: String
     )
 
-    // TODO[mailjet] possib de limiter les strings ?
+    // TODO[mailjet] is it possible to limit the strings here ?
     data class MailJetAttachment(
         val ContentType: String,
         val Filename: String,
@@ -57,6 +56,7 @@ class MailService(
         val From: MailJetMail,
         val To: List<MailJetMail>,
         val Subject: String,
+        // TODO ?
         //                          val TextPart: String,
         val HTMLPart: String,
         val Attachments: List<MailJetAttachment>,
@@ -67,29 +67,29 @@ class MailService(
 
     private data class MailJetMessages(val Messages: List<MailJetMessage>)
 
-    // TODO[mailjet] [doc] sans ces informations, on ne sait à quelle db correspond l'email dans l'ui mailjet
+    // TODO[mailjet] [doc] this informations is here to display the environnement which sent the mail in mailjet ui
     private data class MailJetEventPayload(val env: String)
 
-    // TODO[mailjet] checker complètement ce machin... ici les premieres lettre en maj ?
+    // TODO[mailjet] check this... + uppercase first letter handled here ?
     private class MyPropertyNamingStrategy : PropertyNamingStrategy() {
-        override fun nameForField(config: MapperConfig<*>?, field: AnnotatedField?, defaultName: String): String {
-            return convert(field!!.name)
+        override fun nameForField(config: MapperConfig<*>?, field: AnnotatedField, defaultName: String): String {
+            return convert(field.name)
         }
 
         override fun nameForGetterMethod(
             config: MapperConfig<*>?,
-            method: AnnotatedMethod?,
+            method: AnnotatedMethod,
             defaultName: String
         ): String {
-            return convert(method!!.name.toString())
+            return convert(method.name.toString())
         }
 
         override fun nameForSetterMethod(
             config: MapperConfig<*>?,
-            method: AnnotatedMethod?,
+            method: AnnotatedMethod,
             defaultName: String
         ): String {
-            return convert(method!!.name.toString())
+            return convert(method.name.toString())
         }
 
         private fun convert(input: String): String {
@@ -125,7 +125,7 @@ class MailService(
         mailLogProperties: MailLogProperties? = null,
         attachments: List<Attachment>? = null
     ): MailLogId? {
-        if (applicationInstance.env == ApplicationEnvironment.dev && recipientMail != devLogMail) {
+        if (applicationInstance.env == ApplicationEnvironment.dev && recipientMail != devLogSenderMail) {
             throw IllegalArgumentException("Mail send canceled en env dev to ${recipientMail}")
         }
         val mailLogId = randomService.id<MailLogId>()
@@ -150,7 +150,7 @@ class MailService(
         val response = try {
             httpService.postAndReturnString(
                 url, json, HttpService.HttpMediaType.json,
-                HttpService.Header.AUTHORIZATION to Credentials.basic(apiKey, secretKey)
+                HttpService.Header.authorization to Credentials.basic(apiKey, secretKey)
             )
         } catch (e: Exception) {
             logger.error {

@@ -22,17 +22,15 @@ export const useWindowHeight = () => {
   return height;
 };
 
-// [doc] Dimensionnement du root element est fait en javascript, à cause de Chrome _mobile_, car
-// la window.innerHeight change lorsque la barre d'url s'affiche ou ne cache...
-// Ce qui pose notamment des bugs tordus avec les popups.
+// [doc] Root element sizing is done with javascript... because of mobile Chrome : indow.innerHeight changes when the
+// url bar is hiding or displayed, which especially provokes complex bugs with popups
 // See https://css-tricks.com/the-trick-to-viewport-units-on-mobile/
-// Ont été essayé en css :
-// height: 100%; (point de départ) => bug en bas de popup lorsque barré d'url hidden
-// height: 100vh; => fixe la taille à l'écran sans barre d'url même lorsqu'elle est affichée... comportement à
-// la con avec le scrolling
-// height: calc(100vh - 56px); => même behaviour que height 100%
-// height: calc(100% - 56px); => je sais plus mais caca aussi =]
-// min-height: -webkit-fill-available; => popup complètement coupée en bar hidden
+// Tried with CSS :
+// height: 100%; (the starting point) => bug in popup below part when url bar hidden
+// height: 100vh; => fixes screen sizes without url bar, even if it's displayed... so scrolling is buggy
+// height: calc(100vh - 56px); => same behaviour than height 100%
+// height: calc(100% - 56px); => problematic too
+// min-height: -webkit-fill-available; => popup completely cut when bar hidden
 // cf onetab "100vh"
 export const Root = (props: PropsWithChildren<{}>) => {
   const height = useWindowHeight();

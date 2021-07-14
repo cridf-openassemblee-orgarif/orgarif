@@ -1,8 +1,8 @@
-package orgarif.endpoint
+package orgarif.controller
 
 import org.springframework.web.bind.annotation.GetMapping
 import org.springframework.web.bind.annotation.RestController
-import orgarif.command.QueryHandler
+import orgarif.query.QueryHandler
 import orgarif.domain.AuthenticationLevel
 import orgarif.error.OrgarifSecurityException
 import orgarif.query.*
@@ -13,7 +13,7 @@ import java.net.URLDecoder
 import javax.servlet.http.HttpServletRequest
 
 @RestController
-class QueryEndpoint(
+class QueryController(
     val getOrganismeQueryHandler: GetOrganismeQueryHandler,
     val isLoginAlreadyTakenQueryHandler: IsLoginAlreadyTakenQueryHandler,
     val listOrganismesBySecteurQueryHandler: ListOrganismesBySecteurQueryHandler,
@@ -38,8 +38,7 @@ class QueryEndpoint(
                 handler.doHandle(query, userSession)
             }
             AuthenticationLevel.admin -> {
-                // FIXMENOW ici should use UserSessionHelper mais tire question du userDao
-                // set virer dépendance à UserDao
+                // FIXME here should use UserSessionHelper but what about userDao ? remove dependency ?
 //                if (!UserSessionHelper.isAdmin()) {
 //                    throw OrgarifSecurityException("$userSession ${query.javaClass.simpleName}")
 //                }

@@ -1,7 +1,6 @@
 package orgarif.query
 
 import org.springframework.stereotype.Service
-import orgarif.command.QueryHandler
 import orgarif.service.organisme.OrganismeService
 
 @Service

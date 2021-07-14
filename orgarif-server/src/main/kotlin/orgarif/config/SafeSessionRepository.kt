@@ -22,7 +22,10 @@ class SafeSessionRepository(
         } catch (e: Exception) {
             if (applicationInstance.env == ApplicationEnvironment.dev) {
                 // TODO[user] better mess
-                throw IllegalArgumentException("ATTENTION problème de deserialization de session - ça pique en prod", e)
+                throw IllegalArgumentException(
+                    "WARNING session deserialization problem - please prevent it for production",
+                    e
+                )
             } else {
                 logger.error { "Deleting session $id" }
                 deleteById(id)

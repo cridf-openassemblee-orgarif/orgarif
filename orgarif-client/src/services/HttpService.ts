@@ -2,7 +2,7 @@ import { appContext } from '../ApplicationContext';
 import { RequestErrorId } from '../domain/ids';
 import { Instant } from '../domain/time';
 
-type RequestType = 'GET' | 'POST';
+type RequestType = 'get' | 'post';
 
 export const displayErrorMessage = 'DisplayError';
 
@@ -24,10 +24,10 @@ export class HttpService {
   public credentials: RequestCredentials = 'same-origin';
 
   public get = (url: string, getParams?: any) =>
-    this.fetchAndDeserialize('GET', url, getParams);
+    this.fetchAndDeserialize('get', url, getParams);
 
   public post = (url: string, bodyObject?: any) =>
-    this.fetchAndDeserialize('POST', url, null, JSON.stringify(bodyObject));
+    this.fetchAndDeserialize('post', url, null, JSON.stringify(bodyObject));
 
   public fetch(
     requestType: RequestType,
@@ -40,8 +40,8 @@ export class HttpService {
       headers: {
         Accept: 'application/json',
         'Content-Type': 'application/json',
-        [appContext.csrfTokenService().header]: appContext.csrfTokenService()
-          .token
+        [appContext.csrfTokenService().header]:
+          appContext.csrfTokenService().token
       },
       credentials: this.credentials
     };

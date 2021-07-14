@@ -1,6 +1,7 @@
-package orgarif.endpoint
+package orgarif.controller
 
 import org.springframework.beans.factory.annotation.Value
+import org.springframework.boot.autoconfigure.condition.ConditionalOnExpression
 import org.springframework.web.bind.annotation.GetMapping
 import org.springframework.web.bind.annotation.RestController
 import orgarif.domain.ApplicationEnvironment
@@ -12,8 +13,10 @@ import javax.servlet.http.HttpServletRequest
 import javax.servlet.http.HttpServletResponse
 
 @RestController
-class ReactHotLoaderEndpoint(
-    @Value("\${assets.webpackDevHost}") val assetsWebpackDevHost: String,
+// [doc] so it won't run on prod
+@ConditionalOnExpression("!\${assets.useBuildFiles}")
+class ReactHotLoaderController(
+    @Value("\${assets.serverWebpackDevHost}") val assetsServerWebpackDevHost: String,
     val applicationInstance: ApplicationInstance,
     val httpService: HttpService
 ) {
@@ -27,7 +30,7 @@ class ReactHotLoaderEndpoint(
             } else {
                 MimeType.json.fullType
             }
-            response.writer.print(httpService.getString(assetsWebpackDevHost + path).body)
+            response.writer.print(httpService.getString(assetsServerWebpackDevHost + path).body)
         } else {
             throw OrgarifNotFoundException()
         }

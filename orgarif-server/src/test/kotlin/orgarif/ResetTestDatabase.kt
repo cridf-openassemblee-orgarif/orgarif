@@ -1,17 +1,20 @@
 package orgarif
 
-import orgarif.jooqlib.GenerateJooq
+import orgarif.jooqlib.Configuration
 import orgarif.jooqlib.ResetDatabase
 import java.util.*
 
 object ResetTestDatabase {
 
-    fun reset() {
+    fun reset(insertInitialData: Boolean) {
         val databaseName = Properties().let {
             it.load(javaClass.classLoader.getResourceAsStream("application-test.properties"))
             it.getProperty("database.name")
         }
         // TODO do smart things with transactions ?
-        ResetDatabase.resetDatabaseSchemaAndInitialData(GenerateJooq.configuration.copy(databaseName = databaseName))
+        ResetDatabase.resetDatabaseSchema(
+            Configuration.configuration.copy(databaseName = databaseName),
+            insertInitialData
+        )
     }
 }

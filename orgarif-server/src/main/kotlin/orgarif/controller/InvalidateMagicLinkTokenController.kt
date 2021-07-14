@@ -20,7 +20,7 @@ class InvalidateMagicLinkTokenController(val magicLinkTokenService: MagicLinkTok
     @GetMapping("/$invalidateTokenUri")
     fun invalidateToken(request: HttpServletRequest, response: HttpServletResponse, mav: ModelAndView): ModelAndView {
         val magicToken = request.getParameter(IndexController.magicTokenParameterName)
-        // TODO[secu] secu supprimer les sesssions
+        // TODO[secu] delete sesssions
         if (magicToken != null) {
             logger.warn { "Invalidate magic token $magicToken" }
             magicLinkTokenService.invalidate(magicToken)

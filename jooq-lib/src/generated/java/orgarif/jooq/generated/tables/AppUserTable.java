@@ -18,7 +18,7 @@ import org.jooq.ForeignKey;
 import org.jooq.Index;
 import org.jooq.Name;
 import org.jooq.Record;
-import org.jooq.Row8;
+import org.jooq.Row10;
 import org.jooq.Schema;
 import org.jooq.Table;
 import org.jooq.TableField;
@@ -77,6 +77,11 @@ public class AppUserTable extends TableImpl<AppUserRecord> {
     public final TableField<AppUserRecord, String> USERNAME = createField(DSL.name("username"), SQLDataType.VARCHAR(255), this, "");
 
     /**
+     * The column <code>public.app_user.display_name</code>.
+     */
+    public final TableField<AppUserRecord, String> DISPLAY_NAME = createField(DSL.name("display_name"), SQLDataType.VARCHAR(255).nullable(false), this, "");
+
+    /**
      * The column <code>public.app_user.language</code>.
      */
     public final TableField<AppUserRecord, String> LANGUAGE = createField(DSL.name("language"), SQLDataType.VARCHAR(2).nullable(false), this, "");
@@ -95,6 +100,11 @@ public class AppUserTable extends TableImpl<AppUserRecord> {
      * The column <code>public.app_user.dirty_mail</code>.
      */
     public final TableField<AppUserRecord, String> DIRTY_MAIL = createField(DSL.name("dirty_mail"), SQLDataType.VARCHAR(255), this, "");
+
+    /**
+     * The column <code>public.app_user.former_mails</code>.
+     */
+    public final TableField<AppUserRecord, String[]> FORMER_MAILS = createField(DSL.name("former_mails"), SQLDataType.VARCHAR(255).getArrayDataType(), this, "");
 
     private AppUserTable(Name alias, Table<AppUserRecord> aliased) {
         this(alias, aliased, null);
@@ -184,12 +194,12 @@ public class AppUserTable extends TableImpl<AppUserRecord> {
     }
 
     // -------------------------------------------------------------------------
-    // Row8 type methods
+    // Row10 type methods
     // -------------------------------------------------------------------------
 
     @Override
     @Nonnull
-    public Row8<UUID, String, String, String, String, Boolean, Instant, String> fieldsRow() {
-        return (Row8) super.fieldsRow();
+    public Row10<UUID, String, String, String, String, String, Boolean, Instant, String, String[]> fieldsRow() {
+        return (Row10) super.fieldsRow();
     }
 }

@@ -16,23 +16,21 @@ plugins {
     id("org.jetbrains.kotlin.plugin.spring") version kotlinVersion
 }
 
-repositories {
-    mavenLocal()
-    mavenCentral()
-    maven("https://repo.spring.io/milestone")
-    maven("https://repo.spring.io/snapshot")
-}
-
 tasks {
     withType<KotlinCompile> {
-        kotlinOptions {
-            jvmTarget = "15"
-        }
+        kotlinOptions.jvmTarget = "15"
     }
 
     withType<Test> {
         useJUnitPlatform()
     }
+}
+
+repositories {
+    mavenLocal()
+    mavenCentral()
+    maven("https://repo.spring.io/milestone")
+    maven("https://repo.spring.io/snapshot")
 }
 
 dependencies {

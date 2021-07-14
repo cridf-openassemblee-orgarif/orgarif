@@ -54,9 +54,11 @@ class OrganismeDao(val jooq: DSLContext) {
         fetchOrNull(id)
             ?: throw IllegalArgumentException("$id")
 
-    fun updateNatureJuridiqueId(id: OrganismeId,
-                                natureJuridiqueId: NatureJuridiqueId?,
-                                modificationDate: Instant) {
+    fun updateNatureJuridiqueId(
+        id: OrganismeId,
+        natureJuridiqueId: NatureJuridiqueId?,
+        modificationDate: Instant
+    ) {
         jooq.update(ORGANISME)
             .set(ORGANISME.NATURE_JURIDIQUE_ID, natureJuridiqueId?.rawId)
             .set(ORGANISME.LAST_MODIFICATION_DATE, modificationDate)
@@ -64,9 +66,11 @@ class OrganismeDao(val jooq: DSLContext) {
             .execute()
     }
 
-    fun updatePartageRepresentants(id: OrganismeId,
-                                   partageRepresentants: Boolean,
-                                   modificationDate: Instant) {
+    fun updatePartageRepresentants(
+        id: OrganismeId,
+        partageRepresentants: Boolean,
+        modificationDate: Instant
+    ) {
         jooq.update(ORGANISME)
             .set(ORGANISME.PARTAGE_REPRESENTANTS, partageRepresentants)
             .set(ORGANISME.LAST_MODIFICATION_DATE, modificationDate)
@@ -74,9 +78,11 @@ class OrganismeDao(val jooq: DSLContext) {
             .execute()
     }
 
-    fun updateSecteurId(id: OrganismeId,
-                        secteurId: SecteurId?,
-                        modificationDate: Instant) {
+    fun updateSecteurId(
+        id: OrganismeId,
+        secteurId: SecteurId?,
+        modificationDate: Instant
+    ) {
         jooq.update(ORGANISME)
             .set(ORGANISME.SECTEUR_ID, secteurId?.rawId)
             .set(ORGANISME.LAST_MODIFICATION_DATE, modificationDate)
@@ -85,9 +91,11 @@ class OrganismeDao(val jooq: DSLContext) {
     }
 
 
-    fun updateTypeStructureId(id: OrganismeId,
-                              typeStructureId: TypeStructureId?,
-                              modificationDate: Instant) {
+    fun updateTypeStructureId(
+        id: OrganismeId,
+        typeStructureId: TypeStructureId?,
+        modificationDate: Instant
+    ) {
         jooq.update(ORGANISME)
             .set(ORGANISME.TYPE_STRUCTURE_ID, typeStructureId?.rawId)
             .set(ORGANISME.LAST_MODIFICATION_DATE, modificationDate)

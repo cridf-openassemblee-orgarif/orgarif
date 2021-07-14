@@ -44,7 +44,7 @@ object Serializer {
             addSerializer(LocalDateSerializer())
             addDeserializer(LocalDate::class.java, LocalDateDeserializer())
 
-            // TODO[serialization] gérer tous les null
+            // TODO[serialization] handle all the null
             addSerializer(UuidSerializer())
             addDeserializer(UUID::class.java, UuidDeserializer())
             addKeySerializer(UUID::class.java, UuidKeySerializer())
@@ -57,7 +57,7 @@ object Serializer {
             addKeySerializer(OrgarifStringId::class.java, OrgarifStringIdKeySerializer())
             addOrgarifStringIdsDeserializers(this)
 
-            // TODO[serialization] tout le bordel avec les data class
+            // TODO[serialization] about data class
             addSerializer(OrgarifUuidIdSerializer())
             addKeySerializer(OrgarifUuidId::class.java, OrgarifUuidIdKeySerializer())
             addOrgarifUuidIdsDeserializers(this)

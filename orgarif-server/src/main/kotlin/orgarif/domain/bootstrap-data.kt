@@ -14,9 +14,8 @@ data class OrganismeCategories(
     val typeStructures: List<TypeStructure>
 )
 
-// TODO[user] start ? boot ? launch ? base Infos ?
-// ConnectedUserInfos (logged pue comme wording btw)
-// initial
+// TODO[user] naming start / initial / boot / launch / base Infos ?
+// ConnectedUserInfos (logged is bad wording btw)
 data class ApplicationBootstrapData(
     val env: ApplicationEnvironment,
     val userInfos: UserInfos?,

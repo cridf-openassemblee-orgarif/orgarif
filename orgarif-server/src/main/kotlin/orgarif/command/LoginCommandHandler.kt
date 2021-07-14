@@ -26,7 +26,7 @@ class LoginCommandHandler(
         response: HttpServletResponse
     ): LoginCommandResponse {
         if (userSession != null) {
-            // FIXMENOW je trouve pas le mot
+            // FIXME can't find the wooord
             // OrgarifCommonException
             // OrgarifStandardException
             throw RuntimeException()
@@ -34,14 +34,14 @@ class LoginCommandHandler(
         val cleanLogin = UserService.cleanMail(command.login)
         val user = userDao.fetchByMail(cleanLogin)
             ?: userDao.fetchByUsername(cleanLogin)
-            ?: return LoginCommandResponse(LoginResult.USER_NOT_FOUND, null, null)
+            ?: return LoginCommandResponse(LoginResult.userNotFound, null, null)
         val userPassword = userDao.fetchPassword(user.id)
             ?: throw IllegalStateException("${user.id}")
         if (!passwordEncoder.matches(command.password.password.trim(), userPassword.hash)) {
-            return LoginCommandResponse(LoginResult.BAD_PASSWORD, null, null)
+            return LoginCommandResponse(LoginResult.badPassword, null, null)
         }
         val authResult = userSessionService.authenticateUser(user, request, response)
-        return LoginCommandResponse(LoginResult.LOGGED_IN, UserInfos.fromUser(user), authResult.csrfToken)
+        return LoginCommandResponse(LoginResult.loggedIn, UserInfos.fromUser(user), authResult.csrfToken)
     }
 
 }

@@ -12,6 +12,7 @@ import org.springframework.web.servlet.ModelAndView
 import orgarif.controller.IndexController
 import orgarif.domain.RequestErrorId
 import orgarif.service.RandomService
+import orgarif.config.Routes
 import java.util.*
 import javax.servlet.http.HttpServletResponse
 
@@ -24,14 +25,9 @@ class ApplicationErrorController(
 
     private val logger = KotlinLogging.logger {}
 
-    companion object {
-        private const val errorRoute = "/error"
-    }
-
-    // TODO[secu] de la nécessité de tester ce truc là, il était pété en silence =x
-    // encore une fois..
-    // TODO[secu] si acces direct on redirect
-    @RequestMapping(errorRoute)
+    // TODO[secu] test this, it silently broke twice in the past
+    // TODO[secu] if direct access, redirect
+    @RequestMapping(Routes.error)
     fun error(request: WebRequest, response: HttpServletResponse): ModelAndView {
         val errorMap = errorAttributes.getErrorAttributes(
             request,
@@ -43,9 +39,9 @@ class ApplicationErrorController(
             )
         )
         // [doc] in case logout is quickly called twice
-        if (response.status == 403 && errorMap["path"] == IndexController.logoutRoute) {
+        if (response.status == 403 && errorMap["path"] == Routes.logout) {
             logger.trace { "Some user logged out twice" }
-            return ModelAndView("redirect:/")
+            return ModelAndView("redirect:${Routes.root}")
         }
         val initialError = errorMap["error"] as String
         val exception = errorAttributes.getError(request)
@@ -56,9 +52,9 @@ class ApplicationErrorController(
             // we'are arrived here with a status 200
             200 -> 404 to "Not Found"
             500 -> {
-                // TODO[secu] on passe ici dans quel cas ?
-                // si // dans l'url
-                // SecurityException par ex apparemment
+                // TODO[secu] in which case are we getting here ?
+                // if // within the url
+                // with SecurityException
 //                when (exception) {
 //                    is ErrorDisplayException -> Triple(response.status, initialError, null)
 //                    else -> {
@@ -67,7 +63,7 @@ class ApplicationErrorController(
 //                    }
 //                }
             }
-            // TODO[secu] on fait quoi ?
+            // TODO[secu] what do we do ?
             else -> response.status to initialError
         }
         val date = errorMap["timestamp"] as Date

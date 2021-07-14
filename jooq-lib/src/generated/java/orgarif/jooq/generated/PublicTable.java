@@ -27,6 +27,7 @@ import orgarif.jooq.generated.tables.OrganismeTable;
 import orgarif.jooq.generated.tables.RepresentantTable;
 import orgarif.jooq.generated.tables.SecteurTable;
 import orgarif.jooq.generated.tables.TypeStructureTable;
+import orgarif.jooq.generated.tables.UserFileTable;
 import orgarif.jooq.generated.tables.UserSessionLogTable;
 
 
@@ -114,6 +115,11 @@ public class PublicTable extends SchemaImpl {
     public final TypeStructureTable TYPE_STRUCTURE = TypeStructureTable.TYPE_STRUCTURE;
 
     /**
+     * The table <code>public.user_file</code>.
+     */
+    public final UserFileTable USER_FILE = UserFileTable.USER_FILE;
+
+    /**
      * The table <code>public.user_session_log</code>.
      */
     public final UserSessionLogTable USER_SESSION_LOG = UserSessionLogTable.USER_SESSION_LOG;
@@ -150,6 +156,7 @@ public class PublicTable extends SchemaImpl {
             RepresentantTable.REPRESENTANT,
             SecteurTable.SECTEUR,
             TypeStructureTable.TYPE_STRUCTURE,
+            UserFileTable.USER_FILE,
             UserSessionLogTable.USER_SESSION_LOG);
     }
 }

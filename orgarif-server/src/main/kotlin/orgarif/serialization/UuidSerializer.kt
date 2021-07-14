@@ -8,7 +8,7 @@ import java.util.*
 
 class UuidSerializer : StdSerializer<UUID>(UUID::class.java) {
 
-    // TODO[serialization] gérer tous les cas où null
+    // TODO[serialization] handle all the null cases ?
     override fun serialize(value: UUID?, gen: JsonGenerator, provider: SerializerProvider) =
         gen.writeString(value?.let { OrgarifStringUtils.serializeUuid(it) } ?: "null")
 

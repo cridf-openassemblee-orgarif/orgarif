@@ -35,8 +35,8 @@ class ApplicationExceptionHandler(
 
     @ExceptionHandler(Exception::class)
     fun defaultErrorHandler(request: WebRequest, response: HttpServletResponse, exception: Exception): ModelAndView {
-        // TODO[secu] traitements exceptions
-        // pr log userid, mail, ip
+        // TODO[secu] handle exceptions
+        // log userid, mail, ip
         val id = randomService.id<RequestErrorId>()
         val readableStackTrace =
             if (applicationInstance.env == ApplicationEnvironment.dev ||
@@ -50,13 +50,13 @@ class ApplicationExceptionHandler(
         val subCause = cause?.cause
         when {
             subCause is SizeLimitExceededException -> {
-                // TODO[secu] tester dans la pratiqu, il se passe quoi avec le user null
+                // TODO[secu] in practice what happens with user null ?
                 logger.info {
-                    // TODO[secu] alors du coup user nécessairement connecté... ce n'était plus le cas à un moment !
+                    // TODO[secu] which means user must be connected...
                     "User ${UserSessionHelper.getUserSession()} tried to upload a file to big : " +
                             subCause.message
                 }
-                // TODO[secu] un système de code pour front
+                // TODO[secu] error codes for the front !
                 return render(
                     request, response, RequestError(
                         id, 500, "Error",
@@ -65,7 +65,7 @@ class ApplicationExceptionHandler(
                 )
             }
             exception is DisplayMessageException -> {
-                // TODO[secu] ce "DisplayError" est used en front
+                // TODO[secu] this "DisplayError" is used on front
                 logger.info { "[user message exception] ${exception.logMessage}" }
                 return render(
                     request, response, RequestError(
@@ -102,11 +102,11 @@ class ApplicationExceptionHandler(
                 } else {
                     logger.warn(exception) { "Unhandled exception [$id]" }
                 }
-                // TODO[secu] i18n, et i18n de spring
-                // centraliser les strings user qui viennent du back
+                // TODO[secu] i18n, & i18n from spring
+                // all strings should come from a central place
                 return render(
                     request, response, RequestError(
-                        id, 500, "Erreur", "Erreur inconnue",
+                        id, 500, "Error", "Unknown error",
                         dateService.now(), readableStackTrace
                     )
                 )
@@ -122,12 +122,12 @@ class ApplicationExceptionHandler(
         val mav = ModelAndView()
         response.status = requestError.status
         val stackTrace = requestError.stackTrace
-        // TODO[secu] fiable ça ?
+        // TODO[secu] reliable ?
         if (request.getHeader("Content-Type") == MimeType.json.fullType) {
             response.contentType = MimeType.json.fullType
-            // écrire dans le tampon via un
+            // write in the buffer with
             // objectMapper.writeValue(response.outputStream, requestErrorNode)
-            // est tout buggy
+            // is buggy...
             mav.view = MappingJackson2JsonView(Serializer.objectMapper)
             mav.model["errorId"] = requestError.id
             mav.model["status"] = requestError.status
@@ -145,7 +145,7 @@ class ApplicationExceptionHandler(
             }
             mav.viewName = "error"
         }
-        // TODO[secu] pv move aux erreurs en html only?
+        // TODO[secu] for output html only?
         mav.model["statics"] = statics
         return mav
     }

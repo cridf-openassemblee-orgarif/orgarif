@@ -9,7 +9,7 @@ import orgarif.jooq.generated.Tables.USER_SESSION_LOG
 import orgarif.jooq.generated.tables.records.UserSessionLogRecord
 import java.time.Instant
 
-// TODO[user] : essayer keep id de spring
+// TODO[user] : try to keep Spring id
 @Repository
 class UserSessionLogDao(val jooq: DSLContext) {
 

@@ -65,18 +65,18 @@ class CommandLogDao(val jooq: DSLContext) {
     }
 
     private fun map(r: CommandLogRecord) = Record(
-        r.id.toTypeId(),
-        r.userId?.toTypeId(),
-        r.deploymentLogId.toTypeId(),
-        Class.forName(r.commandClass),
-        r.jsonCommand,
-        r.ip,
-        r.userSessionId?.toTypeId(),
-        r.resultingIds,
-        r.jsonResult,
-        r.exceptionStackTrace,
-        r.startDate,
-        r.endDate
+        id = r.id.toTypeId(),
+        userId = r.userId?.toTypeId(),
+        deploymentLogId = r.deploymentLogId.toTypeId(),
+        commandClass = Class.forName(r.commandClass),
+        jsonCommand = r.jsonCommand,
+        ip = r.ip,
+        userSessionId = r.userSessionId?.toTypeId(),
+        resultingIds = r.resultingIds,
+        jsonResult = r.jsonResult,
+        exceptionStackTrace = r.exceptionStackTrace,
+        startDate = r.startDate,
+        endDate = r.endDate
     )
 
 }

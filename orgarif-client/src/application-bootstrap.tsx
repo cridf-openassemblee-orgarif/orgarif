@@ -1,6 +1,9 @@
 import { Global } from '@emotion/react';
-import { MuiThemeProvider, StylesProvider } from '@material-ui/core';
-import createMuiTheme from '@material-ui/core/styles/createMuiTheme';
+import {
+  createMuiTheme,
+  MuiThemeProvider,
+  StylesProvider
+} from '@material-ui/core';
 import * as React from 'react';
 import * as ReactDOM from 'react-dom';
 import { Router as ReactRouter } from 'react-router-dom';

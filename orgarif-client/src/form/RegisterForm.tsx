@@ -11,6 +11,7 @@ import { TextInput } from '../component/base-component/TextInput';
 export interface RegisterFormDto {
   mail: string;
   password: string;
+  displayName: string;
 }
 
 interface Props {
@@ -31,10 +32,11 @@ export const RegisterForm = (props: Props) => {
   };
   return (
     <SimpleForm
-      onSubmit={(dto: { mail: string }) =>
+      onSubmit={(dto: { mail: string; displayName: string }) =>
         props.onSubmit({
           mail: dto.mail,
-          password
+          password,
+          displayName: dto.displayName
         })
       }
     >
@@ -67,6 +69,17 @@ export const RegisterForm = (props: Props) => {
           label="Mode de passe"
           value={password}
           setValue={setPassword}
+        />
+      </div>
+      <div
+        css={css`
+          margin: 10px 0;
+        `}
+      >
+        <TextInput
+          name="displayName"
+          label={'Display name'}
+          onChange={checkLoginAvailability}
         />
       </div>
       <Button type="submit">Créer le compte</Button>

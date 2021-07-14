@@ -44,17 +44,11 @@ object UserSessionHelper {
 //                        updateSession(UserSession(...))
 //                    }
             }
-            // TODO[secu] clairement 403 si anonymousUser
+            // TODO[secu] do 403 if anonymousUser
             is AnonymousAuthenticationToken ->
                 throw AppErrors.NotConnectedUser()
-//            handle anonymous
             // TODO[secu] log ?
-            // TODO[secu] et surtout ça devrait atterir en 403 ça
             else -> {
-                // je pourrais log et balancer une SilentException
-                // mais non en fait je veux bien la stack ici
-//                Thread.dumpStack() ?
-//                logger.error(e) { "" }
                 throw IllegalStateException("Unknown principal type ${it.javaClass} $it")
             }
         }

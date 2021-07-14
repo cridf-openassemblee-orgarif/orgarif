@@ -4,40 +4,13 @@
     <appender name="stdout" class="ch.qos.logback.core.ConsoleAppender">
         <encoder name="enc" class="ch.qos.logback.core.encoder.LayoutWrappingEncoder">
             <layout class="orgarif.utils.LogbackPatternLayout">
-                <pattern>%d{MM-dd HH:mm:ss} %-5level %-36logger{36} %m %userSession%n</pattern>
+                <pattern>%d{MM-dd HH:mm:ss} %-5level %-36logger{36} %m %userSession%ip%n</pattern>
             </layout>
         </encoder>
     </appender>
 
-    <appender name="sentry" class="io.sentry.logback.SentryAppender">
-        <filter class="ch.qos.logback.classic.filter.ThresholdFilter">
-            <level>WARN</level>
-        </filter>
-    </appender>
-
-    <appender name="loggly" class="ch.qos.logback.ext.loggly.LogglyAppender">
-        <endpointUrl>http://logs-01.loggly.com/inputs/f9d494eb-09b1-463d-864f-4bd7f223b070/tag/prod</endpointUrl>
-        <pattern>%d{"ISO8601", UTC} %p %t %c{0}.%M - %m%n</pattern>
-    </appender>
-
-    <appender name="papertrail" class="com.papertrailapp.logback.Syslog4jAppender">
-        <layout class="ch.qos.logback.classic.PatternLayout">
-            <pattern>%-5level %logger{35}: %m%n%xEx</pattern>
-        </layout>
-
-        <syslogConfig class="org.productivity.java.syslog4j.impl.net.tcp.ssl.SSLTCPNetSyslogConfig">
-            <host>logs5.papertrailapp.com</host>
-            <port>34338</port>
-            <ident>prod</ident>
-            <maxMessageLength>128000</maxMessageLength>
-        </syslogConfig>
-    </appender>
-
     <root level="WARN">
         <appender-ref ref="stdout"/>
-        <appender-ref ref="sentry"/>
-        <appender-ref ref="loggly"/>
-        <appender-ref ref="papertrail"/>
     </root>
 
     <logger name="orgarif" level="INFO"/>
@@ -45,8 +18,4 @@
     <!-- Spring noise -->
     <logger name="orgarif.error.ApplicationExceptionHandlerExceptionResolver" level="WARN"/>
     <logger name="org.spring.aop.framework.CglibAopProxy" level="INFO"/>
-
-    <!-- Because of : WARN  o.a.a.u.s.d.StAXDialectDetector: Unable to load manifest for StAX implementation at ... -->
-    <!-- at launch -->
-    <logger name="org.apache.axiom.util.stax.dialect.StAXDialectDetector" level="ERROR"/>
 </configuration>
