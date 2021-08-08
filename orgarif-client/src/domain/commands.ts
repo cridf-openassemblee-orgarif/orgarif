@@ -67,6 +67,10 @@ export interface DeleteInstanceCommand {
   id: InstanceId;
 }
 
+export interface DeleteNatureJuridiqueCommand {
+  id: NatureJuridiqueId;
+}
+
 export interface DeleteRepresentantCommand {
   id: RepresentantId;
 }
@@ -102,6 +106,11 @@ export interface RegisterCommandResponse {
   result: RegisterResult;
   userinfos?: UserInfos;
   displayName: string;
+}
+
+export interface UpdateNatureJuridiqueLibelleCommand {
+  id: NatureJuridiqueId;
+  libelle: string;
 }
 
 export interface UpdateOrganismeNatureJuridiqueCommand {

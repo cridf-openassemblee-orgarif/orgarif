@@ -1,5 +1,6 @@
 import { FunctionComponent } from 'react';
 import { OrganismeId, SecteurId } from '../domain/ids';
+import { EditNatureJuridiquesView } from '../view/EditNatureJuridiquesView';
 import { EditOrganismeView } from '../view/EditOrganismeView';
 import { EditSecteursView } from '../view/EditSecteursView';
 import { ListOrganismesBySecteurView } from '../view/ListOrganismesBySecteurView';
@@ -10,6 +11,7 @@ import { RegisterView } from '../view/RegisterView';
 import { RootView } from '../view/RootView';
 
 export type Route =
+  | EditNatureJuridiquesRoute
   | EditOrganismeRoute
   | EditSecteursRoute
   | ListOrganismesBySecteurRoute
@@ -33,6 +35,11 @@ interface RouteProps {
 }
 
 export const routes: Record<Route['name'], RouteProps> = {
+  EditNatureJuridiquesRoute: {
+    path: '/edition-nature-juridiques',
+    component: EditNatureJuridiquesView,
+    authenticationLevel: 'loggedIn'
+  },
   EditOrganismeRoute: {
     path: '/edition-organisme/:id',
     component: EditOrganismeView,
@@ -74,6 +81,10 @@ export const routes: Record<Route['name'], RouteProps> = {
     authenticationLevel: 'neutral'
   }
 };
+
+export interface EditNatureJuridiquesRoute {
+  name: 'EditNatureJuridiquesRoute';
+}
 
 export interface EditOrganismeRoute {
   name: 'EditOrganismeRoute';

@@ -8,5 +8,8 @@ export const Errors = {
   _ff7e63f5: () => Error('ff7e63f5'),
   _c0c89407: () => Error('c0c89407'),
   _06c0f351: () => Error('06c0f351'),
-  _2c740dc6: () => Error('2c740dc6')
+  _2c740dc6: () => Error('2c740dc6'),
+  _bf153d36: () => Error('bf153d36'),
+  _51237480: () => Error('51237480'),
+  _952f03ee: () => Error('952f03ee')
 };

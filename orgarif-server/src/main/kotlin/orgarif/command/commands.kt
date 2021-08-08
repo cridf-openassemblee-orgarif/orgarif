@@ -54,6 +54,8 @@ data class CreateOrganismeCommandResponse(val id: OrganismeId) : CommandResponse
 
 data class DeleteInstanceCommand(val id: InstanceId) : Command()
 
+data class DeleteNatureJuridiqueCommand(val id: NatureJuridiqueId) : Command()
+
 data class DeleteRepresentantCommand(val id: RepresentantId) : Command()
 
 data class DeleteSecteurCommand(val id: SecteurId) : Command()
@@ -88,6 +90,11 @@ data class RegisterCommandResponse(
     val result: RegisterResult,
     val userinfos: UserInfos?
 ) : CommandResponse()
+
+data class UpdateNatureJuridiqueLibelleCommand(
+    val id: NatureJuridiqueId,
+    val libelle: String
+) : Command()
 
 data class UpdateOrganismeNatureJuridiqueCommand(
     val id: OrganismeId,

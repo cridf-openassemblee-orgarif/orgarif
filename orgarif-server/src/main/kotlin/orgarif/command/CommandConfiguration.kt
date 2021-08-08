@@ -10,11 +10,13 @@ object CommandConfiguration {
         is CreateDeliberationAndAddLienCommand -> AuthenticationLevel.admin
         is CreateOrganismeCommand -> AuthenticationLevel.admin
         is DeleteInstanceCommand -> AuthenticationLevel.admin
+        is DeleteNatureJuridiqueCommand -> AuthenticationLevel.admin
         is DeleteRepresentantCommand -> AuthenticationLevel.admin
         is DeleteSecteurCommand -> AuthenticationLevel.admin
         is LoginCommand -> AuthenticationLevel.anonymous
         is MoveRepresentantCommand -> AuthenticationLevel.admin
         is RegisterCommand -> AuthenticationLevel.anonymous
+        is UpdateNatureJuridiqueLibelleCommand -> AuthenticationLevel.admin
         is UpdateOrganismeNatureJuridiqueCommand -> AuthenticationLevel.admin
         is UpdateOrganismePartageRepresentantsCommand -> AuthenticationLevel.admin
         is UpdateOrganismeSecteurCommand -> AuthenticationLevel.admin

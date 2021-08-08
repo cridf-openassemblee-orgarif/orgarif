@@ -41,6 +41,7 @@ class CommandController(
     val deleteInstanceCommandHandler: DeleteInstanceCommandHandler,
     val deleteRepresentantCommandHandler: DeleteRepresentantCommandHandler,
     val deleteSecteurCommandHandler: DeleteSecteurCommandHandler,
+    val deleteNatureJuridiqueCommandHandler: DeleteNatureJuridiqueCommandHandler,
     val loginCommandHandler: LoginCommandHandler,
     val moveRepresentantCommandHandler: MoveRepresentantCommandHandler,
     val registerCommandHandler: RegisterCommandHandler,
@@ -49,6 +50,7 @@ class CommandController(
     val updateOrganismeSecteurCommandHandler: UpdateOrganismeSecteurCommandHandler,
     val updateOrganismeTypeStructureCommandCommandHandler: UpdateOrganismeTypeStructureCommandHandler,
     val updateSecteurLibelleCommandHandler: UpdateSecteurLibelleCommandHandler,
+    val updateNatureJuridiqueLibelleCommandHandler: UpdateNatureJuridiqueLibelleCommandHandler,
 ) {
 
     private val logger = KotlinLogging.logger {}
@@ -149,11 +151,13 @@ class CommandController(
         is CreateDeliberationAndAddLienCommand -> createDeliberationAndAddLienCommandHandler
         is CreateOrganismeCommand -> createOrganismeCommandHandler
         is DeleteInstanceCommand -> deleteInstanceCommandHandler
+        is DeleteNatureJuridiqueCommand -> deleteNatureJuridiqueCommandHandler
         is DeleteRepresentantCommand -> deleteRepresentantCommandHandler
         is DeleteSecteurCommand -> deleteSecteurCommandHandler
         is LoginCommand -> loginCommandHandler
         is MoveRepresentantCommand -> moveRepresentantCommandHandler
         is RegisterCommand -> registerCommandHandler
+        is UpdateNatureJuridiqueLibelleCommand -> updateNatureJuridiqueLibelleCommandHandler
         is UpdateOrganismeNatureJuridiqueCommand -> updateOrganismeNatureJuridiqueCommandHandler
         is UpdateOrganismePartageRepresentantsCommand -> updateOrganismePartageRepresentantsCommandHandler
         is UpdateOrganismeSecteurCommand -> updateOrganismeSecteurCommandHandler

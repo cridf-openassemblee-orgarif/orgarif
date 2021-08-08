@@ -123,6 +123,13 @@ class OrganismeDao(val jooq: DSLContext) {
             .fetchSingle()
             .value1()
 
+    fun countByNatureJuridique(natureJuridiqueId: NatureJuridiqueId): Int =
+        jooq.selectCount()
+            .from(ORGANISME)
+            .where(ORGANISME.NATURE_JURIDIQUE_ID.equal(natureJuridiqueId.rawId))
+            .fetchSingle()
+            .value1()
+
     private fun map(r: OrganismeRecord) = Record(
         r.id.toTypeId(),
         r.nom,

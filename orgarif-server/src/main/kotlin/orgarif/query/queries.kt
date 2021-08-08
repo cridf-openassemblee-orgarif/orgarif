@@ -8,6 +8,7 @@ import orgarif.domain.OrganismeId
 import orgarif.domain.Secteur
 import orgarif.domain.SecteurId
 import orgarif.domain.UserSession
+import orgarif.domain.*
 
 @JsonTypeInfo(use = JsonTypeInfo.Id.NAME, include = JsonTypeInfo.As.PROPERTY, property = "objectType")
 sealed class Query

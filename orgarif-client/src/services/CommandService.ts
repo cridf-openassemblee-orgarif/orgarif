@@ -11,6 +11,7 @@ import {
   CreateOrganismeCommand,
   CreateOrganismeCommandResponse,
   DeleteInstanceCommand,
+  DeleteNatureJuridiqueCommand,
   DeleteRepresentantCommand,
   DeleteSecteurCommand,
   LoginCommand,
@@ -18,6 +19,7 @@ import {
   MoveRepresentantCommand,
   RegisterCommand,
   RegisterCommandResponse,
+  UpdateNatureJuridiqueLibelleCommand,
   UpdateOrganismeNatureJuridiqueCommand,
   UpdateOrganismePartageRepresentantsCommand,
   UpdateOrganismeSecteurCommand,
@@ -55,6 +57,10 @@ export class CommandService {
     command: DeleteInstanceCommand
   ): Promise<void> => this.command('DeleteInstanceCommand', command);
 
+  public deleteNatureJuridiqueCommand = (
+    command: DeleteNatureJuridiqueCommand
+  ): Promise<void> => this.command('DeleteNatureJuridiqueCommand', command);
+
   public deleteRepresentantCommand = (
     command: DeleteRepresentantCommand
   ): Promise<void> => this.command('DeleteRepresentantCommand', command);
@@ -76,6 +82,11 @@ export class CommandService {
     command: RegisterCommand
   ): Promise<RegisterCommandResponse> =>
     this.command('RegisterCommand', command);
+
+  public updateNatureJuridiqueLibelleCommand = (
+    command: UpdateNatureJuridiqueLibelleCommand
+  ): Promise<void> =>
+    this.command('UpdateNatureJuridiqueLibelleCommand', command);
 
   public updateOrganismeNatureJuridiqueCommand = (
     command: UpdateOrganismeNatureJuridiqueCommand
