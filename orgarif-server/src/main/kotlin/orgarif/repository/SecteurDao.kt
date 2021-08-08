@@ -3,6 +3,7 @@ package orgarif.repository
 import org.jooq.DSLContext
 import org.springframework.stereotype.Repository
 import orgarif.domain.SecteurId
+import orgarif.jooq.generated.Tables
 import orgarif.jooq.generated.Tables.SECTEUR
 import orgarif.jooq.generated.tables.records.SecteurRecord
 import orgarif.utils.toTypeId
@@ -28,6 +29,19 @@ class SecteurDao(val jooq: DSLContext) {
         jooq.selectFrom(SECTEUR)
             .fetch()
             .map(this::map)
+
+    fun updateLibelle(id: SecteurId, libelle: String) {
+        jooq.update(SECTEUR)
+            .set(SECTEUR.LIBELLE, libelle)
+            .where(SECTEUR.ID.equal(id.rawId))
+            .execute()
+    }
+
+    fun delete(id: SecteurId) {
+        jooq.deleteFrom(SECTEUR)
+            .where(SECTEUR.ID.equal(id.rawId))
+            .execute()
+    }
 
     private fun map(r: SecteurRecord) = Record(
         r.id.toTypeId(),

@@ -58,9 +58,15 @@ class ApplicationExceptionHandler(
                 }
                 // TODO[secu] error codes for the front !
                 return render(
-                    request, response, RequestError(
-                        id, 500, "Error",
-                        "File exceeds max authorized size", dateService.now(), readableStackTrace
+                    request,
+                    response,
+                    RequestError(
+                        id,
+                        500,
+                        "Error",
+                        "File exceeds max authorized size",
+                        dateService.now(),
+                        readableStackTrace
                     )
                 )
             }
@@ -68,10 +74,9 @@ class ApplicationExceptionHandler(
                 // TODO[secu] this "DisplayError" is used on front
                 logger.info { "[user message exception] ${exception.logMessage}" }
                 return render(
-                    request, response, RequestError(
-                        id, 500, "DisplayError",
-                        exception.displayMessage, dateService.now(), readableStackTrace
-                    )
+                    request,
+                    response,
+                    RequestError(id, 500, "DisplayError", exception.displayMessage, dateService.now(), null)
                 )
             }
             exception is JsonMappingException -> {
@@ -143,10 +148,9 @@ class ApplicationExceptionHandler(
             if (applicationInstance.env == ApplicationEnvironment.dev && stackTrace != null) {
                 mav.model[ApplicationConstants.springMvcModelKeyStackTrace] = stackTrace.toReadableString()
             }
+            mav.model["statics"] = statics
             mav.viewName = "error"
         }
-        // TODO[secu] for output html only?
-        mav.model["statics"] = statics
         return mav
     }
 }

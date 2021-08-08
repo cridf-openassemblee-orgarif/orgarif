@@ -116,6 +116,13 @@ class OrganismeDao(val jooq: DSLContext) {
             .fetch()
             .map(this::map)
 
+    fun countBySecteur(secteurId: SecteurId): Int =
+        jooq.selectCount()
+            .from(ORGANISME)
+            .where(ORGANISME.SECTEUR_ID.equal(secteurId.rawId))
+            .fetchSingle()
+            .value1()
+
     private fun map(r: OrganismeRecord) = Record(
         r.id.toTypeId(),
         r.nom,

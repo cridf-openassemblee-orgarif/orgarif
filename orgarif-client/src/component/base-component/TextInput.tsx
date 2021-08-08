@@ -1,17 +1,34 @@
 /** @jsxImportSource @emotion/react */
+import { createStyles, Theme } from '@material-ui/core';
+import makeStyles from '@material-ui/core/styles/makeStyles';
 import TextField from '@material-ui/core/TextField';
 import * as React from 'react';
-import { ChangeEvent, useState } from 'react';
+import { ChangeEvent, FocusEvent, useState } from 'react';
+
+const useStyles = makeStyles((theme: Theme) =>
+  createStyles({
+    root: {
+      '& .MuiOutlinedInput-root': {
+        '& fieldset': {
+          border: 0
+        }
+      }
+    }
+  })
+);
 
 export const TextInput = (props: {
   name: string;
-  label: string;
+  label?: string;
   initialValue?: string;
   autoFocus?: boolean;
   type?: React.InputHTMLAttributes<unknown>['type'];
   onChange?: (event: ChangeEvent<HTMLInputElement>) => void;
+  onBlur?: (event: FocusEvent<HTMLInputElement>) => void;
+  mode?: 'normal' | 'appears-as-text';
 }) => {
-  const [value] = useState(props.initialValue);
+  const classes = useStyles();
+  const [value, setValue] = useState(props.initialValue);
   return (
     <TextField
       name={props.name}
@@ -22,7 +39,17 @@ export const TextInput = (props: {
       autoFocus={props.autoFocus}
       size={'small'}
       type={props.type}
-      onChange={props.onChange}
+      onChange={(e: ChangeEvent<HTMLInputElement>) => {
+        setValue(e.currentTarget.value);
+        if (props.onChange) {
+          props.onChange(e);
+        }
+      }}
+      onBlur={props.onBlur}
+      className={props.mode === 'appears-as-text' ? classes.root : undefined}
+      InputProps={{
+        readOnly: props.mode === 'appears-as-text'
+      }}
     />
   );
 };

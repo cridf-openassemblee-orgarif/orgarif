@@ -15,6 +15,7 @@ export const colors = {
   errorBackground: '#bd4641',
   errorRed: '#cc0000',
   grey: '#333333',
+  grey2: '#aaa',
   lightblue: 'lightblue',
   popupGlasspanel: 'rgba(220, 220, 220, 0.85)',
   white: '#ffffff'

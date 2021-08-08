@@ -12,6 +12,7 @@ import {
   CreateOrganismeCommandResponse,
   DeleteInstanceCommand,
   DeleteRepresentantCommand,
+  DeleteSecteurCommand,
   LoginCommand,
   LoginCommandResponse,
   MoveRepresentantCommand,
@@ -20,7 +21,8 @@ import {
   UpdateOrganismeNatureJuridiqueCommand,
   UpdateOrganismePartageRepresentantsCommand,
   UpdateOrganismeSecteurCommand,
-  UpdateOrganismeTypeStructureCommand
+  UpdateOrganismeTypeStructureCommand,
+  UpdateSecteurLibelleCommand
 } from '../domain/commands';
 
 export class CommandService {
@@ -57,6 +59,10 @@ export class CommandService {
     command: DeleteRepresentantCommand
   ): Promise<void> => this.command('DeleteRepresentantCommand', command);
 
+  public deleteSecteurCommand = (
+    command: DeleteSecteurCommand
+  ): Promise<void> => this.command('DeleteSecteurCommand', command);
+
   public loginCommand = (
     command: LoginCommand
   ): Promise<LoginCommandResponse> => this.command('LoginCommand', command);
@@ -89,6 +95,10 @@ export class CommandService {
     command: UpdateOrganismeTypeStructureCommand
   ): Promise<void> =>
     this.command('UpdateOrganismeTypeStructureCommand', command);
+
+  public updateSecteurLibelleCommand = (
+    command: UpdateSecteurLibelleCommand
+  ): Promise<void> => this.command('UpdateSecteurLibelleCommand', command);
 
   private command = <R>(commandName: string, command?: object): Promise<R> =>
     appContext

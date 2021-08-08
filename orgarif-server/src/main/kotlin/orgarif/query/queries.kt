@@ -5,6 +5,7 @@ import FullOrganisme
 import OrganismeInfos
 import com.fasterxml.jackson.annotation.JsonTypeInfo
 import orgarif.domain.OrganismeId
+import orgarif.domain.Secteur
 import orgarif.domain.SecteurId
 import orgarif.domain.UserSession
 

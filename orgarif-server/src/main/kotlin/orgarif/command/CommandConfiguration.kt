@@ -11,6 +11,7 @@ object CommandConfiguration {
         is CreateOrganismeCommand -> AuthenticationLevel.admin
         is DeleteInstanceCommand -> AuthenticationLevel.admin
         is DeleteRepresentantCommand -> AuthenticationLevel.admin
+        is DeleteSecteurCommand -> AuthenticationLevel.admin
         is LoginCommand -> AuthenticationLevel.anonymous
         is MoveRepresentantCommand -> AuthenticationLevel.admin
         is RegisterCommand -> AuthenticationLevel.anonymous
@@ -18,5 +19,6 @@ object CommandConfiguration {
         is UpdateOrganismePartageRepresentantsCommand -> AuthenticationLevel.admin
         is UpdateOrganismeSecteurCommand -> AuthenticationLevel.admin
         is UpdateOrganismeTypeStructureCommand -> AuthenticationLevel.admin
+        is UpdateSecteurLibelleCommand -> AuthenticationLevel.admin
     }
 }

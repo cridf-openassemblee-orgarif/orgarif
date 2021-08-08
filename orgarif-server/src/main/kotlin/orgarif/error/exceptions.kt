@@ -23,7 +23,7 @@ data class ReadableStackTrace(val exception: Throwable?) {
 // TODO[error] display ? silent ? mute ?
 //class DisplayMessageException(displayMessage: String, logMessage: String) : Exception(message)
 // user message exception
-class DisplayMessageException(val displayMessage: String, val logMessage: String, val logLevel: Level) :
+class DisplayMessageException(val displayMessage: String, val logMessage: String) : //, val logLevel: Level) :
     Exception(logMessage)
 
 // [doc] contains mail to be clear on the front ? Not really needed it smartly handled on the front ?

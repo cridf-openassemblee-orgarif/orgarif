@@ -71,9 +71,6 @@ export class HttpService {
         } else {
           return response.text().then(t => {
             const error: RequestError = JSON.parse(t);
-            if (error.error === displayErrorMessage) {
-              return Promise.reject(displayErrorMessage);
-            }
             return Promise.reject(error);
           });
         }

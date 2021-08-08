@@ -86,8 +86,8 @@ class ElusSynchronizationService(
                 EluDao.Record(
                     id = deserializeUuid(r.uid).toTypeId(),
                     civilite = civilite,
-                    prenom = r.prenom,
-                    nom = r.nom,
+                    prenom = r.prenom.trim(),
+                    nom = r.nom.trim(),
                     groupePolitique = r.groupePolitique,
                     groupePolitiqueCourt = r.groupePolitiqueCourt,
                     imageUrl = r.image,

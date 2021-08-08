@@ -71,6 +71,10 @@ export interface DeleteRepresentantCommand {
   id: RepresentantId;
 }
 
+export interface DeleteSecteurCommand {
+  id: SecteurId;
+}
+
 export interface LoginCommand {
   login: string;
   password: string;
@@ -118,4 +122,9 @@ export interface UpdateOrganismeSecteurCommand {
 export interface UpdateOrganismeTypeStructureCommand {
   id: OrganismeId;
   typeStructureId: TypeStructureId | undefined;
+}
+
+export interface UpdateSecteurLibelleCommand {
+  id: SecteurId;
+  libelle: string;
 }
