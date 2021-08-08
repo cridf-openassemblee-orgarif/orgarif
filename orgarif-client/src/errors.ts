@@ -11,5 +11,8 @@ export const Errors = {
   _2c740dc6: () => Error('2c740dc6'),
   _bf153d36: () => Error('bf153d36'),
   _51237480: () => Error('51237480'),
-  _952f03ee: () => Error('952f03ee')
+  _952f03ee: () => Error('952f03ee'),
+  _89de521f: () => Error('89de521f'),
+  _52b81c0f: () => Error('52b81c0f'),
+  _a5ef6b39: () => Error('a5ef6b39')
 };

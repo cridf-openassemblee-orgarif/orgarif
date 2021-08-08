@@ -60,6 +60,8 @@ data class DeleteRepresentantCommand(val id: RepresentantId) : Command()
 
 data class DeleteSecteurCommand(val id: SecteurId) : Command()
 
+data class DeleteTypeStructureCommand(val id: TypeStructureId) : Command()
+
 // [doc] login as username|mail
 data class LoginCommand(
     val login: String,
@@ -118,5 +120,10 @@ data class UpdateOrganismeTypeStructureCommand(
 
 data class UpdateSecteurLibelleCommand(
     val id: SecteurId,
+    val libelle: String
+) : Command()
+
+data class UpdateTypeStructureLibelleCommand(
+    val id: TypeStructureId,
     val libelle: String
 ) : Command()

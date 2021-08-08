@@ -42,6 +42,7 @@ class CommandController(
     val deleteRepresentantCommandHandler: DeleteRepresentantCommandHandler,
     val deleteSecteurCommandHandler: DeleteSecteurCommandHandler,
     val deleteNatureJuridiqueCommandHandler: DeleteNatureJuridiqueCommandHandler,
+    val deleteTypeStructureCommandHandler: DeleteTypeStructureCommandHandler,
     val loginCommandHandler: LoginCommandHandler,
     val moveRepresentantCommandHandler: MoveRepresentantCommandHandler,
     val registerCommandHandler: RegisterCommandHandler,
@@ -51,6 +52,7 @@ class CommandController(
     val updateOrganismeTypeStructureCommandCommandHandler: UpdateOrganismeTypeStructureCommandHandler,
     val updateSecteurLibelleCommandHandler: UpdateSecteurLibelleCommandHandler,
     val updateNatureJuridiqueLibelleCommandHandler: UpdateNatureJuridiqueLibelleCommandHandler,
+    val updateTypeStructureLibelleCommandHandler: UpdateTypeStructureLibelleCommandHandler,
 ) {
 
     private val logger = KotlinLogging.logger {}
@@ -154,6 +156,7 @@ class CommandController(
         is DeleteNatureJuridiqueCommand -> deleteNatureJuridiqueCommandHandler
         is DeleteRepresentantCommand -> deleteRepresentantCommandHandler
         is DeleteSecteurCommand -> deleteSecteurCommandHandler
+        is DeleteTypeStructureCommand -> deleteTypeStructureCommandHandler
         is LoginCommand -> loginCommandHandler
         is MoveRepresentantCommand -> moveRepresentantCommandHandler
         is RegisterCommand -> registerCommandHandler
@@ -163,6 +166,7 @@ class CommandController(
         is UpdateOrganismeSecteurCommand -> updateOrganismeSecteurCommandHandler
         is UpdateOrganismeTypeStructureCommand -> updateOrganismeTypeStructureCommandCommandHandler
         is UpdateSecteurLibelleCommand -> updateSecteurLibelleCommandHandler
+        is UpdateTypeStructureLibelleCommand -> updateTypeStructureLibelleCommandHandler
     } as CommandHandler<Command, CommandResponse>
 
 }

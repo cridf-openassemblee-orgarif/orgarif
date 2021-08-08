@@ -37,12 +37,21 @@ export const RootView = () => {
           >
             Édition des secteurs
           </RouteLink>
+          <br />
           <RouteLink
             route={{
               name: 'EditNatureJuridiquesRoute'
             }}
           >
             Édition des natures juridiques
+          </RouteLink>
+          <br />
+          <RouteLink
+            route={{
+              name: 'EditTypeStructuresRoute'
+            }}
+          >
+            Édition des types de structure
           </RouteLink>
           <h3>Par secteur</h3>
           {secteurs.map(s => (

@@ -3,6 +3,7 @@ import { OrganismeId, SecteurId } from '../domain/ids';
 import { EditNatureJuridiquesView } from '../view/EditNatureJuridiquesView';
 import { EditOrganismeView } from '../view/EditOrganismeView';
 import { EditSecteursView } from '../view/EditSecteursView';
+import { EditTypeStructuresView } from '../view/EditTypeStructuresView';
 import { ListOrganismesBySecteurView } from '../view/ListOrganismesBySecteurView';
 import { ListOrganismesView } from '../view/ListOrganismesView';
 import { LoginView } from '../view/LoginView';
@@ -14,6 +15,7 @@ export type Route =
   | EditNatureJuridiquesRoute
   | EditOrganismeRoute
   | EditSecteursRoute
+  | EditTypeStructuresRoute
   | ListOrganismesBySecteurRoute
   | ListOrganismesRoute
   | LoginRoute
@@ -48,6 +50,11 @@ export const routes: Record<Route['name'], RouteProps> = {
   EditSecteursRoute: {
     path: '/edition-secteurs',
     component: EditSecteursView,
+    authenticationLevel: 'loggedIn'
+  },
+  EditTypeStructuresRoute: {
+    path: '/edition-type-structures',
+    component: EditTypeStructuresView,
     authenticationLevel: 'loggedIn'
   },
   ListOrganismesBySecteurRoute: {
@@ -93,6 +100,10 @@ export interface EditOrganismeRoute {
 
 export interface EditSecteursRoute {
   name: 'EditSecteursRoute';
+}
+
+export interface EditTypeStructuresRoute {
+  name: 'EditTypeStructuresRoute';
 }
 
 export interface ListOrganismesBySecteurRoute {

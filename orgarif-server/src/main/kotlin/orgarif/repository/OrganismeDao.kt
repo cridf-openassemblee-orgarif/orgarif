@@ -130,6 +130,13 @@ class OrganismeDao(val jooq: DSLContext) {
             .fetchSingle()
             .value1()
 
+    fun countByTypeStructure(typeStructureId: TypeStructureId): Int =
+        jooq.selectCount()
+            .from(ORGANISME)
+            .where(ORGANISME.TYPE_STRUCTURE_ID.equal(typeStructureId.rawId))
+            .fetchSingle()
+            .value1()
+
     private fun map(r: OrganismeRecord) = Record(
         r.id.toTypeId(),
         r.nom,

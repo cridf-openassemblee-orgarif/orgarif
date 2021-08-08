@@ -20,5 +20,6 @@ data class ApplicationBootstrapData(
     val env: ApplicationEnvironment,
     val userInfos: UserInfos?,
     val categories: OrganismeCategories,
+    // TODO remove
     val elus: List<Elu>
 )

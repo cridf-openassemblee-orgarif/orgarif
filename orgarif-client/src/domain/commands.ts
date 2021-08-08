@@ -79,6 +79,10 @@ export interface DeleteSecteurCommand {
   id: SecteurId;
 }
 
+export interface DeleteTypeStructureCommand {
+  id: TypeStructureId;
+}
+
 export interface LoginCommand {
   login: string;
   password: string;
@@ -135,5 +139,10 @@ export interface UpdateOrganismeTypeStructureCommand {
 
 export interface UpdateSecteurLibelleCommand {
   id: SecteurId;
+  libelle: string;
+}
+
+export interface UpdateTypeStructureLibelleCommand {
+  id: TypeStructureId;
   libelle: string;
 }
