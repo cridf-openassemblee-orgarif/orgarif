@@ -78,7 +78,7 @@ export const RegisterForm = (props: Props) => {
       >
         <TextInput
           name="displayName"
-          label={'Display name'}
+          label={'Nom affiché'}
           onChange={checkLoginAvailability}
         />
       </div>

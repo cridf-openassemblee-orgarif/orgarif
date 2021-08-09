@@ -27,12 +27,15 @@ export const PasswordInput = (props: {
   };
   return (
     <FormControl variant="outlined" size="small" fullWidth={true}>
-      <InputLabel htmlFor={stringifyNominalString(id)}>Password</InputLabel>
+      <InputLabel htmlFor={stringifyNominalString(id)}>
+        {props.label}
+      </InputLabel>
       <OutlinedInput
         id={stringifyNominalString(id)}
         type={showPassword ? 'text' : 'password'}
         value={props.value}
         onChange={e => props.setValue(e.target.value)}
+        // keep for animation
         label={props.label}
         endAdornment={
           <InputAdornment position="end">
