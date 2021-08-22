@@ -1,6 +1,6 @@
 /** @jsxImportSource @emotion/react */
 import { css } from '@emotion/react';
-import { Button } from '@material-ui/core';
+import { Button } from '@mui/material';
 import * as React from 'react';
 import { ChangeEvent, useState } from 'react';
 import { appContext } from '../ApplicationContext';

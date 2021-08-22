@@ -13,19 +13,23 @@ object Configuration {
         configuration("application-dev.yaml", "application-$additionalConfig.yaml")
     }
 
-    private fun configuration(vararg configurationFiles: String): DatabaseConfiguration {
+    fun configuration(vararg configurationFiles: String): DatabaseConfiguration {
         val config = SpringLikeYamlConfigUtils
             .yamlFilesToMap(*configurationFiles.map { streamConfigurationFile(it) }.toTypedArray())
+        val host = config.getValue("database.host")
+        if(host.endsWith(".com")) {
+            throw RuntimeException("Warning run database operations on $host")
+        }
         return DatabaseConfiguration(
             DatabaseConfiguration.Driver.psql,
-            config.getValue("database.host"),
+            host,
             config.getValue("database.port").toInt(),
             config.getValue("database.name"),
             config.getValue("database.user"),
-            config.getValue("database.password"),
+            config["database.password"],
             setOf("public"),
             "/usr/local/bin",
-            config.get("pgquarrel")
+            config["pgquarrel"]
         )
     }
 

@@ -11,8 +11,10 @@ class OrgarifUuidIdDeserializer<T : OrgarifUuidId>(val orgarifUuidIdClass: KClas
     StdDeserializer<T>(orgarifUuidIdClass.java) {
 
     companion object {
-        fun <T : OrgarifUuidId> deserialize(orgarifUuidIdClass: KClass<T>, value: String) =
-            orgarifUuidIdClass.constructors.first().call(OrgarifStringUtils.deserializeUuid(value))
+        fun <T : OrgarifUuidId> deserialize(orgarifUuidIdClass: KClass<T>, value: String): T =
+            OrgarifSerializationPrefixUtils.removePrefix(orgarifUuidIdClass, value)
+                .let { OrgarifStringUtils.deserializeUuid(it) }
+                .let { orgarifUuidIdClass.constructors.first().call(it) }
     }
 
     override fun deserialize(p: JsonParser, ctxt: DeserializationContext): T =

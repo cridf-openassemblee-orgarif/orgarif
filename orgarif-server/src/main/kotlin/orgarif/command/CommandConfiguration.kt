@@ -1,10 +1,12 @@
 package orgarif.command
 
-import orgarif.domain.AuthenticationLevel
+import orgarif.domain.Role
 
 object CommandConfiguration {
-    fun authenticationLevel(command: Command) = when (command) {
-        is LoginCommand -> AuthenticationLevel.anonymous
-        is RegisterCommand -> AuthenticationLevel.anonymous
+
+    fun role(command: Command): Role? = when (command) {
+        is LoginCommand -> null
+        is RegisterCommand -> null
     }
+
 }

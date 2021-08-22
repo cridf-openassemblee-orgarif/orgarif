@@ -2,10 +2,11 @@ package orgarif.service.user
 
 import orgarif.command.RegisterCommand
 import orgarif.domain.PlainStringPassword
-import org.junit.Assert
-import org.junit.Rule
-import org.junit.Test
-import org.junit.rules.ExpectedException
+import org.hamcrest.MatcherAssert
+import org.hamcrest.Matchers
+import org.junit.jupiter.api.Assertions
+import org.junit.jupiter.api.Assertions.assertEquals
+import org.junit.jupiter.api.Test
 
 internal class UserServiceCompanionTest {
 
@@ -18,10 +19,6 @@ internal class UserServiceCompanionTest {
 //    val sampleIdentityDto = IdentityDto("  HÉL lo@mytest.net  ", "  firstname  ", "  lastname  ",
 //            "012356789", null)
 
-    @Rule
-    @JvmField
-    val expectedException = ExpectedException.none()
-
     @Test
     fun `validate validation ok`() {
         UserService.validateRegisterUserDto(sampleRegisterUserDto)
@@ -29,24 +26,26 @@ internal class UserServiceCompanionTest {
 
     @Test
     fun `validate mail validation`() {
-        expectedException.expect(IllegalArgumentException::class.java)
-        expectedException.expectMessage("Mail is blank")
-        UserService.validateRegisterUserDto(sampleRegisterUserDto.copy(mail = ""))
+        val exceptionThatWasThrown = Assertions.assertThrows(IllegalArgumentException::class.java) {
+            UserService.validateRegisterUserDto(sampleRegisterUserDto.copy(mail = ""))
+        }
+        MatcherAssert.assertThat(exceptionThatWasThrown.message, Matchers.equalTo("Mail is blank"))
     }
 
     @Test
     fun `validate lastname validation`() {
-        expectedException.expect(IllegalArgumentException::class.java)
-        expectedException.expectMessage("Display name is blank")
-        UserService.validateRegisterUserDto(sampleRegisterUserDto.copy(displayName = ""))
+        val exceptionThatWasThrown = Assertions.assertThrows(IllegalArgumentException::class.java) {
+            UserService.validateRegisterUserDto(sampleRegisterUserDto.copy(displayName = ""))
+        }
+        MatcherAssert.assertThat(exceptionThatWasThrown.message, Matchers.equalTo("Display name is blank"))
     }
 
     @Test
     fun `clean user register dto`() {
         val (cleanCommand, dirtyMail) = UserService.cleanRegisterUserDto(sampleRegisterUserDto)
-        Assert.assertEquals("héllo@mytest.net", cleanCommand.mail)
-        Assert.assertEquals("display name", cleanCommand.displayName)
-        Assert.assertEquals("HÉL lo@mytest.net", dirtyMail)
+        assertEquals("héllo@mytest.net", cleanCommand.mail)
+        assertEquals("display name", cleanCommand.displayName)
+        assertEquals("HÉL lo@mytest.net", dirtyMail)
     }
 
 //    @Test
@@ -61,26 +60,26 @@ internal class UserServiceCompanionTest {
     @Test
     fun `clean several mails`() {
         // nothing changes
-        Assert.assertEquals("hello@mytest.net" to null, getCleanMailDirtyMailPair("hello@mytest.net"))
+        assertEquals("hello@mytest.net" to null, getCleanMailDirtyMailPair("hello@mytest.net"))
         // trim
-        Assert.assertEquals("hello@mytest.net" to null, getCleanMailDirtyMailPair("  hello@mytest.net  "))
+        assertEquals("hello@mytest.net" to null, getCleanMailDirtyMailPair("  hello@mytest.net  "))
         // space in the middle of the mail
-        Assert.assertEquals(
+        assertEquals(
             "hello@mytest.net" to "hel lo@mytest.net",
             getCleanMailDirtyMailPair("hel lo@mytest.net")
         )
         // nothing changes (accents)
-        Assert.assertEquals(
+        assertEquals(
             "héàllo@mytest.net" to null,
             getCleanMailDirtyMailPair("héàllo@mytest.net")
         )
         // lowercase
-        Assert.assertEquals(
+        assertEquals(
             "héàâôîllo@mytest.net" to "HÉÀÂÔÎLlo@MYTEST.NET",
             getCleanMailDirtyMailPair("HÉÀÂÔÎLlo@MYTEST.NET")
         )
         // all in
-        Assert.assertEquals(
+        assertEquals(
             "héàâôîllo@mytest.net" to "HÉÀ Â ÔÎLl  o@MYTEST.NET",
             getCleanMailDirtyMailPair("  HÉÀ Â ÔÎLl  o@MYTEST.NET  ")
         )

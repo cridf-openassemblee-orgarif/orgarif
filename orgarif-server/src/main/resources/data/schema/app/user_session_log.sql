@@ -8,3 +8,5 @@ CREATE TABLE user_session_log
     ip                VARCHAR(255) NOT NULL,
     FOREIGN KEY (user_id) REFERENCES app_user (id)
 );
+
+CREATE INDEX ON user_session_log (user_id);

@@ -1,11 +1,11 @@
 package orgarif.query
 
-import orgarif.domain.AuthenticationLevel
+import orgarif.domain.Role
 
 object QueryConfiguration {
 
-    fun authenticationLevel(query: Query) = when (query) {
-        is IsLoginAlreadyTakenQuery -> AuthenticationLevel.anonymous
+    fun role(query: Query): Role? = when (query) {
+        is IsLoginAlreadyTakenQuery -> null
     }
 
 }

@@ -1,25 +1,46 @@
 package orgarif.service
 
-import org.springframework.stereotype.Service
+import orgarif.domain.OrgarifSecurityString
+import orgarif.domain.OrgarifStringId
 import orgarif.domain.OrgarifUuidId
-import orgarif.utils.toTypeId
-import java.math.BigInteger
-import java.security.SecureRandom
+import org.apache.commons.text.CharacterPredicates
+import org.apache.commons.text.RandomStringGenerator
 import java.util.*
 
-@Service
-class RandomService(val idCreationLoggerService: IdCreationLoggerService) {
+open class RandomService(val idLogService: IdLogService? = null) {
 
-    //private val random by lazy { SecureRandom() }
+    val generator by lazy {
+        RandomStringGenerator.Builder()
+            .withinRange('0'.code, 'z'.code)
+            .filteredBy(CharacterPredicates.LETTERS, CharacterPredicates.DIGITS)
+            .build()
+    }
 
-    //fun randomAlpha() = BigInteger(100, random).toString(36)
-
-    final inline fun <reified T : OrgarifUuidId> id(): T {
-        val id = uuid().toTypeId<T>()
-        idCreationLoggerService.log(id)
+    inline fun <reified T : OrgarifUuidId> id(): T {
+        @Suppress("DEPRECATION")
+        val uuid = internalUuid()
+        val id = T::class.constructors.first().call(uuid)
+        idLogService?.log(id)
         return id
     }
 
-    fun uuid() = UUID.randomUUID()
+    inline fun <reified T : OrgarifStringId> stringId(length: Int): T {
+        @Suppress("DEPRECATION")
+        val stringId = internalRandomString(length)
+        val id = T::class.constructors.first().call(stringId)
+        idLogService?.log(id)
+        return id
+    }
 
+    inline fun <reified T : OrgarifSecurityString> securityString(length: Int): T {
+        @Suppress("DEPRECATION")
+        val stringId = internalRandomString(length)
+        return T::class.constructors.first().call(stringId)
+    }
+
+    @Deprecated("Is for internal use only, exists because of reified id() & DummyRandomService")
+    open fun internalUuid() = UUID.randomUUID()
+
+    @Deprecated("Is for internal use only, exists because of reified stringId() & DummyRandomService")
+    open fun internalRandomString(length: Int) = generator.generate(length)
 }

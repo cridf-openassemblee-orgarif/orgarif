@@ -1,7 +1,5 @@
 package orgarif.repository
 
-import org.jooq.DSLContext
-import org.springframework.stereotype.Repository
 import orgarif.domain.DeploymentLogId
 import orgarif.domain.MailLogId
 import orgarif.domain.MailReference
@@ -9,8 +7,9 @@ import orgarif.domain.UserId
 import orgarif.jooq.generated.Tables.MAIL_LOG
 import orgarif.jooq.generated.tables.records.MailLogRecord
 import orgarif.utils.toTypeId
+import org.jooq.DSLContext
+import org.springframework.stereotype.Repository
 import java.time.Instant
-import java.util.*
 
 @Repository
 class MailLogDao(val jooq: DSLContext) {
@@ -79,7 +78,7 @@ class MailLogDao(val jooq: DSLContext) {
             .map(this::map)
 
     fun fetchHistoryPartialRecordByUserIdAndReferences(userId: UserId, mailReferences: Set<MailReference>):
-            List<HistoryPartialRecord> =
+        List<HistoryPartialRecord> =
         jooq.select(*historyPartialRecordFields)
             .from(MAIL_LOG)
             .where(MAIL_LOG.USER_ID.equal(userId.rawId))

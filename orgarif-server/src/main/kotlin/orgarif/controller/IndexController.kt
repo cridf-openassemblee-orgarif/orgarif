@@ -1,7 +1,5 @@
 package orgarif.controller
 
-import freemarker.ext.beans.BeansWrapperBuilder
-import freemarker.template.Configuration
 import orgarif.config.Routes
 import orgarif.domain.ApplicationBootstrapData
 import orgarif.domain.UserInfos
@@ -10,8 +8,10 @@ import orgarif.service.ApplicationInstance
 import orgarif.service.LocaleService
 import orgarif.service.user.MagicLinkTokenService
 import orgarif.service.user.UserService
-import orgarif.service.user.UserSessionHelper
+import orgarif.service.user.UserSessionService
 import orgarif.utils.Serializer.serialize
+import freemarker.ext.beans.BeansWrapperBuilder
+import freemarker.template.Configuration
 import org.json.JSONObject
 import org.springframework.beans.factory.annotation.Value
 import org.springframework.stereotype.Controller
@@ -33,7 +33,8 @@ class IndexController(
     val localeService: LocaleService,
     val userService: UserService,
     val applicationInstance: ApplicationInstance,
-    val magicLinkTokenService: MagicLinkTokenService
+    val magicLinkTokenService: MagicLinkTokenService,
+    val userSessionService: UserSessionService
 ) {
 
     companion object {
@@ -76,13 +77,13 @@ class IndexController(
             magicLinkTokenService.connectUser(magicToken, request, response)
             return ModelAndView(
                 "redirect:" + request.requestURI +
-                        if (queryString.isNotBlank()) "?$queryString" else ""
+                    if (queryString.isNotBlank()) "?$queryString" else ""
             )
         }
-        val userInfos = if (UserSessionHelper.isAuthenticated()) {
-            val userSession = UserSessionHelper.getUserSession()
+        val userInfos = if (userSessionService.isAuthenticated()) {
+            val userSession = userSessionService.getUserSession()
             val user = userDao.fetch(userSession.userId)
-                ?: throw IllegalStateException()
+                ?: throw IllegalStateException("$userSession")
             UserInfos.fromUser(user)
         } else null
         mav.model["bootstrapData"] = serialize(ApplicationBootstrapData(applicationInstance.env, userInfos))
@@ -109,7 +110,7 @@ class IndexController(
                     val paramValues = parameterMap.getValue(paramName)
                     paramValues.map {
                         URLEncoder.encode(paramName, Charsets.UTF_8.name()) + "=" +
-                                URLEncoder.encode(it, Charsets.UTF_8.name())
+                            URLEncoder.encode(it, Charsets.UTF_8.name())
                     }
                 }.reduce { acc, s -> acc + "&" + s }
         }

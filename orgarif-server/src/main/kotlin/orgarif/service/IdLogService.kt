@@ -1,12 +1,10 @@
 package orgarif.service
 
-import org.springframework.stereotype.Service
 import orgarif.domain.OrgarifId
 import orgarif.utils.OrgarifStringUtils
 import java.util.*
 
-@Service
-class IdCreationLoggerService {
+class IdLogService {
 
     data class IdLogging(
         var enableLogging: Boolean,
@@ -38,6 +36,7 @@ class IdCreationLoggerService {
         }
     }
 
+    // TODO would be faster avec un StringBuffer
     fun getIdsString() = (list.get().list ?: throw RuntimeException())
         .map {
             val rawIdString = it.rawId.let {

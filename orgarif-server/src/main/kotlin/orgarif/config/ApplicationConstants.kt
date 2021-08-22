@@ -6,9 +6,11 @@ object ApplicationConstants {
     // FIXME remove !
     const val springMvcModelKeyStackTrace = "stackTrace"
 
+    // TODO /res vs /static
     const val resourcesPath = "/static"
 
-    const val applicationMailSenderName = "Mail automatique Orgarif"
+    // TODO naming... Monitoring ?
+    const val applicationMailSenderName = "Automatic email Orgarif"
 
     // TODO[orgarif]
     // FIXME mail !

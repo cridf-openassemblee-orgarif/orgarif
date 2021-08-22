@@ -20,6 +20,8 @@ export const getCookie = (cookieName: string) => {
   return undefined;
 };
 
+// TODO[naming] sort in name
+// usage : item.sort(compareByString(item => item.sortLabel))
 export const compareByString =
   <T>(l: (o: T) => string) =>
   (o1: T, o2: T) =>

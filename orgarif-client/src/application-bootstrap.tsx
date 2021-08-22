@@ -1,9 +1,10 @@
 import { Global } from '@emotion/react';
 import {
   createTheme,
-  MuiThemeProvider,
-  StylesProvider
-} from '@material-ui/core';
+  StyledEngineProvider,
+  ThemeProvider
+} from '@mui/material';
+import StylesProvider from '@mui/styles/StylesProvider';
 import * as React from 'react';
 import * as ReactDOM from 'react-dom';
 import { Router as ReactRouter } from 'react-router-dom';
@@ -28,11 +29,13 @@ ReactDOM.render(
     <Global styles={[globalStyles]} />
     <ReactRouter history={appContext.applicationHistory().browserHistory}>
       <StylesProvider injectFirst>
-        <MuiThemeProvider theme={muiTheme}>
-          <Root>
-            <ApplicationRouter />
-          </Root>
-        </MuiThemeProvider>
+        <StyledEngineProvider injectFirst>
+          <ThemeProvider theme={muiTheme}>
+            <Root>
+              <ApplicationRouter />
+            </Root>
+          </ThemeProvider>
+        </StyledEngineProvider>
       </StylesProvider>
     </ReactRouter>
   </RecoilRoot>,

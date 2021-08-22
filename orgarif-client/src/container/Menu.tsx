@@ -16,7 +16,7 @@ export const Menu = () => {
         justify-content: space-between;
         width: 100%;
         height: 36px;
-        padding: 8px 20px;
+        padding: 10px 20px;
         background: ${colors.grey};
       `}
     >

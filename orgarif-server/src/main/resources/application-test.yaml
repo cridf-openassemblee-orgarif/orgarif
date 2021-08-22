@@ -7,7 +7,10 @@ database:
   user: mlo
   password:
 #---------------------------------------------------------------------------
-assets.useBuildFiles: false
+assets:
+  useBuildFiles: false
+  browserWebpackDevHost:
+  serverWebpackDevHost:
 #---------------------------------------------------------------------------
 mailjet:
   api-key:

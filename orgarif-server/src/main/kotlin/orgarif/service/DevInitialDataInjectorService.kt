@@ -1,12 +1,12 @@
 package orgarif.service
 
+import orgarif.domain.HashedPassword
+import orgarif.domain.Language
+import orgarif.domain.Role
+import orgarif.repository.UserDao
 import org.springframework.beans.factory.annotation.Value
 import org.springframework.security.crypto.password.PasswordEncoder
 import org.springframework.stereotype.Service
-import orgarif.domain.HashedPassword
-import orgarif.domain.Language
-import orgarif.domain.UserId
-import orgarif.repository.UserDao
 
 @Service
 // TODO naming fake / sample
@@ -40,7 +40,7 @@ class DevInitialDataInjectorService(
                     displayName = username,
                     language = Language.en,
                     signupDate = dateService.now(),
-                    admin = admin,
+                    roles = setOf(Role.user).let { if (admin) it + Role.admin else it },
                     dirtyMail = null,
                     formerMails = emptyList()
                 ), HashedPassword(passwordEncoder.encode(username))

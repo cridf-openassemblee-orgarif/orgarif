@@ -3,7 +3,6 @@ package orgarif.utils
 import ch.qos.logback.classic.pattern.ClassicConverter
 import ch.qos.logback.classic.spi.ILoggingEvent
 import org.springframework.security.core.context.SecurityContextHolder
-import java.lang.reflect.Method
 
 class LogbackUserSessionConverter : ClassicConverter() {
 

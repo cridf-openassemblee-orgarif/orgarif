@@ -10,8 +10,9 @@ class OrgarifStringIdDeserializer<T : OrgarifStringId>(val orgarifStringIdClass:
     StdDeserializer<T>(orgarifStringIdClass.java) {
 
     companion object {
-        fun <T : OrgarifStringId> deserialize(orgarifStringIdClass: KClass<T>, value: String) =
-            orgarifStringIdClass.constructors.first().call(value)
+        fun <T : OrgarifStringId> deserialize(orgarifStringIdClass: KClass<T>, value: String): T =
+            OrgarifSerializationPrefixUtils.removePrefix(orgarifStringIdClass, value)
+                .let { orgarifStringIdClass.constructors.first().call(it) }
     }
 
     override fun deserialize(p: JsonParser, ctxt: DeserializationContext): T =

@@ -1,8 +1,8 @@
 package orgarif.service
 
-import org.springframework.stereotype.Service
 import orgarif.domain.ApplicationEnvironment
 import mu.KotlinLogging
+import org.springframework.stereotype.Service
 
 @Service
 class InitializationService(
@@ -13,7 +13,7 @@ class InitializationService(
     private val logger = KotlinLogging.logger { }
 
     init {
-        if (applicationInstance.env !in listOf(ApplicationEnvironment.dev, ApplicationEnvironment.test)) {
+        if (applicationInstance.env !in setOf(ApplicationEnvironment.dev, ApplicationEnvironment.test)) {
             // [doc] this log is also gonna trigger the deploymentId insertion at startup
             logger.info { "Deployed build \"${applicationInstance.gitRevisionLabel}\", env \"${applicationInstance.env}\", deployment id ${applicationInstance.deploymentId}" }
         }

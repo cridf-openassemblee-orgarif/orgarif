@@ -1,14 +1,14 @@
 /** @jsxImportSource @emotion/react */
-import FormControl from '@material-ui/core/FormControl';
-import IconButton from '@material-ui/core/IconButton';
-import InputAdornment from '@material-ui/core/InputAdornment';
-import InputLabel from '@material-ui/core/InputLabel';
-import OutlinedInput from '@material-ui/core/OutlinedInput';
-import { Visibility, VisibilityOff } from '@material-ui/icons';
+import { Visibility, VisibilityOff } from '@mui/icons-material';
+import FormControl from '@mui/material/FormControl';
+import IconButton from '@mui/material/IconButton';
+import InputAdornment from '@mui/material/InputAdornment';
+import InputLabel from '@mui/material/InputLabel';
+import OutlinedInput from '@mui/material/OutlinedInput';
 import * as React from 'react';
 import { useState } from 'react';
 import { clientUid } from '../../utils';
-import { stringifyNominalString } from '../../utils/nominal-class';
+import { asString } from '../../utils/nominal-class';
 
 // [doc] material password input doesn't send its value in a classic form
 // submission... so we have to use a hook to get the value
@@ -27,12 +27,13 @@ export const PasswordInput = (props: {
   };
   return (
     <FormControl variant="outlined" size="small" fullWidth={true}>
-      <InputLabel htmlFor={stringifyNominalString(id)}>Password</InputLabel>
+      <InputLabel htmlFor={asString(id)}>{props.label}</InputLabel>
       <OutlinedInput
-        id={stringifyNominalString(id)}
+        id={asString(id)}
         type={showPassword ? 'text' : 'password'}
         value={props.value}
         onChange={e => props.setValue(e.target.value)}
+        // keep for animation
         label={props.label}
         endAdornment={
           <InputAdornment position="end">

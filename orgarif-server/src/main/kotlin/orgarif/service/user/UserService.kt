@@ -1,18 +1,18 @@
 package orgarif.service.user
 
-import mu.KotlinLogging
-import org.springframework.stereotype.Service
 import orgarif.command.RegisterCommand
 import orgarif.domain.HashedPassword
 import orgarif.domain.Language
 import orgarif.domain.RegisterAndAuthenticateResult
-import orgarif.domain.UserId
+import orgarif.domain.Role
 import orgarif.error.MailAlreadyRegisteredException
 import orgarif.repository.UserDao
 import orgarif.service.DateService
 import orgarif.service.LocaleService
 import orgarif.service.NotificationService
 import orgarif.service.RandomService
+import mu.KotlinLogging
+import org.springframework.stereotype.Service
 import javax.servlet.http.HttpServletRequest
 import javax.servlet.http.HttpServletResponse
 
@@ -104,7 +104,7 @@ class UserService(
             displayName = command.displayName,
             language = language,
             signupDate = dateService.now(),
-            admin = false,
+            roles = setOf(Role.user),
             dirtyMail = dirtyMail,
             formerMails = emptyList()
         )

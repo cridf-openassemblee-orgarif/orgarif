@@ -11,7 +11,6 @@ import org.jooq.DSLContext
 import org.jooq.Record
 import org.jooq.TableField
 import org.springframework.stereotype.Repository
-import java.time.ZoneOffset
 
 @Repository
 class UserFileDao(val jooq: DSLContext) {

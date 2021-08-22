@@ -1,24 +1,21 @@
 package orgarif.controller
 
+import orgarif.command.*
+import orgarif.domain.CommandLogId
+import orgarif.repository.CommandLogDao
+import orgarif.repository.UserDao
+import orgarif.service.ApplicationInstance
+import orgarif.service.DateService
+import orgarif.service.IdLogService
+import orgarif.service.RandomService
+import orgarif.service.user.UserSessionService
+import orgarif.utils.Serializer
 import mu.KotlinLogging
 import org.apache.commons.lang3.exception.ExceptionUtils
 import org.springframework.transaction.PlatformTransactionManager
 import org.springframework.web.bind.annotation.PostMapping
 import org.springframework.web.bind.annotation.RequestBody
 import org.springframework.web.bind.annotation.RestController
-import orgarif.command.*
-import orgarif.domain.AuthenticationLevel
-import orgarif.domain.CommandLogId
-import orgarif.error.OrgarifSecurityException
-import orgarif.repository.CommandLogDao
-import orgarif.repository.UserDao
-import orgarif.service.ApplicationInstance
-import orgarif.service.DateService
-import orgarif.service.IdCreationLoggerService
-import orgarif.service.RandomService
-import orgarif.service.user.UserSessionHelper
-import orgarif.utils.Serializer.deserialize
-import orgarif.utils.Serializer.serialize
 import javax.servlet.http.HttpServletRequest
 import javax.servlet.http.HttpServletResponse
 
@@ -31,7 +28,8 @@ class CommandController(
     val dateService: DateService,
     val randomService: RandomService,
     val transactionManager: PlatformTransactionManager,
-    val idCreationLoggerService: IdCreationLoggerService,
+    val idLogService: IdLogService,
+    val userSessionService: UserSessionService,
 
     val loginCommandHandler: LoginCommandHandler,
     val registerCommandHandler: RegisterCommandHandler,
@@ -46,11 +44,11 @@ class CommandController(
         request: HttpServletRequest,
         response: HttpServletResponse
     ): CommandResponse? {
-        val command = deserialize<Command>(jsonCommand)
+        val command = Serializer.deserialize<Command>(jsonCommand)
         val handler = handler(command)
-        val userSession = if (UserSessionHelper.isAuthenticated()) UserSessionHelper.getUserSession() else null
+        val userSession = if (userSessionService.isAuthenticated()) userSessionService.getUserSession() else null
         // [doc] is filtered from sensitive data (passwords) because of serializers
-        val filteredJsonCommand = serialize(command)
+        val filteredJsonCommand = Serializer.serialize(command)
         // TODO[test] make an only insert at the end, with no update ?
         // or make an insert first to protect from some errors (? isolate its transactionl)
         val commandLogId = randomService.id<CommandLogId>()
@@ -74,35 +72,20 @@ class CommandController(
         val transaction = transactionManager.getTransaction(null)
 
         try {
-            idCreationLoggerService.enableLogging()
-            val result = when (CommandConfiguration.authenticationLevel(command)) {
-                AuthenticationLevel.anonymous,
-                AuthenticationLevel.loggedIn -> {
-                    handler.handle(command, userSession, request, response)
-                }
-                AuthenticationLevel.admin -> {
-                    if (!UserSessionHelper.isAuthenticated()) {
-                        throw OrgarifSecurityException("$userSession ${command.javaClass.simpleName}")
-                    }
-                    let {
-                        val user = UserSessionHelper.getUserSession().userId.let {
-                            userDao.fetch(it)
-                                ?: throw IllegalArgumentException("$it")
-                        }
-                        if (!user.admin) {
-                            throw OrgarifSecurityException("$userSession ${command.javaClass.simpleName}")
-                        }
-                    }
-                    handler.handle(command, userSession, request, response)
-                }
-            }
+            userSessionService.verifyRoleOrFail(
+                CommandConfiguration.role(command),
+                request.remoteAddr,
+                command.javaClass
+            )
+            idLogService.enableLogging()
+            val result = handler.handle(command, userSession, request, response)
             transactionManager.commit(transaction)
             if (result !is EmptyCommandResponse) {
                 try {
                     commandLogDao.updateResult(
                         commandLogId,
-                        idCreationLoggerService.getIdsString(),
-                        serialize(result),
+                        idLogService.getIdsString(),
+                        Serializer.serialize(result),
                         dateService.now()
                     )
                 } catch (e: Exception) {
@@ -123,7 +106,7 @@ class CommandController(
             }
             throw e
         } finally {
-            idCreationLoggerService.clean()
+            idLogService.clean()
         }
     }
 

@@ -1,10 +1,10 @@
 package orgarif.config
 
+import orgarif.error.ApplicationExceptionHandlerExceptionResolver
 import mu.KotlinLogging
 import org.apache.catalina.connector.Request
 import org.apache.catalina.connector.Response
 import org.apache.catalina.valves.ValveBase
-import org.springframework.beans.factory.annotation.Value
 import org.springframework.boot.autoconfigure.web.servlet.WebMvcRegistrations
 import org.springframework.boot.web.embedded.tomcat.TomcatServletWebServerFactory
 import org.springframework.context.annotation.Bean
@@ -13,7 +13,6 @@ import org.springframework.core.convert.support.GenericConversionService
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder
 import org.springframework.security.web.csrf.CookieCsrfTokenRepository
 import org.springframework.web.servlet.mvc.method.annotation.ExceptionHandlerExceptionResolver
-import orgarif.error.ApplicationExceptionHandlerExceptionResolver
 
 
 @Configuration

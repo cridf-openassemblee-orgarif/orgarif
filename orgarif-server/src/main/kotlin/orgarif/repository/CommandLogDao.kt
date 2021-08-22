@@ -1,7 +1,5 @@
 package orgarif.repository
 
-import org.jooq.DSLContext
-import org.springframework.stereotype.Repository
 import orgarif.domain.CommandLogId
 import orgarif.domain.DeploymentLogId
 import orgarif.domain.UserId
@@ -9,6 +7,8 @@ import orgarif.domain.UserSessionId
 import orgarif.jooq.generated.Tables.COMMAND_LOG
 import orgarif.jooq.generated.tables.records.CommandLogRecord
 import orgarif.utils.toTypeId
+import org.jooq.DSLContext
+import org.springframework.stereotype.Repository
 import java.time.Instant
 
 @Repository

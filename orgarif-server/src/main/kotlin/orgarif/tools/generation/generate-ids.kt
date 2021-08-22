@@ -1,11 +1,11 @@
 package orgarif.tools.generation
 
+import orgarif.domain.OrgarifId
+import orgarif.utils.Serializer.idsPackage
 import org.reflections.Reflections
 import org.reflections.util.ClasspathHelper
 import org.reflections.util.ConfigurationBuilder
 import org.reflections.util.FilterBuilder
-import orgarif.domain.OrgarifId
-import orgarif.utils.Serializer.idsPackage
 import java.nio.file.Files
 import java.nio.file.Paths
 

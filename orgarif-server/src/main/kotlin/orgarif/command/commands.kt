@@ -1,8 +1,10 @@
 package orgarif.command
 
 import com.fasterxml.jackson.annotation.JsonTypeInfo
-import orgarif.domain.*
-import java.time.LocalDate
+import orgarif.domain.LoginResult
+import orgarif.domain.PlainStringPassword
+import orgarif.domain.RegisterResult
+import orgarif.domain.UserInfos
 
 @JsonTypeInfo(use = JsonTypeInfo.Id.NAME, include = JsonTypeInfo.As.PROPERTY, property = "objectType")
 sealed class Command
