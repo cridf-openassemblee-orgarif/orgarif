@@ -233,8 +233,7 @@ class InitialDataInjector(
         return id
     }
 
-    @Synchronized
-    fun injectRepresentants() {
+    fun injectRepresentants() = synchronized(this) {
         if (!injectFakeData) {
             return
         }
