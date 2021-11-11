@@ -1,16 +1,15 @@
 /** @jsxImportSource @emotion/react */
 import { css } from '@emotion/react';
+import { Delete, Edit } from '@mui/icons-material';
 import {
   CircularProgress,
   DialogContent,
   DialogTitle,
   Fab
-} from '@material-ui/core';
-import Button from '@material-ui/core/Button';
-import Dialog from '@material-ui/core/Dialog';
-import DialogActions from '@material-ui/core/DialogActions';
-import DeleteIcon from '@material-ui/icons/Delete';
-import EditIcon from '@material-ui/icons/Edit';
+} from '@mui/material';
+import Button from '@mui/material/Button';
+import Dialog from '@mui/material/Dialog';
+import DialogActions from '@mui/material/DialogActions';
 import * as React from 'react';
 import { FocusEvent, useState } from 'react';
 import { useRecoilState } from 'recoil';
@@ -23,7 +22,7 @@ import { NatureJuridiqueId } from '../domain/ids';
 import { Errors } from '../errors';
 import { state } from '../state/state';
 import { colors } from '../styles/vars';
-import { stringifyNominalString } from '../utils/nominal-class';
+import { asString } from '../utils/nominal-class';
 
 const iconStyle = css`
   height: 1em;
@@ -83,7 +82,7 @@ const EditNatureJuridiqueComponent = (props: {
             size="small"
             variant="extended"
           >
-            <EditIcon css={iconStyle} />
+            <Edit css={iconStyle} />
           </Fab>
         )}
         {updating && (
@@ -97,7 +96,7 @@ const EditNatureJuridiqueComponent = (props: {
           variant="extended"
           style={{ marginLeft: '10px' }}
         >
-          <DeleteIcon css={iconStyle} />
+          <Delete css={iconStyle} />
         </Fab>
       </td>
     </tr>
@@ -186,7 +185,7 @@ export const EditNatureJuridiquesView = () => {
             {natureJuridiques.map(n => (
               <EditNatureJuridiqueComponent
                 // libelle needed in key, or it won't refresh when libelle is updated
-                key={stringifyNominalString(n.id) + n.libelle}
+                key={asString(n.id) + n.libelle}
                 natureJuridique={n}
                 displayDeletePopup={() =>
                   setConfirmNatureJuridiqueIdDeletion(n.id)

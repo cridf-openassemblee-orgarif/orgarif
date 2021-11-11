@@ -1,12 +1,13 @@
 package orgarif.repository
 
-import org.jooq.DSLContext
-import org.springframework.stereotype.Repository
 import orgarif.domain.DeploymentLogId
 import orgarif.domain.UserId
 import orgarif.domain.UserSessionId
 import orgarif.jooq.generated.Tables.USER_SESSION_LOG
 import orgarif.jooq.generated.tables.records.UserSessionLogRecord
+import orgarif.utils.toTypeId
+import org.jooq.DSLContext
+import org.springframework.stereotype.Repository
 import java.time.Instant
 
 // TODO[user] : try to keep Spring id
@@ -33,5 +34,12 @@ class UserSessionLogDao(val jooq: DSLContext) {
         }
         jooq.insertInto(USER_SESSION_LOG).set(lr).execute()
     }
+
+    fun fetchIdsByUserId(userId: UserId): List<UserSessionId> =
+        jooq.select(USER_SESSION_LOG.ID)
+            .from(USER_SESSION_LOG)
+            .where(USER_SESSION_LOG.USER_ID.equal(userId.rawId))
+            .fetch()
+            .map { it.component1().toTypeId() }
 
 }

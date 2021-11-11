@@ -1,7 +1,7 @@
 /** @jsxImportSource @emotion/react */
 import { css } from '@emotion/react';
-import TextField from '@material-ui/core/TextField';
-import Autocomplete from '@material-ui/lab/Autocomplete';
+import { Autocomplete } from '@mui/material';
+import TextField from '@mui/material/TextField';
 import * as React from 'react';
 import { useState } from 'react';
 import { useRecoilValue } from 'recoil';

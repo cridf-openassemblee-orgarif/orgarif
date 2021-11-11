@@ -7,8 +7,6 @@ import java.time.ZoneId
 
 class ZoneIdDeserializer : StdDeserializer<ZoneId>(ZoneId::class.java) {
 
-    override fun deserialize(p: JsonParser, ctxt: DeserializationContext): ZoneId {
-        return ZoneId.of(p.valueAsString)
-    }
+    override fun deserialize(p: JsonParser, ctxt: DeserializationContext) = ZoneId.of(p.valueAsString)
 
 }

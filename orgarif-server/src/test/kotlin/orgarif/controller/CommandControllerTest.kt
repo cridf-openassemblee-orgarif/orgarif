@@ -3,7 +3,7 @@ package orgarif.controller
 import orgarif.command.Command
 import orgarif.command.LoginCommand
 import orgarif.utils.Serializer
-import org.junit.Test
+import org.junit.jupiter.api.Test
 
 internal class CommandEndpointTest {
 

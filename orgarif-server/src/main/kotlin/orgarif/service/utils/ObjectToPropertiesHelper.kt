@@ -1,7 +1,7 @@
 package orgarif.service.utils
 
-import org.jetbrains.annotations.TestOnly
 import orgarif.utils.OrgarifStringUtils
+import org.jetbrains.annotations.TestOnly
 import java.time.LocalDate
 import java.time.LocalTime
 import java.time.ZoneId
@@ -46,8 +46,7 @@ object ObjectToPropertiesHelper {
             else -> {
                 if (depth > 5) {
                     throw RuntimeException(
-                        "Can't convert object to properties, max depth reached, failed at $path " +
-                                "${value::class}"
+                        "Can't convert object to properties, max depth reached, failed at $path ${value::class}"
                     )
                 }
                 transformObject(value, path, exclusions, depth + 1)

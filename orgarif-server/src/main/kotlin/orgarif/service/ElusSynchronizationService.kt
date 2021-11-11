@@ -58,9 +58,12 @@ class ElusSynchronizationService(
     fun sync() {
         logger.info { "Synchronize elus avec SIGER" }
         val elusJons = try {
-            httpService
+            val r = httpService
                 .getString(elusSynchronizationUrl)
-                .body
+            when (r) {
+                is HttpService.MaybeStringResponse.EmptyResponse -> throw RuntimeException("$r")
+                is HttpService.MaybeStringResponse.StringResponse -> r.body
+            }
         } catch (e: Exception) {
             logger.error { "Could not synchronize élus." }
             return

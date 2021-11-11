@@ -1,6 +1,6 @@
 /** @jsxImportSource @emotion/react */
 import { css } from '@emotion/react';
-import { Button } from '@material-ui/core';
+import { Button } from '@mui/material';
 import * as React from 'react';
 import { useEffect, useState } from 'react';
 import { appContext } from '../ApplicationContext';
@@ -10,11 +10,12 @@ import { MainContainer } from '../container/MainContainer';
 import { OrganismeInfos } from '../domain/organisme';
 import { RouteLink } from '../routing/RouteLink';
 import { colors } from '../styles/vars';
-import { stringifyNominalString } from '../utils/nominal-class';
+import { asString } from '../utils/nominal-class';
 
 export const ListOrganismesView = () => {
-  const [organismes, setOrganismes] =
-    useState<OrganismeInfos[] | undefined>(undefined);
+  const [organismes, setOrganismes] = useState<OrganismeInfos[] | undefined>(
+    undefined
+  );
   useEffect(() => {
     appContext
       .queryService()
@@ -49,7 +50,7 @@ export const ListOrganismesView = () => {
       {organismes &&
         organismes.map(o => (
           <div
-            key={stringifyNominalString(o.id)}
+            key={asString(o.id)}
             css={css`
               background: ${colors.clearGrey};
               margin: 2px 0;

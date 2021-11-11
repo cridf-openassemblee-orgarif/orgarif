@@ -1,9 +1,6 @@
 import { ClientUid } from './domain/client-ids';
 import { LocalDate } from './domain/time';
-import {
-  instanciateNominalString,
-  stringifyNominalString
-} from './utils/nominal-class';
+import { asString, instanciateNominalString } from './utils/nominal-class';
 
 export function assertUnreachable(x: never): never {
   throw new Error(`Expected unreachable code ! Value : "${JSON.stringify(x)}"`);
@@ -27,7 +24,7 @@ export const getCookie = (cookieName: string) => {
 export const compareByLocalDate =
   <T>(l: (o: T) => LocalDate) =>
   (o1: T, o2: T) =>
-    stringifyNominalString(l(o1)).localeCompare(stringifyNominalString(l(o2)));
+    asString(l(o1)).localeCompare(asString(l(o2)));
 
 export const compareByNumber =
   <T>(l: (o: T) => number) =>
@@ -37,6 +34,8 @@ export const compareByNumber =
     else return 0;
   };
 
+// TODO[naming] sort in name
+// usage : item.sort(compareByString(item => item.sortLabel))
 export const compareByString =
   <T>(l: (o: T) => string) =>
   (o1: T, o2: T) =>

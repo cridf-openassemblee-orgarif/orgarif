@@ -8,11 +8,9 @@ export abstract class NominalNumber<T extends string> {
   private _typeGuard!: T;
 }
 
-export const stringifyNominalString = (value: NominalString<any> | string) =>
-  value as string;
+export const asString = (v: NominalString<any>) => v as unknown as string;
 
-export const numberifyNominalNumber = (value: NominalNumber<any>) =>
-  value as unknown as number;
+export const asNumber = (v: NominalNumber<any>) => v as unknown as string;
 
 export const instanciateNominalString = <T extends NominalString<any>>(
   value: string

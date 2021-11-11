@@ -1,8 +1,8 @@
 /** @jsxImportSource @emotion/react */
 import { css } from '@emotion/react';
-import CircularProgress from '@material-ui/core/CircularProgress';
-import TextField from '@material-ui/core/TextField';
-import Autocomplete from '@material-ui/lab/Autocomplete';
+import { Autocomplete } from '@mui/material';
+import CircularProgress from '@mui/material/CircularProgress';
+import TextField from '@mui/material/TextField';
 import * as React from 'react';
 import { ChangeEvent, useState } from 'react';
 import { appContext } from '../../ApplicationContext';
@@ -190,8 +190,8 @@ export const AddLienDeliberationComponent = (props: {
             )}
           </div>
         )}
-        renderOption={(option: DeliberationItem) => (
-          <div>
+        renderOption={(props, option: DeliberationItem) => (
+          <li {...props}>
             {!option.id && (
               <span
                 css={css`
@@ -212,7 +212,7 @@ export const AddLienDeliberationComponent = (props: {
                 (du {option.deliberationDate})
               </span>
             ) : null}
-          </div>
+          </li>
         )}
       />
       <CreateDeliberationAndAddLienComponent

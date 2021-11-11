@@ -1,7 +1,7 @@
 /** @jsxImportSource @emotion/react */
 import { css } from '@emotion/react';
-import { FormControlLabel } from '@material-ui/core';
-import Checkbox from '@material-ui/core/Checkbox';
+import { FormControlLabel } from '@mui/material';
+import Checkbox from '@mui/material/Checkbox';
 import * as React from 'react';
 import { useEffect, useState } from 'react';
 import { useRecoilValue } from 'recoil';

@@ -1,9 +1,9 @@
 package orgarif.error
 
-import org.apache.commons.lang3.exception.ExceptionUtils
-import org.slf4j.event.Level
 import orgarif.domain.OrgarifId
 import orgarif.domain.RequestErrorId
+import org.apache.commons.lang3.exception.ExceptionUtils
+import org.slf4j.event.Level
 import java.time.Instant
 
 // FIXME can remove ? ReadableStackTrace ? and ReadableStackTraceSerializer ?
@@ -23,13 +23,19 @@ data class ReadableStackTrace(val exception: Throwable?) {
 // TODO[error] display ? silent ? mute ?
 //class DisplayMessageException(displayMessage: String, logMessage: String) : Exception(message)
 // user message exception
-class DisplayMessageException(val displayMessage: String, val logMessage: String) : //, val logLevel: Level) :
+data class DisplayMessageException(val displayMessage: String, val logMessage: String) : //, val logLevel: Level) :
     Exception(logMessage)
 
 // [doc] contains mail to be clear on the front ? Not really needed it smartly handled on the front ?
-class MailAlreadyRegisteredException(mail: String) : Exception()
-class ItemIdNotFoundException(val id: OrgarifId<*>) : Exception()
-class ItemNotFoundException(val itemClass: Class<*>, val reference: String) : Exception()
+data class MailAlreadyRegisteredException(val mail: String) : Exception()
+
+// TODO this message ?
+data class ItemIdNotFoundException(val id: OrgarifId<*>) : Exception("Not found : $id")
+
+// TODO a message
+data class ItemNotFoundException(val itemClass: Class<*>, val reference: String) : Exception()
+
+// TODO ItemIdNotFoundException + ItemNotFoundException + OrgarifNotFoundException... it's a lot of "not found"
 class OrgarifNotFoundException : Exception()
 class OrgarifSerializationLocalDateException(val date: String) : Exception()
 

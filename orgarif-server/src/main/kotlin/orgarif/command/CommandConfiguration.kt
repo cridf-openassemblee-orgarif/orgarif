@@ -1,28 +1,30 @@
 package orgarif.command
 
-import orgarif.domain.AuthenticationLevel
+import orgarif.domain.Role
 
 object CommandConfiguration {
-    fun authenticationLevel(command: Command) = when (command) {
-        is AddInstanceCommand -> AuthenticationLevel.admin
-        is AddLienDeliberationCommand -> AuthenticationLevel.admin
-        is AddRepresentantCommand -> AuthenticationLevel.admin
-        is CreateDeliberationAndAddLienCommand -> AuthenticationLevel.admin
-        is CreateOrganismeCommand -> AuthenticationLevel.admin
-        is DeleteInstanceCommand -> AuthenticationLevel.admin
-        is DeleteNatureJuridiqueCommand -> AuthenticationLevel.admin
-        is DeleteRepresentantCommand -> AuthenticationLevel.admin
-        is DeleteSecteurCommand -> AuthenticationLevel.admin
-        is DeleteTypeStructureCommand -> AuthenticationLevel.admin
-        is LoginCommand -> AuthenticationLevel.anonymous
-        is MoveRepresentantCommand -> AuthenticationLevel.admin
-        is RegisterCommand -> AuthenticationLevel.anonymous
-        is UpdateNatureJuridiqueLibelleCommand -> AuthenticationLevel.admin
-        is UpdateOrganismeNatureJuridiqueCommand -> AuthenticationLevel.admin
-        is UpdateOrganismePartageRepresentantsCommand -> AuthenticationLevel.admin
-        is UpdateOrganismeSecteurCommand -> AuthenticationLevel.admin
-        is UpdateOrganismeTypeStructureCommand -> AuthenticationLevel.admin
-        is UpdateSecteurLibelleCommand -> AuthenticationLevel.admin
-        is UpdateTypeStructureLibelleCommand -> AuthenticationLevel.admin
+
+    fun role(command: Command): Role? = when (command) {
+        is AddInstanceCommand -> Role.user
+        is AddLienDeliberationCommand -> Role.user
+        is AddRepresentantCommand -> Role.user
+        is CreateDeliberationAndAddLienCommand -> Role.user
+        is CreateOrganismeCommand -> Role.user
+        is DeleteInstanceCommand -> Role.user
+        is DeleteNatureJuridiqueCommand -> Role.user
+        is DeleteRepresentantCommand -> Role.user
+        is DeleteSecteurCommand -> Role.user
+        is DeleteTypeStructureCommand -> Role.user
+        is LoginCommand -> null
+        is MoveRepresentantCommand -> Role.user
+        is RegisterCommand -> null
+        is UpdateNatureJuridiqueLibelleCommand -> Role.user
+        is UpdateOrganismeNatureJuridiqueCommand -> Role.user
+        is UpdateOrganismePartageRepresentantsCommand -> Role.user
+        is UpdateOrganismeSecteurCommand -> Role.user
+        is UpdateOrganismeTypeStructureCommand -> Role.user
+        is UpdateSecteurLibelleCommand -> Role.user
+        is UpdateTypeStructureLibelleCommand -> Role.user
     }
+
 }

@@ -1,13 +1,13 @@
 package orgarif.command
 
-import org.springframework.security.crypto.password.PasswordEncoder
-import org.springframework.stereotype.Service
 import orgarif.domain.HashedPassword
 import orgarif.domain.RegisterResult
 import orgarif.domain.UserInfos
 import orgarif.domain.UserSession
 import orgarif.error.MailAlreadyRegisteredException
 import orgarif.service.user.UserService
+import org.springframework.security.crypto.password.PasswordEncoder
+import org.springframework.stereotype.Service
 import javax.servlet.http.HttpServletRequest
 import javax.servlet.http.HttpServletResponse
 
@@ -31,7 +31,7 @@ class RegisterCommandHandler(val userService: UserService, val passwordEncoder: 
             // FIXME can't find the wooord
             // OrgarifCommonException
             // OrgarifStandardException
-            throw RuntimeException()
+            throw RuntimeException("$userSession")
         }
         UserService.validateRegisterUserDto(command)
         validatePassword(command.password.password)

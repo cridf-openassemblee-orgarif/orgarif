@@ -3,6 +3,7 @@ package orgarif.controller
 import orgarif.domain.UserFileId
 import orgarif.repository.UserFileDao
 import orgarif.utils.OrgarifStringUtils
+import orgarif.utils.toTypeId
 import org.springframework.http.HttpHeaders
 import org.springframework.http.HttpStatus
 import org.springframework.http.MediaType
@@ -17,7 +18,7 @@ class UserFileController(val userFileDao: UserFileDao) {
     @GetMapping("/user-file/{id}")
     fun getUserFile(@PathVariable id: String): ResponseEntity<ByteArray> {
         // TODO[secu] todo secu
-        val userFileId = UserFileId(OrgarifStringUtils.deserializeUuid(id))
+        val userFileId = OrgarifStringUtils.deserializeUuid(id).toTypeId<UserFileId>()
         val userFile = userFileDao.fetchData(userFileId)
             ?: return ResponseEntity(HttpStatus.NOT_FOUND)
         val headers = HttpHeaders()

@@ -1,9 +1,9 @@
 import { LocalDate } from './domain/time';
 import { Errors } from './errors';
-import { stringifyNominalString } from './utils/nominal-class';
+import { asString } from './utils/nominal-class';
 
 export const formatLocaleDate = (value: LocalDate) => {
-  const parts = stringifyNominalString(value).split('-');
+  const parts = asString(value).split('-');
   if (parts.length !== 3) {
     throw Errors._41dcf9d3();
   }

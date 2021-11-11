@@ -3,13 +3,12 @@ package orgarif.service
 import com.google.common.base.Charsets
 import com.google.common.base.Strings
 import com.google.common.io.Files
-import mu.KotlinLogging
-import org.springframework.core.env.Environment
-import org.springframework.stereotype.Service
 import orgarif.OrgarifApplication
 import orgarif.domain.ApplicationEnvironment
 import orgarif.domain.DeploymentLogId
 import orgarif.repository.DeploymentLogDao
+import org.springframework.core.env.Environment
+import org.springframework.stereotype.Service
 import java.io.File
 import java.io.FileInputStream
 import java.util.*

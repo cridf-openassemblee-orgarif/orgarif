@@ -5,9 +5,9 @@ import { RepresentantListId } from '../../domain/client-ids';
 import { InstanceId, OrganismeId } from '../../domain/ids';
 import { Representant, RepresentantOrSuppleant } from '../../domain/organisme';
 import {
+  asString,
   Dict,
-  instanciateNominalString,
-  stringifyNominalString
+  instanciateNominalString
 } from '../../utils/nominal-class';
 import { SharedHeightContainer } from '../base-component/SharedHeightContainer';
 import { AddRepresentantComponent } from './AddRepresentantComponent';
@@ -28,11 +28,9 @@ export const EditRepresentantsListComponent = (props: {
     <h4>{props.label}</h4>
     <SharedHeightContainer
       groupId={instanciateNominalString(
-        stringifyNominalString(
-          'representants-' +
-            (props.instanceId ? 'instances-' : '') +
-            props.organismeId
-        )
+        'representants-' +
+          (props.instanceId ? 'instances-' : '') +
+          asString(props.organismeId)
       )}
     >
       <RepresentantsListComponent

@@ -13,7 +13,7 @@ import { RepresentantListId } from '../../domain/client-ids';
 import { InstanceId, OrganismeId } from '../../domain/ids';
 import { Representant, RepresentantOrSuppleant } from '../../domain/organisme';
 import { colors } from '../../styles/vars';
-import { Dict, get, stringifyNominalString } from '../../utils/nominal-class';
+import { asString, Dict, get } from '../../utils/nominal-class';
 import { EluComponent } from '../EluComponent';
 import { DeleteRepresentantButton } from './DeleteRepresentantButton';
 import { DragAndDropItem, representantListId } from './DragAndDropContainer';
@@ -39,7 +39,7 @@ export const RepresentantsListComponent = (props: {
   return (
     <Droppable
       type={dragType}
-      droppableId={stringifyNominalString(
+      droppableId={asString(
         representantListId(
           props.organismeId,
           props.instanceId,
@@ -78,8 +78,8 @@ export const RepresentantsListComponent = (props: {
           )}
           {representants.map((r, index) => (
             <Draggable
-              key={stringifyNominalString(r.id)}
-              draggableId={stringifyNominalString(r.id)}
+              key={asString(r.id)}
+              draggableId={asString(r.id)}
               index={index}
             >
               {(

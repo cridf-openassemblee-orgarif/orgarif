@@ -14,7 +14,7 @@ object EmptyCommandResponse : CommandResponse()
 
 data class AddInstanceCommand(
     val nomInstance: String,
-    val organismeId: OrganismeId
+    val organismeId: OrganismeId,
 ) : Command()
 
 data class AddInstanceCommandResponse(val id: InstanceId) : CommandResponse()

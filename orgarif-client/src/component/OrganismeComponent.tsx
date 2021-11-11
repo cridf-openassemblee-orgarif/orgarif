@@ -10,7 +10,7 @@ import {
 } from '../domain/organisme';
 import { state } from '../state/state';
 import { colors } from '../styles/vars';
-import { getValue, stringifyNominalString } from '../utils/nominal-class';
+import { asString, getValue } from '../utils/nominal-class';
 import { EluComponent } from './EluComponent';
 
 const classes = {
@@ -61,7 +61,7 @@ const RepresentantsComponent = (props: {
         >
           <h3>Représentants</h3>
           {props.representants.map(r => (
-            <EluComponent key={stringifyNominalString(r.id)} eluId={r.eluId} />
+            <EluComponent key={asString(r.id)} eluId={r.eluId} />
           ))}
         </div>
       )}
@@ -76,7 +76,7 @@ const RepresentantsComponent = (props: {
         >
           <h3>Suppléants</h3>
           {props.suppleants.map(r => (
-            <EluComponent key={stringifyNominalString(r.id)} eluId={r.eluId} />
+            <EluComponent key={asString(r.id)} eluId={r.eluId} />
           ))}
         </div>
       )}
@@ -94,7 +94,7 @@ const DeliberationsComponent = (props: {
     <div>
       <h3>Délibérations</h3>
       {props.lienDeliberations.map(d => (
-        <div key={stringifyNominalString(d.id)}>
+        <div key={asString(d.id)}>
           {d.deliberation.libelle} du {d.deliberation.deliberationDate}
         </div>
       ))}
@@ -174,10 +174,7 @@ export const OrganismeComponent = (props: { organisme: FullOrganisme }) => {
         <div>
           <h3>Instances</h3>
           {organisme.instances.map(i => (
-            <InstanceComponent
-              key={stringifyNominalString(i.infos.id)}
-              instance={i}
-            />
+            <InstanceComponent key={asString(i.infos.id)} instance={i} />
           ))}
         </div>
       )}

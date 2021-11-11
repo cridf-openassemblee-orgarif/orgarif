@@ -20,8 +20,7 @@ tasks {
     withType<KotlinCompile> {
         kotlinOptions.jvmTarget = "15"
     }
-
-    withType<Test> {
+    test {
         useJUnitPlatform()
     }
 }
@@ -47,13 +46,14 @@ dependencies {
     implementation("org.springframework.boot:spring-boot-starter-security")
     implementation("org.springframework.session:spring-session-jdbc")
 
-    implementation("org.postgresql:postgresql:42.2.18")
+    implementation("org.postgresql:postgresql:42.2.22")
 
     // logs
     implementation("io.github.microutils:kotlin-logging:1.4.6")
 
     // utils
     implementation("org.apache.commons:commons-lang3:3.6")
+    implementation("org.apache.commons:commons-text:1.9")
     implementation("commons-codec:commons-codec:1.14")
     implementation("com.fasterxml.jackson.module:jackson-module-kotlin:2.11.0")
     implementation("org.reflections:reflections:0.9.10")
@@ -61,7 +61,7 @@ dependencies {
     implementation("org.json:json:20210307")
 
     testImplementation("org.springframework.boot:spring-boot-starter-test")
-    testImplementation("junit:junit:4.13.1")
+    testImplementation("org.junit.jupiter:junit-jupiter-engine:5.7.2")
 //    testImplementation("org.junit.jupiter:junit-jupiter-api")
 //    testRuntimeOnly("org.junit.jupiter:junit-jupiter-engine")
 }

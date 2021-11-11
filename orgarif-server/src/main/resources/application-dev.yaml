@@ -1,17 +1,17 @@
+# TODO[config] no / in urls end ?
+# configuration validation
+app.url: http://devorgarif:8300
+#---------------------------------------------------------------------------
 server.port: 8300
 database:
   host: localhost
   port: 5432
   name: orgarif
 #---------------------------------------------------------------------------
-# TODO[config] no / in urls end ?
-# configuration validation
-app.url: http://devorgarif:8300
-#---------------------------------------------------------------------------
 assets:
+  useBuildFiles: false
   browserWebpackDevHost: http://localhost:3300
   serverWebpackDevHost: http://localhost:3300
-  useBuildFiles: false
 #---------------------------------------------------------------------------
 mailjet:
   api-key:

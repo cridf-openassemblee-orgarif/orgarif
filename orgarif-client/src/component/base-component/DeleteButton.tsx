@@ -1,10 +1,9 @@
 /** @jsxImportSource @emotion/react */
 import { css } from '@emotion/react';
-import { ButtonGroup } from '@material-ui/core';
-import Button from '@material-ui/core/Button';
-import makeStyles from '@material-ui/core/styles/makeStyles';
-import { Clear, KeyboardBackspace } from '@material-ui/icons';
-import DeleteIcon from '@material-ui/icons/Delete';
+import { Clear, Delete, KeyboardBackspace } from '@mui/icons-material';
+import { ButtonGroup } from '@mui/material';
+import Button from '@mui/material/Button';
+import { makeStyles } from '@mui/styles';
 import * as React from 'react';
 import { useState } from 'react';
 import { colors } from '../../styles/vars';
@@ -93,7 +92,7 @@ export const DeleteButton = (props: Props) => {
                   `}
                 >
                   <span css={iconSpanStyle}>
-                    <DeleteIcon css={iconStyle} />
+                    <Delete css={iconStyle} />
                   </span>
                   {props.size === 'large' && 'Supprimer'}
                 </Button>

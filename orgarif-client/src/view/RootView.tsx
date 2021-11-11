@@ -4,7 +4,7 @@ import { useRecoilState } from 'recoil';
 import { MainContainer } from '../container/MainContainer';
 import { RouteLink } from '../routing/RouteLink';
 import { state } from '../state/state';
-import { stringifyNominalString } from '../utils/nominal-class';
+import { asString } from '../utils/nominal-class';
 
 export const RootView = () => {
   const [userInfos] = useRecoilState(state.userInfos);
@@ -55,7 +55,7 @@ export const RootView = () => {
           </RouteLink>
           <h3>Par secteur</h3>
           {secteurs.map(s => (
-            <div key={stringifyNominalString(s.id)}>
+            <div key={asString(s.id)}>
               <RouteLink
                 route={{
                   name: 'ListOrganismesBySecteurRoute',

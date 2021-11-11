@@ -1,22 +1,20 @@
 /** @jsxImportSource @emotion/react */
 import { css } from '@emotion/react';
-import { createStyles, FormControl, Select, Theme } from '@material-ui/core';
-import MenuItem from '@material-ui/core/MenuItem/MenuItem';
-import makeStyles from '@material-ui/core/styles/makeStyles';
+import { FormControl, MenuItem, Select, Theme } from '@mui/material';
+import { SelectChangeEvent } from '@mui/material/Select/SelectInput';
+import { makeStyles } from '@mui/styles';
 import * as React from 'react';
 import { clientUid } from '../../utils';
-import { stringifyNominalString } from '../../utils/nominal-class';
+import { asString } from '../../utils/nominal-class';
 
-const useStyles = makeStyles((theme: Theme) =>
-  createStyles({
-    formControl: {
-      margin: theme.spacing(1)
-    },
-    selectEmpty: {
-      marginTop: theme.spacing(2)
-    }
-  })
-);
+const useStyles = makeStyles((theme: Theme) => ({
+  formControl: {
+    margin: theme.spacing(1)
+  },
+  selectEmpty: {
+    marginTop: theme.spacing(2)
+  }
+}));
 
 export interface SelectOption {
   value: any;
@@ -27,7 +25,7 @@ export const SelectInput = (props: {
   label: string;
   value: any | undefined;
   options: SelectOption[];
-  onChange: (event: React.ChangeEvent<{ value: unknown }>) => void;
+  onChange: (event: SelectChangeEvent<unknown>, child: React.ReactNode) => void;
 }) => {
   const inputId = clientUid();
   const classes = useStyles();
@@ -57,8 +55,8 @@ export const SelectInput = (props: {
         `}
       >
         <Select
-          labelId={stringifyNominalString(inputId)}
-          id={stringifyNominalString(inputId)}
+          labelId={asString(inputId)}
+          id={asString(inputId)}
           value={props.value}
           onChange={props.onChange}
         >

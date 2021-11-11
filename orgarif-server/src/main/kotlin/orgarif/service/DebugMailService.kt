@@ -1,12 +1,12 @@
 package orgarif.service
 
+import orgarif.domain.ApplicationEnvironment
+import orgarif.service.MailService.MailJetMail
+import orgarif.service.utils.ApplicationTaskExecutor
 import mu.KotlinLogging
 import okhttp3.Credentials
 import org.springframework.beans.factory.annotation.Value
 import org.springframework.stereotype.Service
-import orgarif.config.ApplicationConstants
-import orgarif.service.MailService.MailJetMail
-import orgarif.service.utils.ApplicationTaskExecutor
 
 @Service
 class DebugMailService(
@@ -32,37 +32,42 @@ class DebugMailService(
 
     private data class DebugMailJetMessages(val Messages: List<DebugMailJetMessage>)
 
-    fun devMail(
-        mailSubject: String,
-        mailContent: String,
-        monitoringCategory: String? = null
-    ) {
-        taskExecutor.execute {
-            val body = DebugMailJetMessages(
-                listOf(
-                    DebugMailJetMessage(
-                        MailJetMail(devLogSenderMail, "Orgarif app"),
-                        listOf(MailJetMail(devDestinationMail, "dev orgarif")),
-                        "[${applicationInstance.env}] $mailSubject", mailContent, monitoringCategory
+    fun devMail(mailSubject: String, mailContent: String, monitoringCategory: String? = null) {
+        // TODO in conf instead ?
+        if (applicationInstance.env !in setOf(ApplicationEnvironment.dev, ApplicationEnvironment.test)) {
+            taskExecutor.execute {
+                val body =
+                    DebugMailJetMessages(
+                        listOf(
+                            DebugMailJetMessage(
+                                MailJetMail(devLogSenderMail, "Orgarif app"),
+                                listOf(MailJetMail(devDestinationMail, "dev orgarif")),
+                                "[${applicationInstance.env}] $mailSubject",
+                                mailContent,
+                                monitoringCategory
+                            )
+                        )
                     )
-                )
-            )
-            val json = MailService.mailJetObjectMapper.writeValueAsString(body)
-            val r = try {
-                httpService.postAndReturnString(
-                    url, json, HttpService.HttpMediaType.json,
-                    HttpService.Header.authorization to Credentials.basic(apiKey, secretKey)
-                )
-            } catch (e: Exception) {
-                logger.error { "Failed to send debug mail" }
-                throw e
-            }
-            if (r.code != 200) {
-                logger.error {
-                    "Couldn't send mail :\n${r.body}\n$json"
+                val json = MailService.mailJetObjectMapper.writeValueAsString(body)
+                val r =
+                    try {
+                        httpService.postAndReturnString(
+                            url,
+                            json,
+                            HttpService.Header.Authorization to Credentials.basic(apiKey, secretKey)
+                        )
+                    } catch (e: Exception) {
+                        logger.error { "Failed to send debug mail" }
+                        throw e
+                    }
+                if (r.code != 200) {
+                    val body = when (r) {
+                        is HttpService.MaybeStringResponse.EmptyResponse -> "[no response body]"
+                        is HttpService.MaybeStringResponse.StringResponse -> r.body
+                    }
+                    logger.error { "Couldn't send mail :\n$body\n----\n$json" }
                 }
             }
         }
     }
-
 }

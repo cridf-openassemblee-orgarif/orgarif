@@ -1,6 +1,6 @@
 /** @jsxImportSource @emotion/react */
 import { css } from '@emotion/react';
-import { Button } from '@material-ui/core';
+import { Button } from '@mui/material';
 import * as React from 'react';
 import { useEffect, useState } from 'react';
 import { useRecoilValue } from 'recoil';
@@ -13,13 +13,14 @@ import { RouteLink } from '../routing/RouteLink';
 import { ListOrganismesBySecteurRoute } from '../routing/routes';
 import { state } from '../state/state';
 import { colors } from '../styles/vars';
-import { getValue, stringifyNominalString } from '../utils/nominal-class';
+import { asString, getValue } from '../utils/nominal-class';
 
 export const ListOrganismesBySecteurView = (props: {
   routeParams: ListOrganismesBySecteurRoute;
 }) => {
-  const [organismes, setOrganismes] =
-    useState<OrganismeInfos[] | undefined>(undefined);
+  const [organismes, setOrganismes] = useState<OrganismeInfos[] | undefined>(
+    undefined
+  );
   const secteurById = useRecoilValue(state.secteursById);
   const secteur = getValue(secteurById, props.routeParams.secteurId);
   useEffect(() => {
@@ -58,7 +59,7 @@ export const ListOrganismesBySecteurView = (props: {
       {organismes &&
         organismes.map(o => (
           <div
-            key={stringifyNominalString(o.id)}
+            key={asString(o.id)}
             css={css`
               background: ${colors.clearGrey};
               margin: 2px 0;

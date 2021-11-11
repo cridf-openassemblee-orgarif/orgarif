@@ -1,6 +1,17 @@
 package orgarif.error
 
 import com.fasterxml.jackson.databind.JsonMappingException
+import orgarif.config.ApplicationConstants
+import orgarif.domain.ApplicationEnvironment
+import orgarif.domain.MimeType
+import orgarif.domain.RequestErrorId
+import orgarif.domain.Role
+import orgarif.service.ApplicationInstance
+import orgarif.service.DateService
+import orgarif.service.RandomService
+import orgarif.service.user.UserSessionService
+import orgarif.utils.OrgarifStringUtils
+import orgarif.utils.Serializer
 import freemarker.ext.beans.BeansWrapperBuilder
 import freemarker.template.Configuration
 import mu.KotlinLogging
@@ -10,23 +21,14 @@ import org.springframework.web.bind.annotation.ExceptionHandler
 import org.springframework.web.context.request.WebRequest
 import org.springframework.web.servlet.ModelAndView
 import org.springframework.web.servlet.view.json.MappingJackson2JsonView
-import orgarif.config.ApplicationConstants
-import orgarif.domain.ApplicationEnvironment
-import orgarif.domain.MimeType
-import orgarif.domain.RequestErrorId
-import orgarif.service.ApplicationInstance
-import orgarif.service.DateService
-import orgarif.service.RandomService
-import orgarif.service.user.UserSessionHelper
-import orgarif.utils.OrgarifStringUtils
-import orgarif.utils.Serializer
 import javax.servlet.http.HttpServletResponse
 
 @ControllerAdvice
 class ApplicationExceptionHandler(
     val applicationInstance: ApplicationInstance,
     val dateService: DateService,
-    val randomService: RandomService
+    val randomService: RandomService,
+    val userSessionService: UserSessionService
 ) {
 
     private val logger = KotlinLogging.logger {}
@@ -39,9 +41,7 @@ class ApplicationExceptionHandler(
         // log userid, mail, ip
         val id = randomService.id<RequestErrorId>()
         val readableStackTrace =
-            if (applicationInstance.env == ApplicationEnvironment.dev ||
-                (UserSessionHelper.isAuthenticated() && UserSessionHelper.isAdmin())
-            ) {
+            if (applicationInstance.env == ApplicationEnvironment.dev || userSessionService.hasRole(Role.admin)) {
                 ReadableStackTrace(exception)
             } else {
                 null
@@ -53,8 +53,7 @@ class ApplicationExceptionHandler(
                 // TODO[secu] in practice what happens with user null ?
                 logger.info {
                     // TODO[secu] which means user must be connected...
-                    "User ${UserSessionHelper.getUserSession()} tried to upload a file to big : " +
-                            subCause.message
+                    "User ${userSessionService.getUserSession()} tried to upload a file to big : ${subCause.message}"
                 }
                 // TODO[secu] error codes for the front !
                 return render(
@@ -76,7 +75,14 @@ class ApplicationExceptionHandler(
                 return render(
                     request,
                     response,
-                    RequestError(id, 500, "DisplayError", exception.displayMessage, dateService.now(), null)
+                    RequestError(
+                        id,
+                        500,
+                        "DisplayError",
+                        exception.displayMessage,
+                        dateService.now(),
+                        readableStackTrace
+                    )
                 )
             }
             exception is JsonMappingException -> {
@@ -102,17 +108,25 @@ class ApplicationExceptionHandler(
                 }
             }
             else -> {
-                if (UserSessionHelper.isAuthenticated()) {
-                    logger.warn(exception) { "Unhandled exception [$id] for user ${UserSessionHelper.getUserSession()}" }
+                if (userSessionService.isAuthenticated()) {
+                    logger.warn(exception) {
+                        "Unhandled exception [$id] for user ${userSessionService.getUserSession()}"
+                    }
                 } else {
                     logger.warn(exception) { "Unhandled exception [$id]" }
                 }
                 // TODO[secu] i18n, & i18n from spring
                 // all strings should come from a central place
                 return render(
-                    request, response, RequestError(
-                        id, 500, "Error", "Unknown error",
-                        dateService.now(), readableStackTrace
+                    request,
+                    response,
+                    RequestError(
+                        id,
+                        500,
+                        "Error",
+                        "Unknown error",
+                        dateService.now(),
+                        readableStackTrace
                     )
                 )
             }

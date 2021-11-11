@@ -1,5 +1,4 @@
 import { atom, selector } from 'recoil';
-import { applicationBootstrapData } from '../constants';
 import {
   NatureJuridique,
   Secteur,
@@ -18,7 +17,7 @@ import { Dict, pairsToDict } from '../utils/nominal-class';
 export const state = {
   elus: atom<Elu[]>({
     key: 'elus',
-    default: applicationBootstrapData.elus.sort(compareByString(i => i.nom))
+    default: bootstrapData.elus.sort(compareByString(i => i.nom))
   }),
   elusById: selector({
     key: 'elusById',
@@ -28,7 +27,7 @@ export const state = {
   }),
   natureJuridiques: atom({
     key: 'natureJuridiques',
-    default: applicationBootstrapData.categories.natureJuridiques.sort(
+    default: bootstrapData.categories.natureJuridiques.sort(
       compareByString(i => i.libelle)
     )
   }),
@@ -39,11 +38,11 @@ export const state = {
   }),
   organismeCategories: atom({
     key: 'organismeCategories',
-    default: applicationBootstrapData.categories
+    default: bootstrapData.categories
   }),
   secteurs: atom({
     key: 'secteurs',
-    default: applicationBootstrapData.categories.secteurs.sort(
+    default: bootstrapData.categories.secteurs.sort(
       compareByString(i => i.libelle)
     )
   }),
@@ -54,7 +53,7 @@ export const state = {
   }),
   typeStructures: atom({
     key: 'typeStructures',
-    default: applicationBootstrapData.categories.typeStructures.sort(
+    default: bootstrapData.categories.typeStructures.sort(
       compareByString(i => i.libelle)
     )
   }),
@@ -65,6 +64,6 @@ export const state = {
   }),
   userInfos: atom({
     key: 'userInfos',
-    default: applicationBootstrapData.userInfos
+    default: bootstrapData.userInfos
   })
 };

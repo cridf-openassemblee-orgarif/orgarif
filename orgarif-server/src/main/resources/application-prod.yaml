@@ -16,7 +16,10 @@ spring:
       maxActive: 10
 server.forward-headers-strategy: framework
 #---------------------------------------------------------------------------
-assets.useBuildFiles: true
+assets:
+  useBuildFiles: true
+  browserWebpackDevHost:
+  serverWebpackDevHost:
 #---------------------------------------------------------------------------
 mailjet:
   api-key:

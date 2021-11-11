@@ -1,10 +1,10 @@
 package orgarif.config
 
+import orgarif.domain.Session
+import orgarif.utils.Serializer.deserialize
 import org.springframework.core.convert.converter.Converter
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken
 import org.springframework.security.core.context.SecurityContextImpl
-import orgarif.domain.UserSession
-import orgarif.utils.Serializer.deserialize
 import java.util.*
 
 class JsonDeserializingService : Converter<ByteArray, Any> {
@@ -19,7 +19,7 @@ class JsonDeserializingService : Converter<ByteArray, Any> {
             throw IllegalArgumentException("Couldn't convert to string ${Arrays.toString(source)}", e)
         }
         return try {
-            val session = deserialize<UserSession>(json)
+            val session = deserialize<Session>(json)
             SecurityContextImpl().apply {
                 authentication = UsernamePasswordAuthenticationToken(session, null, null)
             }

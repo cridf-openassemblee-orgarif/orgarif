@@ -1,39 +1,31 @@
 package orgarif.repository
 
+import orgarif.ResetTestDatabase
+import orgarif.TestData
 import orgarif.domain.HashedPassword
-import orgarif.domain.Language
-import orgarif.domain.UserId
 import orgarif.error.MailAlreadyRegisteredException
-import org.junit.Ignore
-import org.junit.Test
-import org.junit.runner.RunWith
+import orgarif.service.RandomService
+import org.junit.jupiter.api.Assertions
+import org.junit.jupiter.api.BeforeEach
+import org.junit.jupiter.api.Test
 import org.springframework.beans.factory.annotation.Autowired
 import org.springframework.boot.test.context.SpringBootTest
 import org.springframework.test.context.ActiveProfiles
-import org.springframework.test.context.junit4.SpringJUnit4ClassRunner
-import orgarif.TestData
-import orgarif.service.RandomService
-import java.time.Instant
-import java.util.*
 
-@SpringBootTest(webEnvironment = SpringBootTest.WebEnvironment.RANDOM_PORT)
+@SpringBootTest
 @ActiveProfiles("test")
-@RunWith(SpringJUnit4ClassRunner::class)
-internal class UserDaoTest {
+internal class UserDaoTest(@Autowired val userDao: UserDao, @Autowired val randomService: RandomService) {
 
-    @Autowired
-    lateinit var userDao: UserDao
+    @BeforeEach
+    fun init() {
+        ResetTestDatabase.reset(false)
+    }
 
-    @Autowired
-    lateinit var randomService: RandomService
-
-    @Ignore
     @Test
     fun `test conflict`() {
-        try {
+        userDao.insert(TestData.dummyUser(randomService.id()), HashedPassword("sdv"))
+        Assertions.assertThrows(MailAlreadyRegisteredException::class.java) {
             userDao.insert(TestData.dummyUser(randomService.id()), HashedPassword("sdv"))
-            throw RuntimeException()
-        } catch (e: MailAlreadyRegisteredException) {
         }
     }
 

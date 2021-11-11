@@ -6,13 +6,13 @@ import com.fasterxml.jackson.databind.SerializationFeature
 import com.fasterxml.jackson.databind.cfg.MapperConfig
 import com.fasterxml.jackson.databind.introspect.AnnotatedField
 import com.fasterxml.jackson.databind.introspect.AnnotatedMethod
+import orgarif.domain.*
+import orgarif.error.MessageNotSentException
+import orgarif.repository.MailLogDao
 import mu.KotlinLogging
 import okhttp3.Credentials
 import org.springframework.beans.factory.annotation.Value
 import org.springframework.stereotype.Service
-import orgarif.domain.*
-import orgarif.error.MessageNotSentException
-import orgarif.repository.MailLogDao
 import java.util.*
 
 @Service
@@ -40,10 +40,7 @@ class MailService(
     }
 
     // TODO[mailjet] the uppercase on first letter : ask it to the serializer ?
-    data class MailJetMail(
-        val Email: String,
-        val Name: String
-    )
+    data class MailJetMail(val Email: String, val Name: String)
 
     // TODO[mailjet] is it possible to limit the strings here ?
     data class MailJetAttachment(
@@ -67,12 +64,17 @@ class MailService(
 
     private data class MailJetMessages(val Messages: List<MailJetMessage>)
 
-    // TODO[mailjet] [doc] this informations is here to display the environnement which sent the mail in mailjet ui
+    // TODO[mailjet] [doc] this informations is here to display the environnement which sent the
+    // mail in mailjet ui
     private data class MailJetEventPayload(val env: String)
 
     // TODO[mailjet] check this... + uppercase first letter handled here ?
     private class MyPropertyNamingStrategy : PropertyNamingStrategy() {
-        override fun nameForField(config: MapperConfig<*>?, field: AnnotatedField, defaultName: String): String {
+        override fun nameForField(
+            config: MapperConfig<*>?,
+            field: AnnotatedField,
+            defaultName: String
+        ): String {
             return convert(field.name)
         }
 
@@ -98,7 +100,8 @@ class MailService(
     }
 
     enum class MailLog {
-        doLog, doNotLog
+        doLog,
+        doNotLog
     }
 
     data class MailLogProperties(
@@ -107,11 +110,7 @@ class MailService(
         val jsonData: String
     )
 
-    data class Attachment(
-        val filename: String,
-        val content: ByteArray,
-        val contentType: MimeType
-    )
+    data class Attachment(val filename: String, val content: ByteArray, val contentType: MimeType)
 
     fun sendMail(
         senderName: String,
@@ -125,46 +124,63 @@ class MailService(
         mailLogProperties: MailLogProperties? = null,
         attachments: List<Attachment>? = null
     ): MailLogId? {
-        if (applicationInstance.env == ApplicationEnvironment.dev && recipientMail != devLogSenderMail) {
+        if (applicationInstance.env == ApplicationEnvironment.dev &&
+            recipientMail != devLogSenderMail
+        ) {
             throw IllegalArgumentException("Mail send canceled en env dev to ${recipientMail}")
         }
         val mailLogId = randomService.id<MailLogId>()
-        val payload = mailJetObjectMapper.writeValueAsString(MailJetEventPayload(applicationInstance.env.name))
-        val subject = if (applicationInstance.env == ApplicationEnvironment.prod)
-            mailSubject
-        else
-            "[${applicationInstance.env}] $mailSubject"
-        val mailJetAttachments = (attachments ?: emptyList()).map {
-            MailJetAttachment(it.contentType.fullType, it.filename, Base64.getEncoder().encodeToString(it.content))
-        }
-        val body = MailJetMessages(
-            listOf(
-                MailJetMessage(
-                    MailJetMail(senderMail, senderName),
-                    listOf(MailJetMail(recipientMail, recipientName)), subject, mailContent, mailJetAttachments,
-                    mailLogIdToString(mailLogId), mailReference.name, payload
+        val payload =
+            mailJetObjectMapper.writeValueAsString(
+                MailJetEventPayload(applicationInstance.env.name)
+            )
+        val subject =
+            if (applicationInstance.env == ApplicationEnvironment.prod) mailSubject
+            else "[${applicationInstance.env}] $mailSubject"
+        val mailJetAttachments =
+            (attachments ?: emptyList()).map {
+                MailJetAttachment(
+                    it.contentType.fullType,
+                    it.filename,
+                    Base64.getEncoder().encodeToString(it.content)
+                )
+            }
+        val body =
+            MailJetMessages(
+                listOf(
+                    MailJetMessage(
+                        MailJetMail(senderMail, senderName),
+                        listOf(MailJetMail(recipientMail, recipientName)),
+                        subject,
+                        mailContent,
+                        mailJetAttachments,
+                        mailLogIdToString(mailLogId),
+                        mailReference.name,
+                        payload
+                    )
                 )
             )
-        )
         val json = mailJetObjectMapper.writeValueAsString(body)
-        val response = try {
-            httpService.postAndReturnString(
-                url, json, HttpService.HttpMediaType.json,
-                HttpService.Header.authorization to Credentials.basic(apiKey, secretKey)
-            )
-        } catch (e: Exception) {
-            logger.error {
-                "Failed to send mail to $recipientMail. Mail log properties & content is following =>"
+        val response =
+            try {
+                httpService.postAndReturnString(
+                    url,
+                    json,
+                    HttpService.Header.Authorization to Credentials.basic(apiKey, secretKey)
+                )
+            } catch (e: Exception) {
+                logger.error {
+                    "Failed to send mail to $recipientMail. Mail log properties & content is following =>"
+                }
+                logger.info { mailLogProperties }
+                logger.info { mailContent }
+                throw e
             }
-            logger.info { mailLogProperties }
-            logger.info { mailContent }
-            throw e
-        }
         when (response.code) {
             200 -> {
             }
             else -> {
-                logger.trace { response.body }
+                logger.trace { response }
                 throw MessageNotSentException("${response.code} $recipientMail $mailSubject")
             }
         }

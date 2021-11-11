@@ -21,17 +21,10 @@ export const ApplicationRouter = () => {
               exact={true}
               path={r.path}
               render={(routerProps: RouteComponentProps<any>) => {
-                if (r.authenticationLevel === 'loggedIn' && !userInfos) {
-                  return (
-                    <Redirect
-                      to={{
-                        pathname: routes.RootRoute.path,
-                        state: { from: routerProps.location }
-                      }}
-                    />
-                  );
-                }
-                if (r.authenticationLevel === 'admin' && !userInfos?.admin) {
+                if (
+                  r.role &&
+                  (!userInfos || !userInfos.roles.includes(r.role))
+                ) {
                   return (
                     <Redirect
                       to={{

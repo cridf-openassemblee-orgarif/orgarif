@@ -13,11 +13,11 @@ import {
 import { Errors } from '../../errors';
 import { assertUnreachable } from '../../utils';
 import {
+  asString,
   Dict,
   getValue,
   instanciateNominalString,
-  set,
-  stringifyNominalString
+  set
 } from '../../utils/nominal-class';
 import { pipe } from '../../utils/Pipe';
 
@@ -31,15 +31,15 @@ export const representantListId = (
   representantOrSuppleant: RepresentantOrSuppleant
 ) =>
   instanciateNominalString<RepresentantListId>(
-    `${stringifyNominalString(organismeId)}.${
-      instanceId ? stringifyNominalString(instanceId) : noInstanceId
+    `${asString(organismeId)}.${
+      instanceId ? asString(instanceId) : noInstanceId
     }.${representantOrSuppleant}`
   );
 
 export const extract = (
   representantListId: RepresentantListId
 ): [OrganismeId, InstanceId | undefined, RepresentantOrSuppleant] => {
-  const parts = stringifyNominalString(representantListId).split('.');
+  const parts = asString(representantListId).split('.');
   if (parts.length !== 3) {
     throw Errors._6f643a2a();
   }

@@ -1,6 +1,6 @@
 /** @jsxImportSource @emotion/react */
 import { css } from '@emotion/react';
-import { ArrowBackIos } from '@material-ui/icons';
+import { ArrowBackIos } from '@mui/icons-material';
 import * as React from 'react';
 import { useEffect, useState } from 'react';
 import { appContext } from '../ApplicationContext';
@@ -13,8 +13,9 @@ import { EditOrganismeRoute } from '../routing/routes';
 export const EditOrganismeView = (props: {
   routeParams: EditOrganismeRoute;
 }) => {
-  const [organisme, setOrganisme] =
-    useState<FullOrganisme | undefined>(undefined);
+  const [organisme, setOrganisme] = useState<FullOrganisme | undefined>(
+    undefined
+  );
   const [loading, setLoading] = useState(false);
   useEffect(() => {
     setLoading(true);

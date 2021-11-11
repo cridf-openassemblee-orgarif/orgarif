@@ -1,10 +1,10 @@
 package orgarif.repository
 
-import org.jooq.DSLContext
-import org.springframework.stereotype.Repository
 import orgarif.domain.DeploymentLogId
 import orgarif.jooq.generated.Tables.DEPLOYMENT_LOG
 import orgarif.jooq.generated.tables.records.DeploymentLogRecord
+import org.jooq.DSLContext
+import org.springframework.stereotype.Repository
 import java.time.Instant
 import java.time.ZoneId
 

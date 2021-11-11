@@ -8,7 +8,7 @@ import java.util.*
 
 class UuidDeserializer : StdDeserializer<UUID>(UUID::class.java) {
 
-    override fun deserialize(p: JsonParser, ctxt: DeserializationContext): UUID =
+    override fun deserialize(p: JsonParser, ctxt: DeserializationContext) =
         OrgarifStringUtils.deserializeUuid(p.valueAsString)
 
 }

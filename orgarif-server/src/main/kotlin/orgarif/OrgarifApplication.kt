@@ -1,20 +1,17 @@
 package orgarif
 
-import org.springframework.boot.SpringApplication
-import org.springframework.boot.autoconfigure.SpringBootApplication
-import org.springframework.boot.autoconfigure.security.servlet.UserDetailsServiceAutoConfiguration
-import org.springframework.context.annotation.ComponentScan
-import org.springframework.session.jdbc.config.annotation.web.http.EnableJdbcHttpSession
 import orgarif.domain.ApplicationEnvironment
-import orgarif.jooqlib.Configuration
 import orgarif.jooqlib.Configuration.configuration
 import orgarif.jooqlib.ResetDatabase
 import orgarif.utils.DatabaseUtils.datasource
+import org.springframework.boot.SpringApplication
+import org.springframework.boot.autoconfigure.SpringBootApplication
+import org.springframework.boot.autoconfigure.security.servlet.UserDetailsServiceAutoConfiguration
+import org.springframework.session.jdbc.config.annotation.web.http.EnableJdbcHttpSession
 import java.util.*
 
 @SpringBootApplication(exclude = [UserDetailsServiceAutoConfiguration::class])
 @EnableJdbcHttpSession
-@ComponentScan("orgarif")
 class OrgarifApplication {
 
     companion object {

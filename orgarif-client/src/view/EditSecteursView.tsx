@@ -1,16 +1,15 @@
 /** @jsxImportSource @emotion/react */
 import { css } from '@emotion/react';
+import { Delete, Edit } from '@mui/icons-material';
 import {
   CircularProgress,
   DialogContent,
   DialogTitle,
   Fab
-} from '@material-ui/core';
-import Button from '@material-ui/core/Button';
-import Dialog from '@material-ui/core/Dialog';
-import DialogActions from '@material-ui/core/DialogActions';
-import DeleteIcon from '@material-ui/icons/Delete';
-import EditIcon from '@material-ui/icons/Edit';
+} from '@mui/material';
+import Button from '@mui/material/Button';
+import Dialog from '@mui/material/Dialog';
+import DialogActions from '@mui/material/DialogActions';
 import * as React from 'react';
 import { FocusEvent, useState } from 'react';
 import { useRecoilState } from 'recoil';
@@ -23,7 +22,7 @@ import { SecteurId } from '../domain/ids';
 import { Errors } from '../errors';
 import { state } from '../state/state';
 import { colors } from '../styles/vars';
-import { stringifyNominalString } from '../utils/nominal-class';
+import { asString } from '../utils/nominal-class';
 
 const iconStyle = css`
   height: 1em;
@@ -78,7 +77,7 @@ const EditSecteurComponent = (props: {
             size="small"
             variant="extended"
           >
-            <EditIcon css={iconStyle} />
+            <Edit css={iconStyle} />
           </Fab>
         )}
         {updating && (
@@ -92,7 +91,7 @@ const EditSecteurComponent = (props: {
           variant="extended"
           style={{ marginLeft: '10px' }}
         >
-          <DeleteIcon css={iconStyle} />
+          <Delete css={iconStyle} />
         </Fab>
       </td>
     </tr>
@@ -101,8 +100,9 @@ const EditSecteurComponent = (props: {
 
 export const EditSecteursView = () => {
   const [secteurs, setSecteurs] = useRecoilState(state.secteurs);
-  const [confirmSecteurIdDeletion, setConfirmSecteurIdDeletion] =
-    useState<SecteurId | undefined>(undefined);
+  const [confirmSecteurIdDeletion, setConfirmSecteurIdDeletion] = useState<
+    SecteurId | undefined
+  >(undefined);
   const [deleteError, setDeleteError] = useState<string | undefined>(undefined);
   const hidePopup = () => {
     setConfirmSecteurIdDeletion(undefined);
@@ -170,7 +170,7 @@ export const EditSecteursView = () => {
             {secteurs.map(s => (
               <EditSecteurComponent
                 // libelle needed in key, or it won't refresh when libelle is updated
-                key={stringifyNominalString(s.id) + s.libelle}
+                key={asString(s.id) + s.libelle}
                 secteur={s}
                 displayDeletePopup={() => setConfirmSecteurIdDeletion(s.id)}
                 updateSecteur={updateSecteur}

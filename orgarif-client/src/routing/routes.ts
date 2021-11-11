@@ -1,5 +1,6 @@
 import { FunctionComponent } from 'react';
 import { OrganismeId, SecteurId } from '../domain/ids';
+import { Role } from '../domain/user';
 import { EditNatureJuridiquesView } from '../view/EditNatureJuridiquesView';
 import { EditOrganismeView } from '../view/EditOrganismeView';
 import { EditSecteursView } from '../view/EditSecteursView';
@@ -23,8 +24,6 @@ export type Route =
   | RegisterRoute
   | RootRoute;
 
-type AuthenticationLevel = 'neutral' | 'loggedIn' | 'loggedOut' | 'admin';
-
 interface ViewParameters<R extends Route> {
   routeParams: R;
 }
@@ -32,7 +31,7 @@ interface ViewParameters<R extends Route> {
 interface RouteProps {
   path: string;
   component: FunctionComponent<ViewParameters<any>>;
-  authenticationLevel: AuthenticationLevel;
+  role?: Role;
   onEnter?: () => void;
 }
 
@@ -40,52 +39,46 @@ export const routes: Record<Route['name'], RouteProps> = {
   EditNatureJuridiquesRoute: {
     path: '/edition-nature-juridiques',
     component: EditNatureJuridiquesView,
-    authenticationLevel: 'loggedIn'
+    role: 'user'
   },
   EditOrganismeRoute: {
     path: '/edition-organisme/:id',
     component: EditOrganismeView,
-    authenticationLevel: 'loggedIn'
+    role: 'user'
   },
   EditSecteursRoute: {
     path: '/edition-secteurs',
     component: EditSecteursView,
-    authenticationLevel: 'loggedIn'
+    role: 'user'
   },
   EditTypeStructuresRoute: {
     path: '/edition-type-structures',
     component: EditTypeStructuresView,
-    authenticationLevel: 'loggedIn'
+    role: 'user'
   },
   ListOrganismesBySecteurRoute: {
     path: '/organismes-par-secteur/:secteurId',
-    component: ListOrganismesBySecteurView,
-    authenticationLevel: 'loggedOut'
+    component: ListOrganismesBySecteurView
   },
   ListOrganismesRoute: {
     path: '/organismes',
-    component: ListOrganismesView,
-    authenticationLevel: 'loggedOut'
+    component: ListOrganismesView
   },
   LoginRoute: {
     path: '/login',
-    component: LoginView,
-    authenticationLevel: 'loggedOut'
+    component: LoginView
   },
   OrganismeRoute: {
     path: '/organisme/:id',
-    component: OrganismeView,
-    authenticationLevel: 'loggedIn'
+    component: OrganismeView
   },
   RegisterRoute: {
     path: '/register',
-    component: RegisterView,
-    authenticationLevel: 'loggedOut'
+    component: RegisterView
   },
   RootRoute: {
     path: '/',
-    component: RootView,
-    authenticationLevel: 'neutral'
+    component: RootView
   }
 };
 

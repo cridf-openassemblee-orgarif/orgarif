@@ -1,27 +1,26 @@
 package orgarif.command
 
-import org.junit.Rule
-import org.junit.Test
-import org.junit.rules.ExpectedException
+import org.hamcrest.MatcherAssert.assertThat
+import org.hamcrest.Matchers.equalTo
+import org.junit.jupiter.api.Assertions
+import org.junit.jupiter.api.Test
 
 internal class RegisterCommandHandlerTest {
 
-    @Rule
-    @JvmField
-    val expectedException = ExpectedException.none()
-
     @Test
     fun `validate blank password validation`() {
-        expectedException.expect(IllegalArgumentException::class.java)
-        expectedException.expectMessage("Password is blank")
-        RegisterCommandHandler.validatePassword(" ")
+        val exceptionThatWasThrown = Assertions.assertThrows(IllegalArgumentException::class.java) {
+            RegisterCommandHandler.validatePassword(" ")
+        }
+        assertThat(exceptionThatWasThrown.message, equalTo("Password is blank"))
     }
 
     @Test
     fun `validate tab password validation`() {
-        expectedException.expect(IllegalArgumentException::class.java)
-        expectedException.expectMessage("Password is blank")
-        RegisterCommandHandler.validatePassword("\t")
+        val exceptionThatWasThrown = Assertions.assertThrows(IllegalArgumentException::class.java) {
+            RegisterCommandHandler.validatePassword("\t")
+        }
+        assertThat(exceptionThatWasThrown.message, equalTo("Password is blank"))
     }
 
 }

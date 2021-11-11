@@ -1,21 +1,18 @@
 /** @jsxImportSource @emotion/react */
-import { createStyles, Theme } from '@material-ui/core';
-import makeStyles from '@material-ui/core/styles/makeStyles';
-import TextField from '@material-ui/core/TextField';
+import { TextField } from '@mui/material';
+import { makeStyles } from '@mui/styles';
 import * as React from 'react';
 import { ChangeEvent, FocusEvent, useState } from 'react';
 
-const useStyles = makeStyles((theme: Theme) =>
-  createStyles({
-    root: {
-      '& .MuiOutlinedInput-root': {
-        '& fieldset': {
-          border: 0
-        }
+const useStyles = makeStyles(() => ({
+  root: {
+    '& .MuiOutlinedInput-root': {
+      '& fieldset': {
+        border: 0
       }
     }
-  })
-);
+  }
+}));
 
 export const TextInput = (props: {
   name: string;

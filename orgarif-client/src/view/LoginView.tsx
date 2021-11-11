@@ -1,11 +1,10 @@
 /** @jsxImportSource @emotion/react */
 import { css } from '@emotion/react';
-import Button from '@material-ui/core/Button';
+import Button from '@mui/material/Button';
 import * as React from 'react';
 import { useState } from 'react';
 import { useRecoilState } from 'recoil';
 import { appContext } from '../ApplicationContext';
-import { applicationBootstrapData } from '../constants';
 import { MainContainer } from '../container/MainContainer';
 import { LoginResult } from '../domain/user';
 import { Errors } from '../errors';
@@ -16,8 +15,9 @@ import { assertUnreachable } from '../utils';
 
 export const LoginView = () => {
   const [userInfos, setUserInfos] = useRecoilState(state.userInfos);
-  const [loginResult, setLoginResult] =
-    useState<LoginResult | undefined>(undefined);
+  const [loginResult, setLoginResult] = useState<LoginResult | undefined>(
+    undefined
+  );
   const login = (data: LoginFormDto) => {
     appContext
       .commandService()
@@ -65,7 +65,7 @@ export const LoginView = () => {
             {loginResult !== 'loggedIn' && !userInfos && (
               <LoginForm onSubmit={login} />
             )}
-            {!userInfos && applicationBootstrapData.env === 'dev' && (
+            {!userInfos && bootstrapData.env === 'dev' && (
               <div
                 css={css`
                   margin-top: 20px;

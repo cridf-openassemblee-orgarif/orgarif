@@ -13,6 +13,16 @@ object SpringLikeYamlConfigUtils {
     private val parisZoneId = ZoneId.of("Europe/Paris")
 
     fun yamlFilesToMap(vararg files: InputStream): Map<String, String> =
+        yamlFilesToPairs(*files)
+            .mapNotNull { pair -> pair.second?.let { pair.first to it } }
+            .toMap()
+
+    // FIXMENOW we can debug with this one
+    fun yamlFilesToMapComplete(vararg files: InputStream): Map<String, String?> =
+        yamlFilesToPairs(*files)
+            .toMap()
+
+    private fun yamlFilesToPairs(vararg files: InputStream): List<Pair<String, String?>> =
         files
             .map { CharStreams.toString(InputStreamReader(it, Charsets.UTF_8)) }
             .map { Yaml().load<Map<String, Any>>(it) }
@@ -21,16 +31,16 @@ object SpringLikeYamlConfigUtils {
             // but distinct() will keep the first item for each key, and we want the last
             // so we reverse, distinct, and re-reverse
             .reversed()
+            // toMap() would have removed the duplicates, but with distinct we're sure of the algorithm
             .distinct()
             .reversed()
-            // toMap() would have removed the duplicates, but with distinct we're sure of the algorythm
-            .toMap()
 
-    private fun flattenConf(map: Map<String, Any>): List<Pair<String, String>> =
+    private fun flattenConf(map: Map<String, Any>): List<Pair<String, String?>> =
         map.keys
             .flatMap { key ->
                 val value = map.getValue(key)
                 when (value) {
+                    null -> listOf(key to null)
                     is Boolean,
                     is Int,
                     is Long,
@@ -44,9 +54,7 @@ object SpringLikeYamlConfigUtils {
                             value.toInstant().atZone(parisZoneId).toLocalDate()
                         )
                     )
-                    else -> {
-                        listOf(key to "$value")
-                    }
+                    else -> listOf(key to "$value")
                 }
             }
 

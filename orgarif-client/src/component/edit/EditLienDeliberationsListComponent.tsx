@@ -5,7 +5,7 @@ import { useState } from 'react';
 import { InstanceId, OrganismeId } from '../../domain/ids';
 import { LienDeliberationInfos } from '../../domain/organisme';
 import { formatLocaleDate } from '../../simple-fr';
-import { stringifyNominalString } from '../../utils/nominal-class';
+import { asString } from '../../utils/nominal-class';
 import { AddLienDeliberationComponent } from './AddLienDeliberationComponent';
 
 export const EditLienDeliberationsListComponent = (props: {
@@ -36,7 +36,7 @@ export const EditLienDeliberationsListComponent = (props: {
       >
         {lienDeliberations.map(d => (
           <div
-            key={stringifyNominalString(d.id)}
+            key={asString(d.id)}
             css={css`
               padding: 10px 0;
             `}

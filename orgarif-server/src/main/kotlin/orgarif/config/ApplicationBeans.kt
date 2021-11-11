@@ -1,15 +1,15 @@
 package orgarif.config
 
+import orgarif.service.IdLogService
+import orgarif.service.RandomService
+import orgarif.service.utils.ApplicationTaskExecutor
+import orgarif.utils.Serializer
 import okhttp3.OkHttpClient
-import org.jooq.DSLContext
-import org.springframework.beans.factory.annotation.Autowired
 import org.springframework.context.annotation.Bean
 import org.springframework.context.annotation.Configuration
 import org.springframework.context.annotation.Primary
 import org.springframework.core.task.TaskExecutor
 import org.springframework.scheduling.concurrent.ThreadPoolTaskExecutor
-import orgarif.service.utils.ApplicationTaskExecutor
-import orgarif.utils.Serializer
 
 @Configuration
 class ApplicationBeans {
@@ -22,12 +22,18 @@ class ApplicationBeans {
     fun okHttpClient() = OkHttpClient()
 
     @Bean
+    fun idLogService() = IdLogService()
+
+    @Bean
+    fun randomService(idLogService: IdLogService) = RandomService(idLogService)
+
+    @Bean
     fun taskExecutor(): TaskExecutor {
         val executor = ThreadPoolTaskExecutor()
         executor.corePoolSize = 20
         executor.maxPoolSize = 20
         executor.setQueueCapacity(500)
-        executor.setThreadNamePrefix("TaskExecutor-")
+        executor.threadNamePrefix = "TaskExecutor-"
         executor.initialize()
         return executor
     }

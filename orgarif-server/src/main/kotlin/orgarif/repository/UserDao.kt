@@ -1,17 +1,20 @@
 package orgarif.repository
 
+import orgarif.domain.HashedPassword
+import orgarif.domain.Language
+import orgarif.domain.Role
+import orgarif.domain.UserId
+import orgarif.error.MailAlreadyRegisteredException
+import orgarif.jooq.generated.Keys.APP_USER_MAIL_KEY
+import orgarif.jooq.generated.Tables.APP_USER
+import orgarif.jooq.generated.tables.records.AppUserRecord
+import orgarif.utils.toTypeId
 import org.jooq.DSLContext
 import org.jooq.impl.DSL.lower
 import org.springframework.dao.DuplicateKeyException
 import org.springframework.stereotype.Repository
-import orgarif.domain.HashedPassword
-import orgarif.domain.Language
-import orgarif.domain.UserId
-import orgarif.error.MailAlreadyRegisteredException
-import orgarif.jooq.generated.Tables.APP_USER
-import orgarif.jooq.generated.tables.records.AppUserRecord
-import orgarif.utils.toTypeId
 import java.time.Instant
+import java.util.stream.Stream
 
 @Repository
 class UserDao(val jooq: DSLContext) {
@@ -22,7 +25,7 @@ class UserDao(val jooq: DSLContext) {
         val username: String?,
         val displayName: String,
         val language: Language,
-        val admin: Boolean,
+        val roles: Set<Role>,
         val signupDate: Instant,
         // [doc] because some mail provider could choose to support character which usually aren't
         // differentiated from another or usually just supported
@@ -43,7 +46,7 @@ class UserDao(val jooq: DSLContext) {
             password = hashedPassword.hash
             displayName = r.displayName
             language = r.language.name
-            admin = r.admin
+            roles = r.roles.map { it.name }.toTypedArray()
             signupDate = r.signupDate
             dirtyMail = r.dirtyMail
             formerMails = r.formerMails.toTypedArray()
@@ -58,7 +61,9 @@ class UserDao(val jooq: DSLContext) {
 
     private fun handleDuplicateKeyException(e: DuplicateKeyException, mail: String) {
         val message = e.cause?.message
-        if (message != null && "for key 'mail'" in message) {
+        if (message != null &&
+            "duplicate key value violates unique constraint \"" + APP_USER_MAIL_KEY.name + "\"" in message
+        ) {
             throw MailAlreadyRegisteredException(mail)
         } else {
             throw e
@@ -68,6 +73,13 @@ class UserDao(val jooq: DSLContext) {
     fun updatePassword(id: UserId, password: HashedPassword) {
         jooq.update(APP_USER)
             .set(APP_USER.PASSWORD, password.hash)
+            .where(APP_USER.ID.equal(id.rawId))
+            .execute()
+    }
+
+    fun updateRoles(id: UserId, roles: Set<Role>) {
+        jooq.update(APP_USER)
+            .set(APP_USER.ROLES, roles.map { it.name }.toTypedArray())
             .where(APP_USER.ID.equal(id.rawId))
             .execute()
     }
@@ -106,6 +118,11 @@ class UserDao(val jooq: DSLContext) {
             ?.value1()
             ?.let { HashedPassword(it) }
 
+    fun streamAll(): Stream<Record> =
+        jooq.selectFrom(APP_USER)
+            .stream()
+            .map(this::map)
+
     fun map(r: AppUserRecord) = Record(
         id = r.id.toTypeId(),
         mail = r.mail,
@@ -113,7 +130,7 @@ class UserDao(val jooq: DSLContext) {
         displayName = r.displayName,
         language = Language.valueOf(r.language),
         signupDate = r.signupDate,
-        admin = r.admin,
+        roles = r.roles.map { Role.valueOf(it) }.toSet(),
         dirtyMail = r.dirtyMail,
         formerMails = r.formerMails.toList()
     )
