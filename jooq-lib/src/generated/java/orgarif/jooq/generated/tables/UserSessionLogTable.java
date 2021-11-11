@@ -15,6 +15,7 @@ import jooqutils.jooq.TimestampWithTimeZoneToInstantConverter;
 
 import org.jooq.Field;
 import org.jooq.ForeignKey;
+import org.jooq.Index;
 import org.jooq.Name;
 import org.jooq.Record;
 import org.jooq.Row6;
@@ -27,6 +28,7 @@ import org.jooq.impl.DSL;
 import org.jooq.impl.SQLDataType;
 import org.jooq.impl.TableImpl;
 
+import orgarif.jooq.generated.Indexes;
 import orgarif.jooq.generated.Keys;
 import orgarif.jooq.generated.PublicTable;
 import orgarif.jooq.generated.tables.records.UserSessionLogRecord;
@@ -125,6 +127,12 @@ public class UserSessionLogTable extends TableImpl<UserSessionLogRecord> {
 
     @Override
     @Nonnull
+    public List<Index> getIndexes() {
+        return Arrays.<Index>asList(Indexes.USER_SESSION_LOG_USER_ID_IDX);
+    }
+
+    @Override
+    @Nonnull
     public UniqueKey<UserSessionLogRecord> getPrimaryKey() {
         return Keys.USER_SESSION_LOG_PKEY;
     }
@@ -141,8 +149,13 @@ public class UserSessionLogTable extends TableImpl<UserSessionLogRecord> {
         return Arrays.<ForeignKey<UserSessionLogRecord, ?>>asList(Keys.USER_SESSION_LOG__USER_SESSION_LOG_USER_ID_FKEY);
     }
 
+    private transient AppUserTable _appUser;
+
     public AppUserTable appUser() {
-        return new AppUserTable(this, Keys.USER_SESSION_LOG__USER_SESSION_LOG_USER_ID_FKEY);
+        if (_appUser == null)
+            _appUser = new AppUserTable(this, Keys.USER_SESSION_LOG__USER_SESSION_LOG_USER_ID_FKEY);
+
+        return _appUser;
     }
 
     @Override

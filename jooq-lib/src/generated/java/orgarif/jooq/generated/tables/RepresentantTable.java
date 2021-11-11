@@ -159,16 +159,29 @@ public class RepresentantTable extends TableImpl<RepresentantRecord> {
         return Arrays.<ForeignKey<RepresentantRecord, ?>>asList(Keys.REPRESENTANT__REPRESENTANT_ELU_ID_FKEY, Keys.REPRESENTANT__REPRESENTANT_ORGANISME_ID_FKEY, Keys.REPRESENTANT__REPRESENTANT_INSTANCE_ID_FKEY);
     }
 
+    private transient EluTable _elu;
+    private transient OrganismeTable _organisme;
+    private transient InstanceTable _instance;
+
     public EluTable elu() {
-        return new EluTable(this, Keys.REPRESENTANT__REPRESENTANT_ELU_ID_FKEY);
+        if (_elu == null)
+            _elu = new EluTable(this, Keys.REPRESENTANT__REPRESENTANT_ELU_ID_FKEY);
+
+        return _elu;
     }
 
     public OrganismeTable organisme() {
-        return new OrganismeTable(this, Keys.REPRESENTANT__REPRESENTANT_ORGANISME_ID_FKEY);
+        if (_organisme == null)
+            _organisme = new OrganismeTable(this, Keys.REPRESENTANT__REPRESENTANT_ORGANISME_ID_FKEY);
+
+        return _organisme;
     }
 
     public InstanceTable instance() {
-        return new InstanceTable(this, Keys.REPRESENTANT__REPRESENTANT_INSTANCE_ID_FKEY);
+        if (_instance == null)
+            _instance = new InstanceTable(this, Keys.REPRESENTANT__REPRESENTANT_INSTANCE_ID_FKEY);
+
+        return _instance;
     }
 
     @Override

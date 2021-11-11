@@ -171,16 +171,29 @@ public class CommandLogTable extends TableImpl<CommandLogRecord> {
         return Arrays.<ForeignKey<CommandLogRecord, ?>>asList(Keys.COMMAND_LOG__COMMAND_LOG_USER_ID_FKEY, Keys.COMMAND_LOG__COMMAND_LOG_DEPLOYMENT_LOG_ID_FKEY, Keys.COMMAND_LOG__COMMAND_LOG_USER_SESSION_ID_FKEY);
     }
 
+    private transient AppUserTable _appUser;
+    private transient DeploymentLogTable _deploymentLog;
+    private transient UserSessionLogTable _userSessionLog;
+
     public AppUserTable appUser() {
-        return new AppUserTable(this, Keys.COMMAND_LOG__COMMAND_LOG_USER_ID_FKEY);
+        if (_appUser == null)
+            _appUser = new AppUserTable(this, Keys.COMMAND_LOG__COMMAND_LOG_USER_ID_FKEY);
+
+        return _appUser;
     }
 
     public DeploymentLogTable deploymentLog() {
-        return new DeploymentLogTable(this, Keys.COMMAND_LOG__COMMAND_LOG_DEPLOYMENT_LOG_ID_FKEY);
+        if (_deploymentLog == null)
+            _deploymentLog = new DeploymentLogTable(this, Keys.COMMAND_LOG__COMMAND_LOG_DEPLOYMENT_LOG_ID_FKEY);
+
+        return _deploymentLog;
     }
 
     public UserSessionLogTable userSessionLog() {
-        return new UserSessionLogTable(this, Keys.COMMAND_LOG__COMMAND_LOG_USER_SESSION_ID_FKEY);
+        if (_userSessionLog == null)
+            _userSessionLog = new UserSessionLogTable(this, Keys.COMMAND_LOG__COMMAND_LOG_USER_SESSION_ID_FKEY);
+
+        return _userSessionLog;
     }
 
     @Override

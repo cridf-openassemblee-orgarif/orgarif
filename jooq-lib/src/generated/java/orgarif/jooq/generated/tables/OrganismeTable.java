@@ -161,16 +161,29 @@ public class OrganismeTable extends TableImpl<OrganismeRecord> {
         return Arrays.<ForeignKey<OrganismeRecord, ?>>asList(Keys.ORGANISME__ORGANISME_SECTEUR_ID_FKEY, Keys.ORGANISME__ORGANISME_NATURE_JURIDIQUE_ID_FKEY, Keys.ORGANISME__ORGANISME_TYPE_STRUCTURE_ID_FKEY);
     }
 
+    private transient SecteurTable _secteur;
+    private transient NatureJuridiqueTable _natureJuridique;
+    private transient TypeStructureTable _typeStructure;
+
     public SecteurTable secteur() {
-        return new SecteurTable(this, Keys.ORGANISME__ORGANISME_SECTEUR_ID_FKEY);
+        if (_secteur == null)
+            _secteur = new SecteurTable(this, Keys.ORGANISME__ORGANISME_SECTEUR_ID_FKEY);
+
+        return _secteur;
     }
 
     public NatureJuridiqueTable natureJuridique() {
-        return new NatureJuridiqueTable(this, Keys.ORGANISME__ORGANISME_NATURE_JURIDIQUE_ID_FKEY);
+        if (_natureJuridique == null)
+            _natureJuridique = new NatureJuridiqueTable(this, Keys.ORGANISME__ORGANISME_NATURE_JURIDIQUE_ID_FKEY);
+
+        return _natureJuridique;
     }
 
     public TypeStructureTable typeStructure() {
-        return new TypeStructureTable(this, Keys.ORGANISME__ORGANISME_TYPE_STRUCTURE_ID_FKEY);
+        if (_typeStructure == null)
+            _typeStructure = new TypeStructureTable(this, Keys.ORGANISME__ORGANISME_TYPE_STRUCTURE_ID_FKEY);
+
+        return _typeStructure;
     }
 
     @Override

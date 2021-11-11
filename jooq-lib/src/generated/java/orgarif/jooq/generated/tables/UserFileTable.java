@@ -141,8 +141,13 @@ public class UserFileTable extends TableImpl<UserFileRecord> {
         return Arrays.<ForeignKey<UserFileRecord, ?>>asList(Keys.USER_FILE__USER_FILE_USER_ID_FKEY);
     }
 
+    private transient AppUserTable _appUser;
+
     public AppUserTable appUser() {
-        return new AppUserTable(this, Keys.USER_FILE__USER_FILE_USER_ID_FKEY);
+        if (_appUser == null)
+            _appUser = new AppUserTable(this, Keys.USER_FILE__USER_FILE_USER_ID_FKEY);
+
+        return _appUser;
     }
 
     @Override

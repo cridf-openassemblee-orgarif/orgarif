@@ -131,8 +131,13 @@ public class MagicLinkTokenTable extends TableImpl<MagicLinkTokenRecord> {
         return Arrays.<ForeignKey<MagicLinkTokenRecord, ?>>asList(Keys.MAGIC_LINK_TOKEN__MAGIC_LINK_TOKEN_USER_ID_FKEY);
     }
 
+    private transient AppUserTable _appUser;
+
     public AppUserTable appUser() {
-        return new AppUserTable(this, Keys.MAGIC_LINK_TOKEN__MAGIC_LINK_TOKEN_USER_ID_FKEY);
+        if (_appUser == null)
+            _appUser = new AppUserTable(this, Keys.MAGIC_LINK_TOKEN__MAGIC_LINK_TOKEN_USER_ID_FKEY);
+
+        return _appUser;
     }
 
     @Override

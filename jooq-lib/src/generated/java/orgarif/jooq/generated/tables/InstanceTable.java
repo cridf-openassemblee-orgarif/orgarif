@@ -154,8 +154,13 @@ public class InstanceTable extends TableImpl<InstanceRecord> {
         return Arrays.<ForeignKey<InstanceRecord, ?>>asList(Keys.INSTANCE__INSTANCE_ORGANISME_ID_FKEY);
     }
 
+    private transient OrganismeTable _organisme;
+
     public OrganismeTable organisme() {
-        return new OrganismeTable(this, Keys.INSTANCE__INSTANCE_ORGANISME_ID_FKEY);
+        if (_organisme == null)
+            _organisme = new OrganismeTable(this, Keys.INSTANCE__INSTANCE_ORGANISME_ID_FKEY);
+
+        return _organisme;
     }
 
     @Override

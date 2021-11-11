@@ -174,8 +174,13 @@ public class MailLogTable extends TableImpl<MailLogRecord> {
         return Arrays.<ForeignKey<MailLogRecord, ?>>asList(Keys.MAIL_LOG__MAIL_LOG_DEPLOYMENT_LOG_ID_FKEY);
     }
 
+    private transient DeploymentLogTable _deploymentLog;
+
     public DeploymentLogTable deploymentLog() {
-        return new DeploymentLogTable(this, Keys.MAIL_LOG__MAIL_LOG_DEPLOYMENT_LOG_ID_FKEY);
+        if (_deploymentLog == null)
+            _deploymentLog = new DeploymentLogTable(this, Keys.MAIL_LOG__MAIL_LOG_DEPLOYMENT_LOG_ID_FKEY);
+
+        return _deploymentLog;
     }
 
     @Override

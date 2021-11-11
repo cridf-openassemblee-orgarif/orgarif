@@ -87,9 +87,9 @@ public class AppUserTable extends TableImpl<AppUserRecord> {
     public final TableField<AppUserRecord, String> LANGUAGE = createField(DSL.name("language"), SQLDataType.VARCHAR(2).nullable(false), this, "");
 
     /**
-     * The column <code>public.app_user.admin</code>.
+     * The column <code>public.app_user.roles</code>.
      */
-    public final TableField<AppUserRecord, Boolean> ADMIN = createField(DSL.name("admin"), SQLDataType.BOOLEAN.nullable(false), this, "");
+    public final TableField<AppUserRecord, String[]> ROLES = createField(DSL.name("roles"), SQLDataType.VARCHAR(255).getArrayDataType(), this, "");
 
     /**
      * The column <code>public.app_user.signup_date</code>.
@@ -199,7 +199,7 @@ public class AppUserTable extends TableImpl<AppUserRecord> {
 
     @Override
     @Nonnull
-    public Row10<UUID, String, String, String, String, String, Boolean, Instant, String, String[]> fieldsRow() {
+    public Row10<UUID, String, String, String, String, String, String[], Instant, String, String[]> fieldsRow() {
         return (Row10) super.fieldsRow();
     }
 }

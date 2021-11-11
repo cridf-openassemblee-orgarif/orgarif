@@ -14,6 +14,7 @@ import orgarif.jooq.generated.tables.InstanceTable;
 import orgarif.jooq.generated.tables.LienDeliberationTable;
 import orgarif.jooq.generated.tables.MailLogTable;
 import orgarif.jooq.generated.tables.RepresentantTable;
+import orgarif.jooq.generated.tables.UserSessionLogTable;
 
 
 /**
@@ -33,4 +34,5 @@ public class Indexes {
     public static final Index MAIL_LOG_USER_ID_IDX = Internal.createIndex(DSL.name("mail_log_user_id_idx"), MailLogTable.MAIL_LOG, new OrderField[] { MailLogTable.MAIL_LOG.USER_ID }, false);
     public static final Index REPRESENTANT_INSTANCE_ID_IDX = Internal.createIndex(DSL.name("representant_instance_id_idx"), RepresentantTable.REPRESENTANT, new OrderField[] { RepresentantTable.REPRESENTANT.INSTANCE_ID }, false);
     public static final Index REPRESENTANT_ORGANISME_ID_IDX = Internal.createIndex(DSL.name("representant_organisme_id_idx"), RepresentantTable.REPRESENTANT, new OrderField[] { RepresentantTable.REPRESENTANT.ORGANISME_ID }, false);
+    public static final Index USER_SESSION_LOG_USER_ID_IDX = Internal.createIndex(DSL.name("user_session_log_user_id_idx"), UserSessionLogTable.USER_SESSION_LOG, new OrderField[] { UserSessionLogTable.USER_SESSION_LOG.USER_ID }, false);
 }

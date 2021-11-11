@@ -149,16 +149,29 @@ public class LienDeliberationTable extends TableImpl<LienDeliberationRecord> {
         return Arrays.<ForeignKey<LienDeliberationRecord, ?>>asList(Keys.LIEN_DELIBERATION__LIEN_DELIBERATION_DELIBERATION_ID_FKEY, Keys.LIEN_DELIBERATION__LIEN_DELIBERATION_ORGANISME_ID_FKEY, Keys.LIEN_DELIBERATION__LIEN_DELIBERATION_INSTANCE_ID_FKEY);
     }
 
+    private transient DeliberationTable _deliberation;
+    private transient OrganismeTable _organisme;
+    private transient InstanceTable _instance;
+
     public DeliberationTable deliberation() {
-        return new DeliberationTable(this, Keys.LIEN_DELIBERATION__LIEN_DELIBERATION_DELIBERATION_ID_FKEY);
+        if (_deliberation == null)
+            _deliberation = new DeliberationTable(this, Keys.LIEN_DELIBERATION__LIEN_DELIBERATION_DELIBERATION_ID_FKEY);
+
+        return _deliberation;
     }
 
     public OrganismeTable organisme() {
-        return new OrganismeTable(this, Keys.LIEN_DELIBERATION__LIEN_DELIBERATION_ORGANISME_ID_FKEY);
+        if (_organisme == null)
+            _organisme = new OrganismeTable(this, Keys.LIEN_DELIBERATION__LIEN_DELIBERATION_ORGANISME_ID_FKEY);
+
+        return _organisme;
     }
 
     public InstanceTable instance() {
-        return new InstanceTable(this, Keys.LIEN_DELIBERATION__LIEN_DELIBERATION_INSTANCE_ID_FKEY);
+        if (_instance == null)
+            _instance = new InstanceTable(this, Keys.LIEN_DELIBERATION__LIEN_DELIBERATION_INSTANCE_ID_FKEY);
+
+        return _instance;
     }
 
     @Override
