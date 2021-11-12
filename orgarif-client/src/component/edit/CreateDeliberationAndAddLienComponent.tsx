@@ -76,31 +76,37 @@ export const CreateDeliberationAndAddLienComponent = (props: {
       <SimpleForm onSubmit={dialogSubmit}>
         <DialogTitle>Ajouter nouvelle délibération</DialogTitle>
         <DialogContent>
-          <TextInput
-            name="libelle"
-            label="Libellé"
-            initialValue={props.libelle}
-          />
           <div
             css={css`
-              padding-top: 10px;
+              margin: 10px;
             `}
           >
-            <LocalDateInput
-              label="Date de délibération"
-              name="deliberationDate"
-              autoFocus
+            <TextInput
+              name="libelle"
+              label="Libellé"
+              initialValue={props.libelle}
             />
-            {displayError !== '' && (
-              <div
-                css={css`
-                  color: ${colors.errorRed};
-                  font-weight: bold;
-                `}
-              >
-                {displayError}
-              </div>
-            )}
+            <div
+              css={css`
+                padding-top: 10px;
+              `}
+            >
+              <LocalDateInput
+                label="Date de délibération"
+                name="deliberationDate"
+                autoFocus
+              />
+              {displayError !== '' && (
+                <div
+                  css={css`
+                    color: ${colors.errorRed};
+                    font-weight: bold;
+                  `}
+                >
+                  {displayError}
+                </div>
+              )}
+            </div>
           </div>
         </DialogContent>
         <DialogActions>
