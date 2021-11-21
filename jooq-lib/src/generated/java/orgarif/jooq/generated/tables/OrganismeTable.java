@@ -11,7 +11,7 @@ import java.util.UUID;
 
 import javax.annotation.Nonnull;
 
-import jooqutils.jooq.TimestampToInstantConverter;
+import jooqutils.jooq.TimestampWithTimeZoneToInstantConverter;
 
 import org.jooq.Field;
 import org.jooq.ForeignKey;
@@ -90,19 +90,19 @@ public class OrganismeTable extends TableImpl<OrganismeRecord> {
     public final TableField<OrganismeRecord, Integer> NOMBRE_SUPPLEANTS = createField(DSL.name("nombre_suppleants"), SQLDataType.INTEGER, this, "");
 
     /**
-     * The column <code>public.organisme.partage_representants</code>.
-     */
-    public final TableField<OrganismeRecord, Boolean> PARTAGE_REPRESENTANTS = createField(DSL.name("partage_representants"), SQLDataType.BOOLEAN.nullable(false), this, "");
-
-    /**
      * The column <code>public.organisme.creation_date</code>.
      */
-    public final TableField<OrganismeRecord, Instant> CREATION_DATE = createField(DSL.name("creation_date"), SQLDataType.LOCALDATETIME(6).nullable(false), this, "", new TimestampToInstantConverter());
+    public final TableField<OrganismeRecord, Instant> CREATION_DATE = createField(DSL.name("creation_date"), SQLDataType.TIMESTAMPWITHTIMEZONE(6).nullable(false), this, "", new TimestampWithTimeZoneToInstantConverter());
+
+    /**
+     * The column <code>public.organisme.status</code>.
+     */
+    public final TableField<OrganismeRecord, String> STATUS = createField(DSL.name("status"), SQLDataType.VARCHAR(255).nullable(false), this, "");
 
     /**
      * The column <code>public.organisme.last_modification_date</code>.
      */
-    public final TableField<OrganismeRecord, Instant> LAST_MODIFICATION_DATE = createField(DSL.name("last_modification_date"), SQLDataType.LOCALDATETIME(6).nullable(false), this, "", new TimestampToInstantConverter());
+    public final TableField<OrganismeRecord, Instant> LAST_MODIFICATION_DATE = createField(DSL.name("last_modification_date"), SQLDataType.TIMESTAMPWITHTIMEZONE(6).nullable(false), this, "", new TimestampWithTimeZoneToInstantConverter());
 
     private OrganismeTable(Name alias, Table<OrganismeRecord> aliased) {
         this(alias, aliased, null);
@@ -222,7 +222,7 @@ public class OrganismeTable extends TableImpl<OrganismeRecord> {
 
     @Override
     @Nonnull
-    public Row10<UUID, String, UUID, UUID, UUID, Integer, Integer, Boolean, Instant, Instant> fieldsRow() {
+    public Row10<UUID, String, UUID, UUID, UUID, Integer, Integer, Instant, String, Instant> fieldsRow() {
         return (Row10) super.fieldsRow();
     }
 }

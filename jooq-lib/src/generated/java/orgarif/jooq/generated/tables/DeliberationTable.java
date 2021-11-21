@@ -12,7 +12,7 @@ import java.util.UUID;
 
 import javax.annotation.Nonnull;
 
-import jooqutils.jooq.TimestampToInstantConverter;
+import jooqutils.jooq.TimestampWithTimeZoneToInstantConverter;
 
 import org.jooq.Field;
 import org.jooq.ForeignKey;
@@ -73,12 +73,12 @@ public class DeliberationTable extends TableImpl<DeliberationRecord> {
     /**
      * The column <code>public.deliberation.creation_date</code>.
      */
-    public final TableField<DeliberationRecord, Instant> CREATION_DATE = createField(DSL.name("creation_date"), SQLDataType.LOCALDATETIME(6).nullable(false), this, "", new TimestampToInstantConverter());
+    public final TableField<DeliberationRecord, Instant> CREATION_DATE = createField(DSL.name("creation_date"), SQLDataType.TIMESTAMPWITHTIMEZONE(6).nullable(false), this, "", new TimestampWithTimeZoneToInstantConverter());
 
     /**
      * The column <code>public.deliberation.last_modification_date</code>.
      */
-    public final TableField<DeliberationRecord, Instant> LAST_MODIFICATION_DATE = createField(DSL.name("last_modification_date"), SQLDataType.LOCALDATETIME(6).nullable(false), this, "", new TimestampToInstantConverter());
+    public final TableField<DeliberationRecord, Instant> LAST_MODIFICATION_DATE = createField(DSL.name("last_modification_date"), SQLDataType.TIMESTAMPWITHTIMEZONE(6).nullable(false), this, "", new TimestampWithTimeZoneToInstantConverter());
 
     private DeliberationTable(Name alias, Table<DeliberationRecord> aliased) {
         this(alias, aliased, null);

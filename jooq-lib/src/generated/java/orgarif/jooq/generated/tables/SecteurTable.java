@@ -4,17 +4,20 @@
 package orgarif.jooq.generated.tables;
 
 
+import java.time.Instant;
 import java.util.Arrays;
 import java.util.List;
 import java.util.UUID;
 
 import javax.annotation.Nonnull;
 
+import jooqutils.jooq.TimestampWithTimeZoneToInstantConverter;
+
 import org.jooq.Field;
 import org.jooq.ForeignKey;
 import org.jooq.Name;
 import org.jooq.Record;
-import org.jooq.Row2;
+import org.jooq.Row4;
 import org.jooq.Schema;
 import org.jooq.Table;
 import org.jooq.TableField;
@@ -60,6 +63,16 @@ public class SecteurTable extends TableImpl<SecteurRecord> {
      * The column <code>public.secteur.libelle</code>.
      */
     public final TableField<SecteurRecord, String> LIBELLE = createField(DSL.name("libelle"), SQLDataType.VARCHAR(255).nullable(false), this, "");
+
+    /**
+     * The column <code>public.secteur.status</code>.
+     */
+    public final TableField<SecteurRecord, String> STATUS = createField(DSL.name("status"), SQLDataType.VARCHAR(255).nullable(false), this, "");
+
+    /**
+     * The column <code>public.secteur.last_modification_date</code>.
+     */
+    public final TableField<SecteurRecord, Instant> LAST_MODIFICATION_DATE = createField(DSL.name("last_modification_date"), SQLDataType.TIMESTAMPWITHTIMEZONE(6).nullable(false), this, "", new TimestampWithTimeZoneToInstantConverter());
 
     private SecteurTable(Name alias, Table<SecteurRecord> aliased) {
         this(alias, aliased, null);
@@ -143,12 +156,12 @@ public class SecteurTable extends TableImpl<SecteurRecord> {
     }
 
     // -------------------------------------------------------------------------
-    // Row2 type methods
+    // Row4 type methods
     // -------------------------------------------------------------------------
 
     @Override
     @Nonnull
-    public Row2<UUID, String> fieldsRow() {
-        return (Row2) super.fieldsRow();
+    public Row4<UUID, String, String, Instant> fieldsRow() {
+        return (Row4) super.fieldsRow();
     }
 }

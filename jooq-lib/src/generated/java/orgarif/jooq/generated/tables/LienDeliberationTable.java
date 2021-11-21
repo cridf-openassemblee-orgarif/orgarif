@@ -11,14 +11,14 @@ import java.util.UUID;
 
 import javax.annotation.Nonnull;
 
-import jooqutils.jooq.TimestampToInstantConverter;
+import jooqutils.jooq.TimestampWithTimeZoneToInstantConverter;
 
 import org.jooq.Field;
 import org.jooq.ForeignKey;
 import org.jooq.Index;
 import org.jooq.Name;
 import org.jooq.Record;
-import org.jooq.Row6;
+import org.jooq.Row7;
 import org.jooq.Schema;
 import org.jooq.Table;
 import org.jooq.TableField;
@@ -79,12 +79,17 @@ public class LienDeliberationTable extends TableImpl<LienDeliberationRecord> {
     /**
      * The column <code>public.lien_deliberation.creation_date</code>.
      */
-    public final TableField<LienDeliberationRecord, Instant> CREATION_DATE = createField(DSL.name("creation_date"), SQLDataType.LOCALDATETIME(6).nullable(false), this, "", new TimestampToInstantConverter());
+    public final TableField<LienDeliberationRecord, Instant> CREATION_DATE = createField(DSL.name("creation_date"), SQLDataType.TIMESTAMPWITHTIMEZONE(6).nullable(false), this, "", new TimestampWithTimeZoneToInstantConverter());
+
+    /**
+     * The column <code>public.lien_deliberation.status</code>.
+     */
+    public final TableField<LienDeliberationRecord, String> STATUS = createField(DSL.name("status"), SQLDataType.VARCHAR(255).nullable(false), this, "");
 
     /**
      * The column <code>public.lien_deliberation.last_modification_date</code>.
      */
-    public final TableField<LienDeliberationRecord, Instant> LAST_MODIFICATION_DATE = createField(DSL.name("last_modification_date"), SQLDataType.LOCALDATETIME(6).nullable(false), this, "", new TimestampToInstantConverter());
+    public final TableField<LienDeliberationRecord, Instant> LAST_MODIFICATION_DATE = createField(DSL.name("last_modification_date"), SQLDataType.TIMESTAMPWITHTIMEZONE(6).nullable(false), this, "", new TimestampWithTimeZoneToInstantConverter());
 
     private LienDeliberationTable(Name alias, Table<LienDeliberationRecord> aliased) {
         this(alias, aliased, null);
@@ -205,12 +210,12 @@ public class LienDeliberationTable extends TableImpl<LienDeliberationRecord> {
     }
 
     // -------------------------------------------------------------------------
-    // Row6 type methods
+    // Row7 type methods
     // -------------------------------------------------------------------------
 
     @Override
     @Nonnull
-    public Row6<UUID, UUID, UUID, UUID, Instant, Instant> fieldsRow() {
-        return (Row6) super.fieldsRow();
+    public Row7<UUID, UUID, UUID, UUID, Instant, String, Instant> fieldsRow() {
+        return (Row7) super.fieldsRow();
     }
 }

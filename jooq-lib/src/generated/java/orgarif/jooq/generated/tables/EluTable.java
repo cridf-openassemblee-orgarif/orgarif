@@ -11,13 +11,13 @@ import java.util.UUID;
 
 import javax.annotation.Nonnull;
 
-import jooqutils.jooq.TimestampToInstantConverter;
+import jooqutils.jooq.TimestampWithTimeZoneToInstantConverter;
 
 import org.jooq.Field;
 import org.jooq.ForeignKey;
 import org.jooq.Name;
 import org.jooq.Record;
-import org.jooq.Row9;
+import org.jooq.Row10;
 import org.jooq.Schema;
 import org.jooq.Table;
 import org.jooq.TableField;
@@ -97,7 +97,12 @@ public class EluTable extends TableImpl<EluRecord> {
     /**
      * The column <code>public.elu.creation_date</code>.
      */
-    public final TableField<EluRecord, Instant> CREATION_DATE = createField(DSL.name("creation_date"), SQLDataType.LOCALDATETIME(6).nullable(false), this, "", new TimestampToInstantConverter());
+    public final TableField<EluRecord, Instant> CREATION_DATE = createField(DSL.name("creation_date"), SQLDataType.TIMESTAMPWITHTIMEZONE(6).nullable(false), this, "", new TimestampWithTimeZoneToInstantConverter());
+
+    /**
+     * The column <code>public.elu.last_modification_date</code>.
+     */
+    public final TableField<EluRecord, Instant> LAST_MODIFICATION_DATE = createField(DSL.name("last_modification_date"), SQLDataType.TIMESTAMPWITHTIMEZONE(6).nullable(false), this, "", new TimestampWithTimeZoneToInstantConverter());
 
     private EluTable(Name alias, Table<EluRecord> aliased) {
         this(alias, aliased, null);
@@ -181,12 +186,12 @@ public class EluTable extends TableImpl<EluRecord> {
     }
 
     // -------------------------------------------------------------------------
-    // Row9 type methods
+    // Row10 type methods
     // -------------------------------------------------------------------------
 
     @Override
     @Nonnull
-    public Row9<UUID, String, String, String, String, String, String, Boolean, Instant> fieldsRow() {
-        return (Row9) super.fieldsRow();
+    public Row10<UUID, String, String, String, String, String, String, Boolean, Instant, Instant> fieldsRow() {
+        return (Row10) super.fieldsRow();
     }
 }

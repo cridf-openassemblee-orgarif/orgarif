@@ -25,7 +25,9 @@ import orgarif.jooq.generated.tables.MailLogTable;
 import orgarif.jooq.generated.tables.NatureJuridiqueTable;
 import orgarif.jooq.generated.tables.OrganismeTable;
 import orgarif.jooq.generated.tables.RepresentantTable;
+import orgarif.jooq.generated.tables.RepresentationTable;
 import orgarif.jooq.generated.tables.SecteurTable;
+import orgarif.jooq.generated.tables.SuppleanceTable;
 import orgarif.jooq.generated.tables.TypeStructureTable;
 import orgarif.jooq.generated.tables.UserFileTable;
 import orgarif.jooq.generated.tables.UserSessionLogTable;
@@ -105,9 +107,19 @@ public class PublicTable extends SchemaImpl {
     public final RepresentantTable REPRESENTANT = RepresentantTable.REPRESENTANT;
 
     /**
+     * The table <code>public.representation</code>.
+     */
+    public final RepresentationTable REPRESENTATION = RepresentationTable.REPRESENTATION;
+
+    /**
      * The table <code>public.secteur</code>.
      */
     public final SecteurTable SECTEUR = SecteurTable.SECTEUR;
+
+    /**
+     * The table <code>public.suppleance</code>.
+     */
+    public final SuppleanceTable SUPPLEANCE = SuppleanceTable.SUPPLEANCE;
 
     /**
      * The table <code>public.type_structure</code>.
@@ -154,7 +166,9 @@ public class PublicTable extends SchemaImpl {
             NatureJuridiqueTable.NATURE_JURIDIQUE,
             OrganismeTable.ORGANISME,
             RepresentantTable.REPRESENTANT,
+            RepresentationTable.REPRESENTATION,
             SecteurTable.SECTEUR,
+            SuppleanceTable.SUPPLEANCE,
             TypeStructureTable.TYPE_STRUCTURE,
             UserFileTable.USER_FILE,
             UserSessionLogTable.USER_SESSION_LOG);

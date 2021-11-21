@@ -16,7 +16,9 @@ import orgarif.jooq.generated.tables.MailLogTable;
 import orgarif.jooq.generated.tables.NatureJuridiqueTable;
 import orgarif.jooq.generated.tables.OrganismeTable;
 import orgarif.jooq.generated.tables.RepresentantTable;
+import orgarif.jooq.generated.tables.RepresentationTable;
 import orgarif.jooq.generated.tables.SecteurTable;
+import orgarif.jooq.generated.tables.SuppleanceTable;
 import orgarif.jooq.generated.tables.TypeStructureTable;
 import orgarif.jooq.generated.tables.UserFileTable;
 import orgarif.jooq.generated.tables.UserSessionLogTable;
@@ -89,9 +91,19 @@ public class Tables {
     public static final RepresentantTable REPRESENTANT = RepresentantTable.REPRESENTANT;
 
     /**
+     * The table <code>public.representation</code>.
+     */
+    public static final RepresentationTable REPRESENTATION = RepresentationTable.REPRESENTATION;
+
+    /**
      * The table <code>public.secteur</code>.
      */
     public static final SecteurTable SECTEUR = SecteurTable.SECTEUR;
+
+    /**
+     * The table <code>public.suppleance</code>.
+     */
+    public static final SuppleanceTable SUPPLEANCE = SuppleanceTable.SUPPLEANCE;
 
     /**
      * The table <code>public.type_structure</code>.

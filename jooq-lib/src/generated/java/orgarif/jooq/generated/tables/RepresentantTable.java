@@ -11,14 +11,13 @@ import java.util.UUID;
 
 import javax.annotation.Nonnull;
 
-import jooqutils.jooq.TimestampToInstantConverter;
+import jooqutils.jooq.TimestampWithTimeZoneToInstantConverter;
 
 import org.jooq.Field;
 import org.jooq.ForeignKey;
-import org.jooq.Index;
 import org.jooq.Name;
 import org.jooq.Record;
-import org.jooq.Row8;
+import org.jooq.Row6;
 import org.jooq.Schema;
 import org.jooq.Table;
 import org.jooq.TableField;
@@ -28,7 +27,6 @@ import org.jooq.impl.DSL;
 import org.jooq.impl.SQLDataType;
 import org.jooq.impl.TableImpl;
 
-import orgarif.jooq.generated.Indexes;
 import orgarif.jooq.generated.Keys;
 import orgarif.jooq.generated.PublicTable;
 import orgarif.jooq.generated.tables.records.RepresentantRecord;
@@ -64,37 +62,27 @@ public class RepresentantTable extends TableImpl<RepresentantRecord> {
     /**
      * The column <code>public.representant.elu_id</code>.
      */
-    public final TableField<RepresentantRecord, UUID> ELU_ID = createField(DSL.name("elu_id"), SQLDataType.UUID.nullable(false), this, "");
+    public final TableField<RepresentantRecord, UUID> ELU_ID = createField(DSL.name("elu_id"), SQLDataType.UUID, this, "");
 
     /**
-     * The column <code>public.representant.organisme_id</code>.
+     * The column <code>public.representant.prenom</code>.
      */
-    public final TableField<RepresentantRecord, UUID> ORGANISME_ID = createField(DSL.name("organisme_id"), SQLDataType.UUID.nullable(false), this, "");
+    public final TableField<RepresentantRecord, String> PRENOM = createField(DSL.name("prenom"), SQLDataType.VARCHAR(255), this, "");
 
     /**
-     * The column <code>public.representant.instance_id</code>.
+     * The column <code>public.representant.nom</code>.
      */
-    public final TableField<RepresentantRecord, UUID> INSTANCE_ID = createField(DSL.name("instance_id"), SQLDataType.UUID, this, "");
-
-    /**
-     * The column <code>public.representant.position</code>.
-     */
-    public final TableField<RepresentantRecord, Integer> POSITION = createField(DSL.name("position"), SQLDataType.INTEGER.nullable(false), this, "");
-
-    /**
-     * The column <code>public.representant.representant_or_suppleant</code>.
-     */
-    public final TableField<RepresentantRecord, String> REPRESENTANT_OR_SUPPLEANT = createField(DSL.name("representant_or_suppleant"), SQLDataType.VARCHAR(255).nullable(false), this, "");
+    public final TableField<RepresentantRecord, String> NOM = createField(DSL.name("nom"), SQLDataType.VARCHAR(255), this, "");
 
     /**
      * The column <code>public.representant.creation_date</code>.
      */
-    public final TableField<RepresentantRecord, Instant> CREATION_DATE = createField(DSL.name("creation_date"), SQLDataType.LOCALDATETIME(6).nullable(false), this, "", new TimestampToInstantConverter());
+    public final TableField<RepresentantRecord, Instant> CREATION_DATE = createField(DSL.name("creation_date"), SQLDataType.TIMESTAMPWITHTIMEZONE(6).nullable(false), this, "", new TimestampWithTimeZoneToInstantConverter());
 
     /**
      * The column <code>public.representant.last_modification_date</code>.
      */
-    public final TableField<RepresentantRecord, Instant> LAST_MODIFICATION_DATE = createField(DSL.name("last_modification_date"), SQLDataType.LOCALDATETIME(6).nullable(false), this, "", new TimestampToInstantConverter());
+    public final TableField<RepresentantRecord, Instant> LAST_MODIFICATION_DATE = createField(DSL.name("last_modification_date"), SQLDataType.TIMESTAMPWITHTIMEZONE(6).nullable(false), this, "", new TimestampWithTimeZoneToInstantConverter());
 
     private RepresentantTable(Name alias, Table<RepresentantRecord> aliased) {
         this(alias, aliased, null);
@@ -137,12 +125,6 @@ public class RepresentantTable extends TableImpl<RepresentantRecord> {
 
     @Override
     @Nonnull
-    public List<Index> getIndexes() {
-        return Arrays.<Index>asList(Indexes.REPRESENTANT_INSTANCE_ID_IDX, Indexes.REPRESENTANT_ORGANISME_ID_IDX);
-    }
-
-    @Override
-    @Nonnull
     public UniqueKey<RepresentantRecord> getPrimaryKey() {
         return Keys.REPRESENTANT_PKEY;
     }
@@ -156,32 +138,16 @@ public class RepresentantTable extends TableImpl<RepresentantRecord> {
     @Override
     @Nonnull
     public List<ForeignKey<RepresentantRecord, ?>> getReferences() {
-        return Arrays.<ForeignKey<RepresentantRecord, ?>>asList(Keys.REPRESENTANT__REPRESENTANT_ELU_ID_FKEY, Keys.REPRESENTANT__REPRESENTANT_ORGANISME_ID_FKEY, Keys.REPRESENTANT__REPRESENTANT_INSTANCE_ID_FKEY);
+        return Arrays.<ForeignKey<RepresentantRecord, ?>>asList(Keys.REPRESENTANT__REPRESENTANT_ELU_ID_FKEY);
     }
 
     private transient EluTable _elu;
-    private transient OrganismeTable _organisme;
-    private transient InstanceTable _instance;
 
     public EluTable elu() {
         if (_elu == null)
             _elu = new EluTable(this, Keys.REPRESENTANT__REPRESENTANT_ELU_ID_FKEY);
 
         return _elu;
-    }
-
-    public OrganismeTable organisme() {
-        if (_organisme == null)
-            _organisme = new OrganismeTable(this, Keys.REPRESENTANT__REPRESENTANT_ORGANISME_ID_FKEY);
-
-        return _organisme;
-    }
-
-    public InstanceTable instance() {
-        if (_instance == null)
-            _instance = new InstanceTable(this, Keys.REPRESENTANT__REPRESENTANT_INSTANCE_ID_FKEY);
-
-        return _instance;
     }
 
     @Override
@@ -215,12 +181,12 @@ public class RepresentantTable extends TableImpl<RepresentantRecord> {
     }
 
     // -------------------------------------------------------------------------
-    // Row8 type methods
+    // Row6 type methods
     // -------------------------------------------------------------------------
 
     @Override
     @Nonnull
-    public Row8<UUID, UUID, UUID, UUID, Integer, String, Instant, Instant> fieldsRow() {
-        return (Row8) super.fieldsRow();
+    public Row6<UUID, UUID, String, String, Instant, Instant> fieldsRow() {
+        return (Row6) super.fieldsRow();
     }
 }
