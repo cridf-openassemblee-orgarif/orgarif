@@ -4,8 +4,8 @@ CREATE TABLE lien_deliberation
     deliberation_id        UUID             NOT NULL,
     organisme_id           UUID             NOT NULL,
     instance_id            UUID,
-    creation_date          TIMESTAMP        NOT NULL,
-    last_modification_date TIMESTAMP        NOT NULL,
+    creation_date          TIMESTAMPTZ      NOT NULL,
+    last_modification_date TIMESTAMPTZ      NOT NULL,
     FOREIGN KEY (deliberation_id) REFERENCES deliberation (id),
     FOREIGN KEY (organisme_id) REFERENCES organisme (id),
     FOREIGN KEY (instance_id) REFERENCES instance (id)

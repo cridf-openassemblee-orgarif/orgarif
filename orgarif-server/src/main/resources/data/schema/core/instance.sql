@@ -5,8 +5,8 @@ CREATE TABLE instance
     organisme_id           UUID             NOT NULL,
     nombre_representants   INTEGER,
     nombre_suppleants      INTEGER,
-    creation_date          TIMESTAMP        NOT NULL,
-    last_modification_date TIMESTAMP        NOT NULL,
+    creation_date          TIMESTAMPTZ      NOT NULL,
+    last_modification_date TIMESTAMPTZ      NOT NULL,
     FOREIGN KEY (organisme_id) REFERENCES organisme (id)
 );
 

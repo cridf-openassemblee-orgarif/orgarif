@@ -7,9 +7,8 @@ CREATE TABLE organisme
     type_structure_id      UUID,
     nombre_representants   INTEGER,
     nombre_suppleants      INTEGER,
-    partage_representants  BOOLEAN          NOT NULL,
-    creation_date          TIMESTAMP        NOT NULL,
-    last_modification_date TIMESTAMP        NOT NULL,
+    creation_date          TIMESTAMPTZ      NOT NULL,
+    last_modification_date TIMESTAMPTZ      NOT NULL,
     FOREIGN KEY (secteur_id) REFERENCES secteur (id),
     FOREIGN KEY (nature_juridique_id) REFERENCES nature_juridique (id),
     FOREIGN KEY (type_structure_id) REFERENCES type_structure (id)
