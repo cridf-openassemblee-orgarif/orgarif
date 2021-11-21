@@ -6,9 +6,9 @@ import org.springframework.core.task.AsyncTaskExecutor
 import org.springframework.stereotype.Service
 import orgarif.domain.Civilite
 import orgarif.repository.EluDao
+import orgarif.serialization.Serializer
 import orgarif.service.utils.InitialDataInjector
 import orgarif.utils.OrgarifStringUtils.deserializeUuid
-import orgarif.utils.Serializer.deserialize
 import orgarif.utils.toTypeId
 
 @Service
@@ -79,7 +79,7 @@ class ElusSynchronizationService(
 
     fun handleElusJson(elusJons: String): Int {
         val now = dateService.now()
-        val data = deserialize<Data>(elusJons)
+        val data = Serializer.deserialize<Data>(elusJons)
         val newElus = data.elus
             .map { r ->
                 val civilite = when (r.civilite) {
