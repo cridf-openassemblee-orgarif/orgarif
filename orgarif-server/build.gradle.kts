@@ -22,6 +22,24 @@ tasks {
     }
     test {
         useJUnitPlatform()
+        addTestListener(object : TestListener {
+            override fun beforeSuite(suite: TestDescriptor) {}
+            override fun beforeTest(testDescriptor: TestDescriptor) {}
+            override fun afterTest(testDescriptor: TestDescriptor, result: TestResult) {
+            }
+
+            override fun afterSuite(suite: TestDescriptor, result: TestResult) {
+                if (suite.parent == null) {
+                    println("\n | Test result: ${result.resultType}")
+                    println(
+                        " | Test summary: ${result.testCount} tests, " +
+                                "${result.successfulTestCount} succeeded, " +
+                                "${result.failedTestCount} failed, " +
+                                "${result.skippedTestCount} skipped\n"
+                    )
+                }
+            }
+        })
     }
 }
 
@@ -30,6 +48,10 @@ repositories {
     mavenCentral()
     maven("https://repo.spring.io/milestone")
     maven("https://repo.spring.io/snapshot")
+}
+
+configurations.all {
+    exclude("junit")
 }
 
 dependencies {
@@ -56,7 +78,7 @@ dependencies {
     implementation("org.apache.commons:commons-text:1.9")
     implementation("commons-codec:commons-codec:1.14")
     implementation("com.fasterxml.jackson.module:jackson-module-kotlin:2.11.0")
-    implementation("org.reflections:reflections:0.9.10")
+    implementation("org.reflections:reflections:0.10.2")
     implementation("com.squareup.okhttp3:okhttp:4.2.2")
     implementation("org.json:json:20210307")
 

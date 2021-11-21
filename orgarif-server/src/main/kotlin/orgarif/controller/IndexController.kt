@@ -9,7 +9,7 @@ import orgarif.service.LocaleService
 import orgarif.service.user.MagicLinkTokenService
 import orgarif.service.user.UserService
 import orgarif.service.user.UserSessionService
-import orgarif.utils.Serializer.serialize
+import orgarif.serialization.Serializer.serialize
 import freemarker.ext.beans.BeansWrapperBuilder
 import freemarker.template.Configuration
 import org.json.JSONObject

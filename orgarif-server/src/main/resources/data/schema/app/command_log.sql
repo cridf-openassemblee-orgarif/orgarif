@@ -10,8 +10,8 @@ CREATE TABLE command_log
     resulting_ids         TEXT,
     json_result           TEXT,
     exception_stack_trace TEXT,
-    start_date            TIMESTAMP    NOT NULL,
-    end_date              TIMESTAMP,
+    start_date            TIMESTAMPTZ  NOT NULL,
+    end_date              TIMESTAMPTZ,
     FOREIGN KEY (user_id) REFERENCES app_user (id),
     FOREIGN KEY (deployment_log_id) REFERENCES deployment_log (id),
     FOREIGN KEY (user_session_id) REFERENCES user_session_log (id)

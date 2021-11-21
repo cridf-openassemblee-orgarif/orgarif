@@ -10,7 +10,7 @@ import orgarif.service.ApplicationInstance
 import orgarif.service.HttpService
 import orgarif.service.MailService
 import orgarif.service.user.MagicLinkTokenService
-import orgarif.utils.Serializer.serialize
+import orgarif.serialization.Serializer.serialize
 import mu.KotlinLogging
 import org.springframework.beans.factory.annotation.Value
 import org.springframework.stereotype.Service

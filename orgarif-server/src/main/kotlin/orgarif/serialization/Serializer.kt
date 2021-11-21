@@ -1,4 +1,4 @@
-package orgarif.utils
+package orgarif.serialization
 
 import com.fasterxml.jackson.annotation.JsonInclude
 import com.fasterxml.jackson.databind.ObjectMapper
@@ -6,21 +6,21 @@ import com.fasterxml.jackson.databind.module.SimpleModule
 import com.fasterxml.jackson.module.kotlin.KotlinModule
 import com.fasterxml.jackson.module.kotlin.readValue
 import orgarif.domain.*
-import orgarif.serialization.*
+import org.reflections.Reflections
 import java.time.Instant
 import java.time.LocalDate
 import java.time.ZoneId
 import java.util.*
 import kotlin.jvm.internal.Reflection
 import kotlin.reflect.KClass
-import org.reflections.Reflections
-import org.reflections.util.ClasspathHelper
-import org.reflections.util.ConfigurationBuilder
-import org.reflections.util.FilterBuilder
 
 object Serializer {
 
     val idsPackage = OrgarifId::class.java.packageName
+
+    private val reflections by lazy {
+        Reflections(idsPackage)
+    }
 
     val objectMapper: ObjectMapper = ObjectMapper().apply { configure(this) }
 
@@ -40,8 +40,6 @@ object Serializer {
 
             addSerializer(PlainStringPasswordSerializer())
             addDeserializer(PlainStringPassword::class.java, PlainStringPasswordDeserializer())
-
-            addSerializer(ReadableStackTraceSerializer())
 
             // TODO[serialization] handle all the null
             addSerializer(UuidSerializer())
@@ -76,12 +74,6 @@ object Serializer {
     }
 
     fun addAllOrgarifStringIdsDeserializers(module: SimpleModule) {
-        val reflections = Reflections(
-            ConfigurationBuilder()
-                .filterInputsBy(FilterBuilder().includePackage(idsPackage))
-                .setUrls(ClasspathHelper.forPackage(idsPackage))
-        )
-
         fun <T : OrgarifStringId> addDeserializer(module: SimpleModule, idKclass: KClass<T>) {
             module.addDeserializer(idKclass.java, OrgarifStringIdDeserializer(idKclass))
             module.addKeyDeserializer(idKclass.java, OrgarifStringIdKeyDeserializer(idKclass))
@@ -94,12 +86,6 @@ object Serializer {
     }
 
     fun addAllOrgarifUuidIdsDeserializers(module: SimpleModule) {
-        val reflections = Reflections(
-            ConfigurationBuilder()
-                .filterInputsBy(FilterBuilder().includePackage(idsPackage))
-                .setUrls(ClasspathHelper.forPackage(idsPackage))
-        )
-
         fun <T : OrgarifUuidId> addDeserializer(module: SimpleModule, idKclass: KClass<T>) {
             module.addDeserializer(idKclass.java, OrgarifUuidIdDeserializer(idKclass))
             module.addKeyDeserializer(idKclass.java, OrgarifUuidIdKeyDeserializer(idKclass))
@@ -112,30 +98,19 @@ object Serializer {
     }
 
     fun addAllOrgarifSecurityStringDeserializers(module: SimpleModule) {
-        val reflections = Reflections(
-            ConfigurationBuilder()
-                .filterInputsBy(FilterBuilder().includePackage(idsPackage))
-                .setUrls(ClasspathHelper.forPackage(idsPackage))
-        )
-
         fun <T : OrgarifSecurityString> addDeserializer(module: SimpleModule, idKclass: KClass<T>) {
             module.addDeserializer(idKclass.java, OrgarifSecurityStringDeserializer(idKclass))
             module.addKeyDeserializer(idKclass.java, OrgarifSecurityStringKeyDeserializer(idKclass))
         }
 
-        val idClasses: Set<Class<out OrgarifSecurityString>> = reflections.getSubTypesOf(OrgarifSecurityString::class.java)
+        val idClasses: Set<Class<out OrgarifSecurityString>> =
+            reflections.getSubTypesOf(OrgarifSecurityString::class.java)
         idClasses.forEach {
             addDeserializer(module, Reflection.createKotlinClass(it) as KClass<out OrgarifSecurityString>)
         }
     }
 
     fun addAllSerializeAsStringDeserializers(module: SimpleModule) {
-        val reflections = Reflections(
-            ConfigurationBuilder()
-                .filterInputsBy(FilterBuilder().includePackage(idsPackage))
-                .setUrls(ClasspathHelper.forPackage(idsPackage))
-        )
-
         fun <T : SerializeAsString> addDeserializer(module: SimpleModule, idKclass: KClass<T>) {
             module.addDeserializer(idKclass.java, SerializeAsStringDeserializer(idKclass))
             module.addKeyDeserializer(idKclass.java, SerializeAsStringKeyDeserializer(idKclass))

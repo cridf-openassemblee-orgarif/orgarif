@@ -3,7 +3,7 @@ package orgarif.config
 import orgarif.service.IdLogService
 import orgarif.service.RandomService
 import orgarif.service.utils.ApplicationTaskExecutor
-import orgarif.utils.Serializer
+import orgarif.serialization.Serializer
 import okhttp3.OkHttpClient
 import org.springframework.context.annotation.Bean
 import org.springframework.context.annotation.Configuration

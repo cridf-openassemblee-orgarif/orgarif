@@ -1,7 +1,7 @@
 package orgarif.config
 
 import orgarif.domain.Session
-import orgarif.utils.Serializer.serialize
+import orgarif.serialization.Serializer.serialize
 import org.springframework.core.convert.converter.Converter
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken
 import org.springframework.security.core.context.SecurityContextImpl

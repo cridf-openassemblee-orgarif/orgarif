@@ -21,7 +21,7 @@ class ApplicationInstance(
     val randomService: RandomService
 ) {
 
-    val env = run {
+    val env: ApplicationEnvironment = run {
         val environments = ApplicationEnvironment.values().map { it.name }
         val profiles = environment.activeProfiles
             .let {
