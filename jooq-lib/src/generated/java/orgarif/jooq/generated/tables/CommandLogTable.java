@@ -11,7 +11,7 @@ import java.util.UUID;
 
 import javax.annotation.Nonnull;
 
-import jooqutils.jooq.TimestampToInstantConverter;
+import jooqutils.jooq.TimestampWithTimeZoneToInstantConverter;
 
 import org.jooq.Field;
 import org.jooq.ForeignKey;
@@ -107,12 +107,12 @@ public class CommandLogTable extends TableImpl<CommandLogRecord> {
     /**
      * The column <code>public.command_log.start_date</code>.
      */
-    public final TableField<CommandLogRecord, Instant> START_DATE = createField(DSL.name("start_date"), SQLDataType.LOCALDATETIME(6).nullable(false), this, "", new TimestampToInstantConverter());
+    public final TableField<CommandLogRecord, Instant> START_DATE = createField(DSL.name("start_date"), SQLDataType.TIMESTAMPWITHTIMEZONE(6).nullable(false), this, "", new TimestampWithTimeZoneToInstantConverter());
 
     /**
      * The column <code>public.command_log.end_date</code>.
      */
-    public final TableField<CommandLogRecord, Instant> END_DATE = createField(DSL.name("end_date"), SQLDataType.LOCALDATETIME(6), this, "", new TimestampToInstantConverter());
+    public final TableField<CommandLogRecord, Instant> END_DATE = createField(DSL.name("end_date"), SQLDataType.TIMESTAMPWITHTIMEZONE(6), this, "", new TimestampWithTimeZoneToInstantConverter());
 
     private CommandLogTable(Name alias, Table<CommandLogRecord> aliased) {
         this(alias, aliased, null);
