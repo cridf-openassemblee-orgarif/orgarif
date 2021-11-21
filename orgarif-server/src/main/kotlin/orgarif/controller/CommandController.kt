@@ -9,7 +9,7 @@ import orgarif.service.DateService
 import orgarif.service.IdLogService
 import orgarif.service.RandomService
 import orgarif.service.user.UserSessionService
-import orgarif.utils.Serializer
+import orgarif.serialization.Serializer
 import mu.KotlinLogging
 import org.apache.commons.lang3.exception.ExceptionUtils
 import org.springframework.transaction.PlatformTransactionManager

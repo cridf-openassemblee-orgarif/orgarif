@@ -33,7 +33,7 @@ class UserService(
         // [doc] no automatic accent suppression : they're supported by the RFC...
         fun cleanMail(mail: String) = mail
             .trim()
-            .toLowerCase()
+            .lowercase()
             .replace(" ", "")
 
         // TODO[fmk] those validations should be done in another place too. Also :

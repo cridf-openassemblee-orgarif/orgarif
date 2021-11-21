@@ -1,7 +1,7 @@
 package orgarif.tools.generation
 
 import orgarif.domain.OrgarifId
-import orgarif.utils.Serializer.idsPackage
+import orgarif.serialization.Serializer.idsPackage
 import org.reflections.Reflections
 import org.reflections.util.ClasspathHelper
 import org.reflections.util.ConfigurationBuilder

@@ -3,7 +3,7 @@ package orgarif.controller
 import orgarif.query.*
 import orgarif.repository.UserDao
 import orgarif.service.user.UserSessionService
-import orgarif.utils.Serializer
+import orgarif.serialization.Serializer
 import org.springframework.web.bind.annotation.GetMapping
 import org.springframework.web.bind.annotation.RestController
 import java.net.URLDecoder

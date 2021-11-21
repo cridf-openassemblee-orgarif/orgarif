@@ -11,7 +11,7 @@ import orgarif.service.DateService
 import orgarif.service.RandomService
 import orgarif.service.user.UserSessionService
 import orgarif.utils.OrgarifStringUtils
-import orgarif.utils.Serializer
+import orgarif.serialization.Serializer
 import freemarker.ext.beans.BeansWrapperBuilder
 import freemarker.template.Configuration
 import mu.KotlinLogging

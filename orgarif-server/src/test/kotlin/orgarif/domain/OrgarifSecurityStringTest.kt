@@ -31,7 +31,7 @@ class OrgarifSecurityStringTest {
         val exceptionThatWasThrown = Assertions.assertThrows(IllegalArgumentException::class.java) {
             "".padEnd(TestStringId.length - 1, '-').toSecurityString<TestSecurityString>()
         }
-        assertEquals("TestSecurityString length must be 40 (not 39)", exceptionThatWasThrown.message)
+        assertEquals("TestSecurityString length must be 20 (not 19)", exceptionThatWasThrown.message)
     }
 
 }

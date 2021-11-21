@@ -1,17 +1,17 @@
-package orgarif.utils
+package orgarif.serialization
 
 import orgarif.domain.*
-import orgarif.serialization.Serializer
 import orgarif.service.DummyRandomService
+import orgarif.utils.OrgarifStringUtils
 import orgarif.utils.OrgarifStringUtils.filteredPassword
-import java.time.Instant
-import java.time.LocalDate
-import java.time.ZoneId
-import java.util.*
 import org.json.JSONObject
 import org.junit.jupiter.api.Assertions.assertEquals
 import org.junit.jupiter.api.Test
 import org.skyscreamer.jsonassert.JSONAssert
+import java.time.Instant
+import java.time.LocalDate
+import java.time.ZoneId
+import java.util.*
 
 // TODO test maps keys
 internal class SerializerTest {
