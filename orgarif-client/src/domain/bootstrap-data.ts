@@ -8,26 +8,22 @@ import {
 } from './ids';
 import { UserInfos } from './user';
 
-export interface Category {
-  _category: 'Secteur' | 'NatureJuridique' | 'TypeStructure';
-  id: OrgarifId;
-  libelle: string;
-}
+export type Category = Secteur | NatureJuridique | TypeStructure;
 
-export interface Secteur extends Category {
-  _category: 'Secteur';
+export interface Secteur {
+  category: 'Secteur';
   id: SecteurId;
   libelle: string;
 }
 
-export interface NatureJuridique extends Category {
-  _category: 'NatureJuridique';
+export interface NatureJuridique {
+  category: 'NatureJuridique';
   id: NatureJuridiqueId;
   libelle: string;
 }
 
-export interface TypeStructure extends Category {
-  _category: 'TypeStructure';
+export interface TypeStructure {
+  category: 'TypeStructure';
   id: TypeStructureId;
   libelle: string;
 }

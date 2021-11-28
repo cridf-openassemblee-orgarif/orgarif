@@ -4,8 +4,9 @@ import { FormControl, MenuItem, Select, Theme } from '@mui/material';
 import { SelectChangeEvent } from '@mui/material/Select/SelectInput';
 import { makeStyles } from '@mui/styles';
 import * as React from 'react';
+import { useState } from 'react';
 import { clientUid } from '../../utils';
-import { asString } from '../../utils/nominal-class';
+import { asString, NominalString } from '../../utils/nominal-class';
 
 const useStyles = makeStyles((theme: Theme) => ({
   formControl: {
@@ -16,19 +17,25 @@ const useStyles = makeStyles((theme: Theme) => ({
   }
 }));
 
-export interface SelectOption {
-  value: any;
+export interface SelectOption<T extends NominalString<string>> {
+  value: T | undefined;
   label: string;
 }
 
-export const SelectInput = (props: {
+export const SelectInput = <Id extends NominalString<string>>(props: {
   label: string;
-  value: any | undefined;
-  options: SelectOption[];
-  onChange: (event: SelectChangeEvent<unknown>, child: React.ReactNode) => void;
+  initialValue: Id | undefined;
+  options: SelectOption<Id>[];
+  onChange: (value: Id) => void;
 }) => {
   const inputId = clientUid();
   const classes = useStyles();
+  const [value, setValue] = useState(props.initialValue);
+  const onChange = (event: SelectChangeEvent<unknown>) => {
+    const value = event.target.value as Id;
+    setValue(value);
+    props.onChange(value);
+  };
   return (
     <div
       css={css`
@@ -57,11 +64,11 @@ export const SelectInput = (props: {
         <Select
           labelId={asString(inputId)}
           id={asString(inputId)}
-          value={props.value}
-          onChange={props.onChange}
+          value={value}
+          onChange={onChange}
         >
           {props.options.map((o, i) => (
-            <MenuItem key={i} value={o.value}>
+            <MenuItem key={i} value={o.value ? asString(o.value) : undefined}>
               {o.label}
             </MenuItem>
           ))}

@@ -20,13 +20,7 @@ import {
   Representant
 } from '../../domain/organisme';
 import { state } from '../../state/state';
-import {
-  Dict,
-  dict,
-  instanciateNominalString,
-  set,
-  setMutable
-} from '../../utils/nominal-class';
+import { Dict, dict, set, setMutable } from '../../utils/nominal-class';
 import { pipe } from '../../utils/Pipe';
 import { SelectInput, SelectOption } from '../base-component/SelectInput';
 import { NombreRepresentantsComponent } from '../NombreRepresentantsComponent';
@@ -45,18 +39,17 @@ const classes = {
   `
 };
 
-interface Props<C extends Category, I extends OrgarifId> {
+export const EditCategoryComponent = <
+  C extends Category,
+  Id extends OrgarifId
+>(props: {
   label: string;
   categoryList: C[];
-  categoryById: Dict<OrgarifId, C>;
-  currentId: I | undefined;
-  onChange: (id: I | undefined) => void;
-}
-
-export const EditCategoryComponent = <C extends Category, I extends OrgarifId>(
-  props: Props<C, I>
-) => {
-  const options: SelectOption[] = props.categoryList.map(e => ({
+  categoryById: Dict<Id, C>;
+  currentId: Id | undefined;
+  onChange: (id: Id | undefined) => void;
+}) => {
+  const options: SelectOption<OrgarifId>[] = props.categoryList.map(e => ({
     value: e.id,
     label: e.libelle
   }));
@@ -64,19 +57,12 @@ export const EditCategoryComponent = <C extends Category, I extends OrgarifId>(
     value: undefined,
     label: `- Sans ${props.label.toLowerCase()} -`
   });
-  const [value, setValue] = useState<I | undefined>(props.currentId);
   return (
     <SelectInput
       label={props.label}
-      value={value}
+      initialValue={props.currentId}
       options={options}
-      onChange={e => {
-        const id = e.target.value
-          ? instanciateNominalString<I>(e.target.value as string)
-          : undefined;
-        setValue(id);
-        props.onChange(id);
-      }}
+      onChange={id => props.onChange(id as Id)}
     />
   );
 };
@@ -177,14 +163,12 @@ export const EditOrganismeComponent = (props: {
               categoryList={useRecoilValue(state.natureJuridiques)}
               categoryById={useRecoilValue(state.natureJuridiquesById)}
               currentId={organisme.infos.natureJuridiqueId}
-              onChange={(
-                natureJuridiqueId: NatureJuridiqueId | undefined | null
-              ) =>
+              onChange={(natureJuridiqueId: NatureJuridiqueId | undefined) =>
                 appContext
                   .commandService()
                   .updateOrganismeNatureJuridiqueCommand({
                     id: organisme.infos.id,
-                    natureJuridiqueId: natureJuridiqueId ?? undefined
+                    natureJuridiqueId: natureJuridiqueId
                   })
               }
             />
@@ -195,10 +179,10 @@ export const EditOrganismeComponent = (props: {
               categoryList={useRecoilValue(state.secteurs)}
               categoryById={useRecoilValue(state.secteursById)}
               currentId={organisme.infos.secteurId}
-              onChange={(secteurId: SecteurId | undefined | null) =>
+              onChange={(secteurId: SecteurId | undefined) =>
                 appContext.commandService().updateOrganismeSecteurCommand({
                   id: organisme.infos.id,
-                  secteurId: secteurId ?? undefined
+                  secteurId: secteurId
                 })
               }
             />
@@ -209,12 +193,12 @@ export const EditOrganismeComponent = (props: {
               categoryList={useRecoilValue(state.typeStructures)}
               categoryById={useRecoilValue(state.typeStructuresById)}
               currentId={organisme.infos.typeStructureId}
-              onChange={(typeStructureId: TypeStructureId | undefined | null) =>
+              onChange={(typeStructureId: TypeStructureId | undefined) =>
                 appContext
                   .commandService()
                   .updateOrganismeTypeStructureCommand({
                     id: organisme.infos.id,
-                    typeStructureId: typeStructureId ?? undefined
+                    typeStructureId: typeStructureId
                   })
               }
             />
