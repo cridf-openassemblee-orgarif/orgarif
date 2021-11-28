@@ -55,7 +55,7 @@ class CommandLogDao(val jooq: DSLContext) {
             .execute()
     }
 
-    fun updateResult(id: CommandLogId, resultingIds: String, jsonResult: String, endDate: Instant) {
+    fun updateResult(id: CommandLogId, resultingIds: String, jsonResult: String?, endDate: Instant) {
         jooq.update(COMMAND_LOG)
             .set(COMMAND_LOG.RESULTING_IDS, resultingIds)
             .set(COMMAND_LOG.JSON_RESULT, jsonResult)
