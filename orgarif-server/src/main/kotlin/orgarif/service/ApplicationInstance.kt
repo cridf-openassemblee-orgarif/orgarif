@@ -40,7 +40,7 @@ class ApplicationInstance(
     }
 
     val gitRevisionProperties by lazy {
-        File(System.getProperty("user.dir") + "/git-revision.properties").let { file ->
+        File(System.getProperty("user.dir") + "/build.properties").let { file ->
             if (file.exists()) {
                 Properties().apply {
                     load(FileInputStream(file))

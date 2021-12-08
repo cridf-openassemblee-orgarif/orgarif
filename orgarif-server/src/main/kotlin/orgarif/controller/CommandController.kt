@@ -4,12 +4,12 @@ import orgarif.command.*
 import orgarif.domain.CommandLogId
 import orgarif.repository.CommandLogDao
 import orgarif.repository.UserDao
+import orgarif.serialization.Serializer
 import orgarif.service.ApplicationInstance
 import orgarif.service.DateService
 import orgarif.service.IdLogService
 import orgarif.service.RandomService
 import orgarif.service.user.UserSessionService
-import orgarif.serialization.Serializer
 import mu.KotlinLogging
 import org.apache.commons.lang3.exception.ExceptionUtils
 import org.springframework.transaction.PlatformTransactionManager
@@ -80,17 +80,15 @@ class CommandController(
             idLogService.enableLogging()
             val result = handler.handle(command, userSession, request, response)
             transactionManager.commit(transaction)
-            if (result !is EmptyCommandResponse) {
-                try {
-                    commandLogDao.updateResult(
-                        commandLogId,
-                        idLogService.getIdsString(),
-                        Serializer.serialize(result),
-                        dateService.now()
-                    )
-                } catch (e: Exception) {
-                    logger.error(e) { "Exception in command result log..." }
-                }
+            try {
+                commandLogDao.updateResult(
+                    commandLogId,
+                    idLogService.getIdsString(),
+                    if (result !is EmptyCommandResponse) Serializer.serialize(result) else null,
+                    dateService.now()
+                )
+            } catch (e: Exception) {
+                logger.error(e) { "Exception in command result log..." }
             }
             return result
         } catch (e: Exception) {

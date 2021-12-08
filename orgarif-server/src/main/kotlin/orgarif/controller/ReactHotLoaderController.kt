@@ -5,7 +5,6 @@ import orgarif.domain.MimeType
 import orgarif.error.OrgarifNotFoundException
 import orgarif.service.ApplicationInstance
 import orgarif.service.HttpService
-import orgarif.utils.forceExhaustiveWhen
 import mu.KotlinLogging
 import org.springframework.beans.factory.annotation.Value
 import org.springframework.boot.autoconfigure.condition.ConditionalOnExpression
@@ -47,7 +46,7 @@ class ReactHotLoaderController(
                         logger.error { "Error webpack hot update $r" }
                     }
                 }
-            }.forceExhaustiveWhen
+            }
         } else {
             throw OrgarifNotFoundException()
         }

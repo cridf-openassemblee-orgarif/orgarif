@@ -14,6 +14,7 @@ import freemarker.ext.beans.BeansWrapperBuilder
 import freemarker.template.Configuration
 import org.json.JSONObject
 import org.springframework.beans.factory.annotation.Value
+import org.springframework.context.annotation.DependsOn
 import org.springframework.stereotype.Controller
 import org.springframework.web.bind.annotation.GetMapping
 import org.springframework.web.servlet.ModelAndView
@@ -24,6 +25,14 @@ import javax.servlet.http.HttpServletRequest
 import javax.servlet.http.HttpServletResponse
 
 @Controller
+@DependsOn(
+    "internalCommandService",
+    "commandController",
+    "invalidateMagicLinkTokenController",
+    "queryController",
+    "remoteController",
+    "userFileController",
+)
 class IndexController(
     @Value("\${assets.browserWebpackDevHost}") val assetsBrowserWebpackDevHost: String,
     @Value("\${assets.useBuildFiles}") val assetsUseBuildFiles: Boolean,
@@ -69,7 +78,7 @@ class IndexController(
     @GetMapping(Routes.logout)
     fun redirect() = "redirect:${Routes.root}"
 
-    @GetMapping(Routes.root, "/**/{path:[^\\.]*}")
+    @GetMapping(Routes.root, "/*", "/{path:^(?!static)[^\\.]*}/**")
     fun index(request: HttpServletRequest, response: HttpServletResponse, mav: ModelAndView): ModelAndView {
         val magicToken = request.getParameter(magicTokenParameterName)
         if (magicToken != null) {

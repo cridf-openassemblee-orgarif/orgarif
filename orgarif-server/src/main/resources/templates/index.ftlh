@@ -8,7 +8,6 @@
         <#if bootstrapData??>
         var bootstrapData = ${bootstrapData?no_esc};
         </#if>
-        var securityCsrfToken = '${_csrf.token?no_esc}';
     </script>
     <#list cssAssets as cssAsset>
         <link href="${cssAsset?no_esc}" rel="stylesheet">

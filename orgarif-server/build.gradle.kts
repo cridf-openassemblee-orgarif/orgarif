@@ -1,19 +1,26 @@
-import Build_gradle.Versions.kotlinVersion
 import org.jetbrains.kotlin.gradle.tasks.KotlinCompile
+
+plugins {
+    val kotlinVersion = "1.6.0"
+    kotlin("jvm") version kotlinVersion
+    id("io.spring.dependency-management") version "1.0.11.RELEASE"
+    id("org.springframework.boot") version "2.6.1"
+    // so we don't need to open Spring components classes
+    id("org.jetbrains.kotlin.plugin.spring") version kotlinVersion
+}
 
 // TODO[build] find a way to declare it just once
 // don't forget to change the second one until then !
-object Versions {
-    val kotlinVersion = "1.5.0"
-}
+val kotlinVersion = "1.6.0"
 
-plugins {
-    val kotlinVersion = "1.5.0"
-    kotlin("jvm") version kotlinVersion
-    id("io.spring.dependency-management") version "1.0.11.RELEASE"
-    id("org.springframework.boot") version "2.5.0"
-    // so we don't need to open Spring components classes
-    id("org.jetbrains.kotlin.plugin.spring") version kotlinVersion
+kotlin {
+    sourceSets.all {
+        languageSettings.apply {
+            languageVersion = "1.6"
+            apiVersion = "1.6"
+            progressiveMode = true
+        }
+    }
 }
 
 tasks {
@@ -77,7 +84,7 @@ dependencies {
     implementation("org.apache.commons:commons-lang3:3.6")
     implementation("org.apache.commons:commons-text:1.9")
     implementation("commons-codec:commons-codec:1.14")
-    implementation("com.fasterxml.jackson.module:jackson-module-kotlin:2.11.0")
+    implementation("com.fasterxml.jackson.module:jackson-module-kotlin:2.13.0")
     implementation("org.reflections:reflections:0.10.2")
     implementation("com.squareup.okhttp3:okhttp:4.2.2")
     implementation("org.json:json:20210307")
