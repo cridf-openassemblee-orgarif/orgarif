@@ -6,8 +6,6 @@ import orgarif.domain.OrgarifUuidId
 import java.lang.reflect.InvocationTargetException
 import java.util.*
 
-val Any?.forceExhaustiveWhen get() = Unit
-
 operator fun StringBuilder.plusAssign(adding: Any) {
     append(adding)
 }

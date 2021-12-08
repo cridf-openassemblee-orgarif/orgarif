@@ -5,7 +5,7 @@ import orgarif.command.LoginCommand
 import orgarif.serialization.Serializer
 import org.junit.jupiter.api.Test
 
-internal class CommandEndpointTest {
+internal class CommandControllerTest {
 
     @Test
     fun command() {

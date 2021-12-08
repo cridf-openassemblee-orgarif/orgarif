@@ -3,12 +3,25 @@ import org.jetbrains.kotlin.gradle.tasks.KotlinCompile
 group = "orgarif"
 
 plugins {
-    kotlin("jvm") version "1.5.0"
+    kotlin("jvm") version "1.6.0"
 }
 
-val kotlinVersion = "1.5.0"
+val kotlinVersion = "1.6.0"
+
+kotlin {
+    sourceSets.all {
+        languageSettings.apply {
+            languageVersion = "1.6"
+            apiVersion = "1.6"
+            progressiveMode = true
+        }
+    }
+}
 
 tasks {
+    withType<KotlinCompile> {
+        kotlinOptions.jvmTarget = "15"
+    }
     register<JavaExec>("generateJooq") {
         main = "orgarif.jooqlib.GenerateJooqAndDiffKt"
         classpath = sourceSets["main"].runtimeClasspath
@@ -16,9 +29,6 @@ tasks {
     register<JavaExec>("resetDatabase") {
         main = "orgarif.jooqlib.ResetDatabaseKt"
         classpath = sourceSets["main"].runtimeClasspath
-    }
-    withType<KotlinCompile> {
-        kotlinOptions.jvmTarget = "15"
     }
 }
 

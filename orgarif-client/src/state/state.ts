@@ -12,7 +12,7 @@ import {
   TypeStructureId
 } from '../domain/ids';
 import { compareByString } from '../utils';
-import { Dict, pairsToDict } from '../utils/nominal-class';
+import { dict, Dict } from '../utils/nominal-class';
 
 export const state = {
   elus: atom<Elu[]>({
@@ -23,7 +23,7 @@ export const state = {
     key: 'elusById',
     // TODO wtf typescript, pourquoi le return est nécessaire
     get: ({ get }): Dict<EluId, Elu> =>
-      pairsToDict(get(state.elus).map(e => [e.id, e]))
+      dict(get(state.elus).map(e => [e.id, e]))
   }),
   natureJuridiques: atom({
     key: 'natureJuridiques',
@@ -34,7 +34,7 @@ export const state = {
   natureJuridiquesById: selector({
     key: 'natureJuridiquesById',
     get: ({ get }): Dict<NatureJuridiqueId, NatureJuridique> =>
-      pairsToDict(get(state.natureJuridiques).map(n => [n.id, n]))
+      dict(get(state.natureJuridiques).map(n => [n.id, n]))
   }),
   organismeCategories: atom({
     key: 'organismeCategories',
@@ -49,7 +49,7 @@ export const state = {
   secteursById: selector({
     key: 'secteursById',
     get: ({ get }): Dict<SecteurId, Secteur> =>
-      pairsToDict(get(state.secteurs).map(s => [s.id, s]))
+      dict(get(state.secteurs).map(s => [s.id, s]))
   }),
   typeStructures: atom({
     key: 'typeStructures',
@@ -60,7 +60,7 @@ export const state = {
   typeStructuresById: selector({
     key: 'typeStructuresById',
     get: ({ get }): Dict<TypeStructureId, TypeStructure> =>
-      pairsToDict(get(state.typeStructures).map(t => [t.id, t]))
+      dict(get(state.typeStructures).map(t => [t.id, t]))
   }),
   userInfos: atom({
     key: 'userInfos',

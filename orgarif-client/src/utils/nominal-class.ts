@@ -25,8 +25,13 @@ export class Dict<K extends NominalItem, T> {
   private _typeGuardValue!: T;
 }
 
-export const dict = <K extends NominalItem, T>() => {
-  return {} as Dict<K, T>;
+export const dict = <K extends NominalItem, T>(pairs: [K, T][] = []) => {
+    const d = {} as Dict<K, T>;
+    pairs.forEach(pair => {
+        // @ts-ignore
+        d[pair[0]] = pair[1];
+    });
+    return d;
 };
 
 export const get = <K extends NominalItem, T>(
@@ -95,15 +100,6 @@ export const deleteFromDict = <K extends NominalItem, T>(
     delete newDict[k];
   });
   return newDict;
-};
-
-export const pairsToDict = <K extends NominalItem, T>(pairs: [K, T][]) => {
-  const d = dict<K, T>();
-  pairs.forEach(pair => {
-    // @ts-ignore
-    d[pair[0]] = pair[1];
-  });
-  return d;
 };
 
 export const mergeDicts = <K extends NominalItem, T>(

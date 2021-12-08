@@ -1,17 +1,16 @@
 package orgarif.controller
 
+import orgarif.domain.ApplicationEnvironment
+import orgarif.domain.MimeType
+import orgarif.error.OrgarifNotFoundException
+import orgarif.service.ApplicationInstance
+import orgarif.service.HttpService
 import mu.KotlinLogging
 import org.springframework.beans.factory.annotation.Value
 import org.springframework.boot.autoconfigure.condition.ConditionalOnExpression
 import org.springframework.http.HttpStatus
 import org.springframework.web.bind.annotation.GetMapping
 import org.springframework.web.bind.annotation.RestController
-import orgarif.domain.ApplicationEnvironment
-import orgarif.domain.MimeType
-import orgarif.error.OrgarifNotFoundException
-import orgarif.service.ApplicationInstance
-import orgarif.service.HttpService
-import orgarif.utils.forceExhaustiveWhen
 import javax.servlet.http.HttpServletRequest
 import javax.servlet.http.HttpServletResponse
 
@@ -47,7 +46,7 @@ class ReactHotLoaderController(
                         logger.error { "Error webpack hot update $r" }
                     }
                 }
-            }.forceExhaustiveWhen
+            }
         } else {
             throw OrgarifNotFoundException()
         }
