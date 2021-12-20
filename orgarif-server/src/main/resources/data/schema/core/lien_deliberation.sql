@@ -5,6 +5,7 @@ CREATE TABLE lien_deliberation
     organisme_id           UUID             NOT NULL,
     instance_id            UUID,
     creation_date          TIMESTAMPTZ      NOT NULL,
+    status                 VARCHAR(255)     NOT NULL,
     last_modification_date TIMESTAMPTZ      NOT NULL,
     FOREIGN KEY (deliberation_id) REFERENCES deliberation (id),
     FOREIGN KEY (organisme_id) REFERENCES organisme (id),

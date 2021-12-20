@@ -8,6 +8,7 @@ CREATE TABLE organisme
     nombre_representants   INTEGER,
     nombre_suppleants      INTEGER,
     creation_date          TIMESTAMPTZ      NOT NULL,
+    status                 VARCHAR(255)     NOT NULL,
     last_modification_date TIMESTAMPTZ      NOT NULL,
     FOREIGN KEY (secteur_id) REFERENCES secteur (id),
     FOREIGN KEY (nature_juridique_id) REFERENCES nature_juridique (id),

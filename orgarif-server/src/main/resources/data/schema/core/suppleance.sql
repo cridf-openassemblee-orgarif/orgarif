@@ -7,6 +7,7 @@ CREATE TABLE suppleance
     start_date             DATE,
     end_date               DATE,
     creation_date          TIMESTAMPTZ      NOT NULL,
+    status                 VARCHAR(255)     NOT NULL,
     last_modification_date TIMESTAMPTZ      NOT NULL,
     FOREIGN KEY (representant_id) REFERENCES representant (id),
     FOREIGN KEY (representation_id) REFERENCES representation (id),

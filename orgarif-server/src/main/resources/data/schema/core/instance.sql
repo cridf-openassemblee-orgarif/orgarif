@@ -6,6 +6,7 @@ CREATE TABLE instance
     nombre_representants   INTEGER,
     nombre_suppleants      INTEGER,
     creation_date          TIMESTAMPTZ      NOT NULL,
+    status                 VARCHAR(255)     NOT NULL,
     last_modification_date TIMESTAMPTZ      NOT NULL,
     FOREIGN KEY (organisme_id) REFERENCES organisme (id)
 );
