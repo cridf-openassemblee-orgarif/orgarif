@@ -1,17 +1,18 @@
 package orgarif.service.utils
 
-import orgarif.utils.OrgarifStringUtils
-import org.jetbrains.annotations.TestOnly
 import java.time.LocalDate
 import java.time.LocalTime
 import java.time.ZoneId
 import java.util.*
+import org.jetbrains.annotations.TestOnly
+import orgarif.utils.OrgarifStringUtils
 
 object ObjectToPropertiesHelper {
 
-    fun defaultExclusions(value: Any, path: String) = when (value) {
-        else -> emptyList<String>()
-    }.map { "$path.$it" }
+    fun defaultExclusions(value: Any, path: String) =
+        when (value) {
+            else -> emptyList<String>()
+        }.map { "$path.$it" }
 
     fun transform(
         value: Any?,
@@ -24,23 +25,17 @@ object ObjectToPropertiesHelper {
         }
         val exclusions = forcedExclusions ?: defaultExclusions(value, path)
         return when (value) {
-            is String,
-            is Boolean,
-            is Int,
-            is Double,
-            is Enum<*>,
-            is LocalDate,
-            is LocalTime,
-            is ZoneId -> listOf(path to value.toString())
+            is String, is Boolean, is Int, is Double, is Enum<*>, is LocalDate, is LocalTime, is ZoneId ->
+                listOf(path to value.toString())
             is UUID -> listOf(path to OrgarifStringUtils.serializeUuid(value))
-            is List<*> -> value
-                .mapIndexed { index, value ->
-                    transform(value, "$path[$index]", exclusions, depth + 1)
-                }
-                .flatten()
-            is Map<*, *> -> value
-                .toList()
-                .flatMap {
+            is List<*> ->
+                value
+                    .mapIndexed { index, value ->
+                        transform(value, "$path[$index]", exclusions, depth + 1)
+                    }
+                    .flatten()
+            is Map<*, *> ->
+                value.toList().flatMap {
                     transform(it.second, "$path.${it.first}", exclusions, depth + 1)
                 }
             else -> {
@@ -64,9 +59,9 @@ object ObjectToPropertiesHelper {
         return info
             .filter {
                 //                    "$path.${it.name}" !in exceptions
-//                    if(it.name == "phaseConsumptions") {
-//                        println(exceptions)
-//                    }
+                //                    if(it.name == "phaseConsumptions") {
+                //                        println(exceptions)
+                //                    }
                 val path = "$rootPath.${it.name}"
                 path !in exceptions
             }
@@ -74,25 +69,20 @@ object ObjectToPropertiesHelper {
                 val path = "$rootPath.${field.name}"
                 field.isAccessible = true
                 val value = field.get(obj)
-//                    if (value == null) {
-//                        listOf(path + "." + pd.name to "null")
-//                    } else {
+                //                    if (value == null) {
+                //                        listOf(path + "." + pd.name to "null")
+                //                    } else {
                 transform(value, path, exceptions, depth)
-//                    }
+                //                    }
             }
     }
 
     fun asPrintableString(properties: Map<String, String>) =
-        properties.map { (key, value) ->
-            "  ${key}: ${value}"
-        }
-            .reduce { acc, s -> "$acc\n$s" }
+        properties.map { (key, value) -> "  ${key}: ${value}" }.reduce { acc, s -> "$acc\n$s" }
 
     @TestOnly
     fun prepareTest(properties: List<Pair<String, String>>) =
-        properties.map { (key, value) ->
-            "  \"${key}\" to \"${value}\","
+        properties.map { (key, value) -> "  \"${key}\" to \"${value}\"," }.reduce { acc, s ->
+            "$acc\n$s"
         }
-            .reduce { acc, s -> "$acc\n$s" }
-
 }

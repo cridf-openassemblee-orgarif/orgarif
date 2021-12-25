@@ -1,36 +1,39 @@
 package orgarif.query
 
-import DeliberationInfos
-import FullOrganisme
-import OrganismeInfos
 import com.fasterxml.jackson.annotation.JsonTypeInfo
-import orgarif.domain.OrganismeId
-import orgarif.domain.Secteur
-import orgarif.domain.SecteurId
-import orgarif.domain.UserSession
 import orgarif.domain.*
 
-@JsonTypeInfo(use = JsonTypeInfo.Id.NAME, include = JsonTypeInfo.As.PROPERTY, property = "objectType")
+@JsonTypeInfo(
+    use = JsonTypeInfo.Id.NAME,
+    include = JsonTypeInfo.As.PROPERTY,
+    property = "objectType"
+)
 sealed class Query
 
 sealed class QueryResponse
 
 data class GetOrganismeQuery(val id: OrganismeId) : Query()
 
-data class GetOrganismeQueryResponse(val organisme: FullOrganisme) : QueryResponse()
+data class GetOrganismeQueryResponse(val organisme: OrganismeDto) : QueryResponse()
 
 data class IsLoginAlreadyTakenQuery(val login: String) : Query()
 
 data class IsLoginAlreadyTakenQueryResponse(val alreadyTaken: Boolean) : QueryResponse()
 
-class ListOrganismesQuery : Query()
-
 data class ListOrganismesBySecteurQuery(val secteurId: SecteurId) : Query()
 
-data class ListOrganismesBySecteurQueryResponse(val organismes: List<OrganismeInfos>) : QueryResponse()
+data class ListOrganismesBySecteurQueryResponse(val organismes: List<OrganismeListDto>) :
+    QueryResponse()
 
-data class ListOrganismesQueryResponse(val organismes: List<OrganismeInfos>) : QueryResponse()
+class ListOrganismesQuery : Query()
+
+data class ListOrganismesQueryResponse(val organismes: List<OrganismeListDto>) : QueryResponse()
+
+class ListRepresentantsQuery : Query()
+
+data class ListRepresentantsQueryResponse(val representants: List<RepresentantDto>) :
+    QueryResponse()
 
 data class SearchDeliberationQuery(val searchToken: String) : Query()
 
-data class SearchDeliberationQueryResponse(val results: List<DeliberationInfos>) : QueryResponse()
+data class SearchDeliberationQueryResponse(val results: List<DeliberationDto>) : QueryResponse()

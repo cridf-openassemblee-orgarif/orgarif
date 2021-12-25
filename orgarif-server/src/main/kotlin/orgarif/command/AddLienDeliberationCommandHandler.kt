@@ -1,6 +1,7 @@
 package orgarif.command
 
 import org.springframework.stereotype.Service
+import orgarif.domain.ItemStatus
 import orgarif.domain.LienDeliberationId
 import orgarif.repository.LienDeliberationDao
 import orgarif.service.DateService
@@ -11,8 +12,7 @@ class AddLienDeliberationCommandHandler(
     val lienDeliberationDao: LienDeliberationDao,
     val randomService: RandomService,
     val dateService: DateService
-) :
-    CommandHandler.Handler<AddLienDeliberationCommand, AddLienDeliberationCommandResponse>() {
+) : CommandHandler.Handler<AddLienDeliberationCommand, AddLienDeliberationCommandResponse>() {
 
     override fun handle(command: AddLienDeliberationCommand): AddLienDeliberationCommandResponse {
         val id = randomService.id<LienDeliberationId>()
@@ -24,6 +24,7 @@ class AddLienDeliberationCommandHandler(
                 organismeId = command.organismeId,
                 instanceId = command.instanceId,
                 creationDate = now,
+                status = ItemStatus.live,
                 lastModificationDate = now
             )
         )

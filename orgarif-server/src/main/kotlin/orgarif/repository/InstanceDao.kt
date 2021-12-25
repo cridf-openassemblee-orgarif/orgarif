@@ -3,7 +3,9 @@ package orgarif.repository
 import org.jooq.DSLContext
 import org.springframework.stereotype.Repository
 import orgarif.domain.InstanceId
+import orgarif.domain.ItemStatus
 import orgarif.domain.OrganismeId
+import orgarif.jooq.generated.Tables
 import orgarif.jooq.generated.Tables.INSTANCE
 import orgarif.jooq.generated.tables.records.InstanceRecord
 import orgarif.utils.toTypeId
@@ -19,6 +21,7 @@ class InstanceDao(val jooq: DSLContext) {
         val nombreRepresentants: Int?,
         val nombreSuppleants: Int?,
         val creationDate: Instant,
+        val status: ItemStatus,
         val lastModificationDate: Instant
     )
 
@@ -30,6 +33,7 @@ class InstanceDao(val jooq: DSLContext) {
             nombreRepresentants = r.nombreRepresentants
             nombreSuppleants = r.nombreSuppleants
             creationDate = r.creationDate
+            status = r.status.name
             lastModificationDate = r.lastModificationDate
         }
         jooq.insertInto(INSTANCE).set(record).execute()
@@ -47,8 +51,34 @@ class InstanceDao(val jooq: DSLContext) {
             .fetch()
             .map(this::map)
 
-    fun delete(id: InstanceId) {
-        jooq.deleteFrom(INSTANCE)
+    fun updateNom(id: InstanceId, nom: String, modificationDate: Instant) {
+        jooq.update(INSTANCE)
+            .set(INSTANCE.NOM, nom)
+            .set(INSTANCE.LAST_MODIFICATION_DATE, modificationDate)
+            .where(INSTANCE.ID.equal(id.rawId))
+            .execute()
+    }
+
+    fun updateNombreRepresentants(id: InstanceId, nombre: Int?, modificationDate: Instant) {
+        jooq.update(INSTANCE)
+            .set(INSTANCE.NOMBRE_REPRESENTANTS, nombre)
+            .set(INSTANCE.LAST_MODIFICATION_DATE, modificationDate)
+            .where(INSTANCE.ID.equal(id.rawId))
+            .execute()
+    }
+
+    fun updateNombreSuppleants(id: InstanceId, nombre: Int?, modificationDate: Instant) {
+        jooq.update(INSTANCE)
+            .set(INSTANCE.NOMBRE_SUPPLEANTS, nombre)
+            .set(INSTANCE.LAST_MODIFICATION_DATE, modificationDate)
+            .where(INSTANCE.ID.equal(id.rawId))
+            .execute()
+    }
+
+    fun updateStatus(id: InstanceId, status: ItemStatus, modificationDate: Instant) {
+        jooq.update(INSTANCE)
+            .set(INSTANCE.STATUS, status.name)
+            .set(INSTANCE.LAST_MODIFICATION_DATE, modificationDate)
             .where(INSTANCE.ID.equal(id.rawId))
             .execute()
     }
@@ -60,6 +90,7 @@ class InstanceDao(val jooq: DSLContext) {
         r.nombreRepresentants,
         r.nombreSuppleants,
         r.creationDate,
+        ItemStatus.valueOf(r.status),
         r.lastModificationDate
     )
 

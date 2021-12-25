@@ -1,11 +1,12 @@
 package orgarif.command
 
-import RepresentantOrSuppleant
 import com.fasterxml.jackson.annotation.JsonTypeInfo
-import orgarif.domain.*
 import java.time.LocalDate
+import orgarif.domain.*
 
-@JsonTypeInfo(use = JsonTypeInfo.Id.NAME, include = JsonTypeInfo.As.PROPERTY, property = "objectType")
+@JsonTypeInfo(
+    use = JsonTypeInfo.Id.NAME, include = JsonTypeInfo.As.PROPERTY, property = "objectType"
+)
 sealed class Command
 
 sealed class CommandResponse
@@ -25,16 +26,16 @@ data class AddLienDeliberationCommand(
     val instanceId: InstanceId?
 ) : Command()
 
-data class AddLienDeliberationCommandResponse(val lienDeliberationId: LienDeliberationId) : CommandResponse()
+data class AddLienDeliberationCommandResponse(val lienDeliberationId: LienDeliberationId) :
+    CommandResponse()
 
-data class AddRepresentantCommand(
-    val eluId: EluId,
+data class AddRepresentationCommand(
+    val representantId: RepresentantId,
     val organismeId: OrganismeId,
-    val instanceId: InstanceId?,
-    val representantOrSuppleant: RepresentantOrSuppleant
+    val instanceId: InstanceId?
 ) : Command()
 
-data class AddRepresentantCommandResponse(val id: RepresentantId) : CommandResponse()
+data class AddRepresentationCommandResponse(val id: RepresentationId) : CommandResponse()
 
 data class CreateDeliberationAndAddLienCommand(
     val libelle: String,
@@ -48,25 +49,24 @@ data class CreateDeliberationAndAddLienCommandResponse(
     val lienDeliberationId: LienDeliberationId
 ) : CommandResponse()
 
+data class CreateNatureJuridiqueCommand(val libelle: String) : Command()
+
+data class CreateNatureJuridiqueCommandResponse(val id: NatureJuridiqueId) : CommandResponse()
+
 data class CreateOrganismeCommand(val nom: String) : Command()
 
 data class CreateOrganismeCommandResponse(val id: OrganismeId) : CommandResponse()
 
-data class DeleteInstanceCommand(val id: InstanceId) : Command()
+data class CreateSecteurCommand(val libelle: String) : Command()
 
-data class DeleteNatureJuridiqueCommand(val id: NatureJuridiqueId) : Command()
+data class CreateSecteurCommandResponse(val id: SecteurId) : CommandResponse()
 
-data class DeleteRepresentantCommand(val id: RepresentantId) : Command()
+data class CreateTypeStructureCommand(val libelle: String) : Command()
 
-data class DeleteSecteurCommand(val id: SecteurId) : Command()
-
-data class DeleteTypeStructureCommand(val id: TypeStructureId) : Command()
+data class CreateTypeStructureCommandResponse(val id: TypeStructureId) : CommandResponse()
 
 // [doc] login as username|mail
-data class LoginCommand(
-    val login: String,
-    val password: PlainStringPassword
-) : Command()
+data class LoginCommand(val login: String, val password: PlainStringPassword) : Command()
 
 data class LoginCommandResponse(
     val result: LoginResult,
@@ -74,12 +74,11 @@ data class LoginCommandResponse(
     val csrfToken: String?
 ) : CommandResponse()
 
-data class MoveRepresentantCommand(
-    val id: RepresentantId,
+data class MoveRepresentationCommand(
+    val id: RepresentationId,
     val toOrganismeId: OrganismeId,
     val toInstanceId: InstanceId?,
-    val toPosition: Int,
-    val toRepresentantOrSuppleant: RepresentantOrSuppleant
+    val toPosition: Int
 ) : Command()
 
 data class RegisterCommand(
@@ -88,42 +87,61 @@ data class RegisterCommand(
     val displayName: String
 ) : Command()
 
-data class RegisterCommandResponse(
-    val result: RegisterResult,
-    val userinfos: UserInfos?
-) : CommandResponse()
+data class RegisterCommandResponse(val result: RegisterResult, val userinfos: UserInfos?) :
+    CommandResponse()
 
-data class UpdateNatureJuridiqueLibelleCommand(
-    val id: NatureJuridiqueId,
-    val libelle: String
+data class UpdateInstanceNombreRepresentantsCommand(
+    val instanceId: InstanceId,
+    val nombre: Int?
 ) : Command()
+
+data class UpdateInstanceNombreSuppleantsCommand(
+    val instanceId: InstanceId,
+    val nombre: Int?
+) :
+    Command()
+
+data class UpdateInstanceNomCommand(val id: InstanceId, val nom: String) : Command()
+
+data class UpdateInstanceStatusCommand(val id: InstanceId, val status: ItemStatus) : Command()
+
+data class UpdateNatureJuridiqueLibelleCommand(val id: NatureJuridiqueId, val libelle: String) :
+    Command()
+
+data class UpdateNatureJuridiqueStatusCommand(val id: NatureJuridiqueId, val status: ItemStatus) : Command()
 
 data class UpdateOrganismeNatureJuridiqueCommand(
     val id: OrganismeId,
     val natureJuridiqueId: NatureJuridiqueId?
 ) : Command()
 
-data class UpdateOrganismePartageRepresentantsCommand(
+data class UpdateOrganismeNombreRepresentantsCommand(
     val id: OrganismeId,
-    val partageRepresentants: Boolean
+    val nombre: Int?
 ) : Command()
 
-data class UpdateOrganismeSecteurCommand(
+data class UpdateOrganismeNombreSuppleantsCommand(
     val id: OrganismeId,
-    val secteurId: SecteurId?
+    val nombre: Int?
 ) : Command()
+
+data class UpdateOrganismeNomCommand(val id: OrganismeId, val nom: String) : Command()
+
+data class UpdateOrganismeSecteurCommand(val id: OrganismeId, val secteurId: SecteurId?) :
+    Command()
 
 data class UpdateOrganismeTypeStructureCommand(
     val id: OrganismeId,
     val typeStructureId: TypeStructureId?
 ) : Command()
 
-data class UpdateSecteurLibelleCommand(
-    val id: SecteurId,
-    val libelle: String
-) : Command()
+data class UpdateRepresentationStatusCommand(val id: RepresentationId, val status: ItemStatus) : Command()
 
-data class UpdateTypeStructureLibelleCommand(
-    val id: TypeStructureId,
-    val libelle: String
-) : Command()
+data class UpdateSecteurLibelleCommand(val id: SecteurId, val libelle: String) : Command()
+
+data class UpdateSecteurStatusCommand(val id: SecteurId, val status: ItemStatus) : Command()
+
+data class UpdateTypeStructureLibelleCommand(val id: TypeStructureId, val libelle: String) :
+    Command()
+
+data class UpdateTypeStructureStatusCommand(val id: TypeStructureId, val status: ItemStatus) : Command()

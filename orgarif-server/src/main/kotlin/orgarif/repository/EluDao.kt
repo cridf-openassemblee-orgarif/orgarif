@@ -4,6 +4,7 @@ import org.jooq.DSLContext
 import org.springframework.stereotype.Repository
 import orgarif.domain.Civilite
 import orgarif.domain.EluId
+import orgarif.jooq.generated.Tables
 import orgarif.jooq.generated.Tables.ELU
 import orgarif.jooq.generated.tables.records.EluRecord
 import orgarif.utils.toTypeId
@@ -21,7 +22,8 @@ class EluDao(val jooq: DSLContext) {
         val groupePolitiqueCourt: String,
         val imageUrl: String,
         val actif: Boolean,
-        val creationDate: Instant
+        val creationDate: Instant,
+        val lastModificationDate: Instant
     )
 
     fun insert(r: Record) {
@@ -35,8 +37,33 @@ class EluDao(val jooq: DSLContext) {
             imageUrl = r.imageUrl
             actif = r.actif
             creationDate = r.creationDate
+            lastModificationDate = r.lastModificationDate
         }
         jooq.insertInto(ELU).set(record).execute()
+    }
+
+    fun update(
+        id: EluId,
+        civilite: Civilite,
+        prenom: String,
+        nom: String,
+        groupePolitique: String,
+        groupePolitiqueCourt: String,
+        imageUrl: String,
+        actif: Boolean,
+        lastModificationDate: Instant
+    ) {
+        val record = EluRecord().also {
+            it.civilite = civilite.name
+            it.prenom = prenom
+            it.nom = nom
+            it.groupePolitique = groupePolitique
+            it.groupePolitiqueCourt = groupePolitiqueCourt
+            it.imageUrl = imageUrl
+            it.actif = actif
+            it.lastModificationDate = lastModificationDate
+        }
+        jooq.update(ELU).set(record).where(ELU.ID.equal(id.rawId)).execute()
     }
 
     fun fetch(id: EluId) =
@@ -45,16 +72,22 @@ class EluDao(val jooq: DSLContext) {
             .fetchOne()
             ?.let(this::map)
 
+    fun fetch(ids: Set<EluId>) =
+        jooq.selectFrom(ELU)
+            .where(ELU.ID.`in`(ids.map { it.rawId }))
+            .fetch()
+            .map(this::map)
+
     fun fetchAll() =
         jooq.selectFrom(ELU)
             .fetch()
             .map(this::map)
 
-    fun delete(id: EluId) {
-        jooq.delete(ELU)
-            .where(ELU.ID.equal(id.rawId))
-            .execute()
-    }
+//    fun delete(id: EluId) {
+//        jooq.delete(ELU)
+//            .where(ELU.ID.equal(id.rawId))
+//            .execute()
+//    }
 
     private fun map(r: EluRecord) = Record(
         r.id.toTypeId(),
@@ -65,7 +98,8 @@ class EluDao(val jooq: DSLContext) {
         r.groupePolitiqueCourt,
         r.imageUrl,
         r.actif,
-        r.creationDate
+        r.creationDate,
+        r.lastModificationDate
     )
 
 }

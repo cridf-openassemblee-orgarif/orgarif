@@ -1,13 +1,7 @@
 package orgarif.service.organisme
 
-import DeliberationInfos
-import FullInstance
-import FullOrganisme
-import LienDeliberationInfos
-import Representant
-import RepresentantOrSuppleant
 import org.springframework.stereotype.Service
-import orgarif.domain.OrganismeId
+import orgarif.domain.*
 import orgarif.repository.*
 
 @Service
@@ -15,43 +9,99 @@ class OrganismeService(
     val organismeDao: OrganismeDao,
     val instanceDao: InstanceDao,
     val deliberationAdvancedDao: DeliberationAdvancedDao,
+    val representationDao: RepresentationDao,
+    val suppleanceDao: SuppleanceDao,
     val representantDao: RepresentantDao,
-    val deliberationDao: DeliberationDao
+    val eluDao: EluDao
 ) {
 
-    fun fetchFullOrganisme(id: OrganismeId): FullOrganisme {
+    fun fetchOrganismeDto(id: OrganismeId): OrganismeDto {
         val organisme = organismeDao.fetch(id)
-        val deliberations = deliberationAdvancedDao.fetchDeliberationByOrganismeId(id)
+        val lienDeliberations = deliberationAdvancedDao.fetchDeliberationByOrganismeId(id)
             .groupBy { it.first.instanceId }
             .mapValues {
                 it.value
                     .sortedBy { it.second.deliberationDate }
                     .map {
-                        LienDeliberationInfos(
+                        LienDeliberationDto(
                             it.first.id,
-                            DeliberationInfos(it.second.id, it.second.libelle, it.second.deliberationDate)
+                            DeliberationDto(it.second.id, it.second.libelle, it.second.deliberationDate)
                         )
                     }
             }
-        val representants = representantDao.fetchByOrganismeId(organisme.id)
-            .groupBy { it.instanceId to it.representantOrSuppleant }
-            .mapValues { it.value.sortedBy { it.position }.map { Representant(it.id, it.eluId) } }
+        val representationsByInstance = let {
+            val representations = representationDao.fetchByOrganismeId(organisme.id)
+            val suppleances = suppleanceDao.fetchByOrganismeId(organisme.id)
+            val representantById = let {
+                val ids = representations.map { it.representantId } + suppleances.map { it.representantId }
+                val representants = representantDao.fetch(ids.toSet()).let { representantDtos(it) }
+                representants.associateBy { it.id }
+            }
+            val suppleanceByRepresentation = suppleances.associateBy { it.representationId }
+            representations
+                .groupBy { it.instanceId }
+                .mapValues {
+                    it.value.sortedBy { it.position }
+                        .map {
+                            RepresentationDto(
+                                it.id,
+                                representantById.getValue(it.representantId),
+                                it.startDate,
+                                it.endDate,
+                                suppleanceByRepresentation[it.id]?.let {
+                                    SuppleanceDto(
+                                        it.id, representantById.getValue(it.representantId),
+                                        it.startDate,
+                                        it.endDate
+                                    )
+                                }
+                            )
+                        }
+                }
+        }
         val instances = instanceDao.fetchByOrganismeId(organisme.id)
             .map {
-                FullInstance(
-                    it,
-                    deliberations[it.id] ?: emptyList(),
-                    representants[it.id to RepresentantOrSuppleant.representant] ?: emptyList(),
-                    representants[it.id to RepresentantOrSuppleant.suppleant] ?: emptyList()
+                InstanceDto(
+                    it.id,
+                    it.nom,
+                    it.nombreRepresentants,
+                    it.nombreSuppleants,
+                    lienDeliberations[it.id] ?: emptyList(),
+                    representationsByInstance[it.id] ?: emptyList(),
+                    it.status
                 )
             }
-        return FullOrganisme(
-            organisme,
-            deliberations[null] ?: emptyList(),
-            representants[null to RepresentantOrSuppleant.representant] ?: emptyList(),
-            representants[null to RepresentantOrSuppleant.suppleant] ?: emptyList(),
-            instances
+        return OrganismeDto(
+            organisme.id,
+            organisme.nom,
+            organisme.secteurId,
+            organisme.natureJuridiqueId,
+            organisme.typeStructureId,
+            organisme.nombreRepresentants,
+            organisme.nombreSuppleants,
+            representationsByInstance[null] ?: emptyList(),
+            lienDeliberations[null] ?: emptyList(),
+            instances,
+            organisme.status
         )
+    }
+
+    fun representantDtos(representants: List<RepresentantDao.Record>): List<RepresentantDto> {
+        val elus = representants.mapNotNull { it.eluId }.let { eluDao.fetch(it.toSet()) }.associateBy { it.id }
+        return representants.map {
+            val elu = it.eluId?.let { elus.getValue(it) }
+            RepresentantDto(
+                it.id,
+                elu != null,
+                elu?.civilite?.name,
+                elu?.prenom ?: it.prenom ?: throw IllegalStateException("${it.id}"),
+                elu?.nom ?: it.nom ?: throw IllegalStateException("${it.id}"),
+                elu?.groupePolitique,
+                elu?.groupePolitiqueCourt,
+                elu?.imageUrl,
+                elu?.actif
+            )
+        }
     }
 
 }

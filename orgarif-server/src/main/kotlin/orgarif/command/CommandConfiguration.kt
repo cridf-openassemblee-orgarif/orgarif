@@ -1,30 +1,39 @@
 package orgarif.command
 
 import orgarif.domain.Role
+import orgarif.domain.Role.*
 
 object CommandConfiguration {
 
     fun role(command: Command): Role? = when (command) {
-        is AddInstanceCommand -> Role.user
-        is AddLienDeliberationCommand -> Role.user
-        is AddRepresentantCommand -> Role.user
-        is CreateDeliberationAndAddLienCommand -> Role.user
-        is CreateOrganismeCommand -> Role.user
-        is DeleteInstanceCommand -> Role.user
-        is DeleteNatureJuridiqueCommand -> Role.user
-        is DeleteRepresentantCommand -> Role.user
-        is DeleteSecteurCommand -> Role.user
-        is DeleteTypeStructureCommand -> Role.user
+        is AddInstanceCommand -> user
+        is AddLienDeliberationCommand -> user
+        is AddRepresentationCommand -> user
+        is CreateDeliberationAndAddLienCommand -> user
+        is CreateNatureJuridiqueCommand -> user
+        is CreateOrganismeCommand -> user
+        is CreateSecteurCommand -> user
+        is CreateTypeStructureCommand -> user
         is LoginCommand -> null
-        is MoveRepresentantCommand -> Role.user
+        is MoveRepresentationCommand -> user
         is RegisterCommand -> null
-        is UpdateNatureJuridiqueLibelleCommand -> Role.user
-        is UpdateOrganismeNatureJuridiqueCommand -> Role.user
-        is UpdateOrganismePartageRepresentantsCommand -> Role.user
-        is UpdateOrganismeSecteurCommand -> Role.user
-        is UpdateOrganismeTypeStructureCommand -> Role.user
-        is UpdateSecteurLibelleCommand -> Role.user
-        is UpdateTypeStructureLibelleCommand -> Role.user
+        is UpdateInstanceNombreRepresentantsCommand -> user
+        is UpdateInstanceNombreSuppleantsCommand -> user
+        is UpdateInstanceNomCommand -> user
+        is UpdateInstanceStatusCommand -> user
+        is UpdateNatureJuridiqueLibelleCommand -> user
+        is UpdateNatureJuridiqueStatusCommand -> user
+        is UpdateOrganismeNatureJuridiqueCommand -> user
+        is UpdateOrganismeNombreRepresentantsCommand -> user
+        is UpdateOrganismeNombreSuppleantsCommand -> user
+        is UpdateOrganismeNomCommand -> user
+        is UpdateOrganismeSecteurCommand -> user
+        is UpdateOrganismeTypeStructureCommand -> user
+        is UpdateRepresentationStatusCommand -> user
+        is UpdateSecteurLibelleCommand -> user
+        is UpdateSecteurStatusCommand -> user
+        is UpdateTypeStructureLibelleCommand -> user
+        is UpdateTypeStructureStatusCommand -> user
     }
 
 }

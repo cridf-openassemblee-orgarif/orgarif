@@ -1,8 +1,8 @@
 package orgarif.query
 
-import DeliberationInfos
 import org.springframework.stereotype.Service
 import orgarif.config.SharedConstants
+import orgarif.domain.DeliberationDto
 import orgarif.repository.DeliberationDao
 
 @Service
@@ -14,7 +14,7 @@ class SearchDeliberationQueryHandler(val deliberationDao: DeliberationDao) :
             throw IllegalArgumentException()
         }
         val results = deliberationDao.search(query.searchToken)
-            .map { DeliberationInfos(it.id, it.libelle, it.deliberationDate) }
+            .map { DeliberationDto(it.id, it.libelle, it.deliberationDate) }
         return SearchDeliberationQueryResponse(results)
     }
 

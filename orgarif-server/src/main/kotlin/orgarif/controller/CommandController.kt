@@ -33,24 +33,32 @@ class CommandController(
 
     val addInstanceCommandHandler: AddInstanceCommandHandler,
     val addLienDeliberationCommandHandler: AddLienDeliberationCommandHandler,
-    val addRepresentantCommandHandler: AddRepresentantCommandHandler,
+    val addRepresentationCommandHandler: AddRepresentationCommandHandler,
     val createDeliberationAndAddLienCommandHandler: CreateDeliberationAndAddLienCommandHandler,
+    val createNatureJuridiqueCommandHandler: CreateNatureJuridiqueCommandHandler,
     val createOrganismeCommandHandler: CreateOrganismeCommandHandler,
-    val deleteInstanceCommandHandler: DeleteInstanceCommandHandler,
-    val deleteRepresentantCommandHandler: DeleteRepresentantCommandHandler,
-    val deleteSecteurCommandHandler: DeleteSecteurCommandHandler,
-    val deleteNatureJuridiqueCommandHandler: DeleteNatureJuridiqueCommandHandler,
-    val deleteTypeStructureCommandHandler: DeleteTypeStructureCommandHandler,
+    val createSecteurCommandHandler: CreateSecteurCommandHandler,
+    val createTypeStructureCommandHandler: CreateTypeStructureCommandHandler,
     val loginCommandHandler: LoginCommandHandler,
-    val moveRepresentantCommandHandler: MoveRepresentantCommandHandler,
+    val moveRepresentationCommandHandler: MoveRepresentationCommandHandler,
     val registerCommandHandler: RegisterCommandHandler,
+    val updateInstanceNombreRepresentantsCommandHandler: UpdateInstanceNombreRepresentantsCommandHandler,
+    val updateInstanceNombreSuppleantsCommandHandler: UpdateInstanceNombreSuppleantsCommandHandler,
+    val updateInstanceNomCommandHandler: UpdateInstanceNomCommandHandler,
+    val updateInstanceStatusCommandHandler: UpdateInstanceStatusCommandHandler,
+    val updateNatureJuridiqueLibelleCommandHandler: UpdateNatureJuridiqueLibelleCommandHandler,
+    val updateNatureJuridiqueStatusCommandHandler: UpdateNatureJuridiqueStatusCommandHandler,
     val updateOrganismeNatureJuridiqueCommandHandler: UpdateOrganismeNatureJuridiqueCommandHandler,
-    val updateOrganismePartageRepresentantsCommandHandler: UpdateOrganismePartageRepresentantsCommandHandler,
+    val updateOrganismeNomCommandHandler: UpdateOrganismeNomCommandHandler,
+    val updateOrganismeNombreRepresentantsCommandHandler: UpdateOrganismeNombreRepresentantsCommandHandler,
+    val updateOrganismeNombreSuppleantsCommandHandler: UpdateOrganismeNombreSuppleantsCommandHandler,
     val updateOrganismeSecteurCommandHandler: UpdateOrganismeSecteurCommandHandler,
     val updateOrganismeTypeStructureCommandCommandHandler: UpdateOrganismeTypeStructureCommandHandler,
+    val updateRepresentationStatusCommandHandler: UpdateRepresentationStatusCommandHandler,
     val updateSecteurLibelleCommandHandler: UpdateSecteurLibelleCommandHandler,
-    val updateNatureJuridiqueLibelleCommandHandler: UpdateNatureJuridiqueLibelleCommandHandler,
+    val updateSecteurStatusCommandHandler: UpdateSecteurStatusCommandHandler,
     val updateTypeStructureLibelleCommandHandler: UpdateTypeStructureLibelleCommandHandler,
+    val updateTypeStructureStatusCommandHandler: UpdateTypeStructureStatusCommandHandler,
 ) {
 
     private val logger = KotlinLogging.logger {}
@@ -130,24 +138,32 @@ class CommandController(
     private fun handler(command: Command) = when (command) {
         is AddInstanceCommand -> addInstanceCommandHandler
         is AddLienDeliberationCommand -> addLienDeliberationCommandHandler
-        is AddRepresentantCommand -> addRepresentantCommandHandler
+        is AddRepresentationCommand -> addRepresentationCommandHandler
         is CreateDeliberationAndAddLienCommand -> createDeliberationAndAddLienCommandHandler
+        is CreateNatureJuridiqueCommand -> createNatureJuridiqueCommandHandler
         is CreateOrganismeCommand -> createOrganismeCommandHandler
-        is DeleteInstanceCommand -> deleteInstanceCommandHandler
-        is DeleteNatureJuridiqueCommand -> deleteNatureJuridiqueCommandHandler
-        is DeleteRepresentantCommand -> deleteRepresentantCommandHandler
-        is DeleteSecteurCommand -> deleteSecteurCommandHandler
-        is DeleteTypeStructureCommand -> deleteTypeStructureCommandHandler
+        is CreateSecteurCommand -> createSecteurCommandHandler
+        is CreateTypeStructureCommand -> createTypeStructureCommandHandler
         is LoginCommand -> loginCommandHandler
-        is MoveRepresentantCommand -> moveRepresentantCommandHandler
+        is MoveRepresentationCommand -> moveRepresentationCommandHandler
         is RegisterCommand -> registerCommandHandler
+        is UpdateInstanceNombreRepresentantsCommand -> updateInstanceNombreRepresentantsCommandHandler
+        is UpdateInstanceNombreSuppleantsCommand -> updateInstanceNombreSuppleantsCommandHandler
+        is UpdateInstanceNomCommand -> updateInstanceNomCommandHandler
+        is UpdateInstanceStatusCommand -> updateInstanceStatusCommandHandler
         is UpdateNatureJuridiqueLibelleCommand -> updateNatureJuridiqueLibelleCommandHandler
+        is UpdateNatureJuridiqueStatusCommand -> updateNatureJuridiqueStatusCommandHandler
         is UpdateOrganismeNatureJuridiqueCommand -> updateOrganismeNatureJuridiqueCommandHandler
-        is UpdateOrganismePartageRepresentantsCommand -> updateOrganismePartageRepresentantsCommandHandler
+        is UpdateOrganismeNombreRepresentantsCommand -> updateOrganismeNombreRepresentantsCommandHandler
+        is UpdateOrganismeNombreSuppleantsCommand -> updateOrganismeNombreSuppleantsCommandHandler
+        is UpdateOrganismeNomCommand -> updateOrganismeNomCommandHandler
         is UpdateOrganismeSecteurCommand -> updateOrganismeSecteurCommandHandler
         is UpdateOrganismeTypeStructureCommand -> updateOrganismeTypeStructureCommandCommandHandler
+        is UpdateRepresentationStatusCommand -> updateRepresentationStatusCommandHandler
         is UpdateSecteurLibelleCommand -> updateSecteurLibelleCommandHandler
+        is UpdateSecteurStatusCommand -> updateSecteurStatusCommandHandler
         is UpdateTypeStructureLibelleCommand -> updateTypeStructureLibelleCommandHandler
+        is UpdateTypeStructureStatusCommand -> updateTypeStructureStatusCommandHandler
     } as CommandHandler<Command, CommandResponse>
 
 }

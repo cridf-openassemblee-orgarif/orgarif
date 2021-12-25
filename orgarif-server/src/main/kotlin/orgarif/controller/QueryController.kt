@@ -19,6 +19,7 @@ class QueryController(
     val isLoginAlreadyTakenQueryHandler: IsLoginAlreadyTakenQueryHandler,
     val listOrganismesBySecteurQueryHandler: ListOrganismesBySecteurQueryHandler,
     val listOrganismesQueryHandler: ListOrganismesQueryHandler,
+    val listRepresentantsQueryHandler: ListRepresentantsQueryHandler,
     val searchDeliberationQueryHandler: SearchDeliberationQueryHandler,
 ) {
 
@@ -38,6 +39,7 @@ class QueryController(
         is IsLoginAlreadyTakenQuery -> isLoginAlreadyTakenQueryHandler
         is ListOrganismesBySecteurQuery -> listOrganismesBySecteurQueryHandler
         is ListOrganismesQuery -> listOrganismesQueryHandler
+        is ListRepresentantsQuery -> listRepresentantsQueryHandler
         is SearchDeliberationQuery -> searchDeliberationQueryHandler
     } as QueryHandler<Query, QueryResponse>
 

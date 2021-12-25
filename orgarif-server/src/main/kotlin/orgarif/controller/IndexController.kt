@@ -30,6 +30,7 @@ import javax.servlet.http.HttpServletResponse
     "commandController",
     "invalidateMagicLinkTokenController",
     "queryController",
+    "reactHotLoaderController",
     "remoteController",
     "userFileController",
 )
@@ -104,8 +105,7 @@ class IndexController(
             typeStructureDao.fetchAll()
         )
         val elus = eluDao.fetchAll()
-        mav.model["bootstrapData"] =
-            serialize(ApplicationBootstrapData(applicationInstance.env, userInfos, categories, elus))
+        mav.model["bootstrapData"] = serialize(ApplicationBootstrapData(applicationInstance.env, userInfos, categories))
         mav.model["deploymentId"] = applicationInstance.deploymentId.rawId
         mav.model["gitRevisionLabel"] = applicationInstance.gitRevisionLabel
         mav.model["jsAssets"] = jsAssets

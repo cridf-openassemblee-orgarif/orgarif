@@ -2,10 +2,6 @@ package orgarif.controller
 
 import orgarif.config.SafeSessionRepository
 import orgarif.controller.RemoteController.Companion.remoteRoute
-import orgarif.domain.Role
-import orgarif.domain.UserSession
-import orgarif.repository.UserDao
-import orgarif.repository.UserSessionLogDao
 import orgarif.service.user.UserSessionService
 import orgarif.service.utils.TransactionIsolationService
 import mu.KotlinLogging
@@ -16,6 +12,9 @@ import org.springframework.web.bind.annotation.PostMapping
 import org.springframework.web.bind.annotation.RequestMapping
 import org.springframework.web.bind.annotation.RequestParam
 import org.springframework.web.bind.annotation.RestController
+import orgarif.domain.*
+import orgarif.repository.*
+import orgarif.service.RandomService
 import orgarif.domain.Session as OrgarifSession
 import org.springframework.session.Session as SpringSession
 
@@ -25,8 +24,14 @@ class RemoteController(
     val jooq: DSLContext,
     val userDao: UserDao,
     val userSessionLogDao: UserSessionLogDao,
+    val eluDao: EluDao,
+    val representantDao: RepresentantDao,
+    val representationDao: RepresentationDao,
+    val suppleanceDao: SuppleanceDao,
+
     val sessionRepository: SafeSessionRepository,
     val userSessionService: UserSessionService,
+    val randomService: RandomService,
     val transactionIsolationService: TransactionIsolationService
 ) {
 

@@ -1,44 +1,80 @@
-import orgarif.domain.DeliberationId
-import orgarif.domain.EluId
-import orgarif.domain.LienDeliberationId
-import orgarif.domain.RepresentantId
-import orgarif.repository.InstanceDao
+package orgarif.domain
+
 import orgarif.repository.OrganismeDao
 import java.time.LocalDate
 
-enum class RepresentantOrSuppleant { representant, suppleant }
+enum class ItemStatus {
+    live, archive, trash
+}
 
-typealias OrganismeInfos = OrganismeDao.Record
-
-typealias InstanceInfos = InstanceDao.Record
-
-data class Representant(
-    val id: RepresentantId,
-    val eluId: EluId
+data class RepresentationDto(
+    val id: RepresentationId,
+    val representant: RepresentantDto,
+    val startDate: LocalDate?,
+    val endDate: LocalDate?,
+    val suppleance: SuppleanceDto?
 )
 
-data class DeliberationInfos(
+data class SuppleanceDto(
+    val id: SuppleanceId,
+    val representant: RepresentantDto,
+    val startDate: LocalDate?,
+    val endDate: LocalDate?
+)
+
+data class RepresentantDto(
+    val id: RepresentantId,
+    val isElu: Boolean,
+    val civilite: String?,
+    val prenom: String,
+    val nom: String,
+    val groupePolitique: String?,
+    val groupePolitiqueCourt: String?,
+    val imageUrl: String?,
+    val eluActif: Boolean?
+)
+
+data class DeliberationDto(
     val id: DeliberationId,
     val libelle: String,
     val deliberationDate: LocalDate
 )
 
-data class LienDeliberationInfos(
+data class LienDeliberationDto(
     val id: LienDeliberationId,
-    val deliberation: DeliberationInfos
+    val deliberation: DeliberationDto
 )
 
-data class FullInstance(
-    val infos: InstanceInfos,
-    val lienDeliberations: List<LienDeliberationInfos>,
-    val representants: List<Representant>,
-    val suppleants: List<Representant>
+data class InstanceDto(
+    val id: InstanceId,
+    val nom: String,
+    val nombreRepresentants: Int?,
+    val nombreSuppleants: Int?,
+    val lienDeliberations: List<LienDeliberationDto>,
+    val representations: List<RepresentationDto>,
+    val status: ItemStatus
 )
 
-data class FullOrganisme(
-    val infos: OrganismeInfos,
-    val lienDeliberations: List<LienDeliberationInfos>,
-    val representants: List<Representant>,
-    val suppleants: List<Representant>,
-    val instances: List<FullInstance>
+data class OrganismeListDto(
+    val id: OrganismeId,
+    val nom: String,
+    val secteurId: SecteurId?,
+    val natureJuridiqueId: NatureJuridiqueId?,
+    val typeStructureId: TypeStructureId?
+) {
+    constructor(r: OrganismeDao.Record) : this(r.id, r.nom, r.secteurId, r.natureJuridiqueId, r.typeStructureId)
+}
+
+data class OrganismeDto(
+    val id: OrganismeId,
+    val nom: String,
+    val secteurId: SecteurId?,
+    val natureJuridiqueId: NatureJuridiqueId?,
+    val typeStructureId: TypeStructureId?,
+    val nombreRepresentants: Int?,
+    val nombreSuppleants: Int?,
+    val representations: List<RepresentationDto>,
+    val lienDeliberations: List<LienDeliberationDto>,
+    val instances: List<InstanceDto>,
+    val status: ItemStatus
 )

@@ -2,12 +2,14 @@ package orgarif.repository
 
 import org.jooq.DSLContext
 import org.springframework.stereotype.Repository
+import orgarif.domain.ItemStatus
 import orgarif.domain.NatureJuridiqueId
 import orgarif.domain.SecteurId
 import orgarif.jooq.generated.Tables
 import orgarif.jooq.generated.Tables.NATURE_JURIDIQUE
 import orgarif.jooq.generated.tables.records.NatureJuridiqueRecord
 import orgarif.utils.toTypeId
+import java.time.Instant
 
 
 @Repository
@@ -15,13 +17,17 @@ class NatureJuridiqueDao(val jooq: DSLContext) {
 
     data class Record(
         val id: NatureJuridiqueId,
-        val libelle: String
+        val libelle: String,
+        val status: ItemStatus,
+        val lastModificationDate: Instant
     )
 
     fun insert(r: Record) {
         val record = NatureJuridiqueRecord().apply {
             id = r.id.rawId
             libelle = r.libelle
+            status = r.status.name
+            lastModificationDate = r.lastModificationDate
         }
         jooq.insertInto(NATURE_JURIDIQUE).set(record).execute()
     }
@@ -31,22 +37,27 @@ class NatureJuridiqueDao(val jooq: DSLContext) {
             .fetch()
             .map(this::map)
 
-    fun updateLibelle(id: NatureJuridiqueId, libelle: String) {
+    fun updateLibelle(id: NatureJuridiqueId, libelle: String, modificationDate: Instant) {
         jooq.update(NATURE_JURIDIQUE)
             .set(NATURE_JURIDIQUE.LIBELLE, libelle)
+            .set(NATURE_JURIDIQUE.LAST_MODIFICATION_DATE, modificationDate)
             .where(NATURE_JURIDIQUE.ID.equal(id.rawId))
             .execute()
     }
 
-    fun delete(id: NatureJuridiqueId) {
-        jooq.deleteFrom(NATURE_JURIDIQUE)
+    fun updateStatus(id: NatureJuridiqueId, status: ItemStatus, modificationDate: Instant) {
+        jooq.update(NATURE_JURIDIQUE)
+            .set(NATURE_JURIDIQUE.STATUS, status.name)
+            .set(NATURE_JURIDIQUE.LAST_MODIFICATION_DATE, modificationDate)
             .where(NATURE_JURIDIQUE.ID.equal(id.rawId))
             .execute()
     }
 
     private fun map(r: NatureJuridiqueRecord) = Record(
         r.id.toTypeId(),
-        r.libelle
+        r.libelle,
+        ItemStatus.valueOf(r.status),
+        r.lastModificationDate
     )
 
 }

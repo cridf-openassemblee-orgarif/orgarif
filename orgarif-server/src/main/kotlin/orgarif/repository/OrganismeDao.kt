@@ -1,8 +1,9 @@
 package orgarif.repository
 
-
+import java.time.Instant
 import org.jooq.DSLContext
 import org.springframework.stereotype.Repository
+import orgarif.domain.ItemStatus
 import orgarif.domain.NatureJuridiqueId
 import orgarif.domain.OrganismeId
 import orgarif.domain.SecteurId
@@ -10,7 +11,6 @@ import orgarif.domain.TypeStructureId
 import orgarif.jooq.generated.Tables.ORGANISME
 import orgarif.jooq.generated.tables.records.OrganismeRecord
 import orgarif.utils.toTypeId
-import java.time.Instant
 
 @Repository
 class OrganismeDao(val jooq: DSLContext) {
@@ -23,36 +23,32 @@ class OrganismeDao(val jooq: DSLContext) {
         val typeStructureId: TypeStructureId?,
         val nombreRepresentants: Int?,
         val nombreSuppleants: Int?,
-        val partageRepresentants: Boolean,
         val creationDate: Instant,
+        val status: ItemStatus,
         val lastModificationDate: Instant
     )
 
     fun insert(r: Record) {
-        val record = OrganismeRecord().apply {
-            id = r.id.rawId
-            nom = r.nom
-            secteurId = r.secteurId?.rawId
-            natureJuridiqueId = r.natureJuridiqueId?.rawId
-            typeStructureId = r.typeStructureId?.rawId
-            nombreRepresentants = r.nombreRepresentants
-            nombreSuppleants = r.nombreSuppleants
-            partageRepresentants = r.partageRepresentants
-            creationDate = r.creationDate
-            lastModificationDate = r.lastModificationDate
-        }
+        val record =
+            OrganismeRecord().apply {
+                id = r.id.rawId
+                nom = r.nom
+                secteurId = r.secteurId?.rawId
+                natureJuridiqueId = r.natureJuridiqueId?.rawId
+                typeStructureId = r.typeStructureId?.rawId
+                nombreRepresentants = r.nombreRepresentants
+                nombreSuppleants = r.nombreSuppleants
+                creationDate = r.creationDate
+                status = r.status.name
+                lastModificationDate = r.lastModificationDate
+            }
         jooq.insertInto(ORGANISME).set(record).execute()
     }
 
     fun fetchOrNull(id: OrganismeId) =
-        jooq.selectFrom(ORGANISME)
-            .where(ORGANISME.ID.equal(id.rawId))
-            .fetchOne()
-            ?.let(this::map)
+        jooq.selectFrom(ORGANISME).where(ORGANISME.ID.equal(id.rawId)).fetchOne()?.let(this::map)
 
-    fun fetch(id: OrganismeId) =
-        fetchOrNull(id)
-            ?: throw IllegalArgumentException("$id")
+    fun fetch(id: OrganismeId) = fetchOrNull(id) ?: throw IllegalArgumentException("$id")
 
     fun updateNatureJuridiqueId(
         id: OrganismeId,
@@ -66,23 +62,31 @@ class OrganismeDao(val jooq: DSLContext) {
             .execute()
     }
 
-    fun updatePartageRepresentants(
-        id: OrganismeId,
-        partageRepresentants: Boolean,
-        modificationDate: Instant
-    ) {
+    fun updateNom(id: OrganismeId, nom: String, modificationDate: Instant) {
         jooq.update(ORGANISME)
-            .set(ORGANISME.PARTAGE_REPRESENTANTS, partageRepresentants)
+            .set(ORGANISME.NOM, nom)
             .set(ORGANISME.LAST_MODIFICATION_DATE, modificationDate)
             .where(ORGANISME.ID.equal(id.rawId))
             .execute()
     }
 
-    fun updateSecteurId(
-        id: OrganismeId,
-        secteurId: SecteurId?,
-        modificationDate: Instant
-    ) {
+    fun updateNombreRepresentants(id: OrganismeId, nombre: Int?, modificationDate: Instant) {
+        jooq.update(ORGANISME)
+            .set(ORGANISME.NOMBRE_REPRESENTANTS, nombre)
+            .set(ORGANISME.LAST_MODIFICATION_DATE, modificationDate)
+            .where(ORGANISME.ID.equal(id.rawId))
+            .execute()
+    }
+
+    fun updateNombreSuppleants(id: OrganismeId, nombre: Int?, modificationDate: Instant) {
+        jooq.update(ORGANISME)
+            .set(ORGANISME.NOMBRE_SUPPLEANTS, nombre)
+            .set(ORGANISME.LAST_MODIFICATION_DATE, modificationDate)
+            .where(ORGANISME.ID.equal(id.rawId))
+            .execute()
+    }
+
+    fun updateSecteurId(id: OrganismeId, secteurId: SecteurId?, modificationDate: Instant) {
         jooq.update(ORGANISME)
             .set(ORGANISME.SECTEUR_ID, secteurId?.rawId)
             .set(ORGANISME.LAST_MODIFICATION_DATE, modificationDate)
@@ -90,6 +94,13 @@ class OrganismeDao(val jooq: DSLContext) {
             .execute()
     }
 
+    fun updateStatus(id: OrganismeId, status: ItemStatus, modificationDate: Instant) {
+        jooq.update(ORGANISME)
+            .set(ORGANISME.STATUS, status.name)
+            .set(ORGANISME.LAST_MODIFICATION_DATE, modificationDate)
+            .where(ORGANISME.ID.equal(id.rawId))
+            .execute()
+    }
 
     fun updateTypeStructureId(
         id: OrganismeId,
@@ -104,10 +115,7 @@ class OrganismeDao(val jooq: DSLContext) {
     }
 
     fun fetchAll() =
-        jooq.selectFrom(ORGANISME)
-            .orderBy(ORGANISME.CREATION_DATE.desc())
-            .fetch()
-            .map(this::map)
+        jooq.selectFrom(ORGANISME).orderBy(ORGANISME.CREATION_DATE.desc()).fetch().map(this::map)
 
     fun fetchBySecteurId(secteurId: SecteurId) =
         jooq.selectFrom(ORGANISME)
@@ -137,17 +145,17 @@ class OrganismeDao(val jooq: DSLContext) {
             .fetchSingle()
             .value1()
 
-    private fun map(r: OrganismeRecord) = Record(
-        r.id.toTypeId(),
-        r.nom,
-        r.secteurId?.toTypeId(),
-        r.natureJuridiqueId?.toTypeId(),
-        r.typeStructureId?.toTypeId(),
-        r.nombreRepresentants,
-        r.nombreSuppleants,
-        r.partageRepresentants,
-        r.creationDate,
-        r.lastModificationDate
-    )
-
+    private fun map(r: OrganismeRecord) =
+        Record(
+            r.id.toTypeId(),
+            r.nom,
+            r.secteurId?.toTypeId(),
+            r.natureJuridiqueId?.toTypeId(),
+            r.typeStructureId?.toTypeId(),
+            r.nombreRepresentants,
+            r.nombreSuppleants,
+            r.creationDate,
+            ItemStatus.valueOf(r.status),
+            r.lastModificationDate
+        )
 }

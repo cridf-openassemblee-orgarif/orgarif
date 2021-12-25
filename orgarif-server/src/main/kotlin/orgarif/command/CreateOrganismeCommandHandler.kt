@@ -1,6 +1,7 @@
 package orgarif.command
 
 import org.springframework.stereotype.Service
+import orgarif.domain.ItemStatus
 import orgarif.domain.OrganismeId
 import orgarif.repository.OrganismeDao
 import orgarif.service.DateService
@@ -11,8 +12,7 @@ class CreateOrganismeCommandHandler(
     val organismeDao: OrganismeDao,
     val randomService: RandomService,
     val dateService: DateService
-) :
-    CommandHandler.Handler<CreateOrganismeCommand, CreateOrganismeCommandResponse>() {
+) : CommandHandler.Handler<CreateOrganismeCommand, CreateOrganismeCommandResponse>() {
 
     override fun handle(command: CreateOrganismeCommand): CreateOrganismeCommandResponse {
         val organismeId = randomService.id<OrganismeId>()
@@ -26,8 +26,8 @@ class CreateOrganismeCommandHandler(
                 typeStructureId = null,
                 nombreRepresentants = null,
                 nombreSuppleants = null,
-                partageRepresentants = false,
                 creationDate = now,
+                status = ItemStatus.live,
                 lastModificationDate = now
             )
         )

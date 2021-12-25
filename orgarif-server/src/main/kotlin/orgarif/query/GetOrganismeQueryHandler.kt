@@ -8,6 +8,6 @@ class GetOrganismeQueryHandler(val organismeService: OrganismeService) :
     QueryHandler.Handler<GetOrganismeQuery, GetOrganismeQueryResponse>() {
 
     override fun handle(query: GetOrganismeQuery) =
-        GetOrganismeQueryResponse(organismeService.fetchFullOrganisme(query.id))
+        GetOrganismeQueryResponse(organismeService.fetchOrganismeDto(query.id))
 
 }

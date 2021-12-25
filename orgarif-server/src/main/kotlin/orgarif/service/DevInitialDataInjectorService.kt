@@ -1,12 +1,12 @@
 package orgarif.service
 
+import org.springframework.beans.factory.annotation.Value
+import org.springframework.security.crypto.password.PasswordEncoder
+import org.springframework.stereotype.Service
 import orgarif.domain.HashedPassword
 import orgarif.domain.Language
 import orgarif.domain.Role
 import orgarif.repository.UserDao
-import org.springframework.beans.factory.annotation.Value
-import org.springframework.security.crypto.password.PasswordEncoder
-import org.springframework.stereotype.Service
 
 @Service
 // TODO naming fake / sample
@@ -19,13 +19,14 @@ class DevInitialDataInjectorService(
 ) {
 
     fun initiateDevUsers() {
-        val (mailPrefix, mailSuffix) = run {
-            // FIXME double + if some + in conf (which is the case...) !
-            val arobaseIndex = developerDestinationMail.indexOf('@')
-            val mailPrefix = developerDestinationMail.substring(0, arobaseIndex)
-            val mailSuffix = developerDestinationMail.substring(arobaseIndex)
-            mailPrefix to mailSuffix
-        }
+        val (mailPrefix, mailSuffix) =
+            run {
+                // FIXME double + if some + in conf (which is the case...) !
+                val arobaseIndex = developerDestinationMail.indexOf('@')
+                val mailPrefix = developerDestinationMail.substring(0, arobaseIndex)
+                val mailSuffix = developerDestinationMail.substring(arobaseIndex)
+                mailPrefix to mailSuffix
+            }
         insertUser("user", false, mailPrefix, mailSuffix)
         insertUser("admin", true, mailPrefix, mailSuffix)
     }
@@ -43,9 +44,9 @@ class DevInitialDataInjectorService(
                     roles = setOf(Role.user).let { if (admin) it + Role.admin else it },
                     dirtyMail = null,
                     formerMails = emptyList()
-                ), HashedPassword(passwordEncoder.encode(username))
+                ),
+                HashedPassword(passwordEncoder.encode(username))
             )
         }
     }
-
 }
