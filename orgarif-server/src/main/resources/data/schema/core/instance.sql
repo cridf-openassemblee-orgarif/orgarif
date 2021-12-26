@@ -4,7 +4,6 @@ CREATE TABLE instance
     nom                    VARCHAR(255)     NOT NULL,
     organisme_id           UUID             NOT NULL,
     nombre_representants   INTEGER,
-    nombre_suppleants      INTEGER,
     creation_date          TIMESTAMPTZ      NOT NULL,
     status                 VARCHAR(255)     NOT NULL,
     last_modification_date TIMESTAMPTZ      NOT NULL,
