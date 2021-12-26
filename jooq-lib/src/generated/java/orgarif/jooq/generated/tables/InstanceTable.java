@@ -18,7 +18,7 @@ import org.jooq.ForeignKey;
 import org.jooq.Index;
 import org.jooq.Name;
 import org.jooq.Record;
-import org.jooq.Row8;
+import org.jooq.Row7;
 import org.jooq.Schema;
 import org.jooq.Table;
 import org.jooq.TableField;
@@ -75,11 +75,6 @@ public class InstanceTable extends TableImpl<InstanceRecord> {
      * The column <code>public.instance.nombre_representants</code>.
      */
     public final TableField<InstanceRecord, Integer> NOMBRE_REPRESENTANTS = createField(DSL.name("nombre_representants"), SQLDataType.INTEGER, this, "");
-
-    /**
-     * The column <code>public.instance.nombre_suppleants</code>.
-     */
-    public final TableField<InstanceRecord, Integer> NOMBRE_SUPPLEANTS = createField(DSL.name("nombre_suppleants"), SQLDataType.INTEGER, this, "");
 
     /**
      * The column <code>public.instance.creation_date</code>.
@@ -199,12 +194,12 @@ public class InstanceTable extends TableImpl<InstanceRecord> {
     }
 
     // -------------------------------------------------------------------------
-    // Row8 type methods
+    // Row7 type methods
     // -------------------------------------------------------------------------
 
     @Override
     @Nonnull
-    public Row8<UUID, String, UUID, Integer, Integer, Instant, String, Instant> fieldsRow() {
-        return (Row8) super.fieldsRow();
+    public Row7<UUID, String, UUID, Integer, Instant, String, Instant> fieldsRow() {
+        return (Row7) super.fieldsRow();
     }
 }
