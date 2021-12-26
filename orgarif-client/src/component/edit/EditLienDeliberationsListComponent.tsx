@@ -1,57 +1,85 @@
 /** @jsxImportSource @emotion/react */
 import { css } from '@emotion/react';
+import { Edit } from '@mui/icons-material';
+import { Button } from '@mui/material';
 import * as React from 'react';
-import { useState } from 'react';
-import { InstanceId, OrganismeId } from '../../domain/ids';
-import { LienDeliberationInfos } from '../../domain/organisme';
+import { LienDeliberationDto } from '../../domain/organisme';
 import { formatLocaleDate } from '../../simple-fr';
+import { colors } from '../../styles/vars';
+import { clientUid } from '../../utils';
 import { asString } from '../../utils/nominal-class';
-import { AddLienDeliberationComponent } from './AddLienDeliberationComponent';
+import { editCommonClasses } from './EditPartialOrganismeOrInstance';
+
+const actionsClass = asString(clientUid());
 
 export const EditLienDeliberationsListComponent = (props: {
-  lienDeliberations: LienDeliberationInfos[];
-  organismeId: OrganismeId;
-  instanceId?: InstanceId;
-}) => {
-  const [lienDeliberations, setLienDeliberations] = useState<
-    LienDeliberationInfos[]
-  >(props.lienDeliberations);
-  return (
-    <div
-      css={css`
-        padding: 20px 10px 20px 10px;
-      `}
-    >
-      <h3
-        css={css`
-          padding-left: 40px;
-        `}
-      >
-        Délibérations
-      </h3>
+  lienDeliberations: LienDeliberationDto[];
+}) => (
+  <div>
+    {props.lienDeliberations.map(d => (
       <div
+        key={asString(d.id)}
         css={css`
-          margin: 20px 0;
+          user-select: none;
+          padding: 10px 20px;
+          ${editCommonClasses.border};
+          margin-top: 4px;
+          &:first-of-type {
+            margin-top: 0;
+          }
+          background: ${colors.clearGrey2};
         `}
       >
-        {lienDeliberations.map(d => (
-          <div
-            key={asString(d.id)}
-            css={css`
-              padding: 10px 0;
-            `}
-          >
+        <div
+          css={css`
+            margin: 12px 4px;
+            display: flex;
+            align-items: center;
+            .${actionsClass} {
+              visibility: hidden;
+            }
+            &:hover {
+              .${actionsClass} {
+                visibility: visible;
+              }
+            }
+          `}
+        >
+          <div>
             {d.deliberation.libelle} du{' '}
             {formatLocaleDate(d.deliberation.deliberationDate)}
           </div>
-        ))}
+          <div
+            css={css`
+              flex: 1;
+            `}
+          />
+          <div
+            css={css`
+              margin-left: 20px;
+              display: flex;
+            `}
+            className={actionsClass}
+          >
+            <div
+              css={css`
+                margin-left: 10px;
+              `}
+            >
+              <Button
+                variant="outlined"
+                size="small"
+                css={css`
+                  background: white;
+                `}
+                startIcon={<Edit />}
+              >
+                Éditer
+              </Button>
+            </div>
+          </div>
+        </div>
       </div>
-      <AddLienDeliberationComponent
-        organismeId={props.organismeId}
-        instanceId={props.instanceId}
-        lienDeliberations={lienDeliberations}
-        setLienDeliberations={setLienDeliberations}
-      />
-    </div>
-  );
-};
+    ))}
+  </div>
+);

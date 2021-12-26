@@ -3,7 +3,7 @@ import { Instant } from './time';
 
 export type Civilite = 'M' | 'Mme';
 
-export interface Elu {
+export interface EluDto {
   id: EluId;
   civilite: Civilite;
   prenom: string;
@@ -13,4 +13,5 @@ export interface Elu {
   imageUrl: string;
   actif: boolean;
   creationDate: Instant;
+  lastModificationDate: Instant;
 }

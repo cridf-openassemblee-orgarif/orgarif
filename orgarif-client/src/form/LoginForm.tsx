@@ -45,7 +45,9 @@ export const LoginForm = (props: Props) => {
           setValue={setPassword}
         />
       </div>
-      <Button type="submit">Se connecter</Button>
+      <Button type="submit" variant="contained">
+        Se connecter
+      </Button>
     </SimpleForm>
   );
 };

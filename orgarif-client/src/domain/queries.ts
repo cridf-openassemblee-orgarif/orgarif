@@ -1,12 +1,17 @@
 import { OrganismeId, SecteurId } from './ids';
-import { DeliberationInfos, FullOrganisme, OrganismeInfos } from './organisme';
+import {
+  DeliberationDto,
+  OrganismeDto,
+  OrganismeListDto,
+  RepresentantDto
+} from './organisme';
 
 export interface GetOrganismeQuery {
   id: OrganismeId;
 }
 
 export interface GetOrganismeQueryResponse {
-  organisme: FullOrganisme;
+  organisme: OrganismeDto;
 }
 
 export interface IsLoginAlreadyTakenQuery {
@@ -22,11 +27,15 @@ export interface ListOrganismesBySecteurQuery {
 }
 
 export interface ListOrganismesBySecteurQueryResponse {
-  organismes: OrganismeInfos[];
+  organismes: OrganismeListDto[];
 }
 
 export interface ListOrganismesQueryResponse {
-  organismes: OrganismeInfos[];
+  organismes: OrganismeListDto[];
+}
+
+export interface ListRepresentantsQueryResponse {
+  representants: RepresentantDto[];
 }
 
 export interface SearchDeliberationQuery {
@@ -34,5 +43,5 @@ export interface SearchDeliberationQuery {
 }
 
 export interface SearchDeliberationQueryResponse {
-  results: DeliberationInfos[];
+  results: DeliberationDto[];
 }

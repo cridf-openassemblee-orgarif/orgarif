@@ -6,26 +6,48 @@ import { useEffect, useState } from 'react';
 import { appContext } from '../ApplicationContext';
 import { EditOrganismeComponent } from '../component/edit/EditOrganismeComponent';
 import { MainContainer } from '../container/MainContainer';
-import { FullOrganisme } from '../domain/organisme';
+import { OrganismeDto } from '../domain/organisme';
+import { LoadingState } from '../interfaces';
 import { RouteLink } from '../routing/RouteLink';
 import { EditOrganismeRoute } from '../routing/routes';
+import { assertUnreachable } from '../utils';
+
+const displayLoading = (loading: LoadingState) => {
+  switch (loading) {
+    case 'loading':
+      return <div>Chargement...</div>;
+    case 'idle':
+      return null;
+    case 'error':
+      return <div>Erreur de chargement</div>;
+    default:
+      assertUnreachable(loading);
+  }
+};
 
 export const EditOrganismeView = (props: {
   routeParams: EditOrganismeRoute;
 }) => {
-  const [organisme, setOrganisme] = useState<FullOrganisme | undefined>(
-    undefined
-  );
-  const [loading, setLoading] = useState(false);
+  const [organisme, setOrganisme] = useState<OrganismeDto | undefined>();
+  const [loading, setLoading] = useState<LoadingState>('idle');
   useEffect(() => {
-    setLoading(true);
-    appContext
-      .queryService()
-      .getOrganismeQuery({ id: props.routeParams.id })
-      .then(r => {
-        setLoading(false);
-        setOrganisme(r.organisme);
-      });
+    setOrganisme(undefined);
+    setLoading('loading');
+    const exec = async () => {
+      const organisme = await appContext
+        .queryService()
+        .getOrganismeQuery({ id: props.routeParams.id })
+        .then(r => r.organisme)
+        .catch(() => setLoading('error'));
+      if (!organisme) {
+        return;
+      }
+      setLoading('idle');
+      // const representationsMap = doRepresentationsMap(organisme);
+      // const organismeSuppleances = doOrganismeSuppleances(organisme);
+      setOrganisme(organisme);
+    };
+    exec();
   }, [props.routeParams.id]);
   return (
     <MainContainer>
@@ -33,15 +55,19 @@ export const EditOrganismeView = (props: {
         <span
           css={css`
             top: 6px;
+            font-size: 10px;
           `}
         >
-          <ArrowBackIos />
+          <ArrowBackIos fontSize="small" />
         </span>{' '}
         Retour liste des organismes
       </RouteLink>
-      {loading && <div>Chargement...</div>}
+      {displayLoading(loading)}
       {organisme && (
-        <EditOrganismeComponent organisme={organisme} setLoading={setLoading} />
+        <EditOrganismeComponent
+          organisme={organisme}
+          setOrganisme={setOrganisme}
+        />
       )}
     </MainContainer>
   );

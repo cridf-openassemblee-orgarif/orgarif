@@ -1,15 +1,15 @@
 import {
   DeliberationId,
-  EluId,
   InstanceId,
   LienDeliberationId,
   NatureJuridiqueId,
   OrganismeId,
   RepresentantId,
+  RepresentationId,
   SecteurId,
   TypeStructureId
 } from './ids';
-import { RepresentantOrSuppleant } from './organisme';
+import { ItemStatus } from './organisme';
 import { LocalDate } from './time';
 import { LoginResult, RegisterResult, UserInfos } from './user';
 
@@ -32,15 +32,14 @@ export interface AddLienDeliberationCommandResponse {
   lienDeliberationId: LienDeliberationId;
 }
 
-export interface AddRepresentantCommand {
-  eluId: EluId;
+export interface AddRepresentationCommand {
+  representantId: RepresentantId;
   organismeId: OrganismeId;
   instanceId?: InstanceId;
-  representantOrSuppleant: RepresentantOrSuppleant;
 }
 
-export interface AddRepresentantCommandResponse {
-  id: RepresentantId;
+export interface AddRepresentationCommandResponse {
+  id: RepresentationId;
 }
 
 export interface CreateDeliberationAndAddLienCommand {
@@ -55,6 +54,14 @@ export interface CreateDeliberationAndAddLienCommandResponse {
   lienDeliberationId: LienDeliberationId;
 }
 
+export interface CreateNatureJuridiqueCommand {
+  libelle: string;
+}
+
+export interface CreateNatureJuridiqueCommandResponse {
+  id: NatureJuridiqueId;
+}
+
 export interface CreateOrganismeCommand {
   nom: string;
 }
@@ -63,23 +70,19 @@ export interface CreateOrganismeCommandResponse {
   id: OrganismeId;
 }
 
-export interface DeleteInstanceCommand {
-  id: InstanceId;
+export interface CreateSecteurCommand {
+  libelle: string;
 }
 
-export interface DeleteNatureJuridiqueCommand {
-  id: NatureJuridiqueId;
-}
-
-export interface DeleteRepresentantCommand {
-  id: RepresentantId;
-}
-
-export interface DeleteSecteurCommand {
+export interface CreateSecteurCommandResponse {
   id: SecteurId;
 }
 
-export interface DeleteTypeStructureCommand {
+export interface CreateTypeStructureCommand {
+  libelle: string;
+}
+
+export interface CreateTypeStructureCommandResponse {
   id: TypeStructureId;
 }
 
@@ -93,12 +96,11 @@ export interface LoginCommandResponse {
   userinfos?: UserInfos;
 }
 
-export interface MoveRepresentantCommand {
-  id: RepresentantId;
+export interface MoveRepresentationCommand {
+  id: RepresentationId;
   toOrganismeId: OrganismeId;
   toInstanceId?: InstanceId;
   toPosition: number;
-  toRepresentantOrSuppleant: RepresentantOrSuppleant;
 }
 
 export interface RegisterCommand {
@@ -112,14 +114,54 @@ export interface RegisterCommandResponse {
   displayName: string;
 }
 
+export interface UpdateInstanceNombreRepresentantsCommand {
+  instanceId: InstanceId;
+  nombre: number | undefined;
+}
+
+export interface UpdateInstanceNombreSuppleantsCommand {
+  instanceId: InstanceId;
+  nombre: number | undefined;
+}
+
+export interface UpdateInstanceNomCommand {
+  id: InstanceId;
+  nom: string;
+}
+
+export interface UpdateInstanceStatusCommand {
+  id: InstanceId;
+  status: ItemStatus;
+}
+
 export interface UpdateNatureJuridiqueLibelleCommand {
   id: NatureJuridiqueId;
   libelle: string;
 }
 
+export interface UpdateNatureJuridiqueStatusCommand {
+  id: NatureJuridiqueId;
+  status: ItemStatus;
+}
+
 export interface UpdateOrganismeNatureJuridiqueCommand {
   id: OrganismeId;
   natureJuridiqueId: NatureJuridiqueId | undefined;
+}
+
+export interface UpdateOrganismeNombreRepresentantsCommand {
+  id: OrganismeId;
+  nombre: number | undefined;
+}
+
+export interface UpdateOrganismeNombreSuppleantsCommand {
+  id: OrganismeId;
+  nombre: number | undefined;
+}
+
+export interface UpdateOrganismeNomCommand {
+  id: OrganismeId;
+  nom: string;
 }
 
 export interface UpdateOrganismePartageRepresentantsCommand {
@@ -132,9 +174,19 @@ export interface UpdateOrganismeSecteurCommand {
   secteurId: SecteurId | undefined;
 }
 
+export interface UpdateOrganismeStatus {
+  id: OrganismeId;
+  status: ItemStatus;
+}
+
 export interface UpdateOrganismeTypeStructureCommand {
   id: OrganismeId;
   typeStructureId: TypeStructureId | undefined;
+}
+
+export interface UpdateRepresentationStatusCommand {
+  id: RepresentantId;
+  status: ItemStatus;
 }
 
 export interface UpdateSecteurLibelleCommand {
@@ -142,7 +194,17 @@ export interface UpdateSecteurLibelleCommand {
   libelle: string;
 }
 
+export interface UpdateSecteurStatusCommand {
+  id: SecteurId;
+  status: ItemStatus;
+}
+
 export interface UpdateTypeStructureLibelleCommand {
   id: TypeStructureId;
   libelle: string;
+}
+
+export interface UpdateTypeStructureStatusCommand {
+  id: TypeStructureId;
+  status: ItemStatus;
 }

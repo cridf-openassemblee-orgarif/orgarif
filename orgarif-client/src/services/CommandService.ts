@@ -4,29 +4,42 @@ import {
   AddInstanceCommandResponse,
   AddLienDeliberationCommand,
   AddLienDeliberationCommandResponse,
-  AddRepresentantCommand,
-  AddRepresentantCommandResponse,
+  AddRepresentationCommand,
+  AddRepresentationCommandResponse,
   CreateDeliberationAndAddLienCommand,
   CreateDeliberationAndAddLienCommandResponse,
+  CreateNatureJuridiqueCommand,
+  CreateNatureJuridiqueCommandResponse,
   CreateOrganismeCommand,
   CreateOrganismeCommandResponse,
-  DeleteInstanceCommand,
-  DeleteNatureJuridiqueCommand,
-  DeleteRepresentantCommand,
-  DeleteSecteurCommand,
-  DeleteTypeStructureCommand,
+  CreateSecteurCommand,
+  CreateSecteurCommandResponse,
+  CreateTypeStructureCommand,
+  CreateTypeStructureCommandResponse,
   LoginCommand,
   LoginCommandResponse,
-  MoveRepresentantCommand,
+  MoveRepresentationCommand,
   RegisterCommand,
   RegisterCommandResponse,
+  UpdateInstanceNombreRepresentantsCommand,
+  UpdateInstanceNombreSuppleantsCommand,
+  UpdateInstanceNomCommand,
+  UpdateInstanceStatusCommand,
   UpdateNatureJuridiqueLibelleCommand,
+  UpdateNatureJuridiqueStatusCommand,
   UpdateOrganismeNatureJuridiqueCommand,
+  UpdateOrganismeNombreRepresentantsCommand,
+  UpdateOrganismeNombreSuppleantsCommand,
+  UpdateOrganismeNomCommand,
   UpdateOrganismePartageRepresentantsCommand,
   UpdateOrganismeSecteurCommand,
+  UpdateOrganismeStatus,
   UpdateOrganismeTypeStructureCommand,
+  UpdateRepresentationStatusCommand,
   UpdateSecteurLibelleCommand,
-  UpdateTypeStructureLibelleCommand
+  UpdateSecteurStatusCommand,
+  UpdateTypeStructureLibelleCommand,
+  UpdateTypeStructureStatusCommand
 } from '../domain/commands';
 
 export class CommandService {
@@ -40,64 +53,95 @@ export class CommandService {
   ): Promise<AddLienDeliberationCommandResponse> =>
     this.command('AddLienDeliberationCommand', command);
 
-  public addRepresentantCommand = (
-    command: AddRepresentantCommand
-  ): Promise<AddRepresentantCommandResponse> =>
-    this.command('AddRepresentantCommand', command);
+  public addRepresentationCommand = (
+    command: AddRepresentationCommand
+  ): Promise<AddRepresentationCommandResponse> =>
+    this.command('AddRepresentationCommand', command);
 
   public createDeliberationAndAddLienCommand = (
     command: CreateDeliberationAndAddLienCommand
   ): Promise<CreateDeliberationAndAddLienCommandResponse> =>
     this.command('CreateDeliberationAndAddLienCommand', command);
 
+  public createNatureJuridiqueCommand = (
+    command: CreateNatureJuridiqueCommand
+  ): Promise<CreateNatureJuridiqueCommandResponse> =>
+    this.command('CreateNatureJuridiqueCommand', command);
+
   public createOrganismeCommand = (
     command: CreateOrganismeCommand
   ): Promise<CreateOrganismeCommandResponse> =>
     this.command('CreateOrganismeCommand', command);
 
-  public deleteInstanceCommand = (
-    command: DeleteInstanceCommand
-  ): Promise<void> => this.command('DeleteInstanceCommand', command);
+  public createSecteurCommand = (
+    command: CreateSecteurCommand
+  ): Promise<CreateSecteurCommandResponse> =>
+    this.command('CreateSecteurCommand', command);
 
-  public deleteNatureJuridiqueCommand = (
-    command: DeleteNatureJuridiqueCommand
-  ): Promise<void> => this.command('DeleteNatureJuridiqueCommand', command);
-
-  public deleteRepresentantCommand = (
-    command: DeleteRepresentantCommand
-  ): Promise<void> => this.command('DeleteRepresentantCommand', command);
-
-  public deleteSecteurCommand = (
-    command: DeleteSecteurCommand
-  ): Promise<void> => this.command('DeleteSecteurCommand', command);
-
-  public deleteTypeStructureCommand = (
-    command: DeleteTypeStructureCommand
-  ): Promise<void> => this.command('DeleteTypeStructureCommand', command);
+  public createTypeStructureCommand = (
+    command: CreateTypeStructureCommand
+  ): Promise<CreateTypeStructureCommandResponse> =>
+    this.command('CreateTypeStructureCommand', command);
 
   public loginCommand = (
     command: LoginCommand
   ): Promise<LoginCommandResponse> => this.command('LoginCommand', command);
 
-  public moveRepresentantCommand = (
-    command: MoveRepresentantCommand
-  ): Promise<MoveRepresentantCommand> =>
-    this.command('MoveRepresentantCommand', command);
+  public moveRepresentationCommand = (
+    command: MoveRepresentationCommand
+  ): Promise<void> => this.command('MoveRepresentationCommand', command);
 
   public registerCommand = (
     command: RegisterCommand
   ): Promise<RegisterCommandResponse> =>
     this.command('RegisterCommand', command);
 
+  public updateInstanceNombreRepresentantsCommand = (
+    command: UpdateInstanceNombreRepresentantsCommand
+  ): Promise<void> =>
+    this.command('UpdateInstanceNombreRepresentantsCommand', command);
+
+  public updateInstanceNombreSuppleantsCommand = (
+    command: UpdateInstanceNombreSuppleantsCommand
+  ): Promise<void> =>
+    this.command('UpdateInstanceNombreSuppleantsCommand', command);
+
+  public updateInstanceNomCommand = (
+    command: UpdateInstanceNomCommand
+  ): Promise<void> => this.command('UpdateInstanceNomCommand', command);
+
+  public updateInstanceStatusCommand = (
+    command: UpdateInstanceStatusCommand
+  ): Promise<void> => this.command('UpdateInstanceStatusCommand', command);
+
   public updateNatureJuridiqueLibelleCommand = (
     command: UpdateNatureJuridiqueLibelleCommand
   ): Promise<void> =>
     this.command('UpdateNatureJuridiqueLibelleCommand', command);
 
+  public updateNatureJuridiqueStatusCommand = (
+    command: UpdateNatureJuridiqueStatusCommand
+  ): Promise<void> =>
+    this.command('UpdateNatureJuridiqueStatusCommand', command);
+
   public updateOrganismeNatureJuridiqueCommand = (
     command: UpdateOrganismeNatureJuridiqueCommand
   ): Promise<void> =>
     this.command('UpdateOrganismeNatureJuridiqueCommand', command);
+
+  public updateOrganismeNombreRepresentantsCommand = (
+    command: UpdateOrganismeNombreRepresentantsCommand
+  ): Promise<void> =>
+    this.command('UpdateOrganismeNombreRepresentantsCommand', command);
+
+  public updateOrganismeNombreSuppleantsCommand = (
+    command: UpdateOrganismeNombreSuppleantsCommand
+  ): Promise<void> =>
+    this.command('UpdateOrganismeNombreSuppleantsCommand', command);
+
+  public updateOrganismeNomCommand = (
+    command: UpdateOrganismeNomCommand
+  ): Promise<void> => this.command('UpdateOrganismeNomCommand', command);
 
   public updateOrganismePartageRepresentantsCommand = (
     command: UpdateOrganismePartageRepresentantsCommand
@@ -108,19 +152,36 @@ export class CommandService {
     command: UpdateOrganismeSecteurCommand
   ): Promise<void> => this.command('UpdateOrganismeSecteurCommand', command);
 
+  public updateOrganismeStatus = (
+    command: UpdateOrganismeStatus
+  ): Promise<void> => this.command('UpdateOrganismeStatus', command);
+
   public updateOrganismeTypeStructureCommand = (
     command: UpdateOrganismeTypeStructureCommand
   ): Promise<void> =>
     this.command('UpdateOrganismeTypeStructureCommand', command);
 
+  public updateRepresentationStatusCommand = (
+    command: UpdateRepresentationStatusCommand
+  ): Promise<void> =>
+    this.command('UpdateRepresentationStatusCommand', command);
+
   public updateSecteurLibelleCommand = (
     command: UpdateSecteurLibelleCommand
   ): Promise<void> => this.command('UpdateSecteurLibelleCommand', command);
+
+  public updateSecteurStatusCommand = (
+    command: UpdateSecteurStatusCommand
+  ): Promise<void> => this.command('UpdateSecteurStatusCommand', command);
 
   public updateTypeStructureLibelleCommand = (
     command: UpdateTypeStructureLibelleCommand
   ): Promise<void> =>
     this.command('UpdateTypeStructureLibelleCommand', command);
+
+  public updateTypeStructureStatusCommand = (
+    command: UpdateTypeStructureStatusCommand
+  ): Promise<void> => this.command('UpdateTypeStructureStatusCommand', command);
 
   private command = <R>(commandName: string, command?: object): Promise<R> =>
     appContext

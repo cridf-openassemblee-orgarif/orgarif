@@ -26,15 +26,15 @@ export const SelectInput = <Id extends NominalString<string>>(props: {
   label: string;
   initialValue: Id | undefined;
   options: SelectOption<Id>[];
-  onChange: (value: Id) => void;
+  onChange: (value: Id | undefined) => void;
 }) => {
   const inputId = clientUid();
   const classes = useStyles();
-  const [value, setValue] = useState(props.initialValue);
+  const [textValue, setTextValue] = useState<Id | ''>(props.initialValue ?? '');
   const onChange = (event: SelectChangeEvent<unknown>) => {
-    const value = event.target.value as Id;
-    setValue(value);
-    props.onChange(value);
+    const value = event.target.value as Id | '';
+    setTextValue(value);
+    props.onChange(value !== '' ? value : undefined);
   };
   return (
     <div
@@ -64,14 +64,20 @@ export const SelectInput = <Id extends NominalString<string>>(props: {
         <Select
           labelId={asString(inputId)}
           id={asString(inputId)}
-          value={value}
+          value={textValue}
           onChange={onChange}
+          displayEmpty={true}
+          css={css`
+            background: white;
+          `}
         >
-          {props.options.map((o, i) => (
-            <MenuItem key={i} value={o.value ? asString(o.value) : undefined}>
-              {o.label}
-            </MenuItem>
-          ))}
+          {props.options.map((o, i) => {
+            return (
+              <MenuItem key={i} value={o.value ? asString(o.value) : ''}>
+                {o.label}
+              </MenuItem>
+            );
+          })}
         </Select>
       </FormControl>
     </div>

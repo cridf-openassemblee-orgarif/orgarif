@@ -1,4 +1,4 @@
-export type NominalItem = NominalString<any> | NominalNumber<any>;
+export type NominalItem = NominalString<any> | NominalNumber<any> | string;
 
 export abstract class NominalString<T extends string> {
   private _typeGuard!: T;
@@ -26,12 +26,12 @@ export class Dict<K extends NominalItem, T> {
 }
 
 export const dict = <K extends NominalItem, T>(pairs: [K, T][] = []) => {
-    const d = {} as Dict<K, T>;
-    pairs.forEach(pair => {
-        // @ts-ignore
-        d[pair[0]] = pair[1];
-    });
-    return d;
+  const d = {} as Dict<K, T>;
+  pairs.forEach(pair => {
+    // @ts-ignore
+    d[pair[0]] = pair[1];
+  });
+  return d;
 };
 
 export const get = <K extends NominalItem, T>(
@@ -63,6 +63,18 @@ export const set = <K extends NominalItem, T>(
   return newDict;
 };
 
+export const setAll = <K extends NominalItem, T>(
+  dict: Dict<K, T>,
+  pairs: [K, T][]
+): Dict<K, T> => {
+  const newDict = { ...dict } as Dict<K, T>;
+  pairs.forEach(pair => {
+    // @ts-ignore
+    d[pair[0]] = pair[1];
+  });
+  return newDict;
+};
+
 export const setMutable = <K extends NominalItem, T>(
   dict: Dict<K, T>,
   key: K,
@@ -81,16 +93,7 @@ export const dictValues = <K extends NominalItem, T>(dict: Dict<K, T>) =>
 export const dictEntries = <K extends NominalItem, T>(dict: Dict<K, T>) =>
   Object.entries(dict) as unknown as [K, T][];
 
-// FIXME remove usage for an immutable deleteItem
-export const deleteItemOld = <K extends NominalItem, T>(
-  dict: Dict<K, T>,
-  key: K
-) => {
-  // @ts-ignore
-  delete dict[key];
-};
-
-export const deleteFromDict = <K extends NominalItem, T>(
+export const remove = <K extends NominalItem, T>(
   dict: Dict<K, T>,
   ...keys: K[]
 ): Dict<K, T> => {

@@ -1,31 +1,27 @@
 import { ApplicationEnvironment } from './application';
-import { Elu } from './elu';
-import {
-  NatureJuridiqueId,
-  OrgarifId,
-  SecteurId,
-  TypeStructureId
-} from './ids';
+import { NatureJuridiqueId, SecteurId, TypeStructureId } from './ids';
+import { ItemStatus } from './organisme';
 import { UserInfos } from './user';
 
+export type CategoryId = SecteurId | NatureJuridiqueId | TypeStructureId;
 export type Category = Secteur | NatureJuridique | TypeStructure;
 
 export interface Secteur {
-  category: 'Secteur';
   id: SecteurId;
   libelle: string;
+  status: ItemStatus;
 }
 
 export interface NatureJuridique {
-  category: 'NatureJuridique';
   id: NatureJuridiqueId;
   libelle: string;
+  status: ItemStatus;
 }
 
 export interface TypeStructure {
-  category: 'TypeStructure';
   id: TypeStructureId;
   libelle: string;
+  status: ItemStatus;
 }
 
 export interface OrganismeCategories {
@@ -39,5 +35,4 @@ export interface ApplicationBootstrapData {
   env: ApplicationEnvironment;
   userInfos?: UserInfos;
   categories: OrganismeCategories;
-  elus: Elu[];
 }

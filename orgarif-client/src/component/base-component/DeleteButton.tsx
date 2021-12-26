@@ -1,6 +1,6 @@
 /** @jsxImportSource @emotion/react */
 import { css } from '@emotion/react';
-import { Clear, Delete, KeyboardBackspace } from '@mui/icons-material';
+import { Clear, Delete } from '@mui/icons-material';
 import { ButtonGroup } from '@mui/material';
 import Button from '@mui/material/Button';
 import { makeStyles } from '@mui/styles';
@@ -55,33 +55,58 @@ export const DeleteButton = (props: Props) => {
       {(() => {
         switch (state) {
           case 'delete':
+            // <Button
+            //   variant="outlined"
+            //   size="small"
+            //   onClick={() => setState('confirm')}
+            //   className={classes.root}
+            // >
+            //   <span css={iconSpanStyle}>
+            //     <Clear css={iconStyle} />
+            //   </span>
+            //   {props.label}
+            // </Button>
+            //   <ButtonGroup>
+            //       {/*<Button */}
+            //       {/*  size="small"*/}
+            //       {/*  onClick={() => setTimeout(() => setState('delete'), 200)}*/}
+            //       {/*  autoFocus={true}*/}
+            //       {/*  className={classes.root}*/}
+            //       {/*>*/}
+            //       {/*  <span css={iconSpanStyle}>*/}
+            //       {/*    <KeyboardBackspace css={iconStyle} />*/}
+            //       {/*  </span>*/}
+            //       {/*  {props.size === 'large' && 'Annuler'}*/}
+            //       {/*</Button>*/}
             return (
-              <Button
-                variant="outlined"
-                size="small"
-                onClick={() => setState('confirm')}
-                className={classes.root}
-              >
-                <span css={iconSpanStyle}>
-                  <Clear css={iconStyle} />
-                </span>
-                {props.label}
-              </Button>
+              <ButtonGroup>
+                <Button
+                  variant="outlined"
+                  size="small"
+                  onClick={() => setState('confirm')}
+                  className={classes.root}
+                >
+                  <span css={iconSpanStyle}>
+                    <Clear css={iconStyle} />
+                  </span>
+                  {props.label}
+                </Button>
+              </ButtonGroup>
             );
           case 'confirm':
             return (
               <ButtonGroup>
-                <Button
-                  size="small"
-                  onClick={() => setTimeout(() => setState('delete'), 200)}
-                  autoFocus={true}
-                  className={classes.root}
-                >
-                  <span css={iconSpanStyle}>
-                    <KeyboardBackspace css={iconStyle} />
-                  </span>
-                  {props.size === 'large' && 'Annuler'}
-                </Button>
+                {/*<Button*/}
+                {/*  size="small"*/}
+                {/*  onClick={() => setTimeout(() => setState('delete'), 200)}*/}
+                {/*  autoFocus={true}*/}
+                {/*  className={classes.root}*/}
+                {/*>*/}
+                {/*  <span css={iconSpanStyle}>*/}
+                {/*    <KeyboardBackspace css={iconStyle} />*/}
+                {/*  </span>*/}
+                {/*  {props.size === 'large' && 'Annuler'}*/}
+                {/*</Button>*/}
                 <Button
                   size="small"
                   onClick={props.onDelete}

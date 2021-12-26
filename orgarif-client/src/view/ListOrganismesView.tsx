@@ -7,13 +7,13 @@ import { appContext } from '../ApplicationContext';
 import { SimpleForm } from '../component/base-component/SimpleForm';
 import { TextInput } from '../component/base-component/TextInput';
 import { MainContainer } from '../container/MainContainer';
-import { OrganismeInfos } from '../domain/organisme';
+import { OrganismeListDto } from '../domain/organisme';
 import { RouteLink } from '../routing/RouteLink';
 import { colors } from '../styles/vars';
 import { asString } from '../utils/nominal-class';
 
 export const ListOrganismesView = () => {
-  const [organismes, setOrganismes] = useState<OrganismeInfos[] | undefined>(
+  const [organismes, setOrganismes] = useState<OrganismeListDto[] | undefined>(
     undefined
   );
   useEffect(() => {

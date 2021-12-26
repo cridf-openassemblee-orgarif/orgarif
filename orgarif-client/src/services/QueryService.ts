@@ -7,6 +7,7 @@ import {
   ListOrganismesBySecteurQuery,
   ListOrganismesBySecteurQueryResponse,
   ListOrganismesQueryResponse,
+  ListRepresentantsQueryResponse,
   SearchDeliberationQuery,
   SearchDeliberationQueryResponse
 } from '../domain/queries';
@@ -29,6 +30,9 @@ export class QueryService {
 
   public listOrganismesQuery = (): Promise<ListOrganismesQueryResponse> =>
     this.query('ListOrganismesQuery');
+
+  public listRepresentantsQuery = (): Promise<ListRepresentantsQueryResponse> =>
+    this.query('ListRepresentantsQuery');
 
   public searchDeliberationQuery = (
     query: SearchDeliberationQuery

@@ -7,15 +7,12 @@ import * as React from 'react';
 import { ChangeEvent, useState } from 'react';
 import { appContext } from '../../ApplicationContext';
 import { SharedConstants } from '../../constants';
-import { DeliberationId, InstanceId, OrganismeId } from '../../domain/ids';
-import {
-  DeliberationInfos,
-  LienDeliberationInfos
-} from '../../domain/organisme';
+import { DeliberationId } from '../../domain/ids';
+import { LienDeliberationDto } from '../../domain/organisme';
 import { LocalDate } from '../../domain/time';
 import { Errors } from '../../errors';
 import { colors } from '../../styles/vars';
-import { compareByLocalDate, defer } from '../../utils';
+import { defer } from '../../utils';
 import { CreateDeliberationAndAddLienComponent } from './CreateDeliberationAndAddLienComponent';
 
 interface DeliberationItem {
@@ -25,12 +22,14 @@ interface DeliberationItem {
 }
 
 export const AddLienDeliberationComponent = (props: {
-  organismeId: OrganismeId;
-  instanceId?: InstanceId;
-  lienDeliberations: LienDeliberationInfos[];
-  setLienDeliberations: (l: LienDeliberationInfos[]) => void;
+  alreadySetLienDeliberations: LienDeliberationDto[];
+  onNewLienDeliberation: (id: DeliberationId) => void;
+  onNewDeliberationAndLien: (
+    libelle: string,
+    deliberationDate: LocalDate
+  ) => void;
 }) => {
-  // material-ui wants null to reset correctly the input
+  // react wants null to reset correctly the input
   const [value, setValue] = useState<DeliberationItem | null>(null);
   const [inputValue, setInputValue] = useState('');
   const [displayDialog, setDisplayDialog] = useState(false);
@@ -39,21 +38,14 @@ export const AddLienDeliberationComponent = (props: {
   const [loading, setLoading] = useState(false);
   const [deliberations, setDeliberations] = useState<DeliberationItem[]>([]);
 
-  const addDeliberation = (lienDeliberation: LienDeliberationInfos) => {
-    const newDeliberations = [...props.lienDeliberations, lienDeliberation];
-    newDeliberations.sort(
-      compareByLocalDate(d => d.deliberation.deliberationDate)
-    );
-    props.setLienDeliberations(newDeliberations);
-  };
-
   // search suggestions
+  // TODO plutot prévenir si delib déjà liée
   const onInputChange = (event: React.ChangeEvent<{}>, value: string) => {
     setInputValue(value);
-    setLoading(true);
-    setAlreadySet(false);
-    setDeliberations([]);
     if (value.length >= SharedConstants.deliberationSearchLengthLimit) {
+      setLoading(true);
+      setAlreadySet(false);
+      setDeliberations([]);
       appContext
         .queryService()
         .searchDeliberationQuery({
@@ -61,10 +53,10 @@ export const AddLienDeliberationComponent = (props: {
         })
         .then(r => {
           setLoading(false);
-          const existingLiens = props.lienDeliberations.map(
+          const alreadySet = props.alreadySetLienDeliberations.map(
             l => l.deliberation.id
           );
-          const results = r.results.filter(r => !existingLiens.includes(r.id));
+          const results = r.results.filter(r => !alreadySet.includes(r.id));
           const libelles = r.results.map(r => r.libelle);
           if (libelles.includes(value) && results.length === 0) {
             setAlreadySet(true);
@@ -90,9 +82,7 @@ export const AddLienDeliberationComponent = (props: {
     setDeliberations([]);
     setDialogLibelle(libelle);
     // without it popup is directly submitted when user use 'enter'
-    defer(() => {
-      setDisplayDialog(true);
-    });
+    defer(() => setDisplayDialog(true));
   };
   const onChange = (
     event: ChangeEvent<{}>,
@@ -109,26 +99,27 @@ export const AddLienDeliberationComponent = (props: {
         if (!deliberationDate) {
           throw Errors._82c7652b();
         }
-        appContext
-          .commandService()
-          .addLienDeliberationCommand({
-            deliberationId, //: newValue.id,
-            organismeId: props.organismeId,
-            instanceId: props.instanceId
-          })
-          .then(r => {
-            const deliberation: DeliberationInfos = {
-              id: deliberationId,
-              libelle: newValue.libelle,
-              deliberationDate
-            };
-            addDeliberation({
-              id: r.lienDeliberationId,
-              deliberation
-            });
-            setInputValue('');
-            setValue(null);
-          });
+        // appContext
+        //   .commandService()
+        //   .addLienDeliberationCommand({
+        //     deliberationId, //: newValue.id,
+        //     organismeId: props.organismeId,
+        //     instanceId: props.instanceId
+        //   })
+        //   .then(r => {
+        //     const deliberation: LienDeliberationDto = {
+        //       id: r.lienDeliberationId,
+        //       deliberationId,
+        //       libelle: newValue.libelle,
+        //       deliberationDate
+        //     };
+        //     addDeliberation({
+        //       id: r.lienDeliberationId,
+        //       deliberation
+        //     });
+        //     setInputValue('');
+        //     setValue(null);
+        //   });
       }
     }
   };
@@ -196,9 +187,10 @@ export const AddLienDeliberationComponent = (props: {
               <span
                 css={css`
                   font-weight: bold;
+                  margin-right: 6px;
                 `}
               >
-                [ajouter]{' '}
+                [ajouter]
               </span>
             )}
             {option.libelle}
@@ -217,11 +209,10 @@ export const AddLienDeliberationComponent = (props: {
       />
       <CreateDeliberationAndAddLienComponent
         libelle={dialogLibelle}
-        organismeId={props.organismeId}
-        instanceId={props.instanceId}
-        addDeliberation={addDeliberation}
         display={displayDialog}
         close={handleClose}
+        onNewLienDeliberation={props.onNewLienDeliberation}
+        onNewDeliberationAndLien={props.onNewDeliberationAndLien}
       />
     </React.Fragment>
   );

@@ -1,19 +1,76 @@
 import {
   DeliberationId,
-  EluId,
   InstanceId,
   LienDeliberationId,
   NatureJuridiqueId,
   OrganismeId,
   RepresentantId,
+  RepresentationId,
   SecteurId,
+  SuppleanceId,
   TypeStructureId
 } from './ids';
-import { Instant, LocalDate } from './time';
+import { LocalDate } from './time';
 
-export type RepresentantOrSuppleant = 'representant' | 'suppleant';
+export type ItemStatus = 'live' | 'archive' | 'trash';
 
-export interface OrganismeInfos {
+export interface RepresentationDto {
+  id: RepresentationId;
+  representant: RepresentantDto;
+  startDate?: LocalDate;
+  endDate?: LocalDate;
+  suppleance?: SuppleanceDto;
+}
+
+export interface SuppleanceDto {
+  id: SuppleanceId;
+  representant: RepresentantDto;
+  startDate?: LocalDate;
+  endDate?: LocalDate;
+}
+
+export interface RepresentantDto {
+  id: RepresentantId;
+  isElu: boolean;
+  civilite?: string;
+  prenom: string;
+  nom: string;
+  groupePolitique?: string;
+  groupePolitiqueCourt?: string;
+  imageUrl?: string;
+  eluActif?: boolean;
+}
+
+export interface DeliberationDto {
+  id: DeliberationId;
+  libelle: string;
+  deliberationDate: LocalDate;
+}
+
+export interface LienDeliberationDto {
+  id: LienDeliberationId;
+  deliberation: DeliberationDto;
+}
+
+export interface InstanceDto {
+  id: InstanceId;
+  nom: string;
+  nombreRepresentants?: number;
+  nombreSuppleants?: number;
+  lienDeliberations: LienDeliberationDto[];
+  representations: RepresentationDto[];
+  status: ItemStatus;
+}
+
+export interface OrganismeListDto {
+  id: OrganismeId;
+  nom: string;
+  secteurId?: SecteurId;
+  natureJuridiqueId?: NatureJuridiqueId;
+  typeStructureId?: TypeStructureId;
+}
+
+export interface OrganismeDto {
   id: OrganismeId;
   nom: string;
   secteurId?: SecteurId;
@@ -21,46 +78,15 @@ export interface OrganismeInfos {
   typeStructureId?: TypeStructureId;
   nombreRepresentants?: number;
   nombreSuppleants?: number;
-  partageRepresentants: boolean;
-  creationDate: Instant;
-  lastModificationDate: Instant;
+  representations: RepresentationDto[];
+  lienDeliberations: LienDeliberationDto[];
+  instances: InstanceDto[];
+  status: ItemStatus;
 }
 
-export interface InstanceInfos {
-  id: InstanceId;
-  nom: string;
-  organismeId: OrganismeId;
+export interface PartialOrganismeOrInstance {
   nombreRepresentants?: number;
   nombreSuppleants?: number;
-}
-
-export interface Representant {
-  id: RepresentantId;
-  eluId: EluId;
-}
-
-export interface DeliberationInfos {
-  id: DeliberationId;
-  libelle: string;
-  deliberationDate: LocalDate;
-}
-
-export interface LienDeliberationInfos {
-  id: LienDeliberationId;
-  deliberation: DeliberationInfos;
-}
-
-export interface FullInstance {
-  infos: InstanceInfos;
-  lienDeliberations: LienDeliberationInfos[];
-  representants: Representant[];
-  suppleants: Representant[];
-}
-
-export interface FullOrganisme {
-  infos: OrganismeInfos;
-  lienDeliberations: LienDeliberationInfos[];
-  representants: Representant[];
-  suppleants: Representant[];
-  instances: FullInstance[];
+  representations: RepresentationDto[];
+  lienDeliberations: LienDeliberationDto[];
 }

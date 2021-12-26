@@ -10,12 +10,13 @@ export type OrgarifId =
   | MailLogId
   | NatureJuridiqueId
   | OrganismeId
-  | OrgarifSecurityId
   | OrgarifStringId
   | OrgarifUuidId
   | RepresentantId
+  | RepresentationId
   | RequestErrorId
   | SecteurId
+  | SuppleanceId
   | TypeStructureId
   | UserFileId
   | UserId
@@ -30,12 +31,13 @@ export type LienDeliberationId = NominalString<'LienDeliberationId'>;
 export type MailLogId = NominalString<'MailLogId'>;
 export type NatureJuridiqueId = NominalString<'NatureJuridiqueId'>;
 export type OrganismeId = NominalString<'OrganismeId'>;
-export type OrgarifSecurityId = NominalString<'OrgarifSecurityId'>;
 export type OrgarifStringId = NominalString<'OrgarifStringId'>;
 export type OrgarifUuidId = NominalString<'OrgarifUuidId'>;
 export type RepresentantId = NominalString<'RepresentantId'>;
+export type RepresentationId = NominalString<'RepresentationId'>;
 export type RequestErrorId = NominalString<'RequestErrorId'>;
 export type SecteurId = NominalString<'SecteurId'>;
+export type SuppleanceId = NominalString<'SuppleanceId'>;
 export type TypeStructureId = NominalString<'TypeStructureId'>;
 export type UserFileId = NominalString<'UserFileId'>;
 export type UserId = NominalString<'UserId'>;

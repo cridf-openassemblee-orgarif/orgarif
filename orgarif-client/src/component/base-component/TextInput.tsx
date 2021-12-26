@@ -23,6 +23,8 @@ export const TextInput = (props: {
   onChange?: (event: ChangeEvent<HTMLInputElement>) => void;
   onBlur?: (event: FocusEvent<HTMLInputElement>) => void;
   mode?: 'normal' | 'appears-as-text';
+  // label always on top (important pour date notamment)
+  shrinkLabel?: boolean;
 }) => {
   const classes = useStyles();
   const [value, setValue] = useState(props.initialValue);
@@ -47,6 +49,7 @@ export const TextInput = (props: {
       InputProps={{
         readOnly: props.mode === 'appears-as-text'
       }}
+      InputLabelProps={props.shrinkLabel ? { shrink: true } : undefined}
     />
   );
 };

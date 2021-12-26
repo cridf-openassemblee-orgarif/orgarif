@@ -1,7 +1,7 @@
 export const pipe = <T>(value: T) => new Pipe(value);
 
 export class Pipe<T> {
-  t: T;
+  private t: T;
 
   constructor(t: T) {
     this.t = t;

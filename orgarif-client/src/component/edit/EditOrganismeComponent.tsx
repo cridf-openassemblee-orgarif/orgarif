@@ -1,365 +1,133 @@
 /** @jsxImportSource @emotion/react */
 import { css } from '@emotion/react';
-import { FormControlLabel } from '@mui/material';
-import Checkbox from '@mui/material/Checkbox';
 import * as React from 'react';
-import { useEffect, useState } from 'react';
-import { useRecoilValue } from 'recoil';
-import { appContext } from '../../ApplicationContext';
-import { Category } from '../../domain/bootstrap-data';
-import { RepresentantListId } from '../../domain/client-ids';
-import {
-  NatureJuridiqueId,
-  OrgarifId,
-  SecteurId,
-  TypeStructureId
-} from '../../domain/ids';
-import {
-  FullInstance,
-  FullOrganisme,
-  Representant
-} from '../../domain/organisme';
-import { state } from '../../state/state';
-import { Dict, dict, set, setMutable } from '../../utils/nominal-class';
-import { pipe } from '../../utils/Pipe';
-import { SelectInput, SelectOption } from '../base-component/SelectInput';
-import { NombreRepresentantsComponent } from '../NombreRepresentantsComponent';
+import { OrganismeDto } from '../../domain/organisme';
+import { colors, dimensions } from '../../styles/vars';
+import { organismeActions } from '../../utils/organisme-utils';
 import { AddInstanceComponent } from './AddInstanceComponent';
+import { DragAndDropGlobalContext } from './DragAndDropGlobalContext';
+import { EditInstancesComponent } from './EditInstancesComponent';
+import { EditNomComponent } from './EditNomComponent';
 import {
-  DragAndDropContainer,
-  representantListId
-} from './DragAndDropContainer';
-import { EditLienDeliberationsListComponent } from './EditLienDeliberationsListComponent';
-import { EditRepresentantsListComponent } from './EditRepresentantsListComponent';
-import { InstancesListComponent } from './InstancesListComponent';
+  EditOrganismeNatureJuridiqueComponent,
+  EditOrganismeSecteurComponent,
+  EditOrganismeTypeStructureComponent
+} from './EditOrganismeCategoryComponent';
+import { EditPartialOrganismeOrInstance } from './EditPartialOrganismeOrInstance';
 
 const classes = {
   categories: css`
-    padding: 0 20px;
+    margin: 4px;
+    @media (min-width: ${dimensions.screenSmMin}px) {
+      width: 33.33%;
+    }
+  `,
+  separator: css`
+    margin: 20px 5%;
+    padding: 0;
+    border: 0;
+    border-top: 1px dashed ${colors.grey2};
   `
 };
 
-export const EditCategoryComponent = <
-  C extends Category,
-  Id extends OrgarifId
->(props: {
-  label: string;
-  categoryList: C[];
-  categoryById: Dict<Id, C>;
-  currentId: Id | undefined;
-  onChange: (id: Id | undefined) => void;
-}) => {
-  const options: SelectOption<OrgarifId>[] = props.categoryList.map(e => ({
-    value: e.id,
-    label: e.libelle
-  }));
-  options.unshift({
-    value: undefined,
-    label: `- Sans ${props.label.toLowerCase()} -`
-  });
-  return (
-    <SelectInput
-      label={props.label}
-      initialValue={props.currentId}
-      options={options}
-      onChange={id => props.onChange(id as Id)}
-    />
-  );
-};
-
-export const useWindowHeight = () => {
-  const [height, setHeight] = useState(0);
-
-  useEffect(() => {
-    const handleResize = () => setHeight(window.innerHeight);
-
-    window.addEventListener('resize', () => handleResize());
-
-    handleResize();
-
-    return () => window.removeEventListener('resize', handleResize);
-  });
-
-  return height;
-};
-
 export const EditOrganismeComponent = (props: {
-  organisme: FullOrganisme;
-  setLoading: (l: boolean) => void;
+  organisme: OrganismeDto;
+  setOrganisme: (o: OrganismeDto) => void;
 }) => {
   const organisme = props.organisme;
-  const [instances, setInstances] = useState<FullInstance[]>(
-    organisme.instances
-  );
-  const [representantsLists, setRepresentantsLists] = useState(
-    dict<RepresentantListId, Representant[]>()
-  );
-  const [partageRepresentants, setPartageRepresentants] = useState(
-    organisme.infos.partageRepresentants
-  );
-  useEffect(() => {
-    const representants = pipe(dict<RepresentantListId, Representant[]>())
-      .map(list =>
-        set(
-          list,
-          representantListId(organisme.infos.id, undefined, 'representant'),
-          organisme.representants
-        )
-      )
-      .map(list =>
-        set(
-          list,
-          representantListId(organisme.infos.id, undefined, 'suppleant'),
-          organisme.suppleants
-        )
-      )
-      .unwrap();
-    organisme.instances.forEach(instance => {
-      setMutable(
-        representants,
-        representantListId(
-          organisme.infos.id,
-          instance.infos.id,
-          'representant'
-        ),
-        instance.representants
-      );
-      setMutable(
-        representants,
-        representantListId(organisme.infos.id, instance.infos.id, 'suppleant'),
-        instance.suppleants
-      );
-    });
-    setRepresentantsLists(representants);
-  }, [organisme]);
+  const actions = organismeActions(organisme, props.setOrganisme);
   return (
-    <DragAndDropContainer
-      organisme={organisme}
-      representantsLists={representantsLists}
-      setRepresentantsLists={setRepresentantsLists}
+    <DragAndDropGlobalContext
+      onMoveRepresentation={actions.onMoveRepresentation}
     >
       <div
         css={css`
           width: 100%;
         `}
       >
-        <h2
-          css={css`
-            font-size: 2rem;
-            padding: 20px 50px;
-          `}
-        >
-          {organisme.infos.nom}
-        </h2>
+        <EditNomComponent
+          kind={'organisme'}
+          nom={organisme.nom}
+          onUpdateNom={actions.onOrganismeNomChange}
+          onUpdateStatus={actions.onOrganismeStatusUpdate}
+          titleElement={
+            <h2
+              css={css`
+                font-size: 2rem;
+                font-weight: bold;
+              `}
+            >
+              {/* eslint-disable-line jsx-a11y/heading-has-content */}
+            </h2>
+          }
+        />
         <div
           css={css`
-            width: 50%;
-            margin-bottom: 40px;
+            display: flex;
+            flex-direction: column;
+            @media (min-width: ${dimensions.screenSmMin}px) {
+              flex-direction: row;
+            }
           `}
         >
           <div css={classes.categories}>
-            <EditCategoryComponent
-              label="Nature juridique"
-              categoryList={useRecoilValue(state.natureJuridiques)}
-              categoryById={useRecoilValue(state.natureJuridiquesById)}
-              currentId={organisme.infos.natureJuridiqueId}
-              onChange={(natureJuridiqueId: NatureJuridiqueId | undefined) =>
-                appContext
-                  .commandService()
-                  .updateOrganismeNatureJuridiqueCommand({
-                    id: organisme.infos.id,
-                    natureJuridiqueId: natureJuridiqueId
-                  })
-              }
+            <EditOrganismeNatureJuridiqueComponent
+              natureJuridiqueId={organisme.natureJuridiqueId}
+              onChange={actions.onNatureJuridiqueChange}
             />
           </div>
           <div css={classes.categories}>
-            <EditCategoryComponent
-              label="Secteur"
-              categoryList={useRecoilValue(state.secteurs)}
-              categoryById={useRecoilValue(state.secteursById)}
-              currentId={organisme.infos.secteurId}
-              onChange={(secteurId: SecteurId | undefined) =>
-                appContext.commandService().updateOrganismeSecteurCommand({
-                  id: organisme.infos.id,
-                  secteurId: secteurId
-                })
-              }
+            <EditOrganismeSecteurComponent
+              secteurId={organisme.secteurId}
+              onChange={actions.onSecteurChange}
             />
           </div>
           <div css={classes.categories}>
-            <EditCategoryComponent
-              label="Type de structure"
-              categoryList={useRecoilValue(state.typeStructures)}
-              categoryById={useRecoilValue(state.typeStructuresById)}
-              currentId={organisme.infos.typeStructureId}
-              onChange={(typeStructureId: TypeStructureId | undefined) =>
-                appContext
-                  .commandService()
-                  .updateOrganismeTypeStructureCommand({
-                    id: organisme.infos.id,
-                    typeStructureId: typeStructureId
-                  })
-              }
+            <EditOrganismeTypeStructureComponent
+              typeStructureId={organisme.typeStructureId}
+              onChange={actions.onTypeStructureChange}
             />
           </div>
-          <div css={classes.categories}>
-            <div
-              css={css`
-                display: flex;
-              `}
-            >
-              <div
-                css={css`
-                  flex: 25%;
-                  font-size: 1rem;
-                  text-align: right;
-                  padding: 19px 10px 0 0;
-                `}
-              >
-                Ajouter une instance
-              </div>
-              <div
-                css={css`
-                  flex: 75%;
-                  padding: 8px 6px 0 4px;
-                `}
-              >
-                <AddInstanceComponent
-                  organismeId={organisme.infos.id}
-                  instances={instances}
-                  setInstances={setInstances}
-                  representantsLists={representantsLists}
-                  setRepresentantsLists={setRepresentantsLists}
-                />
-              </div>
-            </div>
-          </div>
-          {instances.length !== 0 && (
-            <div css={classes.categories}>
-              <div
-                css={css`
-                  display: flex;
-                `}
-              >
-                <div
-                  css={css`
-                    flex: 25%;
-                    font-size: 1rem;
-                    text-align: right;
-                    padding: 19px 10px 0 0;
-                  `}
-                />
-                <div
-                  css={css`
-                    flex: 75%;
-                    padding: 8px 6px 0 4px;
-                  `}
-                >
-                  <FormControlLabel
-                    control={
-                      <Checkbox
-                        checked={partageRepresentants}
-                        onChange={() => {
-                          appContext
-                            .commandService()
-                            .updateOrganismePartageRepresentantsCommand({
-                              id: props.organisme.infos.id,
-                              partageRepresentants: !partageRepresentants
-                            })
-                            .then(() =>
-                              setPartageRepresentants(!partageRepresentants)
-                            );
-                        }}
-                        name="checkedB"
-                        color="primary"
-                      />
-                    }
-                    label="Partage des représentants"
-                  />
-                </div>
-              </div>
-            </div>
-          )}
         </div>
-        {(instances.length === 0 || partageRepresentants) && (
-          <React.Fragment>
-            <NombreRepresentantsComponent
-              nombreRepresentants={organisme.infos.nombreRepresentants}
-              nombreSuppleants={organisme.infos.nombreSuppleants}
-            />
-            <div
-              css={css`
-                width: 50%;
-                margin: 10px 50px;
-                padding: 0 40px;
-                display: flex;
-              `}
-            >
-              <div
-                css={css`
-                  flex: 1;
-                `}
-              >
-                <EditRepresentantsListComponent
-                  organismeId={organisme.infos.id}
-                  instanceId={undefined}
-                  representantOrSuppleant="representant"
-                  representantsLists={representantsLists}
-                  setRepresentantsLists={setRepresentantsLists}
-                  label={'Représentants'}
-                  emptyListLabel={'Pas de représentant'}
-                />
-              </div>
-              <div
-                css={css`
-                  flex: 1;
-                  padding-bottom: 30px;
-                `}
-              >
-                <EditRepresentantsListComponent
-                  organismeId={organisme.infos.id}
-                  instanceId={undefined}
-                  representantOrSuppleant="suppleant"
-                  representantsLists={representantsLists}
-                  setRepresentantsLists={setRepresentantsLists}
-                  label={'Suppléants'}
-                  emptyListLabel={'Pas de suppléant'}
-                />
-              </div>
-            </div>
-          </React.Fragment>
-        )}
-        {instances.length !== 0 && (
+        <hr css={classes.separator} />
+        <div
+          css={css`
+            margin-top: 20px;
+          `}
+        >
+          <EditPartialOrganismeOrInstance
+            organismeId={organisme.id}
+            instanceId={undefined}
+            item={organisme}
+            onNombreRepresentantsChange={actions.onNombreRepresentantsChange}
+            onNombreSuppleantsChange={actions.onNombreSuppleantsChange}
+            onAddRepresentation={actions.onAddRepresentation}
+            onNewLienDeliberation={actions.onNewLienDeliberation}
+            onNewDeliberationAndLien={actions.onNewDeliberationAndLien}
+          />
+        </div>
+        <hr css={classes.separator} />
+        <AddInstanceComponent addInstance={actions.onAddInstance} />
+        {organisme.instances.length !== 0 && (
           <div
             css={css`
               margin: 0 20px;
             `}
           >
-            <InstancesListComponent
-              organismeId={organisme.infos.id}
-              instances={instances}
-              setInstances={setInstances}
-              representantsLists={representantsLists}
-              partageRepresentants={partageRepresentants}
-              setRepresentantsLists={setRepresentantsLists}
+            <EditInstancesComponent
+              organismeId={organisme.id}
+              instances={organisme.instances}
+              onNomChange={actions.onInstanceNomChange}
+              onStatusChange={actions.onInstanceStatusChange}
+              onNombreRepresentantsChange={actions.onNombreRepresentantsChange}
+              onNombreSuppleantsChange={actions.onNombreSuppleantsChange}
+              onAddRepresentation={actions.onAddRepresentation}
+              onNewLienDeliberation={actions.onNewLienDeliberation}
+              onNewDeliberationAndLien={actions.onNewDeliberationAndLien}
             />
           </div>
         )}
-        <div
-          css={css`
-            width: 50%;
-            margin: 10px 50px;
-            padding: 0 40px;
-            display: flex;
-          `}
-        >
-          <EditLienDeliberationsListComponent
-            lienDeliberations={organisme.lienDeliberations}
-            organismeId={organisme.infos.id}
-          />
-        </div>
       </div>
-    </DragAndDropContainer>
+    </DragAndDropGlobalContext>
   );
 };

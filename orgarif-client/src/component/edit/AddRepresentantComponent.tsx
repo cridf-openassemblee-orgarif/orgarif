@@ -5,74 +5,28 @@ import TextField from '@mui/material/TextField';
 import * as React from 'react';
 import { useState } from 'react';
 import { useRecoilValue } from 'recoil';
-import { appContext } from '../../ApplicationContext';
-import { RepresentantListId } from '../../domain/client-ids';
-import { Elu } from '../../domain/elu';
-import { EluId, InstanceId, OrganismeId } from '../../domain/ids';
-import { Representant, RepresentantOrSuppleant } from '../../domain/organisme';
+import { RepresentantDto } from '../../domain/organisme';
 import { state } from '../../state/state';
 import { colors } from '../../styles/vars';
-import { Dict, getValue, set } from '../../utils/nominal-class';
-import { representantListId } from './DragAndDropContainer';
 
-export const AddRepresentantComponent = (props: {
-  organismeId: OrganismeId;
-  instanceId: InstanceId | undefined;
-  representantOrSuppleant: RepresentantOrSuppleant;
-  representantsLists: Dict<RepresentantListId, Representant[]>;
-  setRepresentantsLists: (
-    lists: Dict<RepresentantListId, Representant[]>
-  ) => void;
+const AddRepresentantAutocomplete = (props: {
+  onAddRepresentation: (representant: RepresentantDto) => void;
 }) => {
-  const elus = useRecoilValue(state.elus);
-  // material wants null, no undefined. To reproduce bug with undefined : select
-  // one elu and then blur the input
-  const [value, setValue] = useState<Elu | null>(null);
+  const representants = useRecoilValue(state.representants);
   const [inputValue, setInputValue] = useState('');
-  const addRepresentant = (eluId: EluId) => {
-    appContext
-      .commandService()
-      .addRepresentantCommand({
-        eluId,
-        organismeId: props.organismeId,
-        instanceId: props.instanceId,
-        representantOrSuppleant: props.representantOrSuppleant
-      })
-      .then(r => {
-        const representant: Representant = {
-          id: r.id,
-          eluId
-        };
-        const listId = representantListId(
-          props.organismeId,
-          props.instanceId,
-          props.representantOrSuppleant
-        );
-        const newRepresentants = [
-          ...getValue(props.representantsLists, listId),
-          representant
-        ];
-        const newRepresentantsLists = set(
-          props.representantsLists,
-          listId,
-          newRepresentants
-        );
-        props.setRepresentantsLists(newRepresentantsLists);
-        setValue(null);
-        setInputValue('');
-      });
-  };
-  const label = (e: Elu | undefined) => (e ? `${e.nom} ${e.prenom}` : '');
+  const label = (e: RepresentantDto | undefined) =>
+    e ? `${e.prenom} ${e.nom}` : '';
   return (
     <Autocomplete
-      options={elus}
+      options={representants}
       getOptionLabel={label}
       clearOnEscape
       clearOnBlur
-      value={value}
-      onChange={(e, value: Elu | null) => {
+      value={null}
+      onChange={(e, value: RepresentantDto | null) => {
         if (value) {
-          addRepresentant(value.id);
+          props.onAddRepresentation(value);
+          setInputValue('');
         }
       }}
       inputValue={inputValue}
@@ -87,7 +41,17 @@ export const AddRepresentantComponent = (props: {
           `}
         />
       )}
-      size={'small'}
+      size="small"
     />
   );
 };
+
+export const AddRepresentantComponent = (props: {
+  onAddRepresentation: (representant: RepresentantDto) => void;
+}) => (
+  <React.Suspense fallback={<div>Chargement...</div>}>
+    <AddRepresentantAutocomplete
+      onAddRepresentation={props.onAddRepresentation}
+    />
+  </React.Suspense>
+);

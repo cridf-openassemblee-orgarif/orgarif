@@ -32,10 +32,12 @@ export const globalStyles = css`
   h3 {
     font-size: 1.4rem;
     font-weight: normal;
+    margin: 10px 0;
   }
   h4 {
     font-size: 1.3rem;
     font-weight: normal;
     text-align: center;
+    margin: 8px 0;
   }
 `;
