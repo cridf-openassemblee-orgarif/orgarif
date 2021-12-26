@@ -1,5 +1,11 @@
 package orgarif.repository
 
+import java.time.Instant
+import java.util.stream.Stream
+import org.jooq.DSLContext
+import org.jooq.impl.DSL.lower
+import org.springframework.dao.DuplicateKeyException
+import org.springframework.stereotype.Repository
 import orgarif.domain.HashedPassword
 import orgarif.domain.Language
 import orgarif.domain.Role
@@ -9,12 +15,6 @@ import orgarif.jooq.generated.Keys.APP_USER_MAIL_KEY
 import orgarif.jooq.generated.Tables.APP_USER
 import orgarif.jooq.generated.tables.records.AppUserRecord
 import orgarif.utils.toTypeId
-import org.jooq.DSLContext
-import org.jooq.impl.DSL.lower
-import org.springframework.dao.DuplicateKeyException
-import org.springframework.stereotype.Repository
-import java.time.Instant
-import java.util.stream.Stream
 
 @Repository
 class UserDao(val jooq: DSLContext) {
@@ -39,18 +39,19 @@ class UserDao(val jooq: DSLContext) {
 
     @Throws(MailAlreadyRegisteredException::class)
     fun insert(r: Record, hashedPassword: HashedPassword) {
-        val ur = AppUserRecord().apply {
-            id = r.id.rawId
-            mail = r.mail
-            username = r.username
-            password = hashedPassword.hash
-            displayName = r.displayName
-            language = r.language.name
-            roles = r.roles.map { it.name }.toTypedArray()
-            signupDate = r.signupDate
-            dirtyMail = r.dirtyMail
-            formerMails = r.formerMails.toTypedArray()
-        }
+        val ur =
+            AppUserRecord().apply {
+                id = r.id.rawId
+                mail = r.mail
+                username = r.username
+                password = hashedPassword.hash
+                displayName = r.displayName
+                language = r.language.name
+                roles = r.roles.map { it.name }.toTypedArray()
+                signupDate = r.signupDate
+                dirtyMail = r.dirtyMail
+                formerMails = r.formerMails.toTypedArray()
+            }
 
         try {
             jooq.insertInto(APP_USER).set(ur).execute()
@@ -62,8 +63,8 @@ class UserDao(val jooq: DSLContext) {
     private fun handleDuplicateKeyException(e: DuplicateKeyException, mail: String) {
         val message = e.cause?.message
         if (message != null &&
-            "duplicate key value violates unique constraint \"" + APP_USER_MAIL_KEY.name + "\"" in message
-        ) {
+            "duplicate key value violates unique constraint \"" + APP_USER_MAIL_KEY.name + "\"" in
+                message) {
             throw MailAlreadyRegisteredException(mail)
         } else {
             throw e
@@ -85,13 +86,11 @@ class UserDao(val jooq: DSLContext) {
     }
 
     fun fetch(id: UserId) =
-        jooq.selectFrom(APP_USER)
-            .where(APP_USER.ID.equal(id.rawId))
-            .fetchOne()
-            ?.let(this::map)
+        jooq.selectFrom(APP_USER).where(APP_USER.ID.equal(id.rawId)).fetchOne()?.let(this::map)
 
     fun doesLoginExist(login: String): Boolean =
-        jooq.selectCount()
+        jooq
+            .selectCount()
             .from(APP_USER)
             .where(APP_USER.MAIL.equal(login))
             .or(APP_USER.USERNAME.equal(login))
@@ -99,10 +98,7 @@ class UserDao(val jooq: DSLContext) {
             .let { it.value1() > 0 }
 
     fun fetchByMail(mail: String): Record? =
-        jooq.selectFrom(APP_USER)
-            .where(APP_USER.MAIL.equal(mail))
-            .fetchOne()
-            ?.let(this::map)
+        jooq.selectFrom(APP_USER).where(APP_USER.MAIL.equal(mail)).fetchOne()?.let(this::map)
 
     fun fetchByUsername(username: String): Record? =
         jooq.selectFrom(APP_USER)
@@ -111,28 +107,25 @@ class UserDao(val jooq: DSLContext) {
             ?.let(this::map)
 
     fun fetchPassword(id: UserId): HashedPassword? =
-        jooq.select(APP_USER.PASSWORD)
+        jooq
+            .select(APP_USER.PASSWORD)
             .from(APP_USER)
             .where(APP_USER.ID.equal(id.rawId))
             .fetchOne()
             ?.value1()
             ?.let { HashedPassword(it) }
 
-    fun streamAll(): Stream<Record> =
-        jooq.selectFrom(APP_USER)
-            .stream()
-            .map(this::map)
+    fun streamAll(): Stream<Record> = jooq.selectFrom(APP_USER).stream().map(this::map)
 
-    fun map(r: AppUserRecord) = Record(
-        id = r.id.toTypeId(),
-        mail = r.mail,
-        username = r.username,
-        displayName = r.displayName,
-        language = Language.valueOf(r.language),
-        signupDate = r.signupDate,
-        roles = r.roles.map { Role.valueOf(it) }.toSet(),
-        dirtyMail = r.dirtyMail,
-        formerMails = r.formerMails.toList()
-    )
-
+    fun map(r: AppUserRecord) =
+        Record(
+            id = r.id.toTypeId(),
+            mail = r.mail,
+            username = r.username,
+            displayName = r.displayName,
+            language = Language.valueOf(r.language),
+            signupDate = r.signupDate,
+            roles = r.roles.map { Role.valueOf(it) }.toSet(),
+            dirtyMail = r.dirtyMail,
+            formerMails = r.formerMails.toList())
 }

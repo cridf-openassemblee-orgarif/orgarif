@@ -13,9 +13,10 @@ class SearchDeliberationQueryHandler(val deliberationDao: DeliberationDao) :
         if (query.searchToken.length < SharedConstants.deliberationSearchLengthLimit) {
             throw IllegalArgumentException()
         }
-        val results = deliberationDao.search(query.searchToken)
-            .map { DeliberationDto(it.id, it.libelle, it.deliberationDate) }
+        val results =
+            deliberationDao.search(query.searchToken).map {
+                DeliberationDto(it.id, it.libelle, it.deliberationDate)
+            }
         return SearchDeliberationQueryResponse(results)
     }
-
 }

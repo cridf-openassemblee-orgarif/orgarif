@@ -24,29 +24,26 @@ kotlin {
 }
 
 tasks {
-    withType<KotlinCompile> {
-        kotlinOptions.jvmTarget = "15"
-    }
+    withType<KotlinCompile> { kotlinOptions.jvmTarget = "15" }
     test {
         useJUnitPlatform()
-        addTestListener(object : TestListener {
-            override fun beforeSuite(suite: TestDescriptor) {}
-            override fun beforeTest(testDescriptor: TestDescriptor) {}
-            override fun afterTest(testDescriptor: TestDescriptor, result: TestResult) {
-            }
+        addTestListener(
+            object : TestListener {
+                override fun beforeSuite(suite: TestDescriptor) {}
+                override fun beforeTest(testDescriptor: TestDescriptor) {}
+                override fun afterTest(testDescriptor: TestDescriptor, result: TestResult) {}
 
-            override fun afterSuite(suite: TestDescriptor, result: TestResult) {
-                if (suite.parent == null) {
-                    println("\n | Test result: ${result.resultType}")
-                    println(
-                        " | Test summary: ${result.testCount} tests, " +
+                override fun afterSuite(suite: TestDescriptor, result: TestResult) {
+                    if (suite.parent == null) {
+                        println("\n | Test result: ${result.resultType}")
+                        println(
+                            " | Test summary: ${result.testCount} tests, " +
                                 "${result.successfulTestCount} succeeded, " +
                                 "${result.failedTestCount} failed, " +
-                                "${result.skippedTestCount} skipped\n"
-                    )
+                                "${result.skippedTestCount} skipped\n")
+                    }
                 }
-            }
-        })
+            })
     }
 }
 
@@ -57,9 +54,7 @@ repositories {
     maven("https://repo.spring.io/snapshot")
 }
 
-configurations.all {
-    exclude("junit")
-}
+configurations.all { exclude("junit") }
 
 dependencies {
     implementation(project(":jooq-lib"))
@@ -91,6 +86,6 @@ dependencies {
 
     testImplementation("org.springframework.boot:spring-boot-starter-test")
     testImplementation("org.junit.jupiter:junit-jupiter-engine:5.7.2")
-//    testImplementation("org.junit.jupiter:junit-jupiter-api")
-//    testRuntimeOnly("org.junit.jupiter:junit-jupiter-engine")
+    //    testImplementation("org.junit.jupiter:junit-jupiter-api")
+    //    testRuntimeOnly("org.junit.jupiter:junit-jupiter-engine")
 }

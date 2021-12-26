@@ -1,22 +1,22 @@
 package orgarif.controller
 
-import orgarif.config.SafeSessionRepository
-import orgarif.controller.RemoteController.Companion.remoteRoute
-import orgarif.service.user.UserSessionService
-import orgarif.service.utils.TransactionIsolationService
 import mu.KotlinLogging
 import org.jooq.DSLContext
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken
 import org.springframework.security.core.context.SecurityContextImpl
+import org.springframework.session.Session as SpringSession
 import org.springframework.web.bind.annotation.PostMapping
 import org.springframework.web.bind.annotation.RequestMapping
 import org.springframework.web.bind.annotation.RequestParam
 import org.springframework.web.bind.annotation.RestController
+import orgarif.config.SafeSessionRepository
+import orgarif.controller.RemoteController.Companion.remoteRoute
 import orgarif.domain.*
+import orgarif.domain.Session as OrgarifSession
 import orgarif.repository.*
 import orgarif.service.RandomService
-import orgarif.domain.Session as OrgarifSession
-import org.springframework.session.Session as SpringSession
+import orgarif.service.user.UserSessionService
+import orgarif.service.utils.TransactionIsolationService
 
 @RestController
 @RequestMapping(remoteRoute)
@@ -28,7 +28,6 @@ class RemoteController(
     val representantDao: RepresentantDao,
     val representationDao: RepresentationDao,
     val suppleanceDao: SuppleanceDao,
-
     val sessionRepository: SafeSessionRepository,
     val userSessionService: UserSessionService,
     val randomService: RandomService,
@@ -63,7 +62,7 @@ class RemoteController(
                     val context = session.getAttribute<SecurityContextImpl>(SPRING_SECURITY_CONTEXT)
                     val conversion =
                         ((context.authentication as UsernamePasswordAuthenticationToken)
-                            .principal as
+                                .principal as
                                 OrgarifSession)
                             .let { userSessionService.convert(it) }
                     if (conversion.needsUpdate) {

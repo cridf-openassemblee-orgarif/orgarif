@@ -1,15 +1,14 @@
 package orgarif.repository
 
+import java.time.Instant
 import org.jooq.DSLContext
 import org.springframework.stereotype.Repository
 import orgarif.domain.InstanceId
 import orgarif.domain.ItemStatus
 import orgarif.domain.OrganismeId
-import orgarif.jooq.generated.Tables
 import orgarif.jooq.generated.Tables.INSTANCE
 import orgarif.jooq.generated.tables.records.InstanceRecord
 import orgarif.utils.toTypeId
-import java.time.Instant
 
 @Repository
 class InstanceDao(val jooq: DSLContext) {
@@ -26,24 +25,22 @@ class InstanceDao(val jooq: DSLContext) {
     )
 
     fun insert(r: Record) {
-        val record = InstanceRecord().apply {
-            id = r.id.rawId
-            nom = r.nom
-            organismeId = r.organismeId.rawId
-            nombreRepresentants = r.nombreRepresentants
-            nombreSuppleants = r.nombreSuppleants
-            creationDate = r.creationDate
-            status = r.status.name
-            lastModificationDate = r.lastModificationDate
-        }
+        val record =
+            InstanceRecord().apply {
+                id = r.id.rawId
+                nom = r.nom
+                organismeId = r.organismeId.rawId
+                nombreRepresentants = r.nombreRepresentants
+                nombreSuppleants = r.nombreSuppleants
+                creationDate = r.creationDate
+                status = r.status.name
+                lastModificationDate = r.lastModificationDate
+            }
         jooq.insertInto(INSTANCE).set(record).execute()
     }
 
     fun fetchOrNull(id: InstanceId) =
-        jooq.selectFrom(INSTANCE)
-            .where(INSTANCE.ID.equal(id.rawId))
-            .fetchOne()
-            ?.let(this::map)
+        jooq.selectFrom(INSTANCE).where(INSTANCE.ID.equal(id.rawId)).fetchOne()?.let(this::map)
 
     fun fetchByOrganismeId(organismeId: OrganismeId) =
         jooq.selectFrom(INSTANCE)
@@ -83,15 +80,14 @@ class InstanceDao(val jooq: DSLContext) {
             .execute()
     }
 
-    private fun map(r: InstanceRecord) = Record(
-        r.id.toTypeId(),
-        r.nom,
-        r.organismeId.toTypeId(),
-        r.nombreRepresentants,
-        r.nombreSuppleants,
-        r.creationDate,
-        ItemStatus.valueOf(r.status),
-        r.lastModificationDate
-    )
-
+    private fun map(r: InstanceRecord) =
+        Record(
+            r.id.toTypeId(),
+            r.nom,
+            r.organismeId.toTypeId(),
+            r.nombreRepresentants,
+            r.nombreSuppleants,
+            r.creationDate,
+            ItemStatus.valueOf(r.status),
+            r.lastModificationDate)
 }

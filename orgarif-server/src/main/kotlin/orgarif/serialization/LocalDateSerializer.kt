@@ -15,5 +15,4 @@ class LocalDateSerializer : StdSerializer<LocalDate>(LocalDate::class.java) {
     override fun serialize(value: LocalDate, gen: JsonGenerator, provider: SerializerProvider) {
         gen.writeString(formatter.format(value))
     }
-
 }

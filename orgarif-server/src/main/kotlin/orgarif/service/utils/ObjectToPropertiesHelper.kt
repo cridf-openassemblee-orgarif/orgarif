@@ -25,8 +25,14 @@ object ObjectToPropertiesHelper {
         }
         val exclusions = forcedExclusions ?: defaultExclusions(value, path)
         return when (value) {
-            is String, is Boolean, is Int, is Double, is Enum<*>, is LocalDate, is LocalTime, is ZoneId ->
-                listOf(path to value.toString())
+            is String,
+            is Boolean,
+            is Int,
+            is Double,
+            is Enum<*>,
+            is LocalDate,
+            is LocalTime,
+            is ZoneId -> listOf(path to value.toString())
             is UUID -> listOf(path to OrgarifStringUtils.serializeUuid(value))
             is List<*> ->
                 value
@@ -41,8 +47,7 @@ object ObjectToPropertiesHelper {
             else -> {
                 if (depth > 5) {
                     throw RuntimeException(
-                        "Can't convert object to properties, max depth reached, failed at $path ${value::class}"
-                    )
+                        "Can't convert object to properties, max depth reached, failed at $path ${value::class}")
                 }
                 transformObject(value, path, exclusions, depth + 1)
             }

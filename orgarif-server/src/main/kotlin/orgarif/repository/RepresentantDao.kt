@@ -1,5 +1,6 @@
 package orgarif.repository
 
+import java.time.Instant
 import org.jooq.DSLContext
 import org.springframework.stereotype.Repository
 import orgarif.domain.EluId
@@ -7,8 +8,6 @@ import orgarif.domain.RepresentantId
 import orgarif.jooq.generated.Tables.REPRESENTANT
 import orgarif.jooq.generated.tables.records.RepresentantRecord
 import orgarif.utils.toTypeId
-import java.time.Instant
-
 
 @Repository
 class RepresentantDao(val jooq: DSLContext) {
@@ -33,14 +32,15 @@ class RepresentantDao(val jooq: DSLContext) {
     }
 
     fun insert(r: Record) {
-        val record = RepresentantRecord().apply {
-            id = r.id.rawId
-            eluId = r.eluId?.rawId
-            prenom = r.prenom
-            nom = r.nom
-            creationDate = r.creationDate
-            lastModificationDate = r.lastModificationDate
-        }
+        val record =
+            RepresentantRecord().apply {
+                id = r.id.rawId
+                eluId = r.eluId?.rawId
+                prenom = r.prenom
+                nom = r.nom
+                creationDate = r.creationDate
+                lastModificationDate = r.lastModificationDate
+            }
         jooq.insertInto(REPRESENTANT).set(record).execute()
     }
 
@@ -56,18 +56,14 @@ class RepresentantDao(val jooq: DSLContext) {
             .fetch()
             .map(this::map)
 
-    fun fetchAll(): List<Record> =
-        jooq.selectFrom(REPRESENTANT)
-            .fetch()
-            .map(this::map)
+    fun fetchAll(): List<Record> = jooq.selectFrom(REPRESENTANT).fetch().map(this::map)
 
-    private fun map(r: RepresentantRecord) = Record(
-        r.id.toTypeId(),
-        r.eluId?.toTypeId(),
-        r.prenom,
-        r.nom,
-        r.creationDate,
-        r.lastModificationDate
-    )
-
+    private fun map(r: RepresentantRecord) =
+        Record(
+            r.id.toTypeId(),
+            r.eluId?.toTypeId(),
+            r.prenom,
+            r.nom,
+            r.creationDate,
+            r.lastModificationDate)
 }

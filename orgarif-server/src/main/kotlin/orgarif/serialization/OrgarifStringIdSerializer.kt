@@ -8,10 +8,13 @@ import orgarif.domain.OrgarifStringId
 class OrgarifStringIdSerializer : StdSerializer<OrgarifStringId>(OrgarifStringId::class.java) {
 
     companion object {
-        fun serialize(value: OrgarifStringId) = OrgarifSerializationPrefixUtils.prefix(value) + value.rawId
+        fun serialize(value: OrgarifStringId) =
+            OrgarifSerializationPrefixUtils.prefix(value) + value.rawId
     }
 
-    override fun serialize(value: OrgarifStringId, gen: JsonGenerator, provider: SerializerProvider) =
-        gen.writeString(serialize(value))
-
+    override fun serialize(
+        value: OrgarifStringId,
+        gen: JsonGenerator,
+        provider: SerializerProvider
+    ) = gen.writeString(serialize(value))
 }

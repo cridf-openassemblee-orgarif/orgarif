@@ -1,9 +1,9 @@
 package orgarif.service
 
-import orgarif.domain.ApplicationEnvironment
-import orgarif.service.utils.ApplicationTaskExecutor
 import mu.KotlinLogging
 import org.springframework.stereotype.Service
+import orgarif.domain.ApplicationEnvironment
+import orgarif.service.utils.ApplicationTaskExecutor
 
 @Service
 class NotificationService(
@@ -21,11 +21,9 @@ class NotificationService(
 
     fun notify(message: String, channel: Channel) {
         if (applicationInstance.env == ApplicationEnvironment.prod) {
-            taskExecutor.execute {
-            }
+            taskExecutor.execute {}
         } else {
             logger.info { "[${channel.name}] $message" }
         }
     }
-
 }

@@ -1,5 +1,6 @@
 package orgarif.command
 
+import java.time.Instant
 import mu.KotlinLogging
 import org.springframework.stereotype.Service
 import orgarif.domain.RepresentantId
@@ -7,22 +8,17 @@ import orgarif.domain.RepresentationId
 import orgarif.repository.EluDao
 import orgarif.repository.RepresentantDao
 import orgarif.repository.RepresentationDao
-import orgarif.serialization.OrgarifUuidIdSerializer
 import orgarif.service.DateService
 import orgarif.service.RandomService
-import orgarif.utils.OrgarifStringUtils.serializeUuid
-import java.time.Instant
 
 @Service
 class MoveRepresentationCommandHandler(
     val representationDao: RepresentationDao,
     val eluDao: EluDao,
     val representantDao: RepresentantDao,
-
     val randomService: RandomService,
     val dateService: DateService
-) :
-    CommandHandler.Handler<MoveRepresentationCommand, EmptyCommandResponse>() {
+) : CommandHandler.Handler<MoveRepresentationCommand, EmptyCommandResponse>() {
 
     private val logger = KotlinLogging.logger {}
 
@@ -31,37 +27,33 @@ class MoveRepresentationCommandHandler(
         // failed to write a dao method with a join - log nodes ticktick id 5fa9d45aa24d5700ebe5fa12
         // TODO creser et doc
         // ne pas remonter depuis le client les infos sur la liste de départ
-        // par exemple, dans le scenario 2 user edite meme representant, la sourceList pourrait avoir changé
-        val sourceRepresentant = representationDao.fetch(command.id)
-            ?: throw IllegalArgumentException("${command.id}")
-        val sourceList = representationDao.fetchByOrganismeInstance(
-            sourceRepresentant.organismeId,
-            sourceRepresentant.instanceId
-        )
-            .filter { it.id != sourceRepresentant.id }
-            .sortedBy { it.position }
-        val isSameList = let {
-            sourceRepresentant.organismeId == command.toOrganismeId
-                    && sourceRepresentant.instanceId == command.toInstanceId
-        }
-        val destinationList = if (isSameList) {
-            sourceList
-        } else {
-            representationDao.fetchByOrganismeInstance(
-                command.toOrganismeId,
-                command.toInstanceId
-            )
+        // par exemple, dans le scenario 2 user edite meme representant, la sourceList pourrait
+        // avoir changé
+        val sourceRepresentant =
+            representationDao.fetch(command.id) ?: throw IllegalArgumentException("${command.id}")
+        val sourceList =
+            representationDao
+                .fetchByOrganismeInstance(
+                    sourceRepresentant.organismeId, sourceRepresentant.instanceId)
+                .filter { it.id != sourceRepresentant.id }
                 .sortedBy { it.position }
-        }.toMutableList()
+        val isSameList = let {
+            sourceRepresentant.organismeId == command.toOrganismeId &&
+                sourceRepresentant.instanceId == command.toInstanceId
+        }
+        val destinationList =
+            if (isSameList) {
+                    sourceList
+                } else {
+                    representationDao.fetchByOrganismeInstance(
+                            command.toOrganismeId, command.toInstanceId)
+                        .sortedBy { it.position }
+                }
+                .toMutableList()
         logger.debug { "source ${sourceList.size} destination ${destinationList.size}" }
         // update new representant position
         representationDao.updateRepresentation(
-            command.id,
-            command.toOrganismeId,
-            command.toInstanceId,
-            command.toPosition,
-            now
-        )
+            command.id, command.toOrganismeId, command.toInstanceId, command.toPosition, now)
         let {
             destinationList.add(command.toPosition, sourceRepresentant)
             updateList(destinationList, command.id, now)
@@ -82,8 +74,7 @@ class MoveRepresentationCommandHandler(
             list.forEach { representation ->
                 s.appendLine(
                     "${representation.id} ${representantLabel(representation.representantId)} " +
-                            "${representation.position}"
-                )
+                        "${representation.position}")
             }
             s
         }
@@ -105,12 +96,13 @@ class MoveRepresentationCommandHandler(
     fun representantLabel(representantId: RepresentantId?): String {
         // FIXME[migration] remove, param est representantId: RepresentantId
         representantId!!
-        val r = representantDao.fetch(representantId)
-            ?: throw IllegalArgumentException("$representantId")
+        val r =
+            representantDao.fetch(representantId)
+                ?: throw IllegalArgumentException("$representantId")
         return r.eluId?.let { eluId ->
-            val e = eluDao.fetch(eluId)
-                ?: throw IllegalArgumentException("eluId")
+            val e = eluDao.fetch(eluId) ?: throw IllegalArgumentException("eluId")
             "[elu] ${e.prenom} ${e.nom}"
-        } ?: "${r.prenom} ${r.nom}"
+        }
+            ?: "${r.prenom} ${r.nom}"
     }
 }

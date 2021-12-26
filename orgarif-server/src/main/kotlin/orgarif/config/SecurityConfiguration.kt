@@ -25,12 +25,12 @@ class SecurityConfiguration(
 
     override fun configure(http: HttpSecurity) {
         with(http) {
-            with(csrf()) {
-                csrfTokenRepository(cookieCsrfTokenRepository)
-            }
+            with(csrf()) { csrfTokenRepository(cookieCsrfTokenRepository) }
             with(exceptionHandling()) {
                 // [doc] without it Spring sends its own login page !
-                authenticationEntryPoint { _, response, _ -> response.sendError(403, "Access Denied") }
+                authenticationEntryPoint { _, response, _ ->
+                    response.sendError(403, "Access Denied")
+                }
             }
             with(logout()) {
                 logoutUrl(Routes.logout)
@@ -52,5 +52,4 @@ class SecurityConfiguration(
             authorizeRequests()
         }
     }
-
 }

@@ -9,5 +9,4 @@ class GetOrganismeQueryHandler(val organismeService: OrganismeService) :
 
     override fun handle(query: GetOrganismeQuery) =
         GetOrganismeQueryResponse(organismeService.fetchOrganismeDto(query.id))
-
 }

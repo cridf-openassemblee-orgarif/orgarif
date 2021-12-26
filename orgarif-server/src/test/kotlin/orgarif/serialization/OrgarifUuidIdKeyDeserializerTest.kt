@@ -1,16 +1,17 @@
 package orgarif.serialization
 
+import org.junit.jupiter.api.Assertions.assertEquals
+import org.junit.jupiter.api.Test
 import orgarif.domain.TestIds.emptyUuid0
 import orgarif.domain.TestUuidId
 import orgarif.utils.toTypeId
-import org.junit.jupiter.api.Assertions.assertEquals
-import org.junit.jupiter.api.Test
 
 internal class OrgarifUuidIdKeyDeserializerTest {
 
     @Test
     fun testDeserialization() {
-        val json = """
+        val json =
+            """
             {
                 "00000000000000000000000000000000": "coucou"
             }
@@ -19,5 +20,4 @@ internal class OrgarifUuidIdKeyDeserializerTest {
         val expectedMap = mapOf(emptyUuid0.toTypeId<TestUuidId>() to "coucou")
         assertEquals(expectedMap, map)
     }
-
 }

@@ -1,5 +1,6 @@
 package orgarif.repository
 
+import java.time.Instant
 import org.jooq.DSLContext
 import org.springframework.stereotype.Repository
 import orgarif.domain.DeliberationId
@@ -7,11 +8,9 @@ import orgarif.domain.InstanceId
 import orgarif.domain.ItemStatus
 import orgarif.domain.LienDeliberationId
 import orgarif.domain.OrganismeId
-import orgarif.jooq.generated.Tables
 import orgarif.jooq.generated.Tables.LIEN_DELIBERATION
 import orgarif.jooq.generated.tables.records.LienDeliberationRecord
 import orgarif.utils.toTypeId
-import java.time.Instant
 
 @Repository
 class LienDeliberationDao(val jooq: DSLContext) {
@@ -27,15 +26,16 @@ class LienDeliberationDao(val jooq: DSLContext) {
     )
 
     fun insert(r: Record) {
-        val record = LienDeliberationRecord().apply {
-            id = r.id.rawId
-            deliberationId = r.deliberationId.rawId
-            organismeId = r.organismeId.rawId
-            instanceId = r.instanceId?.rawId
-            creationDate = r.creationDate
-            status = r.status.name
-            lastModificationDate = r.lastModificationDate
-        }
+        val record =
+            LienDeliberationRecord().apply {
+                id = r.id.rawId
+                deliberationId = r.deliberationId.rawId
+                organismeId = r.organismeId.rawId
+                instanceId = r.instanceId?.rawId
+                creationDate = r.creationDate
+                status = r.status.name
+                lastModificationDate = r.lastModificationDate
+            }
         jooq.insertInto(LIEN_DELIBERATION).set(record).execute()
     }
 
@@ -47,14 +47,13 @@ class LienDeliberationDao(val jooq: DSLContext) {
             .execute()
     }
 
-    fun map(r: LienDeliberationRecord) = Record(
-        r.id.toTypeId(),
-        r.deliberationId.toTypeId(),
-        r.organismeId.toTypeId(),
-        r.instanceId?.toTypeId(),
-        r.creationDate,
-        ItemStatus.valueOf(r.status),
-        r.lastModificationDate
-    )
-
+    fun map(r: LienDeliberationRecord) =
+        Record(
+            r.id.toTypeId(),
+            r.deliberationId.toTypeId(),
+            r.organismeId.toTypeId(),
+            r.instanceId?.toTypeId(),
+            r.creationDate,
+            ItemStatus.valueOf(r.status),
+            r.lastModificationDate)
 }

@@ -14,5 +14,4 @@ class DeploymentInitializationService(
             devInitialDataInjectorService.initiateDevUsers()
         }
     }
-
 }

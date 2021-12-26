@@ -4,7 +4,7 @@ import java.time.Instant
 
 // TODO merge MimeType / FileExtension ?
 enum class FileExtension(val postfix: String) {
-    png("png");
+    png("png")
 }
 
 // FIXME find elsewhere ? or we want a list of supported stuff
@@ -15,11 +15,7 @@ enum class MimeType(val fullType: String) {
     pdf("application/pdf")
 }
 
-data class UserFileData(
-    val contentType: String,
-    val file: ByteArray,
-    val originalFilename: String
-)
+data class UserFileData(val contentType: String, val file: ByteArray, val originalFilename: String)
 
 data class UserFileReference(
     val id: UserFileId,

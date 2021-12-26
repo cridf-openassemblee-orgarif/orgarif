@@ -1,9 +1,9 @@
 package orgarif.service
 
-import orgarif.domain.*
 import org.junit.jupiter.api.Assertions
 import org.junit.jupiter.api.Assertions.assertEquals
 import org.junit.jupiter.api.Test
+import orgarif.domain.*
 
 internal class IdLogServiceTest {
 
@@ -26,8 +26,7 @@ TestPrefixUuidId bf23ea927f8a4e14a9a11b6604f979eb
 TestStringId 03LOeGFj5ZibyaqdISrO
 TestPrefixStringId rSSPouSEbuXmda1rHUFC
         """.trimIndent(),
-            service.getIdsString()
-        )
+            service.getIdsString())
     }
 
     @Test
@@ -35,9 +34,7 @@ TestPrefixStringId rSSPouSEbuXmda1rHUFC
         val randomService = DummyRandomService(service)
         try {
             try {
-                (1..20).forEach {
-                    randomService.id<TestUuidId>()
-                }
+                (1..20).forEach { randomService.id<TestUuidId>() }
             } catch (e: Exception) {
                 Assertions.fail()
             }
@@ -53,9 +50,7 @@ TestPrefixStringId rSSPouSEbuXmda1rHUFC
         val randomService = DummyRandomService(service)
         try {
             try {
-                (1..20).forEach {
-                    randomService.stringId<TestStringId>(TestStringId.length)
-                }
+                (1..20).forEach { randomService.stringId<TestStringId>(TestStringId.length) }
             } catch (e: Exception) {
                 Assertions.fail()
             }

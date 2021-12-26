@@ -1,5 +1,7 @@
 package orgarif.repository
 
+import java.time.Instant
+import java.time.LocalDate
 import org.jooq.DSLContext
 import org.jooq.impl.DSL.lower
 import org.springframework.stereotype.Repository
@@ -7,8 +9,6 @@ import orgarif.domain.DeliberationId
 import orgarif.jooq.generated.Tables.DELIBERATION
 import orgarif.jooq.generated.tables.records.DeliberationRecord
 import orgarif.utils.toTypeId
-import java.time.Instant
-import java.time.LocalDate
 
 @Repository
 class DeliberationDao(val jooq: DSLContext) {
@@ -22,13 +22,14 @@ class DeliberationDao(val jooq: DSLContext) {
     )
 
     fun insert(r: Record) {
-        val record = DeliberationRecord().apply {
-            id = r.id.rawId
-            libelle = r.libelle
-            deliberationDate = r.deliberationDate
-            creationDate = r.creationDate
-            lastModificationDate = r.lastModificationDate
-        }
+        val record =
+            DeliberationRecord().apply {
+                id = r.id.rawId
+                libelle = r.libelle
+                deliberationDate = r.deliberationDate
+                creationDate = r.creationDate
+                lastModificationDate = r.lastModificationDate
+            }
         jooq.insertInto(DELIBERATION).set(record).execute()
     }
 
@@ -45,12 +46,7 @@ class DeliberationDao(val jooq: DSLContext) {
             .fetch()
             .map(this::map)
 
-    fun map(r: DeliberationRecord) = Record(
-        r.id.toTypeId(),
-        r.libelle,
-        r.deliberationDate,
-        r.creationDate,
-        r.lastModificationDate
-    )
-
+    fun map(r: DeliberationRecord) =
+        Record(
+            r.id.toTypeId(), r.libelle, r.deliberationDate, r.creationDate, r.lastModificationDate)
 }

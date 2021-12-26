@@ -1,16 +1,13 @@
 package orgarif.repository
 
+import java.time.Instant
 import org.jooq.DSLContext
 import org.springframework.stereotype.Repository
 import orgarif.domain.ItemStatus
 import orgarif.domain.NatureJuridiqueId
-import orgarif.domain.SecteurId
-import orgarif.jooq.generated.Tables
 import orgarif.jooq.generated.Tables.NATURE_JURIDIQUE
 import orgarif.jooq.generated.tables.records.NatureJuridiqueRecord
 import orgarif.utils.toTypeId
-import java.time.Instant
-
 
 @Repository
 class NatureJuridiqueDao(val jooq: DSLContext) {
@@ -23,19 +20,17 @@ class NatureJuridiqueDao(val jooq: DSLContext) {
     )
 
     fun insert(r: Record) {
-        val record = NatureJuridiqueRecord().apply {
-            id = r.id.rawId
-            libelle = r.libelle
-            status = r.status.name
-            lastModificationDate = r.lastModificationDate
-        }
+        val record =
+            NatureJuridiqueRecord().apply {
+                id = r.id.rawId
+                libelle = r.libelle
+                status = r.status.name
+                lastModificationDate = r.lastModificationDate
+            }
         jooq.insertInto(NATURE_JURIDIQUE).set(record).execute()
     }
 
-    fun fetchAll() =
-        jooq.selectFrom(NATURE_JURIDIQUE)
-            .fetch()
-            .map(this::map)
+    fun fetchAll() = jooq.selectFrom(NATURE_JURIDIQUE).fetch().map(this::map)
 
     fun updateLibelle(id: NatureJuridiqueId, libelle: String, modificationDate: Instant) {
         jooq.update(NATURE_JURIDIQUE)
@@ -53,11 +48,6 @@ class NatureJuridiqueDao(val jooq: DSLContext) {
             .execute()
     }
 
-    private fun map(r: NatureJuridiqueRecord) = Record(
-        r.id.toTypeId(),
-        r.libelle,
-        ItemStatus.valueOf(r.status),
-        r.lastModificationDate
-    )
-
+    private fun map(r: NatureJuridiqueRecord) =
+        Record(r.id.toTypeId(), r.libelle, ItemStatus.valueOf(r.status), r.lastModificationDate)
 }

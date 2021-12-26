@@ -1,11 +1,11 @@
 package orgarif.service
 
+import java.util.*
+import org.apache.commons.text.CharacterPredicates
+import org.apache.commons.text.RandomStringGenerator
 import orgarif.domain.OrgarifSecurityString
 import orgarif.domain.OrgarifStringId
 import orgarif.domain.OrgarifUuidId
-import org.apache.commons.text.CharacterPredicates
-import org.apache.commons.text.RandomStringGenerator
-import java.util.*
 
 open class RandomService(val idLogService: IdLogService? = null) {
 
@@ -17,30 +17,28 @@ open class RandomService(val idLogService: IdLogService? = null) {
     }
 
     inline fun <reified T : OrgarifUuidId> id(): T {
-        @Suppress("DEPRECATION")
-        val uuid = internalUuid()
+        @Suppress("DEPRECATION") val uuid = internalUuid()
         val id = T::class.constructors.first().call(uuid)
         idLogService?.log(id)
         return id
     }
 
     inline fun <reified T : OrgarifStringId> stringId(length: Int): T {
-        @Suppress("DEPRECATION")
-        val stringId = internalRandomString(length)
+        @Suppress("DEPRECATION") val stringId = internalRandomString(length)
         val id = T::class.constructors.first().call(stringId)
         idLogService?.log(id)
         return id
     }
 
     inline fun <reified T : OrgarifSecurityString> securityString(length: Int): T {
-        @Suppress("DEPRECATION")
-        val stringId = internalRandomString(length)
+        @Suppress("DEPRECATION") val stringId = internalRandomString(length)
         return T::class.constructors.first().call(stringId)
     }
 
     @Deprecated("Is for internal use only, exists because of reified id() & DummyRandomService")
     open fun internalUuid() = UUID.randomUUID()
 
-    @Deprecated("Is for internal use only, exists because of reified stringId() & DummyRandomService")
+    @Deprecated(
+        "Is for internal use only, exists because of reified stringId() & DummyRandomService")
     open fun internalRandomString(length: Int) = generator.generate(length)
 }

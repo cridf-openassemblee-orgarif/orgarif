@@ -10,5 +10,4 @@ class ZoneIdSerializer : StdSerializer<ZoneId>(ZoneId::class.java) {
     override fun serialize(value: ZoneId, gen: JsonGenerator, provider: SerializerProvider) {
         gen.writeString(value.id)
     }
-
 }

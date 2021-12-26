@@ -24,18 +24,20 @@ abstract class OrgarifSecurityString {
         this.rawString = rawString
         if (length() < minimalLength) {
             // because of mask
-            throw IllegalArgumentException("${javaClass.simpleName} minimal length is ${length()}, should not be less than $minimalLength")
+            throw IllegalArgumentException(
+                "${javaClass.simpleName} minimal length is ${length()}, should not be less than $minimalLength")
         }
         if (rawString.length != length()) {
-            throw IllegalArgumentException("${javaClass.simpleName} length must be ${length()} (not ${rawString.length})")
+            throw IllegalArgumentException(
+                "${javaClass.simpleName} length must be ${length()} (not ${rawString.length})")
         }
     }
 
     abstract fun length(): Int
 
     final override fun toString(): String {
-        val mask = rawString.substring(0, displayBeforeMask).padEnd(length() - displayBeforeMask, '*')
+        val mask =
+            rawString.substring(0, displayBeforeMask).padEnd(length() - displayBeforeMask, '*')
         return "${javaClass.simpleName}($mask)"
     }
-
 }

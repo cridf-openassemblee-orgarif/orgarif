@@ -1,8 +1,8 @@
 package orgarif.serialization
 
+import java.time.ZoneId
 import org.junit.jupiter.api.Assertions.assertEquals
 import org.junit.jupiter.api.Test
-import java.time.ZoneId
 
 internal class ZoneIdSerializerTest {
 

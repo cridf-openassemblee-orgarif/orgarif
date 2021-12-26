@@ -16,9 +16,12 @@ class CreateDeliberationAndAddLienCommandHandler(
     val randomService: RandomService,
     val dateService: DateService
 ) :
-    CommandHandler.Handler<CreateDeliberationAndAddLienCommand, CreateDeliberationAndAddLienCommandResponse>() {
+    CommandHandler.Handler<
+        CreateDeliberationAndAddLienCommand, CreateDeliberationAndAddLienCommandResponse>() {
 
-    override fun handle(command: CreateDeliberationAndAddLienCommand): CreateDeliberationAndAddLienCommandResponse {
+    override fun handle(
+        command: CreateDeliberationAndAddLienCommand
+    ): CreateDeliberationAndAddLienCommandResponse {
         val deliberationId = randomService.id<DeliberationId>()
         val now = dateService.now()
         deliberationDao.insert(
@@ -27,9 +30,7 @@ class CreateDeliberationAndAddLienCommandHandler(
                 libelle = command.libelle,
                 deliberationDate = command.deliberationDate,
                 creationDate = now,
-                lastModificationDate = now
-            )
-        )
+                lastModificationDate = now))
         val lienDeliberationId = randomService.id<LienDeliberationId>()
         lienDeliberationDao.insert(
             LienDeliberationDao.Record(
@@ -39,10 +40,7 @@ class CreateDeliberationAndAddLienCommandHandler(
                 instanceId = command.instanceId,
                 creationDate = now,
                 status = ItemStatus.live,
-                lastModificationDate = now
-            )
-        )
+                lastModificationDate = now))
         return CreateDeliberationAndAddLienCommandResponse(deliberationId, lienDeliberationId)
     }
-
 }

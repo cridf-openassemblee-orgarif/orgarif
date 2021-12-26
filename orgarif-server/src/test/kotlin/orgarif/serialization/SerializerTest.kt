@@ -1,17 +1,17 @@
 package orgarif.serialization
 
-import orgarif.domain.*
-import orgarif.service.DummyRandomService
-import orgarif.utils.OrgarifStringUtils
-import orgarif.utils.OrgarifStringUtils.filteredPassword
-import org.json.JSONObject
-import org.junit.jupiter.api.Assertions.assertEquals
-import org.junit.jupiter.api.Test
-import org.skyscreamer.jsonassert.JSONAssert
 import java.time.Instant
 import java.time.LocalDate
 import java.time.ZoneId
 import java.util.*
+import org.json.JSONObject
+import org.junit.jupiter.api.Assertions.assertEquals
+import org.junit.jupiter.api.Test
+import org.skyscreamer.jsonassert.JSONAssert
+import orgarif.domain.*
+import orgarif.service.DummyRandomService
+import orgarif.utils.OrgarifStringUtils
+import orgarif.utils.OrgarifStringUtils.filteredPassword
 
 // TODO test maps keys
 internal class SerializerTest {
@@ -48,20 +48,20 @@ internal class SerializerTest {
     @Test
     fun `test serializers`() {
         val randomService = DummyRandomService()
-        val s = SerializationTest(
-            Instant.ofEpochMilli(1631885748409),
-            TestSerializeAsString("test"),
-            randomService.id(),
-            randomService.id(),
-            randomService.stringId(TestStringId.length),
-            randomService.stringId(TestStringId.length),
-            randomService.securityString(TestStringId.length),
-            randomService.securityString(TestStringId.length),
-            LocalDate.of(2021, 9, 17),
-            PlainStringPassword("mon mot de passe secret"),
-            OrgarifStringUtils.deserializeUuid("a8f088f151794107a30b1eaaa6519c98"),
-            ZoneId.of("Europe/Paris")
-        )
+        val s =
+            SerializationTest(
+                Instant.ofEpochMilli(1631885748409),
+                TestSerializeAsString("test"),
+                randomService.id(),
+                randomService.id(),
+                randomService.stringId(TestStringId.length),
+                randomService.stringId(TestStringId.length),
+                randomService.securityString(TestStringId.length),
+                randomService.securityString(TestStringId.length),
+                LocalDate.of(2021, 9, 17),
+                PlainStringPassword("mon mot de passe secret"),
+                OrgarifStringUtils.deserializeUuid("a8f088f151794107a30b1eaaa6519c98"),
+                ZoneId.of("Europe/Paris"))
         println(Serializer.serialize(s))
         val expectedJson =
             """

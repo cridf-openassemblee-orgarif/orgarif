@@ -1,7 +1,7 @@
 package orgarif.utils
 
-import orgarif.jooqlib.Configuration.configuration
 import org.postgresql.ds.PGSimpleDataSource
+import orgarif.jooqlib.Configuration.configuration
 
 object DatabaseUtils {
 
@@ -14,5 +14,4 @@ object DatabaseUtils {
             password = configuration.password
         }
     }
-
 }

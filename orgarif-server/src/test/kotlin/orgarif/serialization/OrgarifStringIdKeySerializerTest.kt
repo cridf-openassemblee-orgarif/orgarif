@@ -1,9 +1,9 @@
 package orgarif.serialization
 
-import orgarif.domain.TestIds.sampleStringId
-import orgarif.domain.TestStringId
 import org.junit.jupiter.api.Test
 import org.skyscreamer.jsonassert.JSONAssert
+import orgarif.domain.TestIds.sampleStringId
+import orgarif.domain.TestStringId
 
 internal class OrgarifStringIdKeySerializerTest {
 
@@ -16,7 +16,8 @@ internal class OrgarifStringIdKeySerializerTest {
             {
                 "$sampleStringId": "coucou"
             }
-            """, json, true
-        )
+            """,
+            json,
+            true)
     }
 }

@@ -6,7 +6,6 @@ import org.springframework.beans.factory.annotation.Value
 import org.springframework.stereotype.Service
 import orgarif.domain.DeliberationId
 import orgarif.domain.InstanceId
-import orgarif.domain.ItemStatus
 import orgarif.domain.ItemStatus.*
 import orgarif.domain.OrganismeId
 import orgarif.domain.RepresentationId
@@ -58,9 +57,7 @@ class InitialDataInjector(
                         nombreSuppleants = nombreRepresentants,
                         creationDate = now,
                         status = live,
-                        lastModificationDate = now
-                    )
-                )
+                        lastModificationDate = now))
                 (1..2).forEach {
                     deliberation().let { deliberationId ->
                         lienDeliberationDao.insert(
@@ -71,9 +68,7 @@ class InitialDataInjector(
                                 instanceId = null,
                                 creationDate = now,
                                 status = live,
-                                lastModificationDate = now
-                            )
-                        )
+                                lastModificationDate = now))
                     }
                 }
 
@@ -86,9 +81,7 @@ class InitialDataInjector(
                         nombreSuppleants = nombreRepresentants,
                         creationDate = now,
                         status = live,
-                        lastModificationDate = now
-                    )
-                )
+                        lastModificationDate = now))
                 instanceDao.insert(
                     InstanceDao.Record(
                         id = fakeInstanceId2,
@@ -98,9 +91,7 @@ class InitialDataInjector(
                         nombreSuppleants = nombreRepresentants,
                         creationDate = now,
                         status = live,
-                        lastModificationDate = now
-                    )
-                )
+                        lastModificationDate = now))
             }
             injectRepresentations()
         }
@@ -121,16 +112,18 @@ class InitialDataInjector(
             listOf(
                 fakeOrganismeId to null,
                 fakeOrganismeId to fakeInstanceId1,
-                fakeOrganismeId to fakeInstanceId2
-            )
+                fakeOrganismeId to fakeInstanceId2)
                 .forEach { (organismeId, instanceId) ->
                     val reps =
-                        (1..nombreRepresentants).map { i.getAndIncrement() }.mapIndexed { index, incr ->
+                        (1..nombreRepresentants).map { i.getAndIncrement() }.mapIndexed {
+                            index,
+                            incr ->
                             val id = randomService.id<RepresentationId>()
                             representationDao.insert(
                                 RepresentationDao.Record(
                                     id = id,
-                                    representantId = representantByEluId.getValue(elus.get(incr).id).id,
+                                    representantId =
+                                        representantByEluId.getValue(elus.get(incr).id).id,
                                     organismeId = organismeId,
                                     instanceId = instanceId,
                                     position = index,
@@ -138,30 +131,27 @@ class InitialDataInjector(
                                     endDate = null,
                                     creationDate = now,
                                     status = live,
-                                    lastModificationDate = now
-                                )
-                            )
+                                    lastModificationDate = now))
                             id
                         }
-                    (1..nombreRepresentants)
-                        .map { i.getAndIncrement() }
-                        .forEachIndexed { index, incr ->
-                            if (incr % 2 == 0) {
-                                suppleanceDao.insert(
-                                    SuppleanceDao.Record(
-                                        id = randomService.id(),
-                                        representantId = representantByEluId.getValue(elus.get(incr).id).id,
-                                        representationId = reps.get(index),
-                                        organismeId = organismeId,
-                                        startDate = null,
-                                        endDate = null,
-                                        creationDate = now,
-                                        status = live,
-                                        lastModificationDate = now
-                                    )
-                                )
-                            }
+                    (1..nombreRepresentants).map { i.getAndIncrement() }.forEachIndexed {
+                        index,
+                        incr ->
+                        if (incr % 2 == 0) {
+                            suppleanceDao.insert(
+                                SuppleanceDao.Record(
+                                    id = randomService.id(),
+                                    representantId =
+                                        representantByEluId.getValue(elus.get(incr).id).id,
+                                    representationId = reps.get(index),
+                                    organismeId = organismeId,
+                                    startDate = null,
+                                    endDate = null,
+                                    creationDate = now,
+                                    status = live,
+                                    lastModificationDate = now))
                         }
+                    }
                 }
         }
 
@@ -175,9 +165,7 @@ class InitialDataInjector(
                 libelle = "Délibération du $date",
                 deliberationDate = date,
                 creationDate = now,
-                lastModificationDate = now
-            )
-        )
+                lastModificationDate = now))
         return id
     }
 
@@ -200,11 +188,11 @@ class InitialDataInjector(
                     "Tourisme",
                     "Affaires européennes",
                     "Finances - Évaluation des politiques publiques",
-                    "Administration générale"
-                )
+                    "Administration générale")
                     .map {
-                        SecteurDao.Record(randomService.id(), it, live, dateService.now())
-                            .apply { secteurDao.insert(this) }
+                        SecteurDao.Record(randomService.id(), it, live, dateService.now()).apply {
+                            secteurDao.insert(this)
+                        }
                     }
             } else {
                 it
@@ -230,12 +218,10 @@ class InitialDataInjector(
                     "Jury",
                     "Société coopérative d'intérêt collectif (SCIC)",
                     "Établissement public de santé (EPS)",
-                    "Commission d'appel d'offres"
-                )
+                    "Commission d'appel d'offres")
                     .map {
-                        NatureJuridiqueDao.Record(randomService.id(), it, live, dateService.now()).apply {
-                            natureJuridiqueDao.insert(this)
-                        }
+                        NatureJuridiqueDao.Record(randomService.id(), it, live, dateService.now())
+                            .apply { natureJuridiqueDao.insert(this) }
                     }
             } else {
                 it
@@ -263,12 +249,10 @@ class InitialDataInjector(
                     "Parc naturel régional (PNR)",
                     "Centre de formation en travail social (CFTS)",
                     "Commission de coordination des politiques publiques de santé (CCPPS)",
-                    "Base de plein air et de loisirs (BPAL)"
-                )
+                    "Base de plein air et de loisirs (BPAL)")
                     .map {
-                        TypeStructureDao.Record(randomService.id(), it, live, dateService.now()).apply {
-                            typeStructureDao.insert(this)
-                        }
+                        TypeStructureDao.Record(randomService.id(), it, live, dateService.now())
+                            .apply { typeStructureDao.insert(this) }
                     }
             } else {
                 it

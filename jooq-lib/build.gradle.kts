@@ -2,9 +2,7 @@ import org.jetbrains.kotlin.gradle.tasks.KotlinCompile
 
 group = "orgarif"
 
-plugins {
-    kotlin("jvm") version "1.6.0"
-}
+plugins { kotlin("jvm") version "1.6.0" }
 
 val kotlinVersion = "1.6.0"
 
@@ -19,9 +17,7 @@ kotlin {
 }
 
 tasks {
-    withType<KotlinCompile> {
-        kotlinOptions.jvmTarget = "15"
-    }
+    withType<KotlinCompile> { kotlinOptions.jvmTarget = "15" }
     register<JavaExec>("generateJooq") {
         main = "orgarif.jooqlib.GenerateJooqAndDiffKt"
         classpath = sourceSets["main"].runtimeClasspath
@@ -32,9 +28,7 @@ tasks {
     }
 }
 
-sourceSets.getByName("main") {
-    java.srcDir("src/generated/java")
-}
+sourceSets.getByName("main") { java.srcDir("src/generated/java") }
 
 repositories {
     mavenCentral()

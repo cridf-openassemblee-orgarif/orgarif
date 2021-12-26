@@ -1,5 +1,14 @@
 package orgarif.service.user
 
+import java.time.Duration
+import javax.servlet.http.HttpServletRequest
+import javax.servlet.http.HttpServletResponse
+import mu.KotlinLogging
+import org.springframework.security.authentication.AnonymousAuthenticationToken
+import org.springframework.security.authentication.UsernamePasswordAuthenticationToken
+import org.springframework.security.core.context.SecurityContextHolder
+import org.springframework.security.web.csrf.CookieCsrfTokenRepository
+import org.springframework.stereotype.Service
 import orgarif.domain.*
 import orgarif.error.AppErrors
 import orgarif.error.OrgarifSecurityException
@@ -8,15 +17,6 @@ import orgarif.repository.UserSessionLogDao
 import orgarif.service.ApplicationInstance
 import orgarif.service.DateService
 import orgarif.service.RandomService
-import mu.KotlinLogging
-import org.springframework.security.authentication.AnonymousAuthenticationToken
-import org.springframework.security.authentication.UsernamePasswordAuthenticationToken
-import org.springframework.security.core.context.SecurityContextHolder
-import org.springframework.security.web.csrf.CookieCsrfTokenRepository
-import org.springframework.stereotype.Service
-import java.time.Duration
-import javax.servlet.http.HttpServletRequest
-import javax.servlet.http.HttpServletResponse
 
 @Service
 class UserSessionService(
@@ -51,14 +51,7 @@ class UserSessionService(
         val ip = request.remoteAddr
         userSessionLogDao.insert(
             UserSessionLogDao.Record(
-                sessionId,
-                session.id,
-                user.id,
-                applicationInstance.deploymentId,
-                now,
-                ip
-            )
-        )
+                sessionId, session.id, user.id, applicationInstance.deploymentId, now, ip))
 
         val userSession = UserSession(sessionId, user.id, user.roles)
         val springAuthentication = UsernamePasswordAuthenticationToken(userSession, null, null)
@@ -109,15 +102,15 @@ class UserSessionService(
     fun convert(s: Session): SessionConvertion =
         when (s) {
             is UserSession -> SessionConvertion(false, s)
-            // [doc] to update a session :
-            // is FormerUserSession -> {
-            //    logger.info { "Converting session $s" }
-            //    val user = userDao.fetch(s.userId) ?: throw IllegalStateException("$s")
-            //    SessionConvertion(
-            //        true,
-            //        UserSession(s.sessionId, s.userId, user.roles)
-            //    )
-            // }
+        // [doc] to update a session :
+        // is FormerUserSession -> {
+        //    logger.info { "Converting session $s" }
+        //    val user = userDao.fetch(s.userId) ?: throw IllegalStateException("$s")
+        //    SessionConvertion(
+        //        true,
+        //        UserSession(s.sessionId, s.userId, user.roles)
+        //    )
+        // }
         }
 
     fun updateCurrentSession(userSession: UserSession): UserSession {

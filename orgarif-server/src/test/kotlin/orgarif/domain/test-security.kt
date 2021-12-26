@@ -5,6 +5,7 @@ data class TestSecurityString(override val rawString: String) : OrgarifSecurityS
 }
 
 @Prefix("test_prefix")
-data class TestPrefixSecurityString(override val rawString: String) : OrgarifSecurityString(rawString) {
+data class TestPrefixSecurityString(override val rawString: String) :
+    OrgarifSecurityString(rawString) {
     override fun length() = TestStringId.length
 }

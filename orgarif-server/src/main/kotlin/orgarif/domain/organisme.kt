@@ -1,10 +1,12 @@
 package orgarif.domain
 
-import orgarif.repository.OrganismeDao
 import java.time.LocalDate
+import orgarif.repository.OrganismeDao
 
 enum class ItemStatus {
-    live, archive, trash
+    live,
+    archive,
+    trash
 }
 
 data class RepresentationDto(
@@ -40,10 +42,7 @@ data class DeliberationDto(
     val deliberationDate: LocalDate
 )
 
-data class LienDeliberationDto(
-    val id: LienDeliberationId,
-    val deliberation: DeliberationDto
-)
+data class LienDeliberationDto(val id: LienDeliberationId, val deliberation: DeliberationDto)
 
 data class InstanceDto(
     val id: InstanceId,
@@ -62,7 +61,9 @@ data class OrganismeListDto(
     val natureJuridiqueId: NatureJuridiqueId?,
     val typeStructureId: TypeStructureId?
 ) {
-    constructor(r: OrganismeDao.Record) : this(r.id, r.nom, r.secteurId, r.natureJuridiqueId, r.typeStructureId)
+    constructor(
+        r: OrganismeDao.Record
+    ) : this(r.id, r.nom, r.secteurId, r.natureJuridiqueId, r.typeStructureId)
 }
 
 data class OrganismeDto(

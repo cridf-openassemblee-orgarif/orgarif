@@ -3,15 +3,15 @@ package orgarif.service
 import com.google.common.base.Charsets
 import com.google.common.base.Strings
 import com.google.common.io.Files
+import java.io.File
+import java.io.FileInputStream
+import java.util.*
+import org.springframework.core.env.Environment
+import org.springframework.stereotype.Service
 import orgarif.OrgarifApplication
 import orgarif.domain.ApplicationEnvironment
 import orgarif.domain.DeploymentLogId
 import orgarif.repository.DeploymentLogDao
-import org.springframework.core.env.Environment
-import org.springframework.stereotype.Service
-import java.io.File
-import java.io.FileInputStream
-import java.util.*
 
 @Service
 class ApplicationInstance(
@@ -23,16 +23,18 @@ class ApplicationInstance(
 
     val env: ApplicationEnvironment = run {
         val environments = ApplicationEnvironment.values().map { it.name }
-        val profiles = environment.activeProfiles
-            .let {
-                if (it.isEmpty()) {
-                    environment.defaultProfiles
-                } else {
-                    it
+        val profiles =
+            environment
+                .activeProfiles
+                .let {
+                    if (it.isEmpty()) {
+                        environment.defaultProfiles
+                    } else {
+                        it
+                    }
                 }
-            }
-            .filter { it != OrgarifApplication.springUserProfile() }
-            .filter { it in environments }
+                .filter { it != OrgarifApplication.springUserProfile() }
+                .filter { it in environments }
         if (profiles.size != 1) {
             throw IllegalStateException("Spring profiles : $profiles")
         }
@@ -42,9 +44,7 @@ class ApplicationInstance(
     val gitRevisionProperties by lazy {
         File(System.getProperty("user.dir") + "/build.properties").let { file ->
             if (file.exists()) {
-                Properties().apply {
-                    load(FileInputStream(file))
-                }
+                Properties().apply { load(FileInputStream(file)) }
             } else {
                 null
             }
@@ -56,22 +56,25 @@ class ApplicationInstance(
         val notNullGitRevisionProperties = gitRevisionProperties
         if (notNullGitRevisionProperties != null && buildDiffFile.exists()) {
             val buildDiff = Files.asCharSource(buildDiffFile, Charsets.UTF_8).readFirstLine()
-            notNullGitRevisionProperties.getProperty("shortGitRevision") + (if (!Strings.isNullOrEmpty(buildDiff)) " + DIFF" else "")
+            notNullGitRevisionProperties.getProperty("shortGitRevision") +
+                (if (!Strings.isNullOrEmpty(buildDiff)) " + DIFF" else "")
         } else {
             "[dev]"
         }
     }
 
-    // [doc] deploymentId insertion is lazy in development, which permits a database cleaning during the application
+    // [doc] deploymentId insertion is lazy in development, which permits a database cleaning during
+    // the application
     // launch
     val deploymentId by lazy {
         val deploymentId = randomService.id<DeploymentLogId>()
         deploymentLogDao.insert(
             DeploymentLogDao.Record(
-                deploymentId, gitRevisionLabel,
-                dateService.serverZoneId(), dateService.now(), shutdownDate = null
-            )
-        )
+                deploymentId,
+                gitRevisionLabel,
+                dateService.serverZoneId(),
+                dateService.now(),
+                shutdownDate = null))
         deploymentId
     }
 

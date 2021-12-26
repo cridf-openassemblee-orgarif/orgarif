@@ -1,12 +1,12 @@
 package orgarif.repository
 
+import java.time.Instant
+import org.jooq.DSLContext
+import org.springframework.stereotype.Repository
 import orgarif.domain.UserId
 import orgarif.jooq.generated.Tables.MAGIC_LINK_TOKEN
 import orgarif.jooq.generated.tables.records.MagicLinkTokenRecord
 import orgarif.utils.toTypeId
-import org.jooq.DSLContext
-import org.springframework.stereotype.Repository
-import java.time.Instant
 
 @Repository
 class MagicLinkTokenDao(val jooq: DSLContext) {
@@ -19,12 +19,13 @@ class MagicLinkTokenDao(val jooq: DSLContext) {
     )
 
     fun insert(r: Record) {
-        val record = MagicLinkTokenRecord().apply {
-            token = r.token
-            userId = r.userId.rawId
-            creationDate = r.creationDate
-            validity = r.validity
-        }
+        val record =
+            MagicLinkTokenRecord().apply {
+                token = r.token
+                userId = r.userId.rawId
+                creationDate = r.creationDate
+                validity = r.validity
+            }
         jooq.insertInto(MAGIC_LINK_TOKEN).set(record).execute()
     }
 
@@ -41,11 +42,10 @@ class MagicLinkTokenDao(val jooq: DSLContext) {
             .execute()
     }
 
-    private fun map(r: MagicLinkTokenRecord) = Record(
-        token = r.token,
-        userId = r.userId.toTypeId(),
-        creationDate = r.creationDate,
-        validity = r.validity
-    )
-
+    private fun map(r: MagicLinkTokenRecord) =
+        Record(
+            token = r.token,
+            userId = r.userId.toTypeId(),
+            creationDate = r.creationDate,
+            validity = r.validity)
 }

@@ -1,7 +1,6 @@
 package orgarif.command
 
 import org.springframework.stereotype.Service
-import orgarif.repository.OrganismeDao
 import orgarif.repository.SecteurDao
 import orgarif.service.DateService
 
@@ -13,5 +12,4 @@ class UpdateSecteurLibelleCommandHandler(val secteurDao: SecteurDao, val dateSer
         secteurDao.updateLibelle(command.id, command.libelle, dateService.now())
         return EmptyCommandResponse
     }
-
 }

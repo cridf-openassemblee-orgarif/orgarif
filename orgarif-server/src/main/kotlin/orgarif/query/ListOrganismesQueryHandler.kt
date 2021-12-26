@@ -10,5 +10,4 @@ class ListOrganismesQueryHandler(val organismeDao: OrganismeDao) :
 
     override fun handle(query: ListOrganismesQuery) =
         ListOrganismesQueryResponse(organismeDao.fetchAll().map { OrganismeListDto(it) })
-
 }

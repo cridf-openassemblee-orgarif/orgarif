@@ -1,7 +1,6 @@
 package orgarif.command
 
 import org.springframework.stereotype.Service
-import orgarif.error.DisplayMessageException
 import orgarif.repository.*
 import orgarif.service.DateService
 
@@ -16,5 +15,4 @@ class UpdateTypeStructureStatusCommandHandler(
         typeStructureDao.updateStatus(command.id, command.status, dateService.now())
         return EmptyCommandResponse
     }
-
 }

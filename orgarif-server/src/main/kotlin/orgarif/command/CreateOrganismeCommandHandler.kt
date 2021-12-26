@@ -28,10 +28,7 @@ class CreateOrganismeCommandHandler(
                 nombreSuppleants = null,
                 creationDate = now,
                 status = ItemStatus.live,
-                lastModificationDate = now
-            )
-        )
+                lastModificationDate = now))
         return CreateOrganismeCommandResponse(organismeId)
     }
-
 }

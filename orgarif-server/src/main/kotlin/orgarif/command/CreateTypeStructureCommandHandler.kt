@@ -2,11 +2,7 @@ package orgarif.command
 
 import org.springframework.stereotype.Service
 import orgarif.domain.ItemStatus
-import orgarif.domain.OrganismeId
-import orgarif.domain.SecteurId
 import orgarif.domain.TypeStructureId
-import orgarif.repository.OrganismeDao
-import orgarif.repository.SecteurDao
 import orgarif.repository.TypeStructureDao
 import orgarif.service.DateService
 import orgarif.service.RandomService
@@ -26,10 +22,7 @@ class CreateTypeStructureCommandHandler(
                 id = id,
                 libelle = command.libelle,
                 status = ItemStatus.live,
-                lastModificationDate = now
-            )
-        )
+                lastModificationDate = now))
         return CreateTypeStructureCommandResponse(id)
     }
-
 }

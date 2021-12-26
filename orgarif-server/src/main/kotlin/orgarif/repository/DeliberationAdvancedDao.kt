@@ -13,11 +13,13 @@ class DeliberationAdvancedDao(
     val lienDeliberationDao: LienDeliberationDao
 ) {
 
-    fun fetchDeliberationByOrganismeId(organismeId: OrganismeId):
-            List<Pair<LienDeliberationDao.Record, DeliberationDao.Record>> {
+    fun fetchDeliberationByOrganismeId(
+        organismeId: OrganismeId
+    ): List<Pair<LienDeliberationDao.Record, DeliberationDao.Record>> {
         val d = DELIBERATION.`as`("d")
         val l = LIEN_DELIBERATION.`as`("l")
-        return jooq.select()
+        return jooq
+            .select()
             .from(d)
             .join(l)
             .on(d.ID.equal(l.DELIBERATION_ID))
@@ -29,6 +31,4 @@ class DeliberationAdvancedDao(
                 lien to deliberation
             }
     }
-
 }
-

@@ -1,19 +1,9 @@
 package orgarif.error
 
 import com.fasterxml.jackson.databind.JsonMappingException
-import orgarif.config.ApplicationConstants
-import orgarif.domain.ApplicationEnvironment
-import orgarif.domain.MimeType
-import orgarif.domain.RequestErrorId
-import orgarif.domain.Role
-import orgarif.service.ApplicationInstance
-import orgarif.service.DateService
-import orgarif.service.RandomService
-import orgarif.service.user.UserSessionService
-import orgarif.utils.OrgarifStringUtils
-import orgarif.serialization.Serializer
 import freemarker.ext.beans.BeansWrapperBuilder
 import freemarker.template.Configuration
+import javax.servlet.http.HttpServletResponse
 import mu.KotlinLogging
 import org.apache.tomcat.util.http.fileupload.impl.SizeLimitExceededException
 import org.springframework.web.bind.annotation.ControllerAdvice
@@ -21,7 +11,17 @@ import org.springframework.web.bind.annotation.ExceptionHandler
 import org.springframework.web.context.request.WebRequest
 import org.springframework.web.servlet.ModelAndView
 import org.springframework.web.servlet.view.json.MappingJackson2JsonView
-import javax.servlet.http.HttpServletResponse
+import orgarif.config.ApplicationConstants
+import orgarif.domain.ApplicationEnvironment
+import orgarif.domain.MimeType
+import orgarif.domain.RequestErrorId
+import orgarif.domain.Role
+import orgarif.serialization.Serializer
+import orgarif.service.ApplicationInstance
+import orgarif.service.DateService
+import orgarif.service.RandomService
+import orgarif.service.user.UserSessionService
+import orgarif.utils.OrgarifStringUtils
 
 @ControllerAdvice
 class ApplicationExceptionHandler(
@@ -33,15 +33,21 @@ class ApplicationExceptionHandler(
 
     private val logger = KotlinLogging.logger {}
 
-    val statics = BeansWrapperBuilder(Configuration.DEFAULT_INCOMPATIBLE_IMPROVEMENTS).build().staticModels
+    val statics =
+        BeansWrapperBuilder(Configuration.DEFAULT_INCOMPATIBLE_IMPROVEMENTS).build().staticModels
 
     @ExceptionHandler(Exception::class)
-    fun defaultErrorHandler(request: WebRequest, response: HttpServletResponse, exception: Exception): ModelAndView {
+    fun defaultErrorHandler(
+        request: WebRequest,
+        response: HttpServletResponse,
+        exception: Exception
+    ): ModelAndView {
         // TODO[secu] handle exceptions
         // log userid, mail, ip
         val id = randomService.id<RequestErrorId>()
         val readableStackTrace =
-            if (applicationInstance.env == ApplicationEnvironment.dev || userSessionService.hasRole(Role.admin)) {
+            if (applicationInstance.env == ApplicationEnvironment.dev ||
+                userSessionService.hasRole(Role.admin)) {
                 ReadableStackTrace(exception)
             } else {
                 null
@@ -65,9 +71,7 @@ class ApplicationExceptionHandler(
                         "Error",
                         "File exceeds max authorized size",
                         dateService.now(),
-                        readableStackTrace
-                    )
-                )
+                        readableStackTrace))
             }
             exception is DisplayMessageException -> {
                 // TODO[secu] this "DisplayError" is used on front
@@ -81,29 +85,36 @@ class ApplicationExceptionHandler(
                         "DisplayError",
                         exception.displayMessage,
                         dateService.now(),
-                        readableStackTrace
-                    )
-                )
+                        readableStackTrace))
             }
             exception is JsonMappingException -> {
                 when (cause) {
                     is OrgarifSerializationLocalDateException -> {
                         return render(
-                            request, response, RequestError(
-                                id, 400, "SerializationError",
-                                // on ne met pas la date dans le message car non formattée ce n'est pas clair
+                            request,
+                            response,
+                            RequestError(
+                                id,
+                                400,
+                                "SerializationError",
+                                // on ne met pas la date dans le message car non formattée ce n'est
+                                // pas clair
                                 // (2020-33-33 vs 33/33/2020)
-                                "La date n'est pas valide.", dateService.now(), readableStackTrace
-                            )
-                        )
+                                "La date n'est pas valide.",
+                                dateService.now(),
+                                readableStackTrace))
                     }
                     else -> {
                         return render(
-                            request, response, RequestError(
-                                id, 500, "Erreur", "Erreur inconnue",
-                                dateService.now(), readableStackTrace
-                            )
-                        )
+                            request,
+                            response,
+                            RequestError(
+                                id,
+                                500,
+                                "Erreur",
+                                "Erreur inconnue",
+                                dateService.now(),
+                                readableStackTrace))
                     }
                 }
             }
@@ -121,14 +132,7 @@ class ApplicationExceptionHandler(
                     request,
                     response,
                     RequestError(
-                        id,
-                        500,
-                        "Error",
-                        "Unknown error",
-                        dateService.now(),
-                        readableStackTrace
-                    )
-                )
+                        id, 500, "Error", "Unknown error", dateService.now(), readableStackTrace))
             }
         }
     }
@@ -157,10 +161,12 @@ class ApplicationExceptionHandler(
                 mav.model["stackTrace"] = stackTrace
             }
         } else {
-            mav.model["requestErrorIdAsString"] = OrgarifStringUtils.serializeUuid(requestError.id.rawId)
+            mav.model["requestErrorIdAsString"] =
+                OrgarifStringUtils.serializeUuid(requestError.id.rawId)
             mav.model["requestError"] = requestError
             if (applicationInstance.env == ApplicationEnvironment.dev && stackTrace != null) {
-                mav.model[ApplicationConstants.springMvcModelKeyStackTrace] = stackTrace.toReadableString()
+                mav.model[ApplicationConstants.springMvcModelKeyStackTrace] =
+                    stackTrace.toReadableString()
             }
             mav.model["statics"] = statics
             mav.viewName = "error"

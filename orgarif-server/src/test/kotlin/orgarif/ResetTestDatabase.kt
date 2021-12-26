@@ -7,6 +7,6 @@ object ResetTestDatabase {
 
     // TODO do smart things with transactions ?
     fun reset(insertInitialData: Boolean) =
-        ResetDatabase.resetDatabaseSchema(Configuration.configuration("application-test.yaml"), insertInitialData)
-
+        ResetDatabase.resetDatabaseSchema(
+            Configuration.configuration("application-test.yaml"), insertInitialData)
 }

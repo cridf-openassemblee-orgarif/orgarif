@@ -4,10 +4,7 @@ import com.fasterxml.jackson.annotation.JsonTypeInfo
 import orgarif.domain.*
 
 @JsonTypeInfo(
-    use = JsonTypeInfo.Id.NAME,
-    include = JsonTypeInfo.As.PROPERTY,
-    property = "objectType"
-)
+    use = JsonTypeInfo.Id.NAME, include = JsonTypeInfo.As.PROPERTY, property = "objectType")
 sealed class Query
 
 sealed class QueryResponse

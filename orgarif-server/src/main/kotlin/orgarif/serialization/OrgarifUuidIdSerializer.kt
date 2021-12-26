@@ -11,7 +11,7 @@ class OrgarifUuidIdSerializer : StdSerializer<OrgarifUuidId>(OrgarifUuidId::clas
     companion object {
         fun serialize(value: OrgarifUuidId) =
             OrgarifSerializationPrefixUtils.prefix(value) +
-                    OrgarifStringUtils.serializeUuid(value.rawId)
+                OrgarifStringUtils.serializeUuid(value.rawId)
     }
 
     override fun serialize(value: OrgarifUuidId, gen: JsonGenerator, provider: SerializerProvider) =

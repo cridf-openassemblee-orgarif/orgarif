@@ -1,5 +1,8 @@
 package orgarif.controller
 
+import javax.servlet.http.HttpServletRequest
+import javax.servlet.http.HttpServletResponse
+import mu.KotlinLogging
 import org.apache.commons.lang3.exception.ExceptionUtils
 import org.springframework.transaction.PlatformTransactionManager
 import org.springframework.web.bind.annotation.PostMapping
@@ -15,22 +18,17 @@ import orgarif.service.DateService
 import orgarif.service.IdLogService
 import orgarif.service.RandomService
 import orgarif.service.user.UserSessionService
-import mu.KotlinLogging
-import javax.servlet.http.HttpServletRequest
-import javax.servlet.http.HttpServletResponse
 
 @RestController
 class CommandController(
     val commandLogDao: CommandLogDao,
     val userDao: UserDao,
-
     val applicationInstance: ApplicationInstance,
     val dateService: DateService,
     val randomService: RandomService,
     val transactionManager: PlatformTransactionManager,
     val idLogService: IdLogService,
     val userSessionService: UserSessionService,
-
     val addInstanceCommandHandler: AddInstanceCommandHandler,
     val addLienDeliberationCommandHandler: AddLienDeliberationCommandHandler,
     val addRepresentationCommandHandler: AddRepresentationCommandHandler,
@@ -42,7 +40,8 @@ class CommandController(
     val loginCommandHandler: LoginCommandHandler,
     val moveRepresentationCommandHandler: MoveRepresentationCommandHandler,
     val registerCommandHandler: RegisterCommandHandler,
-    val updateInstanceNombreRepresentantsCommandHandler: UpdateInstanceNombreRepresentantsCommandHandler,
+    val updateInstanceNombreRepresentantsCommandHandler:
+        UpdateInstanceNombreRepresentantsCommandHandler,
     val updateInstanceNombreSuppleantsCommandHandler: UpdateInstanceNombreSuppleantsCommandHandler,
     val updateInstanceNomCommandHandler: UpdateInstanceNomCommandHandler,
     val updateInstanceStatusCommandHandler: UpdateInstanceStatusCommandHandler,
@@ -50,10 +49,13 @@ class CommandController(
     val updateNatureJuridiqueStatusCommandHandler: UpdateNatureJuridiqueStatusCommandHandler,
     val updateOrganismeNatureJuridiqueCommandHandler: UpdateOrganismeNatureJuridiqueCommandHandler,
     val updateOrganismeNomCommandHandler: UpdateOrganismeNomCommandHandler,
-    val updateOrganismeNombreRepresentantsCommandHandler: UpdateOrganismeNombreRepresentantsCommandHandler,
-    val updateOrganismeNombreSuppleantsCommandHandler: UpdateOrganismeNombreSuppleantsCommandHandler,
+    val updateOrganismeNombreRepresentantsCommandHandler:
+        UpdateOrganismeNombreRepresentantsCommandHandler,
+    val updateOrganismeNombreSuppleantsCommandHandler:
+        UpdateOrganismeNombreSuppleantsCommandHandler,
     val updateOrganismeSecteurCommandHandler: UpdateOrganismeSecteurCommandHandler,
-    val updateOrganismeTypeStructureCommandCommandHandler: UpdateOrganismeTypeStructureCommandHandler,
+    val updateOrganismeTypeStructureCommandCommandHandler:
+        UpdateOrganismeTypeStructureCommandHandler,
     val updateRepresentationStatusCommandHandler: UpdateRepresentationStatusCommandHandler,
     val updateSecteurLibelleCommandHandler: UpdateSecteurLibelleCommandHandler,
     val updateSecteurStatusCommandHandler: UpdateSecteurStatusCommandHandler,
@@ -72,7 +74,8 @@ class CommandController(
     ): CommandResponse? {
         val command = Serializer.deserialize<Command>(jsonCommand)
         val handler = handler(command)
-        val userSession = if (userSessionService.isAuthenticated()) userSessionService.getUserSession() else null
+        val userSession =
+            if (userSessionService.isAuthenticated()) userSessionService.getUserSession() else null
         // [doc] is filtered from sensitive data (passwords) because of serializers
         val filteredJsonCommand = Serializer.serialize(command)
         // TODO[test] make an only insert at the end, with no update ?
@@ -92,17 +95,12 @@ class CommandController(
                 jsonResult = null,
                 exceptionStackTrace = null,
                 startDate = dateService.now(),
-                endDate = null
-            )
-        )
+                endDate = null))
         val transaction = transactionManager.getTransaction(null)
 
         try {
             userSessionService.verifyRoleOrFail(
-                CommandConfiguration.role(command),
-                request.remoteAddr,
-                command.javaClass
-            )
+                CommandConfiguration.role(command), request.remoteAddr, command.javaClass)
             idLogService.enableLogging()
             val result = handler.handle(command, userSession, request, response)
             transactionManager.commit(transaction)
@@ -111,8 +109,7 @@ class CommandController(
                     commandLogId,
                     idLogService.getIdsString(),
                     if (result !is EmptyCommandResponse) Serializer.serialize(result) else null,
-                    dateService.now()
-                )
+                    dateService.now())
             } catch (e: Exception) {
                 logger.error(e) { "Exception in command result log..." }
             }
@@ -121,10 +118,7 @@ class CommandController(
             transactionManager.rollback(transaction)
             try {
                 commandLogDao.updateExceptionStackTrace(
-                    commandLogId,
-                    ExceptionUtils.getStackTrace(e),
-                    dateService.now()
-                )
+                    commandLogId, ExceptionUtils.getStackTrace(e), dateService.now())
             } catch (e2: Exception) {
                 logger.error(e2) { "Exception in command exception log..." }
             }
@@ -135,35 +129,40 @@ class CommandController(
     }
 
     @Suppress("UNCHECKED_CAST")
-    private fun handler(command: Command) = when (command) {
-        is AddInstanceCommand -> addInstanceCommandHandler
-        is AddLienDeliberationCommand -> addLienDeliberationCommandHandler
-        is AddRepresentationCommand -> addRepresentationCommandHandler
-        is CreateDeliberationAndAddLienCommand -> createDeliberationAndAddLienCommandHandler
-        is CreateNatureJuridiqueCommand -> createNatureJuridiqueCommandHandler
-        is CreateOrganismeCommand -> createOrganismeCommandHandler
-        is CreateSecteurCommand -> createSecteurCommandHandler
-        is CreateTypeStructureCommand -> createTypeStructureCommandHandler
-        is LoginCommand -> loginCommandHandler
-        is MoveRepresentationCommand -> moveRepresentationCommandHandler
-        is RegisterCommand -> registerCommandHandler
-        is UpdateInstanceNombreRepresentantsCommand -> updateInstanceNombreRepresentantsCommandHandler
-        is UpdateInstanceNombreSuppleantsCommand -> updateInstanceNombreSuppleantsCommandHandler
-        is UpdateInstanceNomCommand -> updateInstanceNomCommandHandler
-        is UpdateInstanceStatusCommand -> updateInstanceStatusCommandHandler
-        is UpdateNatureJuridiqueLibelleCommand -> updateNatureJuridiqueLibelleCommandHandler
-        is UpdateNatureJuridiqueStatusCommand -> updateNatureJuridiqueStatusCommandHandler
-        is UpdateOrganismeNatureJuridiqueCommand -> updateOrganismeNatureJuridiqueCommandHandler
-        is UpdateOrganismeNombreRepresentantsCommand -> updateOrganismeNombreRepresentantsCommandHandler
-        is UpdateOrganismeNombreSuppleantsCommand -> updateOrganismeNombreSuppleantsCommandHandler
-        is UpdateOrganismeNomCommand -> updateOrganismeNomCommandHandler
-        is UpdateOrganismeSecteurCommand -> updateOrganismeSecteurCommandHandler
-        is UpdateOrganismeTypeStructureCommand -> updateOrganismeTypeStructureCommandCommandHandler
-        is UpdateRepresentationStatusCommand -> updateRepresentationStatusCommandHandler
-        is UpdateSecteurLibelleCommand -> updateSecteurLibelleCommandHandler
-        is UpdateSecteurStatusCommand -> updateSecteurStatusCommandHandler
-        is UpdateTypeStructureLibelleCommand -> updateTypeStructureLibelleCommandHandler
-        is UpdateTypeStructureStatusCommand -> updateTypeStructureStatusCommandHandler
-    } as CommandHandler<Command, CommandResponse>
-
+    private fun handler(command: Command) =
+        when (command) {
+            is AddInstanceCommand -> addInstanceCommandHandler
+            is AddLienDeliberationCommand -> addLienDeliberationCommandHandler
+            is AddRepresentationCommand -> addRepresentationCommandHandler
+            is CreateDeliberationAndAddLienCommand -> createDeliberationAndAddLienCommandHandler
+            is CreateNatureJuridiqueCommand -> createNatureJuridiqueCommandHandler
+            is CreateOrganismeCommand -> createOrganismeCommandHandler
+            is CreateSecteurCommand -> createSecteurCommandHandler
+            is CreateTypeStructureCommand -> createTypeStructureCommandHandler
+            is LoginCommand -> loginCommandHandler
+            is MoveRepresentationCommand -> moveRepresentationCommandHandler
+            is RegisterCommand -> registerCommandHandler
+            is UpdateInstanceNombreRepresentantsCommand ->
+                updateInstanceNombreRepresentantsCommandHandler
+            is UpdateInstanceNombreSuppleantsCommand -> updateInstanceNombreSuppleantsCommandHandler
+            is UpdateInstanceNomCommand -> updateInstanceNomCommandHandler
+            is UpdateInstanceStatusCommand -> updateInstanceStatusCommandHandler
+            is UpdateNatureJuridiqueLibelleCommand -> updateNatureJuridiqueLibelleCommandHandler
+            is UpdateNatureJuridiqueStatusCommand -> updateNatureJuridiqueStatusCommandHandler
+            is UpdateOrganismeNatureJuridiqueCommand -> updateOrganismeNatureJuridiqueCommandHandler
+            is UpdateOrganismeNombreRepresentantsCommand ->
+                updateOrganismeNombreRepresentantsCommandHandler
+            is UpdateOrganismeNombreSuppleantsCommand ->
+                updateOrganismeNombreSuppleantsCommandHandler
+            is UpdateOrganismeNomCommand -> updateOrganismeNomCommandHandler
+            is UpdateOrganismeSecteurCommand -> updateOrganismeSecteurCommandHandler
+            is UpdateOrganismeTypeStructureCommand ->
+                updateOrganismeTypeStructureCommandCommandHandler
+            is UpdateRepresentationStatusCommand -> updateRepresentationStatusCommandHandler
+            is UpdateSecteurLibelleCommand -> updateSecteurLibelleCommandHandler
+            is UpdateSecteurStatusCommand -> updateSecteurStatusCommandHandler
+            is UpdateTypeStructureLibelleCommand -> updateTypeStructureLibelleCommandHandler
+            is UpdateTypeStructureStatusCommand -> updateTypeStructureStatusCommandHandler
+        } as
+            CommandHandler<Command, CommandResponse>
 }

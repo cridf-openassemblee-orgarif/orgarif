@@ -5,7 +5,9 @@ import orgarif.repository.SecteurDao
 import orgarif.repository.TypeStructureDao
 
 typealias Secteur = SecteurDao.Record
+
 typealias NatureJuridique = NatureJuridiqueDao.Record
+
 typealias TypeStructure = TypeStructureDao.Record
 
 data class OrganismeCategories(

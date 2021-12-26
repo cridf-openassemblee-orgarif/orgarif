@@ -31,7 +31,12 @@ class DevInitialDataInjectorService(
         insertUser("admin", true, mailPrefix, mailSuffix)
     }
 
-    private fun insertUser(username: String, admin: Boolean, mailPrefix: String, mailSuffix: String) {
+    private fun insertUser(
+        username: String,
+        admin: Boolean,
+        mailPrefix: String,
+        mailSuffix: String
+    ) {
         if (userDao.fetchByUsername(username) == null) {
             userDao.insert(
                 UserDao.Record(
@@ -43,10 +48,8 @@ class DevInitialDataInjectorService(
                     signupDate = dateService.now(),
                     roles = setOf(Role.user).let { if (admin) it + Role.admin else it },
                     dirtyMail = null,
-                    formerMails = emptyList()
-                ),
-                HashedPassword(passwordEncoder.encode(username))
-            )
+                    formerMails = emptyList()),
+                HashedPassword(passwordEncoder.encode(username)))
         }
     }
 }

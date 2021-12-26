@@ -9,5 +9,4 @@ class OrgarifUuidIdKeySerializer : StdSerializer<OrgarifUuidId>(OrgarifUuidId::c
 
     override fun serialize(value: OrgarifUuidId, gen: JsonGenerator, provider: SerializerProvider) =
         gen.writeFieldName(OrgarifUuidIdSerializer.serialize(value))
-
 }

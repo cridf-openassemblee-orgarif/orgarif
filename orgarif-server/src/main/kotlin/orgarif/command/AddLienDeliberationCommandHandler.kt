@@ -25,10 +25,7 @@ class AddLienDeliberationCommandHandler(
                 instanceId = command.instanceId,
                 creationDate = now,
                 status = ItemStatus.live,
-                lastModificationDate = now
-            )
-        )
+                lastModificationDate = now))
         return AddLienDeliberationCommandResponse(id)
     }
-
 }

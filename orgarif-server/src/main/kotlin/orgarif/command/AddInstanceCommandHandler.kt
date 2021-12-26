@@ -12,8 +12,7 @@ class AddInstanceCommandHandler(
     val instanceDao: InstanceDao,
     val randomService: RandomService,
     val dateService: DateService
-) :
-    CommandHandler.Handler<AddInstanceCommand, AddInstanceCommandResponse>() {
+) : CommandHandler.Handler<AddInstanceCommand, AddInstanceCommandResponse>() {
 
     override fun handle(command: AddInstanceCommand): AddInstanceCommandResponse {
         val instanceId = randomService.id<InstanceId>()
@@ -27,10 +26,7 @@ class AddInstanceCommandHandler(
                 nombreSuppleants = null,
                 creationDate = now,
                 status = ItemStatus.live,
-                lastModificationDate = now
-            )
-        )
+                lastModificationDate = now))
         return AddInstanceCommandResponse(instanceId)
     }
-
 }

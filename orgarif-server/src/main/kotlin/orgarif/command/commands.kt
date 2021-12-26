@@ -5,8 +5,7 @@ import java.time.LocalDate
 import orgarif.domain.*
 
 @JsonTypeInfo(
-    use = JsonTypeInfo.Id.NAME, include = JsonTypeInfo.As.PROPERTY, property = "objectType"
-)
+    use = JsonTypeInfo.Id.NAME, include = JsonTypeInfo.As.PROPERTY, property = "objectType")
 sealed class Command
 
 sealed class CommandResponse
@@ -90,15 +89,10 @@ data class RegisterCommand(
 data class RegisterCommandResponse(val result: RegisterResult, val userinfos: UserInfos?) :
     CommandResponse()
 
-data class UpdateInstanceNombreRepresentantsCommand(
-    val instanceId: InstanceId,
-    val nombre: Int?
-) : Command()
+data class UpdateInstanceNombreRepresentantsCommand(val instanceId: InstanceId, val nombre: Int?) :
+    Command()
 
-data class UpdateInstanceNombreSuppleantsCommand(
-    val instanceId: InstanceId,
-    val nombre: Int?
-) :
+data class UpdateInstanceNombreSuppleantsCommand(val instanceId: InstanceId, val nombre: Int?) :
     Command()
 
 data class UpdateInstanceNomCommand(val id: InstanceId, val nom: String) : Command()
@@ -108,22 +102,19 @@ data class UpdateInstanceStatusCommand(val id: InstanceId, val status: ItemStatu
 data class UpdateNatureJuridiqueLibelleCommand(val id: NatureJuridiqueId, val libelle: String) :
     Command()
 
-data class UpdateNatureJuridiqueStatusCommand(val id: NatureJuridiqueId, val status: ItemStatus) : Command()
+data class UpdateNatureJuridiqueStatusCommand(val id: NatureJuridiqueId, val status: ItemStatus) :
+    Command()
 
 data class UpdateOrganismeNatureJuridiqueCommand(
     val id: OrganismeId,
     val natureJuridiqueId: NatureJuridiqueId?
 ) : Command()
 
-data class UpdateOrganismeNombreRepresentantsCommand(
-    val id: OrganismeId,
-    val nombre: Int?
-) : Command()
+data class UpdateOrganismeNombreRepresentantsCommand(val id: OrganismeId, val nombre: Int?) :
+    Command()
 
-data class UpdateOrganismeNombreSuppleantsCommand(
-    val id: OrganismeId,
-    val nombre: Int?
-) : Command()
+data class UpdateOrganismeNombreSuppleantsCommand(val id: OrganismeId, val nombre: Int?) :
+    Command()
 
 data class UpdateOrganismeNomCommand(val id: OrganismeId, val nom: String) : Command()
 
@@ -135,7 +126,8 @@ data class UpdateOrganismeTypeStructureCommand(
     val typeStructureId: TypeStructureId?
 ) : Command()
 
-data class UpdateRepresentationStatusCommand(val id: RepresentationId, val status: ItemStatus) : Command()
+data class UpdateRepresentationStatusCommand(val id: RepresentationId, val status: ItemStatus) :
+    Command()
 
 data class UpdateSecteurLibelleCommand(val id: SecteurId, val libelle: String) : Command()
 
@@ -144,4 +136,5 @@ data class UpdateSecteurStatusCommand(val id: SecteurId, val status: ItemStatus)
 data class UpdateTypeStructureLibelleCommand(val id: TypeStructureId, val libelle: String) :
     Command()
 
-data class UpdateTypeStructureStatusCommand(val id: TypeStructureId, val status: ItemStatus) : Command()
+data class UpdateTypeStructureStatusCommand(val id: TypeStructureId, val status: ItemStatus) :
+    Command()

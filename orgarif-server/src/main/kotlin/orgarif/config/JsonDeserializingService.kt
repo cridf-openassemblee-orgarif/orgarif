@@ -1,11 +1,11 @@
 package orgarif.config
 
-import orgarif.domain.Session
-import orgarif.serialization.Serializer.deserialize
+import java.util.*
 import org.springframework.core.convert.converter.Converter
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken
 import org.springframework.security.core.context.SecurityContextImpl
-import java.util.*
+import orgarif.domain.Session
+import orgarif.serialization.Serializer.deserialize
 
 class JsonDeserializingService : Converter<ByteArray, Any> {
 
@@ -13,11 +13,13 @@ class JsonDeserializingService : Converter<ByteArray, Any> {
     // fun byteArrayOfInts(vararg ints: Int) = ByteArray(ints.size) { pos -> ints[pos].toByte() }
     // println(String(byteArrayOfInts(123, 34, ...)))
     override fun convert(source: ByteArray): Any {
-        val json = try {
-            String(source)
-        } catch (e: Exception) {
-            throw IllegalArgumentException("Couldn't convert to string ${Arrays.toString(source)}", e)
-        }
+        val json =
+            try {
+                String(source)
+            } catch (e: Exception) {
+                throw IllegalArgumentException(
+                    "Couldn't convert to string ${Arrays.toString(source)}", e)
+            }
         return try {
             val session = deserialize<Session>(json)
             SecurityContextImpl().apply {
@@ -27,5 +29,4 @@ class JsonDeserializingService : Converter<ByteArray, Any> {
             throw IllegalArgumentException("Couldn't deserialize session $json", e)
         }
     }
-
 }

@@ -1,8 +1,8 @@
 package orgarif.service
 
-import orgarif.domain.Language
-import org.springframework.stereotype.Service
 import java.util.*
+import org.springframework.stereotype.Service
+import orgarif.domain.Language
 
 @Service
 class LocaleService(val notificationService: NotificationService) {
@@ -18,10 +18,7 @@ class LocaleService(val notificationService: NotificationService) {
             }
         }
         notificationService.notify(
-            "No locale found in user locales $locales",
-            NotificationService.Channel.info
-        )
+            "No locale found in user locales $locales", NotificationService.Channel.info)
         return Language.en
     }
-
 }

@@ -3,8 +3,8 @@ package orgarif.serialization
 import com.fasterxml.jackson.core.JsonParser
 import com.fasterxml.jackson.databind.DeserializationContext
 import com.fasterxml.jackson.databind.deser.std.StdDeserializer
-import orgarif.domain.SerializeAsString
 import kotlin.reflect.KClass
+import orgarif.domain.SerializeAsString
 
 class SerializeAsStringDeserializer<T : SerializeAsString>(val orgarifStringIdClass: KClass<T>) :
     StdDeserializer<T>(orgarifStringIdClass.java) {
@@ -16,5 +16,4 @@ class SerializeAsStringDeserializer<T : SerializeAsString>(val orgarifStringIdCl
 
     override fun deserialize(p: JsonParser, ctxt: DeserializationContext): T =
         deserialize(orgarifStringIdClass, p.valueAsString)
-
 }

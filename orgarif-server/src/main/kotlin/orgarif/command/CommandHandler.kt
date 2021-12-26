@@ -1,11 +1,16 @@
 package orgarif.command
 
-import orgarif.domain.UserSession
 import javax.servlet.http.HttpServletRequest
 import javax.servlet.http.HttpServletResponse
+import orgarif.domain.UserSession
 
 interface CommandHandler<C : Command, R : CommandResponse> {
-    fun handle(command: C, userSession: UserSession?, request: HttpServletRequest, response: HttpServletResponse): R
+    fun handle(
+        command: C,
+        userSession: UserSession?,
+        request: HttpServletRequest,
+        response: HttpServletResponse
+    ): R
 
     abstract class Handler<C : Command, R : CommandResponse> : CommandHandler<C, R> {
         override fun handle(

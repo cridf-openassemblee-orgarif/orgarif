@@ -11,5 +11,4 @@ class ListOrganismesBySecteurQueryHandler(val organismeDao: OrganismeDao) :
     override fun handle(query: ListOrganismesBySecteurQuery) =
         ListOrganismesBySecteurQueryResponse(
             organismeDao.fetchBySecteurId(query.secteurId).map { OrganismeListDto(it) })
-
 }

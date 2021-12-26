@@ -1,17 +1,13 @@
 package orgarif.repository
 
+import java.time.Instant
+import java.time.LocalDate
 import org.jooq.DSLContext
 import org.springframework.stereotype.Repository
 import orgarif.domain.*
-import orgarif.jooq.generated.Tables
-import orgarif.jooq.generated.Tables.REPRESENTANT
 import orgarif.jooq.generated.Tables.REPRESENTATION
-import orgarif.jooq.generated.tables.records.RepresentantRecord
 import orgarif.jooq.generated.tables.records.RepresentationRecord
 import orgarif.utils.toTypeId
-import java.time.Instant
-import java.time.LocalDate
-
 
 @Repository
 class RepresentationDao(val jooq: DSLContext) {
@@ -30,18 +26,19 @@ class RepresentationDao(val jooq: DSLContext) {
     )
 
     fun insert(r: Record) {
-        val record = RepresentationRecord().apply {
-            id = r.id.rawId
-            representantId = r.representantId?.rawId
-            organismeId = r.organismeId.rawId
-            instanceId = r.instanceId?.rawId
-            position = r.position
-            startDate = r.startDate
-            endDate = r.endDate
-            creationDate = r.creationDate
-            status = r.status.name
-            lastModificationDate = r.lastModificationDate
-        }
+        val record =
+            RepresentationRecord().apply {
+                id = r.id.rawId
+                representantId = r.representantId?.rawId
+                organismeId = r.organismeId.rawId
+                instanceId = r.instanceId?.rawId
+                position = r.position
+                startDate = r.startDate
+                endDate = r.endDate
+                creationDate = r.creationDate
+                status = r.status.name
+                lastModificationDate = r.lastModificationDate
+            }
         jooq.insertInto(REPRESENTATION).set(record).execute()
     }
 
@@ -73,16 +70,14 @@ class RepresentationDao(val jooq: DSLContext) {
             .fetch()
             .map(this::map)
 
-    fun fetchAll() =
-        jooq.selectFrom(REPRESENTATION)
-            .fetch()
-            .map(this::map)
+    fun fetchAll() = jooq.selectFrom(REPRESENTATION).fetch().map(this::map)
 
     fun fetchCurrentPositionByOrganismeInstance(
         organismeId: OrganismeId,
         instanceId: InstanceId?
     ): Int? =
-        jooq.select(REPRESENTATION.POSITION)
+        jooq
+            .select(REPRESENTATION.POSITION)
             .from(REPRESENTATION)
             .where(REPRESENTATION.ORGANISME_ID.equal(organismeId.rawId))
             .apply {
@@ -112,16 +107,14 @@ class RepresentationDao(val jooq: DSLContext) {
         position: Int,
         modificationDate: Instant
     ) {
-        val r = RepresentationRecord().also {
-            it.organismeId = organismeId.rawId
-            it.instanceId = instanceId?.rawId
-            it.position = position
-            it.lastModificationDate = modificationDate
-        }
-        jooq.update(REPRESENTATION)
-            .set(r)
-            .where(REPRESENTATION.ID.equal(id.rawId))
-            .execute()
+        val r =
+            RepresentationRecord().also {
+                it.organismeId = organismeId.rawId
+                it.instanceId = instanceId?.rawId
+                it.position = position
+                it.lastModificationDate = modificationDate
+            }
+        jooq.update(REPRESENTATION).set(r).where(REPRESENTATION.ID.equal(id.rawId)).execute()
     }
 
     fun updateStatus(id: RepresentationId, status: ItemStatus, modificationDate: Instant) {
@@ -132,17 +125,16 @@ class RepresentationDao(val jooq: DSLContext) {
             .execute()
     }
 
-    private fun map(r: RepresentationRecord) = Record(
-        r.id.toTypeId(),
-        r.representantId?.toTypeId(),
-        r.organismeId.toTypeId(),
-        r.instanceId?.toTypeId(),
-        r.position,
-        r.startDate,
-        r.endDate,
-        r.creationDate,
-        ItemStatus.valueOf(r.status),
-        r.lastModificationDate
-    )
-
+    private fun map(r: RepresentationRecord) =
+        Record(
+            r.id.toTypeId(),
+            r.representantId?.toTypeId(),
+            r.organismeId.toTypeId(),
+            r.instanceId?.toTypeId(),
+            r.position,
+            r.startDate,
+            r.endDate,
+            r.creationDate,
+            ItemStatus.valueOf(r.status),
+            r.lastModificationDate)
 }

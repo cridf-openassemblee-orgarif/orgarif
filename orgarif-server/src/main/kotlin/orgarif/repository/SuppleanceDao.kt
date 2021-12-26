@@ -1,5 +1,7 @@
 package orgarif.repository
 
+import java.time.Instant
+import java.time.LocalDate
 import org.jooq.DSLContext
 import org.springframework.stereotype.Repository
 import orgarif.domain.ItemStatus
@@ -10,9 +12,6 @@ import orgarif.domain.SuppleanceId
 import orgarif.jooq.generated.Tables.SUPPLEANCE
 import orgarif.jooq.generated.tables.records.SuppleanceRecord
 import orgarif.utils.toTypeId
-import java.time.Instant
-import java.time.LocalDate
-
 
 @Repository
 class SuppleanceDao(val jooq: DSLContext) {
@@ -30,17 +29,18 @@ class SuppleanceDao(val jooq: DSLContext) {
     )
 
     fun insert(r: Record) {
-        val record = SuppleanceRecord().apply {
-            id = r.id.rawId
-            representantId = r.representantId.rawId
-            representationId = r.representationId.rawId
-            organismeId = r.organismeId.rawId
-            startDate = r.startDate
-            endDate = r.endDate
-            creationDate = r.creationDate
-            status = r.status.name
-            lastModificationDate = r.lastModificationDate
-        }
+        val record =
+            SuppleanceRecord().apply {
+                id = r.id.rawId
+                representantId = r.representantId.rawId
+                representationId = r.representationId.rawId
+                organismeId = r.organismeId.rawId
+                startDate = r.startDate
+                endDate = r.endDate
+                creationDate = r.creationDate
+                status = r.status.name
+                lastModificationDate = r.lastModificationDate
+            }
         jooq.insertInto(SUPPLEANCE).set(record).execute()
     }
 
@@ -50,16 +50,15 @@ class SuppleanceDao(val jooq: DSLContext) {
             .fetch()
             .map(this::map)
 
-    private fun map(r: SuppleanceRecord) = Record(
-        r.id.toTypeId(),
-        r.representantId.toTypeId(),
-        r.representationId.toTypeId(),
-        r.organismeId.toTypeId(),
-        r.startDate,
-        r.endDate,
-        r.creationDate,
-        ItemStatus.valueOf(r.status),
-        r.lastModificationDate
-    )
-
+    private fun map(r: SuppleanceRecord) =
+        Record(
+            r.id.toTypeId(),
+            r.representantId.toTypeId(),
+            r.representationId.toTypeId(),
+            r.organismeId.toTypeId(),
+            r.startDate,
+            r.endDate,
+            r.creationDate,
+            ItemStatus.valueOf(r.status),
+            r.lastModificationDate)
 }

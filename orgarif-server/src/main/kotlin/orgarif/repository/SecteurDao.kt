@@ -1,15 +1,13 @@
 package orgarif.repository
 
+import java.time.Instant
 import org.jooq.DSLContext
 import org.springframework.stereotype.Repository
 import orgarif.domain.ItemStatus
 import orgarif.domain.SecteurId
-import orgarif.jooq.generated.Tables
 import orgarif.jooq.generated.Tables.SECTEUR
 import orgarif.jooq.generated.tables.records.SecteurRecord
 import orgarif.utils.toTypeId
-import java.time.Instant
-
 
 @Repository
 class SecteurDao(val jooq: DSLContext) {
@@ -22,19 +20,17 @@ class SecteurDao(val jooq: DSLContext) {
     )
 
     fun insert(r: Record) {
-        val record = SecteurRecord().apply {
-            id = r.id.rawId
-            libelle = r.libelle
-            status = r.status.name
-            lastModificationDate = r.lastModificationDate
-        }
+        val record =
+            SecteurRecord().apply {
+                id = r.id.rawId
+                libelle = r.libelle
+                status = r.status.name
+                lastModificationDate = r.lastModificationDate
+            }
         jooq.insertInto(SECTEUR).set(record).execute()
     }
 
-    fun fetchAll() =
-        jooq.selectFrom(SECTEUR)
-            .fetch()
-            .map(this::map)
+    fun fetchAll() = jooq.selectFrom(SECTEUR).fetch().map(this::map)
 
     fun updateLibelle(id: SecteurId, libelle: String, modificationDate: Instant) {
         jooq.update(SECTEUR)
@@ -52,11 +48,6 @@ class SecteurDao(val jooq: DSLContext) {
             .execute()
     }
 
-    private fun map(r: SecteurRecord) = Record(
-        r.id.toTypeId(),
-        r.libelle,
-        ItemStatus.valueOf(r.status),
-        r.lastModificationDate
-    )
-
+    private fun map(r: SecteurRecord) =
+        Record(r.id.toTypeId(), r.libelle, ItemStatus.valueOf(r.status), r.lastModificationDate)
 }

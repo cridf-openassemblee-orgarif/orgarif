@@ -1,15 +1,16 @@
 package orgarif.controller
 
+import org.junit.jupiter.api.Test
 import orgarif.command.Command
 import orgarif.command.LoginCommand
 import orgarif.serialization.Serializer
-import org.junit.jupiter.api.Test
 
 internal class CommandControllerTest {
 
     @Test
     fun command() {
-        val json = """
+        val json =
+            """
         {
             "objectType":"LoginCommand",
             "login": "username",

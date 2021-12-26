@@ -1,23 +1,24 @@
 package orgarif.jooqlib
 
-import jooqutils.DatabaseConfiguration
-import orgarif.jooqlib.utils.SpringLikeYamlConfigUtils
 import java.io.FileInputStream
 import java.io.InputStream
+import jooqutils.DatabaseConfiguration
+import orgarif.jooqlib.utils.SpringLikeYamlConfigUtils
 
 object Configuration {
 
     val configuration by lazy {
-        val additionalConfig = System.getenv("ORGARIF_DEV_ADDITIONAL_CONFIG")
-            ?: ("dev-" + System.getenv("USER"))
+        val additionalConfig =
+            System.getenv("ORGARIF_DEV_ADDITIONAL_CONFIG") ?: ("dev-" + System.getenv("USER"))
         configuration("application-dev.yaml", "application-$additionalConfig.yaml")
     }
 
     fun configuration(vararg configurationFiles: String): DatabaseConfiguration {
-        val config = SpringLikeYamlConfigUtils
-            .yamlFilesToMap(*configurationFiles.map { streamConfigurationFile(it) }.toTypedArray())
+        val config =
+            SpringLikeYamlConfigUtils.yamlFilesToMap(
+                *configurationFiles.map { streamConfigurationFile(it) }.toTypedArray())
         val host = config.getValue("database.host")
-        if(host.endsWith(".com")) {
+        if (host.endsWith(".com")) {
             throw RuntimeException("Warning run database operations on $host")
         }
         return DatabaseConfiguration(
@@ -29,8 +30,7 @@ object Configuration {
             config["database.password"],
             setOf("public"),
             "/usr/local/bin",
-            config["pgquarrel"]
-        )
+            config["pgquarrel"])
     }
 
     private fun streamConfigurationFile(file: String): InputStream {

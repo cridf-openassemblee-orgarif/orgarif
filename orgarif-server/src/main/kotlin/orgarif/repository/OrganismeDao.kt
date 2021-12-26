@@ -156,6 +156,5 @@ class OrganismeDao(val jooq: DSLContext) {
             r.nombreSuppleants,
             r.creationDate,
             ItemStatus.valueOf(r.status),
-            r.lastModificationDate
-        )
+            r.lastModificationDate)
 }
