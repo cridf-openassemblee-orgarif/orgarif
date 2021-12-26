@@ -25,7 +25,6 @@ class CreateOrganismeCommandHandler(
                 natureJuridiqueId = null,
                 typeStructureId = null,
                 nombreRepresentants = null,
-                nombreSuppleants = null,
                 creationDate = now,
                 status = ItemStatus.live,
                 lastModificationDate = now))

@@ -19,14 +19,12 @@ object CommandConfiguration {
             is MoveRepresentationCommand -> user
             is RegisterCommand -> null
             is UpdateInstanceNombreRepresentantsCommand -> user
-            is UpdateInstanceNombreSuppleantsCommand -> user
             is UpdateInstanceNomCommand -> user
             is UpdateInstanceStatusCommand -> user
             is UpdateNatureJuridiqueLibelleCommand -> user
             is UpdateNatureJuridiqueStatusCommand -> user
             is UpdateOrganismeNatureJuridiqueCommand -> user
             is UpdateOrganismeNombreRepresentantsCommand -> user
-            is UpdateOrganismeNombreSuppleantsCommand -> user
             is UpdateOrganismeNomCommand -> user
             is UpdateOrganismeSecteurCommand -> user
             is UpdateOrganismeTypeStructureCommand -> user

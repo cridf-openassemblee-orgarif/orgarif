@@ -63,7 +63,6 @@ class OrganismeService(
                     it.id,
                     it.nom,
                     it.nombreRepresentants,
-                    it.nombreSuppleants,
                     lienDeliberations[it.id] ?: emptyList(),
                     representationsByInstance[it.id] ?: emptyList(),
                     it.status)
@@ -75,7 +74,6 @@ class OrganismeService(
             organisme.natureJuridiqueId,
             organisme.typeStructureId,
             organisme.nombreRepresentants,
-            organisme.nombreSuppleants,
             representationsByInstance[null] ?: emptyList(),
             lienDeliberations[null] ?: emptyList(),
             instances,

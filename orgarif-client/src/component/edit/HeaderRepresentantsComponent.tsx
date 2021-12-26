@@ -29,9 +29,7 @@ const classes = {
 
 export const HeaderRepresentantsComponent = (props: {
   nombreRepresentants?: number;
-  nombreSuppleants?: number;
   onNombreRepresentantsChange: (nombre: number | undefined) => void;
-  onNombreSuppleantsChange: (nombre: number | undefined) => void;
 }) => {
   const [displayPopup, setDisplayPopup] = useState(false);
   return (
@@ -72,20 +70,6 @@ export const HeaderRepresentantsComponent = (props: {
           />
         </div>
         <div css={classes.label}>représentants</div>
-        <div
-          css={css`
-            width: 0;
-            border-left: 1px dashed ${colors.grey2};
-            margin: 8px 12px 8px 40px;
-          `}
-        />
-        <div css={classes.numberBlock}>
-          <NumberInput
-            initialValue={props.nombreSuppleants}
-            onChange={props.onNombreSuppleantsChange}
-          />
-        </div>
-        <div css={classes.label}>suppléants</div>
       </div>
       <Dialog
         open={displayPopup}

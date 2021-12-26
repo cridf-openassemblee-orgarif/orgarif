@@ -42,7 +42,6 @@ class CommandController(
     val registerCommandHandler: RegisterCommandHandler,
     val updateInstanceNombreRepresentantsCommandHandler:
         UpdateInstanceNombreRepresentantsCommandHandler,
-    val updateInstanceNombreSuppleantsCommandHandler: UpdateInstanceNombreSuppleantsCommandHandler,
     val updateInstanceNomCommandHandler: UpdateInstanceNomCommandHandler,
     val updateInstanceStatusCommandHandler: UpdateInstanceStatusCommandHandler,
     val updateNatureJuridiqueLibelleCommandHandler: UpdateNatureJuridiqueLibelleCommandHandler,
@@ -51,8 +50,6 @@ class CommandController(
     val updateOrganismeNomCommandHandler: UpdateOrganismeNomCommandHandler,
     val updateOrganismeNombreRepresentantsCommandHandler:
         UpdateOrganismeNombreRepresentantsCommandHandler,
-    val updateOrganismeNombreSuppleantsCommandHandler:
-        UpdateOrganismeNombreSuppleantsCommandHandler,
     val updateOrganismeSecteurCommandHandler: UpdateOrganismeSecteurCommandHandler,
     val updateOrganismeTypeStructureCommandCommandHandler:
         UpdateOrganismeTypeStructureCommandHandler,
@@ -144,7 +141,6 @@ class CommandController(
             is RegisterCommand -> registerCommandHandler
             is UpdateInstanceNombreRepresentantsCommand ->
                 updateInstanceNombreRepresentantsCommandHandler
-            is UpdateInstanceNombreSuppleantsCommand -> updateInstanceNombreSuppleantsCommandHandler
             is UpdateInstanceNomCommand -> updateInstanceNomCommandHandler
             is UpdateInstanceStatusCommand -> updateInstanceStatusCommandHandler
             is UpdateNatureJuridiqueLibelleCommand -> updateNatureJuridiqueLibelleCommandHandler
@@ -152,8 +148,6 @@ class CommandController(
             is UpdateOrganismeNatureJuridiqueCommand -> updateOrganismeNatureJuridiqueCommandHandler
             is UpdateOrganismeNombreRepresentantsCommand ->
                 updateOrganismeNombreRepresentantsCommandHandler
-            is UpdateOrganismeNombreSuppleantsCommand ->
-                updateOrganismeNombreSuppleantsCommandHandler
             is UpdateOrganismeNomCommand -> updateOrganismeNomCommandHandler
             is UpdateOrganismeSecteurCommand -> updateOrganismeSecteurCommandHandler
             is UpdateOrganismeTypeStructureCommand ->

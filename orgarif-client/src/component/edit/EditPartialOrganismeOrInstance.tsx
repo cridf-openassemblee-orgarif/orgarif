@@ -39,10 +39,6 @@ export const EditPartialOrganismeOrInstance = (props: {
     instanceId: InstanceId | undefined,
     nombre: number | undefined
   ) => void;
-  onNombreSuppleantsChange: (
-    instanceId: InstanceId | undefined,
-    nombre: number | undefined
-  ) => void;
   onAddRepresentation: (
     representant: RepresentantDto,
     organismeId: OrganismeId,
@@ -77,12 +73,8 @@ export const EditPartialOrganismeOrInstance = (props: {
         >
           <HeaderRepresentantsComponent
             nombreRepresentants={props.item.nombreRepresentants}
-            nombreSuppleants={props.item.nombreSuppleants}
             onNombreRepresentantsChange={nombre =>
               props.onNombreRepresentantsChange(props.instanceId, nombre)
-            }
-            onNombreSuppleantsChange={nombre =>
-              props.onNombreSuppleantsChange(props.instanceId, nombre)
             }
           />
         </div>

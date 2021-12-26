@@ -119,11 +119,6 @@ export interface UpdateInstanceNombreRepresentantsCommand {
   nombre: number | undefined;
 }
 
-export interface UpdateInstanceNombreSuppleantsCommand {
-  instanceId: InstanceId;
-  nombre: number | undefined;
-}
-
 export interface UpdateInstanceNomCommand {
   id: InstanceId;
   nom: string;
@@ -150,11 +145,6 @@ export interface UpdateOrganismeNatureJuridiqueCommand {
 }
 
 export interface UpdateOrganismeNombreRepresentantsCommand {
-  id: OrganismeId;
-  nombre: number | undefined;
-}
-
-export interface UpdateOrganismeNombreSuppleantsCommand {
   id: OrganismeId;
   nombre: number | undefined;
 }

@@ -173,34 +173,6 @@ const onNombreRepresentantsChange = (
   }
 };
 
-const onNombreSuppleantsChange = (
-  organisme: OrganismeDto,
-  setOrganisme: (o: OrganismeDto) => void,
-  instanceId: InstanceId | undefined,
-  nombre: number | undefined
-) => {
-  if (!instanceId) {
-    setOrganisme({ ...organisme, nombreRepresentants: nombre });
-    appContext.commandService().updateOrganismeNombreSuppleantsCommand({
-      id: organisme.id,
-      nombre
-    });
-  } else {
-    const instances = organisme.instances.map(i => {
-      if (i.id === instanceId) {
-        return { ...i, nombreRepresentants: nombre };
-      } else {
-        return i;
-      }
-    });
-    setOrganisme({ ...organisme, instances });
-    appContext.commandService().updateInstanceNombreSuppleantsCommand({
-      instanceId,
-      nombre
-    });
-  }
-};
-
 const addRepresentation = (
   organisme: OrganismeDto,
   setOrganisme: (o: OrganismeDto) => void,
@@ -326,7 +298,6 @@ const addInstance = (
         id: r.id,
         nom: nomInstance,
         nombreRepresentants: undefined,
-        nombreSuppleants: undefined,
         lienDeliberations: [],
         representations: [],
         status: 'live'
@@ -382,10 +353,6 @@ export const organismeActions = (
     instanceId: InstanceId | undefined,
     nombre: number | undefined
   ) => onNombreRepresentantsChange(organisme, setOrganisme, instanceId, nombre),
-  onNombreSuppleantsChange: (
-    instanceId: InstanceId | undefined,
-    nombre: number | undefined
-  ) => onNombreSuppleantsChange(organisme, setOrganisme, instanceId, nombre),
   onAddRepresentation: (
     representant: RepresentantDto,
     organismeId: OrganismeId,

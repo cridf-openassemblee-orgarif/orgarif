@@ -92,9 +92,6 @@ data class RegisterCommandResponse(val result: RegisterResult, val userinfos: Us
 data class UpdateInstanceNombreRepresentantsCommand(val instanceId: InstanceId, val nombre: Int?) :
     Command()
 
-data class UpdateInstanceNombreSuppleantsCommand(val instanceId: InstanceId, val nombre: Int?) :
-    Command()
-
 data class UpdateInstanceNomCommand(val id: InstanceId, val nom: String) : Command()
 
 data class UpdateInstanceStatusCommand(val id: InstanceId, val status: ItemStatus) : Command()
@@ -111,9 +108,6 @@ data class UpdateOrganismeNatureJuridiqueCommand(
 ) : Command()
 
 data class UpdateOrganismeNombreRepresentantsCommand(val id: OrganismeId, val nombre: Int?) :
-    Command()
-
-data class UpdateOrganismeNombreSuppleantsCommand(val id: OrganismeId, val nombre: Int?) :
     Command()
 
 data class UpdateOrganismeNomCommand(val id: OrganismeId, val nom: String) : Command()

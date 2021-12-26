@@ -22,7 +22,6 @@ class OrganismeDao(val jooq: DSLContext) {
         val natureJuridiqueId: NatureJuridiqueId?,
         val typeStructureId: TypeStructureId?,
         val nombreRepresentants: Int?,
-        val nombreSuppleants: Int?,
         val creationDate: Instant,
         val status: ItemStatus,
         val lastModificationDate: Instant
@@ -37,7 +36,6 @@ class OrganismeDao(val jooq: DSLContext) {
                 natureJuridiqueId = r.natureJuridiqueId?.rawId
                 typeStructureId = r.typeStructureId?.rawId
                 nombreRepresentants = r.nombreRepresentants
-                nombreSuppleants = r.nombreSuppleants
                 creationDate = r.creationDate
                 status = r.status.name
                 lastModificationDate = r.lastModificationDate
@@ -73,14 +71,6 @@ class OrganismeDao(val jooq: DSLContext) {
     fun updateNombreRepresentants(id: OrganismeId, nombre: Int?, modificationDate: Instant) {
         jooq.update(ORGANISME)
             .set(ORGANISME.NOMBRE_REPRESENTANTS, nombre)
-            .set(ORGANISME.LAST_MODIFICATION_DATE, modificationDate)
-            .where(ORGANISME.ID.equal(id.rawId))
-            .execute()
-    }
-
-    fun updateNombreSuppleants(id: OrganismeId, nombre: Int?, modificationDate: Instant) {
-        jooq.update(ORGANISME)
-            .set(ORGANISME.NOMBRE_SUPPLEANTS, nombre)
             .set(ORGANISME.LAST_MODIFICATION_DATE, modificationDate)
             .where(ORGANISME.ID.equal(id.rawId))
             .execute()
@@ -153,7 +143,6 @@ class OrganismeDao(val jooq: DSLContext) {
             r.natureJuridiqueId?.toTypeId(),
             r.typeStructureId?.toTypeId(),
             r.nombreRepresentants,
-            r.nombreSuppleants,
             r.creationDate,
             ItemStatus.valueOf(r.status),
             r.lastModificationDate)

@@ -48,10 +48,6 @@ export const EditInstancesComponent = (props: {
     instanceId: InstanceId | undefined,
     nombre: number | undefined
   ) => void;
-  onNombreSuppleantsChange: (
-    instanceId: InstanceId | undefined,
-    nombre: number | undefined
-  ) => void;
   onAddRepresentation: (
     representant: RepresentantDto,
     organismeId: OrganismeId,
@@ -138,7 +134,6 @@ export const EditInstancesComponent = (props: {
                     onNombreRepresentantsChange={
                       props.onNombreRepresentantsChange
                     }
-                    onNombreSuppleantsChange={props.onNombreSuppleantsChange}
                     onAddRepresentation={props.onAddRepresentation}
                     onNewLienDeliberation={props.onNewLienDeliberation}
                     onNewDeliberationAndLien={props.onNewDeliberationAndLien}
