@@ -25,7 +25,7 @@ class OrgarifApplication {
             app.setDefaultProperties(
                 mapOf(
                     "spring.profiles.default" to
-                        ApplicationEnvironment.dev.name + ',' + springUserProfile()))
+                        ApplicationEnvironment.dev.name + "," + springUserProfile()))
             app.run(*args)
         }
 

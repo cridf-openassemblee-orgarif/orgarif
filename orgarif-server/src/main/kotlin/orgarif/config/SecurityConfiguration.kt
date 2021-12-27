@@ -7,6 +7,7 @@ import org.springframework.security.config.annotation.web.builders.WebSecurity
 import org.springframework.security.config.annotation.web.configuration.EnableWebSecurity
 import org.springframework.security.config.annotation.web.configuration.WebSecurityConfigurerAdapter
 import org.springframework.security.web.csrf.CookieCsrfTokenRepository
+import orgarif.controller.RemoteController
 
 @Configuration
 @EnableWebSecurity
@@ -21,6 +22,8 @@ class SecurityConfiguration(
         web.ignoring()
             .antMatchers(ApplicationConstants.resourcesPath + "/*")
             .antMatchers(ApplicationConstants.resourcesPath + "/**/*")
+            .antMatchers(RemoteController.remoteRoute + "/*")
+            .antMatchers(RemoteController.remoteRoute + "/**/*")
     }
 
     override fun configure(http: HttpSecurity) {
