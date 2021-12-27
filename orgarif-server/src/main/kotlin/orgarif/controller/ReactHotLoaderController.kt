@@ -1,18 +1,18 @@
 package orgarif.controller
 
-import orgarif.domain.ApplicationEnvironment
-import orgarif.domain.MimeType
-import orgarif.error.OrgarifNotFoundException
-import orgarif.service.ApplicationInstance
-import orgarif.service.HttpService
+import javax.servlet.http.HttpServletRequest
+import javax.servlet.http.HttpServletResponse
 import mu.KotlinLogging
 import org.springframework.beans.factory.annotation.Value
 import org.springframework.boot.autoconfigure.condition.ConditionalOnExpression
 import org.springframework.http.HttpStatus
 import org.springframework.web.bind.annotation.GetMapping
 import org.springframework.web.bind.annotation.RestController
-import javax.servlet.http.HttpServletRequest
-import javax.servlet.http.HttpServletResponse
+import orgarif.domain.ApplicationEnvironment
+import orgarif.domain.MimeType
+import orgarif.error.OrgarifNotFoundException
+import orgarif.service.ApplicationInstance
+import orgarif.service.HttpService
 
 @RestController
 // [doc] so it won't run on prod

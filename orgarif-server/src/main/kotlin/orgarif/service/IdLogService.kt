@@ -1,15 +1,12 @@
 package orgarif.service
 
+import java.util.*
 import orgarif.domain.OrgarifId
 import orgarif.utils.OrgarifStringUtils
-import java.util.*
 
 class IdLogService {
 
-    data class IdLogging(
-        var enableLogging: Boolean,
-        val list: MutableList<OrgarifId<*>>?
-    ) {
+    data class IdLogging(var enableLogging: Boolean, val list: MutableList<OrgarifId<*>>?) {
         init {
             if (enableLogging) {
                 require(list != null)
@@ -37,18 +34,19 @@ class IdLogService {
     }
 
     // TODO would be faster avec un StringBuffer
-    fun getIdsString() = (list.get().list ?: throw RuntimeException())
-        .map {
-            val rawIdString = it.rawId.let {
-                when (it) {
-                    is UUID -> OrgarifStringUtils.serializeUuid(it)
-                    else -> it.toString()
-                }
+    fun getIdsString() =
+        (list.get().list ?: throw RuntimeException())
+            .map {
+                val rawIdString =
+                    it.rawId.let {
+                        when (it) {
+                            is UUID -> OrgarifStringUtils.serializeUuid(it)
+                            else -> it.toString()
+                        }
+                    }
+                it.javaClass.simpleName + " " + rawIdString
             }
-            it.javaClass.simpleName + " " + rawIdString
-        }
-        .joinToString(separator = "\n")
+            .joinToString(separator = "\n")
 
     fun clean() = list.set(null)
-
 }

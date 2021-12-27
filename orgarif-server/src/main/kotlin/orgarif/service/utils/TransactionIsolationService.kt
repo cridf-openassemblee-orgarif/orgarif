@@ -24,5 +24,4 @@ class TransactionIsolationService(transactionManager: PlatformTransactionManager
     fun <T> execute(task: () -> T): T = transactionTemplate.execute { task() }
 
     fun <T> executeReadOnly(task: () -> T): T = transactionTemplateReadOnly.execute { task() }
-
 }

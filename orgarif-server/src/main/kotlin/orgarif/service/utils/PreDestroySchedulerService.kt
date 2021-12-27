@@ -1,9 +1,9 @@
 package orgarif.service.utils
 
-import orgarif.service.ApplicationInstance
+import javax.annotation.PreDestroy
 import mu.KotlinLogging
 import org.springframework.stereotype.Service
-import javax.annotation.PreDestroy
+import orgarif.service.ApplicationInstance
 
 @Service
 class PreDestroySchedulerService(val applicationInstance: ApplicationInstance) {
@@ -16,5 +16,4 @@ class PreDestroySchedulerService(val applicationInstance: ApplicationInstance) {
         applicationInstance.setShutdownTime()
         logger.info { "Predestroy OK" }
     }
-
 }

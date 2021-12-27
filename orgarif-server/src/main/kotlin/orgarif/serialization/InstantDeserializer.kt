@@ -12,5 +12,4 @@ class InstantDeserializer : StdDeserializer<Instant>(Instant::class.java) {
         val node: JsonNode = p.codec.readTree(p)
         return Instant.ofEpochMilli(node.longValue())
     }
-
 }

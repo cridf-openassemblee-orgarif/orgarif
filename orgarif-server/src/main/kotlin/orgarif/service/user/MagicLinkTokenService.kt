@@ -1,17 +1,17 @@
 package orgarif.service.user
 
-import orgarif.domain.UserId
-import orgarif.repository.MagicLinkTokenDao
-import orgarif.repository.UserDao
-import orgarif.service.DateService
-import mu.KotlinLogging
-import org.springframework.stereotype.Service
 import java.math.BigInteger
 import java.security.SecureRandom
 import java.time.Duration
 import java.time.temporal.ChronoUnit
 import javax.servlet.http.HttpServletRequest
 import javax.servlet.http.HttpServletResponse
+import mu.KotlinLogging
+import org.springframework.stereotype.Service
+import orgarif.domain.UserId
+import orgarif.repository.MagicLinkTokenDao
+import orgarif.repository.UserDao
+import orgarif.service.DateService
 
 @Service
 class MagicLinkTokenService(
@@ -25,7 +25,7 @@ class MagicLinkTokenService(
 
     // TODO[magictoken] is going in database too
     // use a shorter validity + display a clear message on the front when it became invalid
-//    val validityDuration = Duration.of(15, ChronoUnit.MINUTES)
+    //    val validityDuration = Duration.of(15, ChronoUnit.MINUTES)
     val validityDuration = Duration.of(24, ChronoUnit.HOURS)
 
     fun createToken(userId: UserId): String {
@@ -39,11 +39,12 @@ class MagicLinkTokenService(
         request: HttpServletRequest,
         response: HttpServletResponse
     ) {
-        val token = magicLinkTokenDao.fetchOrNull(magicToken)
-            ?: run {
-                logger.warn { "Token doesn't exist $magicToken" }
-                return
-            }
+        val token =
+            magicLinkTokenDao.fetchOrNull(magicToken)
+                ?: run {
+                    logger.warn { "Token doesn't exist $magicToken" }
+                    return
+                }
         if (!token.validity) {
             logger.warn { "Invalidated token $token" }
             return
@@ -52,7 +53,9 @@ class MagicLinkTokenService(
             logger.info { "Out of date token $token" }
             return
         }
-        val user = userDao.fetch(token.userId) ?: throw IllegalArgumentException("No user for token $token")
+        val user =
+            userDao.fetch(token.userId)
+                ?: throw IllegalArgumentException("No user for token $token")
         userSessionService.authenticateUser(user, request, response)
         // TODO[magictoken] update to invalidate ?? if not, doc
     }
@@ -60,5 +63,4 @@ class MagicLinkTokenService(
     fun invalidate(magicToken: String) {
         magicLinkTokenDao.updateValidity(magicToken, false)
     }
-
 }

@@ -6,6 +6,6 @@ import orgarif.utils.OrgarifStringUtils
 
 class UuidKeyDeserializer : KeyDeserializer() {
 
-    override fun deserializeKey(key: String, ctxt: DeserializationContext?) = OrgarifStringUtils.deserializeUuid(key)
-
+    override fun deserializeKey(key: String, ctxt: DeserializationContext?) =
+        OrgarifStringUtils.deserializeUuid(key)
 }

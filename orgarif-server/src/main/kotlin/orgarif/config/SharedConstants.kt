@@ -1,5 +1,3 @@
 package orgarif.config
 
-object SharedConstants {
-
-}
+object SharedConstants {}

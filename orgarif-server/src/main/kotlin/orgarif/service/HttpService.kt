@@ -20,7 +20,9 @@ class HttpService(val okHttpClient: OkHttpClient) {
     }
 
     enum class Method(val asString: String) {
-        get("GET"), post("POST"), put("PUT")
+        get("GET"),
+        post("POST"),
+        put("PUT")
     }
 
     data class EmptyResponse(val code: Int)
@@ -34,42 +36,32 @@ class HttpService(val okHttpClient: OkHttpClient) {
     // what permits the simpler/cleaner code ?
     sealed class MaybeStringResponse(open val code: Int) {
         data class EmptyResponse(override val code: Int) : MaybeStringResponse(code)
-        data class StringResponse(override val code: Int, val body: String) : MaybeStringResponse(code)
+        data class StringResponse(override val code: Int, val body: String) :
+            MaybeStringResponse(code)
     }
 
     sealed class MaybeBytesResponse(open val code: Int) {
         data class EmptyResponse(override val code: Int) : MaybeBytesResponse(code)
-        data class BytesResponse(override val code: Int, val bytes: ByteArray) : MaybeBytesResponse(code)
+        data class BytesResponse(override val code: Int, val bytes: ByteArray) :
+            MaybeBytesResponse(code)
     }
 
-    fun getBytes(
-        url: String,
-        vararg headers: Pair<Header, String>
-    ): MaybeBytesResponse =
+    fun getBytes(url: String, vararg headers: Pair<Header, String>): MaybeBytesResponse =
         doRequest(url, Method.get, null, *headers).use { r ->
             // bytes() calls close()
             r.body?.bytes()?.let { MaybeBytesResponse.BytesResponse(r.code, it) }
                 ?: MaybeBytesResponse.EmptyResponse(r.code)
         }
 
-    fun getString(
-        url: String,
-        vararg headers: Pair<Header, String>
-    ): MaybeStringResponse =
+    fun getString(url: String, vararg headers: Pair<Header, String>): MaybeStringResponse =
         doRequest(url, Method.get, null, *headers).use { r ->
             // string() calls close()
             r.body?.string()?.let { MaybeStringResponse.StringResponse(r.code, it) }
                 ?: MaybeStringResponse.EmptyResponse(r.code)
         }
 
-    fun post(
-        url: String,
-        body: String,
-        vararg headers: Pair<Header, String>
-    ): EmptyResponse =
-        doRequest(url, Method.post, body, *headers).use { r ->
-            EmptyResponse(r.code)
-        }
+    fun post(url: String, body: String, vararg headers: Pair<Header, String>): EmptyResponse =
+        doRequest(url, Method.post, body, *headers).use { r -> EmptyResponse(r.code) }
 
     fun postAndReturnBytes(
         url: String,
@@ -93,14 +85,8 @@ class HttpService(val okHttpClient: OkHttpClient) {
                 ?: MaybeStringResponse.EmptyResponse(r.code)
         }
 
-    fun put(
-        url: String,
-        body: String,
-        vararg headers: Pair<Header, String>
-    ): EmptyResponse =
-        doRequest(url, Method.put, body, *headers).use { r ->
-            EmptyResponse(r.code)
-        }
+    fun put(url: String, body: String, vararg headers: Pair<Header, String>): EmptyResponse =
+        doRequest(url, Method.put, body, *headers).use { r -> EmptyResponse(r.code) }
 
     fun putAndReturnBytes(
         url: String,
@@ -130,13 +116,13 @@ class HttpService(val okHttpClient: OkHttpClient) {
         body: String?,
         vararg headers: Pair<Header, String>
     ): Response {
-        val requestBuilder = Request.Builder().apply {
-            url(url)
-            addHeader(Header.Accept.header, jsonMediaType.toString())
-            headers.forEach { addHeader(it.first.header, it.second) }
-        }
+        val requestBuilder =
+            Request.Builder().apply {
+                url(url)
+                addHeader(Header.Accept.header, jsonMediaType.toString())
+                headers.forEach { addHeader(it.first.header, it.second) }
+            }
         requestBuilder.method(method.asString, body?.toRequestBody(jsonMediaType))
         return okHttpClient.newCall(requestBuilder.build()).execute()
     }
-
 }

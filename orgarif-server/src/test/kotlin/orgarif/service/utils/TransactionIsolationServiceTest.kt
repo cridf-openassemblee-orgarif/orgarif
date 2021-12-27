@@ -1,11 +1,6 @@
 package orgarif.service.utils
 
-import orgarif.ResetTestDatabase
-import orgarif.TestData
-import orgarif.domain.HashedPassword
-import orgarif.domain.firstAndOnlyOne
-import orgarif.repository.UserDao
-import orgarif.service.RandomService
+import kotlin.streams.toList
 import org.junit.jupiter.api.Assertions.assertEquals
 import org.junit.jupiter.api.BeforeEach
 import org.junit.jupiter.api.Test
@@ -14,7 +9,12 @@ import org.springframework.boot.test.context.SpringBootTest
 import org.springframework.test.context.ActiveProfiles
 import org.springframework.transaction.PlatformTransactionManager
 import org.springframework.transaction.support.TransactionTemplate
-import kotlin.streams.toList
+import orgarif.ResetTestDatabase
+import orgarif.TestData
+import orgarif.domain.HashedPassword
+import orgarif.domain.firstAndOnlyOne
+import orgarif.repository.UserDao
+import orgarif.service.RandomService
 
 @SpringBootTest
 @ActiveProfiles("test")
@@ -45,10 +45,11 @@ internal class TransactionIsolationServiceTest(
         PROPAGATION_REQUIRES_NEW or PROPAGATION_NESTED
          */
 
-        val recordNotIsolated = TestData.dummyUser(randomService.id())
-            .copy(mail = "not isolated", username = "not isolated")
-        val recordIsolated = TestData.dummyUser(randomService.id())
-            .copy(mail = "isolated", username = "isolated")
+        val recordNotIsolated =
+            TestData.dummyUser(randomService.id())
+                .copy(mail = "not isolated", username = "not isolated")
+        val recordIsolated =
+            TestData.dummyUser(randomService.id()).copy(mail = "isolated", username = "isolated")
         val transactionTemplate = TransactionTemplate(transactionManager)
         try {
             transactionTemplate.execute {

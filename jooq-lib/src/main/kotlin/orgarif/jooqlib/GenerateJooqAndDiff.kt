@@ -1,11 +1,11 @@
 package orgarif.jooqlib
 
-import orgarif.jooqlib.Configuration.configuration
-import orgarif.jooqlib.utils.FileUtils
-import mu.KotlinLogging
 import jooqutils.DatabaseInitializer
 import jooqutils.JooqGeneration
 import kotlin.io.path.name
+import mu.KotlinLogging
+import orgarif.jooqlib.Configuration.configuration
+import orgarif.jooqlib.utils.FileUtils
 
 fun main() {
     System.setProperty("logback.configurationFile", "logback-jooq-tooling.xml")
@@ -47,20 +47,20 @@ object GenerateJooqAndDiff {
         try {
             DatabaseInitializer.dropDb(generationDatabaseConfiguration)
             DatabaseInitializer.createDb(generationDatabaseConfiguration)
-            DatabaseInitializer.initializeSchema(generationDatabaseConfiguration, sqlSchemaFilesDir, sqlCleanResultFile)
+            DatabaseInitializer.initializeSchema(
+                generationDatabaseConfiguration, sqlSchemaFilesDir, sqlCleanResultFile)
             logger.info { "Generate Jooq code" }
             JooqGeneration.generateJooq(
                 generationDatabaseConfiguration,
                 setOf("spring_session", "spring_session_attributes"),
                 "orgarif.jooq",
-                "jooq-lib/src/generated/java"
-            )
-            // TODO [doc] diff will fail if Config.runDatabase does not exist (not very problematic but can be better)
+                "jooq-lib/src/generated/java")
+            // TODO [doc] diff will fail if Config.runDatabase does not exist (not very problematic
+            // but can be better)
             JooqGeneration.generateDiff(configuration, generationDatabaseConfiguration, buildDir)
             ResetDatabase.resetDatabaseSchema(configuration, true)
         } finally {
             DatabaseInitializer.dropDb(generationDatabaseConfiguration)
         }
     }
-
 }

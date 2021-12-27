@@ -1,5 +1,13 @@
 package orgarif.controller
 
+import javax.servlet.http.HttpServletRequest
+import javax.servlet.http.HttpServletResponse
+import mu.KotlinLogging
+import org.apache.commons.lang3.exception.ExceptionUtils
+import org.springframework.transaction.PlatformTransactionManager
+import org.springframework.web.bind.annotation.PostMapping
+import org.springframework.web.bind.annotation.RequestBody
+import org.springframework.web.bind.annotation.RestController
 import orgarif.command.*
 import orgarif.domain.CommandLogId
 import orgarif.repository.CommandLogDao
@@ -10,27 +18,17 @@ import orgarif.service.DateService
 import orgarif.service.IdLogService
 import orgarif.service.RandomService
 import orgarif.service.user.UserSessionService
-import mu.KotlinLogging
-import org.apache.commons.lang3.exception.ExceptionUtils
-import org.springframework.transaction.PlatformTransactionManager
-import org.springframework.web.bind.annotation.PostMapping
-import org.springframework.web.bind.annotation.RequestBody
-import org.springframework.web.bind.annotation.RestController
-import javax.servlet.http.HttpServletRequest
-import javax.servlet.http.HttpServletResponse
 
 @RestController
 class CommandController(
     val commandLogDao: CommandLogDao,
     val userDao: UserDao,
-
     val applicationInstance: ApplicationInstance,
     val dateService: DateService,
     val randomService: RandomService,
     val transactionManager: PlatformTransactionManager,
     val idLogService: IdLogService,
     val userSessionService: UserSessionService,
-
     val loginCommandHandler: LoginCommandHandler,
     val registerCommandHandler: RegisterCommandHandler,
 ) {
@@ -46,7 +44,8 @@ class CommandController(
     ): CommandResponse? {
         val command = Serializer.deserialize<Command>(jsonCommand)
         val handler = handler(command)
-        val userSession = if (userSessionService.isAuthenticated()) userSessionService.getUserSession() else null
+        val userSession =
+            if (userSessionService.isAuthenticated()) userSessionService.getUserSession() else null
         // [doc] is filtered from sensitive data (passwords) because of serializers
         val filteredJsonCommand = Serializer.serialize(command)
         // TODO[test] make an only insert at the end, with no update ?
@@ -66,17 +65,12 @@ class CommandController(
                 jsonResult = null,
                 exceptionStackTrace = null,
                 startDate = dateService.now(),
-                endDate = null
-            )
-        )
+                endDate = null))
         val transaction = transactionManager.getTransaction(null)
 
         try {
             userSessionService.verifyRoleOrFail(
-                CommandConfiguration.role(command),
-                request.remoteAddr,
-                command.javaClass
-            )
+                CommandConfiguration.role(command), request.remoteAddr, command.javaClass)
             idLogService.enableLogging()
             val result = handler.handle(command, userSession, request, response)
             transactionManager.commit(transaction)
@@ -85,8 +79,7 @@ class CommandController(
                     commandLogId,
                     idLogService.getIdsString(),
                     if (result !is EmptyCommandResponse) Serializer.serialize(result) else null,
-                    dateService.now()
-                )
+                    dateService.now())
             } catch (e: Exception) {
                 logger.error(e) { "Exception in command result log..." }
             }
@@ -95,10 +88,7 @@ class CommandController(
             transactionManager.rollback(transaction)
             try {
                 commandLogDao.updateExceptionStackTrace(
-                    commandLogId,
-                    ExceptionUtils.getStackTrace(e),
-                    dateService.now()
-                )
+                    commandLogId, ExceptionUtils.getStackTrace(e), dateService.now())
             } catch (e2: Exception) {
                 logger.error(e2) { "Exception in command exception log..." }
             }
@@ -109,9 +99,10 @@ class CommandController(
     }
 
     @Suppress("UNCHECKED_CAST")
-    private fun handler(command: Command) = when (command) {
-        is LoginCommand -> loginCommandHandler
-        is RegisterCommand -> registerCommandHandler
-    } as CommandHandler<Command, CommandResponse>
-
+    private fun handler(command: Command) =
+        when (command) {
+            is LoginCommand -> loginCommandHandler
+            is RegisterCommand -> registerCommandHandler
+        } as
+            CommandHandler<Command, CommandResponse>
 }

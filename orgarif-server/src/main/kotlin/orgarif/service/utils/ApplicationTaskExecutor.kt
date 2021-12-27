@@ -20,5 +20,4 @@ class ApplicationTaskExecutor(val taskExecutor: TaskExecutor, val executorName: 
             }
         }
     }
-
 }

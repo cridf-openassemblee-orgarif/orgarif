@@ -4,8 +4,8 @@ import orgarif.domain.Role
 
 object QueryConfiguration {
 
-    fun role(query: Query): Role? = when (query) {
-        is IsLoginAlreadyTakenQuery -> null
-    }
-
+    fun role(query: Query): Role? =
+        when (query) {
+            is IsLoginAlreadyTakenQuery -> null
+        }
 }

@@ -10,11 +10,12 @@ object FileUtils {
             listOf(
                 // happens in orgarif-server tests
                 "/orgarif-server",
-            ).forEach {
-                if (userDir.endsWith(it)) {
-                    return@let userDir.dropLast(it.length)
+            )
+                .forEach {
+                    if (userDir.endsWith(it)) {
+                        return@let userDir.dropLast(it.length)
+                    }
                 }
-            }
             userDir
         }
         return Paths.get(dir)

@@ -6,7 +6,8 @@ import orgarif.domain.PlainStringPassword
 import orgarif.domain.RegisterResult
 import orgarif.domain.UserInfos
 
-@JsonTypeInfo(use = JsonTypeInfo.Id.NAME, include = JsonTypeInfo.As.PROPERTY, property = "objectType")
+@JsonTypeInfo(
+    use = JsonTypeInfo.Id.NAME, include = JsonTypeInfo.As.PROPERTY, property = "objectType")
 sealed class Command
 
 sealed class CommandResponse
@@ -14,10 +15,7 @@ sealed class CommandResponse
 object EmptyCommandResponse : CommandResponse()
 
 // [doc] login as username|mail
-data class LoginCommand(
-    val login: String,
-    val password: PlainStringPassword
-) : Command()
+data class LoginCommand(val login: String, val password: PlainStringPassword) : Command()
 
 data class LoginCommandResponse(
     val result: LoginResult,
@@ -31,7 +29,5 @@ data class RegisterCommand(
     val displayName: String
 ) : Command()
 
-data class RegisterCommandResponse(
-    val result: RegisterResult,
-    val userinfos: UserInfos?
-) : CommandResponse()
+data class RegisterCommandResponse(val result: RegisterResult, val userinfos: UserInfos?) :
+    CommandResponse()

@@ -1,7 +1,5 @@
 package orgarif.domain
 
-import org.apache.commons.lang3.exception.ExceptionUtils
-
 // FIXMENOW test unicity ?
 @Target(AnnotationTarget.CLASS)
 @Retention(AnnotationRetention.RUNTIME)

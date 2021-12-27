@@ -1,20 +1,23 @@
 package orgarif.repository
 
-import orgarif.ResetTestDatabase
-import orgarif.TestData
-import orgarif.domain.HashedPassword
-import orgarif.error.MailAlreadyRegisteredException
-import orgarif.service.RandomService
 import org.junit.jupiter.api.Assertions
 import org.junit.jupiter.api.BeforeEach
 import org.junit.jupiter.api.Test
 import org.springframework.beans.factory.annotation.Autowired
 import org.springframework.boot.test.context.SpringBootTest
 import org.springframework.test.context.ActiveProfiles
+import orgarif.ResetTestDatabase
+import orgarif.TestData
+import orgarif.domain.HashedPassword
+import orgarif.error.MailAlreadyRegisteredException
+import orgarif.service.RandomService
 
 @SpringBootTest
 @ActiveProfiles("test")
-internal class UserDaoTest(@Autowired val userDao: UserDao, @Autowired val randomService: RandomService) {
+internal class UserDaoTest(
+    @Autowired val userDao: UserDao,
+    @Autowired val randomService: RandomService
+) {
 
     @BeforeEach
     fun init() {
@@ -28,5 +31,4 @@ internal class UserDaoTest(@Autowired val userDao: UserDao, @Autowired val rando
             userDao.insert(TestData.dummyUser(randomService.id()), HashedPassword("sdv"))
         }
     }
-
 }

@@ -6,14 +6,14 @@ import com.fasterxml.jackson.databind.SerializationFeature
 import com.fasterxml.jackson.databind.cfg.MapperConfig
 import com.fasterxml.jackson.databind.introspect.AnnotatedField
 import com.fasterxml.jackson.databind.introspect.AnnotatedMethod
-import orgarif.domain.*
-import orgarif.error.MessageNotSentException
-import orgarif.repository.MailLogDao
+import java.util.*
 import mu.KotlinLogging
 import okhttp3.Credentials
 import org.springframework.beans.factory.annotation.Value
 import org.springframework.stereotype.Service
-import java.util.*
+import orgarif.domain.*
+import orgarif.error.MessageNotSentException
+import orgarif.repository.MailLogDao
 
 @Service
 class MailService(
@@ -125,15 +125,13 @@ class MailService(
         attachments: List<Attachment>? = null
     ): MailLogId? {
         if (applicationInstance.env == ApplicationEnvironment.dev &&
-                recipientMail != devLogSenderMail
-        ) {
+            recipientMail != devLogSenderMail) {
             throw IllegalArgumentException("Mail send canceled en env dev to ${recipientMail}")
         }
         val mailLogId = randomService.id<MailLogId>()
         val payload =
             mailJetObjectMapper.writeValueAsString(
-                MailJetEventPayload(applicationInstance.env.name)
-            )
+                MailJetEventPayload(applicationInstance.env.name))
         val subject =
             if (applicationInstance.env == ApplicationEnvironment.prod) mailSubject
             else "[${applicationInstance.env}] $mailSubject"
@@ -142,8 +140,7 @@ class MailService(
                 MailJetAttachment(
                     it.contentType.fullType,
                     it.filename,
-                    Base64.getEncoder().encodeToString(it.content)
-                )
+                    Base64.getEncoder().encodeToString(it.content))
             }
         val body =
             MailJetMessages(
@@ -156,18 +153,14 @@ class MailService(
                         mailJetAttachments,
                         mailLogIdToString(mailLogId),
                         mailReference.name,
-                        payload
-                    )
-                )
-            )
+                        payload)))
         val json = mailJetObjectMapper.writeValueAsString(body)
         val response =
             try {
                 httpService.postAndReturnString(
                     url,
                     json,
-                    HttpService.Header.Authorization to Credentials.basic(apiKey, secretKey)
-                )
+                    HttpService.Header.Authorization to Credentials.basic(apiKey, secretKey))
             } catch (e: Exception) {
                 logger.error {
                     "Failed to send mail to $recipientMail. Mail log properties & content is following =>"
@@ -197,9 +190,7 @@ class MailService(
                             mailLogProperties.jsonData,
                             subject,
                             mailContent,
-                            dateService.now()
-                        )
-                    )
+                            dateService.now()))
                     logger.info { "Mail sent & logged to $recipientMail" }
                 } catch (e: Exception) {
                     logger.error {

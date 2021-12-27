@@ -1,13 +1,14 @@
 package orgarif.domain
 
-import orgarif.utils.toSecurityString
 import org.junit.jupiter.api.Assertions
 import org.junit.jupiter.api.Assertions.assertEquals
 import org.junit.jupiter.api.Test
+import orgarif.utils.toSecurityString
 
 class OrgarifSecurityStringTest {
 
-    data class TestTooShortSecurityString(override val rawString: String) : OrgarifSecurityString(rawString) {
+    data class TestTooShortSecurityString(override val rawString: String) :
+        OrgarifSecurityString(rawString) {
         companion object {
             val length = 10
         }
@@ -17,21 +18,23 @@ class OrgarifSecurityStringTest {
 
     @Test
     fun `test minimum length security`() {
-        val exceptionThatWasThrown = Assertions.assertThrows(IllegalArgumentException::class.java) {
-            "".padEnd(TestTooShortSecurityString.length, '-').toSecurityString<TestTooShortSecurityString>()
-        }
+        val exceptionThatWasThrown =
+            Assertions.assertThrows(IllegalArgumentException::class.java) {
+                "".padEnd(TestTooShortSecurityString.length, '-')
+                    .toSecurityString<TestTooShortSecurityString>()
+            }
         assertEquals(
             "TestTooShortSecurityString minimal length is 10, should not be less than 20",
-            exceptionThatWasThrown.message
-        )
+            exceptionThatWasThrown.message)
     }
 
     @Test
     fun `test length is respected`() {
-        val exceptionThatWasThrown = Assertions.assertThrows(IllegalArgumentException::class.java) {
-            "".padEnd(TestStringId.length - 1, '-').toSecurityString<TestSecurityString>()
-        }
-        assertEquals("TestSecurityString length must be 20 (not 19)", exceptionThatWasThrown.message)
+        val exceptionThatWasThrown =
+            Assertions.assertThrows(IllegalArgumentException::class.java) {
+                "".padEnd(TestStringId.length - 1, '-').toSecurityString<TestSecurityString>()
+            }
+        assertEquals(
+            "TestSecurityString length must be 20 (not 19)", exceptionThatWasThrown.message)
     }
-
 }

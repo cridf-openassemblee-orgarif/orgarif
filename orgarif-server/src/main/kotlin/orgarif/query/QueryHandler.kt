@@ -2,7 +2,6 @@ package orgarif.query
 
 import orgarif.domain.UserSession
 
-
 interface QueryHandler<Q : Query, R : QueryResponse> {
     fun doHandle(query: Q, userSession: UserSession?): R
 

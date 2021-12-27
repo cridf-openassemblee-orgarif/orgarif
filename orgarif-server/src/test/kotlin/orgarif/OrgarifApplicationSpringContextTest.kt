@@ -14,8 +14,5 @@ internal class OrgarifApplicationSpringContextTest {
         ResetTestDatabase.reset(false)
     }
 
-    @Test
-    fun `context does load`() {
-    }
-
+    @Test fun `context does load`() {}
 }

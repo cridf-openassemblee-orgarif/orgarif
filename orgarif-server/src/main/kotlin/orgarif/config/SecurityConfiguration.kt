@@ -7,6 +7,7 @@ import org.springframework.security.config.annotation.web.builders.WebSecurity
 import org.springframework.security.config.annotation.web.configuration.EnableWebSecurity
 import org.springframework.security.config.annotation.web.configuration.WebSecurityConfigurerAdapter
 import org.springframework.security.web.csrf.CookieCsrfTokenRepository
+import orgarif.controller.RemoteController
 
 @Configuration
 @EnableWebSecurity
@@ -21,16 +22,18 @@ class SecurityConfiguration(
         web.ignoring()
             .antMatchers(ApplicationConstants.resourcesPath + "/*")
             .antMatchers(ApplicationConstants.resourcesPath + "/**/*")
+            .antMatchers(RemoteController.remoteRoute + "/*")
+            .antMatchers(RemoteController.remoteRoute + "/**/*")
     }
 
     override fun configure(http: HttpSecurity) {
         with(http) {
-            with(csrf()) {
-                csrfTokenRepository(cookieCsrfTokenRepository)
-            }
+            with(csrf()) { csrfTokenRepository(cookieCsrfTokenRepository) }
             with(exceptionHandling()) {
                 // [doc] without it Spring sends its own login page !
-                authenticationEntryPoint { _, response, _ -> response.sendError(403, "Access Denied") }
+                authenticationEntryPoint { _, response, _ ->
+                    response.sendError(403, "Access Denied")
+                }
             }
             with(logout()) {
                 logoutUrl(Routes.logout)
@@ -52,5 +55,4 @@ class SecurityConfiguration(
             authorizeRequests()
         }
     }
-
 }

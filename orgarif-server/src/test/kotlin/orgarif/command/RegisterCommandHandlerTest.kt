@@ -9,18 +9,19 @@ internal class RegisterCommandHandlerTest {
 
     @Test
     fun `validate blank password validation`() {
-        val exceptionThatWasThrown = Assertions.assertThrows(IllegalArgumentException::class.java) {
-            RegisterCommandHandler.validatePassword(" ")
-        }
+        val exceptionThatWasThrown =
+            Assertions.assertThrows(IllegalArgumentException::class.java) {
+                RegisterCommandHandler.validatePassword(" ")
+            }
         assertThat(exceptionThatWasThrown.message, equalTo("Password is blank"))
     }
 
     @Test
     fun `validate tab password validation`() {
-        val exceptionThatWasThrown = Assertions.assertThrows(IllegalArgumentException::class.java) {
-            RegisterCommandHandler.validatePassword("\t")
-        }
+        val exceptionThatWasThrown =
+            Assertions.assertThrows(IllegalArgumentException::class.java) {
+                RegisterCommandHandler.validatePassword("\t")
+            }
         assertThat(exceptionThatWasThrown.message, equalTo("Password is blank"))
     }
-
 }

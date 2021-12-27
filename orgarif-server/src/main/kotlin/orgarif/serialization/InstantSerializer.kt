@@ -10,5 +10,4 @@ class InstantSerializer : StdSerializer<Instant>(Instant::class.java) {
     override fun serialize(value: Instant, gen: JsonGenerator, provider: SerializerProvider) {
         gen.writeNumber(value.toEpochMilli())
     }
-
 }

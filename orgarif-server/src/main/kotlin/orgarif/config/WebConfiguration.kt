@@ -1,14 +1,14 @@
 package orgarif.config
 
+import java.time.Duration
+import java.time.temporal.ChronoUnit
+import javax.servlet.ServletContext
 import mu.KotlinLogging
 import org.springframework.boot.web.servlet.ServletContextInitializer
 import org.springframework.context.annotation.Configuration
 import org.springframework.core.env.Environment
 import org.springframework.web.servlet.config.annotation.ResourceHandlerRegistry
 import org.springframework.web.servlet.config.annotation.WebMvcConfigurer
-import java.time.Duration
-import java.time.temporal.ChronoUnit
-import javax.servlet.ServletContext
 
 @Configuration
 class WebConfiguration(val env: Environment) : WebMvcConfigurer, ServletContextInitializer {

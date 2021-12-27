@@ -26,12 +26,12 @@ export class Dict<K extends NominalItem, T> {
 }
 
 export const dict = <K extends NominalItem, T>(pairs: [K, T][] = []) => {
-    const d = {} as Dict<K, T>;
-    pairs.forEach(pair => {
-        // @ts-ignore
-        d[pair[0]] = pair[1];
-    });
-    return d;
+  const d = {} as Dict<K, T>;
+  pairs.forEach(pair => {
+    // @ts-ignore
+    d[pair[0]] = pair[1];
+  });
+  return d;
 };
 
 export const get = <K extends NominalItem, T>(

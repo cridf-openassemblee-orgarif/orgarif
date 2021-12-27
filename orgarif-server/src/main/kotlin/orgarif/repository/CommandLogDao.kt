@@ -1,5 +1,8 @@
 package orgarif.repository
 
+import java.time.Instant
+import org.jooq.DSLContext
+import org.springframework.stereotype.Repository
 import orgarif.domain.CommandLogId
 import orgarif.domain.DeploymentLogId
 import orgarif.domain.UserId
@@ -7,9 +10,6 @@ import orgarif.domain.UserSessionId
 import orgarif.jooq.generated.Tables.COMMAND_LOG
 import orgarif.jooq.generated.tables.records.CommandLogRecord
 import orgarif.utils.toTypeId
-import org.jooq.DSLContext
-import org.springframework.stereotype.Repository
-import java.time.Instant
 
 @Repository
 class CommandLogDao(val jooq: DSLContext) {
@@ -30,20 +30,21 @@ class CommandLogDao(val jooq: DSLContext) {
     )
 
     fun insert(r: Record) {
-        val clr = CommandLogRecord().apply {
-            id = r.id.rawId
-            userId = r.userId?.rawId
-            deploymentLogId = r.deploymentLogId.rawId
-            commandClass = r.commandClass.name
-            jsonCommand = r.jsonCommand
-            ip = r.ip
-            userSessionId = r.userSessionId?.rawId
-            resultingIds = r.resultingIds
-            jsonResult = r.jsonResult
-            exceptionStackTrace = r.exceptionStackTrace
-            startDate = r.startDate
-            endDate = r.endDate
-        }
+        val clr =
+            CommandLogRecord().apply {
+                id = r.id.rawId
+                userId = r.userId?.rawId
+                deploymentLogId = r.deploymentLogId.rawId
+                commandClass = r.commandClass.name
+                jsonCommand = r.jsonCommand
+                ip = r.ip
+                userSessionId = r.userSessionId?.rawId
+                resultingIds = r.resultingIds
+                jsonResult = r.jsonResult
+                exceptionStackTrace = r.exceptionStackTrace
+                startDate = r.startDate
+                endDate = r.endDate
+            }
         jooq.insertInto(COMMAND_LOG).set(clr).execute()
     }
 
@@ -55,7 +56,12 @@ class CommandLogDao(val jooq: DSLContext) {
             .execute()
     }
 
-    fun updateResult(id: CommandLogId, resultingIds: String, jsonResult: String?, endDate: Instant) {
+    fun updateResult(
+        id: CommandLogId,
+        resultingIds: String,
+        jsonResult: String?,
+        endDate: Instant
+    ) {
         jooq.update(COMMAND_LOG)
             .set(COMMAND_LOG.RESULTING_IDS, resultingIds)
             .set(COMMAND_LOG.JSON_RESULT, jsonResult)
@@ -64,19 +70,18 @@ class CommandLogDao(val jooq: DSLContext) {
             .execute()
     }
 
-    private fun map(r: CommandLogRecord) = Record(
-        id = r.id.toTypeId(),
-        userId = r.userId?.toTypeId(),
-        deploymentLogId = r.deploymentLogId.toTypeId(),
-        commandClass = Class.forName(r.commandClass),
-        jsonCommand = r.jsonCommand,
-        ip = r.ip,
-        userSessionId = r.userSessionId?.toTypeId(),
-        resultingIds = r.resultingIds,
-        jsonResult = r.jsonResult,
-        exceptionStackTrace = r.exceptionStackTrace,
-        startDate = r.startDate,
-        endDate = r.endDate
-    )
-
+    private fun map(r: CommandLogRecord) =
+        Record(
+            id = r.id.toTypeId(),
+            userId = r.userId?.toTypeId(),
+            deploymentLogId = r.deploymentLogId.toTypeId(),
+            commandClass = Class.forName(r.commandClass),
+            jsonCommand = r.jsonCommand,
+            ip = r.ip,
+            userSessionId = r.userSessionId?.toTypeId(),
+            resultingIds = r.resultingIds,
+            jsonResult = r.jsonResult,
+            exceptionStackTrace = r.exceptionStackTrace,
+            startDate = r.startDate,
+            endDate = r.endDate)
 }
