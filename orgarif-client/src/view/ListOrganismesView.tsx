@@ -12,6 +12,8 @@ import { OrganismeListDto } from '../domain/organisme';
 import { RouteLink } from '../routing/RouteLink';
 import { colors } from '../styles/colors';
 import { asString } from '../utils/nominal-class';
+import { DocumentationLink } from '../documentation/DocumentationLink';
+import { documentationHeadlines } from '../documentation/documentation-headlines';
 
 export const ListOrganismesView = () => {
   const [organismes, setOrganismes] = useState<OrganismeListDto[] | undefined>(
@@ -41,6 +43,9 @@ export const ListOrganismesView = () => {
   return (
     <MainContainer>
       <h1>Liste des organismes</h1>
+      <DocumentationLink
+        documentationHealine={documentationHeadlines.editionDesCategories}
+      />
       <Button
         startIcon={<Add />}
         variant="outlined"
