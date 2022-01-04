@@ -1,9 +1,11 @@
 package orgarif.tools
 
+import okhttp3.OkHttpClient
 import java.lang.StringBuilder
 import java.nio.file.Files
 import java.nio.file.Paths
 import org.jsoup.Jsoup
+import orgarif.service.HttpService
 import orgarif.utils.OrgarifStringUtils
 
 fun main() {
@@ -18,12 +20,22 @@ p span {margin: 20px 0;line-height: 22px !important;font-size: 15px !important;f
 p img {padding: 20px 0;}
         """.trimIndent()
     val html = run {
-        val html = Files.readString(filePath)
+        //        val html = Files.readString(filePath)
+        val html = run {
+            val httpService = HttpService(OkHttpClient())
+            val r =
+                httpService.getString(
+                    "https://docs.google.com/document/d/e/2PACX-1vTqdejGkxplsAUAkZB--o-mPPfgyoJ-z57kQkkS_nEtLWukSUBnt4QXogNX4LD9Q9ySmrbid0Xi2zpV/pub?embedded=true")
+            when (r) {
+                is HttpService.MaybeStringResponse.EmptyResponse -> throw IllegalStateException()
+                is HttpService.MaybeStringResponse.StringResponse -> r.body
+            }
+        }
         val importCss =
             "@import url('https://themes.googleusercontent.com/fonts/css?kit=iMc4-4exjgqA-toZgqqJBf35jAjY-31lSKWZb9Fa77M');"
-        if (html.indexOf(importCss) == -1 && html.indexOf(additionalCss) == -1) {
-            throw IllegalArgumentException("Import css url must have changed")
-        }
+//        if (html.indexOf(importCss) == -1 && html.indexOf(additionalCss) == -1) {
+//            throw IllegalArgumentException("Import css url must have changed")
+//        }
         html.replace(importCss, additionalCss).apply {
             Files.write(filePath, toByteArray(Charsets.UTF_8))
         }
@@ -31,7 +43,8 @@ p img {padding: 20px 0;}
 
     val doc = Jsoup.parse(html)
     val headlines =
-        doc.select("*").filter { it.tagName() in listOf("h1", "h2", "h3", "h4", "h5", "h6") }
+        doc.select("*")
+            .filter { it.tagName() in listOf("h1", "h2", "h3", "h4", "h5", "h6") }
             // drop document main title...
             .drop(1)
     val sb = StringBuilder()

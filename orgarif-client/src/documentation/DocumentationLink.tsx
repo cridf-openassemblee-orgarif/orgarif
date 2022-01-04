@@ -23,8 +23,12 @@ const useStyles = makeStyles(() => ({
 // no cache, re-download à chaque fois, on pourrait utiliser hash git mais pas bien grave
 const random = Math.random();
 
-const documentationUrl =
+const editDocumentationUrl =
   'https://docs.google.com/document/d/1WqnENdvNgmTBWLb_NOm7ilXMdjfZAMKKUl9-k3ABjVY/edit';
+
+const documentationUrl =
+  // '/static/Documentation%20Siger/DocumentationSiger.html?'
+  'https://docs.google.com/document/d/e/2PACX-1vTqdejGkxplsAUAkZB--o-mPPfgyoJ-z57kQkkS_nEtLWukSUBnt4QXogNX4LD9Q9ySmrbid0Xi2zpV/pub?embedded=true';
 
 export const DocumentationLink = (props: {
   documentationHealine?: DocumentationHeadline;
@@ -36,9 +40,8 @@ export const DocumentationLink = (props: {
     props.documentationHealine
   );
   const iframeSrc =
-    '/static/Documentation%20Siger/DocumentationSiger.html?' +
-    random +
-    (headline ? '#' + headline.id : '');
+    // documentationUrl + random + (headline ? '#' + headline.id : '');
+    documentationUrl + (headline ? '#' + headline.id : '');
   return (
     <>
       <div onClick={() => setDisplay(true)}>doc</div>
@@ -84,7 +87,7 @@ export const DocumentationLink = (props: {
                   margin-top: 10px;
                 `}
               >
-                <a href={documentationUrl} target="_blank">
+                <a href={editDocumentationUrl} target="_blank">
                   Éditer documentation
                 </a>
               </div>
@@ -95,8 +98,7 @@ export const DocumentationLink = (props: {
               `}
             >
               <iframe
-                // src={iframeSrc}
-                src="https://docs.google.com/document/d/e/2PACX-1vTqdejGkxplsAUAkZB--o-mPPfgyoJ-z57kQkkS_nEtLWukSUBnt4QXogNX4LD9Q9ySmrbid0Xi2zpV/pub?embedded=true"
+                src={iframeSrc}
                 width="100%"
                 height="100%"
                 frameBorder={0}

@@ -4,14 +4,19 @@ export interface DocumentationHeadline {
   level: number;
 }
 export const documentationHeadlines: Record<string, DocumentationHeadline> = {
-  introduction: {
-    label: 'Introduction',
-    id: 'h.qbl733ifzopm',
+  representations: {
+    label: 'Représentations',
+    id: 'h.v2vuihxf302r',
+    level: 1,
+  },
+  edition: {
+    label: 'Édition',
+    id: 'h.85q1rnywpcar',
     level: 2,
   },
-  titre1: {
-    label: 'Titre 1',
-    id: 'h.v2vuihxf302r',
+  deliberation: {
+    label: 'Délibération',
+    id: 'h.8t4gppwd6hmv',
     level: 1,
   },
   second: {
