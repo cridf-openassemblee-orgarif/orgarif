@@ -23,6 +23,9 @@ const useStyles = makeStyles(() => ({
 // no cache, re-download à chaque fois, on pourrait utiliser hash git mais pas bien grave
 const random = Math.random();
 
+const documentationUrl =
+  'https://docs.google.com/document/d/1WqnENdvNgmTBWLb_NOm7ilXMdjfZAMKKUl9-k3ABjVY/edit';
+
 export const DocumentationLink = (props: {
   documentationHealine?: DocumentationHeadline;
 }) => {
@@ -76,6 +79,15 @@ export const DocumentationLink = (props: {
                   {h.label}
                 </div>
               ))}
+              <div
+                css={css`
+                  margin-top: 10px;
+                `}
+              >
+                <a href={documentationUrl} target="_blank">
+                  Éditer documentation
+                </a>
+              </div>
             </div>
             <div
               css={css`
@@ -83,7 +95,8 @@ export const DocumentationLink = (props: {
               `}
             >
               <iframe
-                src={iframeSrc}
+                // src={iframeSrc}
+                src="https://docs.google.com/document/d/e/2PACX-1vTqdejGkxplsAUAkZB--o-mPPfgyoJ-z57kQkkS_nEtLWukSUBnt4QXogNX4LD9Q9ySmrbid0Xi2zpV/pub?embedded=true"
                 width="100%"
                 height="100%"
                 frameBorder={0}
