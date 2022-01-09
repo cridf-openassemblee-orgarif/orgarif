@@ -18,9 +18,7 @@ import { asString, getValue } from '../utils/nominal-class';
 export const ListOrganismesBySecteurView = (props: {
   routeParams: ListOrganismesBySecteurRoute;
 }) => {
-  const [organismes, setOrganismes] = useState<OrganismeListDto[] | undefined>(
-    undefined
-  );
+  const [organismes, setOrganismes] = useState<OrganismeListDto[]>();
   const secteurById = useRecoilValue(state.secteursById);
   const secteur = getValue(secteurById, props.routeParams.secteurId);
   useEffect(() => {

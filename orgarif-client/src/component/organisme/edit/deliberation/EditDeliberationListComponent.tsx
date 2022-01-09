@@ -10,7 +10,7 @@ import { HeaderDeliberationsComponent } from './HeaderDeliberationsComponent';
 export const EditDeliberationListComponent = (props: {
   lienDeliberations: LienDeliberationDto[];
   onNewLienDeliberation: (
-    id: DeliberationId,
+    deliberationId: DeliberationId,
     comment: string | undefined
   ) => Promise<void>;
 }) => {

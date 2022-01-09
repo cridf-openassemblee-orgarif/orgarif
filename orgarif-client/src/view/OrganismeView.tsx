@@ -9,9 +9,7 @@ import { RouteLink } from '../routing/RouteLink';
 import { EditOrganismeRoute } from '../routing/routes';
 
 export const OrganismeView = (props: { routeParams: EditOrganismeRoute }) => {
-  const [organisme, setOrganisme] = useState<OrganismeDto | undefined>(
-    undefined
-  );
+  const [organisme, setOrganisme] = useState<OrganismeDto>();
   useEffect(() => {
     appContext
       .queryService()

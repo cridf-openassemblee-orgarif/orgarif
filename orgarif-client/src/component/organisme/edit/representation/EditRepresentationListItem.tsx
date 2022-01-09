@@ -23,9 +23,11 @@ export const EditRepresentationListItem = (props: {
           margin: 12px 4px;
           display: flex;
           align-items: center;
+
           .${actionsClass} {
             visibility: hidden;
           }
+
           &:hover {
             .${actionsClass} {
               visibility: visible;
@@ -51,6 +53,18 @@ export const EditRepresentationListItem = (props: {
           <div>
             {props.representation.representant.prenom}{' '}
             {props.representation.representant.nom}
+            {props.representation.startDate && (
+              <span
+                css={css`
+                  padding-left: 10px;
+                  font-size: 0.8rem;
+                  color: ${colors.grey};
+                  font-style: italic;
+                `}
+              >
+                (à partir du {props.representation.startDate})
+              </span>
+            )}
           </div>
           {props.representation.suppleance && (
             <div
@@ -69,6 +83,18 @@ export const EditRepresentationListItem = (props: {
               </span>{' '}
               {props.representation.suppleance.representant.prenom}{' '}
               {props.representation.suppleance.representant.nom}
+              {props.representation.suppleance.startDate && (
+                <span
+                  css={css`
+                    padding-left: 10px;
+                    font-size: 0.8rem;
+                    color: ${colors.grey};
+                    font-style: italic;
+                  `}
+                >
+                  (à partir du {props.representation.suppleance.startDate})
+                </span>
+              )}
             </div>
           )}
         </div>

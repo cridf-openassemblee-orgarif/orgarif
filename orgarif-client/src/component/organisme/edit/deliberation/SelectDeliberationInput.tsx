@@ -12,6 +12,7 @@ import {
   AlreadySet,
   AutocompleteInput
 } from '../../../base-component/AutocompleteInput';
+import { LoadingState } from '../../../../interfaces';
 
 // type DisplayPopup = boolean;
 // type CreateDeliberationLibelle = string;
@@ -33,7 +34,7 @@ export const SelectDeliberationInput = (props: {
   const [inputValue, setInputValue] = useState('');
   const [displayCreateDialog, setDisplayCreateDialog] = useState(false);
   // const [dialogLibelle, setDialogLibelle] = useState('');
-  const [loading, setLoading] = useState(false);
+  const [loading, setLoading] = useState<LoadingState>('idle');
   const [deliberations, setDeliberations] = useState<
     (DeliberationDto | string)[]
   >([]);
@@ -51,14 +52,14 @@ export const SelectDeliberationInput = (props: {
     setDeliberations([]);
     setAlreadySet(false);
     if (input.length >= SharedConstants.searchLengthLimit) {
-      setLoading(true);
+      setLoading('loading');
       return appContext
         .queryService()
         .searchDeliberationQuery({
           searchToken: input
         })
         .then(r => {
-          setLoading(false);
+          setLoading('idle');
           const results = r.results
             // on vire les delib qui sont déjà liées
             .filter(r => !props.excludeDeliberations.includes(r.id));

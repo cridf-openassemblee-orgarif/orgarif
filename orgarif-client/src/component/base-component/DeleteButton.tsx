@@ -28,6 +28,7 @@ const useStyles = makeStyles({
   }
 });
 
+// TODO remove ?
 export const DeleteButton = (props: Props) => {
   if (props.size === 'small' && !!props.label) {
     throw Error('Small button cannot display a label');

@@ -13,7 +13,7 @@ import { AddLienDeliberationDialog } from './AddLienDeliberationDialog';
 export const HeaderDeliberationsComponent = (props: {
   lienDeliberations: LienDeliberationDto[];
   onNewLienDeliberation: (
-    id: DeliberationId,
+    deliberationId: DeliberationId,
     comment: string | undefined
   ) => Promise<void>;
 }) => {
@@ -57,11 +57,11 @@ export const HeaderDeliberationsComponent = (props: {
           l => l.deliberation.id
         )}
         onNewLienDeliberation={(
-          id: DeliberationId,
+          deliberationId: DeliberationId,
           comment: string | undefined
         ) =>
           props
-            .onNewLienDeliberation(id, comment)
+            .onNewLienDeliberation(deliberationId, comment)
             .then(() => setDisplayDialog(false))
         }
       />

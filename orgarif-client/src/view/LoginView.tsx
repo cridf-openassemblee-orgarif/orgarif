@@ -15,9 +15,7 @@ import { assertUnreachable } from '../utils';
 
 export const LoginView = () => {
   const [userInfos, setUserInfos] = useRecoilState(state.userInfos);
-  const [loginResult, setLoginResult] = useState<LoginResult | undefined>(
-    undefined
-  );
+  const [loginResult, setLoginResult] = useState<LoginResult>();
   const login = (data: LoginFormDto) => {
     appContext
       .commandService()

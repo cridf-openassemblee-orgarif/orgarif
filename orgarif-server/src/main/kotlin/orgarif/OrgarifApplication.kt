@@ -9,7 +9,7 @@ import orgarif.domain.ApplicationEnvironment
 import orgarif.jooqlib.Configuration.configuration
 import orgarif.jooqlib.ResetDatabase
 import orgarif.service.ApplicationInstance
-import orgarif.utils.DatabaseUtils.datasource
+import orgarif.utils.DatabaseUtils
 
 @SpringBootApplication(exclude = [UserDetailsServiceAutoConfiguration::class])
 @EnableJdbcHttpSession
@@ -36,7 +36,7 @@ class OrgarifApplication {
         fun initiateDatabaseIfEmpty() {
             if (ApplicationInstance.env == ApplicationEnvironment.dev) {
                 val r =
-                    datasource
+                    DatabaseUtils.datasource
                         .connection
                         .createStatement()
                         .executeQuery(

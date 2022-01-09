@@ -9,6 +9,7 @@ import { RepresentationDto } from '../../../../domain/organisme';
 import { editCommonClasses } from '../EditOrganismeComponent';
 import { EditRepresentationDragListComponent } from './EditRepresentationDragListComponent';
 import { HeaderRepresentationsComponent } from './HeaderRepresentationsComponent';
+import { LocalDate } from '../../../../domain/time';
 
 export const EditRepresentationListComponent = (props: {
   organismeOrInstanceId: OrganismeId | InstanceId;
@@ -17,7 +18,12 @@ export const EditRepresentationListComponent = (props: {
   presenceSuppleants: boolean;
   onPresenceSuppleantsChange: (presenceSuppleants: boolean) => void;
   representations: RepresentationDto[];
-  onAddRepresentation: (representantId: RepresentantId) => Promise<void>;
+  onAddRepresentation: (
+    representantId: RepresentantId,
+    startDate: LocalDate | undefined,
+    suppleantId: RepresentantId | undefined,
+    suppleantStartDate: LocalDate | undefined
+  ) => Promise<void>;
 }) => {
   return (
     <React.Fragment>

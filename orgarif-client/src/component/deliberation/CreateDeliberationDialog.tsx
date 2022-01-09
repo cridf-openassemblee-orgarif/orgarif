@@ -25,9 +25,7 @@ export const CreateDeliberationDialog = (props: {
   // libelle & deliberationDate because TextInput type=date doesn't seem to work with SimpleForm
   const [libelle, setLibelle] = useState(props.libelle);
   useEffect(() => setLibelle(props.libelle), [props.libelle]);
-  const [deliberationDate, setDeliberationDate] = useState<
-    LocalDate | undefined
-  >(undefined);
+  const [deliberationDate, setDeliberationDate] = useState<LocalDate>();
   const onSubmit = () => {
     if (!deliberationDate) {
       setDateMandatory(true);

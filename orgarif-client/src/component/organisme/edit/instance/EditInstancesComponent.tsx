@@ -20,6 +20,7 @@ import { asString } from '../../../../utils/nominal-class';
 import { EditNomComponent } from '../EditNomComponent';
 import { RepresentantsDeliberationsBlock } from '../EditOrganismeComponent';
 import { DragAndDropItemType } from '../DragAndDropGlobalContext';
+import { LocalDate } from '../../../../domain/time';
 
 const instance: DragAndDropItemType = 'instance';
 
@@ -52,11 +53,14 @@ export const EditInstancesComponent = (props: {
   ) => void;
   onAddRepresentation: (
     representantId: RepresentantId,
+    startDate: LocalDate | undefined,
+    suppleantId: RepresentantId | undefined,
+    suppleantStartDate: LocalDate | undefined,
     instanceId: InstanceId
   ) => Promise<void>;
   onNewLienDeliberation: (
     instanceId: InstanceId,
-    id: DeliberationId,
+    deliberationId: DeliberationId,
     comment: string | undefined
   ) => Promise<void>;
 }) => {
@@ -136,8 +140,19 @@ export const EditInstancesComponent = (props: {
                       )
                     }
                     representations={instance.representations}
-                    onAddRepresentation={(representantId: RepresentantId) =>
-                      props.onAddRepresentation(representantId, instance.id)
+                    onAddRepresentation={(
+                      representantId: RepresentantId,
+                      startDate: LocalDate | undefined,
+                      suppleantId: RepresentantId | undefined,
+                      suppleantStartDate: LocalDate | undefined
+                    ) =>
+                      props.onAddRepresentation(
+                        representantId,
+                        startDate,
+                        suppleantId,
+                        suppleantStartDate,
+                        instance.id
+                      )
                     }
                     lienDeliberations={instance.lienDeliberations}
                     onNewLienDeliberation={(

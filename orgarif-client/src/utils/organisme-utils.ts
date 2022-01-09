@@ -17,6 +17,7 @@ import {
   RepresentationDto
 } from '../domain/organisme';
 import { pipe } from './Pipe';
+import { LocalDate } from '../domain/time';
 
 // TODO naming utils, actions...
 
@@ -176,10 +177,16 @@ const addRepresentation = async (
   organisme: OrganismeDto,
   setOrganisme: (o: OrganismeDto) => void,
   representantId: RepresentantId,
+  startDate: LocalDate | undefined,
+  suppleantId: RepresentantId | undefined,
+  suppleantStartDate: LocalDate | undefined,
   instanceId: InstanceId | undefined
 ) => {
   await appContext.commandService().addRepresentationCommand({
     representantId,
+    startDate,
+    suppleantId,
+    suppleantStartDate,
     organismeId: organisme.id,
     instanceId
   });
@@ -396,8 +403,20 @@ export const organismeActions = (
   ) => onNombreRepresentantsChange(organisme, setOrganisme, instanceId, nombre),
   onAddRepresentation: (
     representantId: RepresentantId,
+    startDate: LocalDate | undefined,
+    suppleantId: RepresentantId | undefined,
+    suppleantStartDate: LocalDate | undefined,
     instanceId: InstanceId | undefined
-  ) => addRepresentation(organisme, setOrganisme, representantId, instanceId),
+  ) =>
+    addRepresentation(
+      organisme,
+      setOrganisme,
+      representantId,
+      startDate,
+      suppleantId,
+      suppleantStartDate,
+      instanceId
+    ),
   onMoveRepresentation: (
     representationId: RepresentationId,
     source: DropDestination<OrganismeId | InstanceId>,
@@ -413,9 +432,16 @@ export const organismeActions = (
   onAddInstance: (nom: string) => addInstance(organisme, setOrganisme, nom),
   onNewLienDeliberation: (
     instanceId: InstanceId | undefined,
-    id: DeliberationId,
+    deliberationId: DeliberationId,
     comment: string | undefined
-  ) => onNewLienDeliberation(organisme, setOrganisme, instanceId, id, comment),
+  ) =>
+    onNewLienDeliberation(
+      organisme,
+      setOrganisme,
+      instanceId,
+      deliberationId,
+      comment
+    ),
   onPresenceSuppleantsChange: (
     instanceId: InstanceId | undefined,
     presenceSuppleants: boolean

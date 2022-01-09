@@ -28,6 +28,7 @@ import { AddInstanceComponent } from './instance/AddInstanceComponent';
 import { EditInstancesComponent } from './instance/EditInstancesComponent';
 import { EditRepresentationListComponent } from './representation/EditRepresentationListComponent';
 import { TABLET } from '../../../styles/breakpoints';
+import { LocalDate } from '../../../domain/time';
 
 export const editCommonClasses = {
   columnPadding: css`
@@ -66,10 +67,15 @@ export const RepresentantsDeliberationsBlock = (props: {
   presenceSuppleants: boolean;
   onPresenceSuppleantsChange: (presenceSuppleants: boolean) => void;
   representations: RepresentationDto[];
-  onAddRepresentation: (representantId: RepresentantId) => Promise<void>;
+  onAddRepresentation: (
+    representantId: RepresentantId,
+    startDate: LocalDate | undefined,
+    suppleantId: RepresentantId | undefined,
+    suppleantStartDate: LocalDate | undefined
+  ) => Promise<void>;
   lienDeliberations: LienDeliberationDto[];
   onNewLienDeliberation: (
-    id: DeliberationId,
+    deliberationId: DeliberationId,
     comment: string | undefined
   ) => Promise<void>;
 }) => (
@@ -185,8 +191,19 @@ export const EditOrganismeComponent = (props: {
               actions.onPresenceSuppleantsChange(undefined, presenceSuppleants)
             }
             representations={organisme.representations}
-            onAddRepresentation={(representantId: RepresentantId) =>
-              actions.onAddRepresentation(representantId, undefined)
+            onAddRepresentation={(
+              representantId: RepresentantId,
+              startDate: LocalDate | undefined,
+              suppleantId: RepresentantId | undefined,
+              suppleantStartDate: LocalDate | undefined
+            ) =>
+              actions.onAddRepresentation(
+                representantId,
+                startDate,
+                suppleantId,
+                suppleantStartDate,
+                undefined
+              )
             }
             lienDeliberations={organisme.lienDeliberations}
             onNewLienDeliberation={(
@@ -227,8 +244,19 @@ export const EditOrganismeComponent = (props: {
               onPresenceSuppleantsChange={actions.onPresenceSuppleantsChange}
               onAddRepresentation={(
                 representantId: RepresentantId,
+                startDate: LocalDate | undefined,
+                suppleantId: RepresentantId | undefined,
+                suppleantStartDate: LocalDate | undefined,
                 instanceId: InstanceId
-              ) => actions.onAddRepresentation(representantId, instanceId)}
+              ) =>
+                actions.onAddRepresentation(
+                  representantId,
+                  startDate,
+                  suppleantId,
+                  suppleantStartDate,
+                  instanceId
+                )
+              }
               onNewLienDeliberation={actions.onNewLienDeliberation}
             />
           </div>

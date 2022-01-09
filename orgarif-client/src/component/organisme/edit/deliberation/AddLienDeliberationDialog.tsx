@@ -16,19 +16,19 @@ import { colors } from '../../../../styles/colors';
 import { TextInput } from '../../../base-component/TextInput';
 import { CreateDeliberationDialog } from '../../../deliberation/CreateDeliberationDialog';
 import { SelectDeliberationInput } from './SelectDeliberationInput';
+import { LoadingState } from '../../../../interfaces';
 
 export const AddLienDeliberationDialog = (props: {
   display: boolean;
   onClose: () => void;
   excludeDeliberations: DeliberationId[];
   onNewLienDeliberation: (
-    id: DeliberationId,
+    deliberationId: DeliberationId,
     comment: string | undefined
   ) => Promise<void>;
 }) => {
-  const [selectedDeliberation, setSelectedDeliberation] = useState<
-    DeliberationDto | undefined
-  >(undefined);
+  const [selectedDeliberation, setSelectedDeliberation] =
+    useState<DeliberationDto>();
   const [inputValue, setInputValue] = useState('');
   const [displayCreateDeliberationDialog, setDisplayCreateDeliberationDialog] =
     useState(false);
@@ -36,7 +36,7 @@ export const AddLienDeliberationDialog = (props: {
     useState('');
   const [comment, setComment] = useState('');
   // const [dialogLibelle, setDialogLibelle] = useState('');
-  const [loading, setLoading] = useState(false);
+  const [loading, setLoading] = useState<LoadingState>('idle');
   const [deliberations, setDeliberations] = useState<
     (DeliberationDto | string)[]
   >([]);

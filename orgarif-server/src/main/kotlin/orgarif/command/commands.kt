@@ -31,6 +31,9 @@ data class AddLienDeliberationCommandResponse(val lienDeliberationId: LienDelibe
 
 data class AddRepresentationCommand(
     val representantId: RepresentantId,
+    val startDate: LocalDate?,
+    val suppleantId: RepresentantId?,
+    val suppleantStartDate: LocalDate?,
     val organismeId: OrganismeId,
     val instanceId: InstanceId?
 ) : Command()

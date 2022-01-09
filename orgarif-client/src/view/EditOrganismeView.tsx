@@ -28,7 +28,7 @@ const displayLoading = (loading: LoadingState) => {
 export const EditOrganismeView = (props: {
   routeParams: EditOrganismeRoute;
 }) => {
-  const [organisme, setOrganisme] = useState<OrganismeDto | undefined>();
+  const [organisme, setOrganisme] = useState<OrganismeDto>();
   const [loading, setLoading] = useState<LoadingState>('idle');
   useEffect(() => {
     setOrganisme(undefined);

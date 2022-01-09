@@ -4,12 +4,14 @@ import org.springframework.stereotype.Service
 import orgarif.domain.ItemStatus.*
 import orgarif.domain.RepresentationId
 import orgarif.repository.RepresentationDao
+import orgarif.repository.SuppleanceDao
 import orgarif.service.DateService
 import orgarif.service.RandomService
 
 @Service
 class AddRepresentationCommandHandler(
     val representationDao: RepresentationDao,
+    val suppleanceDao: SuppleanceDao,
     val randomService: RandomService,
     val dateService: DateService
 ) : CommandHandler.Handler<AddRepresentationCommand, AddRepresentationCommandResponse>() {
@@ -22,18 +24,32 @@ class AddRepresentationCommandHandler(
                     command.organismeId, command.instanceId)
                 ?.let { it + 1 }
                 ?: 0
-        representationDao.insert(
+        val r =
             RepresentationDao.Record(
                 id = representationId,
                 representantId = command.representantId,
                 organismeId = command.organismeId,
                 instanceId = command.instanceId,
                 position = newPosition,
-                startDate = null,
+                startDate = command.startDate,
                 endDate = null,
                 creationDate = now,
                 status = live,
-                lastModificationDate = now))
+                lastModificationDate = now)
+        representationDao.insert(r)
+        if (command.suppleantId != null) {
+            suppleanceDao.insert(
+                SuppleanceDao.Record(
+                    id = randomService.id(),
+                    representantId = command.suppleantId,
+                    representationId = r.id,
+                    organismeId = command.organismeId,
+                    startDate = command.suppleantStartDate,
+                    endDate = null,
+                    creationDate = now,
+                    status = live,
+                    lastModificationDate = now))
+        }
         return AddRepresentationCommandResponse(representationId)
     }
 }

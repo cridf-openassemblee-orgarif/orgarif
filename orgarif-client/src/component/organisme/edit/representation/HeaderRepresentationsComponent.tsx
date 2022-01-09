@@ -12,6 +12,7 @@ import { NumberInput } from '../../../base-component/NumberInput';
 import { SelectInput } from '../../../base-component/SelectInput';
 import { editCommonClasses } from '../EditOrganismeComponent';
 import { AddRepresentationDialog } from './AddRepresentationDialog';
+import { LocalDate } from '../../../../domain/time';
 
 const classes = {
   numberBlock: css`
@@ -34,7 +35,12 @@ export const HeaderRepresentationsComponent = (props: {
   onNombreRepresentantsChange: (nombre: number | undefined) => void;
   presenceSuppleants: boolean;
   onPresenceSuppleantsChange: (presenceSuppleants: boolean) => void;
-  onAddRepresentation: (representantId: RepresentantId) => Promise<void>;
+  onAddRepresentation: (
+    representantId: RepresentantId,
+    startDate: LocalDate | undefined,
+    suppleantId: RepresentantId | undefined,
+    suppleantStartDate: LocalDate | undefined
+  ) => Promise<void>;
 }) => {
   const [displayAddRepresentantionDialog, setDisplayAddRepresentantionDialog] =
     useState(false);
@@ -108,9 +114,19 @@ export const HeaderRepresentationsComponent = (props: {
       <AddRepresentationDialog
         display={displayAddRepresentantionDialog}
         onClose={() => setDisplayAddRepresentantionDialog(false)}
-        onAddRepresentation={representantId =>
+        onAddRepresentation={(
+          representantId: RepresentantId,
+          startDate: LocalDate | undefined,
+          suppleantId: RepresentantId | undefined,
+          suppleantStartDate: LocalDate | undefined
+        ) =>
           props
-            .onAddRepresentation(representantId)
+            .onAddRepresentation(
+              representantId,
+              startDate,
+              suppleantId,
+              suppleantStartDate
+            )
             .then(() => setDisplayAddRepresentantionDialog(false))
         }
       />

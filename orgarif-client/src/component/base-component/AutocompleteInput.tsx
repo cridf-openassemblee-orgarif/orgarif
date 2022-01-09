@@ -6,6 +6,7 @@ import TextField from '@mui/material/TextField';
 import * as React from 'react';
 import { ChangeEvent, useEffect, useState } from 'react';
 import { colors } from '../../styles/colors';
+import { LoadingState } from '../../interfaces';
 
 export type AlreadySet = boolean;
 
@@ -28,12 +29,15 @@ export const AutocompleteInput = <Suggestion extends object>(props: {
   useEffect(() => setValue(props.selection ?? null), [props.selection]);
   const [suggestions, setSuggestions] = useState<(Suggestion | string)[]>([]);
   const [alreadySet, setAlreadySet] = useState(false);
-  const [loading, setLoading] = useState(false);
-  const onInputChange = (event: React.ChangeEvent<{}>, value: string) =>
+  const [loading, setLoading] = useState<LoadingState>('idle');
+  const onInputChange = (event: React.ChangeEvent<{}>, value: string) => {
+    setLoading('loading');
     props.onInputChange(value).then(([suggestions, alreadySet]) => {
+      setLoading('idle');
       setSuggestions(suggestions);
       setAlreadySet(alreadySet);
     });
+  };
   const onChange = (
     event: ChangeEvent<{}>,
     newValue: string | Suggestion | null
@@ -72,17 +76,16 @@ export const AutocompleteInput = <Suggestion extends object>(props: {
               background: ${colors.white};
             `}
           />
-          {loading && (
+          {loading === 'loading' && (
             <div
               css={css`
                 position: absolute;
                 top: 50%;
-                right: 9px;
-                margin-top: -12px;
-                margin-left: -12px;
+                right: 11px;
+                margin-top: -17px;
               `}
             >
-              <CircularProgress size={24} />
+              <CircularProgress size={20} />
             </div>
           )}
           <div

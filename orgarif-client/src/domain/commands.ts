@@ -35,6 +35,9 @@ export interface AddLienDeliberationCommandResponse {
 
 export interface AddRepresentationCommand {
   representantId: RepresentantId;
+  startDate: LocalDate | undefined;
+  suppleantId: RepresentantId | undefined;
+  suppleantStartDate: LocalDate | undefined;
   organismeId: OrganismeId;
   instanceId?: InstanceId;
 }
