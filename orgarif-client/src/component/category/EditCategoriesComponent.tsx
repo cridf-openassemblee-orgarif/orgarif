@@ -241,6 +241,10 @@ export const EditCategoriesComponent = (props: {
   const [displayAddPopup, setDisplayAddPopup] = useState(false);
   return (
     <React.Fragment>
+      <DocumentationLink
+        documentationHealine={documentationHeadlines.editionDesCategories}
+      />
+      <br />
       <Button
         variant="outlined"
         size="small"

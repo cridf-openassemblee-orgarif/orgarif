@@ -44,7 +44,18 @@ export const DocumentationLink = (props: {
     documentationUrl + (headline ? '#' + headline.id : '');
   return (
     <>
-      <div onClick={() => setDisplay(true)}>doc</div>
+      <div
+        onClick={() => setDisplay(true)}
+        css={css`
+          display: inline-block;
+          padding: 10px 20px;
+          margin: 10px;
+          border: 1px solid ${colors.grey2};
+          cursor: pointer;
+        `}
+      >
+        Voir documentation
+      </div>
       <Dialog
         open={display}
         onClose={onClose}
