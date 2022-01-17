@@ -1,4 +1,5 @@
-app.url: https://orgarif-staging.mlorber.net
+app.url: ${APP_URL}
+logging.config: classpath:logback-staging.xml
 #---------------------------------------------------------------------------
 database:
   host: ${POSTGRESQL_ADDON_HOST}
@@ -27,4 +28,4 @@ mailjet:
 #---------------------------------------------------------------------------
 injectFakeData: false
 doSynchronizeElus: true
-elusSynchronizationUrl: https://siger.mlorber.net/api/publicdata/v2/elus
+sigerUrl: ${SIGER_URL}

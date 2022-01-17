@@ -18,4 +18,4 @@ mailjet:
 #---------------------------------------------------------------------------
 injectFakeData: false
 doSynchronizeElus: false
-elusSynchronizationUrl:
+sigerUrl:

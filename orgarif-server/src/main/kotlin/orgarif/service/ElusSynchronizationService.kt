@@ -15,7 +15,7 @@ import orgarif.utils.toTypeId
 @Service
 class ElusSynchronizationService(
     @Value("\${doSynchronizeElus}") val doSynchronizeElus: Boolean,
-    @Value("\${elusSynchronizationUrl}") val elusSynchronizationUrl: String,
+    @Value("\${sigerUrl}") val sigerUrl: String,
     val eluDao: EluDao,
     val representantDao: RepresentantDao,
     val randomService: RandomService,
@@ -26,6 +26,10 @@ class ElusSynchronizationService(
 ) {
 
     private val logger = KotlinLogging.logger {}
+
+    val synchronizationUrl by lazy {
+        (if (sigerUrl.last() == '/') sigerUrl.dropLast(1) else sigerUrl) + "/api/publicdata/v2/elus"
+    }
 
     init {
         if (doSynchronizeElus) {
@@ -57,7 +61,7 @@ class ElusSynchronizationService(
             logger.info { "Synchronize elus avec SIGER" }
             val elusJons =
                 try {
-                    val r = httpService.getString(elusSynchronizationUrl)
+                    val r = httpService.getString(synchronizationUrl)
                     if (r.code == 200) {
                         when (r) {
                             is HttpService.MaybeStringResponse.EmptyResponse ->
