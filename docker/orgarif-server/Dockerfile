@@ -3,10 +3,10 @@ FROM openjdk:15-alpine
 RUN apk add wget unzip git
 
 # copy jooq-utils to maven repository
-RUN wget https://mlorber.net/maven/jooq-utils.zip
+RUN wget https://mlorber.net/maven/jooq-utils-0.0.5-snapshot.zip
 RUN mkdir /root/.m2
 RUN mkdir /root/.m2/repository
-RUN unzip jooq-utils.zip -d /root/.m2/repository
+RUN unzip jooq-utils-0.0.5-snapshot.zip -d /root/.m2/repository
 
 WORKDIR /src
 
