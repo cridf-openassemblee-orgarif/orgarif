@@ -1,3 +1,4 @@
+/** @jsxImportSource @emotion/react */
 import { Global } from '@emotion/react';
 import {
   createTheme,
@@ -8,13 +9,10 @@ import StylesProvider from '@mui/styles/StylesProvider';
 import * as React from 'react';
 import * as ReactDOM from 'react-dom';
 import { Router as ReactRouter } from 'react-router-dom';
-import 'react-toastify/dist/ReactToastify.min.css';
 import { RecoilRoot } from 'recoil';
 import { appContext } from './ApplicationContext';
-import { Root } from './container/Root';
 import { ApplicationRouter } from './routing/ApplicationRouter';
 import { globalStyles } from './styles/common-styles';
-import './styles/ReactToastify-additional.css';
 
 global.log = (logged: any) => console.log(logged);
 
@@ -31,9 +29,7 @@ ReactDOM.render(
       <StylesProvider injectFirst>
         <StyledEngineProvider injectFirst>
           <ThemeProvider theme={muiTheme}>
-            <Root>
-              <ApplicationRouter />
-            </Root>
+            <ApplicationRouter />
           </ThemeProvider>
         </StyledEngineProvider>
       </StylesProvider>
