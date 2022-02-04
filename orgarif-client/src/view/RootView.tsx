@@ -1,4 +1,6 @@
+// tslint:disable:ordered-imports
 /** @jsxImportSource @emotion/react */
+import { Box, Typography } from '@mui/material';
 import * as React from 'react';
 import { useRecoilState } from 'recoil';
 import { MainContainer } from '../container/MainContainer';
@@ -9,16 +11,25 @@ import { asString } from '../utils/nominal-class';
 export const RootView = () => {
   const [userInfos] = useRecoilState(state.userInfos);
   const [secteurs] = useRecoilState(state.secteurs);
+
   return (
     <MainContainer>
       {!userInfos && (
-        <RouteLink
-          route={{
-            name: 'LoginRoute'
-          }}
-        >
-          Se connecter
-        </RouteLink>
+        <Box>
+          <Typography
+            variant="h1"
+            component="h1"
+            align="center"
+            mt={4}
+            sx={{
+              fontSize: '22vw',
+              lineHeight: '80%',
+              userSelect: 'none'
+            }}
+          >
+            ORGARIF
+          </Typography>
+        </Box>
       )}
       {userInfos && (
         <div>

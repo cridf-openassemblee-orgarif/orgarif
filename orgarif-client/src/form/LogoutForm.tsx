@@ -1,6 +1,4 @@
-/** @jsxImportSource @emotion/react */
-import { css } from '@emotion/react';
-import { Button } from '@mui/material';
+import { Link } from '@mui/material';
 import * as React from 'react';
 import { PureComponent } from 'react';
 import { appContext } from '../ApplicationContext';
@@ -35,19 +33,15 @@ export class LogoutForm extends PureComponent {
             value={appContext.csrfTokenService().token}
           />
         </form>
-        <Button
+        <Link
           onClick={this.logout}
-          size="small"
-          css={css`
-            top: -4px;
-            height: 24px;
-            background-color: white;
-            font-size: 0.8rem;
-            padding: 0 10px;
-          `}
+          variant="body2"
+          underline="hover"
+          component="button"
+          sx={{ alignSelf: 'center', ml: 1 }}
         >
-          Se déconnecter
-        </Button>
+          Déconnexion
+        </Link>
       </React.Fragment>
     );
   }
