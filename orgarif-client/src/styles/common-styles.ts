@@ -1,6 +1,7 @@
 /** @jsxImportSource @emotion/react */
 import { css } from '@emotion/react';
-import { fonts } from './vars';
+import { colors } from './colors';
+import { fonts } from './fonts';
 
 export const globalStyles = css`
   *,
@@ -13,8 +14,22 @@ export const globalStyles = css`
   html,
   body {
     margin: 0;
-    // font-size: {fonts.baseSize}px;
-    font-family: ${fonts.font};
+    font-family: ${fonts.fontFamily};
+    background-color: ${colors.mainBackground};
+  }
+
+  body {
+    min-height: 100vh;
+    /* mobile viewport bug fix */
+    min-height: -webkit-fill-available;
+  }
+
+  html {
+    height: -webkit-fill-available;
+  }
+
+  a {
+    text-decoration: none !important;
   }
 
   button {

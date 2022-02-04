@@ -5,7 +5,7 @@ import { Button } from '@mui/material';
 import * as React from 'react';
 import { LienDeliberationDto } from '../../domain/organisme';
 import { formatLocaleDate } from '../../simple-fr';
-import { colors } from '../../styles/vars';
+import { colors } from '../../styles/colors';
 import { clientUid } from '../../utils';
 import { asString } from '../../utils/nominal-class';
 import { editCommonClasses } from './EditPartialOrganismeOrInstance';

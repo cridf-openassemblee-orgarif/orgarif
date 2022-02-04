@@ -7,7 +7,7 @@ import { useState } from 'react';
 import { useRecoilValue } from 'recoil';
 import { RepresentantDto } from '../../domain/organisme';
 import { state } from '../../state/state';
-import { colors } from '../../styles/vars';
+import { colors } from '../../styles/colors';
 
 const AddRepresentantAutocomplete = (props: {
   onAddRepresentation: (representant: RepresentantDto) => void;

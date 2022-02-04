@@ -11,7 +11,7 @@ import {
 } from 'react-beautiful-dnd';
 import { InstanceId, OrganismeId } from '../../domain/ids';
 import { RepresentationDto } from '../../domain/organisme';
-import { colors } from '../../styles/vars';
+import { colors } from '../../styles/colors';
 import { asString } from '../../utils/nominal-class';
 import { EditRepresentationComponent } from '../EditRepresentationComponent';
 import { DragAndDropItemType } from './DragAndDropGlobalContext';

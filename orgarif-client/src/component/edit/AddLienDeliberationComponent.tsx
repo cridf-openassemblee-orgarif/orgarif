@@ -11,7 +11,7 @@ import { DeliberationId } from '../../domain/ids';
 import { LienDeliberationDto } from '../../domain/organisme';
 import { LocalDate } from '../../domain/time';
 import { Errors } from '../../errors';
-import { colors } from '../../styles/vars';
+import { colors } from '../../styles/colors';
 import { defer } from '../../utils';
 import { CreateDeliberationAndAddLienComponent } from './CreateDeliberationAndAddLienComponent';
 

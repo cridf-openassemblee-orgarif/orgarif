@@ -9,7 +9,7 @@ import * as React from 'react';
 import { useState } from 'react';
 import { DeliberationId } from '../../domain/ids';
 import { LocalDate } from '../../domain/time';
-import { colors } from '../../styles/vars';
+import { colors } from '../../styles/colors';
 import { LocalDateInput } from '../base-component/LocalDateInput';
 import { TextInput } from '../base-component/TextInput';
 

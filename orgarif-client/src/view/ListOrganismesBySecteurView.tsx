@@ -12,7 +12,7 @@ import { OrganismeListDto } from '../domain/organisme';
 import { RouteLink } from '../routing/RouteLink';
 import { ListOrganismesBySecteurRoute } from '../routing/routes';
 import { state } from '../state/state';
-import { colors } from '../styles/vars';
+import { colors } from '../styles/colors';
 import { asString, getValue } from '../utils/nominal-class';
 
 export const ListOrganismesBySecteurView = (props: {

@@ -16,7 +16,7 @@ import {
   RepresentantDto
 } from '../../domain/organisme';
 import { LocalDate } from '../../domain/time';
-import { colors } from '../../styles/vars';
+import { colors } from '../../styles/colors';
 import { asString } from '../../utils/nominal-class';
 import { DragAndDropItemType } from './DragAndDropGlobalContext';
 import { EditNomComponent } from './EditNomComponent';

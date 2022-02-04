@@ -9,7 +9,7 @@ import * as React from 'react';
 import { useState } from 'react';
 import { Category, CategoryId } from '../../domain/bootstrap-data';
 import { ItemStatus } from '../../domain/organisme';
-import { colors } from '../../styles/vars';
+import { colors } from '../../styles/colors';
 import { assertUnreachable, clientUid } from '../../utils';
 import { asString, NominalString } from '../../utils/nominal-class';
 import { TextInput } from '../base-component/TextInput';
