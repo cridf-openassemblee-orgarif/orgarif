@@ -10,7 +10,7 @@ import {
   TypeStructureId
 } from '../../domain/ids';
 import { state } from '../../state/state';
-import { colors } from '../../styles/vars';
+import { colors } from '../../styles/colors';
 import { Dict } from '../../utils/nominal-class';
 import { SelectInput, SelectOption } from '../base-component/SelectInput';
 import { editCommonClasses } from './EditPartialOrganismeOrInstance';

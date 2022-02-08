@@ -2,7 +2,8 @@
 import { css } from '@emotion/react';
 import * as React from 'react';
 import { OrganismeDto } from '../../domain/organisme';
-import { colors, dimensions } from '../../styles/vars';
+import * as breakpoint from '../../styles/breakpoints';
+import { colors } from '../../styles/colors';
 import { organismeActions } from '../../utils/organisme-utils';
 import { AddInstanceComponent } from './AddInstanceComponent';
 import { DragAndDropGlobalContext } from './DragAndDropGlobalContext';
@@ -18,7 +19,7 @@ import { EditPartialOrganismeOrInstance } from './EditPartialOrganismeOrInstance
 const classes = {
   categories: css`
     margin: 4px;
-    @media (min-width: ${dimensions.screenSmMin}px) {
+    @media (${breakpoint.TABLET}) {
       width: 33.33%;
     }
   `,
@@ -65,7 +66,7 @@ export const EditOrganismeComponent = (props: {
           css={css`
             display: flex;
             flex-direction: column;
-            @media (min-width: ${dimensions.screenSmMin}px) {
+            @media (${breakpoint.TABLET}) {
               flex-direction: row;
             }
           `}

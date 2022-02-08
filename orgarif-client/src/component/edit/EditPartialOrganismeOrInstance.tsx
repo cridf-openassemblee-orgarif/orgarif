@@ -7,7 +7,8 @@ import {
   RepresentantDto
 } from '../../domain/organisme';
 import { LocalDate } from '../../domain/time';
-import { colors, dimensions } from '../../styles/vars';
+import * as breakpoint from '../../styles/breakpoints';
+import { colors } from '../../styles/colors';
 import { AddDeliberationComponent } from './AddDeliberationComponent';
 import { EditLienDeliberationsListComponent } from './EditLienDeliberationsListComponent';
 import { HeaderRepresentantsComponent } from './HeaderRepresentantsComponent';
@@ -25,7 +26,7 @@ export const editCommonClasses = {
 export const classes = {
   column: css`
     padding: 0 10px 10px 10px;
-    @media (min-width: ${dimensions.screenSmMin}px) {
+    @media (${breakpoint.TABLET}) {
       width: 50%;
     }
   `
@@ -59,7 +60,7 @@ export const EditPartialOrganismeOrInstance = (props: {
       css={css`
         display: flex;
         flex-direction: column;
-        @media (min-width: ${dimensions.screenSmMin}px) {
+        @media (${breakpoint.TABLET}) {
           flex-direction: row;
         }
       `}

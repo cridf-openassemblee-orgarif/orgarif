@@ -9,7 +9,7 @@ import { TextInput } from '../component/base-component/TextInput';
 import { MainContainer } from '../container/MainContainer';
 import { OrganismeListDto } from '../domain/organisme';
 import { RouteLink } from '../routing/RouteLink';
-import { colors } from '../styles/vars';
+import { colors } from '../styles/colors';
 import { asString } from '../utils/nominal-class';
 
 export const ListOrganismesView = () => {

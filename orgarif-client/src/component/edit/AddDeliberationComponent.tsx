@@ -10,7 +10,7 @@ import {
 } from '@mui/material';
 import * as React from 'react';
 import { useState } from 'react';
-import { colors } from '../../styles/vars';
+import { colors } from '../../styles/colors';
 import { editCommonClasses } from './EditPartialOrganismeOrInstance';
 
 export const AddDeliberationComponent = () => {

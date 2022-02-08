@@ -10,7 +10,7 @@ import {
 } from '@mui/material';
 import * as React from 'react';
 import { useState } from 'react';
-import { colors } from '../../styles/vars';
+import { colors } from '../../styles/colors';
 import { NumberInput } from '../base-component/NumberInput';
 import { TextInput } from '../base-component/TextInput';
 import { AddRepresentantComponent } from './AddRepresentantComponent';
