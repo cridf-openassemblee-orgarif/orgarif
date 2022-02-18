@@ -67,5 +67,9 @@ export const state = {
   userInfos: atom({
     key: 'userInfos',
     default: bootstrapData.userInfos
+  }),
+  openedDrawer: atom({
+    key: 'drawer',
+    default: false
   })
 };
