@@ -1,12 +1,12 @@
 /** @jsxImportSource @emotion/react */
-import { Box, Typography } from '@mui/material';
+import { css } from '@emotion/react';
 import * as React from 'react';
 import { useRecoilState } from 'recoil';
+import { FiltersContainer } from '../container/FiltersContainer';
 import { MainContainer } from '../container/MainContainer';
 import { RouteLink } from '../routing/RouteLink';
 import { state } from '../state/state';
 import { asString } from '../utils/nominal-class';
-import { css } from '@emotion/react';
 
 export const RootView = () => {
   const [userInfos] = useRecoilState(state.userInfos);
@@ -14,23 +14,8 @@ export const RootView = () => {
 
   return (
     <MainContainer>
-      {!userInfos && (
-        <Box>
-          <Typography
-            variant="h1"
-            component="h1"
-            align="center"
-            mt={4}
-            sx={{
-              fontSize: '22vw',
-              lineHeight: '80%',
-              userSelect: 'none'
-            }}
-          >
-            ORGARIF
-          </Typography>
-        </Box>
-      )}
+      {!userInfos && <FiltersContainer />}
+
       {userInfos && (
         <div
           css={css`
