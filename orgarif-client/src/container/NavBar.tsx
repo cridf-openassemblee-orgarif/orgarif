@@ -6,22 +6,29 @@ import Box from '@mui/material/Box';
 import Toolbar from '@mui/material/Toolbar';
 import * as React from 'react';
 import { useRecoilState } from 'recoil';
+import { Header } from '../component/Header';
 import { LogoutForm } from '../form/LogoutForm';
-import * as icons from '../icon';
+import { Logo } from '../icon/collection/Logo';
+import { SignIn } from '../icon/collection/SignIn';
+import { SignOut } from '../icon/collection/SignOut';
 import { RouteLink } from '../routing/RouteLink';
 import { state } from '../state/state';
 import { colors } from '../styles/colors';
 
-export function NavBar() {
+export const NavBar = () => {
   const [userInfos] = useRecoilState(state.userInfos);
 
   return (
-    <Box sx={{ flexGrow: 1 }}>
-      <AppBar position="static">
+    <Box>
+      <AppBar>
         <Toolbar>
-          <Box sx={{ flexGrow: 1 }}>
+          <Box
+            css={css`
+              flex-grow: 1;
+            `}
+          >
             <RouteLink route={{ name: 'RootRoute' }}>
-              <icons.Logo width={200} height={70} />
+              <Logo width={200} height={70} />
             </RouteLink>
           </Box>
           {!userInfos && (
@@ -36,25 +43,35 @@ export function NavBar() {
                 name: 'LoginRoute'
               }}
             >
-              <icons.SignIn size={36} />
+              <SignIn size={36} />
               <Link
                 variant="body2"
                 underline="hover"
                 component="button"
-                sx={{ ml: 1, color: `${colors.dark}`, pr: 2 }}
+                css={css`
+                  margin-left: 0.5em;
+                  color: ${colors.dark};
+                  padding-right: 1em;
+                `}
               >
                 Connexion
               </Link>
             </RouteLink>
           )}
           {userInfos && (
-            <Box sx={{ display: 'flex', pr: 2 }}>
-              <icons.SignOut size={36} />
+            <Box
+              css={`
+                display: flex;
+                padding-right: 1em;
+              `}
+            >
+              <SignOut size={36} />
               <LogoutForm />
             </Box>
           )}
         </Toolbar>
       </AppBar>
+      <Header />
     </Box>
   );
-}
+};

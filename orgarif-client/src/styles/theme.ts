@@ -11,6 +11,9 @@ const orgarifTheme = {
     secondary: {
       main: '#0f0f0f'
     },
+    error: {
+      main: '#e72725'
+    },
     background: {
       default: '#f5f5f5'
     },
@@ -51,38 +54,28 @@ const orgarifTheme = {
     MuiAppBar: {
       styleOverrides: {
         root: {
-          backgroundColor: `${colors.mainBackground}`,
+          // backgroundColor: `${colors.mainBackground}`,
+          backgroundColor: 'transparent',
           boxShadow: 'none',
           borderBottom: `1px solid ${colors.dark}`
         }
       }
     },
-    MuiChip: {
+    MuiTableCell: {
       styleOverrides: {
         root: {
-          color: `${colors.dark}`,
-          fontSize: 'clamp(14px, 1.4vw, 2rem)',
-          lineHeight: 1,
-          fontWeight: 500,
-          borderRadius: '40px',
-          height: 'fit-content'
+          padding: '4px 48px'
         },
-        colorPrimary: {
-          backgroundColor: `${colors.white}`,
-          '&:hover': {
-            backgroundColor: `${colors.errorRed}`,
-            color: `${colors.white}`
-          },
-          color: `${colors.dark}`
-        },
-        outlinedPrimary: `${colors.white}`,
-        label: {
-          padding: '0.4vw 0.8vw',
-          textTransform: 'uppercase'
-        },
-        icon: {
-          order: 1,
-          marginRight: '0.8vw'
+        head: {
+          padding: '14px 48px',
+          borderBottom: `1px solid ${colors.dark}`
+        }
+      }
+    },
+    MuiDivider: {
+      styleOverrides: {
+        root: {
+          borderColor: colors.dark
         }
       }
     }
