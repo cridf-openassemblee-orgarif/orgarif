@@ -34,7 +34,6 @@ const Accordion = styled((props: AccordionProps) => (
   />
 ))(({ theme }) => ({
   backgroundColor: `${colors.mainBackground}`,
-  borderBottom: `1px solid hsl(0, 0%, 6%);`,
   '&:not(:last-child)': {
     borderBottom: 0
   },
@@ -130,7 +129,14 @@ export const FiltersContainer = () => {
         onChange={handleChange('section')}
       >
         <AccordionSummary aria-controls="section-content" id="section-header">
-          <Typography component="h4" variant="h4">
+          <Typography
+            component="h4"
+            variant="h4"
+            css={css`
+              font-size: clamp(24px, 2vw, 2.125rem);
+              white-space: nowrap;
+            `}
+          >
             RECHERCHE
           </Typography>
         </AccordionSummary>
