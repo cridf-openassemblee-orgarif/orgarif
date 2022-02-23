@@ -5,6 +5,7 @@ import AppBar from '@mui/material/AppBar';
 import Box from '@mui/material/Box';
 import Toolbar from '@mui/material/Toolbar';
 import * as React from 'react';
+import { useLocation } from 'react-router-dom';
 import { useRecoilState } from 'recoil';
 import { Header } from '../component/Header';
 import { LogoutForm } from '../form/LogoutForm';
@@ -14,9 +15,11 @@ import { SignOut } from '../icon/collection/SignOut';
 import { RouteLink } from '../routing/RouteLink';
 import { state } from '../state/state';
 import { colors } from '../styles/colors';
+import { isMobile } from '../utils/viewport-utils';
 
 export const NavBar = () => {
   const [userInfos] = useRecoilState(state.userInfos);
+  const location = useLocation();
 
   return (
     <Box>
@@ -28,7 +31,7 @@ export const NavBar = () => {
             `}
           >
             <RouteLink route={{ name: 'RootRoute' }}>
-              <Logo width={200} height={70} />
+              <Logo width={isMobile() ? 150 : 200} height={70} />
             </RouteLink>
           </Box>
           {!userInfos && (
@@ -71,7 +74,7 @@ export const NavBar = () => {
           )}
         </Toolbar>
       </AppBar>
-      <Header />
+      {location.pathname === '/' && <Header />}
     </Box>
   );
 };
