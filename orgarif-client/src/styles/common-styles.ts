@@ -16,6 +16,7 @@ export const globalStyles = css`
     margin: 0;
     font-family: ${fonts.fontFamily};
     background-color: ${colors.mainBackground};
+    scroll-behavior: smooth;
   }
 
   body {
