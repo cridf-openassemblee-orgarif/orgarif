@@ -6,19 +6,19 @@ const orgarifTheme = {
   palette: {
     type: 'light',
     primary: {
-      main: '#e72725'
+      main: 'hsl(1, 80%, 53%)'
     },
     secondary: {
-      main: '#0f0f0f'
+      main: 'hsl(0, 0%, 6%)'
     },
     error: {
-      main: '#e72725'
+      main: 'hsl(1, 80%, 53%)'
     },
     background: {
-      default: '#f5f5f5'
+      default: 'hsl(0, 0%, 96%)'
     },
     text: {
-      primary: '#0f0f0f',
+      primary: 'hsl(0, 0%, 6%)',
       secondary: 'rgba(15,15,15,0.54)',
       disabled: 'rgba(15,15,15,0.38)',
       hint: 'rgba(15,15,15,0.38)'
@@ -68,7 +68,14 @@ const orgarifTheme = {
         },
         head: {
           padding: '14px 48px',
-          borderBottom: `1px solid ${colors.dark}`
+          borderTop: `1px solid ${colors.dark}`
+        }
+      }
+    },
+    MuiTablePagination: {
+      styleOverrides: {
+        root: {
+          backgroundColor: `${colors.mainBackground}`
         }
       }
     },
