@@ -48,7 +48,7 @@ const skrinkedChips = css`
 `;
 
 /**
- * TODO : typing props
+ * TODO : typing props + handle filters when selected
  */
 export const FilterChip = ({ filter, showIcon, isSticky }: any) => {
   const handleClick = (e: React.MouseEvent<HTMLElement>) => {
