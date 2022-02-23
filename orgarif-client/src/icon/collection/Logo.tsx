@@ -5,7 +5,7 @@ export const Logo = styled(function Logo(
   props: icon.SpecificIconProps
 ): React.ReactElement {
   return (
-    <icon.Icon {...props} name="sign-in" viewBox="0 0 199 73">
+    <icon.Icon {...props} name="logo" viewBox="0 0 199 73">
       <g>
         <path
           fill="#E42313"
