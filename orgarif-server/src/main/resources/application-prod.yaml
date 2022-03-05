@@ -1,5 +1,4 @@
 app.url: https://orgarif.mlorber.net
-logging.config: classpath:logback-prod.xml
 #---------------------------------------------------------------------------
 database:
   host: ${POSTGRESQL_ADDON_HOST}
@@ -24,8 +23,6 @@ assets:
 mailjet:
   api-key:
   secret-key:
-#---------------------------------------------------------------------------
-intercom.secretKey:
 #---------------------------------------------------------------------------
 injectFakeData: false
 doSynchronizeElus: true

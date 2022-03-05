@@ -30,7 +30,8 @@ import orgarif.service.user.UserSessionService
     "commandController",
     "invalidateMagicLinkTokenController",
     "queryController",
-    "reactHotLoaderController",
+    // TODO[doc] breaks when app is deployed because reactHotLoaderController is optional
+    //    "reactHotLoaderController",
     "remoteController",
     "userFileController",
 )
@@ -111,7 +112,7 @@ class IndexController(
                 secteurDao.fetchAll(), natureJuridiqueDao.fetchAll(), typeStructureDao.fetchAll())
         val elus = eluDao.fetchAll()
         mav.model["bootstrapData"] =
-            serialize(ApplicationBootstrapData(applicationInstance.env, userInfos, categories))
+            serialize(ApplicationBootstrapData(ApplicationInstance.env, userInfos, categories))
         mav.model["deploymentId"] = applicationInstance.deploymentId.rawId
         mav.model["gitRevisionLabel"] = applicationInstance.gitRevisionLabel
         mav.model["jsAssets"] = jsAssets

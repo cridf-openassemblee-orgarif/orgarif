@@ -30,10 +30,17 @@ object SpringLikeYamlConfigUtils {
             // but distinct() will keep the first item for each key, and we want the last
             // so we reverse, distinct, and re-reverse
             .reversed()
-            // toMap() would have removed the duplicates, but with distinct we're sure of the
-            // algorithm
+            // toMap() would have removed the duplicates, but with distinct we're sure of the order
             .distinct()
             .reversed()
+            // replace system env vars
+            .map {
+                it.first to
+                    // TODO write test (with 2 vars in string)
+                    it.second?.replace("\\$\\{[^}]*}".toRegex()) {
+                        System.getenv(it.value.drop(2).dropLast(1))
+                    }
+            }
 
     private fun flattenConf(map: Map<String, Any>): List<Pair<String, String?>> =
         map.keys.flatMap { key ->

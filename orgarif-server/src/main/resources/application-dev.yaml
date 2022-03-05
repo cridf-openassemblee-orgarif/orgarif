@@ -7,6 +7,8 @@ database:
   host: localhost
   port: 5432
   name: orgarif
+  user: ${USER}
+  password:
 #---------------------------------------------------------------------------
 assets:
   useBuildFiles: false
@@ -16,8 +18,6 @@ assets:
 mailjet:
   api-key:
   secret-key:
-#---------------------------------------------------------------------------
-intercom.secretKey:
 #---------------------------------------------------------------------------
 injectFakeData: true
 doSynchronizeElus: true

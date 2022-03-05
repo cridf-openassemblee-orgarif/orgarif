@@ -1,5 +1,4 @@
 app.url: https://orgarif-staging.mlorber.net
-logging.config: classpath:logback-staging.xml
 #---------------------------------------------------------------------------
 database:
   host: ${POSTGRESQL_ADDON_HOST}

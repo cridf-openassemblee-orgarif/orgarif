@@ -15,7 +15,6 @@ class DebugMailService(
     @Value("\${mailjet.secret-key}") val secretKey: String,
     @Value("\${mail.devLogSender}") val devLogSenderMail: String,
     @Value("\${mail.devDestination}") val devDestinationMail: String,
-    val applicationInstance: ApplicationInstance,
     val httpService: HttpService,
     val taskExecutor: ApplicationTaskExecutor
 ) {
@@ -32,9 +31,10 @@ class DebugMailService(
 
     private data class DebugMailJetMessages(val Messages: List<DebugMailJetMessage>)
 
+    // TODO warn if devDestination empty at start (async)
     fun devMail(mailSubject: String, mailContent: String, monitoringCategory: String? = null) {
         // TODO in conf instead ?
-        if (applicationInstance.env !in
+        if (ApplicationInstance.env !in
             setOf(ApplicationEnvironment.dev, ApplicationEnvironment.test)) {
             taskExecutor.execute {
                 val body =
@@ -43,7 +43,7 @@ class DebugMailService(
                             DebugMailJetMessage(
                                 MailJetMail(devLogSenderMail, "Orgarif app"),
                                 listOf(MailJetMail(devDestinationMail, "dev orgarif")),
-                                "[${applicationInstance.env}] $mailSubject",
+                                "[${ApplicationInstance.env}] $mailSubject",
                                 mailContent,
                                 monitoringCategory)))
                 val json = MailService.mailJetObjectMapper.writeValueAsString(body)
