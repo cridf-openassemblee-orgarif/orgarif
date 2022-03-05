@@ -17,7 +17,7 @@ import org.jooq.Field;
 import org.jooq.ForeignKey;
 import org.jooq.Name;
 import org.jooq.Record;
-import org.jooq.Row9;
+import org.jooq.Row10;
 import org.jooq.Schema;
 import org.jooq.Table;
 import org.jooq.TableField;
@@ -83,6 +83,11 @@ public class OrganismeTable extends TableImpl<OrganismeRecord> {
      * The column <code>public.organisme.nombre_representants</code>.
      */
     public final TableField<OrganismeRecord, Integer> NOMBRE_REPRESENTANTS = createField(DSL.name("nombre_representants"), SQLDataType.INTEGER, this, "");
+
+    /**
+     * The column <code>public.organisme.presence_suppleants</code>.
+     */
+    public final TableField<OrganismeRecord, Boolean> PRESENCE_SUPPLEANTS = createField(DSL.name("presence_suppleants"), SQLDataType.BOOLEAN.nullable(false), this, "");
 
     /**
      * The column <code>public.organisme.creation_date</code>.
@@ -212,12 +217,12 @@ public class OrganismeTable extends TableImpl<OrganismeRecord> {
     }
 
     // -------------------------------------------------------------------------
-    // Row9 type methods
+    // Row10 type methods
     // -------------------------------------------------------------------------
 
     @Override
     @Nonnull
-    public Row9<UUID, String, UUID, UUID, UUID, Integer, Instant, String, Instant> fieldsRow() {
-        return (Row9) super.fieldsRow();
+    public Row10<UUID, String, UUID, UUID, UUID, Integer, Boolean, Instant, String, Instant> fieldsRow() {
+        return (Row10) super.fieldsRow();
     }
 }
