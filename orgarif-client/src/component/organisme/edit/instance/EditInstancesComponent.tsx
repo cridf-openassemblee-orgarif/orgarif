@@ -46,6 +46,10 @@ export const EditInstancesComponent = (props: {
     instanceId: InstanceId,
     nombre: number | undefined
   ) => void;
+  onPresenceSuppleantsChange: (
+    instanceId: InstanceId,
+    presenceSuppleants: boolean
+  ) => void;
   onAddRepresentation: (
     representantId: RepresentantId,
     instanceId: InstanceId
@@ -121,10 +125,17 @@ export const EditInstancesComponent = (props: {
                   <RepresentantsDeliberationsBlock
                     organismeOrInstanceId={instance.id}
                     nombreRepresentants={instance.nombreRepresentants}
-                    representations={instance.representations}
                     onNombreRepresentantsChange={(nombre: number | undefined) =>
                       props.onNombreRepresentantsChange(instance.id, nombre)
                     }
+                    presenceSuppleants={instance.presenceSuppleants}
+                    onPresenceSuppleantsChange={presenceSuppleants =>
+                      props.onPresenceSuppleantsChange(
+                        instance.id,
+                        presenceSuppleants
+                      )
+                    }
+                    representations={instance.representations}
                     onAddRepresentation={(representantId: RepresentantId) =>
                       props.onAddRepresentation(representantId, instance.id)
                     }

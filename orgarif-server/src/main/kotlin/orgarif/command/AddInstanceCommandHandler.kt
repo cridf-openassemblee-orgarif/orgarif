@@ -23,9 +23,12 @@ class AddInstanceCommandHandler(
                 nom = command.nomInstance,
                 organismeId = command.organismeId,
                 nombreRepresentants = null,
+                presenceSuppleants = false,
                 creationDate = now,
                 status = ItemStatus.live,
-                lastModificationDate = now))
+                lastModificationDate = now
+            )
+        )
         return AddInstanceCommandResponse(instanceId)
     }
 }

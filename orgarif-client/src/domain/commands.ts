@@ -131,6 +131,11 @@ export interface UpdateInstanceNomCommand {
   nom: string;
 }
 
+export interface UpdateInstancePresenceSuppleantsCommand {
+  presenceSuppleants: boolean;
+  instanceId: InstanceId;
+}
+
 export interface UpdateInstanceStatusCommand {
   id: InstanceId;
   status: ItemStatus;
@@ -161,9 +166,9 @@ export interface UpdateOrganismeNomCommand {
   nom: string;
 }
 
-export interface UpdateOrganismePartageRepresentantsCommand {
-  id: OrganismeId;
-  partageRepresentants: boolean;
+export interface UpdateOrganismePresenceSuppleantsCommand {
+  presenceSuppleants: boolean;
+  organismeId: OrganismeId;
 }
 
 export interface UpdateOrganismeSecteurCommand {

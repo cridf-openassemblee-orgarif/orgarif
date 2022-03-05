@@ -52,6 +52,7 @@ data class InstanceDto(
     val id: InstanceId,
     val nom: String,
     val nombreRepresentants: Int?,
+    val presenceSuppleants: Boolean,
     val lienDeliberations: List<LienDeliberationDto>,
     val representations: List<RepresentationDto>,
     val status: ItemStatus
@@ -76,6 +77,7 @@ data class OrganismeDto(
     val natureJuridiqueId: NatureJuridiqueId?,
     val typeStructureId: TypeStructureId?,
     val nombreRepresentants: Int?,
+    val presenceSuppleants: Boolean,
     val representations: List<RepresentationDto>,
     val lienDeliberations: List<LienDeliberationDto>,
     val instances: List<InstanceDto>,

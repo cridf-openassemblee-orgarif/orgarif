@@ -176,12 +176,11 @@ const addRepresentation = async (
   organisme: OrganismeDto,
   setOrganisme: (o: OrganismeDto) => void,
   representantId: RepresentantId,
-  organismeId: OrganismeId,
   instanceId: InstanceId | undefined
 ) => {
   await appContext.commandService().addRepresentationCommand({
     representantId,
-    organismeId,
+    organismeId: organisme.id,
     instanceId
   });
   // .then(r => {
@@ -303,6 +302,7 @@ const addInstance = (
         id: r.id,
         nom: nomInstance,
         nombreRepresentants: undefined,
+        presenceSuppleants: false,
         lienDeliberations: [],
         representations: [],
         status: 'live'
@@ -337,6 +337,34 @@ const onNewLienDeliberation = async (
     .then(r => setOrganisme(r.organisme));
 };
 
+const onPresenceSuppleantsChange = async (
+  organisme: OrganismeDto,
+  setOrganisme: (o: OrganismeDto) => void,
+  instanceId: InstanceId | undefined,
+  presenceSuppleants: boolean
+): Promise<void> => {
+  if (!instanceId) {
+    setOrganisme({ ...organisme, presenceSuppleants });
+    appContext.commandService().updateOrganismePresenceSuppleantsCommand({
+      organismeId: organisme.id,
+      presenceSuppleants
+    });
+  } else {
+    const instances = organisme.instances.map(i => {
+      if (i.id === instanceId) {
+        return { ...i, presenceSuppleants };
+      } else {
+        return i;
+      }
+    });
+    setOrganisme({ ...organisme, instances });
+    appContext.commandService().updateInstancePresenceSuppleantsCommand({
+      instanceId,
+      presenceSuppleants
+    });
+  }
+};
+
 export const organismeActions = (
   organisme: OrganismeDto,
   setOrganisme: (o: OrganismeDto) => void
@@ -368,16 +396,8 @@ export const organismeActions = (
   ) => onNombreRepresentantsChange(organisme, setOrganisme, instanceId, nombre),
   onAddRepresentation: (
     representantId: RepresentantId,
-    organismeId: OrganismeId,
     instanceId: InstanceId | undefined
-  ) =>
-    addRepresentation(
-      organisme,
-      setOrganisme,
-      representantId,
-      organismeId,
-      instanceId
-    ),
+  ) => addRepresentation(organisme, setOrganisme, representantId, instanceId),
   onMoveRepresentation: (
     representationId: RepresentationId,
     source: DropDestination<OrganismeId | InstanceId>,
@@ -395,5 +415,15 @@ export const organismeActions = (
     instanceId: InstanceId | undefined,
     id: DeliberationId,
     comment: string | undefined
-  ) => onNewLienDeliberation(organisme, setOrganisme, instanceId, id, comment)
+  ) => onNewLienDeliberation(organisme, setOrganisme, instanceId, id, comment),
+  onPresenceSuppleantsChange: (
+    instanceId: InstanceId | undefined,
+    presenceSuppleants: boolean
+  ) =>
+    onPresenceSuppleantsChange(
+      organisme,
+      setOrganisme,
+      instanceId,
+      presenceSuppleants
+    )
 });

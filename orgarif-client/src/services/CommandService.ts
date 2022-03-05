@@ -25,13 +25,14 @@ import {
   RegisterCommandResponse,
   UpdateInstanceNombreRepresentantsCommand,
   UpdateInstanceNomCommand,
+  UpdateInstancePresenceSuppleantsCommand,
   UpdateInstanceStatusCommand,
   UpdateNatureJuridiqueLibelleCommand,
   UpdateNatureJuridiqueStatusCommand,
   UpdateOrganismeNatureJuridiqueCommand,
   UpdateOrganismeNombreRepresentantsCommand,
   UpdateOrganismeNomCommand,
-  UpdateOrganismePartageRepresentantsCommand,
+  UpdateOrganismePresenceSuppleantsCommand,
   UpdateOrganismeSecteurCommand,
   UpdateOrganismeStatus,
   UpdateOrganismeTypeStructureCommand,
@@ -110,6 +111,11 @@ export class CommandService {
     command: UpdateInstanceNomCommand
   ): Promise<void> => this.command('UpdateInstanceNomCommand', command);
 
+  public updateInstancePresenceSuppleantsCommand = (
+    command: UpdateInstancePresenceSuppleantsCommand
+  ): Promise<void> =>
+    this.command('UpdateInstancePresenceSuppleantsCommand', command);
+
   public updateInstanceStatusCommand = (
     command: UpdateInstanceStatusCommand
   ): Promise<void> => this.command('UpdateInstanceStatusCommand', command);
@@ -138,10 +144,10 @@ export class CommandService {
     command: UpdateOrganismeNomCommand
   ): Promise<void> => this.command('UpdateOrganismeNomCommand', command);
 
-  public updateOrganismePartageRepresentantsCommand = (
-    command: UpdateOrganismePartageRepresentantsCommand
+  public updateOrganismePresenceSuppleantsCommand = (
+    command: UpdateOrganismePresenceSuppleantsCommand
   ): Promise<void> =>
-    this.command('UpdateOrganismePartageRepresentantsCommand', command);
+    this.command('UpdateOrganismePresenceSuppleantsCommand', command);
 
   public updateOrganismeSecteurCommand = (
     command: UpdateOrganismeSecteurCommand

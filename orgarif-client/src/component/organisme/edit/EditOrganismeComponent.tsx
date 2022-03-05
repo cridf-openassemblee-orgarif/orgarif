@@ -61,8 +61,10 @@ const classes = {
 export const RepresentantsDeliberationsBlock = (props: {
   organismeOrInstanceId: OrganismeId | InstanceId;
   nombreRepresentants: number | undefined;
-  representations: RepresentationDto[];
   onNombreRepresentantsChange: (nombre: number | undefined) => void;
+  presenceSuppleants: boolean;
+  onPresenceSuppleantsChange: (presenceSuppleants: boolean) => void;
+  representations: RepresentationDto[];
   onAddRepresentation: (representantId: RepresentantId) => Promise<void>;
   lienDeliberations: LienDeliberationDto[];
   onNewLienDeliberation: (
@@ -83,8 +85,10 @@ export const RepresentantsDeliberationsBlock = (props: {
       <EditRepresentationListComponent
         organismeOrInstanceId={props.organismeOrInstanceId}
         nombreRepresentants={props.nombreRepresentants}
-        representations={props.representations}
         onNombreRepresentantsChange={props.onNombreRepresentantsChange}
+        presenceSuppleants={props.presenceSuppleants}
+        onPresenceSuppleantsChange={props.onPresenceSuppleantsChange}
+        representations={props.representations}
         onAddRepresentation={props.onAddRepresentation}
       />
     </div>
@@ -172,16 +176,16 @@ export const EditOrganismeComponent = (props: {
           <RepresentantsDeliberationsBlock
             organismeOrInstanceId={organisme.id}
             nombreRepresentants={organisme.nombreRepresentants}
-            representations={organisme.representations}
             onNombreRepresentantsChange={(nombre: number | undefined) =>
               actions.onNombreRepresentantsChange(undefined, nombre)
             }
+            presenceSuppleants={props.organisme.presenceSuppleants}
+            onPresenceSuppleantsChange={(presenceSuppleants: boolean) =>
+              actions.onPresenceSuppleantsChange(undefined, presenceSuppleants)
+            }
+            representations={organisme.representations}
             onAddRepresentation={(representantId: RepresentantId) =>
-              actions.onAddRepresentation(
-                representantId,
-                organisme.id,
-                undefined
-              )
+              actions.onAddRepresentation(representantId, undefined)
             }
             lienDeliberations={organisme.lienDeliberations}
             onNewLienDeliberation={(
@@ -219,16 +223,11 @@ export const EditOrganismeComponent = (props: {
               onNomChange={actions.onInstanceNomChange}
               onStatusChange={actions.onInstanceStatusChange}
               onNombreRepresentantsChange={actions.onNombreRepresentantsChange}
+              onPresenceSuppleantsChange={actions.onPresenceSuppleantsChange}
               onAddRepresentation={(
                 representantId: RepresentantId,
                 instanceId: InstanceId
-              ) =>
-                actions.onAddRepresentation(
-                  representantId,
-                  organisme.id,
-                  instanceId
-                )
-              }
+              ) => actions.onAddRepresentation(representantId, instanceId)}
               onNewLienDeliberation={actions.onNewLienDeliberation}
             />
           </div>

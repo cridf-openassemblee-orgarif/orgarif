@@ -55,6 +55,7 @@ class InitialDataInjector(
                         natureJuridiqueId = natureJuridiques.first().id,
                         typeStructureId = typeStructures.first().id,
                         nombreRepresentants = nombreRepresentants,
+                        presenceSuppleants = true,
                         creationDate = now,
                         status = live,
                         lastModificationDate = now))
@@ -83,7 +84,8 @@ class InitialDataInjector(
                         secteurId = secteurs.first().id,
                         natureJuridiqueId = natureJuridiques.first().id,
                         typeStructureId = typeStructures.first().id,
-                        nombreRepresentants = nombreRepresentants,
+                        nombreRepresentants = 0,
+                        presenceSuppleants = false,
                         creationDate = now,
                         status = live,
                         lastModificationDate = now))
@@ -93,6 +95,7 @@ class InitialDataInjector(
                         nom = "instance 1",
                         organismeId = fakeOrganismeId2,
                         nombreRepresentants = nombreRepresentants,
+                        presenceSuppleants = true,
                         creationDate = now,
                         status = live,
                         lastModificationDate = now))
@@ -116,6 +119,7 @@ class InitialDataInjector(
                         nom = "instance 2",
                         organismeId = fakeOrganismeId2,
                         nombreRepresentants = nombreRepresentants,
+                        presenceSuppleants = true,
                         creationDate = now,
                         status = live,
                         lastModificationDate = now))

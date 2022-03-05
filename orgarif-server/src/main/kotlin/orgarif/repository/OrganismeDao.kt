@@ -3,11 +3,13 @@ package orgarif.repository
 import java.time.Instant
 import org.jooq.DSLContext
 import org.springframework.stereotype.Repository
+import orgarif.domain.InstanceId
 import orgarif.domain.ItemStatus
 import orgarif.domain.NatureJuridiqueId
 import orgarif.domain.OrganismeId
 import orgarif.domain.SecteurId
 import orgarif.domain.TypeStructureId
+import orgarif.jooq.generated.Tables
 import orgarif.jooq.generated.Tables.ORGANISME
 import orgarif.jooq.generated.tables.records.OrganismeRecord
 import orgarif.utils.toTypeId
@@ -22,6 +24,7 @@ class OrganismeDao(val jooq: DSLContext) {
         val natureJuridiqueId: NatureJuridiqueId?,
         val typeStructureId: TypeStructureId?,
         val nombreRepresentants: Int?,
+        val presenceSuppleants: Boolean,
         val creationDate: Instant,
         val status: ItemStatus,
         val lastModificationDate: Instant
@@ -36,6 +39,7 @@ class OrganismeDao(val jooq: DSLContext) {
                 natureJuridiqueId = r.natureJuridiqueId?.rawId
                 typeStructureId = r.typeStructureId?.rawId
                 nombreRepresentants = r.nombreRepresentants
+                presenceSuppleants = r.presenceSuppleants
                 creationDate = r.creationDate
                 status = r.status.name
                 lastModificationDate = r.lastModificationDate
@@ -71,6 +75,14 @@ class OrganismeDao(val jooq: DSLContext) {
     fun updateNombreRepresentants(id: OrganismeId, nombre: Int?, modificationDate: Instant) {
         jooq.update(ORGANISME)
             .set(ORGANISME.NOMBRE_REPRESENTANTS, nombre)
+            .set(ORGANISME.LAST_MODIFICATION_DATE, modificationDate)
+            .where(ORGANISME.ID.equal(id.rawId))
+            .execute()
+    }
+
+    fun updatePresenceSuppleants(id: OrganismeId, presenceSuppleants: Boolean, modificationDate: Instant) {
+        jooq.update(ORGANISME)
+            .set(ORGANISME.PRESENCE_SUPPLEANTS, presenceSuppleants)
             .set(ORGANISME.LAST_MODIFICATION_DATE, modificationDate)
             .where(ORGANISME.ID.equal(id.rawId))
             .execute()
@@ -143,6 +155,7 @@ class OrganismeDao(val jooq: DSLContext) {
             r.natureJuridiqueId?.toTypeId(),
             r.typeStructureId?.toTypeId(),
             r.nombreRepresentants,
+            r.presenceSuppleants,
             r.creationDate,
             ItemStatus.valueOf(r.status),
             r.lastModificationDate)

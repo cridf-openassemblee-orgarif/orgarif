@@ -5,7 +5,8 @@ import java.time.LocalDate
 import orgarif.domain.*
 
 @JsonTypeInfo(
-    use = JsonTypeInfo.Id.NAME, include = JsonTypeInfo.As.PROPERTY, property = "objectType")
+    use = JsonTypeInfo.Id.NAME, include = JsonTypeInfo.As.PROPERTY, property = "objectType"
+)
 sealed class Command
 
 sealed class CommandResponse
@@ -94,6 +95,11 @@ data class UpdateInstanceNombreRepresentantsCommand(val instanceId: InstanceId, 
 
 data class UpdateInstanceNomCommand(val id: InstanceId, val nom: String) : Command()
 
+data class UpdateInstancePresenceSuppleantsCommand(
+    val presenceSuppleants: Boolean,
+    val instanceId: InstanceId
+) : Command()
+
 data class UpdateInstanceStatusCommand(val id: InstanceId, val status: ItemStatus) : Command()
 
 data class UpdateNatureJuridiqueLibelleCommand(val id: NatureJuridiqueId, val libelle: String) :
@@ -111,6 +117,11 @@ data class UpdateOrganismeNombreRepresentantsCommand(val id: OrganismeId, val no
     Command()
 
 data class UpdateOrganismeNomCommand(val id: OrganismeId, val nom: String) : Command()
+
+data class UpdateOrganismePresenceSuppleantsCommand(
+    val presenceSuppleants: Boolean,
+    val organismeId: OrganismeId
+) : Command()
 
 data class UpdateOrganismeSecteurCommand(val id: OrganismeId, val secteurId: SecteurId?) :
     Command()

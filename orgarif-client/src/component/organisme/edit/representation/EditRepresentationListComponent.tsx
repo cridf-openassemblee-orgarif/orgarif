@@ -13,8 +13,10 @@ import { HeaderRepresentationsComponent } from './HeaderRepresentationsComponent
 export const EditRepresentationListComponent = (props: {
   organismeOrInstanceId: OrganismeId | InstanceId;
   nombreRepresentants?: number;
-  representations: RepresentationDto[];
   onNombreRepresentantsChange: (nombre: number | undefined) => void;
+  presenceSuppleants: boolean;
+  onPresenceSuppleantsChange: (presenceSuppleants: boolean) => void;
+  representations: RepresentationDto[];
   onAddRepresentation: (representantId: RepresentantId) => Promise<void>;
 }) => {
   return (
@@ -24,6 +26,8 @@ export const EditRepresentationListComponent = (props: {
         <HeaderRepresentationsComponent
           nombreRepresentants={props.nombreRepresentants}
           onNombreRepresentantsChange={props.onNombreRepresentantsChange}
+          presenceSuppleants={props.presenceSuppleants}
+          onPresenceSuppleantsChange={props.onPresenceSuppleantsChange}
           onAddRepresentation={props.onAddRepresentation}
         />
       </div>

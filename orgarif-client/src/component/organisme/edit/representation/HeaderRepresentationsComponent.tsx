@@ -5,6 +5,7 @@ import { Button } from '@mui/material';
 import * as React from 'react';
 import { useState } from 'react';
 import { BooleanAsNominalString, RepresentantId } from '../../../../domain/ids';
+import { Errors } from '../../../../errors';
 import { colors } from '../../../../styles/vars';
 import { instanciateNominalString } from '../../../../utils/nominal-class';
 import { NumberInput } from '../../../base-component/NumberInput';
@@ -31,6 +32,8 @@ const classes = {
 export const HeaderRepresentationsComponent = (props: {
   nombreRepresentants?: number;
   onNombreRepresentantsChange: (nombre: number | undefined) => void;
+  presenceSuppleants: boolean;
+  onPresenceSuppleantsChange: (presenceSuppleants: boolean) => void;
   onAddRepresentation: (representantId: RepresentantId) => Promise<void>;
 }) => {
   const [displayAddRepresentantionDialog, setDisplayAddRepresentantionDialog] =
@@ -76,7 +79,7 @@ export const HeaderRepresentationsComponent = (props: {
         <div css={classes.suppleantsBlock}>
           <SelectInput
             initialValue={instanciateNominalString<BooleanAsNominalString>(
-              'false'
+              props.presenceSuppleants ? 'true' : 'false'
             )}
             label="Suppléants"
             options={[
@@ -90,7 +93,15 @@ export const HeaderRepresentationsComponent = (props: {
                 label: 'sans'
               }
             ]}
-            onChange={v => {}}
+            onChange={presenceSuppleants => {
+              if (!presenceSuppleants) {
+                throw Errors._d2070152();
+              }
+              props.onPresenceSuppleantsChange(
+                presenceSuppleants ===
+                  instanciateNominalString<BooleanAsNominalString>('true')
+              );
+            }}
           />
         </div>
       </div>
