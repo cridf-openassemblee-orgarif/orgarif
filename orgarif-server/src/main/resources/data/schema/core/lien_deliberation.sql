@@ -1,9 +1,10 @@
 CREATE TABLE lien_deliberation
 (
     id                     UUID PRIMARY KEY NOT NULL,
-    deliberation_id        UUID             NOT NULL,
     organisme_id           UUID             NOT NULL,
     instance_id            UUID,
+    deliberation_id        UUID             NOT NULL,
+    comment                TEXT,
     creation_date          TIMESTAMPTZ      NOT NULL,
     status                 VARCHAR(255)     NOT NULL,
     last_modification_date TIMESTAMPTZ      NOT NULL,
