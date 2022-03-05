@@ -17,7 +17,7 @@ import org.jooq.Field;
 import org.jooq.ForeignKey;
 import org.jooq.Name;
 import org.jooq.Record;
-import org.jooq.Row6;
+import org.jooq.Row8;
 import org.jooq.Schema;
 import org.jooq.Table;
 import org.jooq.TableField;
@@ -67,12 +67,22 @@ public class RepresentantTable extends TableImpl<RepresentantRecord> {
     /**
      * The column <code>public.representant.prenom</code>.
      */
-    public final TableField<RepresentantRecord, String> PRENOM = createField(DSL.name("prenom"), SQLDataType.VARCHAR(255), this, "");
+    public final TableField<RepresentantRecord, String> PRENOM = createField(DSL.name("prenom"), SQLDataType.VARCHAR(255).nullable(false), this, "");
 
     /**
      * The column <code>public.representant.nom</code>.
      */
-    public final TableField<RepresentantRecord, String> NOM = createField(DSL.name("nom"), SQLDataType.VARCHAR(255), this, "");
+    public final TableField<RepresentantRecord, String> NOM = createField(DSL.name("nom"), SQLDataType.VARCHAR(255).nullable(false), this, "");
+
+    /**
+     * The column <code>public.representant.search_prenom</code>.
+     */
+    public final TableField<RepresentantRecord, String> SEARCH_PRENOM = createField(DSL.name("search_prenom"), SQLDataType.VARCHAR(255).nullable(false), this, "");
+
+    /**
+     * The column <code>public.representant.search_nom</code>.
+     */
+    public final TableField<RepresentantRecord, String> SEARCH_NOM = createField(DSL.name("search_nom"), SQLDataType.VARCHAR(255).nullable(false), this, "");
 
     /**
      * The column <code>public.representant.creation_date</code>.
@@ -181,12 +191,12 @@ public class RepresentantTable extends TableImpl<RepresentantRecord> {
     }
 
     // -------------------------------------------------------------------------
-    // Row6 type methods
+    // Row8 type methods
     // -------------------------------------------------------------------------
 
     @Override
     @Nonnull
-    public Row6<UUID, UUID, String, String, Instant, Instant> fieldsRow() {
-        return (Row6) super.fieldsRow();
+    public Row8<UUID, UUID, String, String, String, String, Instant, Instant> fieldsRow() {
+        return (Row8) super.fieldsRow();
     }
 }
