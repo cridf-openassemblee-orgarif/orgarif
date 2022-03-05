@@ -15,6 +15,7 @@ import orgarif.service.DateService
 import orgarif.service.LocaleService
 import orgarif.service.NotificationService
 import orgarif.service.RandomService
+import orgarif.utils.OrgarifStringUtils
 
 @Service
 class UserService(
@@ -30,7 +31,14 @@ class UserService(
 
     companion object {
         // [doc] no automatic accent suppression : they're supported by the RFC...
-        fun cleanMail(mail: String) = mail.trim().lowercase().replace(" ", "")
+        fun cleanMail(mail: String) =
+            mail
+                .trim()
+                .lowercase()
+                .replace(" ", "")
+                // TODO [doc] a standard email could contain accents but in practice it's always a
+                // user input error
+                .let { OrgarifStringUtils.stripAccents(it) }
 
         // TODO[fmk] those validations should be done in another place too. Also :
         // * should not be longer than 255 chars (because of the database)

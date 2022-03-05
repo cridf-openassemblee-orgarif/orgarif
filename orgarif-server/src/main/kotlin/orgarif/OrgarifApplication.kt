@@ -8,6 +8,7 @@ import org.springframework.session.jdbc.config.annotation.web.http.EnableJdbcHtt
 import orgarif.domain.ApplicationEnvironment
 import orgarif.jooqlib.Configuration.configuration
 import orgarif.jooqlib.ResetDatabase
+import orgarif.service.ApplicationInstance
 import orgarif.utils.DatabaseUtils.datasource
 
 @SpringBootApplication(exclude = [UserDetailsServiceAutoConfiguration::class])
@@ -17,10 +18,10 @@ class OrgarifApplication {
     companion object {
         @JvmStatic
         fun main(args: Array<String>) {
-            val env = System.getenv("env") ?: ApplicationEnvironment.dev.name
-            System.setProperty("logging.config", "classpath:logback-webapp-$env.xml")
+            System.setProperty(
+                "logging.config", "classpath:logback-webapp-${ApplicationInstance.env}.xml")
             TimeZone.setDefault(TimeZone.getTimeZone("UTC"))
-            initiateDatabaseIfEmpty(env)
+            initiateDatabaseIfEmpty()
             val app = SpringApplication(OrgarifApplication::class.java)
             app.setDefaultProperties(
                 mapOf(
@@ -32,8 +33,8 @@ class OrgarifApplication {
         fun springUserProfile() =
             ApplicationEnvironment.dev.name + "-" + System.getProperty("user.name")
 
-        fun initiateDatabaseIfEmpty(env: String) {
-            if (env == ApplicationEnvironment.dev.name) {
+        fun initiateDatabaseIfEmpty() {
+            if (ApplicationInstance.env == ApplicationEnvironment.dev) {
                 val r =
                     datasource
                         .connection

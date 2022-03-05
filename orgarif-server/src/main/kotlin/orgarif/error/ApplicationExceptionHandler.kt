@@ -24,7 +24,6 @@ import orgarif.utils.OrgarifStringUtils
 
 @ControllerAdvice
 class ApplicationExceptionHandler(
-    val applicationInstance: ApplicationInstance,
     val dateService: DateService,
     val randomService: RandomService,
     val userSessionService: UserSessionService
@@ -45,7 +44,7 @@ class ApplicationExceptionHandler(
         // log userid, mail, ip
         val id = randomService.id<RequestErrorId>()
         val readableStackTrace =
-            if (applicationInstance.env == ApplicationEnvironment.dev ||
+            if (ApplicationInstance.env == ApplicationEnvironment.dev ||
                 userSessionService.hasRole(Role.admin)) {
                 ReadableStackTrace(exception)
             } else {
@@ -131,7 +130,7 @@ class ApplicationExceptionHandler(
             mav.model["requestErrorIdAsString"] =
                 OrgarifStringUtils.serializeUuid(requestError.id.rawId)
             mav.model["requestError"] = requestError
-            if (applicationInstance.env == ApplicationEnvironment.dev && stackTrace != null) {
+            if (ApplicationInstance.env == ApplicationEnvironment.dev && stackTrace != null) {
                 mav.model[ApplicationConstants.springMvcModelKeyStackTrace] =
                     stackTrace.toReadableString()
             }

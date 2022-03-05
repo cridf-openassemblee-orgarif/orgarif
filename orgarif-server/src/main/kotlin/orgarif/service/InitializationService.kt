@@ -13,14 +13,14 @@ class InitializationService(
     private val logger = KotlinLogging.logger {}
 
     init {
-        if (applicationInstance.env !in
+        if (ApplicationInstance.env !in
             setOf(ApplicationEnvironment.dev, ApplicationEnvironment.test)) {
             // [doc] this log is also gonna trigger the deploymentId insertion at startup
             logger.info {
-                "Deployed build \"${applicationInstance.gitRevisionLabel}\", env \"${applicationInstance.env}\", deployment id ${applicationInstance.deploymentId}"
+                "Deployed build \"${applicationInstance.gitRevisionLabel}\", env \"${ApplicationInstance.env}\", deployment id ${applicationInstance.deploymentId}"
             }
         }
-        if (applicationInstance.env == ApplicationEnvironment.dev) {
+        if (ApplicationInstance.env == ApplicationEnvironment.dev) {
             devInitialDataInjectorService.initiateDevUsers()
         }
     }

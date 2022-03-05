@@ -8,7 +8,6 @@ import java.io.FileInputStream
 import java.util.*
 import org.springframework.core.env.Environment
 import org.springframework.stereotype.Service
-import orgarif.OrgarifApplication
 import orgarif.domain.ApplicationEnvironment
 import orgarif.domain.DeploymentLogId
 import orgarif.repository.DeploymentLogDao
@@ -21,24 +20,29 @@ class ApplicationInstance(
     val randomService: RandomService
 ) {
 
-    val env: ApplicationEnvironment = run {
-        val environments = ApplicationEnvironment.values().map { it.name }
-        val profiles =
-            environment
-                .activeProfiles
-                .let {
-                    if (it.isEmpty()) {
-                        environment.defaultProfiles
-                    } else {
-                        it
-                    }
-                }
-                .filter { it != OrgarifApplication.springUserProfile() }
-                .filter { it in environments }
-        if (profiles.size != 1) {
-            throw IllegalStateException("Spring profiles : $profiles")
+    companion object {
+        val env =
+            System.getenv("env")?.let { ApplicationEnvironment.valueOf(it) }
+                ?: ApplicationEnvironment.dev
+    }
+
+    init {
+        // verify env is in profiles
+        val profiles = let {
+            val e = ApplicationEnvironment.values().map { it.name }
+            environment.activeProfiles.filter { it in e }
         }
-        ApplicationEnvironment.valueOf(profiles.first())
+        // if not empty, let's check profiles are consistent with env
+        // (if is empty, default profiles will be enabled)
+        if (profiles.isNotEmpty()) {
+            if (profiles.first() != env.name) {
+                throw IllegalStateException("Spring profiles should start by $env (is $profiles)")
+            }
+            if (profiles.size != 1) {
+                throw IllegalStateException(
+                    "Spring profiles list contains multiple environments : $profiles")
+            }
+        }
     }
 
     val gitRevisionProperties by lazy {

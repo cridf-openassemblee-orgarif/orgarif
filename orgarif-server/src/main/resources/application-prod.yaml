@@ -1,5 +1,4 @@
 app.url: https://orgarif.mlorber.net
-logging.config: classpath:logback-prod.xml
 #---------------------------------------------------------------------------
 database:
   host: ${POSTGRESQL_ADDON_HOST}

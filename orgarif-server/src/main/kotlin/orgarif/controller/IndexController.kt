@@ -29,7 +29,8 @@ import orgarif.service.user.UserSessionService
     "commandController",
     "invalidateMagicLinkTokenController",
     "queryController",
-    "reactHotLoaderController",
+    // TODO[doc] breaks when app is deployed because reactHotLoaderController is optional
+    //    "reactHotLoaderController",
     "remoteController",
     "userFileController",
 )
@@ -102,7 +103,7 @@ class IndexController(
                 UserInfos.fromUser(user)
             } else null
         mav.model["bootstrapData"] =
-            serialize(ApplicationBootstrapData(applicationInstance.env, userInfos))
+            serialize(ApplicationBootstrapData(ApplicationInstance.env, userInfos))
         mav.model["deploymentId"] = applicationInstance.deploymentId.rawId
         mav.model["gitRevisionLabel"] = applicationInstance.gitRevisionLabel
         mav.model["jsAssets"] = jsAssets

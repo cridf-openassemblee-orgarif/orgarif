@@ -3,7 +3,7 @@
 <configuration>
     <appender name="stdout" class="ch.qos.logback.core.ConsoleAppender">
         <encoder>
-            <pattern>%-5level %-36logger{36} - %m%n%throwable</pattern>
+            <pattern>%highlight(%-5level) %cyan(%-36logger{36}) - %m%n%throwable</pattern>
         </encoder>
     </appender>
 
