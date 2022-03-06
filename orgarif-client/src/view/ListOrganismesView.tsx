@@ -1,5 +1,6 @@
 /** @jsxImportSource @emotion/react */
 import { css } from '@emotion/react';
+import { Add } from '@mui/icons-material';
 import { Button } from '@mui/material';
 import * as React from 'react';
 import { useEffect, useState } from 'react';
@@ -40,6 +41,14 @@ export const ListOrganismesView = () => {
   return (
     <MainContainer>
       <h1>Liste des organismes</h1>
+      <Button
+        startIcon={<Add />}
+        variant="outlined"
+        color="primary"
+        size="small"
+      >
+        Ajouter un organisme
+      </Button>
       <SimpleForm onSubmit={newOrganismeOnSubmit}>
         <TextInput name="nom" label="Nouvel organisme" />
         <Button type="submit" color="primary">

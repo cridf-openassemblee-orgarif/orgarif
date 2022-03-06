@@ -1,8 +1,8 @@
 /** @jsxImportSource @emotion/react */
 import { css } from '@emotion/react';
 import { useRef } from 'react';
-import { SimpleForm } from '../base-component/SimpleForm';
-import { TextInput } from '../base-component/TextInput';
+import { SimpleForm } from '../../../base-component/SimpleForm';
+import { TextInput } from '../../../base-component/TextInput';
 
 export const AddInstanceComponent = (props: {
   addInstance: (nom: string) => void;

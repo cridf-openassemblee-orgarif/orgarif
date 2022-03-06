@@ -10,7 +10,7 @@ class DeploymentInitializationService(
 ) {
 
     init {
-        if (applicationInstance.env == ApplicationEnvironment.dev) {
+        if (ApplicationInstance.env == ApplicationEnvironment.dev) {
             devInitialDataInjectorService.initiateDevUsers()
         }
     }

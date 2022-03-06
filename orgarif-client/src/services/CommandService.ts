@@ -6,12 +6,14 @@ import {
   AddLienDeliberationCommandResponse,
   AddRepresentationCommand,
   AddRepresentationCommandResponse,
-  CreateDeliberationAndAddLienCommand,
-  CreateDeliberationAndAddLienCommandResponse,
+  CreateDeliberationCommand,
+  CreateDeliberationCommandResponse,
   CreateNatureJuridiqueCommand,
   CreateNatureJuridiqueCommandResponse,
   CreateOrganismeCommand,
   CreateOrganismeCommandResponse,
+  CreateRepresentantCommand,
+  CreateRepresentantCommandResponse,
   CreateSecteurCommand,
   CreateSecteurCommandResponse,
   CreateTypeStructureCommand,
@@ -23,13 +25,14 @@ import {
   RegisterCommandResponse,
   UpdateInstanceNombreRepresentantsCommand,
   UpdateInstanceNomCommand,
+  UpdateInstancePresenceSuppleantsCommand,
   UpdateInstanceStatusCommand,
   UpdateNatureJuridiqueLibelleCommand,
   UpdateNatureJuridiqueStatusCommand,
   UpdateOrganismeNatureJuridiqueCommand,
   UpdateOrganismeNombreRepresentantsCommand,
   UpdateOrganismeNomCommand,
-  UpdateOrganismePartageRepresentantsCommand,
+  UpdateOrganismePresenceSuppleantsCommand,
   UpdateOrganismeSecteurCommand,
   UpdateOrganismeStatus,
   UpdateOrganismeTypeStructureCommand,
@@ -56,10 +59,10 @@ export class CommandService {
   ): Promise<AddRepresentationCommandResponse> =>
     this.command('AddRepresentationCommand', command);
 
-  public createDeliberationAndAddLienCommand = (
-    command: CreateDeliberationAndAddLienCommand
-  ): Promise<CreateDeliberationAndAddLienCommandResponse> =>
-    this.command('CreateDeliberationAndAddLienCommand', command);
+  public createDeliberationCommand = (
+    command: CreateDeliberationCommand
+  ): Promise<CreateDeliberationCommandResponse> =>
+    this.command('CreateDeliberationCommand', command);
 
   public createNatureJuridiqueCommand = (
     command: CreateNatureJuridiqueCommand
@@ -70,6 +73,11 @@ export class CommandService {
     command: CreateOrganismeCommand
   ): Promise<CreateOrganismeCommandResponse> =>
     this.command('CreateOrganismeCommand', command);
+
+  public createRepresentantCommand = (
+    command: CreateRepresentantCommand
+  ): Promise<CreateRepresentantCommandResponse> =>
+    this.command('CreateRepresentantCommand', command);
 
   public createSecteurCommand = (
     command: CreateSecteurCommand
@@ -103,6 +111,11 @@ export class CommandService {
     command: UpdateInstanceNomCommand
   ): Promise<void> => this.command('UpdateInstanceNomCommand', command);
 
+  public updateInstancePresenceSuppleantsCommand = (
+    command: UpdateInstancePresenceSuppleantsCommand
+  ): Promise<void> =>
+    this.command('UpdateInstancePresenceSuppleantsCommand', command);
+
   public updateInstanceStatusCommand = (
     command: UpdateInstanceStatusCommand
   ): Promise<void> => this.command('UpdateInstanceStatusCommand', command);
@@ -131,10 +144,10 @@ export class CommandService {
     command: UpdateOrganismeNomCommand
   ): Promise<void> => this.command('UpdateOrganismeNomCommand', command);
 
-  public updateOrganismePartageRepresentantsCommand = (
-    command: UpdateOrganismePartageRepresentantsCommand
+  public updateOrganismePresenceSuppleantsCommand = (
+    command: UpdateOrganismePresenceSuppleantsCommand
   ): Promise<void> =>
-    this.command('UpdateOrganismePartageRepresentantsCommand', command);
+    this.command('UpdateOrganismePresenceSuppleantsCommand', command);
 
   public updateOrganismeSecteurCommand = (
     command: UpdateOrganismeSecteurCommand

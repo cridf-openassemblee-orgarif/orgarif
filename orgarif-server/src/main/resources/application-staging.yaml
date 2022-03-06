@@ -1,5 +1,4 @@
 app.url: https://orgarif-staging.mlorber.net
-logging.config: classpath:logback-staging.xml
 #---------------------------------------------------------------------------
 database:
   host: ${POSTGRESQL_ADDON_HOST}
@@ -10,10 +9,10 @@ database:
 spring:
   datasource:
     tomcat:
-      initialSize: 15
-      minIdle: 10
-      maxIdle: 15
-      maxActive: 20
+      initialSize: 1
+      minIdle: 1
+      maxIdle: 1
+      maxActive: 1
 server.forward-headers-strategy: framework
 #---------------------------------------------------------------------------
 assets:
@@ -26,3 +25,6 @@ mailjet:
   api-key:
   secret-key:
 #---------------------------------------------------------------------------
+injectFakeData: false
+doSynchronizeElus: true
+elusSynchronizationUrl: https://siger.mlorber.net/api/publicdata/v2/elus

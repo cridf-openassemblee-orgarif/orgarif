@@ -34,14 +34,18 @@ export interface ListOrganismesQueryResponse {
   organismes: OrganismeListDto[];
 }
 
-export interface ListRepresentantsQueryResponse {
-  representants: RepresentantDto[];
-}
-
 export interface SearchDeliberationQuery {
   searchToken: string;
 }
 
 export interface SearchDeliberationQueryResponse {
   results: DeliberationDto[];
+}
+
+export interface SearchRepresentantsQuery {
+  searchToken: string;
+}
+
+export interface SearchRepresentantsQueryResponse {
+  representants: RepresentantDto[];
 }

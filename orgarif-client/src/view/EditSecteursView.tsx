@@ -3,7 +3,7 @@ import { css } from '@emotion/react';
 import * as React from 'react';
 import { useRecoilState } from 'recoil';
 import { appContext } from '../ApplicationContext';
-import { EditCategoriesComponent } from '../component/edit/EditCategoriesComponent';
+import { EditCategoriesComponent } from '../component/category/EditCategoriesComponent';
 import { MainContainer } from '../container/MainContainer';
 import { Secteur } from '../domain/bootstrap-data';
 import { SecteurId } from '../domain/ids';

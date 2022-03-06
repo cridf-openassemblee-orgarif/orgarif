@@ -17,9 +17,10 @@ class LienDeliberationDao(val jooq: DSLContext) {
 
     data class Record(
         val id: LienDeliberationId,
-        val deliberationId: DeliberationId,
         val organismeId: OrganismeId,
         val instanceId: InstanceId?,
+        val deliberationId: DeliberationId,
+        val comment: String?,
         val creationDate: Instant,
         val status: ItemStatus,
         val lastModificationDate: Instant
@@ -29,9 +30,10 @@ class LienDeliberationDao(val jooq: DSLContext) {
         val record =
             LienDeliberationRecord().apply {
                 id = r.id.rawId
-                deliberationId = r.deliberationId.rawId
                 organismeId = r.organismeId.rawId
                 instanceId = r.instanceId?.rawId
+                deliberationId = r.deliberationId.rawId
+                comment = r.comment
                 creationDate = r.creationDate
                 status = r.status.name
                 lastModificationDate = r.lastModificationDate
@@ -50,9 +52,10 @@ class LienDeliberationDao(val jooq: DSLContext) {
     fun map(r: LienDeliberationRecord) =
         Record(
             r.id.toTypeId(),
-            r.deliberationId.toTypeId(),
             r.organismeId.toTypeId(),
             r.instanceId?.toTypeId(),
+            r.deliberationId.toTypeId(),
+            r.comment,
             r.creationDate,
             ItemStatus.valueOf(r.status),
             r.lastModificationDate)

@@ -32,11 +32,12 @@ class InitialDataInjector(
     val dateService: DateService
 ) {
 
-    val fakeOrganismeId = OrganismeId(deserializeUuid("ced8c29ba05b4ceca05f5104b9c84e28"))
+    val fakeOrganismeId = OrganismeId(deserializeUuid("ddf9d23e60294a8b823162f014a53968"))
+    val fakeOrganismeId2 = OrganismeId(deserializeUuid("ced8c29ba05b4ceca05f5104b9c84e28"))
     val fakeInstanceId1 = InstanceId(deserializeUuid("88a344859a574d789f92462779ca7f8f"))
     val fakeInstanceId2 = InstanceId(deserializeUuid("a68887ef582440bf8a525dbbad22f1f5"))
     val nombreRepresentants = 3
-    val increment = AtomicInteger(0)
+    val deliberationIncrement = AtomicInteger(0)
 
     init {
         val now = dateService.now()
@@ -49,11 +50,12 @@ class InitialDataInjector(
                 organismeDao.insert(
                     OrganismeDao.Record(
                         id = fakeOrganismeId,
-                        nom = "Organisme de test",
+                        nom = "Organisme de test (sans instance)",
                         secteurId = secteurs.first().id,
                         natureJuridiqueId = natureJuridiques.first().id,
                         typeStructureId = typeStructures.first().id,
                         nombreRepresentants = nombreRepresentants,
+                        presenceSuppleants = true,
                         creationDate = now,
                         status = live,
                         lastModificationDate = now))
@@ -62,33 +64,79 @@ class InitialDataInjector(
                         lienDeliberationDao.insert(
                             LienDeliberationDao.Record(
                                 id = randomService.id(),
-                                deliberationId = deliberationId,
                                 organismeId = fakeOrganismeId,
                                 instanceId = null,
+                                deliberationId = deliberationId,
+                                comment = null,
+                                creationDate = now,
+                                status = live,
+                                lastModificationDate = now))
+                    }
+                    // pour avoir des delib sans lien
+                    deliberation()
+                }
+            }
+            if (organismeDao.fetchOrNull(fakeOrganismeId2) == null) {
+                organismeDao.insert(
+                    OrganismeDao.Record(
+                        id = fakeOrganismeId2,
+                        nom = "Organisme de test 2 (avec instances)",
+                        secteurId = secteurs.first().id,
+                        natureJuridiqueId = natureJuridiques.first().id,
+                        typeStructureId = typeStructures.first().id,
+                        nombreRepresentants = 0,
+                        presenceSuppleants = false,
+                        creationDate = now,
+                        status = live,
+                        lastModificationDate = now))
+                instanceDao.insert(
+                    InstanceDao.Record(
+                        id = fakeInstanceId1,
+                        nom = "instance 1",
+                        organismeId = fakeOrganismeId2,
+                        nombreRepresentants = nombreRepresentants,
+                        presenceSuppleants = true,
+                        creationDate = now,
+                        status = live,
+                        lastModificationDate = now))
+                (1..2).forEach {
+                    deliberation().let { deliberationId ->
+                        lienDeliberationDao.insert(
+                            LienDeliberationDao.Record(
+                                id = randomService.id(),
+                                organismeId = fakeOrganismeId2,
+                                instanceId = fakeInstanceId1,
+                                deliberationId = deliberationId,
+                                comment = null,
                                 creationDate = now,
                                 status = live,
                                 lastModificationDate = now))
                     }
                 }
-
-                instanceDao.insert(
-                    InstanceDao.Record(
-                        id = fakeInstanceId1,
-                        nom = "instance 1",
-                        organismeId = fakeOrganismeId,
-                        nombreRepresentants = nombreRepresentants,
-                        creationDate = now,
-                        status = live,
-                        lastModificationDate = now))
                 instanceDao.insert(
                     InstanceDao.Record(
                         id = fakeInstanceId2,
                         nom = "instance 2",
-                        organismeId = fakeOrganismeId,
+                        organismeId = fakeOrganismeId2,
                         nombreRepresentants = nombreRepresentants,
+                        presenceSuppleants = true,
                         creationDate = now,
                         status = live,
                         lastModificationDate = now))
+                (1..2).forEach {
+                    deliberation().let { deliberationId ->
+                        lienDeliberationDao.insert(
+                            LienDeliberationDao.Record(
+                                id = randomService.id(),
+                                organismeId = fakeOrganismeId2,
+                                instanceId = fakeInstanceId2,
+                                deliberationId = deliberationId,
+                                comment = null,
+                                creationDate = now,
+                                status = live,
+                                lastModificationDate = now))
+                    }
+                }
             }
             injectRepresentations()
         }
@@ -96,66 +144,68 @@ class InitialDataInjector(
 
     fun injectRepresentations() =
         synchronized(this) {
-            val elus = eluDao.fetchAll().sortedBy { it.id.rawId.toString() }
-            if (elus.isEmpty()) {
-                return
-            }
-            if (representationDao.fetchAll().isNotEmpty()) {
-                return
-            }
-            val now = dateService.now()
-            val i = AtomicInteger(1)
-            val representantByEluId = representantDao.fetchAll().associateBy { it.eluId }
-            listOf(
-                fakeOrganismeId to null,
-                fakeOrganismeId to fakeInstanceId1,
-                fakeOrganismeId to fakeInstanceId2)
-                .forEach { (organismeId, instanceId) ->
-                    val reps =
-                        (1..nombreRepresentants).map { i.getAndIncrement() }.mapIndexed {
+            if (injectFakeData) {
+                val elus = eluDao.fetchAll().sortedBy { it.id.rawId.toString() }
+                if (elus.isEmpty()) {
+                    return
+                }
+                if (representationDao.fetchAll().isNotEmpty()) {
+                    return
+                }
+                val now = dateService.now()
+                val i = AtomicInteger(1)
+                val representantByEluId = representantDao.fetchAll().associateBy { it.eluId }
+                listOf(
+                    fakeOrganismeId to null,
+                    fakeOrganismeId2 to fakeInstanceId1,
+                    fakeOrganismeId2 to fakeInstanceId2)
+                    .forEach { (organismeId, instanceId) ->
+                        val reps =
+                            (1..nombreRepresentants).map { i.getAndIncrement() }.mapIndexed {
+                                index,
+                                incr ->
+                                val id = randomService.id<RepresentationId>()
+                                representationDao.insert(
+                                    RepresentationDao.Record(
+                                        id = id,
+                                        representantId =
+                                            representantByEluId.getValue(elus.get(incr).id).id,
+                                        organismeId = organismeId,
+                                        instanceId = instanceId,
+                                        position = index,
+                                        startDate = null,
+                                        endDate = null,
+                                        creationDate = now,
+                                        status = live,
+                                        lastModificationDate = now))
+                                id
+                            }
+                        (1..nombreRepresentants).map { i.getAndIncrement() }.forEachIndexed {
                             index,
                             incr ->
-                            val id = randomService.id<RepresentationId>()
-                            representationDao.insert(
-                                RepresentationDao.Record(
-                                    id = id,
-                                    representantId =
-                                        representantByEluId.getValue(elus.get(incr).id).id,
-                                    organismeId = organismeId,
-                                    instanceId = instanceId,
-                                    position = index,
-                                    startDate = null,
-                                    endDate = null,
-                                    creationDate = now,
-                                    status = live,
-                                    lastModificationDate = now))
-                            id
-                        }
-                    (1..nombreRepresentants).map { i.getAndIncrement() }.forEachIndexed {
-                        index,
-                        incr ->
-                        if (incr % 2 == 0) {
-                            suppleanceDao.insert(
-                                SuppleanceDao.Record(
-                                    id = randomService.id(),
-                                    representantId =
-                                        representantByEluId.getValue(elus.get(incr).id).id,
-                                    representationId = reps.get(index),
-                                    organismeId = organismeId,
-                                    startDate = null,
-                                    endDate = null,
-                                    creationDate = now,
-                                    status = live,
-                                    lastModificationDate = now))
+                            if (incr % 2 == 0) {
+                                suppleanceDao.insert(
+                                    SuppleanceDao.Record(
+                                        id = randomService.id(),
+                                        representantId =
+                                            representantByEluId.getValue(elus.get(incr).id).id,
+                                        representationId = reps.get(index),
+                                        organismeId = organismeId,
+                                        startDate = null,
+                                        endDate = null,
+                                        creationDate = now,
+                                        status = live,
+                                        lastModificationDate = now))
+                            }
                         }
                     }
-                }
+            }
         }
 
     private fun deliberation(): DeliberationId {
         val id = randomService.id<DeliberationId>()
         val now = dateService.now()
-        val date = LocalDate.of(2020, 1, 1).plusDays(increment.getAndIncrement() * 10L)
+        val date = LocalDate.of(2020, 1, 1).plusDays(deliberationIncrement.getAndIncrement() * 10L)
         deliberationDao.insert(
             DeliberationDao.Record(
                 id = id,

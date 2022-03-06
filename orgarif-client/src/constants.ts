@@ -1,3 +1,3 @@
 export const SharedConstants = {
-  deliberationSearchLengthLimit: 3
+  searchLengthLimit: 2
 };

@@ -2,18 +2,18 @@
 import { css } from '@emotion/react';
 import * as React from 'react';
 import { useRecoilValue } from 'recoil';
-import { Category } from '../../domain/bootstrap-data';
+import { Category } from '../../../domain/bootstrap-data';
 import {
   NatureJuridiqueId,
   OrgarifId,
   SecteurId,
   TypeStructureId
-} from '../../domain/ids';
-import { state } from '../../state/state';
-import { colors } from '../../styles/colors';
-import { Dict } from '../../utils/nominal-class';
-import { SelectInput, SelectOption } from '../base-component/SelectInput';
-import { editCommonClasses } from './EditPartialOrganismeOrInstance';
+} from '../../../domain/ids';
+import { state } from '../../../state/state';
+import { colors } from '../../../styles/colors';
+import { Dict } from '../../../utils/nominal-class';
+import { SelectInput, SelectOption } from '../../base-component/SelectInput';
+import { editCommonClasses } from './EditOrganismeComponent';
 
 const EditOrganismeCategoryComponent = <
   C extends Category,

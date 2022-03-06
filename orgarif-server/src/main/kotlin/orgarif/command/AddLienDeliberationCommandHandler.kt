@@ -20,9 +20,10 @@ class AddLienDeliberationCommandHandler(
         lienDeliberationDao.insert(
             LienDeliberationDao.Record(
                 id = id,
-                deliberationId = command.deliberationId,
                 organismeId = command.organismeId,
                 instanceId = command.instanceId,
+                deliberationId = command.deliberationId,
+                comment = command.comment,
                 creationDate = now,
                 status = ItemStatus.live,
                 lastModificationDate = now))

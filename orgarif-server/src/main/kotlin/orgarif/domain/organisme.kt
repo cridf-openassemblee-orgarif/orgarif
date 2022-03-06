@@ -42,12 +42,17 @@ data class DeliberationDto(
     val deliberationDate: LocalDate
 )
 
-data class LienDeliberationDto(val id: LienDeliberationId, val deliberation: DeliberationDto)
+data class LienDeliberationDto(
+    val id: LienDeliberationId,
+    val deliberation: DeliberationDto,
+    val comment: String?
+)
 
 data class InstanceDto(
     val id: InstanceId,
     val nom: String,
     val nombreRepresentants: Int?,
+    val presenceSuppleants: Boolean,
     val lienDeliberations: List<LienDeliberationDto>,
     val representations: List<RepresentationDto>,
     val status: ItemStatus
@@ -72,6 +77,7 @@ data class OrganismeDto(
     val natureJuridiqueId: NatureJuridiqueId?,
     val typeStructureId: TypeStructureId?,
     val nombreRepresentants: Int?,
+    val presenceSuppleants: Boolean,
     val representations: List<RepresentationDto>,
     val lienDeliberations: List<LienDeliberationDto>,
     val instances: List<InstanceDto>,

@@ -19,7 +19,6 @@ import orgarif.service.HttpService
 @ConditionalOnExpression("!\${assets.useBuildFiles}")
 class ReactHotLoaderController(
     @Value("\${assets.serverWebpackDevHost}") val assetsServerWebpackDevHost: String,
-    val applicationInstance: ApplicationInstance,
     val httpService: HttpService
 ) {
 
@@ -27,28 +26,27 @@ class ReactHotLoaderController(
 
     @GetMapping("/*.hot-update.*")
     fun handle(request: HttpServletRequest, response: HttpServletResponse) {
-        if (applicationInstance.env == ApplicationEnvironment.dev) {
-            val path = request.servletPath
-            response.contentType =
-                if (path.endsWith(".js")) {
-                    MimeType.javascript.fullType
+        if (ApplicationInstance.env != ApplicationEnvironment.dev) {
+            throw OrgarifNotFoundException()
+        }
+        val path = request.servletPath
+        response.contentType =
+            if (path.endsWith(".js")) {
+                MimeType.javascript.fullType
+            } else {
+                MimeType.json.fullType
+            }
+        val r = httpService.getString(assetsServerWebpackDevHost + path)
+        when (r) {
+            is HttpService.MaybeStringResponse.EmptyResponse ->
+                logger.error { "Empty webpack hot update $r" }
+            is HttpService.MaybeStringResponse.StringResponse -> {
+                if (r.code == HttpStatus.OK.value()) {
+                    response.writer.print(r.body)
                 } else {
-                    MimeType.json.fullType
-                }
-            val r = httpService.getString(assetsServerWebpackDevHost + path)
-            when (r) {
-                is HttpService.MaybeStringResponse.EmptyResponse ->
-                    logger.error { "Empty webpack hot update $r" }
-                is HttpService.MaybeStringResponse.StringResponse -> {
-                    if (r.code == HttpStatus.OK.value()) {
-                        response.writer.print(r.body)
-                    } else {
-                        logger.error { "Error webpack hot update $r" }
-                    }
+                    logger.error { "Error webpack hot update $r" }
                 }
             }
-        } else {
-            throw OrgarifNotFoundException()
         }
     }
 }

@@ -6,6 +6,7 @@ CREATE TABLE organisme
     nature_juridique_id    UUID,
     type_structure_id      UUID,
     nombre_representants   INTEGER,
+    presence_suppleants    BOOLEAN          NOT NULL,
     creation_date          TIMESTAMPTZ      NOT NULL,
     status                 VARCHAR(255)     NOT NULL,
     last_modification_date TIMESTAMPTZ      NOT NULL,

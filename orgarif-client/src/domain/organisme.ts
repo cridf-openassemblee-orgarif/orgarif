@@ -50,12 +50,14 @@ export interface DeliberationDto {
 export interface LienDeliberationDto {
   id: LienDeliberationId;
   deliberation: DeliberationDto;
+  comment?: string;
 }
 
 export interface InstanceDto {
   id: InstanceId;
   nom: string;
   nombreRepresentants?: number;
+  presenceSuppleants: boolean;
   lienDeliberations: LienDeliberationDto[];
   representations: RepresentationDto[];
   status: ItemStatus;
@@ -76,14 +78,9 @@ export interface OrganismeDto {
   natureJuridiqueId?: NatureJuridiqueId;
   typeStructureId?: TypeStructureId;
   nombreRepresentants?: number;
+  presenceSuppleants: boolean;
   representations: RepresentationDto[];
   lienDeliberations: LienDeliberationDto[];
   instances: InstanceDto[];
   status: ItemStatus;
-}
-
-export interface PartialOrganismeOrInstance {
-  nombreRepresentants?: number;
-  representations: RepresentationDto[];
-  lienDeliberations: LienDeliberationDto[];
 }

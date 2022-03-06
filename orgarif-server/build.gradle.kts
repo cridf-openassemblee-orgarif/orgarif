@@ -80,7 +80,8 @@ dependencies {
     implementation("org.apache.commons:commons-text:1.9")
     implementation("commons-codec:commons-codec:1.14")
     implementation("com.fasterxml.jackson.module:jackson-module-kotlin:2.13.0")
-    implementation("org.reflections:reflections:0.10.2")
+    // TODO[doc] reflections version 0.10.2 breaks id deserialization when deployed
+    implementation("org.reflections:reflections:0.9.12")
     implementation("com.squareup.okhttp3:okhttp:4.2.2")
     implementation("org.json:json:20210307")
 

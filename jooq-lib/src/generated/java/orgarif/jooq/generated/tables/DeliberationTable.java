@@ -18,7 +18,7 @@ import org.jooq.Field;
 import org.jooq.ForeignKey;
 import org.jooq.Name;
 import org.jooq.Record;
-import org.jooq.Row5;
+import org.jooq.Row6;
 import org.jooq.Schema;
 import org.jooq.Table;
 import org.jooq.TableField;
@@ -64,6 +64,11 @@ public class DeliberationTable extends TableImpl<DeliberationRecord> {
      * The column <code>public.deliberation.libelle</code>.
      */
     public final TableField<DeliberationRecord, String> LIBELLE = createField(DSL.name("libelle"), SQLDataType.VARCHAR(255).nullable(false), this, "");
+
+    /**
+     * The column <code>public.deliberation.search_libelle</code>.
+     */
+    public final TableField<DeliberationRecord, String> SEARCH_LIBELLE = createField(DSL.name("search_libelle"), SQLDataType.VARCHAR(255).nullable(false), this, "");
 
     /**
      * The column <code>public.deliberation.deliberation_date</code>.
@@ -162,12 +167,12 @@ public class DeliberationTable extends TableImpl<DeliberationRecord> {
     }
 
     // -------------------------------------------------------------------------
-    // Row5 type methods
+    // Row6 type methods
     // -------------------------------------------------------------------------
 
     @Override
     @Nonnull
-    public Row5<UUID, String, LocalDate, Instant, Instant> fieldsRow() {
-        return (Row5) super.fieldsRow();
+    public Row6<UUID, String, String, LocalDate, Instant, Instant> fieldsRow() {
+        return (Row6) super.fieldsRow();
     }
 }

@@ -63,7 +63,6 @@ export const SelectInput = <Id extends NominalString<string>>(props: {
       >
         <Select
           labelId={asString(inputId)}
-          // id={asString(inputId)}
           value={textValue}
           onChange={onChange}
           displayEmpty={true}

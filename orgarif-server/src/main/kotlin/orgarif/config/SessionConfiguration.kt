@@ -5,7 +5,6 @@ import org.springframework.context.annotation.Configuration
 import org.springframework.context.annotation.Primary
 import org.springframework.session.FindByIndexNameSessionRepository
 import org.springframework.session.Session
-import orgarif.service.ApplicationInstance
 
 @Configuration
 class SessionConfiguration {
@@ -14,9 +13,6 @@ class SessionConfiguration {
     @Bean
     @Suppress("UNCHECKED_CAST")
     fun <S : Session?> safeSessionRepository(
-        applicationInstance: ApplicationInstance,
         sessionRepository: FindByIndexNameSessionRepository<S>
-    ) =
-        SafeSessionRepository(
-            applicationInstance, sessionRepository as FindByIndexNameSessionRepository<Session>)
+    ) = SafeSessionRepository(sessionRepository as FindByIndexNameSessionRepository<Session>)
 }

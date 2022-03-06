@@ -20,14 +20,20 @@ export const TextInput = (props: {
   initialValue?: string;
   autoFocus?: boolean;
   type?: React.InputHTMLAttributes<unknown>['type'];
+  // TODO not directly value because of forms ?
   onChange?: (event: ChangeEvent<HTMLInputElement>) => void;
   onBlur?: (event: FocusEvent<HTMLInputElement>) => void;
   mode?: 'normal' | 'appears-as-text';
-  // label always on top (important pour date notamment)
-  shrinkLabel?: boolean;
+  multiline?: boolean;
+  multilineDefaultRows?: number;
 }) => {
   const classes = useStyles();
-  const [value, setValue] = useState(props.initialValue);
+  const [value, setValue] = useState(props.initialValue ?? ''); // ?? '' is needed for type=date
+  // label always on top (avec date sinon se superpose avec masque)
+  const shrinkLabel = props.type === 'date';
+  if (!props.multiline && props.multilineDefaultRows) {
+    throw Error();
+  }
   return (
     <TextField
       name={props.name}
@@ -49,7 +55,9 @@ export const TextInput = (props: {
       InputProps={{
         readOnly: props.mode === 'appears-as-text'
       }}
-      InputLabelProps={props.shrinkLabel ? { shrink: true } : undefined}
+      InputLabelProps={shrinkLabel ? { shrink: true } : undefined}
+      multiline={props.multiline ?? false}
+      rows={props.multilineDefaultRows}
     />
   );
 };

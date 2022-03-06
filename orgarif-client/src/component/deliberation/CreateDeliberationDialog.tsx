@@ -6,97 +6,89 @@ import Dialog from '@mui/material/Dialog';
 import DialogActions from '@mui/material/DialogActions';
 import DialogContent from '@mui/material/DialogContent';
 import * as React from 'react';
-import { useState } from 'react';
-import { DeliberationId } from '../../domain/ids';
+import { useEffect, useState } from 'react';
+import { appContext } from '../../ApplicationContext';
+import { DeliberationDto } from '../../domain/organisme';
 import { LocalDate } from '../../domain/time';
 import { colors } from '../../styles/colors';
-import { LocalDateInput } from '../base-component/LocalDateInput';
 import { TextInput } from '../base-component/TextInput';
+import { stringToLocalDate } from '../base-component/LocalDateInput';
 
-interface DialogFormDto {
-  libelle: string;
-  deliberationDate: string;
-}
-
-export const CreateDeliberationAndAddLienComponent = (props: {
+export const CreateDeliberationDialog = (props: {
   libelle: string;
   display: boolean;
   close: () => void;
-  onNewLienDeliberation: (deliberationId: DeliberationId) => void;
-  onNewDeliberationAndLien: (
-    libelle: string,
-    deliberationDate: LocalDate
-  ) => void;
+  onNewDeliberation: (deliberation: DeliberationDto) => void;
 }) => {
   const [dialogLoading, setDialogLoading] = useState(false);
-  const [displayError] = useState('');
-  const dialogSubmit = (dto: DialogFormDto) => {
-    // const deliberationDate = stringToLocalDate(dto.deliberationDate);
+  const [dateMandatory, setDateMandatory] = useState(false);
+  // libelle & deliberationDate because TextInput type=date doesn't seem to work with SimpleForm
+  const [libelle, setLibelle] = useState(props.libelle);
+  useEffect(() => setLibelle(props.libelle), [props.libelle]);
+  const [deliberationDate, setDeliberationDate] = useState<
+    LocalDate | undefined
+  >(undefined);
+  const onSubmit = () => {
+    if (!deliberationDate) {
+      setDateMandatory(true);
+      return;
+    }
     setDialogLoading(true);
-    // appContext
-    //   .commandService()
-    //   .createDeliberationAndAddLienCommand({
-    //     libelle: dto.libelle,
-    //     deliberationDate,
-    //     organismeId: props.organismeId,
-    //     instanceId: props.instanceId
-    //   })
-    //   .then(r => {
-    //     const deliberation: DeliberationInfos = {
-    //       id: r.deliberationId,
-    //       libelle: dto.libelle,
-    //       deliberationDate
-    //     };
-    //     props.addDeliberation({
-    //       id: r.lienDeliberationId,
-    //       deliberation
-    //     });
-    //     props.close();
-    //     setDisplayError('');
-    //     setDialogLoading(false);
-    //   })
-    //   .catch((e: RequestError) => {
-    //     setDialogLoading(false);
-    //     if (e.error === 'SerializationError') {
-    //       setDisplayError(e.message);
-    //     } else {
-    //       throw e;
-    //     }
-    //   });
+    setDateMandatory(false);
+    appContext
+      .commandService()
+      .createDeliberationCommand({
+        libelle,
+        deliberationDate
+      })
+      .then(r => {
+        setDialogLoading(false);
+        const deliberation: DeliberationDto = {
+          id: r.deliberationId,
+          libelle,
+          deliberationDate
+        };
+        props.onNewDeliberation(deliberation);
+        props.close();
+      });
   };
   return (
-    <Dialog open={props.display} onClose={props.close}>
-      {/*<SimpleForm onSubmit={dialogSubmit}>*/}
+    <Dialog open={props.display} onClose={props.close} fullWidth={true}>
       <DialogTitle>Ajouter nouvelle délibération</DialogTitle>
       <DialogContent>
         <div
           css={css`
-            margin: 10px;
+            margin: 10px 0;
           `}
         >
           <TextInput
             name="libelle"
             label="Libellé"
-            initialValue={props.libelle}
+            initialValue={libelle}
+            onChange={e => setLibelle(e.currentTarget.value)}
           />
           <div
             css={css`
-              padding-top: 10px;
+              padding-top: 20px;
             `}
           >
-            <LocalDateInput
-              label="Date de délibération"
+            <TextInput
               name="deliberationDate"
-              autoFocus
+              label="Date de délibération"
+              type="date"
+              onChange={e => {
+                const date = stringToLocalDate(e.currentTarget.value);
+                setDeliberationDate(date);
+              }}
             />
-            {displayError !== '' && (
+            {dateMandatory && (
               <div
                 css={css`
                   color: ${colors.errorRed};
                   font-weight: bold;
                 `}
               >
-                {displayError}
+                La date est obligatoire
               </div>
             )}
           </div>
@@ -108,10 +100,10 @@ export const CreateDeliberationAndAddLienComponent = (props: {
         </Button>
         <div>
           <Button
-            type="submit"
             variant="contained"
             color="primary"
             disabled={dialogLoading}
+            onClick={onSubmit}
           >
             Ajouter
           </Button>
@@ -130,7 +122,6 @@ export const CreateDeliberationAndAddLienComponent = (props: {
           )}
         </div>
       </DialogActions>
-      {/*</SimpleForm>*/}
     </Dialog>
   );
 };

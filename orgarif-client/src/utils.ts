@@ -1,5 +1,6 @@
 import { ClientUid } from './domain/client-ids';
 import { LocalDate } from './domain/time';
+import { Errors } from './errors';
 import { asString, instanciateNominalString } from './utils/nominal-class';
 
 export function assertUnreachable(x: never): never {
@@ -42,3 +43,14 @@ export const compareByString =
     l(o1).localeCompare(l(o2));
 
 export const defer = (action: () => void) => setTimeout(action, 0);
+
+export const stringToLocalDate = (value: string): LocalDate | undefined => {
+  if (value === '') {
+    return undefined;
+  }
+  const parts = value.split('-');
+  if (parts.length !== 3) {
+    throw Errors._ff7e63f5();
+  }
+  return instanciateNominalString(value);
+};

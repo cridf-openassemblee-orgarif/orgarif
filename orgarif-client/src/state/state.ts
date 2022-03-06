@@ -1,12 +1,10 @@
 import { atom, selector } from 'recoil';
-import { appContext } from '../ApplicationContext';
 import {
   NatureJuridique,
   Secteur,
   TypeStructure
 } from '../domain/bootstrap-data';
 import { NatureJuridiqueId, SecteurId, TypeStructureId } from '../domain/ids';
-import { RepresentantDto } from '../domain/organisme';
 import { compareByString } from '../utils';
 import { dict, Dict } from '../utils/nominal-class';
 
@@ -26,13 +24,6 @@ export const state = {
   organismeCategories: atom({
     key: 'organismeCategories',
     default: bootstrapData.categories
-  }),
-  representants: selector<RepresentantDto[]>({
-    key: 'representants',
-    get: async () => {
-      const r = await appContext.queryService().listRepresentantsQuery();
-      return r.representants;
-    }
   }),
   secteurs: atom({
     key: 'secteurs',

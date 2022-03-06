@@ -7,6 +7,7 @@ import orgarif.domain.EluId
 import orgarif.domain.RepresentantId
 import orgarif.jooq.generated.Tables.REPRESENTANT
 import orgarif.jooq.generated.tables.records.RepresentantRecord
+import orgarif.utils.OrgarifStringUtils
 import orgarif.utils.toTypeId
 
 @Repository
@@ -15,21 +16,11 @@ class RepresentantDao(val jooq: DSLContext) {
     data class Record(
         val id: RepresentantId,
         val eluId: EluId? = null,
-        val prenom: String? = null,
-        val nom: String? = null,
+        val prenom: String,
+        val nom: String,
         val creationDate: Instant,
         val lastModificationDate: Instant
-    ) {
-        init {
-            // c'est élu OU prénom / nom
-            if (eluId != null && (prenom != null || nom != null)) {
-                throw IllegalArgumentException("$this")
-            }
-            if (eluId == null && (prenom == null || nom == null)) {
-                throw IllegalArgumentException("$this")
-            }
-        }
-    }
+    )
 
     fun insert(r: Record) {
         val record =
@@ -38,6 +29,8 @@ class RepresentantDao(val jooq: DSLContext) {
                 eluId = r.eluId?.rawId
                 prenom = r.prenom
                 nom = r.nom
+                searchPrenom = OrgarifStringUtils.cleanForSearch(r.prenom)
+                searchNom = OrgarifStringUtils.cleanForSearch(r.nom)
                 creationDate = r.creationDate
                 lastModificationDate = r.lastModificationDate
             }
@@ -53,6 +46,13 @@ class RepresentantDao(val jooq: DSLContext) {
     fun fetch(ids: Set<RepresentantId>): List<Record> =
         jooq.selectFrom(REPRESENTANT)
             .where(REPRESENTANT.ID.`in`(ids.map { it.rawId }))
+            .fetch()
+            .map(this::map)
+
+    fun search(searchToken: String): List<Record> =
+        jooq.selectFrom(REPRESENTANT)
+            .where(REPRESENTANT.SEARCH_PRENOM.like("%$searchToken%"))
+            .or(REPRESENTANT.SEARCH_NOM.like("%$searchToken%"))
             .fetch()
             .map(this::map)
 

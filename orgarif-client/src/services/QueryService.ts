@@ -7,9 +7,10 @@ import {
   ListOrganismesBySecteurQuery,
   ListOrganismesBySecteurQueryResponse,
   ListOrganismesQueryResponse,
-  ListRepresentantsQueryResponse,
   SearchDeliberationQuery,
-  SearchDeliberationQueryResponse
+  SearchDeliberationQueryResponse,
+  SearchRepresentantsQuery,
+  SearchRepresentantsQueryResponse
 } from '../domain/queries';
 
 export class QueryService {
@@ -31,13 +32,15 @@ export class QueryService {
   public listOrganismesQuery = (): Promise<ListOrganismesQueryResponse> =>
     this.query('ListOrganismesQuery');
 
-  public listRepresentantsQuery = (): Promise<ListRepresentantsQueryResponse> =>
-    this.query('ListRepresentantsQuery');
-
   public searchDeliberationQuery = (
     query: SearchDeliberationQuery
   ): Promise<SearchDeliberationQueryResponse> =>
     this.query('SearchDeliberationQuery', query);
+
+  public searchRepresentantsQuery = (
+    query: SearchRepresentantsQuery
+  ): Promise<SearchRepresentantsQueryResponse> =>
+    this.query('SearchRepresentantsQuery', query);
 
   private query = <R>(queryName: string, query?: object): Promise<R> =>
     appContext

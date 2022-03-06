@@ -2,8 +2,8 @@
 import * as React from 'react';
 import { PropsWithChildren } from 'react';
 import { DragDropContext, DropResult } from 'react-beautiful-dnd';
-import { InstanceId, OrganismeId, RepresentationId } from '../../domain/ids';
-import { assertUnreachable } from '../../utils';
+import { InstanceId, OrganismeId, RepresentationId } from '../../../domain/ids';
+import { assertUnreachable } from '../../../utils';
 
 export type DragAndDropItemType = DropEvent['type'];
 

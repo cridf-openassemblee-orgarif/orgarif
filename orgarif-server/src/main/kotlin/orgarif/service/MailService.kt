@@ -21,7 +21,6 @@ class MailService(
     @Value("\${mailjet.api-key}") val apiKey: String,
     @Value("\${mailjet.secret-key}") val secretKey: String,
     @Value("\${mail.devLogSender}") val devLogSenderMail: String,
-    val applicationInstance: ApplicationInstance,
     val httpService: HttpService,
     val mailLogDao: MailLogDao,
     val dateService: DateService,
@@ -124,17 +123,17 @@ class MailService(
         mailLogProperties: MailLogProperties? = null,
         attachments: List<Attachment>? = null
     ): MailLogId? {
-        if (applicationInstance.env == ApplicationEnvironment.dev &&
+        if (ApplicationInstance.env == ApplicationEnvironment.dev &&
             recipientMail != devLogSenderMail) {
             throw IllegalArgumentException("Mail send canceled en env dev to ${recipientMail}")
         }
         val mailLogId = randomService.id<MailLogId>()
         val payload =
             mailJetObjectMapper.writeValueAsString(
-                MailJetEventPayload(applicationInstance.env.name))
+                MailJetEventPayload(ApplicationInstance.env.name))
         val subject =
-            if (applicationInstance.env == ApplicationEnvironment.prod) mailSubject
-            else "[${applicationInstance.env}] $mailSubject"
+            if (ApplicationInstance.env == ApplicationEnvironment.prod) mailSubject
+            else "[${ApplicationInstance.env}] $mailSubject"
         val mailJetAttachments =
             (attachments ?: emptyList()).map {
                 MailJetAttachment(

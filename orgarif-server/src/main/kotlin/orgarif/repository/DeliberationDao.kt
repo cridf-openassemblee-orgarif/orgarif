@@ -3,11 +3,11 @@ package orgarif.repository
 import java.time.Instant
 import java.time.LocalDate
 import org.jooq.DSLContext
-import org.jooq.impl.DSL.lower
 import org.springframework.stereotype.Repository
 import orgarif.domain.DeliberationId
 import orgarif.jooq.generated.Tables.DELIBERATION
 import orgarif.jooq.generated.tables.records.DeliberationRecord
+import orgarif.utils.OrgarifStringUtils
 import orgarif.utils.toTypeId
 
 @Repository
@@ -26,6 +26,7 @@ class DeliberationDao(val jooq: DSLContext) {
             DeliberationRecord().apply {
                 id = r.id.rawId
                 libelle = r.libelle
+                searchLibelle = OrgarifStringUtils.cleanForSearch(r.libelle)
                 deliberationDate = r.deliberationDate
                 creationDate = r.creationDate
                 lastModificationDate = r.lastModificationDate
@@ -42,7 +43,7 @@ class DeliberationDao(val jooq: DSLContext) {
 
     fun search(searchToken: String): List<Record> =
         jooq.selectFrom(DELIBERATION)
-            .where(lower(DELIBERATION.LIBELLE).like("%${searchToken.toLowerCase()}%"))
+            .where(DELIBERATION.SEARCH_LIBELLE.like("%$searchToken%"))
             .fetch()
             .map(this::map)
 

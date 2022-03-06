@@ -18,7 +18,7 @@ import org.jooq.ForeignKey;
 import org.jooq.Index;
 import org.jooq.Name;
 import org.jooq.Record;
-import org.jooq.Row7;
+import org.jooq.Row8;
 import org.jooq.Schema;
 import org.jooq.Table;
 import org.jooq.TableField;
@@ -62,11 +62,6 @@ public class LienDeliberationTable extends TableImpl<LienDeliberationRecord> {
     public final TableField<LienDeliberationRecord, UUID> ID = createField(DSL.name("id"), SQLDataType.UUID.nullable(false), this, "");
 
     /**
-     * The column <code>public.lien_deliberation.deliberation_id</code>.
-     */
-    public final TableField<LienDeliberationRecord, UUID> DELIBERATION_ID = createField(DSL.name("deliberation_id"), SQLDataType.UUID.nullable(false), this, "");
-
-    /**
      * The column <code>public.lien_deliberation.organisme_id</code>.
      */
     public final TableField<LienDeliberationRecord, UUID> ORGANISME_ID = createField(DSL.name("organisme_id"), SQLDataType.UUID.nullable(false), this, "");
@@ -75,6 +70,16 @@ public class LienDeliberationTable extends TableImpl<LienDeliberationRecord> {
      * The column <code>public.lien_deliberation.instance_id</code>.
      */
     public final TableField<LienDeliberationRecord, UUID> INSTANCE_ID = createField(DSL.name("instance_id"), SQLDataType.UUID, this, "");
+
+    /**
+     * The column <code>public.lien_deliberation.deliberation_id</code>.
+     */
+    public final TableField<LienDeliberationRecord, UUID> DELIBERATION_ID = createField(DSL.name("deliberation_id"), SQLDataType.UUID.nullable(false), this, "");
+
+    /**
+     * The column <code>public.lien_deliberation.comment</code>.
+     */
+    public final TableField<LienDeliberationRecord, String> COMMENT = createField(DSL.name("comment"), SQLDataType.CLOB, this, "");
 
     /**
      * The column <code>public.lien_deliberation.creation_date</code>.
@@ -151,19 +156,12 @@ public class LienDeliberationTable extends TableImpl<LienDeliberationRecord> {
     @Override
     @Nonnull
     public List<ForeignKey<LienDeliberationRecord, ?>> getReferences() {
-        return Arrays.<ForeignKey<LienDeliberationRecord, ?>>asList(Keys.LIEN_DELIBERATION__LIEN_DELIBERATION_DELIBERATION_ID_FKEY, Keys.LIEN_DELIBERATION__LIEN_DELIBERATION_ORGANISME_ID_FKEY, Keys.LIEN_DELIBERATION__LIEN_DELIBERATION_INSTANCE_ID_FKEY);
+        return Arrays.<ForeignKey<LienDeliberationRecord, ?>>asList(Keys.LIEN_DELIBERATION__LIEN_DELIBERATION_ORGANISME_ID_FKEY, Keys.LIEN_DELIBERATION__LIEN_DELIBERATION_INSTANCE_ID_FKEY, Keys.LIEN_DELIBERATION__LIEN_DELIBERATION_DELIBERATION_ID_FKEY);
     }
 
-    private transient DeliberationTable _deliberation;
     private transient OrganismeTable _organisme;
     private transient InstanceTable _instance;
-
-    public DeliberationTable deliberation() {
-        if (_deliberation == null)
-            _deliberation = new DeliberationTable(this, Keys.LIEN_DELIBERATION__LIEN_DELIBERATION_DELIBERATION_ID_FKEY);
-
-        return _deliberation;
-    }
+    private transient DeliberationTable _deliberation;
 
     public OrganismeTable organisme() {
         if (_organisme == null)
@@ -177,6 +175,13 @@ public class LienDeliberationTable extends TableImpl<LienDeliberationRecord> {
             _instance = new InstanceTable(this, Keys.LIEN_DELIBERATION__LIEN_DELIBERATION_INSTANCE_ID_FKEY);
 
         return _instance;
+    }
+
+    public DeliberationTable deliberation() {
+        if (_deliberation == null)
+            _deliberation = new DeliberationTable(this, Keys.LIEN_DELIBERATION__LIEN_DELIBERATION_DELIBERATION_ID_FKEY);
+
+        return _deliberation;
     }
 
     @Override
@@ -210,12 +215,12 @@ public class LienDeliberationTable extends TableImpl<LienDeliberationRecord> {
     }
 
     // -------------------------------------------------------------------------
-    // Row7 type methods
+    // Row8 type methods
     // -------------------------------------------------------------------------
 
     @Override
     @Nonnull
-    public Row7<UUID, UUID, UUID, UUID, Instant, String, Instant> fieldsRow() {
-        return (Row7) super.fieldsRow();
+    public Row8<UUID, UUID, UUID, UUID, String, Instant, String, Instant> fieldsRow() {
+        return (Row8) super.fieldsRow();
     }
 }
