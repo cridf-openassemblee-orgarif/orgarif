@@ -48,9 +48,5 @@ export const stringToLocalDate = (value: string): LocalDate | undefined => {
   if (value === '') {
     return undefined;
   }
-  const parts = value.split('-');
-  if (parts.length !== 3) {
-    throw Errors._ff7e63f5();
-  }
   return instanciateNominalString(value);
 };

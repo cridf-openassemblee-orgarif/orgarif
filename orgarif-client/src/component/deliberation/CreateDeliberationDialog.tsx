@@ -12,7 +12,7 @@ import { DeliberationDto } from '../../domain/organisme';
 import { LocalDate } from '../../domain/time';
 import { colors } from '../../styles/colors';
 import { TextInput } from '../base-component/TextInput';
-import { stringToLocalDate } from '../base-component/LocalDateInput';
+import { stringToLocalDate } from '../../utils';
 
 export const CreateDeliberationDialog = (props: {
   libelle: string;
