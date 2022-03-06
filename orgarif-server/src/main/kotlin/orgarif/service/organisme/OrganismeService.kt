@@ -26,10 +26,8 @@ class OrganismeService(
                         LienDeliberationDto(
                             it.first.id,
                             DeliberationDto(
-                                it.second.id, it.second.libelle, it.second.deliberationDate
-                            ),
-                            it.first.comment
-                        )
+                                it.second.id, it.second.libelle, it.second.deliberationDate),
+                            it.first.comment)
                     }
                 }
         val representationsByInstance = let {
@@ -38,7 +36,7 @@ class OrganismeService(
             val representantById = let {
                 val ids =
                     representations.map { it.representantId } +
-                            suppleances.map { it.representantId }
+                        suppleances.map { it.representantId }
                 val representants = representantDao.fetch(ids.toSet()).let { representantDtos(it) }
                 representants.associateBy { it.id }
             }
@@ -55,8 +53,7 @@ class OrganismeService(
                                 it.id,
                                 representantById.getValue(it.representantId),
                                 it.startDate,
-                                it.endDate
-                            )
+                                it.endDate)
                         })
                 }
             }
@@ -70,8 +67,7 @@ class OrganismeService(
                     it.presenceSuppleants,
                     lienDeliberations[it.id] ?: emptyList(),
                     representationsByInstance[it.id] ?: emptyList(),
-                    it.status
-                )
+                    it.status)
             }
         return OrganismeDto(
             organisme.id,
@@ -84,8 +80,7 @@ class OrganismeService(
             representationsByInstance[null] ?: emptyList(),
             lienDeliberations[null] ?: emptyList(),
             instances,
-            organisme.status
-        )
+            organisme.status)
     }
 
     fun representantDtos(representants: List<RepresentantDao.Record>): List<RepresentantDto> {
@@ -104,8 +99,7 @@ class OrganismeService(
                 elu?.groupePolitique,
                 elu?.groupePolitiqueCourt,
                 elu?.imageUrl,
-                elu?.actif
-            )
+                elu?.actif)
         }
     }
 }

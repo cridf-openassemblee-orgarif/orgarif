@@ -42,20 +42,22 @@ class CommandController(
     val moveRepresentationCommandHandler: MoveRepresentationCommandHandler,
     val registerCommandHandler: RegisterCommandHandler,
     val updateInstanceNombreRepresentantsCommandHandler:
-    UpdateInstanceNombreRepresentantsCommandHandler,
+        UpdateInstanceNombreRepresentantsCommandHandler,
     val updateInstanceNomCommandHandler: UpdateInstanceNomCommandHandler,
-    val updateInstancePresenceSuppleantsCommandHandler: UpdateInstancePresenceSuppleantsCommandHandler,
+    val updateInstancePresenceSuppleantsCommandHandler:
+        UpdateInstancePresenceSuppleantsCommandHandler,
     val updateInstanceStatusCommandHandler: UpdateInstanceStatusCommandHandler,
     val updateNatureJuridiqueLibelleCommandHandler: UpdateNatureJuridiqueLibelleCommandHandler,
     val updateNatureJuridiqueStatusCommandHandler: UpdateNatureJuridiqueStatusCommandHandler,
     val updateOrganismeNatureJuridiqueCommandHandler: UpdateOrganismeNatureJuridiqueCommandHandler,
     val updateOrganismeNomCommandHandler: UpdateOrganismeNomCommandHandler,
     val updateOrganismeNombreRepresentantsCommandHandler:
-    UpdateOrganismeNombreRepresentantsCommandHandler,
-    val updateOrganismePresenceSuppleantsCommandHandler: UpdateOrganismePresenceSuppleantsCommandHandler,
+        UpdateOrganismeNombreRepresentantsCommandHandler,
+    val updateOrganismePresenceSuppleantsCommandHandler:
+        UpdateOrganismePresenceSuppleantsCommandHandler,
     val updateOrganismeSecteurCommandHandler: UpdateOrganismeSecteurCommandHandler,
     val updateOrganismeTypeStructureCommandCommandHandler:
-    UpdateOrganismeTypeStructureCommandHandler,
+        UpdateOrganismeTypeStructureCommandHandler,
     val updateRepresentationStatusCommandHandler: UpdateRepresentationStatusCommandHandler,
     val updateSecteurLibelleCommandHandler: UpdateSecteurLibelleCommandHandler,
     val updateSecteurStatusCommandHandler: UpdateSecteurStatusCommandHandler,
@@ -95,15 +97,12 @@ class CommandController(
                 jsonResult = null,
                 exceptionStackTrace = null,
                 startDate = dateService.now(),
-                endDate = null
-            )
-        )
+                endDate = null))
         val transaction = transactionManager.getTransaction(null)
 
         try {
             userSessionService.verifyRoleOrFail(
-                CommandConfiguration.role(command), request.remoteAddr, command.javaClass
-            )
+                CommandConfiguration.role(command), request.remoteAddr, command.javaClass)
             idLogService.enableLogging()
             val result = handler.handle(command, userSession, request, response)
             transactionManager.commit(transaction)
@@ -112,8 +111,7 @@ class CommandController(
                     commandLogId,
                     idLogService.getIdsString(),
                     if (result !is EmptyCommandResponse) Serializer.serialize(result) else null,
-                    dateService.now()
-                )
+                    dateService.now())
             } catch (e: Exception) {
                 logger.error(e) { "Exception in command result log..." }
             }
@@ -122,8 +120,7 @@ class CommandController(
             transactionManager.rollback(transaction)
             try {
                 commandLogDao.updateExceptionStackTrace(
-                    commandLogId, ExceptionUtils.getStackTrace(e), dateService.now()
-                )
+                    commandLogId, ExceptionUtils.getStackTrace(e), dateService.now())
             } catch (e2: Exception) {
                 logger.error(e2) { "Exception in command exception log..." }
             }
@@ -151,7 +148,8 @@ class CommandController(
             is UpdateInstanceNombreRepresentantsCommand ->
                 updateInstanceNombreRepresentantsCommandHandler
             is UpdateInstanceNomCommand -> updateInstanceNomCommandHandler
-            is UpdateInstancePresenceSuppleantsCommand -> updateInstancePresenceSuppleantsCommandHandler
+            is UpdateInstancePresenceSuppleantsCommand ->
+                updateInstancePresenceSuppleantsCommandHandler
             is UpdateInstanceStatusCommand -> updateInstanceStatusCommandHandler
             is UpdateNatureJuridiqueLibelleCommand -> updateNatureJuridiqueLibelleCommandHandler
             is UpdateNatureJuridiqueStatusCommand -> updateNatureJuridiqueStatusCommandHandler
@@ -159,7 +157,8 @@ class CommandController(
             is UpdateOrganismeNombreRepresentantsCommand ->
                 updateOrganismeNombreRepresentantsCommandHandler
             is UpdateOrganismeNomCommand -> updateOrganismeNomCommandHandler
-            is UpdateOrganismePresenceSuppleantsCommand -> updateOrganismePresenceSuppleantsCommandHandler
+            is UpdateOrganismePresenceSuppleantsCommand ->
+                updateOrganismePresenceSuppleantsCommandHandler
             is UpdateOrganismeSecteurCommand -> updateOrganismeSecteurCommandHandler
             is UpdateOrganismeTypeStructureCommand ->
                 updateOrganismeTypeStructureCommandCommandHandler
@@ -169,5 +168,5 @@ class CommandController(
             is UpdateTypeStructureLibelleCommand -> updateTypeStructureLibelleCommandHandler
             is UpdateTypeStructureStatusCommand -> updateTypeStructureStatusCommandHandler
         } as
-                CommandHandler<Command, CommandResponse>
+            CommandHandler<Command, CommandResponse>
 }

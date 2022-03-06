@@ -3,13 +3,11 @@ package orgarif.repository
 import java.time.Instant
 import org.jooq.DSLContext
 import org.springframework.stereotype.Repository
-import orgarif.domain.InstanceId
 import orgarif.domain.ItemStatus
 import orgarif.domain.NatureJuridiqueId
 import orgarif.domain.OrganismeId
 import orgarif.domain.SecteurId
 import orgarif.domain.TypeStructureId
-import orgarif.jooq.generated.Tables
 import orgarif.jooq.generated.Tables.ORGANISME
 import orgarif.jooq.generated.tables.records.OrganismeRecord
 import orgarif.utils.toTypeId
@@ -80,7 +78,11 @@ class OrganismeDao(val jooq: DSLContext) {
             .execute()
     }
 
-    fun updatePresenceSuppleants(id: OrganismeId, presenceSuppleants: Boolean, modificationDate: Instant) {
+    fun updatePresenceSuppleants(
+        id: OrganismeId,
+        presenceSuppleants: Boolean,
+        modificationDate: Instant
+    ) {
         jooq.update(ORGANISME)
             .set(ORGANISME.PRESENCE_SUPPLEANTS, presenceSuppleants)
             .set(ORGANISME.LAST_MODIFICATION_DATE, modificationDate)

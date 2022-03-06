@@ -26,9 +26,7 @@ class AddInstanceCommandHandler(
                 presenceSuppleants = false,
                 creationDate = now,
                 status = ItemStatus.live,
-                lastModificationDate = now
-            )
-        )
+                lastModificationDate = now))
         return AddInstanceCommandResponse(instanceId)
     }
 }

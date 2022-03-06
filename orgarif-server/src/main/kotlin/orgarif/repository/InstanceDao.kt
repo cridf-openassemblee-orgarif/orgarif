@@ -64,7 +64,11 @@ class InstanceDao(val jooq: DSLContext) {
             .execute()
     }
 
-    fun updatePresenceSuppleants(id: InstanceId, presenceSuppleants: Boolean, modificationDate: Instant) {
+    fun updatePresenceSuppleants(
+        id: InstanceId,
+        presenceSuppleants: Boolean,
+        modificationDate: Instant
+    ) {
         jooq.update(INSTANCE)
             .set(INSTANCE.PRESENCE_SUPPLEANTS, presenceSuppleants)
             .set(INSTANCE.LAST_MODIFICATION_DATE, modificationDate)
@@ -89,6 +93,5 @@ class InstanceDao(val jooq: DSLContext) {
             r.presenceSuppleants,
             r.creationDate,
             ItemStatus.valueOf(r.status),
-            r.lastModificationDate
-        )
+            r.lastModificationDate)
 }
