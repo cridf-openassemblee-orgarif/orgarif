@@ -50,6 +50,7 @@ export interface DeliberationDto {
 export interface LienDeliberationDto {
   id: LienDeliberationId;
   deliberation: DeliberationDto;
+  comment?: string;
 }
 
 export interface InstanceDto {
@@ -80,10 +81,4 @@ export interface OrganismeDto {
   lienDeliberations: LienDeliberationDto[];
   instances: InstanceDto[];
   status: ItemStatus;
-}
-
-export interface PartialOrganismeOrInstance {
-  nombreRepresentants?: number;
-  representations: RepresentationDto[];
-  lienDeliberations: LienDeliberationDto[];
 }

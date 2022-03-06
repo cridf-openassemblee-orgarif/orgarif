@@ -13,24 +13,16 @@ import { colors } from '../../styles/vars';
 import { assertUnreachable, clientUid } from '../../utils';
 import { asString, NominalString } from '../../utils/nominal-class';
 import { TextInput } from '../base-component/TextInput';
+import { dialogClasses } from '../organisme/edit/dialog-common';
 
 const buttonClass = asString(clientUid());
 
 export const classes = {
-  editBlock: css`
-    h3 {
-      font-size: 1.2rem;
-    }
-    padding: 0 0 20px 0;
-    border: 0;
-    &:not(:first-of-type) {
-      padding-top: 20px;
-      border-top: 1px dashed ${colors.grey};
-    }
-  `,
   editButton: css`
     padding-top: 10px;
-    text-align: right;
+    display: flex;
+    justify-content: flex-end;
+    gap: 10px;
   `,
   table: css`
     border-spacing: 0;
@@ -108,7 +100,7 @@ const EditCategoryComponent = (props: {
         <Dialog open={displayPopup} onClose={() => setDisplayPopup(false)}>
           <DialogTitle>Édition</DialogTitle>
           <DialogContent>
-            <div css={classes.editBlock}>
+            <div css={dialogClasses.editBlock}>
               <h3>Éditer libelle</h3>
               <TextInput
                 name="libelle"
@@ -131,7 +123,7 @@ const EditCategoryComponent = (props: {
                 </Button>
               </div>
             </div>
-            <div css={classes.editBlock}>
+            <div css={dialogClasses.editBlock}>
               <h3>Archivage</h3>
               {(() => {
                 switch (props.kind) {
@@ -188,7 +180,7 @@ const EditCategoryComponent = (props: {
                 </Button>
               </div>
             </div>
-            <div css={classes.editBlock}>
+            <div css={dialogClasses.editBlock}>
               <h3>Suppression</h3>À utiliser en cas d'<b>erreur de saisie</b>{' '}
               uniquement. Si un organisme est encore référencé dans{' '}
               {(() => {
@@ -300,7 +292,7 @@ export const EditCategoriesComponent = (props: {
       <Dialog open={displayAddPopup} onClose={() => setDisplayAddPopup(false)}>
         <DialogTitle>Ajouter</DialogTitle>
         <DialogContent>
-          <div css={classes.editBlock}>
+          <div css={dialogClasses.editBlock}>
             <h3>Libelle</h3>
             <TextInput
               name="libelle"

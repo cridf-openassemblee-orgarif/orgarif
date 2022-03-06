@@ -9,6 +9,8 @@ object OrgarifStringUtils {
 
     fun stripAccents(value: String) = StringUtils.stripAccents(value)
 
+    fun cleanForSearch(value: String) = stripAccents(value).replace("-", " ").lowercase()
+
     // TODO better impl
     fun serializeUuid(uuid: UUID) = uuid.toString().replace("-", "")
     // problem with this implementation with initial 0 (for instance

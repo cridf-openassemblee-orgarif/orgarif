@@ -42,7 +42,11 @@ data class DeliberationDto(
     val deliberationDate: LocalDate
 )
 
-data class LienDeliberationDto(val id: LienDeliberationId, val deliberation: DeliberationDto)
+data class LienDeliberationDto(
+    val id: LienDeliberationId,
+    val deliberation: DeliberationDto,
+    val comment: String?
+)
 
 data class InstanceDto(
     val id: InstanceId,

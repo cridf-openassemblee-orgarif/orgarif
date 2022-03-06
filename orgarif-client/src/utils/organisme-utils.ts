@@ -1,10 +1,11 @@
 import { appContext } from '../ApplicationContext';
-import { DropDestination } from '../component/edit/DragAndDropGlobalContext';
+import { DropDestination } from '../component/organisme/edit/DragAndDropGlobalContext';
 import {
   DeliberationId,
   InstanceId,
   NatureJuridiqueId,
   OrganismeId,
+  RepresentantId,
   RepresentationId,
   SecteurId,
   TypeStructureId
@@ -13,10 +14,8 @@ import {
   InstanceDto,
   ItemStatus,
   OrganismeDto,
-  RepresentantDto,
   RepresentationDto
 } from '../domain/organisme';
-import { LocalDate } from '../domain/time';
 import { pipe } from './Pipe';
 
 // TODO naming utils, actions...
@@ -173,30 +172,36 @@ const onNombreRepresentantsChange = (
   }
 };
 
-const addRepresentation = (
+const addRepresentation = async (
   organisme: OrganismeDto,
   setOrganisme: (o: OrganismeDto) => void,
-  representant: RepresentantDto,
+  representantId: RepresentantId,
   organismeId: OrganismeId,
   instanceId: InstanceId | undefined
 ) => {
-  appContext
-    .commandService()
-    .addRepresentationCommand({
-      representantId: representant.id,
-      organismeId: organismeId,
-      instanceId: instanceId
+  await appContext.commandService().addRepresentationCommand({
+    representantId,
+    organismeId,
+    instanceId
+  });
+  // .then(r => {
+  //   const representation: RepresentationDto = {
+  //     id: r.id,
+  //     representant
+  //   };
+  //   // FIXME
+  //   if (!instanceId) {
+  //     const representations = [...organisme.representations, representation];
+  //     setOrganisme({ ...organisme, representations });
+  //   }
+  // });
+  // TODO faire mieux ? (penser virer le async)
+  return appContext
+    .queryService()
+    .getOrganismeQuery({
+      id: organisme.id
     })
-    .then(r => {
-      const representation: RepresentationDto = {
-        id: r.id,
-        representant
-      };
-      if (!instanceId) {
-        const representations = [...organisme.representations, representation];
-        setOrganisme({ ...organisme, representations });
-      }
-    });
+    .then(r => setOrganisme(r.organisme));
 };
 
 const representations = (
@@ -309,20 +314,28 @@ const addInstance = (
     });
 };
 
-const onNewLienDeliberation = (
+const onNewLienDeliberation = async (
   organisme: OrganismeDto,
   setOrganisme: (o: OrganismeDto) => void,
-  id: DeliberationId,
-  instanceId: InstanceId | undefined
-) => {};
-
-const onNewDeliberationAndLien = (
-  organisme: OrganismeDto,
-  setOrganisme: (o: OrganismeDto) => void,
-  libelle: string,
-  deliberationDate: LocalDate,
-  instanceId: InstanceId | undefined
-) => {};
+  instanceId: InstanceId | undefined,
+  deliberationId: DeliberationId,
+  comment: string | undefined
+): Promise<void> => {
+  await appContext.commandService().addLienDeliberationCommand({
+    organismeId: organisme.id,
+    instanceId,
+    deliberationId,
+    comment
+  });
+  // plus simple parce qu'on a pas le DeliberationDto pour reconstituer le LienDeliberationDto
+  // TODO faire mieux ? (penser virer le async)
+  return appContext
+    .queryService()
+    .getOrganismeQuery({
+      id: organisme.id
+    })
+    .then(r => setOrganisme(r.organisme));
+};
 
 export const organismeActions = (
   organisme: OrganismeDto,
@@ -354,14 +367,14 @@ export const organismeActions = (
     nombre: number | undefined
   ) => onNombreRepresentantsChange(organisme, setOrganisme, instanceId, nombre),
   onAddRepresentation: (
-    representant: RepresentantDto,
+    representantId: RepresentantId,
     organismeId: OrganismeId,
     instanceId: InstanceId | undefined
   ) =>
     addRepresentation(
       organisme,
       setOrganisme,
-      representant,
+      representantId,
       organismeId,
       instanceId
     ),
@@ -379,19 +392,8 @@ export const organismeActions = (
     ),
   onAddInstance: (nom: string) => addInstance(organisme, setOrganisme, nom),
   onNewLienDeliberation: (
+    instanceId: InstanceId | undefined,
     id: DeliberationId,
-    instanceId: InstanceId | undefined
-  ) => onNewLienDeliberation(organisme, setOrganisme, id, instanceId),
-  onNewDeliberationAndLien: (
-    libelle: string,
-    deliberationDate: LocalDate,
-    instanceId: InstanceId | undefined
-  ) =>
-    onNewDeliberationAndLien(
-      organisme,
-      setOrganisme,
-      libelle,
-      deliberationDate,
-      instanceId
-    )
+    comment: string | undefined
+  ) => onNewLienDeliberation(organisme, setOrganisme, instanceId, id, comment)
 });

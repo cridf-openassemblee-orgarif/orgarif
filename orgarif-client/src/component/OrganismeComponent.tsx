@@ -9,6 +9,8 @@ export const OrganismeComponent = (props: { organisme: OrganismeDto }) => {
       css={css`
         width: 100%;
       `}
-    ></div>
+    >
+      {JSON.stringify(props.organisme)}
+    </div>
   );
 };

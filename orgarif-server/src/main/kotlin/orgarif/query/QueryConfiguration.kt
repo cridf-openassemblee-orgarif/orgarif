@@ -10,7 +10,7 @@ object QueryConfiguration {
             is IsLoginAlreadyTakenQuery -> null
             is ListOrganismesBySecteurQuery -> null
             is ListOrganismesQuery -> null
-            is ListRepresentantsQuery -> null
             is SearchDeliberationQuery -> Role.user
+            is SearchRepresentantsQuery -> Role.user
         }
 }

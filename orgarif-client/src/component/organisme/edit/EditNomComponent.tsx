@@ -7,11 +7,12 @@ import Dialog from '@mui/material/Dialog';
 import DialogActions from '@mui/material/DialogActions';
 import * as React from 'react';
 import { PropsWithChildren, ReactElement, useState } from 'react';
-import { ItemStatus } from '../../domain/organisme';
-import { assertUnreachable, clientUid } from '../../utils';
-import { asString } from '../../utils/nominal-class';
-import { TextInput } from '../base-component/TextInput';
-import { classes } from './EditCategoriesComponent';
+import { ItemStatus } from '../../../domain/organisme';
+import { assertUnreachable, clientUid } from '../../../utils';
+import { asString } from '../../../utils/nominal-class';
+import { TextInput } from '../../base-component/TextInput';
+import { classes } from '../../category/EditCategoriesComponent';
+import { dialogClasses } from './dialog-common';
 
 const editClass = asString(clientUid());
 
@@ -67,15 +68,15 @@ export const EditNomComponent = (
             startIcon={<Edit />}
             onClick={() => setDisplayPopup(true)}
           >
-            Éditer
+            Modifier
           </Button>
         </div>
       </div>
       <Dialog open={displayPopup} onClose={cancel}>
         <DialogTitle>Édition</DialogTitle>
         <DialogContent>
-          <div css={classes.editBlock}>
-            <h3>Éditer libelle</h3>
+          <div css={dialogClasses.editBlock}>
+            <h3>Modifier libelle</h3>
             <TextInput
               name="libelle"
               initialValue={nom}
@@ -95,7 +96,7 @@ export const EditNomComponent = (
               </Button>
             </div>
           </div>
-          <div css={classes.editBlock}>
+          <div css={dialogClasses.editBlock}>
             <h3>Archivage</h3>
             {(() => {
               switch (props.kind) {
@@ -122,7 +123,7 @@ export const EditNomComponent = (
               </Button>
             </div>
           </div>
-          <div css={classes.editBlock}>
+          <div css={dialogClasses.editBlock}>
             <h3>Suppression</h3>À utiliser en cas d'<b>erreur de saisie</b>{' '}
             uniquement.
             <div css={classes.editButton}>

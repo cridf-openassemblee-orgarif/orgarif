@@ -23,9 +23,10 @@ export interface AddInstanceCommandResponse {
 }
 
 export interface AddLienDeliberationCommand {
-  deliberationId: DeliberationId;
   organismeId: OrganismeId;
   instanceId?: InstanceId;
+  deliberationId: DeliberationId;
+  comment: string | undefined;
 }
 
 export interface AddLienDeliberationCommandResponse {
@@ -42,16 +43,13 @@ export interface AddRepresentationCommandResponse {
   id: RepresentationId;
 }
 
-export interface CreateDeliberationAndAddLienCommand {
+export interface CreateDeliberationCommand {
   libelle: string;
   deliberationDate: LocalDate;
-  organismeId: OrganismeId;
-  instanceId?: InstanceId;
 }
 
-export interface CreateDeliberationAndAddLienCommandResponse {
+export interface CreateDeliberationCommandResponse {
   deliberationId: DeliberationId;
-  lienDeliberationId: LienDeliberationId;
 }
 
 export interface CreateNatureJuridiqueCommand {
@@ -68,6 +66,15 @@ export interface CreateOrganismeCommand {
 
 export interface CreateOrganismeCommandResponse {
   id: OrganismeId;
+}
+
+export interface CreateRepresentantCommand {
+  prenom: string;
+  nom: string;
+}
+
+export interface CreateRepresentantCommandResponse {
+  representantId: RepresentantId;
 }
 
 export interface CreateSecteurCommand {

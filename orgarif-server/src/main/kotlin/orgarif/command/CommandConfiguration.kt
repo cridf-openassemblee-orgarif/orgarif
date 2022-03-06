@@ -10,9 +10,10 @@ object CommandConfiguration {
             is AddInstanceCommand -> user
             is AddLienDeliberationCommand -> user
             is AddRepresentationCommand -> user
-            is CreateDeliberationAndAddLienCommand -> user
+            is CreateDeliberationCommand -> user
             is CreateNatureJuridiqueCommand -> user
             is CreateOrganismeCommand -> user
+            is CreateRepresentantCommand -> user
             is CreateSecteurCommand -> user
             is CreateTypeStructureCommand -> user
             is LoginCommand -> null

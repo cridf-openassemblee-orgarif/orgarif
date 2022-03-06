@@ -26,11 +26,11 @@ class ListOrganismesQuery : Query()
 
 data class ListOrganismesQueryResponse(val organismes: List<OrganismeListDto>) : QueryResponse()
 
-class ListRepresentantsQuery : Query()
-
-data class ListRepresentantsQueryResponse(val representants: List<RepresentantDto>) :
-    QueryResponse()
-
 data class SearchDeliberationQuery(val searchToken: String) : Query()
 
 data class SearchDeliberationQueryResponse(val results: List<DeliberationDto>) : QueryResponse()
+
+data class SearchRepresentantsQuery(val searchToken: String) : Query()
+
+data class SearchRepresentantsQueryResponse(val representants: List<RepresentantDto>) :
+    QueryResponse()

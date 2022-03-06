@@ -9,18 +9,17 @@ import {
   DroppableProvided,
   DroppableStateSnapshot
 } from 'react-beautiful-dnd';
-import { DeliberationId, InstanceId, OrganismeId } from '../../domain/ids';
 import {
-  InstanceDto,
-  ItemStatus,
-  RepresentantDto
-} from '../../domain/organisme';
-import { LocalDate } from '../../domain/time';
-import { colors } from '../../styles/vars';
-import { asString } from '../../utils/nominal-class';
-import { DragAndDropItemType } from './DragAndDropGlobalContext';
-import { EditNomComponent } from './EditNomComponent';
-import { EditPartialOrganismeOrInstance } from './EditPartialOrganismeOrInstance';
+  DeliberationId,
+  InstanceId,
+  RepresentantId
+} from '../../../../domain/ids';
+import { InstanceDto, ItemStatus } from '../../../../domain/organisme';
+import { colors } from '../../../../styles/vars';
+import { asString } from '../../../../utils/nominal-class';
+import { DragAndDropItemType } from '../DragAndDropGlobalContext';
+import { EditNomComponent } from '../EditNomComponent';
+import { RepresentantsDeliberationsBlock } from '../EditOrganismeComponent';
 
 const instance: DragAndDropItemType = 'instance';
 
@@ -36,7 +35,6 @@ export const InstanceDragDropZone = (props: {
 );
 
 export const EditInstancesComponent = (props: {
-  organismeId: OrganismeId;
   instances: InstanceDto[];
   onNomChange: (instanceId: InstanceId, nom: string, then: () => void) => void;
   onStatusChange: (
@@ -45,23 +43,18 @@ export const EditInstancesComponent = (props: {
     then: () => void
   ) => void;
   onNombreRepresentantsChange: (
-    instanceId: InstanceId | undefined,
+    instanceId: InstanceId,
     nombre: number | undefined
   ) => void;
   onAddRepresentation: (
-    representant: RepresentantDto,
-    organismeId: OrganismeId,
-    instanceId: InstanceId | undefined
-  ) => void;
+    representantId: RepresentantId,
+    instanceId: InstanceId
+  ) => Promise<void>;
   onNewLienDeliberation: (
+    instanceId: InstanceId,
     id: DeliberationId,
-    instanceId: InstanceId | undefined
-  ) => void;
-  onNewDeliberationAndLien: (
-    libelle: string,
-    deliberationDate: LocalDate,
-    instanceId: InstanceId | undefined
-  ) => void;
+    comment: string | undefined
+  ) => Promise<void>;
 }) => {
   return (
     <InstanceDragDropZone>
@@ -91,12 +84,10 @@ export const EditInstancesComponent = (props: {
                   css={css`
                     flex: 1;
                     user-select: none;
-                    // padding: {2 * padding}px;
-                    // margin: 0 0 {padding}px 0;
                     background: ${snapshotDraggable.isDragging
                       ? colors.dragableMoving
                       : colors.white};
-                    margin: 10px 10px;
+                    margin: 10px;
                   `}
                 >
                   <div
@@ -127,16 +118,27 @@ export const EditInstancesComponent = (props: {
                       }
                     />
                   </div>
-                  <EditPartialOrganismeOrInstance
-                    organismeId={props.organismeId}
-                    instanceId={instance.id}
-                    item={instance}
-                    onNombreRepresentantsChange={
-                      props.onNombreRepresentantsChange
+                  <RepresentantsDeliberationsBlock
+                    organismeOrInstanceId={instance.id}
+                    nombreRepresentants={instance.nombreRepresentants}
+                    representations={instance.representations}
+                    onNombreRepresentantsChange={(nombre: number | undefined) =>
+                      props.onNombreRepresentantsChange(instance.id, nombre)
                     }
-                    onAddRepresentation={props.onAddRepresentation}
-                    onNewLienDeliberation={props.onNewLienDeliberation}
-                    onNewDeliberationAndLien={props.onNewDeliberationAndLien}
+                    onAddRepresentation={(representantId: RepresentantId) =>
+                      props.onAddRepresentation(representantId, instance.id)
+                    }
+                    lienDeliberations={instance.lienDeliberations}
+                    onNewLienDeliberation={(
+                      deliberationId: DeliberationId,
+                      comment: string | undefined
+                    ): Promise<void> =>
+                      props.onNewLienDeliberation(
+                        instance.id,
+                        deliberationId,
+                        comment
+                      )
+                    }
                   />
                 </div>
               )}

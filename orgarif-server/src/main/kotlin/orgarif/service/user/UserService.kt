@@ -8,7 +8,6 @@ import orgarif.command.RegisterCommand
 import orgarif.domain.HashedPassword
 import orgarif.domain.Language
 import orgarif.domain.RegisterAndAuthenticateResult
-import orgarif.domain.Role
 import orgarif.error.MailAlreadyRegisteredException
 import orgarif.repository.UserDao
 import orgarif.service.DateService
@@ -103,7 +102,7 @@ class UserService(
                 displayName = command.displayName,
                 language = language,
                 signupDate = dateService.now(),
-                roles = setOf(Role.user),
+                roles = emptySet(),
                 dirtyMail = dirtyMail,
                 formerMails = emptyList())
         userDao.insert(user, hashedPassword)

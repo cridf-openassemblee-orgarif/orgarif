@@ -117,8 +117,8 @@ class ElusSynchronizationService(
                             RepresentantDao.Record(
                                 id = randomService.id(),
                                 eluId = newElu.id,
-                                prenom = null,
-                                nom = null,
+                                prenom = newElu.prenom,
+                                nom = newElu.nom,
                                 creationDate = now,
                                 lastModificationDate = now))
                         InsertResult.insert

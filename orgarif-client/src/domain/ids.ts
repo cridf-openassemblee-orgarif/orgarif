@@ -22,6 +22,7 @@ export type OrgarifId =
   | UserId
   | UserSessionId;
 
+export type BooleanAsNominalString = NominalString<'BooleanAsNominalString'>;
 export type CommandLogId = NominalString<'CommandLogId'>;
 export type DeliberationId = NominalString<'DeliberationId'>;
 export type DeploymentLogId = NominalString<'DeploymentLogId'>;

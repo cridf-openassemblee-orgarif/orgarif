@@ -22,7 +22,8 @@ data class AddInstanceCommandResponse(val id: InstanceId) : CommandResponse()
 data class AddLienDeliberationCommand(
     val deliberationId: DeliberationId,
     val organismeId: OrganismeId,
-    val instanceId: InstanceId?
+    val instanceId: InstanceId?,
+    val comment: String?
 ) : Command()
 
 data class AddLienDeliberationCommandResponse(val lienDeliberationId: LienDeliberationId) :
@@ -36,17 +37,11 @@ data class AddRepresentationCommand(
 
 data class AddRepresentationCommandResponse(val id: RepresentationId) : CommandResponse()
 
-data class CreateDeliberationAndAddLienCommand(
-    val libelle: String,
-    val deliberationDate: LocalDate,
-    val organismeId: OrganismeId,
-    val instanceId: InstanceId?
-) : Command()
+data class CreateDeliberationCommand(val libelle: String, val deliberationDate: LocalDate) :
+    Command()
 
-data class CreateDeliberationAndAddLienCommandResponse(
-    val deliberationId: DeliberationId,
-    val lienDeliberationId: LienDeliberationId
-) : CommandResponse()
+data class CreateDeliberationCommandResponse(val deliberationId: DeliberationId) :
+    CommandResponse()
 
 data class CreateNatureJuridiqueCommand(val libelle: String) : Command()
 
@@ -55,6 +50,11 @@ data class CreateNatureJuridiqueCommandResponse(val id: NatureJuridiqueId) : Com
 data class CreateOrganismeCommand(val nom: String) : Command()
 
 data class CreateOrganismeCommandResponse(val id: OrganismeId) : CommandResponse()
+
+data class CreateRepresentantCommand(val prenom: String, val nom: String) : Command()
+
+data class CreateRepresentantCommandResponse(val representantId: RepresentantId) :
+    CommandResponse()
 
 data class CreateSecteurCommand(val libelle: String) : Command()
 

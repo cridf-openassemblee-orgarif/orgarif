@@ -9,13 +9,13 @@ import {
   DroppableProvided,
   DroppableStateSnapshot
 } from 'react-beautiful-dnd';
-import { InstanceId, OrganismeId } from '../../domain/ids';
-import { RepresentationDto } from '../../domain/organisme';
-import { colors } from '../../styles/vars';
-import { asString } from '../../utils/nominal-class';
-import { EditRepresentationComponent } from '../EditRepresentationComponent';
-import { DragAndDropItemType } from './DragAndDropGlobalContext';
-import { editCommonClasses } from './EditPartialOrganismeOrInstance';
+import { InstanceId, OrganismeId } from '../../../../domain/ids';
+import { RepresentationDto } from '../../../../domain/organisme';
+import { colors } from '../../../../styles/vars';
+import { asString } from '../../../../utils/nominal-class';
+import { DragAndDropItemType } from '../DragAndDropGlobalContext';
+import { editCommonClasses } from '../EditOrganismeComponent';
+import { EditRepresentationListItem } from './EditRepresentationListItem';
 
 const representation: DragAndDropItemType = 'representation';
 
@@ -34,7 +34,7 @@ export const RepresentantDragDropZone = (props: {
   </Droppable>
 );
 
-export const RepresentationListComponent = (props: {
+export const EditRepresentationDragListComponent = (props: {
   organismeOrInstanceId: OrganismeId | InstanceId;
   representations: RepresentationDto[];
 }) => {
@@ -98,7 +98,7 @@ export const RepresentationListComponent = (props: {
                       : colors.clearGrey2};
                   `}
                 >
-                  <EditRepresentationComponent representation={r} />
+                  <EditRepresentationListItem representation={r} />
                 </div>
               )}
             </Draggable>

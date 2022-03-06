@@ -4,7 +4,7 @@ import { ArrowBackIos } from '@mui/icons-material';
 import * as React from 'react';
 import { useEffect, useState } from 'react';
 import { appContext } from '../ApplicationContext';
-import { EditOrganismeComponent } from '../component/edit/EditOrganismeComponent';
+import { EditOrganismeComponent } from '../component/organisme/edit/EditOrganismeComponent';
 import { MainContainer } from '../container/MainContainer';
 import { OrganismeDto } from '../domain/organisme';
 import { LoadingState } from '../interfaces';

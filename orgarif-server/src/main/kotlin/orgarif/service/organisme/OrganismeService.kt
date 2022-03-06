@@ -22,11 +22,12 @@ class OrganismeService(
                 .fetchDeliberationByOrganismeId(id)
                 .groupBy { it.first.instanceId }
                 .mapValues {
-                    it.value.sortedBy { it.second.deliberationDate }.map {
+                    it.value.sortedByDescending { it.second.deliberationDate }.map {
                         LienDeliberationDto(
                             it.first.id,
                             DeliberationDto(
-                                it.second.id, it.second.libelle, it.second.deliberationDate))
+                                it.second.id, it.second.libelle, it.second.deliberationDate),
+                            it.first.comment)
                     }
                 }
         val representationsByInstance = let {

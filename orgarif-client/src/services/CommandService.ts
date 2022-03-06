@@ -6,12 +6,14 @@ import {
   AddLienDeliberationCommandResponse,
   AddRepresentationCommand,
   AddRepresentationCommandResponse,
-  CreateDeliberationAndAddLienCommand,
-  CreateDeliberationAndAddLienCommandResponse,
+  CreateDeliberationCommand,
+  CreateDeliberationCommandResponse,
   CreateNatureJuridiqueCommand,
   CreateNatureJuridiqueCommandResponse,
   CreateOrganismeCommand,
   CreateOrganismeCommandResponse,
+  CreateRepresentantCommand,
+  CreateRepresentantCommandResponse,
   CreateSecteurCommand,
   CreateSecteurCommandResponse,
   CreateTypeStructureCommand,
@@ -56,10 +58,10 @@ export class CommandService {
   ): Promise<AddRepresentationCommandResponse> =>
     this.command('AddRepresentationCommand', command);
 
-  public createDeliberationAndAddLienCommand = (
-    command: CreateDeliberationAndAddLienCommand
-  ): Promise<CreateDeliberationAndAddLienCommandResponse> =>
-    this.command('CreateDeliberationAndAddLienCommand', command);
+  public createDeliberationCommand = (
+    command: CreateDeliberationCommand
+  ): Promise<CreateDeliberationCommandResponse> =>
+    this.command('CreateDeliberationCommand', command);
 
   public createNatureJuridiqueCommand = (
     command: CreateNatureJuridiqueCommand
@@ -70,6 +72,11 @@ export class CommandService {
     command: CreateOrganismeCommand
   ): Promise<CreateOrganismeCommandResponse> =>
     this.command('CreateOrganismeCommand', command);
+
+  public createRepresentantCommand = (
+    command: CreateRepresentantCommand
+  ): Promise<CreateRepresentantCommandResponse> =>
+    this.command('CreateRepresentantCommand', command);
 
   public createSecteurCommand = (
     command: CreateSecteurCommand
