@@ -2,18 +2,11 @@ package orgarif.repository
 
 import org.jooq.TableField
 import org.junit.jupiter.api.Assertions.assertEquals
-import org.junit.jupiter.api.BeforeEach
 import org.junit.jupiter.api.Test
 import org.reflections.ReflectionUtils
-import orgarif.ResetTestDatabase
 import orgarif.jooq.generated.Tables.USER_FILE
 
 internal class UserFileDaoTest {
-
-    @BeforeEach
-    fun init() {
-        ResetTestDatabase.reset(false)
-    }
 
     @Test
     fun `test fields exhaustiveness`() {

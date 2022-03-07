@@ -14,9 +14,7 @@ import { assertUnreachable } from '../utils';
 
 export const RegisterView = () => {
   const [userInfos, setUserInfos] = useRecoilState(state.userInfos);
-  const [registerResult, setRegisterResult] = useState<
-    RegisterResult | undefined
-  >(undefined);
+  const [registerResult, setRegisterResult] = useState<RegisterResult>();
   const register = (registerInput: RegisterFormDto) => {
     const registerCommand: RegisterCommand = registerInput;
     appContext

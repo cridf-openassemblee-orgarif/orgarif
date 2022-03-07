@@ -2,6 +2,8 @@
 # configuration validation
 app.url: http://devorgarif:8300
 #---------------------------------------------------------------------------
+insertInitialData: true
+#---------------------------------------------------------------------------
 server.port: 8300
 database:
   host: localhost

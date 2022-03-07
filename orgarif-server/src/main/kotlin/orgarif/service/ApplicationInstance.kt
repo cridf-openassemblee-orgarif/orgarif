@@ -10,20 +10,16 @@ import org.springframework.core.env.Environment
 import org.springframework.stereotype.Service
 import orgarif.domain.ApplicationEnvironment
 import orgarif.domain.DeploymentLogId
-import orgarif.repository.DeploymentLogDao
 
 @Service
-class ApplicationInstance(
-    val deploymentLogDao: DeploymentLogDao,
-    val environment: Environment,
-    val dateService: DateService,
-    val randomService: RandomService
-) {
+class ApplicationInstance(val environment: Environment, val randomService: RandomService) {
 
     companion object {
         val env =
-            System.getenv("env")?.let { ApplicationEnvironment.valueOf(it) }
-                ?: ApplicationEnvironment.dev
+            (System.getenv("env") ?: System.getProperty("env"))?.let {
+                ApplicationEnvironment.valueOf(it)
+            }
+                ?: ApplicationEnvironment.test
     }
 
     init {
@@ -68,21 +64,6 @@ class ApplicationInstance(
     }
 
     // [doc] deploymentId insertion is lazy in development, which permits a database cleaning during
-    // the application
-    // launch
-    val deploymentId by lazy {
-        val deploymentId = randomService.id<DeploymentLogId>()
-        deploymentLogDao.insert(
-            DeploymentLogDao.Record(
-                deploymentId,
-                gitRevisionLabel,
-                dateService.serverZoneId(),
-                dateService.now(),
-                shutdownDate = null))
-        deploymentId
-    }
-
-    fun setShutdownTime() {
-        deploymentLogDao.updateShutdownTime(deploymentId, dateService.now())
-    }
+    // the application launch
+    val deploymentId by lazy { randomService.id<DeploymentLogId>() }
 }

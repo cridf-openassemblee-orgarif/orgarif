@@ -58,7 +58,8 @@ object GenerateJooqAndDiff {
             // TODO [doc] diff will fail if Config.runDatabase does not exist (not very problematic
             // but can be better)
             JooqGeneration.generateDiff(configuration, generationDatabaseConfiguration, buildDir)
-            ResetDatabase.resetDatabaseSchema(configuration, true)
+            ResetDatabase.resetDatabaseSchema(configuration)
+            ResetDatabase.insertInitialData(configuration)
         } finally {
             DatabaseInitializer.dropDb(generationDatabaseConfiguration)
         }

@@ -14,7 +14,13 @@ export const SimpleForm = (
     const form = event.currentTarget as HTMLFormElement;
     const dto: any = {};
     Array.from(form.elements).forEach(e => {
-      if (e instanceof HTMLInputElement && e.type === 'text') {
+      // TODO why e.type === 'text' initially ??
+      // see HTMLInputTypeAttribute
+      // because of type="submit" ?
+      if (
+        e instanceof HTMLInputElement &&
+        (e.type === 'text' || e.type === 'date')
+      ) {
         dto[e.name] = e.value;
       }
     });

@@ -4,7 +4,6 @@ import jooqutils.DatabaseCleaner
 import jooqutils.DatabaseConfiguration
 import jooqutils.DatabaseInitializer
 import mu.KotlinLogging
-import orgarif.jooqlib.Configuration.configuration
 import orgarif.jooqlib.GenerateJooqAndDiff.sqlCleanResultFile
 import orgarif.jooqlib.GenerateJooqAndDiff.sqlInitiateSchemaResultFile
 import orgarif.jooqlib.GenerateJooqAndDiff.sqlInsertFilesDir
@@ -12,15 +11,18 @@ import orgarif.jooqlib.GenerateJooqAndDiff.sqlSchemaFilesDir
 
 fun main() {
     System.setProperty("logback.configurationFile", "logback-jooq-tooling.xml")
-    ResetDatabase.resetDatabaseSchema(configuration, true)
-    ResetDatabase.logger.info { "[OK] reset database \"${configuration.databaseName}\"" }
+    ResetDatabase.resetDatabaseSchema(Configuration.configuration)
+    ResetDatabase.insertInitialData(Configuration.configuration)
+    ResetDatabase.logger.info {
+        "[OK] reset database \"${Configuration.configuration.databaseName}\""
+    }
 }
 
 object ResetDatabase {
     // TODO[doc] generated directory can be deleted if there is a problem
     internal val logger = KotlinLogging.logger {}
 
-    fun resetDatabaseSchema(configuration: DatabaseConfiguration, insertInitialData: Boolean) {
+    fun resetDatabaseSchema(configuration: DatabaseConfiguration) {
         logger.info {
             "Reset database \"${configuration.databaseName}\", using directory : $sqlSchemaFilesDir"
         }
@@ -31,9 +33,10 @@ object ResetDatabase {
         logger.info { "Initialize database schema \"${configuration.databaseName}\"" }
         DatabaseInitializer.initializeSchema(
             configuration, sqlSchemaFilesDir, sqlInitiateSchemaResultFile)
-        if (insertInitialData) {
-            logger.info { "Insert initial data, using directory : $sqlInsertFilesDir" }
-            DatabaseInitializer.insert(configuration, sqlInsertFilesDir)
-        }
+    }
+
+    fun insertInitialData(configuration: DatabaseConfiguration) {
+        logger.info { "Insert initial data, using directory : $sqlInsertFilesDir" }
+        DatabaseInitializer.insert(configuration, sqlInsertFilesDir)
     }
 }
