@@ -49,24 +49,31 @@ export const EditOrganismeView = (props: {
   }, [props.routeParams.id]);
   return (
     <MainContainer>
-      <RouteLink route={{ name: 'ListOrganismesRoute' }}>
-        <span
-          css={css`
-            top: 6px;
-            font-size: 10px;
-          `}
-        >
-          <ArrowBackIos fontSize="small" />
-        </span>{' '}
-        Retour liste des organismes
-      </RouteLink>
-      {displayLoading(loading)}
-      {organisme && (
-        <EditOrganismeComponent
-          organisme={organisme}
-          setOrganisme={setOrganisme}
-        />
-      )}
+      <div
+        css={css`
+          width: 80%;
+          margin: auto;
+        `}
+      >
+        <RouteLink route={{ name: 'ListOrganismesRoute' }}>
+          <span
+            css={css`
+              top: 6px;
+              font-size: 10px;
+            `}
+          >
+            <ArrowBackIos fontSize="small" />
+          </span>{' '}
+          Retour liste des organismes
+        </RouteLink>
+        {displayLoading(loading)}
+        {organisme && (
+          <EditOrganismeComponent
+            organisme={organisme}
+            setOrganisme={setOrganisme}
+          />
+        )}
+      </div>
     </MainContainer>
   );
 };

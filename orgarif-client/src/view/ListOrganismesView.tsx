@@ -22,29 +22,36 @@ export const ListOrganismesView = () => {
   }, []);
   return (
     <MainContainer>
-      <h1>Liste des organismes</h1>
-      <AddOrganismeComponent />
-      {!organismes && <div>Chargement...</div>}
-      {organismes &&
-        organismes.map(o => (
-          <div
-            key={asString(o.id)}
-            css={css`
-              background: ${colors.clearGrey};
-              margin: 2px 0;
-              padding: 4px;
-            `}
-          >
-            <h2>{o.nom}</h2>
-            {/*<RouteLink route={{ name: 'OrganismeRoute', id: o.id }}>*/}
-            {/*  view*/}
-            {/*</RouteLink>*/}
-            {/*<br />*/}
-            <RouteLink route={{ name: 'EditOrganismeRoute', id: o.id }}>
-              Éditer
-            </RouteLink>
-          </div>
-        ))}
+      <div
+        css={css`
+          width: 80%;
+          margin: auto;
+        `}
+      >
+        <h1>Liste des organismes</h1>
+        <AddOrganismeComponent />
+        {!organismes && <div>Chargement...</div>}
+        {organismes &&
+          organismes.map(o => (
+            <div
+              key={asString(o.id)}
+              css={css`
+                background: ${colors.clearGrey};
+                margin: 2px 0;
+                padding: 4px;
+              `}
+            >
+              <h2>{o.nom}</h2>
+              {/*<RouteLink route={{ name: 'OrganismeRoute', id: o.id }}>*/}
+              {/*  view*/}
+              {/*</RouteLink>*/}
+              {/*<br />*/}
+              <RouteLink route={{ name: 'EditOrganismeRoute', id: o.id }}>
+                Éditer
+              </RouteLink>
+            </div>
+          ))}
+      </div>
     </MainContainer>
   );
 };
