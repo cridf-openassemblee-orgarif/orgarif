@@ -73,8 +73,9 @@ data class OrganismeListDto(
 data class OrganismeDto(
     val id: OrganismeId,
     val nom: String,
-    val secteurId: SecteurId?,
+    val departementId: DepartementId?,
     val natureJuridiqueId: NatureJuridiqueId?,
+    val secteurId: SecteurId?,
     val typeStructureId: TypeStructureId?,
     val nombreRepresentants: Int?,
     val presenceSuppleants: Boolean,

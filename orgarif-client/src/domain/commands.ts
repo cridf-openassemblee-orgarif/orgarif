@@ -182,6 +182,11 @@ export interface UpdateNatureJuridiqueStatusCommand {
   status: ItemStatus;
 }
 
+export interface UpdateOrganismeDepartementCommand {
+  id: OrganismeId;
+  departementId: DepartementId | undefined;
+}
+
 export interface UpdateOrganismeNatureJuridiqueCommand {
   id: OrganismeId;
   natureJuridiqueId: NatureJuridiqueId | undefined;

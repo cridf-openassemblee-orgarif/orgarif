@@ -126,6 +126,11 @@ data class UpdateNatureJuridiqueLibelleCommand(val id: NatureJuridiqueId, val li
 data class UpdateNatureJuridiqueStatusCommand(val id: NatureJuridiqueId, val status: ItemStatus) :
     Command()
 
+data class UpdateOrganismeDepartementCommand(
+    val id: OrganismeId,
+    val departementId: DepartementId?
+) : Command()
+
 data class UpdateOrganismeNatureJuridiqueCommand(
     val id: OrganismeId,
     val natureJuridiqueId: NatureJuridiqueId?

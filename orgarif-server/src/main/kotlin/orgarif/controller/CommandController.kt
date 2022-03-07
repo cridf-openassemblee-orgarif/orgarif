@@ -53,6 +53,7 @@ class CommandController(
     val updateInstanceStatusCommandHandler: UpdateInstanceStatusCommandHandler,
     val updateNatureJuridiqueLibelleCommandHandler: UpdateNatureJuridiqueLibelleCommandHandler,
     val updateNatureJuridiqueStatusCommandHandler: UpdateNatureJuridiqueStatusCommandHandler,
+    val updateOrganismeDepartementCommandHandler: UpdateOrganismeDepartementCommandHandler,
     val updateOrganismeNatureJuridiqueCommandHandler: UpdateOrganismeNatureJuridiqueCommandHandler,
     val updateOrganismeNomCommandHandler: UpdateOrganismeNomCommandHandler,
     val updateOrganismeNombreRepresentantsCommandHandler:
@@ -162,6 +163,7 @@ class CommandController(
             is UpdateInstanceStatusCommand -> updateInstanceStatusCommandHandler
             is UpdateNatureJuridiqueLibelleCommand -> updateNatureJuridiqueLibelleCommandHandler
             is UpdateNatureJuridiqueStatusCommand -> updateNatureJuridiqueStatusCommandHandler
+            is UpdateOrganismeDepartementCommand -> updateOrganismeDepartementCommandHandler
             is UpdateOrganismeNatureJuridiqueCommand -> updateOrganismeNatureJuridiqueCommandHandler
             is UpdateOrganismeNombreRepresentantsCommand ->
                 updateOrganismeNombreRepresentantsCommandHandler

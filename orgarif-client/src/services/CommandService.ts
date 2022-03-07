@@ -34,6 +34,7 @@ import {
   UpdateInstanceStatusCommand,
   UpdateNatureJuridiqueLibelleCommand,
   UpdateNatureJuridiqueStatusCommand,
+  UpdateOrganismeDepartementCommand,
   UpdateOrganismeNatureJuridiqueCommand,
   UpdateOrganismeNombreRepresentantsCommand,
   UpdateOrganismeNomCommand,
@@ -152,6 +153,11 @@ export class CommandService {
     command: UpdateNatureJuridiqueStatusCommand
   ): Promise<void> =>
     this.command('UpdateNatureJuridiqueStatusCommand', command);
+
+  public updateOrganismeDepartementCommand = (
+    command: UpdateOrganismeDepartementCommand
+  ): Promise<void> =>
+    this.command('UpdateOrganismeDepartementCommand', command);
 
   public updateOrganismeNatureJuridiqueCommand = (
     command: UpdateOrganismeNatureJuridiqueCommand

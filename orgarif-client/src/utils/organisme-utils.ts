@@ -2,6 +2,7 @@ import { appContext } from '../ApplicationContext';
 import { DropDestination } from '../component/organisme/edit/DragAndDropGlobalContext';
 import {
   DeliberationId,
+  DepartementId,
   InstanceId,
   NatureJuridiqueId,
   OrganismeId,
@@ -96,6 +97,18 @@ const onInstanceStatusChange = (
       });
       setOrganisme({ ...organisme, instances });
     });
+
+const onDepartementChange = (
+  organisme: OrganismeDto,
+  setOrganisme: (o: OrganismeDto) => void,
+  departementId: DepartementId | undefined
+) => {
+  setOrganisme({ ...organisme, departementId });
+  appContext.commandService().updateOrganismeDepartementCommand({
+    id: organisme.id,
+    departementId
+  });
+};
 
 const onNatureJuridiqueChange = (
   organisme: OrganismeDto,
@@ -365,6 +378,8 @@ export const organismeActions = (
     onInstanceNomChange(organisme, setOrganisme, instanceId, nom),
   onInstanceStatusChange: (instanceId: InstanceId, status: ItemStatus) =>
     onInstanceStatusChange(organisme, setOrganisme, instanceId, status),
+  onDepartementChange: (departementId: DepartementId | undefined) =>
+    onDepartementChange(organisme, setOrganisme, departementId),
   onNatureJuridiqueChange: (natureJuridiqueId: NatureJuridiqueId | undefined) =>
     onNatureJuridiqueChange(organisme, setOrganisme, natureJuridiqueId),
   onSecteurChange: (secteurId: SecteurId | undefined) =>

@@ -1,10 +1,16 @@
 import { atom, selector } from 'recoil';
 import {
+  Departement,
   NatureJuridique,
   Secteur,
   TypeStructure
 } from '../domain/bootstrap-data';
-import { NatureJuridiqueId, SecteurId, TypeStructureId } from '../domain/ids';
+import {
+  DepartementId,
+  NatureJuridiqueId,
+  SecteurId,
+  TypeStructureId
+} from '../domain/ids';
 import { compareByString } from '../utils';
 import { dict, Dict } from '../utils/nominal-class';
 
@@ -15,6 +21,11 @@ export const state = {
     default: bootstrapData.categories.departements.sort(
       compareByString(i => i.code)
     )
+  }),
+  departementsById: selector({
+    key: 'departementsById',
+    get: ({ get }): Dict<DepartementId, Departement> =>
+      dict(get(state.departements).map(n => [n.id, n]))
   }),
   natureJuridiques: atom({
     key: 'natureJuridiques',

@@ -4,6 +4,7 @@ import * as React from 'react';
 import { useRecoilValue } from 'recoil';
 import { Category } from '../../../domain/bootstrap-data';
 import {
+  DepartementId,
   NatureJuridiqueId,
   OrgarifId,
   SecteurId,
@@ -27,7 +28,7 @@ const EditOrganismeCategoryComponent = <
 }) => {
   const options: SelectOption<OrgarifId>[] = props.categoryList.map(e => ({
     value: e.id,
-    label: e.libelle
+    label: e.libelle + ('code' in e ? ' (' + e.code + ')' : '')
   }));
   options.unshift({
     value: undefined,
@@ -51,6 +52,19 @@ const EditOrganismeCategoryComponent = <
     </div>
   );
 };
+
+export const EditOrganismeDepartementComponent = (props: {
+  departementId: DepartementId | undefined;
+  onChange: (id: DepartementId | undefined) => void;
+}) => (
+  <EditOrganismeCategoryComponent
+    label="Département"
+    categoryList={useRecoilValue(state.departements)}
+    categoryById={useRecoilValue(state.departementsById)}
+    currentId={props.departementId}
+    onChange={props.onChange}
+  />
+);
 
 export const EditOrganismeNatureJuridiqueComponent = (props: {
   natureJuridiqueId: NatureJuridiqueId | undefined;

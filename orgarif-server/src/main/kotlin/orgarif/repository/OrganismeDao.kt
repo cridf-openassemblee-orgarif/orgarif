@@ -53,6 +53,18 @@ class OrganismeDao(val jooq: DSLContext) {
 
     fun fetch(id: OrganismeId) = fetchOrNull(id) ?: throw IllegalArgumentException("$id")
 
+    fun updateDepartementId(
+        id: OrganismeId,
+        departementId: DepartementId?,
+        modificationDate: Instant
+    ) {
+        jooq.update(ORGANISME)
+            .set(ORGANISME.DEPARTEMENT_ID, departementId?.rawId)
+            .set(ORGANISME.LAST_MODIFICATION_DATE, modificationDate)
+            .where(ORGANISME.ID.equal(id.rawId))
+            .execute()
+    }
+
     fun updateNatureJuridiqueId(
         id: OrganismeId,
         natureJuridiqueId: NatureJuridiqueId?,

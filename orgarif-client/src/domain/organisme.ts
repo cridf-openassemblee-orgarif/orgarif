@@ -1,5 +1,6 @@
 import {
   DeliberationId,
+  DepartementId,
   InstanceId,
   LienDeliberationId,
   NatureJuridiqueId,
@@ -74,8 +75,9 @@ export interface OrganismeListDto {
 export interface OrganismeDto {
   id: OrganismeId;
   nom: string;
-  secteurId?: SecteurId;
+  departementId?: DepartementId;
   natureJuridiqueId?: NatureJuridiqueId;
+  secteurId?: SecteurId;
   typeStructureId?: TypeStructureId;
   nombreRepresentants?: number;
   presenceSuppleants: boolean;

@@ -18,6 +18,7 @@ import { EditDeliberationListComponent } from './deliberation/EditDeliberationLi
 import { DragAndDropGlobalContext } from './DragAndDropGlobalContext';
 import { EditNomComponent } from './EditNomComponent';
 import {
+  EditOrganismeDepartementComponent,
   EditOrganismeNatureJuridiqueComponent,
   EditOrganismeSecteurComponent,
   EditOrganismeTypeStructureComponent
@@ -41,7 +42,7 @@ const classes = {
   categories: css`
     margin: 4px;
     @media (${TABLET}) {
-      width: 33.33%;
+      width: 50%;
     }
   `,
   separator: css`
@@ -156,11 +157,27 @@ export const EditOrganismeComponent = (props: {
           `}
         >
           <div css={classes.categories}>
+            <EditOrganismeDepartementComponent
+              departementId={organisme.departementId}
+              onChange={actions.onDepartementChange}
+            />
+          </div>
+          <div css={classes.categories}>
             <EditOrganismeNatureJuridiqueComponent
               natureJuridiqueId={organisme.natureJuridiqueId}
               onChange={actions.onNatureJuridiqueChange}
             />
           </div>
+        </div>
+        <div
+          css={css`
+            display: flex;
+            flex-direction: column;
+            @media (${TABLET}) {
+              flex-direction: row;
+            }
+          `}
+        >
           <div css={classes.categories}>
             <EditOrganismeSecteurComponent
               secteurId={organisme.secteurId}

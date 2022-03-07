@@ -72,8 +72,9 @@ class OrganismeService(
         return OrganismeDto(
             organisme.id,
             organisme.nom,
-            organisme.secteurId,
+            organisme.departementId,
             organisme.natureJuridiqueId,
+            organisme.secteurId,
             organisme.typeStructureId,
             organisme.nombreRepresentants,
             organisme.presenceSuppleants,
