@@ -12,6 +12,7 @@ import { OrganismeListDto } from '../domain/organisme';
 import { RouteLink } from '../routing/RouteLink';
 import { colors } from '../styles/colors';
 import { asString } from '../utils/nominal-class';
+import { AddOrganismeComponent } from '../component/organisme/edit/AddOrganismeComponent';
 
 export const ListOrganismesView = () => {
   const [organismes, setOrganismes] = useState<OrganismeListDto[]>();
@@ -23,36 +24,10 @@ export const ListOrganismesView = () => {
         setOrganismes(r.organismes);
       });
   }, []);
-  const newOrganismeOnSubmit = (dto: { nom: string }) => {
-    if (dto.nom !== '') {
-      appContext
-        .commandService()
-        .createOrganismeCommand(dto)
-        .then(r => {
-          appContext.applicationHistory().goTo({
-            name: 'EditOrganismeRoute',
-            id: r.id
-          });
-        });
-    }
-  };
   return (
     <MainContainer>
       <h1>Liste des organismes</h1>
-      <Button
-        startIcon={<Add />}
-        variant="outlined"
-        color="primary"
-        size="small"
-      >
-        Ajouter un organisme
-      </Button>
-      <SimpleForm onSubmit={newOrganismeOnSubmit}>
-        <TextInput name="nom" label="Nouvel organisme" />
-        <Button type="submit" color="primary">
-          ok
-        </Button>
-      </SimpleForm>
+      <AddOrganismeComponent />
       {!organismes && <div>Chargement...</div>}
       {organismes &&
         organismes.map(o => (

@@ -25,11 +25,11 @@ export const EditNomComponent = (
     titleElement: ReactElement;
   }>
 ) => {
-  const [displayPopup, setDisplayPopup] = useState(false);
+  const [displayDialog, setDisplayDialog] = useState(false);
   const [nom, setNom] = useState(props.nom);
   const cancel = () => {
     setNom(props.nom);
-    setDisplayPopup(false);
+    setDisplayDialog(false);
   };
   return (
     <React.Fragment>
@@ -66,13 +66,13 @@ export const EditNomComponent = (
             `}
             className={editClass}
             startIcon={<Edit />}
-            onClick={() => setDisplayPopup(true)}
+            onClick={() => setDisplayDialog(true)}
           >
             Modifier
           </Button>
         </div>
       </div>
-      <Dialog open={displayPopup} onClose={cancel}>
+      <Dialog open={displayDialog} onClose={cancel}>
         <DialogTitle>Édition</DialogTitle>
         <DialogContent>
           <div css={dialogClasses.editBlock}>
@@ -89,7 +89,7 @@ export const EditNomComponent = (
                 color="primary"
                 size="small"
                 onClick={() =>
-                  props.onUpdateNom(nom, () => setDisplayPopup(false))
+                  props.onUpdateNom(nom, () => setDisplayDialog(false))
                 }
               >
                 Enregistrer
@@ -116,7 +116,7 @@ export const EditNomComponent = (
                 color="warning"
                 size="small"
                 onClick={() =>
-                  props.onUpdateStatus('archive', () => setDisplayPopup(false))
+                  props.onUpdateStatus('archive', () => setDisplayDialog(false))
                 }
               >
                 Archiver
@@ -133,7 +133,7 @@ export const EditNomComponent = (
                 color="error"
                 size="small"
                 onClick={() =>
-                  props.onUpdateStatus('trash', () => setDisplayPopup(false))
+                  props.onUpdateStatus('trash', () => setDisplayDialog(false))
                 }
               >
                 Supprimer
@@ -142,7 +142,7 @@ export const EditNomComponent = (
           </div>
         </DialogContent>
         <DialogActions>
-          <Button onClick={() => setDisplayPopup(false)} color="primary">
+          <Button onClick={() => setDisplayDialog(false)} color="primary">
             Annuler
           </Button>
         </DialogActions>

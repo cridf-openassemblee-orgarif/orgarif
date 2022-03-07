@@ -14,9 +14,6 @@ import {
 } from '../../../base-component/AutocompleteInput';
 import { LoadingState } from '../../../../interfaces';
 
-// type DisplayPopup = boolean;
-// type CreateDeliberationLibelle = string;
-
 export const SelectDeliberationInput = (props: {
   selection: DeliberationDto | undefined;
   excludeDeliberations: DeliberationId[];

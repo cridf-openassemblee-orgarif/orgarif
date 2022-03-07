@@ -71,7 +71,7 @@ const EditCategoryComponent = (props: {
     then: () => void
   ) => void;
 }) => {
-  const [displayPopup, setDisplayPopup] = useState(false);
+  const [displayDialog, setDisplayDialog] = useState(false);
   const [updatedLibelle, setUpdatedLibelle] = useState(props.category.libelle);
   return (
     <React.Fragment>
@@ -92,12 +92,12 @@ const EditCategoryComponent = (props: {
             `}
             className={buttonClass}
             startIcon={<Edit />}
-            onClick={() => setDisplayPopup(true)}
+            onClick={() => setDisplayDialog(true)}
           >
             Éditer
           </Button>
         </td>
-        <Dialog open={displayPopup} onClose={() => setDisplayPopup(false)}>
+        <Dialog open={displayDialog} onClose={() => setDisplayDialog(false)}>
           <DialogTitle>Édition</DialogTitle>
           <DialogContent>
             <div css={dialogClasses.editBlock}>
@@ -115,7 +115,7 @@ const EditCategoryComponent = (props: {
                   size="small"
                   onClick={() =>
                     props.onChange(props.category.id, updatedLibelle, () =>
-                      setDisplayPopup(false)
+                      setDisplayDialog(false)
                     )
                   }
                 >
@@ -172,7 +172,7 @@ const EditCategoryComponent = (props: {
                   size="small"
                   onClick={() =>
                     props.onUpdateStatus(props.category.id, 'archive', () =>
-                      setDisplayPopup(false)
+                      setDisplayDialog(false)
                     )
                   }
                 >
@@ -204,7 +204,7 @@ const EditCategoryComponent = (props: {
                   size="small"
                   onClick={() =>
                     props.onUpdateStatus(props.category.id, 'trash', () =>
-                      setDisplayPopup(false)
+                      setDisplayDialog(false)
                     )
                   }
                 >
@@ -214,7 +214,7 @@ const EditCategoryComponent = (props: {
             </div>
           </DialogContent>
           <DialogActions>
-            <Button onClick={() => setDisplayPopup(false)} color="primary">
+            <Button onClick={() => setDisplayDialog(false)} color="primary">
               Annuler
             </Button>
           </DialogActions>
