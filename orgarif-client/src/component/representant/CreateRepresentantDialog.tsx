@@ -10,6 +10,8 @@ import { useEffect, useState } from 'react';
 import { appContext } from '../../ApplicationContext';
 import { RepresentantDto } from '../../domain/organisme';
 import { TextInput } from '../base-component/TextInput';
+import { LoadingState } from '../../interfaces';
+import { LoadingButton } from '../base-component/LoadingButton';
 
 const extractPrenomNom = (nomComplet: string) => {
   const parts = nomComplet.split(' ');
@@ -29,7 +31,7 @@ export const CreateRepresentantDialog = (props: {
   close: () => void;
   onNewRepresentant: (representantDto: RepresentantDto) => void;
 }) => {
-  const [dialogLoading, setDialogLoading] = useState(false);
+  const [loading, setLoading] = useState<LoadingState>('idle');
   const extract = extractPrenomNom(props.nomComplet);
   const [prenom, setPrenom] = useState(extract.prenom);
   const [nom, setNom] = useState(extract.nom);
@@ -39,12 +41,12 @@ export const CreateRepresentantDialog = (props: {
     setNom(nom);
   }, [props.nomComplet]);
   const onSubmit = () => {
-    setDialogLoading(true);
+    setLoading('loading');
     appContext
       .commandService()
       .createRepresentantCommand({ prenom, nom })
       .then(r => {
-        setDialogLoading(false);
+        setLoading('idle');
         const representant: RepresentantDto = {
           id: r.representantId,
           isElu: false,
@@ -89,33 +91,9 @@ export const CreateRepresentantDialog = (props: {
         <Button onClick={props.close} color="primary">
           Annuler
         </Button>
-        <div
-          css={css`
-            padding-left: 10px;
-          `}
-        >
-          <Button
-            variant="contained"
-            color="primary"
-            disabled={dialogLoading}
-            onClick={onSubmit}
-          >
-            Ajouter
-          </Button>
-          {dialogLoading && (
-            <div
-              css={css`
-                position: absolute;
-                top: 50%;
-                left: 50%;
-                margin-top: -12px;
-                margin-left: -12px;
-              `}
-            >
-              <CircularProgress size={24} />
-            </div>
-          )}
-        </div>
+        <LoadingButton loadingState={loading} onClick={onSubmit}>
+          Ajouter
+        </LoadingButton>
       </DialogActions>
     </Dialog>
   );

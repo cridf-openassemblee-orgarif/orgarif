@@ -17,6 +17,7 @@ import { TextInput } from '../../../base-component/TextInput';
 import { CreateDeliberationDialog } from '../../../deliberation/CreateDeliberationDialog';
 import { SelectDeliberationInput } from './SelectDeliberationInput';
 import { LoadingState } from '../../../../interfaces';
+import { LoadingButton } from '../../../base-component/LoadingButton';
 
 export const AddLienDeliberationDialog = (props: {
   display: boolean;
@@ -36,7 +37,6 @@ export const AddLienDeliberationDialog = (props: {
     useState('');
   const [comment, setComment] = useState('');
   // const [dialogLibelle, setDialogLibelle] = useState('');
-  const [loading, setLoading] = useState<LoadingState>('idle');
   const [deliberations, setDeliberations] = useState<
     (DeliberationDto | string)[]
   >([]);
@@ -44,7 +44,7 @@ export const AddLienDeliberationDialog = (props: {
   // auquel cas deliberations sera un array vide... mais c'est aussi le cas au départ
   const [alreadySet, setAlreadySet] = useState(false);
   const [delibMandatory, setDelibMandatory] = useState(false);
-  const [submitting, setSubmitting] = useState(false);
+  const [loading, setLoading] = useState<LoadingState>('idle');
   // search suggestions
   // TODO plutot prévenir si delib déjà liée
   // const onInputChange = (event: React.ChangeEvent<{}>, value: string) => {
@@ -62,13 +62,13 @@ export const AddLienDeliberationDialog = (props: {
       return;
     }
     setDelibMandatory(false);
-    setSubmitting(true);
+    setLoading('loading');
     props
       .onNewLienDeliberation(
         selectedDeliberation.id,
         comment !== '' ? comment : undefined
       )
-      .then(() => setSubmitting(false));
+      .then(() => setLoading('error'));
   };
   return (
     <React.Fragment>
@@ -124,29 +124,9 @@ export const AddLienDeliberationDialog = (props: {
           <Button onClick={props.onClose} color="primary">
             Annuler
           </Button>
-          <div>
-            <Button
-              variant="contained"
-              color="primary"
-              disabled={submitting}
-              onClick={onSubmit}
-            >
-              Ajouter
-            </Button>
-            {submitting && (
-              <div
-                css={css`
-                  position: absolute;
-                  top: 50%;
-                  left: 50%;
-                  margin-top: -12px;
-                  margin-left: -12px;
-                `}
-              >
-                <CircularProgress size={24} />
-              </div>
-            )}
-          </div>
+          <LoadingButton loadingState={loading} onClick={onSubmit}>
+            Ajouter
+          </LoadingButton>
         </DialogActions>
       </Dialog>
       <CreateDeliberationDialog
