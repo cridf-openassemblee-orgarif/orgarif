@@ -9,6 +9,7 @@ import { colors } from '../../../../styles/colors';
 import { clientUid } from '../../../../utils';
 import { asString } from '../../../../utils/nominal-class';
 import { EditRepresentationDiaglog } from './EditRepresentationDialog';
+import { formatLocaleDate } from '../../../../simple-fr';
 
 const actionsClass = asString(clientUid());
 
@@ -62,7 +63,7 @@ export const EditRepresentationListItem = (props: {
                   font-style: italic;
                 `}
               >
-                (à partir du {props.representation.startDate})
+                (à partir du {formatLocaleDate(props.representation.startDate)})
               </span>
             )}
           </div>
@@ -92,7 +93,8 @@ export const EditRepresentationListItem = (props: {
                     font-style: italic;
                   `}
                 >
-                  (à partir du {props.representation.suppleance.startDate})
+                  (à partir du{' '}
+                  {formatLocaleDate(props.representation.suppleance.startDate)})
                 </span>
               )}
             </div>
