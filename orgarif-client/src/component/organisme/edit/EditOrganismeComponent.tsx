@@ -1,7 +1,5 @@
 /** @jsxImportSource @emotion/react */
 import { css } from '@emotion/react';
-import { Add } from '@mui/icons-material';
-import { Button } from '@mui/material';
 import * as React from 'react';
 import {
   DeliberationId,

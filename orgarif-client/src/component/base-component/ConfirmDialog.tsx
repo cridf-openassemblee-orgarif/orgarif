@@ -29,15 +29,13 @@ export const ConfirmDialog = (props: {
         <Button onClick={props.onClose} color="primary">
           Annuler
         </Button>
-        <div>
-          <Button
-            variant="contained"
-            color={props.confirmButtonColor}
-            onClick={props.onConfirm}
-          >
-            {props.confirmButtonLabel}
-          </Button>
-        </div>
+        <Button
+          variant="contained"
+          color={props.confirmButtonColor}
+          onClick={props.onConfirm}
+        >
+          {props.confirmButtonLabel}
+        </Button>
       </DialogActions>
     </Dialog>
   );

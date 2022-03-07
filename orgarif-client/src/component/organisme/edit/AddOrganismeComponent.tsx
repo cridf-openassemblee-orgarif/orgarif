@@ -68,31 +68,29 @@ export const AddOrganismeComponent = () => {
           <Button onClick={() => setDisplayDialog(false)} color="primary">
             Annuler
           </Button>
-          <div>
-            <Button
-              type="submit"
-              variant="contained"
-              color="primary"
-              size="small"
-              onClick={() => {
-                if (nom === '') {
-                  setDisplayError(true);
-                  return;
-                }
-                appContext
-                  .commandService()
-                  .createOrganismeCommand({ nom })
-                  .then(r => {
-                    appContext.applicationHistory().goTo({
-                      name: 'EditOrganismeRoute',
-                      id: r.id
-                    });
+          <Button
+            type="submit"
+            variant="contained"
+            color="primary"
+            size="small"
+            onClick={() => {
+              if (nom === '') {
+                setDisplayError(true);
+                return;
+              }
+              appContext
+                .commandService()
+                .createOrganismeCommand({ nom })
+                .then(r => {
+                  appContext.applicationHistory().goTo({
+                    name: 'EditOrganismeRoute',
+                    id: r.id
                   });
-              }}
-            >
-              Créer organisme
-            </Button>
-          </div>
+                });
+            }}
+          >
+            Créer organisme
+          </Button>
         </DialogActions>
       </Dialog>
     </>

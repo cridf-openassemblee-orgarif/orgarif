@@ -2,19 +2,15 @@
 import { css } from '@emotion/react';
 import {
   Button,
-  CircularProgress,
   Dialog,
   DialogActions,
   DialogContent,
   DialogTitle
 } from '@mui/material';
 import * as React from 'react';
-import { useEffect, useState } from 'react';
+import { useState } from 'react';
 import { RepresentantId } from '../../../../domain/ids';
-import {
-  RepresentantDto,
-  RepresentationDto
-} from '../../../../domain/organisme';
+import { RepresentantDto } from '../../../../domain/organisme';
 import { colors } from '../../../../styles/colors';
 import { TextInput } from '../../../base-component/TextInput';
 import { CreateRepresentantDialog } from '../../../representant/CreateRepresentantDialog';
@@ -26,10 +22,8 @@ import { LoadingState } from '../../../../interfaces';
 import { LoadingButton } from '../../../base-component/LoadingButton';
 
 const AddRepresentationComponent = (props: {
-  onChange: (
-    representantId: RepresentantId | undefined,
-    startDate: LocalDate | undefined
-  ) => void;
+  setRepresentantId: (representantId: RepresentantId) => void;
+  setStartDate: (startDate: LocalDate | undefined) => void;
   representantMandatoryError: boolean;
 }) => {
   const [representant, setRepresentant] = useState<RepresentantDto>();
@@ -37,9 +31,14 @@ const AddRepresentationComponent = (props: {
   const [displayCreateRepresentantDialog, setDisplayCreateRepresentantDialog] =
     useState(false);
   const [createRepresentantNom, setCreateRepresentantNom] = useState('');
-  useEffect(() => {
-    props.onChange(representant?.id, startDate);
-  }, [representant, startDate]);
+  const updateRepresentant = (r: RepresentantDto) => {
+    setRepresentant(r);
+    props.setRepresentantId(r.id);
+  };
+  const updateStartDate = (d: LocalDate | undefined) => {
+    setStartDate(d);
+    props.setStartDate(d);
+  };
   return (
     <>
       <div
@@ -50,7 +49,7 @@ const AddRepresentationComponent = (props: {
         <SelectRepresentantInput
           label="Représentant"
           selection={representant}
-          onChange={setRepresentant}
+          onChange={r => updateRepresentant(r)}
           onCreate={nom => {
             setDisplayCreateRepresentantDialog(true);
             setCreateRepresentantNom(nom);
@@ -78,7 +77,9 @@ const AddRepresentationComponent = (props: {
           label="Date de début"
           type="date"
           initialValue={startDate ? asString(startDate) : ''}
-          onChange={e => setStartDate(stringToLocalDate(e.currentTarget.value))}
+          onChange={e =>
+            updateStartDate(stringToLocalDate(e.currentTarget.value))
+          }
         />
       </div>
       <CreateRepresentantDialog
@@ -142,10 +143,8 @@ export const AddRepresentationDialog = (props: {
         <DialogContent>
           <h3>Représentant</h3>
           <AddRepresentationComponent
-            onChange={(representantId, startDate) => {
-              setRepresentantId(representantId);
-              setRepresentantStartDate(startDate);
-            }}
+            setRepresentantId={setRepresentantId}
+            setStartDate={setRepresentantStartDate}
             representantMandatoryError={representantMandatoryError}
           />
           <h3
@@ -156,10 +155,8 @@ export const AddRepresentationDialog = (props: {
             Suppléant
           </h3>
           <AddRepresentationComponent
-            onChange={(representantId, startDate) => {
-              setSuppleantId(representantId);
-              setSuppleantStartDate(startDate);
-            }}
+            setRepresentantId={setSuppleantId}
+            setStartDate={setSuppleantStartDate}
             representantMandatoryError={false}
           />
         </DialogContent>

@@ -1,12 +1,8 @@
 /** @jsxImportSource @emotion/react */
 import { css } from '@emotion/react';
-import { Add } from '@mui/icons-material';
-import { Button } from '@mui/material';
 import * as React from 'react';
 import { useEffect, useState } from 'react';
 import { appContext } from '../ApplicationContext';
-import { SimpleForm } from '../component/base-component/SimpleForm';
-import { TextInput } from '../component/base-component/TextInput';
 import { MainContainer } from '../container/MainContainer';
 import { OrganismeListDto } from '../domain/organisme';
 import { RouteLink } from '../routing/RouteLink';

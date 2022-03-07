@@ -43,8 +43,6 @@ export const EditOrganismeView = (props: {
         return;
       }
       setLoading('idle');
-      // const representationsMap = doRepresentationsMap(organisme);
-      // const organismeSuppleances = doOrganismeSuppleances(organisme);
       setOrganisme(organisme);
     };
     exec();

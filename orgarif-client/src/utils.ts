@@ -1,6 +1,5 @@
 import { ClientUid } from './domain/client-ids';
 import { LocalDate } from './domain/time';
-import { Errors } from './errors';
 import { asString, instanciateNominalString } from './utils/nominal-class';
 
 export function assertUnreachable(x: never): never {

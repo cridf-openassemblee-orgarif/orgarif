@@ -69,25 +69,23 @@ export const AddInstanceComponent = (props: {
           <Button onClick={() => setDisplayDialog(false)} color="primary">
             Annuler
           </Button>
-          <div>
-            <Button
-              type="submit"
-              variant="contained"
-              color="primary"
-              size="small"
-              onClick={() => {
-                if (nomInstance === '') {
-                  setDisplayError(true);
-                  return;
-                }
-                props.addInstance(nomInstance);
-                setDisplayDialog(false);
-                setDisplayError(false);
-              }}
-            >
-              Créer instance
-            </Button>
-          </div>
+          <Button
+            type="submit"
+            variant="contained"
+            color="primary"
+            size="small"
+            onClick={() => {
+              if (nomInstance === '') {
+                setDisplayError(true);
+                return;
+              }
+              props.addInstance(nomInstance);
+              setDisplayDialog(false);
+              setDisplayError(false);
+            }}
+          >
+            Créer instance
+          </Button>
         </DialogActions>
       </Dialog>
     </>

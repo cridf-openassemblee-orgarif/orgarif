@@ -2,7 +2,6 @@
 import { css } from '@emotion/react';
 import {
   Button,
-  CircularProgress,
   Dialog,
   DialogActions,
   DialogContent,
@@ -30,32 +29,13 @@ export const AddLienDeliberationDialog = (props: {
 }) => {
   const [selectedDeliberation, setSelectedDeliberation] =
     useState<DeliberationDto>();
-  const [inputValue, setInputValue] = useState('');
+  const [comment, setComment] = useState('');
   const [displayCreateDeliberationDialog, setDisplayCreateDeliberationDialog] =
     useState(false);
   const [createDeliberationLibelle, setCreateDeliberationLibelle] =
     useState('');
-  const [comment, setComment] = useState('');
-  // const [dialogLibelle, setDialogLibelle] = useState('');
-  const [deliberations, setDeliberations] = useState<
-    (DeliberationDto | string)[]
-  >([]);
-  // on est obligé car il y a le scénario ou user a saisi label exact d'une delib deja liée
-  // auquel cas deliberations sera un array vide... mais c'est aussi le cas au départ
-  const [alreadySet, setAlreadySet] = useState(false);
   const [delibMandatory, setDelibMandatory] = useState(false);
   const [loading, setLoading] = useState<LoadingState>('idle');
-  // search suggestions
-  // TODO plutot prévenir si delib déjà liée
-  // const onInputChange = (event: React.ChangeEvent<{}>, value: string) => {
-  const openDialog = (libelle: string) => {
-    // setValue(null);
-    // // setInputValue('');
-    // setDeliberations([]);
-    // // setDialogLibelle(libelle);
-    // // without it popup is directly submitted when user use 'enter'
-    // defer(() => setDisplayCreateDialog(true));
-  };
   const onSubmit = () => {
     if (!selectedDeliberation) {
       setDelibMandatory(true);
