@@ -3,6 +3,7 @@ package orgarif.repository
 import java.time.Instant
 import org.jooq.DSLContext
 import org.springframework.stereotype.Repository
+import orgarif.domain.DepartementId
 import orgarif.domain.ItemStatus
 import orgarif.domain.NatureJuridiqueId
 import orgarif.domain.OrganismeId
@@ -18,13 +19,14 @@ class OrganismeDao(val jooq: DSLContext) {
     data class Record(
         val id: OrganismeId,
         val nom: String,
-        val secteurId: SecteurId?,
+        val departementId: DepartementId?,
         val natureJuridiqueId: NatureJuridiqueId?,
+        val secteurId: SecteurId?,
         val typeStructureId: TypeStructureId?,
         val nombreRepresentants: Int?,
         val presenceSuppleants: Boolean,
-        val creationDate: Instant,
         val status: ItemStatus,
+        val creationDate: Instant,
         val lastModificationDate: Instant
     )
 
@@ -33,13 +35,14 @@ class OrganismeDao(val jooq: DSLContext) {
             OrganismeRecord().apply {
                 id = r.id.rawId
                 nom = r.nom
-                secteurId = r.secteurId?.rawId
+                departementId = r.departementId?.rawId
                 natureJuridiqueId = r.natureJuridiqueId?.rawId
+                secteurId = r.secteurId?.rawId
                 typeStructureId = r.typeStructureId?.rawId
                 nombreRepresentants = r.nombreRepresentants
                 presenceSuppleants = r.presenceSuppleants
-                creationDate = r.creationDate
                 status = r.status.name
+                creationDate = r.creationDate
                 lastModificationDate = r.lastModificationDate
             }
         jooq.insertInto(ORGANISME).set(record).execute()
@@ -153,12 +156,13 @@ class OrganismeDao(val jooq: DSLContext) {
         Record(
             r.id.toTypeId(),
             r.nom,
-            r.secteurId?.toTypeId(),
+            r.departementId?.toTypeId(),
             r.natureJuridiqueId?.toTypeId(),
+            r.secteurId?.toTypeId(),
             r.typeStructureId?.toTypeId(),
             r.nombreRepresentants,
             r.presenceSuppleants,
-            r.creationDate,
             ItemStatus.valueOf(r.status),
+            r.creationDate,
             r.lastModificationDate)
 }

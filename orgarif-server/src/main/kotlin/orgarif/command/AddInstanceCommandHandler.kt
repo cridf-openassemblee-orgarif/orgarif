@@ -2,7 +2,7 @@ package orgarif.command
 
 import org.springframework.stereotype.Service
 import orgarif.domain.InstanceId
-import orgarif.domain.ItemStatus
+import orgarif.domain.ItemStatus.*
 import orgarif.repository.InstanceDao
 import orgarif.service.DateService
 import orgarif.service.RandomService
@@ -24,8 +24,8 @@ class AddInstanceCommandHandler(
                 organismeId = command.organismeId,
                 nombreRepresentants = null,
                 presenceSuppleants = false,
+                status = live,
                 creationDate = now,
-                status = ItemStatus.live,
                 lastModificationDate = now))
         return AddInstanceCommandResponse(instanceId)
     }

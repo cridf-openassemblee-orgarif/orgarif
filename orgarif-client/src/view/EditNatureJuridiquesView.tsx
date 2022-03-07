@@ -8,7 +8,6 @@ import { MainContainer } from '../container/MainContainer';
 import { NatureJuridique } from '../domain/bootstrap-data';
 import { NatureJuridiqueId } from '../domain/ids';
 import { ItemStatus } from '../domain/organisme';
-import { Errors } from '../errors';
 import { state } from '../state/state';
 import { compareByString } from '../utils';
 
@@ -16,7 +15,7 @@ export const EditNatureJuridiquesView = () => {
   const [natureJuridiques, setNatureJuridiques] = useRecoilState(
     state.natureJuridiques
   );
-  const addNatureJuridique = (libelle: string, then: () => void) => {
+  const addNatureJuridique = (libelle: string) =>
     appContext
       .commandService()
       .createNatureJuridiqueCommand({
@@ -33,17 +32,11 @@ export const EditNatureJuridiquesView = () => {
             compareByString(i => i.libelle)
           )
         );
-        then();
       });
-  };
   const updateNatureJuridique = (
     natureJuridiqueId: NatureJuridiqueId,
-    libelle: string,
-    then: () => void
-  ) => {
-    if (!natureJuridiques) {
-      throw Errors._c0c89407();
-    }
+    libelle: string
+  ) =>
     appContext
       .commandService()
       .updateNatureJuridiqueLibelleCommand({
@@ -56,14 +49,8 @@ export const EditNatureJuridiquesView = () => {
             .map(s => (s.id === natureJuridiqueId ? { ...s, libelle } : s))
             .sort(compareByString(i => i.libelle))
         );
-        then();
       });
-  };
-  const onUpdateStatus = (
-    id: NatureJuridiqueId,
-    status: ItemStatus,
-    then: () => void
-  ) => {
+  const onUpdateStatus = (id: NatureJuridiqueId, status: ItemStatus) =>
     appContext
       .commandService()
       .updateNatureJuridiqueStatusCommand({
@@ -74,9 +61,7 @@ export const EditNatureJuridiquesView = () => {
         setNatureJuridiques(
           natureJuridiques.map(s => (s.id === id ? { ...s, status } : s))
         );
-        then();
       });
-  };
   return (
     <MainContainer>
       <div
@@ -85,15 +70,14 @@ export const EditNatureJuridiquesView = () => {
         `}
       >
         <h1>Édition des natures juridiques</h1>
-        {natureJuridiques && (
-          <EditCategoriesComponent
-            kind={'natureJuridique'}
-            categories={natureJuridiques}
-            onAdd={addNatureJuridique}
-            onChange={updateNatureJuridique}
-            onUpdateStatus={onUpdateStatus}
-          />
-        )}
+        <EditCategoriesComponent
+          kind={'natureJuridique'}
+          categories={natureJuridiques}
+          hasCode={false}
+          onAdd={addNatureJuridique}
+          onChange={updateNatureJuridique}
+          onUpdateStatus={onUpdateStatus}
+        />
       </div>
     </MainContainer>
   );

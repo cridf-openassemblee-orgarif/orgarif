@@ -52,6 +52,10 @@ data class CreateDeliberationCommand(val libelle: String, val deliberationDate: 
 data class CreateDeliberationCommandResponse(val deliberationId: DeliberationId) :
     CommandResponse()
 
+data class CreateDepartementCommand(val libelle: String, val code: String) : Command()
+
+data class CreateDepartementCommandResponse(val id: DepartementId) : CommandResponse()
+
 data class CreateNatureJuridiqueCommand(val libelle: String) : Command()
 
 data class CreateNatureJuridiqueCommandResponse(val id: NatureJuridiqueId) : CommandResponse()
@@ -97,6 +101,12 @@ data class RegisterCommand(
 
 data class RegisterCommandResponse(val result: RegisterResult, val userinfos: UserInfos?) :
     CommandResponse()
+
+data class UpdateDepartementCommand(val id: DepartementId, val libelle: String, val code: String) :
+    Command()
+
+data class UpdateDepartementStatusCommand(val id: DepartementId, val status: ItemStatus) :
+    Command()
 
 data class UpdateInstanceNombreRepresentantsCommand(val instanceId: InstanceId, val nombre: Int?) :
     Command()

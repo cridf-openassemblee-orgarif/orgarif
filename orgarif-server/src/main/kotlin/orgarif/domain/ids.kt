@@ -6,6 +6,8 @@ import java.util.*
 // are data classes instead of inline class because of serialization "bugs" with Jackson
 data class DeliberationId(override val rawId: UUID) : OrgarifUuidId()
 
+data class DepartementId(override val rawId: UUID) : OrgarifUuidId()
+
 data class EluId(override val rawId: UUID) : OrgarifUuidId()
 
 data class InstanceId(override val rawId: UUID) : OrgarifUuidId()

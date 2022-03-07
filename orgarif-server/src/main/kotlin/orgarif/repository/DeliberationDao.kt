@@ -5,6 +5,7 @@ import java.time.LocalDate
 import org.jooq.DSLContext
 import org.springframework.stereotype.Repository
 import orgarif.domain.DeliberationId
+import orgarif.domain.ItemStatus
 import orgarif.jooq.generated.Tables.DELIBERATION
 import orgarif.jooq.generated.tables.records.DeliberationRecord
 import orgarif.utils.OrgarifStringUtils
@@ -17,6 +18,7 @@ class DeliberationDao(val jooq: DSLContext) {
         val id: DeliberationId,
         val libelle: String,
         val deliberationDate: LocalDate,
+        val status: ItemStatus,
         val creationDate: Instant,
         val lastModificationDate: Instant
     )
@@ -28,6 +30,7 @@ class DeliberationDao(val jooq: DSLContext) {
                 libelle = r.libelle
                 searchLibelle = OrgarifStringUtils.cleanForSearch(r.libelle)
                 deliberationDate = r.deliberationDate
+                status = r.status.name
                 creationDate = r.creationDate
                 lastModificationDate = r.lastModificationDate
             }
@@ -49,5 +52,10 @@ class DeliberationDao(val jooq: DSLContext) {
 
     fun map(r: DeliberationRecord) =
         Record(
-            r.id.toTypeId(), r.libelle, r.deliberationDate, r.creationDate, r.lastModificationDate)
+            r.id.toTypeId(),
+            r.libelle,
+            r.deliberationDate,
+            ItemStatus.valueOf(r.status),
+            r.creationDate,
+            r.lastModificationDate)
 }

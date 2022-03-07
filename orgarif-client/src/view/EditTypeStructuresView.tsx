@@ -8,7 +8,6 @@ import { MainContainer } from '../container/MainContainer';
 import { TypeStructure } from '../domain/bootstrap-data';
 import { TypeStructureId } from '../domain/ids';
 import { ItemStatus } from '../domain/organisme';
-import { Errors } from '../errors';
 import { state } from '../state/state';
 import { compareByString } from '../utils';
 
@@ -16,7 +15,7 @@ export const EditTypeStructuresView = () => {
   const [typeStructures, setTypeStructures] = useRecoilState(
     state.typeStructures
   );
-  const addTypeStructure = (libelle: string, then: () => void) => {
+  const addTypeStructure = (libelle: string) =>
     appContext
       .commandService()
       .createTypeStructureCommand({
@@ -33,17 +32,11 @@ export const EditTypeStructuresView = () => {
             compareByString(i => i.libelle)
           )
         );
-        then();
       });
-  };
   const updateTypeStructure = (
     typeStructureId: TypeStructureId,
-    libelle: string,
-    then: () => void
-  ) => {
-    if (!typeStructures) {
-      throw Errors._c0c89407();
-    }
+    libelle: string
+  ) =>
     appContext
       .commandService()
       .updateTypeStructureLibelleCommand({
@@ -56,14 +49,8 @@ export const EditTypeStructuresView = () => {
             .map(s => (s.id === typeStructureId ? { ...s, libelle } : s))
             .sort(compareByString(i => i.libelle))
         );
-        then();
       });
-  };
-  const onUpdateStatus = (
-    id: TypeStructureId,
-    status: ItemStatus,
-    then: () => void
-  ) => {
+  const onUpdateStatus = (id: TypeStructureId, status: ItemStatus) =>
     appContext
       .commandService()
       .updateTypeStructureStatusCommand({
@@ -74,9 +61,7 @@ export const EditTypeStructuresView = () => {
         setTypeStructures(
           typeStructures.map(s => (s.id === id ? { ...s, status } : s))
         );
-        then();
       });
-  };
   return (
     <MainContainer>
       <div
@@ -85,15 +70,14 @@ export const EditTypeStructuresView = () => {
         `}
       >
         <h1>Édition des type de structure</h1>
-        {typeStructures && (
-          <EditCategoriesComponent
-            kind={'typeStructure'}
-            categories={typeStructures}
-            onAdd={addTypeStructure}
-            onChange={updateTypeStructure}
-            onUpdateStatus={onUpdateStatus}
-          />
-        )}
+        <EditCategoriesComponent
+          kind={'typeStructure'}
+          categories={typeStructures}
+          hasCode={false}
+          onAdd={addTypeStructure}
+          onChange={updateTypeStructure}
+          onUpdateStatus={onUpdateStatus}
+        />
       </div>
     </MainContainer>
   );

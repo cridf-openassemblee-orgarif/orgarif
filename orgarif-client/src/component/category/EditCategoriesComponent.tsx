@@ -44,9 +44,11 @@ export const classes = {
             visibility: visible;
           }
         }
+
         &:nth-of-type(2n) {
           background-color: ${colors.clearGrey2};
         }
+
         &:not(:first-of-type) {
           td {
             border-top: 1px solid ${colors.grey2};
@@ -62,17 +64,17 @@ export const classes = {
 };
 
 const EditCategoryComponent = (props: {
-  kind: 'secteur' | 'typeStructure' | 'natureJuridique';
+  kind: 'departement' | 'natureJuridique' | 'secteur' | 'typeStructure';
   category: Category;
-  onChange: (id: CategoryId, libelle: string, then: () => void) => void;
-  onUpdateStatus: (
-    id: CategoryId,
-    status: ItemStatus,
-    then: () => void
-  ) => void;
+  hasCode: boolean;
+  onChange: (id: CategoryId, libelle: string, code?: string) => Promise<void>;
+  onUpdateStatus: (id: CategoryId, status: ItemStatus) => Promise<void>;
 }) => {
   const [displayDialog, setDisplayDialog] = useState(false);
   const [updatedLibelle, setUpdatedLibelle] = useState(props.category.libelle);
+  const [updatedCode, setUpdatedCode] = useState(
+    'code' in props.category ? props.category.code : undefined
+  );
   return (
     <React.Fragment>
       <tr>
@@ -82,6 +84,16 @@ const EditCategoryComponent = (props: {
           `}
         >
           {props.category.libelle}
+          {'code' in props.category && (
+            <span
+              css={css`
+                font-style: italic;
+              `}
+            >
+              {' '}
+              - {props.category.code}
+            </span>
+          )}
         </td>
         <td>
           <Button
@@ -100,39 +112,50 @@ const EditCategoryComponent = (props: {
         <Dialog open={displayDialog} onClose={() => setDisplayDialog(false)}>
           <DialogTitle>Édition</DialogTitle>
           <DialogContent>
+            <h3>Éditer</h3>
             <div css={dialogClasses.editBlock}>
-              <h3>Éditer libelle</h3>
               <TextInput
                 name="libelle"
-                initialValue={props.category.libelle}
+                initialValue={updatedLibelle}
                 onChange={l => setUpdatedLibelle(l.currentTarget.value)}
               />
-              <div css={classes.editButton}>
-                <Button
-                  type="submit"
-                  variant="contained"
-                  color="primary"
-                  size="small"
-                  onClick={() =>
-                    props.onChange(props.category.id, updatedLibelle, () =>
-                      setDisplayDialog(false)
-                    )
-                  }
-                >
-                  Enregistrer
-                </Button>
+            </div>
+            {props.hasCode && (
+              <div css={dialogClasses.editBlock}>
+                <TextInput
+                  name="code"
+                  initialValue={updatedCode}
+                  onChange={l => setUpdatedCode(l.currentTarget.value)}
+                />
               </div>
+            )}
+            <div css={classes.editButton}>
+              <Button
+                type="submit"
+                variant="contained"
+                color="primary"
+                size="small"
+                onClick={() =>
+                  props
+                    .onChange(props.category.id, updatedLibelle, updatedCode)
+                    .then(() => setDisplayDialog(false))
+                }
+              >
+                Enregistrer
+              </Button>
             </div>
             <div css={dialogClasses.editBlock}>
               <h3>Archivage</h3>
               {(() => {
                 switch (props.kind) {
+                  case 'departement':
+                    return 'Le departement';
+                  case 'natureJuridique':
+                    return 'La nature juridique';
                   case 'secteur':
                     return 'Le secteur';
                   case 'typeStructure':
                     return 'Le type de structure';
-                  case 'natureJuridique':
-                    return 'La nature juridique';
                   default:
                     assertUnreachable(props.kind);
                 }
@@ -140,6 +163,7 @@ const EditCategoryComponent = (props: {
               pourra être{' '}
               {(() => {
                 switch (props.kind) {
+                  case 'departement':
                   case 'secteur':
                   case 'typeStructure':
                     return 'retrouvé';
@@ -153,12 +177,14 @@ const EditCategoryComponent = (props: {
               référencé dans{' '}
               {(() => {
                 switch (props.kind) {
+                  case 'departement':
+                    return 'le département';
+                  case 'natureJuridique':
+                    return 'la nature juridique';
                   case 'secteur':
                     return 'le secteur';
                   case 'typeStructure':
                     return 'le type de structure';
-                  case 'natureJuridique':
-                    return 'la nature juridique';
                   default:
                     assertUnreachable(props.kind);
                 }
@@ -171,9 +197,9 @@ const EditCategoryComponent = (props: {
                   color="warning"
                   size="small"
                   onClick={() =>
-                    props.onUpdateStatus(props.category.id, 'archive', () =>
-                      setDisplayDialog(false)
-                    )
+                    props
+                      .onUpdateStatus(props.category.id, 'archive')
+                      .then(() => setDisplayDialog(false))
                   }
                 >
                   Archiver
@@ -185,12 +211,14 @@ const EditCategoryComponent = (props: {
               uniquement. Si un organisme est encore référencé dans{' '}
               {(() => {
                 switch (props.kind) {
+                  case 'departement':
+                    return 'le département';
+                  case 'natureJuridique':
+                    return 'la nature juridique';
                   case 'secteur':
                     return 'le secteur';
                   case 'typeStructure':
                     return 'le type de structure';
-                  case 'natureJuridique':
-                    return 'la nature juridique';
                   default:
                     assertUnreachable(props.kind);
                 }
@@ -203,9 +231,9 @@ const EditCategoryComponent = (props: {
                   color="error"
                   size="small"
                   onClick={() =>
-                    props.onUpdateStatus(props.category.id, 'trash', () =>
-                      setDisplayDialog(false)
-                    )
+                    props
+                      .onUpdateStatus(props.category.id, 'trash')
+                      .then(() => setDisplayDialog(false))
                   }
                 >
                   Supprimer
@@ -225,19 +253,21 @@ const EditCategoryComponent = (props: {
 };
 
 export const EditCategoriesComponent = (props: {
-  kind: 'secteur' | 'typeStructure' | 'natureJuridique';
+  kind: 'departement' | 'natureJuridique' | 'secteur' | 'typeStructure';
   categories: Category[];
-  onAdd: (libelle: string, then: () => void) => void;
-  onChange: (id: NominalString<any>, libelle: string, then: () => void) => void;
-  onUpdateStatus: (
+  hasCode: boolean;
+  onAdd: (libelle: string, code?: string) => Promise<void>;
+  onChange: (
     id: NominalString<any>,
-    status: ItemStatus,
-    then: () => void
-  ) => void;
+    libelle: string,
+    code?: string
+  ) => Promise<void>;
+  onUpdateStatus: (id: NominalString<any>, status: ItemStatus) => Promise<void>;
 }) => {
   const live = props.categories.filter(c => c.status === 'live');
   const archive = props.categories.filter(c => c.status === 'archive');
   const [newCategoryLibelle, setNewCategoryLibelle] = useState('');
+  const [newCategoryCode, setNewCategoryCode] = useState('');
   const [displayAddPopup, setDisplayAddPopup] = useState(false);
   return (
     <React.Fragment>
@@ -258,6 +288,7 @@ export const EditCategoriesComponent = (props: {
             <EditCategoryComponent
               key={asString(c.id)}
               kind={props.kind}
+              hasCode={props.hasCode}
               category={c}
               onChange={props.onChange}
               onUpdateStatus={props.onUpdateStatus}
@@ -281,6 +312,7 @@ export const EditCategoriesComponent = (props: {
                   key={asString(c.id)}
                   kind={props.kind}
                   category={c}
+                  hasCode={props.hasCode}
                   onChange={props.onChange}
                   onUpdateStatus={props.onUpdateStatus}
                 />
@@ -293,27 +325,37 @@ export const EditCategoriesComponent = (props: {
         <DialogTitle>Ajouter</DialogTitle>
         <DialogContent>
           <div css={dialogClasses.editBlock}>
-            <h3>Libelle</h3>
             <TextInput
               name="libelle"
+              label="Libellé"
               initialValue={newCategoryLibelle}
               onChange={l => setNewCategoryLibelle(l.currentTarget.value)}
             />
-            <div css={classes.editButton}>
-              <Button
-                type="submit"
-                variant="contained"
-                color="primary"
-                size="small"
-                onClick={() =>
-                  props.onAdd(newCategoryLibelle, () =>
-                    setDisplayAddPopup(false)
-                  )
-                }
-              >
-                Ajouter
-              </Button>
+          </div>
+          {props.hasCode && (
+            <div css={dialogClasses.editBlock}>
+              <TextInput
+                name="code"
+                label="Code"
+                initialValue={newCategoryCode}
+                onChange={l => setNewCategoryCode(l.currentTarget.value)}
+              />
             </div>
+          )}
+          <div css={classes.editButton}>
+            <Button
+              type="submit"
+              variant="contained"
+              color="primary"
+              size="small"
+              onClick={() =>
+                props
+                  .onAdd(newCategoryLibelle, newCategoryCode)
+                  .then(() => setDisplayAddPopup(false))
+              }
+            >
+              Ajouter
+            </Button>
           </div>
         </DialogContent>
         <DialogActions>

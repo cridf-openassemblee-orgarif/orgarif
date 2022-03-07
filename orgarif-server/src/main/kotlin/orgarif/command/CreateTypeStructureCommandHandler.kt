@@ -22,6 +22,7 @@ class CreateTypeStructureCommandHandler(
                 id = id,
                 libelle = command.libelle,
                 status = ItemStatus.live,
+                creationDate = now,
                 lastModificationDate = now))
         return CreateTypeStructureCommandResponse(id)
     }

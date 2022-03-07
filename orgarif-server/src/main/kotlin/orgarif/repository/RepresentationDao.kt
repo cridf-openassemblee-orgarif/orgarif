@@ -20,8 +20,8 @@ class RepresentationDao(val jooq: DSLContext) {
         val position: Int,
         val startDate: LocalDate?,
         val endDate: LocalDate?,
-        val creationDate: Instant,
         val status: ItemStatus,
+        val creationDate: Instant,
         val lastModificationDate: Instant
     )
 
@@ -35,8 +35,8 @@ class RepresentationDao(val jooq: DSLContext) {
                 position = r.position
                 startDate = r.startDate
                 endDate = r.endDate
-                creationDate = r.creationDate
                 status = r.status.name
+                creationDate = r.creationDate
                 lastModificationDate = r.lastModificationDate
             }
         jooq.insertInto(REPRESENTATION).set(record).execute()
@@ -142,7 +142,7 @@ class RepresentationDao(val jooq: DSLContext) {
             r.position,
             r.startDate,
             r.endDate,
-            r.creationDate,
             ItemStatus.valueOf(r.status),
+            r.creationDate,
             r.lastModificationDate)
 }

@@ -11,8 +11,10 @@ import { LoginView } from '../view/LoginView';
 import { OrganismeView } from '../view/OrganismeView';
 import { RegisterView } from '../view/RegisterView';
 import { RootView } from '../view/RootView';
+import { EditDepartementsView } from '../view/EditDepartementsView';
 
 export type Route =
+  | EditDepartementsRoute
   | EditNatureJuridiquesRoute
   | EditOrganismeRoute
   | EditSecteursRoute
@@ -36,6 +38,11 @@ interface RouteProps {
 }
 
 export const routes: Record<Route['name'], RouteProps> = {
+  EditDepartementsRoute: {
+    path: '/edition-departements',
+    component: EditDepartementsView,
+    role: 'user'
+  },
   EditNatureJuridiquesRoute: {
     path: '/edition-nature-juridiques',
     component: EditNatureJuridiquesView,
@@ -81,6 +88,10 @@ export const routes: Record<Route['name'], RouteProps> = {
     component: RootView
   }
 };
+
+export interface EditDepartementsRoute {
+  name: 'EditDepartementsRoute';
+}
 
 export interface EditNatureJuridiquesRoute {
   name: 'EditNatureJuridiquesRoute';

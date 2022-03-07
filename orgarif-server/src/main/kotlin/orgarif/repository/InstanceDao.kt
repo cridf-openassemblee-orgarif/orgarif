@@ -19,8 +19,8 @@ class InstanceDao(val jooq: DSLContext) {
         val organismeId: OrganismeId,
         val nombreRepresentants: Int?,
         val presenceSuppleants: Boolean,
-        val creationDate: Instant,
         val status: ItemStatus,
+        val creationDate: Instant,
         val lastModificationDate: Instant
     )
 
@@ -32,8 +32,8 @@ class InstanceDao(val jooq: DSLContext) {
                 organismeId = r.organismeId.rawId
                 nombreRepresentants = r.nombreRepresentants
                 presenceSuppleants = r.presenceSuppleants
-                creationDate = r.creationDate
                 status = r.status.name
+                creationDate = r.creationDate
                 lastModificationDate = r.lastModificationDate
             }
         jooq.insertInto(INSTANCE).set(record).execute()
@@ -91,7 +91,7 @@ class InstanceDao(val jooq: DSLContext) {
             r.organismeId.toTypeId(),
             r.nombreRepresentants,
             r.presenceSuppleants,
-            r.creationDate,
             ItemStatus.valueOf(r.status),
+            r.creationDate,
             r.lastModificationDate)
 }

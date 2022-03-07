@@ -33,8 +33,8 @@ class AddRepresentationCommandHandler(
                 position = newPosition,
                 startDate = command.startDate,
                 endDate = null,
-                creationDate = now,
                 status = live,
+                creationDate = now,
                 lastModificationDate = now)
         representationDao.insert(r)
         if (command.suppleantId != null) {
@@ -46,8 +46,8 @@ class AddRepresentationCommandHandler(
                     organismeId = command.organismeId,
                     startDate = command.suppleantStartDate,
                     endDate = null,
-                    creationDate = now,
                     status = live,
+                    creationDate = now,
                     lastModificationDate = now))
         }
         return AddRepresentationCommandResponse(representationId)

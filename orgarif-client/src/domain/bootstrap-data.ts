@@ -1,19 +1,35 @@
 import { ApplicationEnvironment } from './application';
-import { NatureJuridiqueId, SecteurId, TypeStructureId } from './ids';
+import {
+  DepartementId,
+  NatureJuridiqueId,
+  SecteurId,
+  TypeStructureId
+} from './ids';
 import { ItemStatus } from './organisme';
 import { UserInfos } from './user';
 
-export type CategoryId = SecteurId | NatureJuridiqueId | TypeStructureId;
-export type Category = Secteur | NatureJuridique | TypeStructure;
+export type CategoryId =
+  | DepartementId
+  | NatureJuridiqueId
+  | SecteurId
+  | TypeStructureId;
+export type Category = Departement | NatureJuridique | Secteur | TypeStructure;
 
-export interface Secteur {
-  id: SecteurId;
+export interface Departement {
+  id: DepartementId;
   libelle: string;
+  code: string;
   status: ItemStatus;
 }
 
 export interface NatureJuridique {
   id: NatureJuridiqueId;
+  libelle: string;
+  status: ItemStatus;
+}
+
+export interface Secteur {
+  id: SecteurId;
   libelle: string;
   status: ItemStatus;
 }
@@ -25,8 +41,9 @@ export interface TypeStructure {
 }
 
 export interface OrganismeCategories {
-  secteurs: Secteur[];
+  departements: Departement[];
   natureJuridiques: NatureJuridique[];
+  secteurs: Secteur[];
   typeStructures: TypeStructure[];
 }
 

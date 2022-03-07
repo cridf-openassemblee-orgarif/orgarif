@@ -22,6 +22,7 @@ class CreateSecteurCommandHandler(
                 id = id,
                 libelle = command.libelle,
                 status = ItemStatus.live,
+                creationDate = now,
                 lastModificationDate = now))
         return CreateSecteurCommandResponse(id)
     }

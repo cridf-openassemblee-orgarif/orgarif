@@ -1,7 +1,7 @@
 package orgarif.command
 
 import org.springframework.stereotype.Service
-import orgarif.domain.ItemStatus
+import orgarif.domain.ItemStatus.*
 import orgarif.domain.OrganismeId
 import orgarif.repository.OrganismeDao
 import orgarif.service.DateService
@@ -21,13 +21,14 @@ class CreateOrganismeCommandHandler(
             OrganismeDao.Record(
                 id = organismeId,
                 nom = command.nom,
-                secteurId = null,
+                departementId = null,
                 natureJuridiqueId = null,
+                secteurId = null,
                 typeStructureId = null,
                 nombreRepresentants = null,
                 presenceSuppleants = false,
+                status = live,
                 creationDate = now,
-                status = ItemStatus.live,
                 lastModificationDate = now))
         return CreateOrganismeCommandResponse(organismeId)
     }

@@ -6,10 +6,21 @@ import org.springframework.beans.factory.annotation.Value
 import org.springframework.stereotype.Service
 import orgarif.domain.DeliberationId
 import orgarif.domain.InstanceId
-import orgarif.domain.ItemStatus.*
+import orgarif.domain.ItemStatus.live
 import orgarif.domain.OrganismeId
 import orgarif.domain.RepresentationId
-import orgarif.repository.*
+import orgarif.repository.DeliberationDao
+import orgarif.repository.DepartementDao
+import orgarif.repository.EluDao
+import orgarif.repository.InstanceDao
+import orgarif.repository.LienDeliberationDao
+import orgarif.repository.NatureJuridiqueDao
+import orgarif.repository.OrganismeDao
+import orgarif.repository.RepresentantDao
+import orgarif.repository.RepresentationDao
+import orgarif.repository.SecteurDao
+import orgarif.repository.SuppleanceDao
+import orgarif.repository.TypeStructureDao
 import orgarif.service.DateService
 import orgarif.service.RandomService
 import orgarif.utils.OrgarifStringUtils.deserializeUuid
@@ -18,8 +29,9 @@ import orgarif.utils.OrgarifStringUtils.deserializeUuid
 class InitialDataInjector(
     @Value("\${injectFakeData}") val injectFakeData: Boolean,
     val organismeDao: OrganismeDao,
-    val secteurDao: SecteurDao,
+    val departementDao: DepartementDao,
     val natureJuridiqueDao: NatureJuridiqueDao,
+    val secteurDao: SecteurDao,
     val typeStructureDao: TypeStructureDao,
     val representationDao: RepresentationDao,
     val representantDao: RepresentantDao,
@@ -42,8 +54,9 @@ class InitialDataInjector(
     init {
         val now = dateService.now()
         // inject secteurs, natureJuridiques & typeStructures for all envs
-        val secteurs = fetchOrInjectSecteurs()
+        val departements = fetchOrInjectDepartements()
         val natureJuridiques = fetchOrInjectNatureJuridiques()
+        val secteurs = fetchOrInjectSecteurs()
         val typeStructures = fetchOrInjectTypeStructure()
         if (injectFakeData) {
             if (organismeDao.fetchOrNull(fakeOrganismeId) == null) {
@@ -51,13 +64,14 @@ class InitialDataInjector(
                     OrganismeDao.Record(
                         id = fakeOrganismeId,
                         nom = "Organisme de test (sans instance)",
-                        secteurId = secteurs.first().id,
+                        departementId = departements.first().id,
                         natureJuridiqueId = natureJuridiques.first().id,
+                        secteurId = secteurs.first().id,
                         typeStructureId = typeStructures.first().id,
                         nombreRepresentants = nombreRepresentants,
                         presenceSuppleants = true,
-                        creationDate = now,
                         status = live,
+                        creationDate = now,
                         lastModificationDate = now))
                 (1..2).forEach {
                     deliberation().let { deliberationId ->
@@ -68,8 +82,8 @@ class InitialDataInjector(
                                 instanceId = null,
                                 deliberationId = deliberationId,
                                 comment = null,
-                                creationDate = now,
                                 status = live,
+                                creationDate = now,
                                 lastModificationDate = now))
                     }
                     // pour avoir des delib sans lien
@@ -81,13 +95,14 @@ class InitialDataInjector(
                     OrganismeDao.Record(
                         id = fakeOrganismeId2,
                         nom = "Organisme de test 2 (avec instances)",
-                        secteurId = secteurs.first().id,
+                        departementId = departements.first().id,
                         natureJuridiqueId = natureJuridiques.first().id,
+                        secteurId = secteurs.first().id,
                         typeStructureId = typeStructures.first().id,
                         nombreRepresentants = 0,
                         presenceSuppleants = false,
-                        creationDate = now,
                         status = live,
+                        creationDate = now,
                         lastModificationDate = now))
                 instanceDao.insert(
                     InstanceDao.Record(
@@ -96,8 +111,8 @@ class InitialDataInjector(
                         organismeId = fakeOrganismeId2,
                         nombreRepresentants = nombreRepresentants,
                         presenceSuppleants = true,
-                        creationDate = now,
                         status = live,
+                        creationDate = now,
                         lastModificationDate = now))
                 (1..2).forEach {
                     deliberation().let { deliberationId ->
@@ -108,8 +123,8 @@ class InitialDataInjector(
                                 instanceId = fakeInstanceId1,
                                 deliberationId = deliberationId,
                                 comment = null,
-                                creationDate = now,
                                 status = live,
+                                creationDate = now,
                                 lastModificationDate = now))
                     }
                 }
@@ -120,8 +135,8 @@ class InitialDataInjector(
                         organismeId = fakeOrganismeId2,
                         nombreRepresentants = nombreRepresentants,
                         presenceSuppleants = true,
-                        creationDate = now,
                         status = live,
+                        creationDate = now,
                         lastModificationDate = now))
                 (1..2).forEach {
                     deliberation().let { deliberationId ->
@@ -132,8 +147,8 @@ class InitialDataInjector(
                                 instanceId = fakeInstanceId2,
                                 deliberationId = deliberationId,
                                 comment = null,
-                                creationDate = now,
                                 status = live,
+                                creationDate = now,
                                 lastModificationDate = now))
                     }
                 }
@@ -175,8 +190,8 @@ class InitialDataInjector(
                                         position = index,
                                         startDate = null,
                                         endDate = null,
-                                        creationDate = now,
                                         status = live,
+                                        creationDate = now,
                                         lastModificationDate = now))
                                 id
                             }
@@ -193,8 +208,8 @@ class InitialDataInjector(
                                         organismeId = organismeId,
                                         startDate = null,
                                         endDate = null,
-                                        creationDate = now,
                                         status = live,
+                                        creationDate = now,
                                         lastModificationDate = now))
                             }
                         }
@@ -211,35 +226,30 @@ class InitialDataInjector(
                 id = id,
                 libelle = "Délibération du $date",
                 deliberationDate = date,
+                status = live,
                 creationDate = now,
                 lastModificationDate = now))
         return id
     }
 
-    fun fetchOrInjectSecteurs() =
-        secteurDao.fetchAll().let {
+    fun fetchOrInjectDepartements() =
+        departementDao.fetchAll().let {
             if (it.isEmpty()) {
                 listOf(
-                    "Lycées",
-                    "Culture - Patrimoine - Création",
-                    "Enseignement supérieur - Recherche",
-                    "Développement économique - Attractivité",
-                    "Emploi - Formation professionnelle - Apprentissage",
-                    "Écologie - Développement durable - Aménagement",
-                    "Agriculture - Ruralité",
-                    "Stratégie institutionnelle - Grand Paris",
-                    "Transports - Mobilités durables",
-                    "Logement - Handicap",
-                    "Solidarités - Santé - Famille",
-                    "Sports - Loisirs - Jeunesse - Citoyenneté - Vie associative",
-                    "Tourisme",
-                    "Affaires européennes",
-                    "Finances - Évaluation des politiques publiques",
-                    "Administration générale")
+                    "Paris" to 75,
+                    "Seine-et-Marne" to 77,
+                    "Yvelines" to 78,
+                    "Essonne" to 91,
+                    "Hauts-de-Seine" to 92,
+                    "Seine-Saint-Denis" to 93,
+                    "Val-de-Marne" to 94,
+                    "Val-d'Oise" to 95,
+                )
                     .map {
-                        SecteurDao.Record(randomService.id(), it, live, dateService.now()).apply {
-                            secteurDao.insert(this)
-                        }
+                        val now = dateService.now()
+                        DepartementDao.Record(
+                                randomService.id(), it.first, it.second.toString(), live, now, now)
+                            .also { departementDao.insert(it) }
                     }
             } else {
                 it
@@ -267,8 +277,41 @@ class InitialDataInjector(
                     "Établissement public de santé (EPS)",
                     "Commission d'appel d'offres")
                     .map {
-                        NatureJuridiqueDao.Record(randomService.id(), it, live, dateService.now())
-                            .apply { natureJuridiqueDao.insert(this) }
+                        val now = dateService.now()
+                        NatureJuridiqueDao.Record(randomService.id(), it, live, now, now).apply {
+                            natureJuridiqueDao.insert(this)
+                        }
+                    }
+            } else {
+                it
+            }
+        }
+
+    fun fetchOrInjectSecteurs() =
+        secteurDao.fetchAll().let {
+            if (it.isEmpty()) {
+                listOf(
+                    "Lycées",
+                    "Culture - Patrimoine - Création",
+                    "Enseignement supérieur - Recherche",
+                    "Développement économique - Attractivité",
+                    "Emploi - Formation professionnelle - Apprentissage",
+                    "Écologie - Développement durable - Aménagement",
+                    "Agriculture - Ruralité",
+                    "Stratégie institutionnelle - Grand Paris",
+                    "Transports - Mobilités durables",
+                    "Logement - Handicap",
+                    "Solidarités - Santé - Famille",
+                    "Sports - Loisirs - Jeunesse - Citoyenneté - Vie associative",
+                    "Tourisme",
+                    "Affaires européennes",
+                    "Finances - Évaluation des politiques publiques",
+                    "Administration générale")
+                    .map {
+                        val now = dateService.now()
+                        SecteurDao.Record(randomService.id(), it, live, now, now).apply {
+                            secteurDao.insert(this)
+                        }
                     }
             } else {
                 it
@@ -298,8 +341,10 @@ class InitialDataInjector(
                     "Commission de coordination des politiques publiques de santé (CCPPS)",
                     "Base de plein air et de loisirs (BPAL)")
                     .map {
-                        TypeStructureDao.Record(randomService.id(), it, live, dateService.now())
-                            .apply { typeStructureDao.insert(this) }
+                        val now = dateService.now()
+                        TypeStructureDao.Record(randomService.id(), it, live, now, now).apply {
+                            typeStructureDao.insert(this)
+                        }
                     }
             } else {
                 it

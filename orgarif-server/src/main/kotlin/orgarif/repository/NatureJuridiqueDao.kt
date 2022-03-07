@@ -16,6 +16,7 @@ class NatureJuridiqueDao(val jooq: DSLContext) {
         val id: NatureJuridiqueId,
         val libelle: String,
         val status: ItemStatus,
+        val creationDate: Instant,
         val lastModificationDate: Instant
     )
 
@@ -25,6 +26,7 @@ class NatureJuridiqueDao(val jooq: DSLContext) {
                 id = r.id.rawId
                 libelle = r.libelle
                 status = r.status.name
+                creationDate = r.creationDate
                 lastModificationDate = r.lastModificationDate
             }
         jooq.insertInto(NATURE_JURIDIQUE).set(record).execute()
@@ -49,5 +51,10 @@ class NatureJuridiqueDao(val jooq: DSLContext) {
     }
 
     private fun map(r: NatureJuridiqueRecord) =
-        Record(r.id.toTypeId(), r.libelle, ItemStatus.valueOf(r.status), r.lastModificationDate)
+        Record(
+            r.id.toTypeId(),
+            r.libelle,
+            ItemStatus.valueOf(r.status),
+            r.creationDate,
+            r.lastModificationDate)
 }

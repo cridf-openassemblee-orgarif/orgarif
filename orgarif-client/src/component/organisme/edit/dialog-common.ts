@@ -8,7 +8,7 @@ export const dialogClasses = {
       font-size: 1.2rem;
       padding: 20px 0 10px 0;
     }
-    padding: 0 0 10px 0;
+    padding: 10px 0;
     border: 0;
     &:not(:first-of-type) {
       padding-top: 10px;

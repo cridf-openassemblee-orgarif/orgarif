@@ -1,5 +1,6 @@
 import {
   DeliberationId,
+  DepartementId,
   InstanceId,
   LienDeliberationId,
   NatureJuridiqueId,
@@ -60,6 +61,15 @@ export interface CreateDeliberationCommand {
 
 export interface CreateDeliberationCommandResponse {
   deliberationId: DeliberationId;
+}
+
+export interface CreateDepartementCommand {
+  libelle: string;
+  code: string;
+}
+
+export interface CreateDepartementCommandResponse {
+  id: DepartementId;
 }
 
 export interface CreateNatureJuridiqueCommand {
@@ -129,6 +139,17 @@ export interface RegisterCommandResponse {
   result: RegisterResult;
   userinfos?: UserInfos;
   displayName: string;
+}
+
+export interface UpdateDepartementCommand {
+  id: DepartementId;
+  libelle: string;
+  code: string;
+}
+
+export interface UpdateDepartementStatusCommand {
+  id: DepartementId;
+  status: ItemStatus;
 }
 
 export interface UpdateInstanceNombreRepresentantsCommand {

@@ -23,8 +23,8 @@ class SuppleanceDao(val jooq: DSLContext) {
         val organismeId: OrganismeId,
         val startDate: LocalDate?,
         val endDate: LocalDate?,
-        val creationDate: Instant,
         val status: ItemStatus,
+        val creationDate: Instant,
         val lastModificationDate: Instant
     )
 
@@ -37,8 +37,8 @@ class SuppleanceDao(val jooq: DSLContext) {
                 organismeId = r.organismeId.rawId
                 startDate = r.startDate
                 endDate = r.endDate
-                creationDate = r.creationDate
                 status = r.status.name
+                creationDate = r.creationDate
                 lastModificationDate = r.lastModificationDate
             }
         jooq.insertInto(SUPPLEANCE).set(record).execute()
@@ -66,7 +66,7 @@ class SuppleanceDao(val jooq: DSLContext) {
             r.organismeId.toTypeId(),
             r.startDate,
             r.endDate,
-            r.creationDate,
             ItemStatus.valueOf(r.status),
+            r.creationDate,
             r.lastModificationDate)
 }

@@ -10,6 +10,12 @@ import { dict, Dict } from '../utils/nominal-class';
 
 // FIXME typer pour lisibilité du state partagé...
 export const state = {
+  departements: atom({
+    key: 'departements',
+    default: bootstrapData.categories.departements.sort(
+      compareByString(i => i.code)
+    )
+  }),
   natureJuridiques: atom({
     key: 'natureJuridiques',
     default: bootstrapData.categories.natureJuridiques.sort(

@@ -9,6 +9,8 @@ import {
   AddSuppleanceCommand,
   CreateDeliberationCommand,
   CreateDeliberationCommandResponse,
+  CreateDepartementCommand,
+  CreateDepartementCommandResponse,
   CreateNatureJuridiqueCommand,
   CreateNatureJuridiqueCommandResponse,
   CreateOrganismeCommand,
@@ -24,6 +26,8 @@ import {
   MoveRepresentationCommand,
   RegisterCommand,
   RegisterCommandResponse,
+  UpdateDepartementCommand,
+  UpdateDepartementStatusCommand,
   UpdateInstanceNombreRepresentantsCommand,
   UpdateInstanceNomCommand,
   UpdateInstancePresenceSuppleantsCommand,
@@ -70,6 +74,11 @@ export class CommandService {
   ): Promise<CreateDeliberationCommandResponse> =>
     this.command('CreateDeliberationCommand', command);
 
+  public createDepartementCommand = (
+    command: CreateDepartementCommand
+  ): Promise<CreateDepartementCommandResponse> =>
+    this.command('CreateDepartementCommand', command);
+
   public createNatureJuridiqueCommand = (
     command: CreateNatureJuridiqueCommand
   ): Promise<CreateNatureJuridiqueCommandResponse> =>
@@ -107,6 +116,14 @@ export class CommandService {
     command: RegisterCommand
   ): Promise<RegisterCommandResponse> =>
     this.command('RegisterCommand', command);
+
+  public updateDepartementCommand = (
+    command: UpdateDepartementCommand
+  ): Promise<void> => this.command('UpdateDepartementCommand', command);
+
+  public updateDepartementStatusCommand = (
+    command: UpdateDepartementStatusCommand
+  ): Promise<void> => this.command('UpdateDepartementStatusCommand', command);
 
   public updateInstanceNombreRepresentantsCommand = (
     command: UpdateInstanceNombreRepresentantsCommand

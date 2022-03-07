@@ -1,7 +1,7 @@
 package orgarif.command
 
 import org.springframework.stereotype.Service
-import orgarif.domain.ItemStatus
+import orgarif.domain.ItemStatus.*
 import orgarif.domain.LienDeliberationId
 import orgarif.repository.LienDeliberationDao
 import orgarif.service.DateService
@@ -24,8 +24,8 @@ class AddLienDeliberationCommandHandler(
                 instanceId = command.instanceId,
                 deliberationId = command.deliberationId,
                 comment = command.comment,
+                status = live,
                 creationDate = now,
-                status = ItemStatus.live,
                 lastModificationDate = now))
         return AddLienDeliberationCommandResponse(id)
     }

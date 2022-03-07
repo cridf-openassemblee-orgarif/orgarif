@@ -39,8 +39,9 @@ class IndexController(
     @Value("\${assets.browserWebpackDevHost}") val assetsBrowserWebpackDevHost: String,
     @Value("\${assets.useBuildFiles}") val assetsUseBuildFiles: Boolean,
     val userDao: UserDao,
-    val secteurDao: SecteurDao,
+    val departementDao: DepartementDao,
     val natureJuridiqueDao: NatureJuridiqueDao,
+    val secteurDao: SecteurDao,
     val typeStructureDao: TypeStructureDao,
     val eluDao: EluDao,
     val localeService: LocaleService,
@@ -109,7 +110,10 @@ class IndexController(
             } else null
         val categories =
             OrganismeCategories(
-                secteurDao.fetchAll(), natureJuridiqueDao.fetchAll(), typeStructureDao.fetchAll())
+                departementDao.fetchAll(),
+                natureJuridiqueDao.fetchAll(),
+                secteurDao.fetchAll(),
+                typeStructureDao.fetchAll())
         val elus = eluDao.fetchAll()
         mav.model["bootstrapData"] =
             serialize(ApplicationBootstrapData(ApplicationInstance.env, userInfos, categories))

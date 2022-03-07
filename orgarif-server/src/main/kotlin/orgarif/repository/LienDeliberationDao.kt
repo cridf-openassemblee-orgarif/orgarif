@@ -21,8 +21,8 @@ class LienDeliberationDao(val jooq: DSLContext) {
         val instanceId: InstanceId?,
         val deliberationId: DeliberationId,
         val comment: String?,
-        val creationDate: Instant,
         val status: ItemStatus,
+        val creationDate: Instant,
         val lastModificationDate: Instant
     )
 
@@ -34,8 +34,8 @@ class LienDeliberationDao(val jooq: DSLContext) {
                 instanceId = r.instanceId?.rawId
                 deliberationId = r.deliberationId.rawId
                 comment = r.comment
-                creationDate = r.creationDate
                 status = r.status.name
+                creationDate = r.creationDate
                 lastModificationDate = r.lastModificationDate
             }
         jooq.insertInto(LIEN_DELIBERATION).set(record).execute()
@@ -56,7 +56,7 @@ class LienDeliberationDao(val jooq: DSLContext) {
             r.instanceId?.toTypeId(),
             r.deliberationId.toTypeId(),
             r.comment,
-            r.creationDate,
             ItemStatus.valueOf(r.status),
+            r.creationDate,
             r.lastModificationDate)
 }

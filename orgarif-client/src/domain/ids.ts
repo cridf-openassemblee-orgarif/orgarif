@@ -3,6 +3,7 @@ import { NominalString } from '../utils/nominal-class';
 export type OrgarifId =
   | CommandLogId
   | DeliberationId
+  | DepartementId
   | DeploymentLogId
   | EluId
   | InstanceId
@@ -25,6 +26,7 @@ export type OrgarifId =
 export type BooleanAsNominalString = NominalString<'BooleanAsNominalString'>;
 export type CommandLogId = NominalString<'CommandLogId'>;
 export type DeliberationId = NominalString<'DeliberationId'>;
+export type DepartementId = NominalString<'DepartementId'>;
 export type DeploymentLogId = NominalString<'DeploymentLogId'>;
 export type EluId = NominalString<'EluId'>;
 export type InstanceId = NominalString<'InstanceId'>;

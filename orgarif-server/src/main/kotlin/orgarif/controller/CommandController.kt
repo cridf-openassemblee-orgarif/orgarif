@@ -34,6 +34,7 @@ class CommandController(
     val addRepresentationCommandHandler: AddRepresentationCommandHandler,
     val addSuppleanceCommandHandler: AddSuppleanceCommandHandler,
     val createDeliberationCommandHandler: CreateDeliberationCommandHandler,
+    val createDepartementCommandHandler: CreateDepartementCommandHandler,
     val createNatureJuridiqueCommandHandler: CreateNatureJuridiqueCommandHandler,
     val createOrganismeCommandHandler: CreateOrganismeCommandHandler,
     val createRepresentantCommandHandler: CreateRepresentantCommandHandler,
@@ -42,6 +43,8 @@ class CommandController(
     val loginCommandHandler: LoginCommandHandler,
     val moveRepresentationCommandHandler: MoveRepresentationCommandHandler,
     val registerCommandHandler: RegisterCommandHandler,
+    val updateDepartementCommandHandler: UpdateDepartementCommandHandler,
+    val updateDepartementStatusCommandHandler: UpdateDepartementStatusCommandHandler,
     val updateInstanceNombreRepresentantsCommandHandler:
         UpdateInstanceNombreRepresentantsCommandHandler,
     val updateInstanceNomCommandHandler: UpdateInstanceNomCommandHandler,
@@ -140,6 +143,7 @@ class CommandController(
             is AddRepresentationCommand -> addRepresentationCommandHandler
             is AddSuppleanceCommand -> addSuppleanceCommandHandler
             is CreateDeliberationCommand -> createDeliberationCommandHandler
+            is CreateDepartementCommand -> createDepartementCommandHandler
             is CreateNatureJuridiqueCommand -> createNatureJuridiqueCommandHandler
             is CreateOrganismeCommand -> createOrganismeCommandHandler
             is CreateRepresentantCommand -> createRepresentantCommandHandler
@@ -148,6 +152,8 @@ class CommandController(
             is LoginCommand -> loginCommandHandler
             is MoveRepresentationCommand -> moveRepresentationCommandHandler
             is RegisterCommand -> registerCommandHandler
+            is UpdateDepartementCommand -> updateDepartementCommandHandler
+            is UpdateDepartementStatusCommand -> updateDepartementStatusCommandHandler
             is UpdateInstanceNombreRepresentantsCommand ->
                 updateInstanceNombreRepresentantsCommandHandler
             is UpdateInstanceNomCommand -> updateInstanceNomCommandHandler

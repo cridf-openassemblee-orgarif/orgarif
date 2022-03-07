@@ -12,6 +12,7 @@ object CommandConfiguration {
             is AddRepresentationCommand -> user
             is AddSuppleanceCommand -> user
             is CreateDeliberationCommand -> user
+            is CreateDepartementCommand -> user
             is CreateNatureJuridiqueCommand -> user
             is CreateOrganismeCommand -> user
             is CreateRepresentantCommand -> user
@@ -20,6 +21,8 @@ object CommandConfiguration {
             is LoginCommand -> null
             is MoveRepresentationCommand -> user
             is RegisterCommand -> null
+            is UpdateDepartementCommand -> user
+            is UpdateDepartementStatusCommand -> user
             is UpdateInstanceNombreRepresentantsCommand -> user
             is UpdateInstanceNomCommand -> user
             is UpdateInstancePresenceSuppleantsCommand -> user

@@ -28,8 +28,8 @@ class AddSuppleanceCommandHandler(
                 organismeId = organismeId,
                 startDate = command.suppleantStartDate,
                 endDate = null,
-                creationDate = now,
                 status = live,
+                creationDate = now,
                 lastModificationDate = now))
         return EmptyCommandResponse
     }

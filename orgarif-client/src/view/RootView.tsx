@@ -70,6 +70,14 @@ export const RootView = () => {
             <h2>Édition des catégories</h2>
             <RouteLink
               route={{
+                name: 'EditDepartementsRoute'
+              }}
+            >
+              Édition des départements
+            </RouteLink>
+            <br />
+            <RouteLink
+              route={{
                 name: 'EditSecteursRoute'
               }}
             >

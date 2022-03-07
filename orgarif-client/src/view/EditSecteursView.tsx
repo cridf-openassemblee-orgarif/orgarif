@@ -8,13 +8,12 @@ import { MainContainer } from '../container/MainContainer';
 import { Secteur } from '../domain/bootstrap-data';
 import { SecteurId } from '../domain/ids';
 import { ItemStatus } from '../domain/organisme';
-import { Errors } from '../errors';
 import { state } from '../state/state';
 import { compareByString } from '../utils';
 
 export const EditSecteursView = () => {
   const [secteurs, setSecteurs] = useRecoilState(state.secteurs);
-  const addSecteur = (libelle: string, then: () => void) => {
+  const addSecteur = (libelle: string) =>
     appContext
       .commandService()
       .createSecteurCommand({
@@ -25,17 +24,8 @@ export const EditSecteursView = () => {
         setSecteurs(
           [...secteurs, newSecteur].sort(compareByString(i => i.libelle))
         );
-        then();
       });
-  };
-  const updateSecteur = (
-    secteurId: SecteurId,
-    libelle: string,
-    then: () => void
-  ) => {
-    if (!secteurs) {
-      throw Errors._c0c89407();
-    }
+  const updateSecteur = (secteurId: SecteurId, libelle: string) =>
     appContext
       .commandService()
       .updateSecteurLibelleCommand({
@@ -48,14 +38,8 @@ export const EditSecteursView = () => {
             .map(s => (s.id === secteurId ? { ...s, libelle } : s))
             .sort(compareByString(i => i.libelle))
         );
-        then();
       });
-  };
-  const onUpdateStatus = (
-    id: SecteurId,
-    status: ItemStatus,
-    then: () => void
-  ) => {
+  const onUpdateStatus = (id: SecteurId, status: ItemStatus) =>
     appContext
       .commandService()
       .updateSecteurStatusCommand({
@@ -64,9 +48,7 @@ export const EditSecteursView = () => {
       })
       .then(() => {
         setSecteurs(secteurs.map(s => (s.id === id ? { ...s, status } : s)));
-        then();
       });
-  };
   return (
     <MainContainer>
       <div
@@ -75,15 +57,14 @@ export const EditSecteursView = () => {
         `}
       >
         <h1>Édition des secteurs</h1>
-        {secteurs && (
-          <EditCategoriesComponent
-            kind={'secteur'}
-            categories={secteurs}
-            onAdd={addSecteur}
-            onChange={updateSecteur}
-            onUpdateStatus={onUpdateStatus}
-          />
-        )}
+        <EditCategoriesComponent
+          kind={'secteur'}
+          categories={secteurs}
+          hasCode={false}
+          onAdd={addSecteur}
+          onChange={updateSecteur}
+          onUpdateStatus={onUpdateStatus}
+        />
       </div>
     </MainContainer>
   );
