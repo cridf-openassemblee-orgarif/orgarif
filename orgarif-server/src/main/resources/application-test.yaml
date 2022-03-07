@@ -16,6 +16,4 @@ mailjet:
   api-key:
   secret-key:
 #---------------------------------------------------------------------------
-injectFakeData: false
-doSynchronizeElus: false
 elusSynchronizationUrl:

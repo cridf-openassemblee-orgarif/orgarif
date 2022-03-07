@@ -2,36 +2,25 @@ package orgarif.service
 
 import mu.KotlinLogging
 import org.springframework.beans.factory.annotation.Value
-import org.springframework.core.task.AsyncTaskExecutor
 import org.springframework.stereotype.Service
 import orgarif.domain.Civilite
 import orgarif.repository.EluDao
 import orgarif.repository.RepresentantDao
 import orgarif.serialization.Serializer
-import orgarif.service.utils.InitialDataInjector
 import orgarif.utils.OrgarifStringUtils.deserializeUuid
 import orgarif.utils.toTypeId
 
 @Service
 class ElusSynchronizationService(
-    @Value("\${doSynchronizeElus}") val doSynchronizeElus: Boolean,
     @Value("\${elusSynchronizationUrl}") val elusSynchronizationUrl: String,
     val eluDao: EluDao,
     val representantDao: RepresentantDao,
     val randomService: RandomService,
-    val taskExecutor: AsyncTaskExecutor,
     val httpService: HttpService,
-    val dateService: DateService,
-    val initialDataInjector: InitialDataInjector
+    val dateService: DateService
 ) {
 
     private val logger = KotlinLogging.logger {}
-
-    init {
-        if (doSynchronizeElus) {
-            taskExecutor.execute { sync() }
-        }
-    }
 
     enum class OpenassembleeCivilite {
         M,
@@ -52,29 +41,27 @@ class ElusSynchronizationService(
 
     data class Data(val elus: List<OpenassembleeElu>)
 
-    fun sync() =
-        synchronized(this) {
-            logger.info { "Synchronize elus avec SIGER" }
-            val elusJons =
-                try {
-                    val r = httpService.getString(elusSynchronizationUrl)
-                    if (r.code == 200) {
-                        when (r) {
-                            is HttpService.MaybeStringResponse.EmptyResponse ->
-                                throw RuntimeException("$r")
-                            is HttpService.MaybeStringResponse.StringResponse -> r.body
-                        }
-                    } else {
-                        logger.error { "Could not synchronize élus. ${r.code}" }
-                        return
+    fun synchronize() {
+        logger.info { "Synchronize elus avec SIGER" }
+        val elusJons =
+            try {
+                val r = httpService.getString(elusSynchronizationUrl)
+                if (r.code == 200) {
+                    when (r) {
+                        is HttpService.MaybeStringResponse.EmptyResponse ->
+                            throw RuntimeException("$r")
+                        is HttpService.MaybeStringResponse.StringResponse -> r.body
                     }
-                } catch (e: Exception) {
-                    logger.error { "Could not synchronize élus." }
+                } else {
+                    logger.error { "Could not synchronize élus. ${r.code}" }
                     return
                 }
-            handleElusJson(elusJons)
-            initialDataInjector.injectRepresentations()
-        }
+            } catch (e: Exception) {
+                logger.error { "Could not synchronize élus." }
+                return
+            }
+        handleElusJson(elusJons)
+    }
 
     enum class InsertResult {
         insert,

@@ -5,6 +5,7 @@ import javax.sql.DataSource
 import jooqutils.DatabaseConfiguration
 import mu.KotlinLogging
 import org.springframework.beans.factory.annotation.Value
+import org.springframework.core.task.AsyncTaskExecutor
 import org.springframework.stereotype.Service
 import orgarif.domain.ApplicationEnvironment
 import orgarif.jooqlib.Configuration
@@ -23,7 +24,9 @@ class InitializationService(
     deploymentLogDao: DeploymentLogDao,
     applicationInstance: ApplicationInstance,
     devInitialDataInjectorService: DevInitialDataInjectorService,
-    dateService: DateService
+    elusSynchronizationService: ElusSynchronizationService,
+    dateService: DateService,
+    taskExecutor: AsyncTaskExecutor
 ) {
 
     private val logger = KotlinLogging.logger {}
@@ -52,6 +55,12 @@ class InitializationService(
                         devInitialDataInjectorService.initiateDevUsers()
                     }
                 }
+                taskExecutor.execute {
+                    elusSynchronizationService.synchronize()
+                    if (insertInitialData) {
+                        devInitialDataInjectorService.injectRepresentations()
+                    }
+                }
             }
             ApplicationEnvironment.test -> {
                 ResetDatabase.resetDatabaseSchema(databaseConfiguration)
@@ -63,6 +72,7 @@ class InitializationService(
                 if (insertInitialData) {
                     throw IllegalArgumentException("Inconsistent configuration")
                 }
+                elusSynchronizationService.synchronize()
             }
         }
         if (ApplicationInstance.env !in

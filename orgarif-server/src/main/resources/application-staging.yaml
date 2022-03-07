@@ -25,6 +25,4 @@ mailjet:
   api-key:
   secret-key:
 #---------------------------------------------------------------------------
-injectFakeData: false
-doSynchronizeElus: true
 elusSynchronizationUrl: https://siger.mlorber.net/api/publicdata/v2/elus

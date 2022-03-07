@@ -21,6 +21,4 @@ mailjet:
   api-key:
   secret-key:
 #---------------------------------------------------------------------------
-injectFakeData: true
-doSynchronizeElus: true
 elusSynchronizationUrl: http://127.0.0.1:8080/api/publicdata/v2/elus
