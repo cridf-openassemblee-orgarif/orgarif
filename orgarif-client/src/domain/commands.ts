@@ -47,6 +47,12 @@ export interface AddRepresentationCommandResponse {
   id: RepresentationId;
 }
 
+export interface AddSuppleanceCommand {
+  representationId: RepresentationId;
+  suppleantId: RepresentantId;
+  suppleantStartDate?: LocalDate;
+}
+
 export interface CreateDeliberationCommand {
   libelle: string;
   deliberationDate: LocalDate;

@@ -55,6 +55,7 @@ export const AddLienDeliberationDialog = (props: {
       <Dialog
         // FIXME choose - pas clair le changement de popup si on superpose pas ?
         // open={props.display && !displayCreateDeliberationDialog}
+        // bcp plus simple de faire superposition dans le cas du AddSuppleant dans l'édition de représentantion...
         open={props.display}
         onClose={props.onClose}
         fullWidth={true}

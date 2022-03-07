@@ -270,15 +270,12 @@ const onMoveRepresentation = (
       .map(o => setRepresentations(o, toInstanceId, destinationRepresentation))
       .unwrap()
   );
-  appContext
-    .commandService()
-    .moveRepresentationCommand({
-      id: representationId,
-      toOrganismeId: organisme.id,
-      toInstanceId,
-      toPosition: destination.index
-    })
-    .then(() => {});
+  appContext.commandService().moveRepresentationCommand({
+    id: representationId,
+    toOrganismeId: organisme.id,
+    toInstanceId,
+    toPosition: destination.index
+  });
 };
 
 const addInstance = (

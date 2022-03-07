@@ -6,6 +6,7 @@ import {
   AddLienDeliberationCommandResponse,
   AddRepresentationCommand,
   AddRepresentationCommandResponse,
+  AddSuppleanceCommand,
   CreateDeliberationCommand,
   CreateDeliberationCommandResponse,
   CreateNatureJuridiqueCommand,
@@ -59,6 +60,10 @@ export class CommandService {
     command: AddRepresentationCommand
   ): Promise<AddRepresentationCommandResponse> =>
     this.command('AddRepresentationCommand', command);
+
+  public addSuppleanceCommand = (
+    command: AddSuppleanceCommand
+  ): Promise<void> => this.command('AddSuppleanceCommand', command);
 
   public createDeliberationCommand = (
     command: CreateDeliberationCommand

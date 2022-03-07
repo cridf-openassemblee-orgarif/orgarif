@@ -10,6 +10,7 @@ object CommandConfiguration {
             is AddInstanceCommand -> user
             is AddLienDeliberationCommand -> user
             is AddRepresentationCommand -> user
+            is AddSuppleanceCommand -> user
             is CreateDeliberationCommand -> user
             is CreateNatureJuridiqueCommand -> user
             is CreateOrganismeCommand -> user

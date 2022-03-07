@@ -23,6 +23,8 @@ import { asString } from '../../../../utils/nominal-class';
 import { LoadingButton } from '../../../base-component/LoadingButton';
 import { LoadingState } from '../../../../interfaces';
 import { appContext } from '../../../../ApplicationContext';
+import { AddSuppleanceDialog } from './AddSuppleanceDialog';
+import { RepresentantId } from '../../../../domain/ids';
 
 const RepresentationPanel = (props: {
   representation: RepresentationDto;
@@ -31,6 +33,7 @@ const RepresentationPanel = (props: {
   onClose: () => void;
 }) => {
   const [loading, setLoading] = useState<LoadingState>('idle');
+  const [displaySuppleantDialog, setDisplaySuppleantDialog] = useState(false);
   return (
     <SimpleForm
       onSubmit={(dto: {
@@ -81,7 +84,32 @@ const RepresentationPanel = (props: {
           />
         )}
         {!props.representation.suppleance && (
-          <Button variant="contained">Ajouter Suppléant</Button>
+          <>
+            <Button
+              variant="contained"
+              onClick={() => setDisplaySuppleantDialog(true)}
+            >
+              Ajouter Suppléant
+            </Button>
+            <AddSuppleanceDialog
+              display={displaySuppleantDialog}
+              onClose={() => setDisplaySuppleantDialog(false)}
+              onAddInstance={(
+                suppleantId: RepresentantId,
+                suppleantStartDate: LocalDate | undefined
+              ) =>
+                appContext
+                  .commandService()
+                  .addSuppleanceCommand({
+                    representationId: props.representation.id,
+                    suppleantId,
+                    suppleantStartDate
+                  })
+                  .then(props.onUpdate)
+                  .then(props.onClose)
+              }
+            />
+          </>
         )}
       </div>
       <div

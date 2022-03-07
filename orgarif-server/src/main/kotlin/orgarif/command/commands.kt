@@ -40,6 +40,12 @@ data class AddRepresentationCommand(
 
 data class AddRepresentationCommandResponse(val id: RepresentationId) : CommandResponse()
 
+data class AddSuppleanceCommand(
+    val representationId: RepresentationId,
+    val suppleantId: RepresentantId,
+    val suppleantStartDate: LocalDate?
+) : Command()
+
 data class CreateDeliberationCommand(val libelle: String, val deliberationDate: LocalDate) :
     Command()
 

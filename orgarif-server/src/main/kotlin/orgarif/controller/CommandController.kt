@@ -32,6 +32,7 @@ class CommandController(
     val addInstanceCommandHandler: AddInstanceCommandHandler,
     val addLienDeliberationCommandHandler: AddLienDeliberationCommandHandler,
     val addRepresentationCommandHandler: AddRepresentationCommandHandler,
+    val addSuppleanceCommandHandler: AddSuppleanceCommandHandler,
     val createDeliberationCommandHandler: CreateDeliberationCommandHandler,
     val createNatureJuridiqueCommandHandler: CreateNatureJuridiqueCommandHandler,
     val createOrganismeCommandHandler: CreateOrganismeCommandHandler,
@@ -137,6 +138,7 @@ class CommandController(
             is AddInstanceCommand -> addInstanceCommandHandler
             is AddLienDeliberationCommand -> addLienDeliberationCommandHandler
             is AddRepresentationCommand -> addRepresentationCommandHandler
+            is AddSuppleanceCommand -> addSuppleanceCommandHandler
             is CreateDeliberationCommand -> createDeliberationCommandHandler
             is CreateNatureJuridiqueCommand -> createNatureJuridiqueCommandHandler
             is CreateOrganismeCommand -> createOrganismeCommandHandler

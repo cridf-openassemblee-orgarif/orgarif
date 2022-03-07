@@ -21,7 +21,8 @@ import { asString } from '../../../../utils/nominal-class';
 import { LoadingState } from '../../../../interfaces';
 import { LoadingButton } from '../../../base-component/LoadingButton';
 
-const AddRepresentationComponent = (props: {
+export const AddRepresentationComponent = (props: {
+  representantLabel: string;
   setRepresentantId: (representantId: RepresentantId) => void;
   setStartDate: (startDate: LocalDate | undefined) => void;
   representantMandatoryError: boolean;
@@ -47,7 +48,7 @@ const AddRepresentationComponent = (props: {
         `}
       >
         <SelectRepresentantInput
-          label="Représentant"
+          label={props.representantLabel}
           selection={representant}
           onChange={r => updateRepresentant(r)}
           onCreate={nom => {
@@ -63,7 +64,7 @@ const AddRepresentationComponent = (props: {
               padding-bottom: 20px;
             `}
           >
-            Sélection du représentant obligatoire
+            Sélection obligatoire
           </div>
         )}
       </div>
@@ -143,6 +144,7 @@ export const AddRepresentationDialog = (props: {
         <DialogContent>
           <h3>Représentant</h3>
           <AddRepresentationComponent
+            representantLabel="Représentant"
             setRepresentantId={setRepresentantId}
             setStartDate={setRepresentantStartDate}
             representantMandatoryError={representantMandatoryError}
@@ -155,6 +157,7 @@ export const AddRepresentationDialog = (props: {
             Suppléant
           </h3>
           <AddRepresentationComponent
+            representantLabel="Suppléant"
             setRepresentantId={setSuppleantId}
             setStartDate={setSuppleantStartDate}
             representantMandatoryError={false}
