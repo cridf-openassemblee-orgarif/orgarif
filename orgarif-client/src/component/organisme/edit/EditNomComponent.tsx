@@ -20,7 +20,7 @@ export const EditNomComponent = (
   props: PropsWithChildren<{
     kind: 'organisme' | 'instance';
     nom: string;
-    onUpdateNom: (nom: string, then: () => void) => void;
+    onUpdateNom: (nom: string) => Promise<void>;
     onUpdateStatus: (status: ItemStatus, then: () => void) => void;
     titleElement: ReactElement;
   }>
@@ -89,7 +89,7 @@ export const EditNomComponent = (
                 color="primary"
                 size="small"
                 onClick={() =>
-                  props.onUpdateNom(nom, () => setDisplayDialog(false))
+                  props.onUpdateNom(nom).then(() => setDisplayDialog(false))
                 }
               >
                 Enregistrer

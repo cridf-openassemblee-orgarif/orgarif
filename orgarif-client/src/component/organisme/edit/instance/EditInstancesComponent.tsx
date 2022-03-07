@@ -37,7 +37,7 @@ export const InstanceDragDropZone = (props: {
 
 export const EditInstancesComponent = (props: {
   instances: InstanceDto[];
-  onNomChange: (instanceId: InstanceId, nom: string, then: () => void) => void;
+  onNomChange: (instanceId: InstanceId, nom: string) => Promise<void>;
   onStatusChange: (
     instanceId: InstanceId,
     status: ItemStatus,
@@ -110,8 +110,8 @@ export const EditInstancesComponent = (props: {
                     <EditNomComponent
                       kind={'instance'}
                       nom={instance.nom}
-                      onUpdateNom={(nom: string, then: () => void) =>
-                        props.onNomChange(instance.id, nom, then)
+                      onUpdateNom={(nom: string) =>
+                        props.onNomChange(instance.id, nom)
                       }
                       onUpdateStatus={(status: ItemStatus, then: () => void) =>
                         props.onStatusChange(instance.id, status, then)

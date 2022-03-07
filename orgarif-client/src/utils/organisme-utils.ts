@@ -24,9 +24,8 @@ import { LocalDate } from '../domain/time';
 const onOrganismeNomChange = (
   organisme: OrganismeDto,
   setOrganisme: (o: OrganismeDto) => void,
-  nom: string,
-  then: () => void
-) => {
+  nom: string
+) =>
   appContext
     .commandService()
     .updateOrganismeNomCommand({
@@ -35,9 +34,7 @@ const onOrganismeNomChange = (
     })
     .then(() => {
       setOrganisme({ ...organisme, nom });
-      then();
     });
-};
 
 const onOrganismeStatusUpdate = (
   organisme: OrganismeDto,
@@ -61,9 +58,8 @@ const onInstanceNomChange = (
   organisme: OrganismeDto,
   setOrganisme: (o: OrganismeDto) => void,
   instanceId: InstanceId,
-  nom: string,
-  then: () => void
-) => {
+  nom: string
+): Promise<void> =>
   appContext
     .commandService()
     .updateInstanceNomCommand({
@@ -79,9 +75,7 @@ const onInstanceNomChange = (
         }
       });
       setOrganisme({ ...organisme, instances });
-      then();
     });
-};
 
 const onInstanceStatusChange = (
   organisme: OrganismeDto,
@@ -369,15 +363,12 @@ export const organismeActions = (
   organisme: OrganismeDto,
   setOrganisme: (o: OrganismeDto) => void
 ) => ({
-  onOrganismeNomChange: (nom: string, then: () => void) =>
-    onOrganismeNomChange(organisme, setOrganisme, nom, then),
+  onOrganismeNomChange: (nom: string) =>
+    onOrganismeNomChange(organisme, setOrganisme, nom),
   onOrganismeStatusUpdate: (status: ItemStatus, then: () => void) =>
     onOrganismeStatusUpdate(organisme, setOrganisme, status, then),
-  onInstanceNomChange: (
-    instanceId: InstanceId,
-    nom: string,
-    then: () => void
-  ) => onInstanceNomChange(organisme, setOrganisme, instanceId, nom, then),
+  onInstanceNomChange: (instanceId: InstanceId, nom: string) =>
+    onInstanceNomChange(organisme, setOrganisme, instanceId, nom),
   onInstanceStatusChange: (
     instanceId: InstanceId,
     status: ItemStatus,
