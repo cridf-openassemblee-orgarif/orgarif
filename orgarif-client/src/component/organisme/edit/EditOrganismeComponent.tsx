@@ -220,16 +220,8 @@ export const EditOrganismeComponent = (props: {
             padding: 0 0 0 40px;
           `}
         >
-          <Button
-            startIcon={<Add />}
-            variant="outlined"
-            color="primary"
-            size="small"
-          >
-            Ajouter une instance
-          </Button>
+          <AddInstanceComponent addInstance={actions.onAddInstance} />
         </div>
-        <AddInstanceComponent addInstance={actions.onAddInstance} />
         {organisme.instances.length !== 0 && (
           <div
             css={css`

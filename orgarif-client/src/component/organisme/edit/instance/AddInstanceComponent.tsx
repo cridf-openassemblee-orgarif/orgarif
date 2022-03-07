@@ -1,44 +1,95 @@
 /** @jsxImportSource @emotion/react */
 import { css } from '@emotion/react';
-import { useRef } from 'react';
-import { SimpleForm } from '../../../base-component/SimpleForm';
+import * as React from 'react';
+import { useState } from 'react';
 import { TextInput } from '../../../base-component/TextInput';
+import {
+  Button,
+  Dialog,
+  DialogActions,
+  DialogContent,
+  DialogTitle
+} from '@mui/material';
+import { Add } from '@mui/icons-material';
+import { colors } from '../../../../styles/colors';
 
 export const AddInstanceComponent = (props: {
   addInstance: (nom: string) => void;
 }) => {
-  const formRef = useRef<HTMLFormElement>(null);
+  const [displayDialog, setDisplayDialog] = useState(false);
+  const [nomInstance, setNomInstance] = useState('');
+  const [displayError, setDisplayError] = useState(false);
   return (
-    <div
-      css={css`
-        display: flex;
-      `}
-    >
+    <>
       <div
         css={css`
-          flex: 25%;
-          font-size: 1rem;
-          text-align: right;
-          padding: 19px 10px 0 0;
+          margin: 20px 0;
         `}
       >
-        Ajouter une instance
-      </div>
-      <div
-        css={css`
-          flex: 75%;
-          padding: 8px 6px 0 4px;
-        `}
-      >
-        <SimpleForm
-          forwardRef={formRef}
-          onSubmit={e => {
-            props.addInstance(e.nom);
-          }}
+        <Button
+          startIcon={<Add />}
+          variant="outlined"
+          color="primary"
+          size="small"
+          onClick={() => setDisplayDialog(true)}
         >
-          <TextInput name="nom" label="Nouvelle instance" />
-        </SimpleForm>
+          Ajouter une instance
+        </Button>
       </div>
-    </div>
+      <Dialog
+        open={displayDialog}
+        onClose={() => setDisplayDialog(false)}
+        fullWidth={true}
+      >
+        <DialogTitle>Ajouter une instance</DialogTitle>
+        <DialogContent>
+          <div
+            css={css`
+              padding: 20px 0;
+            `}
+          >
+            <TextInput
+              name="nom"
+              label="Nouvelle instance"
+              onChange={e => setNomInstance(e.currentTarget.value)}
+            />
+            {displayError && (
+              <div
+                css={css`
+                  color: ${colors.errorRed};
+                  font-weight: bold;
+                `}
+              >
+                Nom obligatoire pour créer une instance
+              </div>
+            )}
+          </div>
+        </DialogContent>
+        <DialogActions>
+          <Button onClick={() => setDisplayDialog(false)} color="primary">
+            Annuler
+          </Button>
+          <div>
+            <Button
+              type="submit"
+              variant="contained"
+              color="primary"
+              size="small"
+              onClick={() => {
+                if (nomInstance === '') {
+                  setDisplayError(true);
+                  return;
+                }
+                props.addInstance(nomInstance);
+                setDisplayDialog(false);
+                setDisplayError(false);
+              }}
+            >
+              Créer instance
+            </Button>
+          </div>
+        </DialogActions>
+      </Dialog>
+    </>
   );
 };
