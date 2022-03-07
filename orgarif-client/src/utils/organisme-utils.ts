@@ -39,9 +39,8 @@ const onOrganismeNomChange = (
 const onOrganismeStatusUpdate = (
   organisme: OrganismeDto,
   setOrganisme: (o: OrganismeDto) => void,
-  status: ItemStatus,
-  then: () => void
-) => {
+  status: ItemStatus
+) =>
   appContext
     .commandService()
     .updateOrganismeStatus({
@@ -50,9 +49,7 @@ const onOrganismeStatusUpdate = (
     })
     .then(() => {
       setOrganisme({ ...organisme, status });
-      then();
     });
-};
 
 const onInstanceNomChange = (
   organisme: OrganismeDto,
@@ -81,9 +78,8 @@ const onInstanceStatusChange = (
   organisme: OrganismeDto,
   setOrganisme: (o: OrganismeDto) => void,
   instanceId: InstanceId,
-  status: ItemStatus,
-  then: () => void
-) => {
+  status: ItemStatus
+) =>
   appContext
     .commandService()
     .updateInstanceStatusCommand({
@@ -99,9 +95,7 @@ const onInstanceStatusChange = (
         }
       });
       setOrganisme({ ...organisme, instances });
-      then();
     });
-};
 
 const onNatureJuridiqueChange = (
   organisme: OrganismeDto,
@@ -365,16 +359,12 @@ export const organismeActions = (
 ) => ({
   onOrganismeNomChange: (nom: string) =>
     onOrganismeNomChange(organisme, setOrganisme, nom),
-  onOrganismeStatusUpdate: (status: ItemStatus, then: () => void) =>
-    onOrganismeStatusUpdate(organisme, setOrganisme, status, then),
+  onOrganismeStatusUpdate: (status: ItemStatus) =>
+    onOrganismeStatusUpdate(organisme, setOrganisme, status),
   onInstanceNomChange: (instanceId: InstanceId, nom: string) =>
     onInstanceNomChange(organisme, setOrganisme, instanceId, nom),
-  onInstanceStatusChange: (
-    instanceId: InstanceId,
-    status: ItemStatus,
-    then: () => void
-  ) =>
-    onInstanceStatusChange(organisme, setOrganisme, instanceId, status, then),
+  onInstanceStatusChange: (instanceId: InstanceId, status: ItemStatus) =>
+    onInstanceStatusChange(organisme, setOrganisme, instanceId, status),
   onNatureJuridiqueChange: (natureJuridiqueId: NatureJuridiqueId | undefined) =>
     onNatureJuridiqueChange(organisme, setOrganisme, natureJuridiqueId),
   onSecteurChange: (secteurId: SecteurId | undefined) =>

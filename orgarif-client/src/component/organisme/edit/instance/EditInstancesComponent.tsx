@@ -38,11 +38,7 @@ export const InstanceDragDropZone = (props: {
 export const EditInstancesComponent = (props: {
   instances: InstanceDto[];
   onNomChange: (instanceId: InstanceId, nom: string) => Promise<void>;
-  onStatusChange: (
-    instanceId: InstanceId,
-    status: ItemStatus,
-    then: () => void
-  ) => void;
+  onStatusChange: (instanceId: InstanceId, status: ItemStatus) => Promise<void>;
   onNombreRepresentantsChange: (
     instanceId: InstanceId,
     nombre: number | undefined
@@ -113,8 +109,8 @@ export const EditInstancesComponent = (props: {
                       onUpdateNom={(nom: string) =>
                         props.onNomChange(instance.id, nom)
                       }
-                      onUpdateStatus={(status: ItemStatus, then: () => void) =>
-                        props.onStatusChange(instance.id, status, then)
+                      onUpdateStatus={(status: ItemStatus) =>
+                        props.onStatusChange(instance.id, status)
                       }
                       titleElement={
                         <h3

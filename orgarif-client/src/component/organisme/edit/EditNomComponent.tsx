@@ -21,7 +21,7 @@ export const EditNomComponent = (
     kind: 'organisme' | 'instance';
     nom: string;
     onUpdateNom: (nom: string) => Promise<void>;
-    onUpdateStatus: (status: ItemStatus, then: () => void) => void;
+    onUpdateStatus: (status: ItemStatus) => Promise<void>;
     titleElement: ReactElement;
   }>
 ) => {
@@ -116,7 +116,9 @@ export const EditNomComponent = (
                 color="warning"
                 size="small"
                 onClick={() =>
-                  props.onUpdateStatus('archive', () => setDisplayDialog(false))
+                  props
+                    .onUpdateStatus('archive')
+                    .then(() => setDisplayDialog(false))
                 }
               >
                 Archiver
@@ -133,7 +135,9 @@ export const EditNomComponent = (
                 color="error"
                 size="small"
                 onClick={() =>
-                  props.onUpdateStatus('trash', () => setDisplayDialog(false))
+                  props
+                    .onUpdateStatus('trash')
+                    .then(() => setDisplayDialog(false))
                 }
               >
                 Supprimer
