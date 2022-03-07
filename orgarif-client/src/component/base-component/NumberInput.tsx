@@ -21,6 +21,9 @@ export const NumberInput = (props: {
       autoFocus={props.autoFocus}
       size={'small'}
       type="number"
+      inputProps={{
+        min: 0
+      }}
       onChange={(e: ChangeEvent<HTMLInputElement>) => {
         const v = e.currentTarget.value;
         setTextValue(v);
