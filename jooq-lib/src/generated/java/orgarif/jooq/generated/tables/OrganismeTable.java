@@ -17,7 +17,7 @@ import org.jooq.Field;
 import org.jooq.ForeignKey;
 import org.jooq.Name;
 import org.jooq.Record;
-import org.jooq.Row10;
+import org.jooq.Row11;
 import org.jooq.Schema;
 import org.jooq.Table;
 import org.jooq.TableField;
@@ -65,14 +65,19 @@ public class OrganismeTable extends TableImpl<OrganismeRecord> {
     public final TableField<OrganismeRecord, String> NOM = createField(DSL.name("nom"), SQLDataType.VARCHAR(255).nullable(false), this, "");
 
     /**
-     * The column <code>public.organisme.secteur_id</code>.
+     * The column <code>public.organisme.departement_id</code>.
      */
-    public final TableField<OrganismeRecord, UUID> SECTEUR_ID = createField(DSL.name("secteur_id"), SQLDataType.UUID, this, "");
+    public final TableField<OrganismeRecord, UUID> DEPARTEMENT_ID = createField(DSL.name("departement_id"), SQLDataType.UUID, this, "");
 
     /**
      * The column <code>public.organisme.nature_juridique_id</code>.
      */
     public final TableField<OrganismeRecord, UUID> NATURE_JURIDIQUE_ID = createField(DSL.name("nature_juridique_id"), SQLDataType.UUID, this, "");
+
+    /**
+     * The column <code>public.organisme.secteur_id</code>.
+     */
+    public final TableField<OrganismeRecord, UUID> SECTEUR_ID = createField(DSL.name("secteur_id"), SQLDataType.UUID, this, "");
 
     /**
      * The column <code>public.organisme.type_structure_id</code>.
@@ -90,14 +95,14 @@ public class OrganismeTable extends TableImpl<OrganismeRecord> {
     public final TableField<OrganismeRecord, Boolean> PRESENCE_SUPPLEANTS = createField(DSL.name("presence_suppleants"), SQLDataType.BOOLEAN.nullable(false), this, "");
 
     /**
-     * The column <code>public.organisme.creation_date</code>.
-     */
-    public final TableField<OrganismeRecord, Instant> CREATION_DATE = createField(DSL.name("creation_date"), SQLDataType.TIMESTAMPWITHTIMEZONE(6).nullable(false), this, "", new TimestampWithTimeZoneToInstantConverter());
-
-    /**
      * The column <code>public.organisme.status</code>.
      */
     public final TableField<OrganismeRecord, String> STATUS = createField(DSL.name("status"), SQLDataType.VARCHAR(255).nullable(false), this, "");
+
+    /**
+     * The column <code>public.organisme.creation_date</code>.
+     */
+    public final TableField<OrganismeRecord, Instant> CREATION_DATE = createField(DSL.name("creation_date"), SQLDataType.TIMESTAMPWITHTIMEZONE(6).nullable(false), this, "", new TimestampWithTimeZoneToInstantConverter());
 
     /**
      * The column <code>public.organisme.last_modification_date</code>.
@@ -158,25 +163,25 @@ public class OrganismeTable extends TableImpl<OrganismeRecord> {
     @Override
     @Nonnull
     public List<ForeignKey<OrganismeRecord, ?>> getReferences() {
-        return Arrays.<ForeignKey<OrganismeRecord, ?>>asList(Keys.ORGANISME__ORGANISME_SECTEUR_ID_FKEY, Keys.ORGANISME__ORGANISME_NATURE_JURIDIQUE_ID_FKEY, Keys.ORGANISME__ORGANISME_TYPE_STRUCTURE_ID_FKEY);
+        return Arrays.<ForeignKey<OrganismeRecord, ?>>asList(Keys.ORGANISME__ORGANISME_NATURE_JURIDIQUE_ID_FKEY, Keys.ORGANISME__ORGANISME_SECTEUR_ID_FKEY, Keys.ORGANISME__ORGANISME_TYPE_STRUCTURE_ID_FKEY);
     }
 
-    private transient SecteurTable _secteur;
     private transient NatureJuridiqueTable _natureJuridique;
+    private transient SecteurTable _secteur;
     private transient TypeStructureTable _typeStructure;
-
-    public SecteurTable secteur() {
-        if (_secteur == null)
-            _secteur = new SecteurTable(this, Keys.ORGANISME__ORGANISME_SECTEUR_ID_FKEY);
-
-        return _secteur;
-    }
 
     public NatureJuridiqueTable natureJuridique() {
         if (_natureJuridique == null)
             _natureJuridique = new NatureJuridiqueTable(this, Keys.ORGANISME__ORGANISME_NATURE_JURIDIQUE_ID_FKEY);
 
         return _natureJuridique;
+    }
+
+    public SecteurTable secteur() {
+        if (_secteur == null)
+            _secteur = new SecteurTable(this, Keys.ORGANISME__ORGANISME_SECTEUR_ID_FKEY);
+
+        return _secteur;
     }
 
     public TypeStructureTable typeStructure() {
@@ -217,12 +222,12 @@ public class OrganismeTable extends TableImpl<OrganismeRecord> {
     }
 
     // -------------------------------------------------------------------------
-    // Row10 type methods
+    // Row11 type methods
     // -------------------------------------------------------------------------
 
     @Override
     @Nonnull
-    public Row10<UUID, String, UUID, UUID, UUID, Integer, Boolean, Instant, String, Instant> fieldsRow() {
-        return (Row10) super.fieldsRow();
+    public Row11<UUID, String, UUID, UUID, UUID, UUID, Integer, Boolean, String, Instant, Instant> fieldsRow() {
+        return (Row11) super.fieldsRow();
     }
 }

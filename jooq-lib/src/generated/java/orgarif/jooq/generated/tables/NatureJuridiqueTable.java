@@ -17,7 +17,7 @@ import org.jooq.Field;
 import org.jooq.ForeignKey;
 import org.jooq.Name;
 import org.jooq.Record;
-import org.jooq.Row4;
+import org.jooq.Row5;
 import org.jooq.Schema;
 import org.jooq.Table;
 import org.jooq.TableField;
@@ -68,6 +68,11 @@ public class NatureJuridiqueTable extends TableImpl<NatureJuridiqueRecord> {
      * The column <code>public.nature_juridique.status</code>.
      */
     public final TableField<NatureJuridiqueRecord, String> STATUS = createField(DSL.name("status"), SQLDataType.VARCHAR(255).nullable(false), this, "");
+
+    /**
+     * The column <code>public.nature_juridique.creation_date</code>.
+     */
+    public final TableField<NatureJuridiqueRecord, Instant> CREATION_DATE = createField(DSL.name("creation_date"), SQLDataType.TIMESTAMPWITHTIMEZONE(6).nullable(false), this, "", new TimestampWithTimeZoneToInstantConverter());
 
     /**
      * The column <code>public.nature_juridique.last_modification_date</code>.
@@ -156,12 +161,12 @@ public class NatureJuridiqueTable extends TableImpl<NatureJuridiqueRecord> {
     }
 
     // -------------------------------------------------------------------------
-    // Row4 type methods
+    // Row5 type methods
     // -------------------------------------------------------------------------
 
     @Override
     @Nonnull
-    public Row4<UUID, String, String, Instant> fieldsRow() {
-        return (Row4) super.fieldsRow();
+    public Row5<UUID, String, String, Instant, Instant> fieldsRow() {
+        return (Row5) super.fieldsRow();
     }
 }

@@ -7,6 +7,7 @@ package orgarif.jooq.generated;
 import orgarif.jooq.generated.tables.AppUserTable;
 import orgarif.jooq.generated.tables.CommandLogTable;
 import orgarif.jooq.generated.tables.DeliberationTable;
+import orgarif.jooq.generated.tables.DepartementTable;
 import orgarif.jooq.generated.tables.DeploymentLogTable;
 import orgarif.jooq.generated.tables.EluTable;
 import orgarif.jooq.generated.tables.InstanceTable;
@@ -44,6 +45,11 @@ public class Tables {
      * The table <code>public.deliberation</code>.
      */
     public static final DeliberationTable DELIBERATION = DeliberationTable.DELIBERATION;
+
+    /**
+     * The table <code>public.departement</code>.
+     */
+    public static final DepartementTable DEPARTEMENT = DepartementTable.DEPARTEMENT;
 
     /**
      * The table <code>public.deployment_log</code>.

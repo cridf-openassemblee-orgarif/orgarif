@@ -18,7 +18,7 @@ import org.jooq.Field;
 import org.jooq.ForeignKey;
 import org.jooq.Name;
 import org.jooq.Record;
-import org.jooq.Row6;
+import org.jooq.Row7;
 import org.jooq.Schema;
 import org.jooq.Table;
 import org.jooq.TableField;
@@ -74,6 +74,11 @@ public class DeliberationTable extends TableImpl<DeliberationRecord> {
      * The column <code>public.deliberation.deliberation_date</code>.
      */
     public final TableField<DeliberationRecord, LocalDate> DELIBERATION_DATE = createField(DSL.name("deliberation_date"), SQLDataType.LOCALDATE.nullable(false), this, "");
+
+    /**
+     * The column <code>public.deliberation.status</code>.
+     */
+    public final TableField<DeliberationRecord, String> STATUS = createField(DSL.name("status"), SQLDataType.VARCHAR(255).nullable(false), this, "");
 
     /**
      * The column <code>public.deliberation.creation_date</code>.
@@ -167,12 +172,12 @@ public class DeliberationTable extends TableImpl<DeliberationRecord> {
     }
 
     // -------------------------------------------------------------------------
-    // Row6 type methods
+    // Row7 type methods
     // -------------------------------------------------------------------------
 
     @Override
     @Nonnull
-    public Row6<UUID, String, String, LocalDate, Instant, Instant> fieldsRow() {
-        return (Row6) super.fieldsRow();
+    public Row7<UUID, String, String, LocalDate, String, Instant, Instant> fieldsRow() {
+        return (Row7) super.fieldsRow();
     }
 }

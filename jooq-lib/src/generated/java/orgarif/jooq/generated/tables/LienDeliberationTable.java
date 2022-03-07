@@ -82,14 +82,14 @@ public class LienDeliberationTable extends TableImpl<LienDeliberationRecord> {
     public final TableField<LienDeliberationRecord, String> COMMENT = createField(DSL.name("comment"), SQLDataType.CLOB, this, "");
 
     /**
-     * The column <code>public.lien_deliberation.creation_date</code>.
-     */
-    public final TableField<LienDeliberationRecord, Instant> CREATION_DATE = createField(DSL.name("creation_date"), SQLDataType.TIMESTAMPWITHTIMEZONE(6).nullable(false), this, "", new TimestampWithTimeZoneToInstantConverter());
-
-    /**
      * The column <code>public.lien_deliberation.status</code>.
      */
     public final TableField<LienDeliberationRecord, String> STATUS = createField(DSL.name("status"), SQLDataType.VARCHAR(255).nullable(false), this, "");
+
+    /**
+     * The column <code>public.lien_deliberation.creation_date</code>.
+     */
+    public final TableField<LienDeliberationRecord, Instant> CREATION_DATE = createField(DSL.name("creation_date"), SQLDataType.TIMESTAMPWITHTIMEZONE(6).nullable(false), this, "", new TimestampWithTimeZoneToInstantConverter());
 
     /**
      * The column <code>public.lien_deliberation.last_modification_date</code>.
@@ -220,7 +220,7 @@ public class LienDeliberationTable extends TableImpl<LienDeliberationRecord> {
 
     @Override
     @Nonnull
-    public Row8<UUID, UUID, UUID, UUID, String, Instant, String, Instant> fieldsRow() {
+    public Row8<UUID, UUID, UUID, UUID, String, String, Instant, Instant> fieldsRow() {
         return (Row8) super.fieldsRow();
     }
 }

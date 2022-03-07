@@ -93,14 +93,14 @@ public class RepresentationTable extends TableImpl<RepresentationRecord> {
     public final TableField<RepresentationRecord, LocalDate> END_DATE = createField(DSL.name("end_date"), SQLDataType.LOCALDATE, this, "");
 
     /**
-     * The column <code>public.representation.creation_date</code>.
-     */
-    public final TableField<RepresentationRecord, Instant> CREATION_DATE = createField(DSL.name("creation_date"), SQLDataType.TIMESTAMPWITHTIMEZONE(6).nullable(false), this, "", new TimestampWithTimeZoneToInstantConverter());
-
-    /**
      * The column <code>public.representation.status</code>.
      */
     public final TableField<RepresentationRecord, String> STATUS = createField(DSL.name("status"), SQLDataType.VARCHAR(255).nullable(false), this, "");
+
+    /**
+     * The column <code>public.representation.creation_date</code>.
+     */
+    public final TableField<RepresentationRecord, Instant> CREATION_DATE = createField(DSL.name("creation_date"), SQLDataType.TIMESTAMPWITHTIMEZONE(6).nullable(false), this, "", new TimestampWithTimeZoneToInstantConverter());
 
     /**
      * The column <code>public.representation.last_modification_date</code>.
@@ -231,7 +231,7 @@ public class RepresentationTable extends TableImpl<RepresentationRecord> {
 
     @Override
     @Nonnull
-    public Row10<UUID, UUID, UUID, UUID, Integer, LocalDate, LocalDate, Instant, String, Instant> fieldsRow() {
+    public Row10<UUID, UUID, UUID, UUID, Integer, LocalDate, LocalDate, String, Instant, Instant> fieldsRow() {
         return (Row10) super.fieldsRow();
     }
 }

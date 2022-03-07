@@ -16,6 +16,7 @@ import org.jooq.impl.SchemaImpl;
 import orgarif.jooq.generated.tables.AppUserTable;
 import orgarif.jooq.generated.tables.CommandLogTable;
 import orgarif.jooq.generated.tables.DeliberationTable;
+import orgarif.jooq.generated.tables.DepartementTable;
 import orgarif.jooq.generated.tables.DeploymentLogTable;
 import orgarif.jooq.generated.tables.EluTable;
 import orgarif.jooq.generated.tables.InstanceTable;
@@ -60,6 +61,11 @@ public class PublicTable extends SchemaImpl {
      * The table <code>public.deliberation</code>.
      */
     public final DeliberationTable DELIBERATION = DeliberationTable.DELIBERATION;
+
+    /**
+     * The table <code>public.departement</code>.
+     */
+    public final DepartementTable DEPARTEMENT = DepartementTable.DEPARTEMENT;
 
     /**
      * The table <code>public.deployment_log</code>.
@@ -157,6 +163,7 @@ public class PublicTable extends SchemaImpl {
             AppUserTable.APP_USER,
             CommandLogTable.COMMAND_LOG,
             DeliberationTable.DELIBERATION,
+            DepartementTable.DEPARTEMENT,
             DeploymentLogTable.DEPLOYMENT_LOG,
             EluTable.ELU,
             InstanceTable.INSTANCE,

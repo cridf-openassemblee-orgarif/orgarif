@@ -88,14 +88,14 @@ public class SuppleanceTable extends TableImpl<SuppleanceRecord> {
     public final TableField<SuppleanceRecord, LocalDate> END_DATE = createField(DSL.name("end_date"), SQLDataType.LOCALDATE, this, "");
 
     /**
-     * The column <code>public.suppleance.creation_date</code>.
-     */
-    public final TableField<SuppleanceRecord, Instant> CREATION_DATE = createField(DSL.name("creation_date"), SQLDataType.TIMESTAMPWITHTIMEZONE(6).nullable(false), this, "", new TimestampWithTimeZoneToInstantConverter());
-
-    /**
      * The column <code>public.suppleance.status</code>.
      */
     public final TableField<SuppleanceRecord, String> STATUS = createField(DSL.name("status"), SQLDataType.VARCHAR(255).nullable(false), this, "");
+
+    /**
+     * The column <code>public.suppleance.creation_date</code>.
+     */
+    public final TableField<SuppleanceRecord, Instant> CREATION_DATE = createField(DSL.name("creation_date"), SQLDataType.TIMESTAMPWITHTIMEZONE(6).nullable(false), this, "", new TimestampWithTimeZoneToInstantConverter());
 
     /**
      * The column <code>public.suppleance.last_modification_date</code>.
@@ -226,7 +226,7 @@ public class SuppleanceTable extends TableImpl<SuppleanceRecord> {
 
     @Override
     @Nonnull
-    public Row9<UUID, UUID, UUID, UUID, LocalDate, LocalDate, Instant, String, Instant> fieldsRow() {
+    public Row9<UUID, UUID, UUID, UUID, LocalDate, LocalDate, String, Instant, Instant> fieldsRow() {
         return (Row9) super.fieldsRow();
     }
 }

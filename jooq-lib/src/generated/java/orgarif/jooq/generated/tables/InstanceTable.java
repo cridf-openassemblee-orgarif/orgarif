@@ -82,14 +82,14 @@ public class InstanceTable extends TableImpl<InstanceRecord> {
     public final TableField<InstanceRecord, Boolean> PRESENCE_SUPPLEANTS = createField(DSL.name("presence_suppleants"), SQLDataType.BOOLEAN.nullable(false), this, "");
 
     /**
-     * The column <code>public.instance.creation_date</code>.
-     */
-    public final TableField<InstanceRecord, Instant> CREATION_DATE = createField(DSL.name("creation_date"), SQLDataType.TIMESTAMPWITHTIMEZONE(6).nullable(false), this, "", new TimestampWithTimeZoneToInstantConverter());
-
-    /**
      * The column <code>public.instance.status</code>.
      */
     public final TableField<InstanceRecord, String> STATUS = createField(DSL.name("status"), SQLDataType.VARCHAR(255).nullable(false), this, "");
+
+    /**
+     * The column <code>public.instance.creation_date</code>.
+     */
+    public final TableField<InstanceRecord, Instant> CREATION_DATE = createField(DSL.name("creation_date"), SQLDataType.TIMESTAMPWITHTIMEZONE(6).nullable(false), this, "", new TimestampWithTimeZoneToInstantConverter());
 
     /**
      * The column <code>public.instance.last_modification_date</code>.
@@ -204,7 +204,7 @@ public class InstanceTable extends TableImpl<InstanceRecord> {
 
     @Override
     @Nonnull
-    public Row8<UUID, String, UUID, Integer, Boolean, Instant, String, Instant> fieldsRow() {
+    public Row8<UUID, String, UUID, Integer, Boolean, String, Instant, Instant> fieldsRow() {
         return (Row8) super.fieldsRow();
     }
 }
