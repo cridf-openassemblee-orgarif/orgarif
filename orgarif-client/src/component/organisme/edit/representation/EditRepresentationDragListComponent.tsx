@@ -37,6 +37,7 @@ export const RepresentantDragDropZone = (props: {
 export const EditRepresentationDragListComponent = (props: {
   organismeOrInstanceId: OrganismeId | InstanceId;
   representations: RepresentationDto[];
+  onUpdate: () => Promise<void>;
 }) => {
   return (
     <RepresentantDragDropZone
@@ -98,7 +99,10 @@ export const EditRepresentationDragListComponent = (props: {
                       : colors.clearGrey2};
                   `}
                 >
-                  <EditRepresentationListItem representation={r} />
+                  <EditRepresentationListItem
+                    representation={r}
+                    onUpdate={props.onUpdate}
+                  />
                 </div>
               )}
             </Draggable>

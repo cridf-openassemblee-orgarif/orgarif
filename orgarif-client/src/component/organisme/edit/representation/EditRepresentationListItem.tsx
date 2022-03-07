@@ -15,6 +15,7 @@ const actionsClass = asString(clientUid());
 
 export const EditRepresentationListItem = (props: {
   representation: RepresentationDto;
+  onUpdate: () => Promise<void>;
 }) => {
   const [displayEditPopup, setDisplayEditPopup] = useState(false);
   return (
@@ -134,6 +135,7 @@ export const EditRepresentationListItem = (props: {
       <EditRepresentationDiaglog
         representation={props.representation}
         display={displayEditPopup}
+        onUpdate={props.onUpdate}
         onClose={() => setDisplayEditPopup(false)}
       />
     </React.Fragment>

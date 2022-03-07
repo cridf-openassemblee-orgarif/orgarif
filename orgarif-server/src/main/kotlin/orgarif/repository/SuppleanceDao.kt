@@ -50,6 +50,14 @@ class SuppleanceDao(val jooq: DSLContext) {
             .fetch()
             .map(this::map)
 
+    fun updateStartDate(id: SuppleanceId, startDate: LocalDate?, date: Instant) {
+        jooq.update(SUPPLEANCE)
+            .set(SUPPLEANCE.START_DATE, startDate)
+            .set(SUPPLEANCE.LAST_MODIFICATION_DATE, date)
+            .where(SUPPLEANCE.ID.equal(id.rawId))
+            .execute()
+    }
+
     private fun map(r: SuppleanceRecord) =
         Record(
             r.id.toTypeId(),

@@ -7,6 +7,7 @@ import {
   RepresentantId,
   RepresentationId,
   SecteurId,
+  SuppleanceId,
   TypeStructureId
 } from './ids';
 import { ItemStatus } from './organisme';
@@ -187,6 +188,13 @@ export interface UpdateOrganismeStatus {
 export interface UpdateOrganismeTypeStructureCommand {
   id: OrganismeId;
   typeStructureId: TypeStructureId | undefined;
+}
+
+export interface UpdateRepresentationDatesCommand {
+  representationId: RepresentationId;
+  representationStartDate?: LocalDate;
+  suppleanceId?: SuppleanceId;
+  suppleanceStartDate?: LocalDate;
 }
 
 export interface UpdateRepresentationStatusCommand {

@@ -190,24 +190,9 @@ const addRepresentation = async (
     organismeId: organisme.id,
     instanceId
   });
-  // .then(r => {
-  //   const representation: RepresentationDto = {
-  //     id: r.id,
-  //     representant
-  //   };
-  //   // FIXME
-  //   if (!instanceId) {
-  //     const representations = [...organisme.representations, representation];
-  //     setOrganisme({ ...organisme, representations });
-  //   }
-  // });
   // TODO faire mieux ? (penser virer le async)
-  return appContext
-    .queryService()
-    .getOrganismeQuery({
-      id: organisme.id
-    })
-    .then(r => setOrganisme(r.organisme));
+  // recup de juste repr tire la question des repr d'instance, c'est pas bcp mieux
+  return updateOrganisme(organisme, setOrganisme);
 };
 
 const representations = (
@@ -372,6 +357,17 @@ const onPresenceSuppleantsChange = async (
   }
 };
 
+const updateOrganisme = (
+  organisme: OrganismeDto,
+  setOrganisme: (o: OrganismeDto) => void
+): Promise<void> =>
+  appContext
+    .queryService()
+    .getOrganismeQuery({
+      id: organisme.id
+    })
+    .then(r => setOrganisme(r.organisme));
+
 export const organismeActions = (
   organisme: OrganismeDto,
   setOrganisme: (o: OrganismeDto) => void
@@ -451,5 +447,6 @@ export const organismeActions = (
       setOrganisme,
       instanceId,
       presenceSuppleants
-    )
+    ),
+  updateOrganisme: () => updateOrganisme(organisme, setOrganisme)
 });

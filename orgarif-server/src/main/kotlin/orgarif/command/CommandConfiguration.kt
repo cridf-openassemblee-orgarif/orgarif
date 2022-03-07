@@ -31,6 +31,7 @@ object CommandConfiguration {
             is UpdateOrganismePresenceSuppleantsCommand -> user
             is UpdateOrganismeSecteurCommand -> user
             is UpdateOrganismeTypeStructureCommand -> user
+            is UpdateRepresentationDatesCommand -> user
             is UpdateRepresentationStatusCommand -> user
             is UpdateSecteurLibelleCommand -> user
             is UpdateSecteurStatusCommand -> user

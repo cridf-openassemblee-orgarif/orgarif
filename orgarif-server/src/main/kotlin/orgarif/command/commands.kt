@@ -133,6 +133,13 @@ data class UpdateOrganismeTypeStructureCommand(
     val typeStructureId: TypeStructureId?
 ) : Command()
 
+data class UpdateRepresentationDatesCommand(
+    val representationId: RepresentationId,
+    val representationStartDate: LocalDate?,
+    val suppleanceId: SuppleanceId?,
+    val suppleanceStartDate: LocalDate?
+) : Command()
+
 data class UpdateRepresentationStatusCommand(val id: RepresentationId, val status: ItemStatus) :
     Command()
 

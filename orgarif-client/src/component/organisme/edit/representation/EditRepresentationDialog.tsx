@@ -17,40 +17,89 @@ import { TextInput } from '../../../base-component/TextInput';
 import { classes } from '../../../category/EditCategoriesComponent';
 import { dialogClasses } from '../dialog-common';
 import { WorkInProgressSign } from '../../../base-component/WorkInProgressSign';
+import { SimpleForm } from '../../../base-component/SimpleForm';
+import { LocalDate } from '../../../../domain/time';
+import { asString } from '../../../../utils/nominal-class';
+import { LoadingButton } from '../../../base-component/LoadingButton';
+import { LoadingState } from '../../../../interfaces';
+import { appContext } from '../../../../ApplicationContext';
 
 const RepresentationPanel = (props: {
   representation: RepresentationDto;
+  // TODO write sur les deux formats d'update : "propre" ou qui recharge tout
+  onUpdate: () => Promise<void>;
   onClose: () => void;
-}) => (
-  <React.Fragment>
-    <div css={dialogClasses.editBlock}>
-      <h3>Représentant</h3>
-      <TextInput name={'date'} type={'date'} label={'Date de début'} />
-    </div>
-    <div css={dialogClasses.editBlock}>
-      <h3>Suppléant</h3>
-      {props.representation.suppleance && (
-        <TextInput name={'date'} type={'date'} label={'Date de début'} />
-      )}
-      {!props.representation.suppleance && (
-        <Button variant="contained">Ajouter Suppléant</Button>
-      )}
-    </div>
-    <div
-      css={css`
-        ${classes.editButton}
-        padding-top: 40px;
-      `}
+}) => {
+  const [loading, setLoading] = useState<LoadingState>('idle');
+  return (
+    <SimpleForm
+      onSubmit={(dto: {
+        representationStartDate?: LocalDate;
+        suppleanceStartDate?: LocalDate;
+      }) => {
+        setLoading('loading');
+        appContext
+          .commandService()
+          .updateRepresentationDatesCommand({
+            representationId: props.representation.id,
+            representationStartDate: dto.representationStartDate,
+            suppleanceId: props.representation.suppleance?.id,
+            suppleanceStartDate: dto.suppleanceStartDate
+          })
+          .then(props.onUpdate)
+          .then(() => {
+            setLoading('idle');
+            props.onClose();
+          });
+      }}
     >
-      <Button onClick={props.onClose} color="primary">
-        Annuler
-      </Button>
-      <Button type="submit" variant="contained" color="primary" size="small">
-        Enregistrer
-      </Button>
-    </div>
-  </React.Fragment>
-);
+      <div css={dialogClasses.editBlock}>
+        <h3>Représentant</h3>
+        <TextInput
+          name={'representationStartDate'}
+          type={'date'}
+          label={'Date de début'}
+          initialValue={
+            props.representation.startDate
+              ? asString(props.representation.startDate)
+              : ''
+          }
+        />
+      </div>
+      <div css={dialogClasses.editBlock}>
+        <h3>Suppléant</h3>
+        {props.representation.suppleance && (
+          <TextInput
+            name={'suppleanceStartDate'}
+            type={'date'}
+            label={'Date de début'}
+            initialValue={
+              props.representation.suppleance.startDate
+                ? asString(props.representation.suppleance.startDate)
+                : ''
+            }
+          />
+        )}
+        {!props.representation.suppleance && (
+          <Button variant="contained">Ajouter Suppléant</Button>
+        )}
+      </div>
+      <div
+        css={css`
+          ${classes.editButton}
+          padding-top: 40px;
+        `}
+      >
+        <Button onClick={props.onClose} color="primary">
+          Annuler
+        </Button>
+        <LoadingButton loadingState={loading} type="submit">
+          Enregistrer
+        </LoadingButton>
+      </div>
+    </SimpleForm>
+  );
+};
 
 type VacanceDecision = 'siege-vacant' | 'suppleant-remplace' | 'siege-remplace';
 
@@ -194,6 +243,7 @@ const SuppressionPanel = (props: {
 export const EditRepresentationDiaglog = (props: {
   representation: RepresentationDto;
   display: boolean;
+  onUpdate: () => Promise<void>;
   onClose: () => void;
 }) => {
   return (
@@ -210,6 +260,7 @@ export const EditRepresentationDiaglog = (props: {
             <RepresentationPanel
               representation={props.representation}
               onClose={props.onClose}
+              onUpdate={props.onUpdate}
             />
           </TabPanel>
           <TabPanel label="Démission représentant">

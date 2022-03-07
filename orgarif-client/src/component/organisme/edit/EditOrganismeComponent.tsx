@@ -76,6 +76,7 @@ export const RepresentantsDeliberationsBlock = (props: {
     deliberationId: DeliberationId,
     comment: string | undefined
   ) => Promise<void>;
+  onOtherUpdate: () => Promise<void>;
 }) => (
   <div
     css={css`
@@ -95,6 +96,7 @@ export const RepresentantsDeliberationsBlock = (props: {
         onPresenceSuppleantsChange={props.onPresenceSuppleantsChange}
         representations={props.representations}
         onAddRepresentation={props.onAddRepresentation}
+        onOtherUpdate={props.onOtherUpdate}
       />
     </div>
     <div
@@ -210,6 +212,7 @@ export const EditOrganismeComponent = (props: {
             ) =>
               actions.onNewLienDeliberation(undefined, deliberationId, comment)
             }
+            onOtherUpdate={actions.updateOrganisme}
           />
         </div>
         <hr css={classes.separator} />
@@ -248,6 +251,7 @@ export const EditOrganismeComponent = (props: {
                 )
               }
               onNewLienDeliberation={actions.onNewLienDeliberation}
+              onOtherUpdate={actions.updateOrganisme}
             />
           </div>
         )}

@@ -100,6 +100,14 @@ class RepresentationDao(val jooq: DSLContext) {
             .execute()
     }
 
+    fun updateStartDate(id: RepresentationId, startDate: LocalDate?, date: Instant) {
+        jooq.update(REPRESENTATION)
+            .set(REPRESENTATION.START_DATE, startDate)
+            .set(REPRESENTATION.LAST_MODIFICATION_DATE, date)
+            .where(REPRESENTATION.ID.equal(id.rawId))
+            .execute()
+    }
+
     fun updateRepresentation(
         id: RepresentationId,
         organismeId: OrganismeId,

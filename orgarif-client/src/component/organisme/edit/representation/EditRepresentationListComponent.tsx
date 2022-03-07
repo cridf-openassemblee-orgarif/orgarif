@@ -24,6 +24,7 @@ export const EditRepresentationListComponent = (props: {
     suppleantId: RepresentantId | undefined,
     suppleantStartDate: LocalDate | undefined
   ) => Promise<void>;
+  onOtherUpdate: () => Promise<void>;
 }) => {
   return (
     <React.Fragment>
@@ -40,6 +41,7 @@ export const EditRepresentationListComponent = (props: {
       <EditRepresentationDragListComponent
         organismeOrInstanceId={props.organismeOrInstanceId}
         representations={props.representations}
+        onUpdate={props.onOtherUpdate}
       />
     </React.Fragment>
   );

@@ -36,6 +36,7 @@ import {
   UpdateOrganismeSecteurCommand,
   UpdateOrganismeStatus,
   UpdateOrganismeTypeStructureCommand,
+  UpdateRepresentationDatesCommand,
   UpdateRepresentationStatusCommand,
   UpdateSecteurLibelleCommand,
   UpdateSecteurStatusCommand,
@@ -161,6 +162,10 @@ export class CommandService {
     command: UpdateOrganismeTypeStructureCommand
   ): Promise<void> =>
     this.command('UpdateOrganismeTypeStructureCommand', command);
+
+  public updateRepresentationDatesCommand = (
+    command: UpdateRepresentationDatesCommand
+  ): Promise<void> => this.command('UpdateRepresentationDatesCommand', command);
 
   public updateRepresentationStatusCommand = (
     command: UpdateRepresentationStatusCommand

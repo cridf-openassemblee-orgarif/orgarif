@@ -58,6 +58,7 @@ class CommandController(
     val updateOrganismeSecteurCommandHandler: UpdateOrganismeSecteurCommandHandler,
     val updateOrganismeTypeStructureCommandCommandHandler:
         UpdateOrganismeTypeStructureCommandHandler,
+    val updateRepresentationDatesCommandHandler: UpdateRepresentationDatesCommandHandler,
     val updateRepresentationStatusCommandHandler: UpdateRepresentationStatusCommandHandler,
     val updateSecteurLibelleCommandHandler: UpdateSecteurLibelleCommandHandler,
     val updateSecteurStatusCommandHandler: UpdateSecteurStatusCommandHandler,
@@ -162,6 +163,7 @@ class CommandController(
             is UpdateOrganismeSecteurCommand -> updateOrganismeSecteurCommandHandler
             is UpdateOrganismeTypeStructureCommand ->
                 updateOrganismeTypeStructureCommandCommandHandler
+            is UpdateRepresentationDatesCommand -> updateRepresentationDatesCommandHandler
             is UpdateRepresentationStatusCommand -> updateRepresentationStatusCommandHandler
             is UpdateSecteurLibelleCommand -> updateSecteurLibelleCommandHandler
             is UpdateSecteurStatusCommand -> updateSecteurStatusCommandHandler

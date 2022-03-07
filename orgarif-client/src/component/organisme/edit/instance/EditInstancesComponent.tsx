@@ -63,6 +63,7 @@ export const EditInstancesComponent = (props: {
     deliberationId: DeliberationId,
     comment: string | undefined
   ) => Promise<void>;
+  onOtherUpdate: () => Promise<void>;
 }) => {
   return (
     <InstanceDragDropZone>
@@ -165,6 +166,7 @@ export const EditInstancesComponent = (props: {
                         comment
                       )
                     }
+                    onOtherUpdate={props.onOtherUpdate}
                   />
                 </div>
               )}
