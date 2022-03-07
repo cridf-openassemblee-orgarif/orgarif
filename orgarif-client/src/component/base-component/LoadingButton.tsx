@@ -2,7 +2,7 @@
 import { css } from '@emotion/react';
 import { Button, CircularProgress } from '@mui/material';
 import * as React from 'react';
-import { MouseEventHandler, PropsWithChildren } from 'react';
+import { PropsWithChildren, useState } from 'react';
 import { assertUnreachable } from '../../utils';
 import { LoadingState } from '../../interfaces';
 
@@ -41,10 +41,10 @@ const ButtonContent = (
   }
 };
 
-export const LoadingButton = (
+const LoadingButtonBase = (
   props: PropsWithChildren<{
     loadingState: LoadingState;
-    onClick?: MouseEventHandler;
+    onClick?: () => void;
     type?: 'submit';
   }>
 ) => {
@@ -59,5 +59,39 @@ export const LoadingButton = (
         {props.children}
       </ButtonContent>
     </Button>
+  );
+};
+
+export const LoadingButton = (
+  props: PropsWithChildren<{
+    onClick: () => Promise<void>;
+  }>
+) => {
+  const [loading, setLoading] = useState<LoadingState>('idle');
+  return (
+    <LoadingButtonBase
+      loadingState={loading}
+      onClick={() => {
+        setLoading('loading');
+        props
+          .onClick()
+          .then(() => setLoading('idle'))
+          .catch(() => setLoading('error'));
+      }}
+    >
+      {props.children}
+    </LoadingButtonBase>
+  );
+};
+
+export const FormLoadingButton = (
+  props: PropsWithChildren<{
+    loadingState: LoadingState;
+  }>
+) => {
+  return (
+    <LoadingButtonBase loadingState={props.loadingState} type="submit">
+      {props.children}
+    </LoadingButtonBase>
   );
 };

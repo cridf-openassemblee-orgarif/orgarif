@@ -37,8 +37,7 @@ export const EditOrganismeView = (props: {
       const organisme = await appContext
         .queryService()
         .getOrganismeQuery({ id: props.routeParams.id })
-        .then(r => r.organisme)
-        .catch(() => setLoading('error'));
+        .then(r => r.organisme);
       if (!organisme) {
         return;
       }

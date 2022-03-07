@@ -18,7 +18,6 @@ import { SelectRepresentantInput } from './SelectRepresentantInput';
 import { LocalDate } from '../../../../domain/time';
 import { stringToLocalDate } from '../../../../utils';
 import { asString } from '../../../../utils/nominal-class';
-import { LoadingState } from '../../../../interfaces';
 import { LoadingButton } from '../../../base-component/LoadingButton';
 
 export const AddRepresentationComponent = (props: {
@@ -114,22 +113,18 @@ export const AddRepresentationDialog = (props: {
   const [suppleantStartDate, setSuppleantStartDate] = useState<LocalDate>();
   const [representantMandatoryError, setRepresentantMandatoryError] =
     useState(false);
-  const [loading, setLoading] = useState<LoadingState>('idle');
   const onSubmit = () => {
     if (!representantId) {
       setRepresentantMandatoryError(true);
-      return;
+      return Promise.resolve();
     }
     setRepresentantMandatoryError(false);
-    setLoading('loading');
-    props
-      .onAddRepresentation(
-        representantId,
-        representantStartDate,
-        suppleantId,
-        suppleantStartDate
-      )
-      .then(() => setLoading('idle'));
+    return props.onAddRepresentation(
+      representantId,
+      representantStartDate,
+      suppleantId,
+      suppleantStartDate
+    );
   };
   return (
     <React.Fragment>
@@ -172,9 +167,7 @@ export const AddRepresentationDialog = (props: {
               padding-left: 10px;
             `}
           >
-            <LoadingButton loadingState={loading} onClick={onSubmit}>
-              Ajouter
-            </LoadingButton>
+            <LoadingButton onClick={onSubmit}>Ajouter</LoadingButton>
           </div>
         </DialogActions>
       </Dialog>

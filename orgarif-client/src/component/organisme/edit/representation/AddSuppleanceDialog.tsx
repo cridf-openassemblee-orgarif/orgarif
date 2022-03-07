@@ -11,7 +11,6 @@ import * as React from 'react';
 import { useState } from 'react';
 import { RepresentantId } from '../../../../domain/ids';
 import { LocalDate } from '../../../../domain/time';
-import { LoadingState } from '../../../../interfaces';
 import { LoadingButton } from '../../../base-component/LoadingButton';
 import { AddRepresentationComponent } from './AddRepresentationDialog';
 
@@ -26,16 +25,13 @@ export const AddSuppleanceDialog = (props: {
   const [suppleantId, setSuppleantId] = useState<RepresentantId>();
   const [suppleantStartDate, setSuppleantStartDate] = useState<LocalDate>();
   const [suppleantMandatoryError, setSuppleantMandatoryError] = useState(false);
-  const [loading, setLoading] = useState<LoadingState>('idle');
   const onSubmit = () => {
     if (!suppleantId) {
       setSuppleantMandatoryError(true);
-      return;
+      return Promise.resolve();
     }
     setSuppleantMandatoryError(false);
-    setLoading('loading');
-    props.onAddInstance(suppleantId, suppleantStartDate).then(() => {
-      setLoading('idle');
+    return props.onAddInstance(suppleantId, suppleantStartDate).then(() => {
       props.onClose();
     });
   };
@@ -73,9 +69,7 @@ export const AddSuppleanceDialog = (props: {
               padding-left: 10px;
             `}
           >
-            <LoadingButton loadingState={loading} onClick={onSubmit}>
-              Ajouter
-            </LoadingButton>
+            <LoadingButton onClick={onSubmit}>Ajouter</LoadingButton>
           </div>
         </DialogActions>
       </Dialog>

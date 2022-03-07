@@ -15,7 +15,6 @@ import { colors } from '../../../../styles/colors';
 import { TextInput } from '../../../base-component/TextInput';
 import { CreateDeliberationDialog } from '../../../deliberation/CreateDeliberationDialog';
 import { SelectDeliberationInput } from './SelectDeliberationInput';
-import { LoadingState } from '../../../../interfaces';
 import { LoadingButton } from '../../../base-component/LoadingButton';
 
 export const AddLienDeliberationDialog = (props: {
@@ -35,20 +34,16 @@ export const AddLienDeliberationDialog = (props: {
   const [createDeliberationLibelle, setCreateDeliberationLibelle] =
     useState('');
   const [delibMandatory, setDelibMandatory] = useState(false);
-  const [loading, setLoading] = useState<LoadingState>('idle');
   const onSubmit = () => {
     if (!selectedDeliberation) {
       setDelibMandatory(true);
-      return;
+      return Promise.resolve();
     }
     setDelibMandatory(false);
-    setLoading('loading');
-    props
-      .onNewLienDeliberation(
-        selectedDeliberation.id,
-        comment !== '' ? comment : undefined
-      )
-      .then(() => setLoading('error'));
+    return props.onNewLienDeliberation(
+      selectedDeliberation.id,
+      comment !== '' ? comment : undefined
+    );
   };
   return (
     <React.Fragment>
@@ -105,9 +100,7 @@ export const AddLienDeliberationDialog = (props: {
           <Button onClick={props.onClose} color="primary">
             Annuler
           </Button>
-          <LoadingButton loadingState={loading} onClick={onSubmit}>
-            Ajouter
-          </LoadingButton>
+          <LoadingButton onClick={onSubmit}>Ajouter</LoadingButton>
         </DialogActions>
       </Dialog>
       <CreateDeliberationDialog

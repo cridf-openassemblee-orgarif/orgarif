@@ -13,7 +13,6 @@ import { colors } from '../../styles/colors';
 import { TextInput } from '../base-component/TextInput';
 import { stringToLocalDate } from '../../utils';
 import { LoadingButton } from '../base-component/LoadingButton';
-import { LoadingState } from '../../interfaces';
 
 export const CreateDeliberationDialog = (props: {
   libelle: string;
@@ -21,27 +20,24 @@ export const CreateDeliberationDialog = (props: {
   close: () => void;
   onNewDeliberation: (deliberation: DeliberationDto) => void;
 }) => {
-  const [loading, setLoading] = useState<LoadingState>('idle');
   const [dateMandatory, setDateMandatory] = useState(false);
   // libelle & deliberationDate because TextInput type=date doesn't seem to work with SimpleForm
   const [libelle, setLibelle] = useState(props.libelle);
   useEffect(() => setLibelle(props.libelle), [props.libelle]);
   const [deliberationDate, setDeliberationDate] = useState<LocalDate>();
-  const onSubmit = () => {
+  const onSubmit = (): Promise<void> => {
     if (!deliberationDate) {
       setDateMandatory(true);
-      return;
+      return Promise.resolve();
     }
-    setLoading('loading');
     setDateMandatory(false);
-    appContext
+    return appContext
       .commandService()
       .createDeliberationCommand({
         libelle,
         deliberationDate
       })
       .then(r => {
-        setLoading('idle');
         const deliberation: DeliberationDto = {
           id: r.deliberationId,
           libelle,
@@ -97,9 +93,7 @@ export const CreateDeliberationDialog = (props: {
         <Button onClick={props.close} color="primary">
           Annuler
         </Button>
-        <LoadingButton loadingState={loading} onClick={onSubmit}>
-          Ajouter
-        </LoadingButton>
+        <LoadingButton onClick={onSubmit}>Ajouter</LoadingButton>
       </DialogActions>
     </Dialog>
   );

@@ -14,6 +14,7 @@ import { assertUnreachable, clientUid } from '../../utils';
 import { asString, NominalString } from '../../utils/nominal-class';
 import { TextInput } from '../base-component/TextInput';
 import { dialogClasses } from '../organisme/edit/dialog-common';
+import { LoadingButton } from '../base-component/LoadingButton';
 
 const buttonClass = asString(clientUid());
 
@@ -75,6 +76,7 @@ const EditCategoryComponent = (props: {
   const [updatedCode, setUpdatedCode] = useState(
     'code' in props.category ? props.category.code : undefined
   );
+  const [error, setError] = useState(false);
   return (
     <React.Fragment>
       <tr>
@@ -129,20 +131,35 @@ const EditCategoryComponent = (props: {
                 />
               </div>
             )}
+            {error && (
+              <div
+                css={css`
+                  color: ${colors.errorRed};
+                  font-weight: bold;
+                `}
+              >
+                Informations nécessaires
+              </div>
+            )}
             <div css={classes.editButton}>
-              <Button
-                type="submit"
-                variant="contained"
-                color="primary"
-                size="small"
-                onClick={() =>
-                  props
+              <LoadingButton
+                onClick={() => {
+                  if (!updatedLibelle) {
+                    setError(true);
+                    return Promise.resolve();
+                  }
+                  if (props.hasCode && !updatedCode) {
+                    setError(true);
+                    return Promise.resolve();
+                  }
+                  setError(false);
+                  return props
                     .onChange(props.category.id, updatedLibelle, updatedCode)
-                    .then(() => setDisplayDialog(false))
-                }
+                    .then(() => setDisplayDialog(false));
+                }}
               >
                 Enregistrer
-              </Button>
+              </LoadingButton>
             </div>
             <div css={dialogClasses.editBlock}>
               <h3>Archivage</h3>
@@ -191,11 +208,7 @@ const EditCategoryComponent = (props: {
               })()}
               , une incohérence sera remontée.
               <div css={classes.editButton}>
-                <Button
-                  type="submit"
-                  variant="contained"
-                  color="warning"
-                  size="small"
+                <LoadingButton
                   onClick={() =>
                     props
                       .onUpdateStatus(props.category.id, 'archive')
@@ -203,7 +216,7 @@ const EditCategoryComponent = (props: {
                   }
                 >
                   Archiver
-                </Button>
+                </LoadingButton>
               </div>
             </div>
             <div css={dialogClasses.editBlock}>
@@ -225,11 +238,7 @@ const EditCategoryComponent = (props: {
               })()}
               , une incohérence sera remontée.
               <div css={classes.editButton}>
-                <Button
-                  type="submit"
-                  variant="contained"
-                  color="error"
-                  size="small"
+                <LoadingButton
                   onClick={() =>
                     props
                       .onUpdateStatus(props.category.id, 'trash')
@@ -237,7 +246,7 @@ const EditCategoryComponent = (props: {
                   }
                 >
                   Supprimer
-                </Button>
+                </LoadingButton>
               </div>
             </div>
           </DialogContent>
@@ -269,6 +278,7 @@ export const EditCategoriesComponent = (props: {
   const [newCategoryLibelle, setNewCategoryLibelle] = useState('');
   const [newCategoryCode, setNewCategoryCode] = useState('');
   const [displayAddPopup, setDisplayAddPopup] = useState(false);
+  const [error, setError] = useState(false);
   return (
     <React.Fragment>
       <Button
@@ -342,20 +352,35 @@ export const EditCategoriesComponent = (props: {
               />
             </div>
           )}
+          {error && (
+            <div
+              css={css`
+                color: ${colors.errorRed};
+                font-weight: bold;
+              `}
+            >
+              Informations nécessaires
+            </div>
+          )}
           <div css={classes.editButton}>
-            <Button
-              type="submit"
-              variant="contained"
-              color="primary"
-              size="small"
-              onClick={() =>
-                props
+            <LoadingButton
+              onClick={() => {
+                if (!newCategoryLibelle) {
+                  setError(true);
+                  return Promise.resolve();
+                }
+                if (props.hasCode && !newCategoryCode) {
+                  setError(true);
+                  return Promise.resolve();
+                }
+                setError(false);
+                return props
                   .onAdd(newCategoryLibelle, newCategoryCode)
-                  .then(() => setDisplayAddPopup(false))
-              }
+                  .then(() => setDisplayAddPopup(false));
+              }}
             >
               Ajouter
-            </Button>
+            </LoadingButton>
           </div>
         </DialogContent>
         <DialogActions>

@@ -20,7 +20,7 @@ import { WorkInProgressSign } from '../../../base-component/WorkInProgressSign';
 import { SimpleForm } from '../../../base-component/SimpleForm';
 import { LocalDate } from '../../../../domain/time';
 import { asString } from '../../../../utils/nominal-class';
-import { LoadingButton } from '../../../base-component/LoadingButton';
+import { FormLoadingButton } from '../../../base-component/LoadingButton';
 import { LoadingState } from '../../../../interfaces';
 import { appContext } from '../../../../ApplicationContext';
 import { AddSuppleanceDialog } from './AddSuppleanceDialog';
@@ -121,9 +121,9 @@ const RepresentationPanel = (props: {
         <Button onClick={props.onClose} color="primary">
           Annuler
         </Button>
-        <LoadingButton loadingState={loading} type="submit">
+        <FormLoadingButton loadingState={loading}>
           Enregistrer
-        </LoadingButton>
+        </FormLoadingButton>
       </div>
     </SimpleForm>
   );

@@ -9,7 +9,6 @@ import { useEffect, useState } from 'react';
 import { appContext } from '../../ApplicationContext';
 import { RepresentantDto } from '../../domain/organisme';
 import { TextInput } from '../base-component/TextInput';
-import { LoadingState } from '../../interfaces';
 import { LoadingButton } from '../base-component/LoadingButton';
 
 const extractPrenomNom = (nomComplet: string) => {
@@ -30,7 +29,6 @@ export const CreateRepresentantDialog = (props: {
   close: () => void;
   onNewRepresentant: (representantDto: RepresentantDto) => void;
 }) => {
-  const [loading, setLoading] = useState<LoadingState>('idle');
   const extract = extractPrenomNom(props.nomComplet);
   const [prenom, setPrenom] = useState(extract.prenom);
   const [nom, setNom] = useState(extract.nom);
@@ -39,13 +37,11 @@ export const CreateRepresentantDialog = (props: {
     setPrenom(prenom);
     setNom(nom);
   }, [props.nomComplet]);
-  const onSubmit = () => {
-    setLoading('loading');
+  const onSubmit = () =>
     appContext
       .commandService()
       .createRepresentantCommand({ prenom, nom })
       .then(r => {
-        setLoading('idle');
         const representant: RepresentantDto = {
           id: r.representantId,
           isElu: false,
@@ -56,7 +52,6 @@ export const CreateRepresentantDialog = (props: {
         props.onNewRepresentant(representant);
         props.close();
       });
-  };
   return (
     <Dialog open={props.display} onClose={props.close} fullWidth={true}>
       <DialogTitle>Ajouter nouveau représentant</DialogTitle>
@@ -90,9 +85,7 @@ export const CreateRepresentantDialog = (props: {
         <Button onClick={props.close} color="primary">
           Annuler
         </Button>
-        <LoadingButton loadingState={loading} onClick={onSubmit}>
-          Ajouter
-        </LoadingButton>
+        <LoadingButton onClick={onSubmit}>Ajouter</LoadingButton>
       </DialogActions>
     </Dialog>
   );
