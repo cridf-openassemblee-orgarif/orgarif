@@ -51,14 +51,14 @@ const RepresentationPanel = (props: {
   </React.Fragment>
 );
 
-type SuppleantDecision = 'remplace' | 'demissionne';
+type VacanceDecision = 'siege-vacant' | 'suppleant-remplace' | 'siege-remplace';
 
 const DemissionPanel = (props: {
   representation: RepresentationDto;
   onClose: () => void;
 }) => {
   const [suppleantDecision, setSuppleantDecision] =
-    useState<SuppleantDecision>('remplace');
+    useState<VacanceDecision>('siege-vacant');
   return (
     <React.Fragment>
       <div css={dialogClasses.editBlock}>
@@ -67,24 +67,29 @@ const DemissionPanel = (props: {
       </div>
       {props.representation.suppleance && (
         <div css={dialogClasses.editBlock}>
-          <h3>Suppléant</h3>
+          <h3>Vacance</h3>
           <RadioGroup
             value={suppleantDecision}
             name="radio-buttons-group"
             onChange={(
               event: React.ChangeEvent<HTMLInputElement>,
               value: string
-            ) => setSuppleantDecision(value as SuppleantDecision)}
+            ) => setSuppleantDecision(value as VacanceDecision)}
           >
             <FormControlLabel
-              value="remplace"
+              value="siege-vacant"
               control={<Radio />}
-              label="Remplace le représentant à date + 1"
+              label="Le siège reste vacant, le suppléant reste suppléant"
             />
             <FormControlLabel
-              value="demissionne"
+              value="suppleant-remplace"
               control={<Radio />}
-              label="Démissionne à date"
+              label="Le suppléant remplace le représentant à date + 1"
+            />
+            <FormControlLabel
+              value="siege-remplace"
+              control={<Radio />}
+              label="Le représentant suivant prend la place, le suppléant démissionne à date"
             />
           </RadioGroup>
         </div>
