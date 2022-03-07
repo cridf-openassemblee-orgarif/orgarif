@@ -72,7 +72,7 @@ export const HeaderRepresentationsComponent = (props: {
             startIcon={<Add />}
             onClick={() => setDisplayAddRepresentantionDialog(true)}
           >
-            Ajouter représentation
+            Représentation
           </Button>
         </div>
         <div css={classes.label}>Représentants :</div>

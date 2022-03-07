@@ -33,7 +33,7 @@ export const AddInstanceComponent = (props: {
           size="small"
           onClick={() => setDisplayDialog(true)}
         >
-          Ajouter une instance
+          Instance
         </Button>
       </div>
       <Dialog

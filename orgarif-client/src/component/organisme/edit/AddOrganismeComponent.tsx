@@ -32,7 +32,7 @@ export const AddOrganismeComponent = () => {
           size="small"
           onClick={() => setDisplayDialog(true)}
         >
-          Ajouter un organisme
+          Organisme
         </Button>
       </div>
       <Dialog

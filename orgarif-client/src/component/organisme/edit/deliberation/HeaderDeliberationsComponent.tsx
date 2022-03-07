@@ -46,7 +46,7 @@ export const HeaderDeliberationsComponent = (props: {
             startIcon={<Add />}
             onClick={() => setDisplayDialog(true)}
           >
-            Ajouter délibération
+            Délibération
           </Button>
         </div>
       </div>
