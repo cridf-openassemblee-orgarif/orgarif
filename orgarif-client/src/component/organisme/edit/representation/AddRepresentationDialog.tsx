@@ -139,7 +139,7 @@ export const AddRepresentationDialog = (props: {
         onClose={props.onClose}
         fullWidth={true}
       >
-        <DialogTitle>Ajout représentant</DialogTitle>
+        <DialogTitle>Ajout représentation</DialogTitle>
         <DialogContent>
           <h3>Représentant</h3>
           <AddRepresentationComponent

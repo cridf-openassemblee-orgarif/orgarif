@@ -106,6 +106,7 @@ export const EditDeliberationListItem = (props: {
                 // appContext.commandService().delete
               }}
               onClose={() => setDisplayDeleteDialog(false)}
+              isWip={true}
             />
           </div>
         </div>

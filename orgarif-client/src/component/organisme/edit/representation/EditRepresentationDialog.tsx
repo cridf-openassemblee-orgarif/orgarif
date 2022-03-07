@@ -16,6 +16,7 @@ import { TabPanel, TabsContainer } from '../../../base-component/TabsContainer';
 import { TextInput } from '../../../base-component/TextInput';
 import { classes } from '../../../category/EditCategoriesComponent';
 import { dialogClasses } from '../dialog-common';
+import { WorkInProgressSign } from '../../../base-component/WorkInProgressSign';
 
 const RepresentationPanel = (props: {
   representation: RepresentationDto;
@@ -212,6 +213,7 @@ export const EditRepresentationDiaglog = (props: {
             />
           </TabPanel>
           <TabPanel label="Démission représentant">
+            <WorkInProgressSign />
             <DemissionPanel
               representation={props.representation}
               onClose={props.onClose}
@@ -219,10 +221,12 @@ export const EditRepresentationDiaglog = (props: {
           </TabPanel>
           {props.representation.suppleance && (
             <TabPanel label="Démission suppléant">
+              <WorkInProgressSign />
               <DemisssionSuppleantPanel onClose={props.onClose} />
             </TabPanel>
           )}
           <TabPanel label="Suppression">
+            <WorkInProgressSign />
             <SuppressionPanel
               representation={props.representation}
               onClose={props.onClose}
