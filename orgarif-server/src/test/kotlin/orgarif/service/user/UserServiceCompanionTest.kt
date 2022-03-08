@@ -47,7 +47,7 @@ internal class UserServiceCompanionTest {
     @Test
     fun `clean user register dto`() {
         val (cleanCommand, dirtyMail) = UserService.cleanRegisterUserDto(sampleRegisterUserDto)
-        assertEquals("héllo@mytest.net", cleanCommand.mail)
+        assertEquals("hello@mytest.net", cleanCommand.mail)
         assertEquals("display name", cleanCommand.displayName)
         assertEquals("HÉL lo@mytest.net", dirtyMail)
     }
@@ -72,14 +72,16 @@ internal class UserServiceCompanionTest {
             "hello@mytest.net" to "hel lo@mytest.net",
             getCleanMailDirtyMailPair("hel lo@mytest.net"))
         // nothing changes (accents)
-        assertEquals("héàllo@mytest.net" to null, getCleanMailDirtyMailPair("héàllo@mytest.net"))
+        assertEquals(
+            "heallo@mytest.net" to "héàllo@mytest.net",
+            getCleanMailDirtyMailPair("héàllo@mytest.net"))
         // lowercase
         assertEquals(
-            "héàâôîllo@mytest.net" to "HÉÀÂÔÎLlo@MYTEST.NET",
+            "heaaoillo@mytest.net" to "HÉÀÂÔÎLlo@MYTEST.NET",
             getCleanMailDirtyMailPair("HÉÀÂÔÎLlo@MYTEST.NET"))
         // all in
         assertEquals(
-            "héàâôîllo@mytest.net" to "HÉÀ Â ÔÎLl  o@MYTEST.NET",
+            "heaaoillo@mytest.net" to "HÉÀ Â ÔÎLl  o@MYTEST.NET",
             getCleanMailDirtyMailPair("  HÉÀ Â ÔÎLl  o@MYTEST.NET  "))
     }
 
