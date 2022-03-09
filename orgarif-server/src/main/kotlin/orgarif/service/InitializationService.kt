@@ -10,7 +10,6 @@ import org.springframework.stereotype.Service
 import orgarif.domain.ApplicationEnvironment
 import orgarif.jooqlib.Configuration
 import orgarif.jooqlib.ResetDatabase
-import orgarif.repository.DeploymentLogDao
 
 @Service
 class InitializationService(
@@ -21,7 +20,6 @@ class InitializationService(
     @Value("\${database.password}") val databasePassword: String,
     @Value("\${insertInitialData}") val insertInitialData: Boolean,
     dataSource: DataSource,
-    deploymentLogDao: DeploymentLogDao,
     applicationInstance: ApplicationInstance,
     devInitialDataInjectorService: DevInitialDataInjectorService,
     elusSynchronizationService: ElusSynchronizationService,
@@ -50,10 +48,10 @@ class InitializationService(
             ApplicationEnvironment.dev -> {
                 if (databaseIfEmpty(dataSource)) {
                     ResetDatabase.resetDatabaseSchema(databaseConfiguration)
-                    if (insertInitialData) {
-                        ResetDatabase.insertInitialData(databaseConfiguration)
-                        devInitialDataInjectorService.initiateDevUsers()
-                    }
+                }
+                if (insertInitialData) {
+                    ResetDatabase.insertInitialData(databaseConfiguration)
+                    devInitialDataInjectorService.initiateDevUsers()
                 }
                 taskExecutor.execute {
                     elusSynchronizationService.synchronize()
@@ -72,22 +70,12 @@ class InitializationService(
                 if (insertInitialData) {
                     throw IllegalArgumentException("Inconsistent configuration")
                 }
+                // [doc] this log is also gonna trigger the deploymentId insertion at startup
+                logger.info {
+                    "Deployed build \"${applicationInstance.gitRevisionLabel}\", env \"${ApplicationInstance.env}\", deployment id ${applicationInstance.deploymentId}"
+                }
                 elusSynchronizationService.synchronize()
             }
-        }
-        if (ApplicationInstance.env !in
-            setOf(ApplicationEnvironment.dev, ApplicationEnvironment.test)) {
-            // [doc] this log is also gonna trigger the deploymentId insertion at startup
-            logger.info {
-                "Deployed build \"${applicationInstance.gitRevisionLabel}\", env \"${ApplicationInstance.env}\", deployment id ${applicationInstance.deploymentId}"
-            }
-            deploymentLogDao.insert(
-                DeploymentLogDao.Record(
-                    applicationInstance.deploymentId,
-                    applicationInstance.gitRevisionLabel,
-                    dateService.serverZoneId(),
-                    dateService.now(),
-                    shutdownDate = null))
         }
     }
 
