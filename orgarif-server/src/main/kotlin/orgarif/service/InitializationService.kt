@@ -23,7 +23,6 @@ class InitializationService(
     applicationInstance: ApplicationInstance,
     devInitialDataInjectorService: DevInitialDataInjectorService,
     elusSynchronizationService: ElusSynchronizationService,
-    dateService: DateService,
     taskExecutor: AsyncTaskExecutor
 ) {
 
@@ -52,6 +51,7 @@ class InitializationService(
                 if (insertInitialData) {
                     ResetDatabase.insertInitialData(databaseConfiguration)
                     devInitialDataInjectorService.initiateDevUsers()
+                    devInitialDataInjectorService.injectInitialData()
                 }
                 taskExecutor.execute {
                     elusSynchronizationService.synchronize()
