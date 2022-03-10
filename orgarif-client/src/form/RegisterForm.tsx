@@ -4,9 +4,9 @@ import { Button } from '@mui/material';
 import * as React from 'react';
 import { ChangeEvent, useState } from 'react';
 import { appContext } from '../ApplicationContext';
-import { PasswordInput } from '../component/base-component/PasswordInput';
-import { SimpleForm } from '../component/base-component/SimpleForm';
-import { TextInput } from '../component/base-component/TextInput';
+import { useForm } from 'react-hook-form';
+import { ControlledTextInput } from '../component/base-component/ControlledTextInput';
+import { colors } from '../styles/colors';
 
 export interface RegisterFormDto {
   mail: string;
@@ -16,12 +16,14 @@ export interface RegisterFormDto {
 
 interface Props {
   onSubmit: (dto: RegisterFormDto) => void;
+  mailIsAlreadyTaken: boolean;
 }
 
 export const RegisterForm = (props: Props) => {
   const [mailIsAlreadyTaken, setMailIsAlreadyTaken] = useState(false);
-  const [password, setPassword] = useState('');
-  const checkLoginAvailability = (event: ChangeEvent<HTMLInputElement>) => {
+  const checkLoginAvailability = (
+    event: ChangeEvent<HTMLInputElement | HTMLTextAreaElement>
+  ) => {
     const login = event.target.value;
     appContext
       .queryService()
@@ -30,34 +32,35 @@ export const RegisterForm = (props: Props) => {
         setMailIsAlreadyTaken(r.alreadyTaken);
       });
   };
+  const {
+    handleSubmit,
+    control,
+    formState: { errors }
+  } = useForm<RegisterFormDto>();
   return (
-    <SimpleForm
-      onSubmit={(dto: { mail: string; displayName: string }) =>
-        props.onSubmit({
-          mail: dto.mail,
-          password,
-          displayName: dto.displayName
-        })
-      }
-    >
+    <form onSubmit={handleSubmit(props.onSubmit)}>
       <div
         css={css`
           margin: 10px 0;
         `}
       >
-        <TextInput
+        <ControlledTextInput
           name="mail"
-          label={'E-mail'}
+          label="E-mail"
           onChange={checkLoginAvailability}
+          control={control}
+          errors={errors}
         />
       </div>
-      {mailIsAlreadyTaken && (
+      {(mailIsAlreadyTaken || props.mailIsAlreadyTaken) && (
         <div
           css={css`
             margin: 10px 0;
+            color: ${colors.errorRed};
+            font-weight: bold;
           `}
         >
-          L'e-mail est déjà pris
+          Il existe déjà un compte avec cet email
         </div>
       )}
       <div
@@ -65,10 +68,11 @@ export const RegisterForm = (props: Props) => {
           margin: 10px 0;
         `}
       >
-        <PasswordInput
+        <ControlledTextInput
+          name="password"
           label="Mode de passe"
-          value={password}
-          setValue={setPassword}
+          control={control}
+          errors={errors}
         />
       </div>
       <div
@@ -76,13 +80,14 @@ export const RegisterForm = (props: Props) => {
           margin: 10px 0;
         `}
       >
-        <TextInput
+        <ControlledTextInput
           name="displayName"
-          label={'Nom affiché'}
-          onChange={checkLoginAvailability}
+          label="Nom affiché"
+          control={control}
+          errors={errors}
         />
       </div>
       <Button type="submit">Créer le compte</Button>
-    </SimpleForm>
+    </form>
   );
 };

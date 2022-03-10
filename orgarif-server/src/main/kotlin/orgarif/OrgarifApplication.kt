@@ -14,7 +14,7 @@ class OrgarifApplication {
     companion object {
         @JvmStatic
         fun main(args: Array<String>) {
-            System.setProperty("env", ApplicationEnvironment.dev.name)
+            System.setProperty("dev-env", ApplicationEnvironment.dev.name)
             System.setProperty(
                 "logging.config", "classpath:logback-webapp-${ApplicationInstance.env}.xml")
             val app = SpringApplication(OrgarifApplication::class.java)

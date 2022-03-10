@@ -7,9 +7,9 @@ object OrgarifStringUtils {
 
     val filteredPassword = "****** filteredPassword ******"
 
-    fun stripAccents(value: String) = StringUtils.stripAccents(value)
+    fun removeAccents(value: String) = StringUtils.stripAccents(value)
 
-    fun cleanForSearch(value: String) = stripAccents(value).replace("-", " ").lowercase()
+    fun cleanForSearch(value: String) = removeAccents(value).replace("-", " ").lowercase()
 
     // TODO better impl
     fun serializeUuid(uuid: UUID) = uuid.toString().replace("-", "")

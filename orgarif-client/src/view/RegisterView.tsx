@@ -60,7 +60,10 @@ export const RegisterView = () => {
             `}
           >
             {registerResult !== 'registered' && !userInfos && (
-              <RegisterForm onSubmit={register} />
+              <RegisterForm
+                onSubmit={register}
+                mailIsAlreadyTaken={registerResult === 'mailAlreadyExists'}
+              />
             )}
             {userInfos && (
               <div
@@ -77,15 +80,6 @@ export const RegisterView = () => {
                 >
                   Liste des organismes
                 </RouteLink>
-              </div>
-            )}
-            {registerResult === 'mailAlreadyExists' && (
-              <div
-                css={css`
-                  text-align: center;
-                `}
-              >
-                Il existe déjà un compte avec cet email
               </div>
             )}
           </div>

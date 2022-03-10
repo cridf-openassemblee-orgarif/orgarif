@@ -1,12 +1,9 @@
 /** @jsxImportSource @emotion/react */
 import { css } from '@emotion/react';
-import { Button } from '@mui/material';
 import * as React from 'react';
 import { useEffect, useState } from 'react';
 import { useRecoilValue } from 'recoil';
 import { appContext } from '../ApplicationContext';
-import { SimpleForm } from '../component/base-component/SimpleForm';
-import { TextInput } from '../component/base-component/TextInput';
 import { MainContainer } from '../container/MainContainer';
 import { OrganismeListDto } from '../domain/organisme';
 import { RouteLink } from '../routing/RouteLink';
@@ -31,28 +28,9 @@ export const ListOrganismesBySecteurView = (props: {
         setOrganismes(r.organismes);
       });
   }, [props.routeParams.secteurId]);
-  const newOrganismeOnSubmit = (dto: { nom: string }) => {
-    if (dto.nom !== '') {
-      appContext
-        .commandService()
-        .createOrganismeCommand(dto)
-        .then(r => {
-          appContext.applicationHistory().goTo({
-            name: 'EditOrganismeRoute',
-            id: r.id
-          });
-        });
-    }
-  };
   return (
     <MainContainer>
       <h1>{secteur.libelle}</h1>
-      <SimpleForm onSubmit={newOrganismeOnSubmit}>
-        <TextInput name="nom" label="Nouvel organisme" />
-        <Button type="submit" color="primary">
-          ok
-        </Button>
-      </SimpleForm>
       {!organismes && <div>Chargement...</div>}
       {organismes &&
         organismes.map(o => (

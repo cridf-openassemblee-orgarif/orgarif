@@ -22,10 +22,14 @@ class ApplicationInstance(
 
     companion object {
         val env =
-            (System.getenv("env") ?: System.getProperty("env"))?.let {
-                ApplicationEnvironment.valueOf(it)
-            }
-                ?: ApplicationEnvironment.test
+        // for deployed environments
+        (System.getenv("env")
+                // for dev env environment, is set by OrgarifApplication
+                ?: System.getProperty("dev-env")
+                // -
+                )?.let { ApplicationEnvironment.valueOf(it) }
+            // for test environment
+            ?: ApplicationEnvironment.test
     }
 
     init {

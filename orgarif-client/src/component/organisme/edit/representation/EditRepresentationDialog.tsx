@@ -17,11 +17,12 @@ import { TextInput } from '../../../base-component/TextInput';
 import { classes } from '../../../category/EditCategoriesComponent';
 import { dialogClasses } from '../dialog-common';
 import { WorkInProgressSign } from '../../../base-component/WorkInProgressSign';
-import { SimpleForm } from '../../../base-component/SimpleForm';
 import { LocalDate } from '../../../../domain/time';
-import { asString } from '../../../../utils/nominal-class';
-import { FormLoadingButton } from '../../../base-component/LoadingButton';
-import { LoadingState } from '../../../../interfaces';
+import {
+  asString,
+  instanciateNominalString
+} from '../../../../utils/nominal-class';
+import { LoadingButton } from '../../../base-component/LoadingButton';
 import { appContext } from '../../../../ApplicationContext';
 import { AddSuppleanceDialog } from './AddSuppleanceDialog';
 import { RepresentantId } from '../../../../domain/ids';
@@ -32,30 +33,26 @@ const RepresentationPanel = (props: {
   onUpdate: () => Promise<void>;
   onClose: () => void;
 }) => {
-  const [loading, setLoading] = useState<LoadingState>('idle');
   const [displaySuppleantDialog, setDisplaySuppleantDialog] = useState(false);
+  const [representationStartDate, setRepresentationStartDate] =
+    useState<LocalDate>();
+  const [suppleanceStartDate, setSuppleanceStartDate] = useState<LocalDate>();
+  const submit = () => {
+    return appContext
+      .commandService()
+      .updateRepresentationDatesCommand({
+        representationId: props.representation.id,
+        representationStartDate: representationStartDate,
+        suppleanceId: props.representation.suppleance?.id,
+        suppleanceStartDate: suppleanceStartDate
+      })
+      .then(props.onUpdate)
+      .then(() => {
+        props.onClose();
+      });
+  };
   return (
-    <SimpleForm
-      onSubmit={(dto: {
-        representationStartDate?: LocalDate;
-        suppleanceStartDate?: LocalDate;
-      }) => {
-        setLoading('loading');
-        appContext
-          .commandService()
-          .updateRepresentationDatesCommand({
-            representationId: props.representation.id,
-            representationStartDate: dto.representationStartDate,
-            suppleanceId: props.representation.suppleance?.id,
-            suppleanceStartDate: dto.suppleanceStartDate
-          })
-          .then(props.onUpdate)
-          .then(() => {
-            setLoading('idle');
-            props.onClose();
-          });
-      }}
-    >
+    <>
       <div css={dialogClasses.editBlock}>
         <h3>Représentant</h3>
         <TextInput
@@ -67,19 +64,33 @@ const RepresentationPanel = (props: {
               ? asString(props.representation.startDate)
               : ''
           }
+          onChange={e =>
+            setRepresentationStartDate(
+              e.currentTarget.value
+                ? instanciateNominalString<LocalDate>(e.currentTarget.value)
+                : undefined
+            )
+          }
         />
       </div>
       <div css={dialogClasses.editBlock}>
         <h3>Suppléant</h3>
         {props.representation.suppleance && (
           <TextInput
-            name={'suppleanceStartDate'}
-            type={'date'}
-            label={'Date de début'}
+            name="suppleanceStartDate"
+            type="date"
+            label="Date de début"
             initialValue={
               props.representation.suppleance.startDate
                 ? asString(props.representation.suppleance.startDate)
                 : ''
+            }
+            onChange={e =>
+              setSuppleanceStartDate(
+                e.currentTarget.value
+                  ? instanciateNominalString<LocalDate>(e.currentTarget.value)
+                  : undefined
+              )
             }
           />
         )}
@@ -121,11 +132,9 @@ const RepresentationPanel = (props: {
         <Button onClick={props.onClose} color="primary">
           Annuler
         </Button>
-        <FormLoadingButton loadingState={loading}>
-          Enregistrer
-        </FormLoadingButton>
+        <LoadingButton onClick={submit}>Enregistrer</LoadingButton>
       </div>
-    </SimpleForm>
+    </>
   );
 };
 
@@ -176,9 +185,7 @@ const DemissionPanel = (props: {
         <Button onClick={props.onClose} color="primary">
           Annuler
         </Button>
-        <Button type="submit" variant="contained" color="primary" size="small">
-          Enregistrer
-        </Button>
+        <Button>Enregistrer</Button>
       </div>
     </React.Fragment>
   );

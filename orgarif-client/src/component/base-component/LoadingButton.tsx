@@ -4,7 +4,7 @@ import { Button, CircularProgress } from '@mui/material';
 import * as React from 'react';
 import { PropsWithChildren, useState } from 'react';
 import { assertUnreachable } from '../../utils';
-import { LoadingState } from '../../interfaces';
+import { EmotionStyles, LoadingState } from '../../interfaces';
 
 const ButtonContent = (
   props: PropsWithChildren<{
@@ -46,21 +46,21 @@ const LoadingButtonBase = (
     loadingState: LoadingState;
     onClick?: () => void;
     type?: 'submit';
+    forwardCss?: EmotionStyles;
   }>
-) => {
-  return (
-    <Button
-      variant="contained"
-      onClick={props.onClick}
-      disabled={props.loadingState === 'loading'}
-      type={props.type}
-    >
-      <ButtonContent loadingState={props.loadingState}>
-        {props.children}
-      </ButtonContent>
-    </Button>
-  );
-};
+) => (
+  <Button
+    variant="contained"
+    onClick={props.onClick}
+    disabled={props.loadingState === 'loading'}
+    type={props.type}
+    css={props.forwardCss}
+  >
+    <ButtonContent loadingState={props.loadingState}>
+      {props.children}
+    </ButtonContent>
+  </Button>
+);
 
 export const LoadingButton = (
   props: PropsWithChildren<{
@@ -87,11 +87,14 @@ export const LoadingButton = (
 export const FormLoadingButton = (
   props: PropsWithChildren<{
     loadingState: LoadingState;
+    forwardCss?: EmotionStyles;
   }>
-) => {
-  return (
-    <LoadingButtonBase loadingState={props.loadingState} type="submit">
-      {props.children}
-    </LoadingButtonBase>
-  );
-};
+) => (
+  <LoadingButtonBase
+    loadingState={props.loadingState}
+    type="submit"
+    forwardCss={props.forwardCss}
+  >
+    {props.children}
+  </LoadingButtonBase>
+);
