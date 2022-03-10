@@ -3,7 +3,9 @@ import { css } from '@emotion/react';
 import styled from '@emotion/styled';
 import { Chip } from '@mui/material';
 import * as React from 'react';
+import { useRecoilState } from 'recoil';
 import { Organigram } from '../icon/collection/Organigram';
+import { state } from '../state/state';
 import * as breakpoints from '../styles/breakpoints';
 import { colors } from '../styles/colors';
 
@@ -51,9 +53,17 @@ const skrinkedChips = css`
  * TODO : typing props + handle filters when selected
  */
 export const FilterChip = ({ filter, showIcon, isSticky }: any) => {
+  const [activeFilters, setActiveFilters] = useRecoilState(state.activeFilters);
+
   const handleClick = (e: React.MouseEvent<HTMLElement>) => {
-    console.log(filter);
-    console.log(e.target);
+    const currentFilters = [...activeFilters];
+    const indexFilter = currentFilters.indexOf(filter);
+
+    indexFilter === -1
+      ? setActiveFilters(oldList => [...oldList, filter])
+      : setActiveFilters(oldList => [
+          ...oldList.filter(item => item !== filter)
+        ]);
   };
 
   return (
@@ -61,7 +71,7 @@ export const FilterChip = ({ filter, showIcon, isSticky }: any) => {
       {showIcon ? (
         <StyledChip
           key={filter.libelle}
-          color="primary"
+          color={activeFilters.includes(filter) ? 'error' : 'primary'}
           icon={
             <Organigram size={isSticky ? '24px' : 'clamp(24px, 1.4vw, 2rem)'} />
           }
@@ -72,7 +82,7 @@ export const FilterChip = ({ filter, showIcon, isSticky }: any) => {
       ) : (
         <StyledChip
           key={filter.libelle}
-          color="primary"
+          color={activeFilters.includes(filter) ? 'error' : 'primary'}
           label={
             !filter.code
               ? `${filter.libelle}`
