@@ -37,10 +37,10 @@ export const SingleEmptyRepresentant = () => {
           <Avatar
             alt="Siège vaquant"
             css={css`
-              width: 90;
-              height: 90;
+              width: 80px;
+              height: 80px;
               margin-right: 1em;
-              border: 1px dotted ${colors.dark};
+              border: 2.5px dotted ${colors.dark};
               background-color: ${colors.mainBackground};
             `}
           />
