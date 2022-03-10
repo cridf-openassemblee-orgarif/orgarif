@@ -2,7 +2,7 @@
 import { css } from '@emotion/react';
 import StarIcon from '@mui/icons-material/Star';
 import StarOutline from '@mui/icons-material/StarOutline';
-import { Box, Chip, Typography } from '@mui/material';
+import { Chip } from '@mui/material';
 import Checkbox from '@mui/material/Checkbox';
 import Paper from '@mui/material/Paper';
 import { styled } from '@mui/material/styles';
@@ -13,144 +13,16 @@ import TableContainer from '@mui/material/TableContainer';
 import TableHead from '@mui/material/TableHead';
 import TablePagination from '@mui/material/TablePagination';
 import TableRow from '@mui/material/TableRow';
-import TableSortLabel from '@mui/material/TableSortLabel';
-import { visuallyHidden } from '@mui/utils';
 import * as React from 'react';
 import { useRecoilState } from 'recoil';
+import { BasicTableHead } from '../component/BasicTableHead';
 import { DrawerComponent as Drawer } from '../component/Drawer';
-import { SearchBar } from '../component/SearchBar';
+import { EnhancedTableHead } from '../component/EnhancedTableHead';
 import { Data, originalRows } from '../data/genericDataTable';
-import { Share } from '../icon/collection/Share';
 import { state } from '../state/state';
 import { colors } from '../styles/colors';
 
 type Order = 'asc' | 'desc';
-
-interface HeadCell {
-  id: keyof Data;
-  label: string;
-  numeric: boolean;
-}
-
-const headCells: readonly HeadCell[] = [
-  {
-    id: 'organisme',
-    numeric: false,
-    label: 'organismes'
-  },
-  {
-    id: 'localité',
-    numeric: false,
-    label: 'localité'
-  },
-  {
-    id: 'département',
-    numeric: true,
-    label: 'département'
-  },
-  {
-    id: 'structure',
-    numeric: false,
-    label: 'structure'
-  }
-];
-
-interface EnhancedTableProps {
-  onRequestSort: (
-    event: React.MouseEvent<unknown>,
-    property: keyof Data
-  ) => void;
-  order: Order;
-  orderBy: string;
-  rowCount: number;
-}
-
-// FIXME : second head row not sticky on safari
-const EnhancedTableHead = (props: EnhancedTableProps) => {
-  const { order, orderBy, rowCount, onRequestSort } = props;
-  const createSortHandler =
-    (property: keyof Data) => (event: React.MouseEvent<unknown>) => {
-      onRequestSort(event, property);
-    };
-
-  return (
-    <React.Fragment>
-      {headCells.map(headCell => (
-        <TableCell
-          key={headCell.id}
-          align="left"
-          sortDirection={orderBy === headCell.id ? order : false}
-          css={css`
-            padding: 18px 48px;
-            top: 71px;
-            border-bottom: none;
-          `}
-        >
-          <TableSortLabel
-            active={orderBy === headCell.id}
-            direction={orderBy === headCell.id ? order : 'asc'}
-            onClick={createSortHandler(headCell.id)}
-            css={css`
-              background-color: ${orderBy === headCell.id
-                ? colors.errorRed
-                : colors.white};
-              color: ${orderBy === headCell.id
-                ? `${colors.white} !important`
-                : colors.dark};
-              border-radius: 5em;
-              padding: 0 1em 0 0.5em;
-              flex-direction: row-reverse;
-              & svg {
-                opacity: 1;
-                fill: ${orderBy === headCell.id
-                  ? `${colors.white} !important`
-                  : 'inherit'};
-              }
-            `}
-          >
-            {headCell.label === 'organismes'
-              ? `${rowCount} ${headCell.label.toUpperCase()}`
-              : headCell.label.toUpperCase()}
-            <Box component="span" sx={visuallyHidden}>
-              {order === 'desc' ? 'sorted descending' : 'sorted ascending'}
-            </Box>
-          </TableSortLabel>
-        </TableCell>
-      ))}
-      <TableCell
-        css={css`
-          top: 71px;
-          border-bottom: none;
-        `}
-      >
-        <Chip
-          label="ENVOYER LA SÉLECTION"
-          icon={<Share size={20} />}
-          size="small"
-          css={css`
-            background-color: ${colors.white};
-            color: ${colors.dark};
-            padding: 0 0.5em 0 0.5em;
-
-            :hover {
-              background-color: ${colors.errorRed};
-              color: ${colors.white};
-
-              & svg {
-                fill: ${colors.white};
-              }
-            }
-
-            & svg {
-              fill: ${colors.dark};
-            }
-          `}
-          onClick={() => console.log('envoyer sélection')}
-        />
-      </TableCell>
-    </React.Fragment>
-  );
-};
 
 interface Column {
   id: 'organisme' | 'localité' | 'département' | 'structure';
@@ -180,7 +52,8 @@ const StyledTableRow = styled(TableRow)(({ theme }) => ({
   '&.MuiTableRow-root:hover': {
     backgroundColor: theme.palette.primary.main,
     cursor: 'pointer',
-    top: '-1px',
+    top: '1px',
+    zIndex: 1,
 
     '& > .MuiTableCell-root': {
       color: '#fff',
@@ -206,18 +79,27 @@ const StyledTableRow = styled(TableRow)(({ theme }) => ({
     content: '""',
     position: 'absolute',
     borderBottom: `1px solid ${colors.dark}`,
-    width: 'calc(100% - 100px);',
+    width: 'calc(100% - 100px)',
     left: '48px',
-    bottom: 0
+    [theme.breakpoints.down('md')]: {
+      width: 'calc(100% - 32px)',
+      left: '16px'
+    }
   },
-  '&:hover::after': {
-    borderBottom: 'none'
+  '&:hover': {
+    '&::after': {
+      borderBottom: 'none'
+    }
   }
 }));
 
 const StyledTableCell = styled(TableCell)(({ theme }) => ({
   fontSize: 'clamp(18px, 1.1vw, 1.2rem)',
-  borderBottom: 'none'
+  borderBottom: 'none',
+
+  [theme.breakpoints.down('md')]: {
+    padding: '4px 16px'
+  }
 }));
 
 const SelectedIcon = () => (
@@ -288,17 +170,19 @@ function stableSort<T>(
   return stabilizedThis.map(el => el[0]);
 }
 
-export const MainTableContainer = () => {
+export const MainTableContainer = React.memo(() => {
   const [page, setPage] = React.useState(0);
   const [rowsPerPage, setRowsPerPage] = React.useState(100);
   const [rows, setRows] = React.useState(originalRows);
   const [order, setOrder] = React.useState<Order>('asc');
   const [orderBy, setOrderBy] = React.useState<keyof Data>('structure');
   const [selected, setSelected] = React.useState<readonly string[]>([]);
+  const TableRef = React.useRef<null | HTMLDivElement>(null);
 
   const [isOpened, setIsOpened] = useRecoilState(state.openedDrawer);
 
-  const requestSearch = (searchedVal: any) => {
+  const handleRequestSearch = (searchedVal: any) => {
+    console.log(searchedVal.target.value);
     const filteredRows = originalRows.filter(row => {
       return row.organisme
         .toLowerCase()
@@ -308,6 +192,7 @@ export const MainTableContainer = () => {
   };
 
   const handleChangePage = (event: unknown, newPage: number) => {
+    TableRef.current && TableRef.current.scrollTo(0, 0);
     setPage(newPage);
   };
 
@@ -359,55 +244,22 @@ export const MainTableContainer = () => {
       <Drawer />
       <TableContainer
         css={css`
-          max-height: calc(100vh - calc(136px + 52px));
+          max-height: calc(100vh - calc(124px + 52px));
+          position: relative;
         `}
+        ref={TableRef}
       >
-        <Table stickyHeader aria-label="sticky dense table" size="small">
+        <Table
+          stickyHeader
+          aria-label="sticky dense table"
+          size="small"
+          css={css`
+            position: relative;
+          `}
+        >
           <TableHead>
             <TableRow>
-              <TableCell
-                align="left"
-                colSpan={1}
-                css={css`
-                  border-bottom: none;
-                `}
-              >
-                <Typography
-                  component="h5"
-                  variant="h4"
-                  css={css`
-                    font-size: clamp(24px, 2vw, 2.125rem);
-                    white-space: nowrap;
-                  `}
-                >
-                  LISTE DES ORGANISMES
-                </Typography>
-              </TableCell>
-              <TableCell
-                align="center"
-                colSpan={1}
-                css={css`
-                  border-bottom: none;
-                `}
-              >
-                <SearchBar
-                  handleChange={(searchVal: any) => requestSearch(searchVal)}
-                />
-              </TableCell>
-              <TableCell
-                align="right"
-                colSpan={3}
-                css={css`
-                  border-bottom: none;
-                `}
-              >
-                <Typography variant="caption" display="block">
-                  DERNIÈRE MISE À JOUR
-                </Typography>
-                <Typography variant="caption" display="block">
-                  25/01/2022
-                </Typography>
-              </TableCell>
+              <BasicTableHead onRequestSearch={handleRequestSearch} />
             </TableRow>
             <TableRow>
               <EnhancedTableHead
@@ -418,7 +270,11 @@ export const MainTableContainer = () => {
               />
             </TableRow>
           </TableHead>
-          <TableBody>
+          <TableBody
+            css={css`
+              position: relative;
+            `}
+          >
             {stableSort(rows, getComparator(order, orderBy))
               .slice(page * rowsPerPage, page * rowsPerPage + rowsPerPage)
               .map((row, idx) => {
@@ -441,7 +297,10 @@ export const MainTableContainer = () => {
                           align={column.align}
                           style={{
                             minWidth: column.minWidth,
-                            whiteSpace: 'nowrap'
+                            maxWidth: '300px',
+                            whiteSpace: 'nowrap',
+                            textOverflow: 'ellipsis',
+                            overflow: 'hidden'
                           }}
                         >
                           {value}
@@ -477,4 +336,4 @@ export const MainTableContainer = () => {
       />
     </Paper>
   );
-};
+});
