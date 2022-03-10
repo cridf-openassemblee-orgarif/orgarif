@@ -34,9 +34,12 @@ const RepresentationPanel = (props: {
   onClose: () => void;
 }) => {
   const [displaySuppleantDialog, setDisplaySuppleantDialog] = useState(false);
-  const [representationStartDate, setRepresentationStartDate] =
-    useState<LocalDate>();
-  const [suppleanceStartDate, setSuppleanceStartDate] = useState<LocalDate>();
+  const [representationStartDate, setRepresentationStartDate] = useState<
+    LocalDate | undefined
+  >(props.representation.startDate);
+  const [suppleanceStartDate, setSuppleanceStartDate] = useState<
+    LocalDate | undefined
+  >(props.representation.suppleance?.startDate);
   const submit = () => {
     return appContext
       .commandService()
