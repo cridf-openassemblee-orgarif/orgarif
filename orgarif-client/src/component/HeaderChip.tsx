@@ -6,7 +6,7 @@ import * as React from 'react';
 // TODO : typing props
 export const HeaderChip = ({ label }: any) => (
   <Chip
-    label={label}
+    label={label.toUpperCase()}
     variant="outlined"
     size="small"
     css={css`

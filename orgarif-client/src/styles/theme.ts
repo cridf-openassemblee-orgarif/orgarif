@@ -46,7 +46,7 @@ const orgarifTheme = {
     MuiToolbar: {
       styleOverrides: {
         root: {
-          color: `${colors.dark}`,
+          color: colors.dark,
           zIndex: 10
         }
       }
@@ -67,7 +67,7 @@ const orgarifTheme = {
           padding: '4px 48px'
         },
         head: {
-          padding: '14px 48px',
+          padding: '10px 48px',
           borderTop: `1px solid ${colors.dark}`
         }
       }
@@ -75,7 +75,7 @@ const orgarifTheme = {
     MuiTablePagination: {
       styleOverrides: {
         root: {
-          backgroundColor: `${colors.mainBackground}`
+          backgroundColor: colors.mainBackground
         }
       }
     },
@@ -83,6 +83,24 @@ const orgarifTheme = {
       styleOverrides: {
         root: {
           borderColor: colors.dark
+        }
+      }
+    },
+    MuiInputLabel: {
+      styleOverrides: {
+        root: {
+          '&.Mui-focused': {
+            color: colors.dark
+          }
+        }
+      }
+    },
+    MuiOutlinedInput: {
+      styleOverrides: {
+        root: {
+          '&.Mui-focused .MuiOutlinedInput-notchedOutline': {
+            borderColor: colors.dark
+          }
         }
       }
     }

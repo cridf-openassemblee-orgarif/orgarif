@@ -3,6 +3,7 @@ import { css } from '@emotion/react';
 import { Avatar, Chip, Typography } from '@mui/material';
 import Box from '@mui/material/Box';
 import * as React from 'react';
+import * as breakpoint from '../styles/breakpoints';
 import { colors } from '../styles/colors';
 
 // TODO : typing props
@@ -14,11 +15,15 @@ export const HystoryItem = ({ delib, yearlyDelib }: any) => {
       css={css`
         display: grid;
         grid-auto-flow: row;
-        grid-template-columns: repeat(1fr);
-        grid-template-rows: repeat(2, fit-content);
-        gap: 1em;
-        padding: 0 5vw 0 1vw;
+        grid-template-columns: 1fr;
+        gap: 0.5em;
+        padding: 0 5vw 0 0;
         margin-bottom: 1em;
+
+        @media (${breakpoint.TABLET}) {
+          padding: 0 5vw 0 1vw;
+          gap: 1em;
+        }
       `}
       ref={TextContentRef}
     >
@@ -29,7 +34,12 @@ export const HystoryItem = ({ delib, yearlyDelib }: any) => {
           align-self: center;
           border-radius: 5em;
           border: 1px solid ${colors.white};
-          margin-right: clamp(1em, 1.4vw, 1.6rem);
+          margin-right: 0;
+          position: relative;
+
+          @media (${breakpoint.LAPTOP_L}) {
+            margin-right: clamp(1em, 1.4vw, 1.6rem);
+          }
 
           // FIXME : find solution for not adding after element on last item
           ::after {
@@ -50,28 +60,55 @@ export const HystoryItem = ({ delib, yearlyDelib }: any) => {
       >
         <Avatar
           css={css`
-            width: 4em;
-            height: 4em;
+            width: 2.5em;
+            height: 2.5em;
             background-color: ${delib.color};
             border-color: ${colors.white};
             font-weight: 600;
             color: ${colors.white};
             z-index: 1;
+            font-size: 0.8em;
+            padding: 1.75em;
+
+            @media (${breakpoint.TABLET}) {
+              width: 4em;
+              height: 4em;
+              font-size: 1.2em;
+            }
           `}
         >
           {yearlyDelib[0]}
         </Avatar>
       </Box>
-      <Box>
+      <Box
+        css={css`
+          display: flex;
+          flex-wrap: wrap;
+          width: 100%;
+          justify-content: center;
+          grid-column: 2/5;
+
+          @media (${breakpoint.MOBILE_L}) {
+            flex-wrap: nowrap;
+            justify-content: space-between;
+          }
+        `}
+      >
         <Chip
           variant="outlined"
           label={delib.title}
           size="small"
           css={css`
             color: ${colors.white};
+            width: fit-content;
+            margin-bottom: 0.5em;
+
+            @media (${breakpoint.TABLET}) {
+              margin-bottom: 0;
+            }
           `}
         />
-      </Box>
+        {/* </Box>
       <Box
         css={css`
           justify-self: center;
@@ -83,6 +120,7 @@ export const HystoryItem = ({ delib, yearlyDelib }: any) => {
           css={css`
             background-color: ${colors.white};
             color: ${colors.dark};
+            width: fit-content;
           `}
         />
       </Box>
@@ -90,13 +128,14 @@ export const HystoryItem = ({ delib, yearlyDelib }: any) => {
         css={css`
           justify-self: flex-end;
         `}
-      >
+      > */}
         <Chip
           variant="outlined"
           label={delib.date}
           size="small"
           css={css`
             color: ${colors.white};
+            width: fit-content;
           `}
         />
       </Box>
@@ -113,7 +152,7 @@ export const HystoryItem = ({ delib, yearlyDelib }: any) => {
           css={css`
             font-size: clamp(16px, 1.1vw, 1.6rem);
             line-height: 1.3em;
-            text-align: left;
+            text-align: justify;
             color: ${colors.white};
             border-bottom: 1px solid ${colors.white};
             padding-bottom: 1em;

@@ -15,38 +15,34 @@ const chipsContainer = css`
 `;
 
 // TODO : typing props
-export const FilterSection = ({
-  filters,
-  label,
-  showIcon,
-  sticky,
-  standalone
-}: any) => {
-  const ChipRef = React.useRef<HTMLDivElement>(null);
+export const FilterSection = React.memo(
+  ({ filters, label, showIcon, sticky, standalone }: any) => {
+    const ChipRef = React.useRef<HTMLDivElement>(null);
 
-  return (
-    <Box
-      css={chipsContainer}
-      sx={{
-        top: sticky ? '80px' : '22vw',
-        py: sticky ? '0.2em' : '1em',
-        pl: standalone ? '1em' : '1em',
-        pr: standalone ? 0 : '1em'
-      }}
-      ref={ChipRef}
-    >
-      <HeaderChip label={label} />
-      {filters &&
-        filters.map(
-          (filter: { libelle: string; code?: string }, idx: number) => (
-            <FilterChip
-              filter={filter}
-              isSticky={sticky}
-              showIcon={showIcon}
-              key={idx}
-            />
-          )
-        )}
-    </Box>
-  );
-};
+    return (
+      <Box
+        css={chipsContainer}
+        sx={{
+          top: sticky ? '80px' : '22vw',
+          py: sticky ? '0.2em' : '1em',
+          pl: standalone ? '1em' : '1em',
+          pr: standalone ? 0 : '1em'
+        }}
+        ref={ChipRef}
+      >
+        <HeaderChip label={label} />
+        {filters &&
+          filters.map(
+            (filter: { libelle: string; code?: string }, idx: number) => (
+              <FilterChip
+                filter={filter}
+                isSticky={sticky}
+                showIcon={showIcon}
+                key={idx}
+              />
+            )
+          )}
+      </Box>
+    );
+  }
+);
