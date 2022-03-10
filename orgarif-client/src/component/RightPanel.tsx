@@ -9,6 +9,7 @@ import Tabs from '@mui/material/Tabs';
 import * as React from 'react';
 import { InView } from 'react-intersection-observer';
 import { deliberations } from '../data/deliberation';
+import * as breakpoint from '../styles/breakpoints';
 import { colors } from '../styles/colors';
 import { HystoryItem } from './HystoryItem';
 
@@ -104,9 +105,13 @@ export const RightPanel = () => {
       css={css`
         background-color: ${colors.dark};
         color: ${colors.white};
-        height: 99vh;
-        padding: 1em 2em 3em;
-        overflow-y: auto;
+        padding: 1em 1em 3em;
+
+        @media (${breakpoint.LAPTOP}) {
+          height: 99vh;
+          padding: 1em 2vw 3em;
+          overflow-y: auto;
+        }
       `}
     >
       <Box
@@ -128,6 +133,9 @@ export const RightPanel = () => {
             icon={CustomRadio(value)}
             iconPosition="end"
             label="Historique"
+            css={css`
+              font-size: clamp(1.5em, 2.4vw, 36px);
+            `}
           />
           {/* // NOTE : Disabling tabs for now */}
           {/* <StyledTab
@@ -164,14 +172,18 @@ export const RightPanel = () => {
         })}
         <div
           css={css`
-            position: fixed;
-            width: 60px;
-            height: fit-content;
-            right: 30px;
-            top: 40%;
-            display: flex;
-            flex-direction: column;
-            align-items: center;
+            display: none;
+
+            @media (${breakpoint.LAPTOP}) {
+              position: fixed;
+              width: 60px;
+              height: fit-content;
+              right: 30px;
+              top: 40%;
+              display: flex;
+              flex-direction: column;
+              align-items: center;
+            }
           `}
         >
           {deliberationsByYear.map((yearlyDelib: any, idx: any) => {

@@ -14,6 +14,7 @@ import { NatureJuridique } from '../icon/collection/NatureJuridique';
 import { Secteur } from '../icon/collection/Secteur';
 import { SiteWeb } from '../icon/collection/SiteWeb';
 import { TextJuridique } from '../icon/collection/TextJuridique';
+import { isMobile } from '../utils/viewport-utils';
 
 const Item = styled(Paper)(({ theme }) => ({
   backgroundColor: theme.palette.background.default,
@@ -39,7 +40,7 @@ export const Informations = () => {
       <Grid container spacing={1} columns={{ xs: 4, sm: 8, md: 12, lg: 16 }}>
         <Grid item xs={2} sm={4} md={4} lg={4}>
           <Item elevation={0}>
-            <Localite size="6vw" />
+            <Localite size={isMobile() ? 90 : 110} />
             <Chip variant="outlined" label="LOCALITÉ" />
             <Typography variant="body2" mt={1}>
               {organismes.nom}
@@ -48,7 +49,7 @@ export const Informations = () => {
         </Grid>
         <Grid item xs={2} sm={4} md={4} lg={4}>
           <Item elevation={0}>
-            <Departement size="6vw" />
+            <Departement size={isMobile() ? 90 : 110} />
             <Chip variant="outlined" label="DÉPARTEMENT" />
             <Typography variant="body2" mt={1}>
               {organismes.departement.code}
@@ -60,7 +61,7 @@ export const Informations = () => {
         </Grid>
         <Grid item xs={2} sm={4} md={4} lg={4}>
           <Item elevation={0}>
-            <Secteur size="6vw" />
+            <Secteur size={isMobile() ? 90 : 110} />
             <Chip variant="outlined" label="SECTEUR" />
             <Typography variant="body2" mt={1}>
               {organismes.secteur}
@@ -69,7 +70,7 @@ export const Informations = () => {
         </Grid>
         <Grid item xs={2} sm={4} md={4} lg={4}>
           <Item elevation={0}>
-            <NatureJuridique size="6vw" />
+            <NatureJuridique size={isMobile() ? 90 : 110} />
             <Chip variant="outlined" label="NATURE JURIDQIQUE" />
             <Typography variant="body2" mt={1}>
               {organismes.natureJuridique}
@@ -78,7 +79,7 @@ export const Informations = () => {
         </Grid>
         <Grid item xs={2} sm={4} md={4} lg={4}>
           <Item elevation={0}>
-            <SiteWeb size="6vw" />
+            <SiteWeb size={isMobile() ? 90 : 110} />
             <Chip variant="outlined" label="SITE WEB" />
             <Link
               href={organismes.siteWeb}
@@ -92,7 +93,7 @@ export const Informations = () => {
         </Grid>
         <Grid item xs={2} sm={4} md={4} lg={4}>
           <Item elevation={0}>
-            <Mail size="6vw" />
+            <Mail size={isMobile() ? 90 : 110} />
             <Chip variant="outlined" label="CONTACT MAIL" />
             <Typography variant="body2" mt={1}>
               {organismes.contact}
@@ -101,7 +102,7 @@ export const Informations = () => {
         </Grid>
         <Grid item xs={2} sm={4} md={4} lg={4}>
           <Item elevation={0}>
-            <TextJuridique size="6vw" />
+            <TextJuridique size={isMobile() ? 90 : 110} />
             <Chip variant="outlined" label="TEXTE JURIDIQUE" />
             <Link
               href={organismes.texteJuridique}

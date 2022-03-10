@@ -10,6 +10,7 @@ import { organismes } from '../data/organismes';
 import { Edit } from '../icon/collection/Edit';
 import { Share } from '../icon/collection/Share';
 import { state } from '../state/state';
+import * as breakpoint from '../styles/breakpoints';
 import { colors } from '../styles/colors';
 import { Informations } from './Informations';
 import { Representants } from './Representants';
@@ -40,9 +41,13 @@ export const LeftPanel = () => {
       css={css`
         background-color: ${colors.mainBackground};
         color: ${colors.grey};
-        height: 99vh;
-        padding: 2em 2em;
-        overflow-y: auto;
+        padding: 2em 1em;
+
+        @media (${breakpoint.LAPTOP}) {
+          height: 99vh;
+          padding: 2em 2vw;
+          overflow-y: auto;
+        }
       `}
     >
       <Stack
@@ -77,7 +82,14 @@ export const LeftPanel = () => {
           `}
         />
       </Stack>
-      <Typography variant="h4" gutterBottom component="div">
+      <Typography
+        variant="h4"
+        gutterBottom
+        component="div"
+        css={css`
+          font-size: clamp(1.5em, 2.4vw, 36px);
+        `}
+      >
         Mission locale (ML) intercommunale de La Courneuve - Le Bourget - Stains
         - Dugny
       </Typography>
@@ -86,6 +98,7 @@ export const LeftPanel = () => {
         variant="h4"
         component="div"
         css={css`
+          font-size: clamp(1.5em, 2.4vw, 36px);
           margin: 0.25em 0;
         `}
       >
@@ -98,6 +111,7 @@ export const LeftPanel = () => {
         variant="h4"
         component="div"
         css={css`
+          font-size: clamp(1.5em, 2.4vw, 36px);
           margin: 0.25em 0;
         `}
       >
@@ -109,6 +123,8 @@ export const LeftPanel = () => {
         variant="h4"
         component="div"
         css={css`
+          font-size: clamp(1.5em, 2.4vw, 36px);
+
           margin: -0.25em 0 0.25em;
         `}
       >

@@ -5,9 +5,9 @@ import { fonts } from './fonts';
 
 export const globalStyles = css`
   *,
-  *:before,
-  *:after {
-    position: relative;
+  *::before,
+  *::after {
+    /* position: relative; */
     box-sizing: border-box;
   }
 

@@ -1,48 +1,55 @@
 /** @jsxImportSource @emotion/react */
 import { css } from '@emotion/react';
-import { Link } from '@mui/material';
-import AppBar from '@mui/material/AppBar';
-import Box from '@mui/material/Box';
-import Toolbar from '@mui/material/Toolbar';
+import MenuIcon from '@mui/icons-material/Menu';
+import { Box, Link } from '@mui/material';
+import Button from '@mui/material/Button';
+import Menu from '@mui/material/Menu';
+import MenuItem from '@mui/material/MenuItem';
 import * as React from 'react';
-import { useLocation } from 'react-router-dom';
 import { useRecoilState } from 'recoil';
-import { Header } from '../component/Header';
-import { MobileMenu } from '../component/MobileMenu';
 import { LogoutForm } from '../form/LogoutForm';
-import { Logo } from '../icon/collection/Logo';
 import { SignIn } from '../icon/collection/SignIn';
 import { SignOut } from '../icon/collection/SignOut';
 import { RouteLink } from '../routing/RouteLink';
 import { state } from '../state/state';
 import { colors } from '../styles/colors';
-import { isMobile, isTabletAndMore } from '../utils/viewport-utils';
 
-export const NavBar = () => {
+export const MobileMenu = () => {
+  const [anchorEl, setAnchorEl] = React.useState<null | HTMLElement>(null);
   const [userInfos] = useRecoilState(state.userInfos);
-  const location = useLocation();
+
+  const open = Boolean(anchorEl);
+  const handleClick = (event: React.MouseEvent<HTMLButtonElement>) => {
+    setAnchorEl(event.currentTarget);
+  };
+  const handleClose = () => {
+    setAnchorEl(null);
+  };
 
   return (
-    <Box>
-      <AppBar>
-        <Toolbar
-          css={css`
-            padding: 0;
-          `}
-        >
-          <Box
-            css={css`
-              flex-grow: 1;
-            `}
-          >
-            <RouteLink route={{ name: 'RootRoute' }}>
-              <Logo width={isMobile() ? 120 : 200} height={70} />
-            </RouteLink>
-          </Box>
-          {isMobile() && <MobileMenu />}
-          {isTabletAndMore() && !userInfos && (
+    <>
+      <Button
+        id="basic-button"
+        aria-controls={open ? 'basic-menu' : undefined}
+        aria-haspopup="true"
+        aria-expanded={open ? 'true' : undefined}
+        onClick={handleClick}
+      >
+        <MenuIcon color="secondary" />
+      </Button>
+      <Menu
+        id="basic-menu"
+        anchorEl={anchorEl}
+        open={open}
+        onClose={handleClose}
+        MenuListProps={{
+          'aria-labelledby': 'basic-button'
+        }}
+      >
+        <MenuItem onClick={handleClose}>
+          {!userInfos && (
             <RouteLink
-              css={css`
+              forwardCss={css`
                 display: flex;
                 flex-direction: row;
                 align-items: center;
@@ -67,7 +74,7 @@ export const NavBar = () => {
               </Link>
             </RouteLink>
           )}
-          {isTabletAndMore() && userInfos && (
+          {userInfos && (
             <Box
               css={css`
                 display: flex;
@@ -78,10 +85,8 @@ export const NavBar = () => {
               <LogoutForm />
             </Box>
           )}
-        </Toolbar>
-      </AppBar>
-      {userInfos && <Header small />}
-      {location.pathname === '/' && !userInfos && <Header />}
-    </Box>
+        </MenuItem>
+      </Menu>
+    </>
   );
 };
