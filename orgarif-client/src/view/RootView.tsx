@@ -18,7 +18,7 @@ export const RootView = () => {
           Login
         </RouteLink>
       )}
-      {userInfos && <div>yeay</div>}
+      {userInfos && <div>You're connected</div>}
     </MainContainer>
   );
 };

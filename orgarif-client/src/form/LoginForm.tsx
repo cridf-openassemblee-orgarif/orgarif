@@ -1,11 +1,12 @@
 /** @jsxImportSource @emotion/react */
 import { css } from '@emotion/react';
-import { Button } from '@mui/material';
 import * as React from 'react';
 import { useState } from 'react';
-import { PasswordInput } from '../component/base-component/PasswordInput';
-import { SimpleForm } from '../component/base-component/SimpleForm';
-import { TextInput } from '../component/base-component/TextInput';
+import { useForm } from 'react-hook-form';
+import { ControlledTextInput } from '../component/base-component/ControlledTextInput';
+import { ControlledPasswordInput } from '../component/base-component/ControlledPasswordInput';
+import { FormLoadingButton } from '../component/base-component/LoadingButton';
+import { LoadingState } from '../interfaces';
 
 export interface LoginFormDto {
   login: string;
@@ -13,39 +14,51 @@ export interface LoginFormDto {
 }
 
 interface Props {
-  onSubmit: (dto: LoginFormDto) => void;
+  onSubmit: (dto: LoginFormDto) => Promise<void>;
 }
 
 export const LoginForm = (props: Props) => {
-  const [password, setPassword] = useState('');
+  const {
+    handleSubmit,
+    control,
+    formState: { errors }
+  } = useForm<LoginFormDto>();
+  const [loading, setLoading] = useState<LoadingState>('idle');
   return (
-    <SimpleForm
-      onSubmit={(dto: { login: string }) =>
-        props.onSubmit({
-          login: dto.login,
-          password
-        })
-      }
+    <form
+      onSubmit={handleSubmit(dto => {
+        setLoading('loading');
+        props
+          .onSubmit(dto)
+          .then(() => setLoading('idle'))
+          .catch(() => setLoading('error'));
+      })}
     >
       <div
         css={css`
           margin: 10px 0;
         `}
       >
-        <TextInput name={'login'} label={'Email'} />
+        <ControlledTextInput
+          name="login"
+          label="Email"
+          control={control}
+          errors={errors}
+        />
       </div>
       <div
         css={css`
           margin: 10px 0;
         `}
       >
-        <PasswordInput
-          label="Mot de passe"
-          value={password}
-          setValue={setPassword}
+        <ControlledPasswordInput
+          name="password"
+          label="Password"
+          control={control}
+          errors={errors}
         />
       </div>
-      <Button type="submit">Login</Button>
-    </SimpleForm>
+      <FormLoadingButton loadingState={loading}>Login</FormLoadingButton>
+    </form>
   );
 };

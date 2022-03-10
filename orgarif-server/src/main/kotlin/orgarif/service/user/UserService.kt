@@ -38,7 +38,7 @@ class UserService(
                 .replace(" ", "")
                 // TODO [doc] a standard email could contain accents but in practice it's always a
                 // user input error
-                .let { OrgarifStringUtils.stripAccents(it) }
+                .let { OrgarifStringUtils.removeAccents(it) }
 
         // TODO[fmk] those validations should be done in another place too. Also :
         // * should not be longer than 255 chars (because of the database)
