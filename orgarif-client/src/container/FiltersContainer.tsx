@@ -1,7 +1,8 @@
 /** @jsxImportSource @emotion/react */
-import { css } from '@emotion/react';
+import { css, keyframes } from '@emotion/react';
 import ArrowForwardIosSharpIcon from '@mui/icons-material/ArrowForwardIosSharp';
-import { Box, Button, Stack } from '@mui/material';
+import ClearIcon from '@mui/icons-material/Clear';
+import { Box, Button, Chip, Stack } from '@mui/material';
 import MuiAccordion, { AccordionProps } from '@mui/material/Accordion';
 import MuiAccordionDetails from '@mui/material/AccordionDetails';
 import MuiAccordionSummary, {
@@ -13,10 +14,12 @@ import Typography from '@mui/material/Typography';
 import * as React from 'react';
 import { useRecoilState } from 'recoil';
 import { FilterSection } from '../component/FilterSection';
+import { MobileSelectFilters } from '../component/MobileSelectFilters';
 import { departements } from '../data/departements';
 import useEventListener from '../hooks/useEventListener';
 import { state } from '../state/state';
 import { colors } from '../styles/colors';
+import { isMobile, isTabletAndMore } from '../utils/viewport-utils';
 
 const slideProps = {
   mountOnEnter: true,
@@ -41,10 +44,10 @@ const Accordion = styled((props: AccordionProps) => (
     display: 'none'
   },
   display: 'flex',
-  flexDirection: 'column-reverse',
-  '&:not(.Mui-expanded)': {
-    borderTop: `1px solid hsl(0, 0%, 6%);`
-  }
+  flexDirection: 'column-reverse'
+  // '&:not(.Mui-expanded)': {
+  //   borderTop: !isMobile() && `1px solid hsl(0, 0%, 6%)`
+  // }
 }));
 
 const AccordionSummary = styled((props: AccordionSummaryProps) => (
@@ -55,17 +58,25 @@ const AccordionSummary = styled((props: AccordionSummaryProps) => (
 ))(({ theme }) => ({
   backgroundColor: `${colors.mainBackground}`,
   flexDirection: 'row',
-  paddingLeft: theme.spacing(6),
+  paddingLeft: '48px',
+  [theme.breakpoints.down('md')]: {
+    paddingLeft: '16px'
+  },
   justifyContent: 'flex-start',
   '& .MuiAccordionSummary-expandIconWrapper': {
-    transform: 'rotate(90deg) scale(2)'
+    transform: 'rotate(90deg) scale(2)',
+    position: 'absolute',
+    left: isTabletAndMore()
+      ? 'clamp(200px, 16vw, 270px)'
+      : 'clamp(170px, 16vw, 220px)'
   },
   '& .MuiAccordionSummary-expandIconWrapper.Mui-expanded': {
     transform: 'rotate(-90deg) scale(2)'
   },
   '& .MuiAccordionSummary-content': {
     marginRight: theme.spacing(4),
-    flexGrow: 0
+    flexGrow: 1,
+    alignItems: 'center'
   }
 }));
 
@@ -73,10 +84,20 @@ const AccordionDetails = styled(MuiAccordionDetails)(({ theme }) => ({
   padding: theme.spacing(2)
 }));
 
+const fadeIn = keyframes`
+  from {
+    opacity: 0;
+  }
+  to {
+    opacity: 1;
+  }
+`;
+
 export const FiltersContainer = () => {
   const [secteurs] = useRecoilState(state.secteurs);
   const [natureJuridiques] = useRecoilState(state.natureJuridiques);
   const [typeStructures] = useRecoilState(state.typeStructures);
+  const [activeFilters, setActiveFilters] = useRecoilState(state.activeFilters);
 
   const ChipRef = React.useRef<HTMLDivElement>(null);
 
@@ -139,56 +160,125 @@ export const FiltersContainer = () => {
           >
             RECHERCHE
           </Typography>
-        </AccordionSummary>
-        <AccordionDetails>
-          <FilterSection
-            filters={departements}
-            label="départements"
-            showIcon={false}
-            sticky={shrinkSectionFilters}
-          />
-          <FilterSection
-            filters={secteurs}
-            label="secteurs"
-            showIcon={true}
-            sticky={shrinkSectionFilters}
-          />
-          <Collapse in={hideExtraFilters}>
-            <Stack direction="row">
-              <FilterSection label="nature juridique" standalone={true} />
-              <FilterSection label="type de structure" standalone={true} />
-              <Button
-                variant="contained"
-                size="small"
-                color="secondary"
-                css={css`
-                  max-height: 2em;
-                  align-self: center;
-                  margin-left: 2em;
-                `}
-                component="button"
-                onClick={() => setHideExtraFilters(!hideExtraFilters)}
-              >
-                Afficher les détails
-              </Button>
-            </Stack>
-          </Collapse>
 
-          <Collapse in={!hideExtraFilters}>
+          {/* Display active filters when filter section is hidden */}
+          {!expandedAccordion && activeFilters && (
+            <Box
+              onClick={e => e.stopPropagation()}
+              css={css`
+                margin-left: 60px;
+                align-self: center;
+                animation: ${fadeIn} 300ms 800ms backwards;
+              `}
+            >
+              {activeFilters.map((filter, idx) => (
+                <Chip
+                  label={filter.libelle.toUpperCase()}
+                  key={idx}
+                  size="small"
+                  color="error"
+                  deleteIcon={<ClearIcon />}
+                  onDelete={() =>
+                    setActiveFilters(oldList => [
+                      ...oldList.filter(item => item !== filter)
+                    ])
+                  }
+                  css={css`
+                    padding: 0.25em;
+                    margin: 0.25em;
+                    // TODO - add tooltip if we keep max-width constraint
+                    max-width: 200px;
+                  `}
+                />
+              ))}
+            </Box>
+          )}
+        </AccordionSummary>
+
+        {isMobile() && (
+          <AccordionDetails>
+            <MobileSelectFilters data={departements} label="départements" />
+            <MobileSelectFilters data={secteurs} label="secteurs" />
+            <Collapse in={!hideExtraFilters}>
+              <MobileSelectFilters
+                data={natureJuridiques}
+                label="nature juridique"
+              />
+              <MobileSelectFilters
+                data={typeStructures}
+                label="type de structure"
+              />
+            </Collapse>
+            <Button
+              variant="contained"
+              size="small"
+              color="secondary"
+              css={css`
+                max-height: 2em;
+                align-self: center;
+                margin-left: 0.6em;
+                width: 95%;
+              `}
+              component="button"
+              onClick={() => setHideExtraFilters(!hideExtraFilters)}
+            >
+              {hideExtraFilters
+                ? 'Afficher plus de filtres'
+                : 'Cacher les filtres'}
+            </Button>
+          </AccordionDetails>
+        )}
+        {!isMobile() && (
+          <AccordionDetails>
             <FilterSection
-              filters={natureJuridiques}
-              label="nature juridique"
+              filters={departements}
+              label="départements"
               showIcon={false}
               sticky={shrinkSectionFilters}
             />
             <FilterSection
-              filters={typeStructures}
-              label="type structure"
-              showIcon={false}
+              filters={secteurs}
+              label="secteurs"
+              showIcon={true}
               sticky={shrinkSectionFilters}
             />
-          </Collapse>
-        </AccordionDetails>
+            <Collapse in={hideExtraFilters}>
+              <Stack direction="row">
+                <FilterSection label="nature juridique" standalone={true} />
+                <FilterSection label="type de structure" standalone={true} />
+                <Button
+                  variant="contained"
+                  size="small"
+                  color="secondary"
+                  css={css`
+                    max-height: 2em;
+                    align-self: center;
+                    margin-left: 2em;
+                  `}
+                  component="button"
+                  onClick={() => setHideExtraFilters(!hideExtraFilters)}
+                >
+                  Afficher les détails
+                </Button>
+              </Stack>
+            </Collapse>
+
+            <Collapse in={!hideExtraFilters}>
+              <FilterSection
+                filters={natureJuridiques}
+                label="nature juridique"
+                showIcon={false}
+                sticky={shrinkSectionFilters}
+              />
+              <FilterSection
+                filters={typeStructures}
+                label="type structure"
+                showIcon={false}
+                sticky={shrinkSectionFilters}
+              />
+            </Collapse>
+          </AccordionDetails>
+        )}
       </Accordion>
     </Box>
   );

@@ -71,5 +71,17 @@ export const state = {
   openedDrawer: atom({
     key: 'drawer',
     default: false
+  }),
+  activeFilters: atom({
+    key: 'activeFilters',
+    default: [] as Filters[]
   })
 };
+
+// Temp types
+export interface Filters {
+  id?: string;
+  libelle: string;
+  code?: boolean;
+  active?: boolean;
+}
