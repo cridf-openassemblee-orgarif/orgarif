@@ -14,8 +14,8 @@ database:
 #---------------------------------------------------------------------------
 assets:
   useBuildFiles: false
-  browserWebpackDevHost: http://localhost:3300
-  serverWebpackDevHost: http://localhost:3300
+  webpackDevPort: 3300
+  webpackDevHost: localhost
 #---------------------------------------------------------------------------
 mailjet:
   api-key:

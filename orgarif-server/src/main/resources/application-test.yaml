@@ -9,8 +9,8 @@ database:
 #---------------------------------------------------------------------------
 assets:
   useBuildFiles: false
-  browserWebpackDevHost:
-  serverWebpackDevHost:
+  webpackDevPort:
+  webpackDevHost:
 #---------------------------------------------------------------------------
 mailjet:
   api-key:

@@ -7,5 +7,5 @@ mail:
   devDestination: mp.lorber+log-orgarif@gmail.com
 pgquarrel:
 assets:
-  browserWebpackDevHost: http://localhost:3300
-  serverWebpackDevHost: http://orgarif-client:3300
+  webpackDevPort: 3300
+  webpackDevHost: orgarif-client

@@ -36,7 +36,7 @@ import orgarif.service.user.UserSessionService
     "userFileController",
 )
 class IndexController(
-    @Value("\${assets.browserWebpackDevHost}") val assetsBrowserWebpackDevHost: String,
+    @Value("\${assets.webpackDevPort}") val assetsWebpackDevPort: String,
     @Value("\${assets.useBuildFiles}") val assetsUseBuildFiles: Boolean,
     val userDao: UserDao,
     val departementDao: DepartementDao,
@@ -58,6 +58,19 @@ class IndexController(
             BeansWrapperBuilder(Configuration.DEFAULT_INCOMPATIBLE_IMPROVEMENTS)
                 .build()
                 .staticModels
+
+        fun extractDomain(url: String): String {
+            fun minPositive(vararg values: Int) = values.filter { it >= 0 }.sorted().first()
+            return (if (url.startsWith("http://")) "http://" to url.substring("http://".length)
+                else if (url.startsWith("https://")) "https://" to url.substring("https://".length)
+                else throw RuntimeException(url))
+                .let {
+                    val cut =
+                        minPositive(
+                            it.second.indexOf("/"), it.second.indexOf(":"), it.second.length)
+                    it.first + it.second.substring(0, cut)
+                }
+        }
     }
 
     val buildAssets by lazy {
@@ -67,15 +80,7 @@ class IndexController(
             .let { it.getJSONArray("entrypoints") }
             .map { "/$it" }
     }
-    val jsAssets by lazy {
-        if (assetsUseBuildFiles) {
-            buildAssets.filter { it.endsWith(".js") }
-        } else {
-            listOf("bundle.js", "vendors~main.chunk.js", "main.chunk.js").map {
-                "$assetsBrowserWebpackDevHost/static/js/$it"
-            }
-        }
-    }
+
     val cssAssets by lazy {
         if (assetsUseBuildFiles) {
             buildAssets.filter { it.endsWith(".css") }
@@ -83,6 +88,8 @@ class IndexController(
             emptyList()
         }
     }
+
+    val builtJsAssets by lazy { buildAssets.filter { it.endsWith(".js") } }
 
     @GetMapping(Routes.logout) fun redirect() = "redirect:${Routes.root}"
 
@@ -119,12 +126,22 @@ class IndexController(
             serialize(ApplicationBootstrapData(ApplicationInstance.env, userInfos, categories))
         mav.model["deploymentId"] = applicationInstance.deploymentId.rawId
         mav.model["gitRevisionLabel"] = applicationInstance.gitRevisionLabel
-        mav.model["jsAssets"] = jsAssets
+        mav.model["jsAssets"] = jsAssets(request)
         mav.model["cssAssets"] = cssAssets
         mav.model["statics"] = statics
         mav.viewName = "index"
         return mav
     }
+
+    fun jsAssets(request: HttpServletRequest) =
+        if (assetsUseBuildFiles) {
+            builtJsAssets
+        } else {
+            val domain = extractDomain(request.requestURL.toString())
+            listOf("bundle.js", "vendors~main.chunk.js", "main.chunk.js").map {
+                "$domain:$assetsWebpackDevPort/static/js/$it"
+            }
+        }
 
     fun rewriteQueryString(parameterMap: Map<String, Array<String>>): String {
         val params = parameterMap.keys.filter { it != magicTokenParameterName }
