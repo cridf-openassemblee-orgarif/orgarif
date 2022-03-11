@@ -44,9 +44,10 @@ class SuppleanceDao(val jooq: DSLContext) {
         jooq.insertInto(SUPPLEANCE).set(record).execute()
     }
 
-    fun fetchByOrganismeId(organismeId: OrganismeId) =
+    fun fetchByOrganismeIdAndStatus(organismeId: OrganismeId, status: ItemStatus) =
         jooq.selectFrom(SUPPLEANCE)
             .where(SUPPLEANCE.ORGANISME_ID.equal(organismeId.rawId))
+            .and(SUPPLEANCE.STATUS.equal(status.name))
             .fetch()
             .map(this::map)
 
@@ -54,6 +55,14 @@ class SuppleanceDao(val jooq: DSLContext) {
         jooq.update(SUPPLEANCE)
             .set(SUPPLEANCE.START_DATE, startDate)
             .set(SUPPLEANCE.LAST_MODIFICATION_DATE, date)
+            .where(SUPPLEANCE.ID.equal(id.rawId))
+            .execute()
+    }
+
+    fun updateStatus(id: SuppleanceId, status: ItemStatus, modificationDate: Instant) {
+        jooq.update(SUPPLEANCE)
+            .set(SUPPLEANCE.STATUS, status.name)
+            .set(SUPPLEANCE.LAST_MODIFICATION_DATE, modificationDate)
             .where(SUPPLEANCE.ID.equal(id.rawId))
             .execute()
     }

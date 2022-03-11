@@ -235,7 +235,8 @@ export interface UpdateRepresentationDatesCommand {
 }
 
 export interface UpdateRepresentationStatusCommand {
-  id: RepresentantId;
+  id: RepresentationId;
+  suppleanceId?: SuppleanceId;
   status: ItemStatus;
 }
 
@@ -246,6 +247,11 @@ export interface UpdateSecteurLibelleCommand {
 
 export interface UpdateSecteurStatusCommand {
   id: SecteurId;
+  status: ItemStatus;
+}
+
+export interface UpdateSuppleanceStatusCommand {
+  id: SuppleanceId;
   status: ItemStatus;
 }
 

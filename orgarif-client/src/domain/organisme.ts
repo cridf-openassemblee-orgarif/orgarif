@@ -21,6 +21,7 @@ export interface RepresentationDto {
   startDate?: LocalDate;
   endDate?: LocalDate;
   suppleance?: SuppleanceDto;
+  status: ItemStatus;
 }
 
 export interface SuppleanceDto {
@@ -28,6 +29,7 @@ export interface SuppleanceDto {
   representant: RepresentantDto;
   startDate?: LocalDate;
   endDate?: LocalDate;
+  status: ItemStatus;
 }
 
 export interface RepresentantDto {

@@ -163,12 +163,17 @@ data class UpdateRepresentationDatesCommand(
     val suppleanceStartDate: LocalDate?
 ) : Command()
 
-data class UpdateRepresentationStatusCommand(val id: RepresentationId, val status: ItemStatus) :
-    Command()
+data class UpdateRepresentationStatusCommand(
+    val id: RepresentationId,
+    val suppleanceId: SuppleanceId?,
+    val status: ItemStatus
+) : Command()
 
 data class UpdateSecteurLibelleCommand(val id: SecteurId, val libelle: String) : Command()
 
 data class UpdateSecteurStatusCommand(val id: SecteurId, val status: ItemStatus) : Command()
+
+data class UpdateSuppleanceStatusCommand(val id: SuppleanceId, val status: ItemStatus) : Command()
 
 data class UpdateTypeStructureLibelleCommand(val id: TypeStructureId, val libelle: String) :
     Command()

@@ -68,6 +68,7 @@ class CommandController(
     val updateRepresentationStatusCommandHandler: UpdateRepresentationStatusCommandHandler,
     val updateSecteurLibelleCommandHandler: UpdateSecteurLibelleCommandHandler,
     val updateSecteurStatusCommandHandler: UpdateSecteurStatusCommandHandler,
+    val updateSuppleanceStatusCommandHandler: UpdateSuppleanceStatusCommandHandler,
     val updateTypeStructureLibelleCommandHandler: UpdateTypeStructureLibelleCommandHandler,
     val updateTypeStructureStatusCommandHandler: UpdateTypeStructureStatusCommandHandler,
 ) {
@@ -179,6 +180,7 @@ class CommandController(
             is UpdateRepresentationStatusCommand -> updateRepresentationStatusCommandHandler
             is UpdateSecteurLibelleCommand -> updateSecteurLibelleCommandHandler
             is UpdateSecteurStatusCommand -> updateSecteurStatusCommandHandler
+            is UpdateSuppleanceStatusCommand -> updateSuppleanceStatusCommandHandler
             is UpdateTypeStructureLibelleCommand -> updateTypeStructureLibelleCommandHandler
             is UpdateTypeStructureStatusCommand -> updateTypeStructureStatusCommandHandler
         } as

@@ -41,6 +41,7 @@ object CommandConfiguration {
             is UpdateRepresentationStatusCommand -> user
             is UpdateSecteurLibelleCommand -> user
             is UpdateSecteurStatusCommand -> user
+            is UpdateSuppleanceStatusCommand -> user
             is UpdateTypeStructureLibelleCommand -> user
             is UpdateTypeStructureStatusCommand -> user
         }

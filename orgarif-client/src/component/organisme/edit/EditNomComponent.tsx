@@ -16,6 +16,7 @@ import { dialogClasses } from './dialog-common';
 
 const editClass = asString(clientUid());
 
+// TODO naming pas fou vu que ça fait d'autre truc
 export const EditNomComponent = (
   props: PropsWithChildren<{
     kind: 'organisme' | 'instance';

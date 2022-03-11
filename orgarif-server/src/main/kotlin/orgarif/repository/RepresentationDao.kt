@@ -48,9 +48,10 @@ class RepresentationDao(val jooq: DSLContext) {
             .fetchOne()
             ?.let(this::map)
 
-    fun fetchByOrganismeId(organismeId: OrganismeId) =
+    fun fetchByOrganismeIdAndStatus(organismeId: OrganismeId, status: ItemStatus) =
         jooq.selectFrom(REPRESENTATION)
             .where(REPRESENTATION.ORGANISME_ID.equal(organismeId.rawId))
+            .and(REPRESENTATION.STATUS.equal(status.name))
             .fetch()
             .map(this::map)
 

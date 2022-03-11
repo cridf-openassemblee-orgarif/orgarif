@@ -14,14 +14,14 @@ data class RepresentationDto(
     val representant: RepresentantDto,
     val startDate: LocalDate?,
     val endDate: LocalDate?,
-    val suppleance: SuppleanceDto?
+    val suppleance: SuppleanceDto?,
 )
 
 data class SuppleanceDto(
     val id: SuppleanceId,
     val representant: RepresentantDto,
     val startDate: LocalDate?,
-    val endDate: LocalDate?
+    val endDate: LocalDate?,
 )
 
 data class RepresentantDto(

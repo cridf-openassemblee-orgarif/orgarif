@@ -26,6 +26,7 @@ import { LoadingButton } from '../../../base-component/LoadingButton';
 import { appContext } from '../../../../ApplicationContext';
 import { AddSuppleanceDialog } from './AddSuppleanceDialog';
 import { RepresentantId } from '../../../../domain/ids';
+import { ConfirmButton } from '../../../base-component/ConfirmButton';
 
 const RepresentationPanel = (props: {
   representation: RepresentationDto;
@@ -151,6 +152,7 @@ const DemissionPanel = (props: {
     useState<VacanceDecision>('siege-vacant');
   return (
     <React.Fragment>
+      <WorkInProgressSign />
       <div css={dialogClasses.editBlock}>
         <h3>Représentant</h3>
         <TextInput name={'date'} type={'date'} label={'Date de fin'} />
@@ -196,6 +198,7 @@ const DemissionPanel = (props: {
 
 const DemisssionSuppleantPanel = (props: { onClose: () => void }) => (
   <React.Fragment>
+    <WorkInProgressSign />
     <div css={dialogClasses.editBlock}>
       <h3>Suppléant</h3>
       <TextInput name={'date'} type={'date'} label={'Date de fin'} />
@@ -219,64 +222,110 @@ const DemisssionSuppleantPanel = (props: { onClose: () => void }) => (
 const SuppressionPanel = (props: {
   representation: RepresentationDto;
   onClose: () => void;
-}) => (
-  <React.Fragment>
-    <div css={dialogClasses.editBlock}>
-      La suppression est définitive et sert à corriger les erreurs de saisie
-      uniquement.
-    </div>
-    {!props.representation.suppleance && (
+}) => {
+  const suppleance = props.representation.suppleance;
+  return (
+    <React.Fragment>
       <div css={dialogClasses.editBlock}>
-        <Button variant="contained" color="error">
-          Supprimer la représentation
+        La suppression est définitive et sert à corriger les erreurs de saisie
+        uniquement.
+      </div>
+      {!suppleance && (
+        <div css={dialogClasses.editBlock}>
+          <ConfirmButton
+            dialogTitle="Supprimer la représentation"
+            okButton="Supprimer"
+            cancelButton="Annuler"
+            color="error"
+            onConfirm={() =>
+              appContext
+                .commandService()
+                .updateRepresentationStatusCommand({
+                  id: props.representation.id,
+                  status: 'trash'
+                })
+                .then(props.onClose)
+            }
+          >
+            Supprimer
+          </ConfirmButton>
+        </div>
+      )}
+      {suppleance && (
+        <React.Fragment>
+          <div css={dialogClasses.editBlock}>
+            <h3>Représentant</h3>
+            Supprimer la représentation
+            <React.Fragment>
+              {' '}
+              <b>et</b> la suppléance
+            </React.Fragment>
+            <div
+              css={css`
+                padding: 10px 0;
+              `}
+            >
+              <ConfirmButton
+                dialogTitle="Supprimer la représentation et la supléance"
+                okButton="Supprimer"
+                cancelButton="Annuler"
+                color="error"
+                onConfirm={() =>
+                  appContext
+                    .commandService()
+                    .updateRepresentationStatusCommand({
+                      id: props.representation.id,
+                      suppleanceId: suppleance.id,
+                      status: 'trash'
+                    })
+                    .then(props.onClose)
+                }
+              >
+                Supprimer
+              </ConfirmButton>
+            </div>
+          </div>
+          <div css={dialogClasses.editBlock}>
+            <h3>Suppléant</h3>
+            Supprimer la suppléance uniquement
+            <div
+              css={css`
+                padding: 10px 0;
+              `}
+            >
+              <ConfirmButton
+                dialogTitle="Supprimer la supléance"
+                okButton="Supprimer"
+                cancelButton="Annuler"
+                color="error"
+                onConfirm={() =>
+                  appContext
+                    .commandService()
+                    .updateSuppleanceStatusCommand({
+                      id: suppleance.id,
+                      status: 'trash'
+                    })
+                    .then(props.onClose)
+                }
+              >
+                Supprimer
+              </ConfirmButton>
+            </div>
+          </div>
+        </React.Fragment>
+      )}
+      <div
+        css={css`
+          ${classes.editButton}
+        `}
+      >
+        <Button onClick={props.onClose} color="primary">
+          Annuler
         </Button>
       </div>
-    )}
-    {props.representation.suppleance && (
-      <React.Fragment>
-        <div css={dialogClasses.editBlock}>
-          <h3>Représentant</h3>
-          Supprimer la représentation
-          <React.Fragment>
-            {' '}
-            <b>et</b> la suppléance
-          </React.Fragment>
-          <div
-            css={css`
-              padding: 10px 0;
-            `}
-          >
-            <Button variant="contained" color="error">
-              Supprimer
-            </Button>
-          </div>
-        </div>
-        <div css={dialogClasses.editBlock}>
-          <h3>Suppléant</h3>
-          Supprimer la suppléance uniquement
-          <div
-            css={css`
-              padding: 10px 0;
-            `}
-          >
-            <Button variant="contained" color="error">
-              Supprimer
-            </Button>
-          </div>
-        </div>
-      </React.Fragment>
-    )}
-    <div
-      css={css`
-        ${classes.editButton}
-      `}
-    >
-      <Button onClick={props.onClose} color="primary">
-        Annuler
-      </Button>
-    </div>
-  </React.Fragment>
-);
+    </React.Fragment>
+  );
+};
 
 export const EditRepresentationDiaglog = (props: {
   representation: RepresentationDto;
@@ -302,7 +351,6 @@ export const EditRepresentationDiaglog = (props: {
             />
           </TabPanel>
           <TabPanel label="Démission représentant">
-            <WorkInProgressSign />
             <DemissionPanel
               representation={props.representation}
               onClose={props.onClose}
@@ -310,15 +358,16 @@ export const EditRepresentationDiaglog = (props: {
           </TabPanel>
           {props.representation.suppleance && (
             <TabPanel label="Démission suppléant">
-              <WorkInProgressSign />
               <DemisssionSuppleantPanel onClose={props.onClose} />
             </TabPanel>
           )}
           <TabPanel label="Suppression">
-            <WorkInProgressSign />
             <SuppressionPanel
               representation={props.representation}
-              onClose={props.onClose}
+              onClose={() => {
+                props.onUpdate();
+                props.onClose();
+              }}
             />
           </TabPanel>
         </TabsContainer>

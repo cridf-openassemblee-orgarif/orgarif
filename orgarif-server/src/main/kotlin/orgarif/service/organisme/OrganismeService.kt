@@ -31,8 +31,10 @@ class OrganismeService(
                     }
                 }
         val representationsByInstance = let {
-            val representations = representationDao.fetchByOrganismeId(organisme.id)
-            val suppleances = suppleanceDao.fetchByOrganismeId(organisme.id)
+            val representations =
+                representationDao.fetchByOrganismeIdAndStatus(organisme.id, ItemStatus.live)
+            val suppleances =
+                suppleanceDao.fetchByOrganismeIdAndStatus(organisme.id, ItemStatus.live)
             val representantById = let {
                 val ids =
                     representations.map { it.representantId } +
