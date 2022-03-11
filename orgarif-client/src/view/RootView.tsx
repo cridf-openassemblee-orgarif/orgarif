@@ -1,4 +1,3 @@
-// tslint:disable:ordered-imports
 /** @jsxImportSource @emotion/react */
 import { Box, Typography } from '@mui/material';
 import * as React from 'react';
