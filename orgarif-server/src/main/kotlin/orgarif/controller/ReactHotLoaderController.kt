@@ -18,7 +18,8 @@ import orgarif.service.HttpService
 // [doc] so it won't run on prod
 @ConditionalOnExpression("!\${assets.useBuildFiles}")
 class ReactHotLoaderController(
-    @Value("\${assets.serverWebpackDevHost}") val assetsServerWebpackDevHost: String,
+    @Value("\${assets.webpackDevPort}") val assetsWebpackDevPort: String,
+    @Value("\${assets.webpackDevHost}") val assetsWebpackDevHost: String,
     val httpService: HttpService
 ) {
 
@@ -36,7 +37,7 @@ class ReactHotLoaderController(
             } else {
                 MimeType.json.fullType
             }
-        val r = httpService.getString(assetsServerWebpackDevHost + path)
+        val r = httpService.getString("http://$assetsWebpackDevHost:$assetsWebpackDevPort$path")
         when (r) {
             is HttpService.MaybeStringResponse.EmptyResponse ->
                 logger.error { "Empty webpack hot update $r" }

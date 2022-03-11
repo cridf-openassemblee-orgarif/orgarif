@@ -17,8 +17,8 @@ server.forward-headers-strategy: framework
 #---------------------------------------------------------------------------
 assets:
   useBuildFiles: true
-  browserWebpackDevHost:
-  serverWebpackDevHost:
+  webpackDevPort:
+  webpackDevHost:
 #---------------------------------------------------------------------------
 mailjet:
   api-key:
