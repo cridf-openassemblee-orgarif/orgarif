@@ -44,7 +44,7 @@ const onOrganismeStatusUpdate = (
 ) =>
   appContext
     .commandService()
-    .updateOrganismeStatus({
+    .updateOrganismeStatusCommand({
       id: organisme.id,
       status
     })

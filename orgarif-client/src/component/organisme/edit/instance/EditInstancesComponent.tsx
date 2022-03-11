@@ -73,101 +73,105 @@ export const EditInstancesComponent = (props: {
             flex-direction: column;
           `}
         >
-          {props.instances.map((instance, index) => (
-            <Draggable
-              key={asString(instance.id)}
-              draggableId={asString(instance.id)}
-              index={index}
-            >
-              {(
-                providedDraggable: DraggableProvided,
-                snapshotDraggable: DraggableStateSnapshot
-              ) => (
-                <div
-                  ref={providedDraggable.innerRef}
-                  {...providedDraggable.draggableProps}
-                  css={css`
-                    flex: 1;
-                    user-select: none;
-                    background: ${snapshotDraggable.isDragging
-                      ? colors.dragableMoving
-                      : colors.white};
-                    margin: 10px;
-                  `}
-                >
+          {props.instances
+            .filter(i => i.status === 'live')
+            .map((instance, index) => (
+              <Draggable
+                key={asString(instance.id)}
+                draggableId={asString(instance.id)}
+                index={index}
+              >
+                {(
+                  providedDraggable: DraggableProvided,
+                  snapshotDraggable: DraggableStateSnapshot
+                ) => (
                   <div
-                    {...providedDraggable.dragHandleProps}
+                    ref={providedDraggable.innerRef}
+                    {...providedDraggable.draggableProps}
                     css={css`
-                      position: relative;
-                      border-radius: 4px;
-                      margin: 0;
+                      flex: 1;
+                      user-select: none;
+                      background: ${snapshotDraggable.isDragging
+                        ? colors.dragableMoving
+                        : colors.white};
+                      margin: 10px;
                     `}
                   >
-                    <EditNomComponent
-                      kind={'instance'}
-                      nom={instance.nom}
-                      onUpdateNom={(nom: string) =>
-                        props.onNomChange(instance.id, nom)
+                    <div
+                      {...providedDraggable.dragHandleProps}
+                      css={css`
+                        position: relative;
+                        border-radius: 4px;
+                        margin: 0;
+                      `}
+                    >
+                      <EditNomComponent
+                        kind={'instance'}
+                        nom={instance.nom}
+                        onUpdateNom={(nom: string) =>
+                          props.onNomChange(instance.id, nom)
+                        }
+                        onUpdateStatus={(status: ItemStatus) =>
+                          props.onStatusChange(instance.id, status)
+                        }
+                        titleElement={
+                          <h3
+                            css={css`
+                              font-weight: bold;
+                            `}
+                          >
+                            {/* eslint-disable-line jsx-a11y/heading-has-content */}
+                          </h3>
+                        }
+                      />
+                    </div>
+                    <RepresentantsDeliberationsBlock
+                      organismeOrInstanceId={instance.id}
+                      nombreRepresentants={instance.nombreRepresentants}
+                      onNombreRepresentantsChange={(
+                        nombre: number | undefined
+                      ) =>
+                        props.onNombreRepresentantsChange(instance.id, nombre)
                       }
-                      onUpdateStatus={(status: ItemStatus) =>
-                        props.onStatusChange(instance.id, status)
+                      presenceSuppleants={instance.presenceSuppleants}
+                      onPresenceSuppleantsChange={presenceSuppleants =>
+                        props.onPresenceSuppleantsChange(
+                          instance.id,
+                          presenceSuppleants
+                        )
                       }
-                      titleElement={
-                        <h3
-                          css={css`
-                            font-weight: bold;
-                          `}
-                        >
-                          {/* eslint-disable-line jsx-a11y/heading-has-content */}
-                        </h3>
+                      representations={instance.representations}
+                      onAddRepresentation={(
+                        representantId: RepresentantId,
+                        startDate: LocalDate | undefined,
+                        suppleantId: RepresentantId | undefined,
+                        suppleantStartDate: LocalDate | undefined
+                      ) =>
+                        props.onAddRepresentation(
+                          representantId,
+                          startDate,
+                          suppleantId,
+                          suppleantStartDate,
+                          instance.id
+                        )
                       }
+                      lienDeliberations={instance.lienDeliberations}
+                      onNewLienDeliberation={(
+                        deliberationId: DeliberationId,
+                        comment: string | undefined
+                      ): Promise<void> =>
+                        props.onNewLienDeliberation(
+                          instance.id,
+                          deliberationId,
+                          comment
+                        )
+                      }
+                      onOtherUpdate={props.onOtherUpdate}
                     />
                   </div>
-                  <RepresentantsDeliberationsBlock
-                    organismeOrInstanceId={instance.id}
-                    nombreRepresentants={instance.nombreRepresentants}
-                    onNombreRepresentantsChange={(nombre: number | undefined) =>
-                      props.onNombreRepresentantsChange(instance.id, nombre)
-                    }
-                    presenceSuppleants={instance.presenceSuppleants}
-                    onPresenceSuppleantsChange={presenceSuppleants =>
-                      props.onPresenceSuppleantsChange(
-                        instance.id,
-                        presenceSuppleants
-                      )
-                    }
-                    representations={instance.representations}
-                    onAddRepresentation={(
-                      representantId: RepresentantId,
-                      startDate: LocalDate | undefined,
-                      suppleantId: RepresentantId | undefined,
-                      suppleantStartDate: LocalDate | undefined
-                    ) =>
-                      props.onAddRepresentation(
-                        representantId,
-                        startDate,
-                        suppleantId,
-                        suppleantStartDate,
-                        instance.id
-                      )
-                    }
-                    lienDeliberations={instance.lienDeliberations}
-                    onNewLienDeliberation={(
-                      deliberationId: DeliberationId,
-                      comment: string | undefined
-                    ): Promise<void> =>
-                      props.onNewLienDeliberation(
-                        instance.id,
-                        deliberationId,
-                        comment
-                      )
-                    }
-                    onOtherUpdate={props.onOtherUpdate}
-                  />
-                </div>
-              )}
-            </Draggable>
-          ))}
+                )}
+              </Draggable>
+            ))}
           {provided.placeholder}
         </div>
       )}

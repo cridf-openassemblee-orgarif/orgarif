@@ -133,8 +133,12 @@ class OrganismeDao(val jooq: DSLContext) {
             .execute()
     }
 
-    fun fetchAll() =
-        jooq.selectFrom(ORGANISME).orderBy(ORGANISME.CREATION_DATE.desc()).fetch().map(this::map)
+    fun fetchByStatus(status: ItemStatus) =
+        jooq.selectFrom(ORGANISME)
+            .where(ORGANISME.STATUS.equal(status.name))
+            .orderBy(ORGANISME.CREATION_DATE.desc())
+            .fetch()
+            .map(this::map)
 
     fun fetchBySecteurId(secteurId: SecteurId) =
         jooq.selectFrom(ORGANISME)

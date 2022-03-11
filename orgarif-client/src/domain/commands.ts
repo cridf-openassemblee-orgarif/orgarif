@@ -212,6 +212,11 @@ export interface UpdateOrganismeSecteurCommand {
   secteurId: SecteurId | undefined;
 }
 
+export interface UpdateOrganismeStatusCommand {
+  id: OrganismeId;
+  status: ItemStatus;
+}
+
 export interface UpdateOrganismeStatus {
   id: OrganismeId;
   status: ItemStatus;

@@ -149,6 +149,8 @@ data class UpdateOrganismePresenceSuppleantsCommand(
 data class UpdateOrganismeSecteurCommand(val id: OrganismeId, val secteurId: SecteurId?) :
     Command()
 
+data class UpdateOrganismeStatusCommand(val id: OrganismeId, val status: ItemStatus) : Command()
+
 data class UpdateOrganismeTypeStructureCommand(
     val id: OrganismeId,
     val typeStructureId: TypeStructureId?
