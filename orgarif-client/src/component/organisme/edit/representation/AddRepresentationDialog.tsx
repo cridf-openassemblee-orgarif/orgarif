@@ -13,12 +13,12 @@ import { RepresentantId } from '../../../../domain/ids';
 import { RepresentantDto } from '../../../../domain/organisme';
 import { colors } from '../../../../styles/colors';
 import { TextInput } from '../../../base-component/TextInput';
-import { CreateRepresentantDialog } from '../../../representant/CreateRepresentantDialog';
 import { SelectRepresentantInput } from './SelectRepresentantInput';
 import { LocalDate } from '../../../../domain/time';
 import { stringToLocalDate } from '../../../../utils';
 import { asString } from '../../../../utils/nominal-class';
 import { LoadingButton } from '../../../base-component/LoadingButton';
+import { CreateRepresentantDialog } from '../representant/CreateRepresentantDialog';
 
 export const AddRepresentationComponent = (props: {
   representantLabel: string;
@@ -119,12 +119,19 @@ export const AddRepresentationDialog = (props: {
       return Promise.resolve();
     }
     setRepresentantMandatoryError(false);
-    return props.onAddRepresentation(
-      representantId,
-      representantStartDate,
-      suppleantId,
-      suppleantStartDate
-    );
+    return props
+      .onAddRepresentation(
+        representantId,
+        representantStartDate,
+        suppleantId,
+        suppleantStartDate
+      )
+      .then(() => {
+        setRepresentantId(undefined);
+        setRepresentantStartDate(undefined);
+        setSuppleantId(undefined);
+        setSuppleantStartDate(undefined);
+      });
   };
   return (
     <React.Fragment>

@@ -9,7 +9,7 @@ import {
   DialogTitle
 } from '@mui/material';
 import * as React from 'react';
-import { useState } from 'react';
+import { useEffect, useState } from 'react';
 import { colors } from '../../../styles/colors';
 import { appContext } from '../../../ApplicationContext';
 import { TextInput } from '../../base-component/TextInput';
@@ -18,6 +18,9 @@ export const AddOrganismeComponent = () => {
   const [displayDialog, setDisplayDialog] = useState(false);
   const [nom, setNom] = useState('');
   const [displayError, setDisplayError] = useState(false);
+  useEffect(() => {
+    setNom('');
+  }, [displayDialog]);
   return (
     <>
       <div

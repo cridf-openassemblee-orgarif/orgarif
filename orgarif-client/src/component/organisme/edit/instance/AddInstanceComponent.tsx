@@ -1,7 +1,7 @@
 /** @jsxImportSource @emotion/react */
 import { css } from '@emotion/react';
 import * as React from 'react';
-import { useState } from 'react';
+import { useEffect, useState } from 'react';
 import { TextInput } from '../../../base-component/TextInput';
 import {
   Button,
@@ -19,6 +19,9 @@ export const AddInstanceComponent = (props: {
   const [displayDialog, setDisplayDialog] = useState(false);
   const [nomInstance, setNomInstance] = useState('');
   const [displayError, setDisplayError] = useState(false);
+  useEffect(() => {
+    setNomInstance('');
+  }, [displayDialog]);
   return (
     <>
       <div

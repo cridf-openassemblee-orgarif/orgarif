@@ -8,14 +8,14 @@ import {
   DialogTitle
 } from '@mui/material';
 import * as React from 'react';
-import { useState } from 'react';
+import { useEffect, useState } from 'react';
 import { DeliberationId } from '../../../../domain/ids';
 import { DeliberationDto } from '../../../../domain/organisme';
 import { colors } from '../../../../styles/colors';
 import { TextInput } from '../../../base-component/TextInput';
-import { CreateDeliberationDialog } from '../../../deliberation/CreateDeliberationDialog';
 import { SelectDeliberationInput } from './SelectDeliberationInput';
 import { LoadingButton } from '../../../base-component/LoadingButton';
+import { CreateDeliberationDialog } from './CreateDeliberationDialog';
 
 export const AddLienDeliberationDialog = (props: {
   display: boolean;
@@ -29,6 +29,9 @@ export const AddLienDeliberationDialog = (props: {
   const [selectedDeliberation, setSelectedDeliberation] =
     useState<DeliberationDto>();
   const [comment, setComment] = useState('');
+  useEffect(() => {
+    setComment('');
+  }, [props.display]);
   const [displayCreateDeliberationDialog, setDisplayCreateDeliberationDialog] =
     useState(false);
   const [createDeliberationLibelle, setCreateDeliberationLibelle] =

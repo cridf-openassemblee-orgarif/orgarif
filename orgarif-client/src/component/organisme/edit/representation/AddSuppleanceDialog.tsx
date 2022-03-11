@@ -31,9 +31,15 @@ export const AddSuppleanceDialog = (props: {
       return Promise.resolve();
     }
     setSuppleantMandatoryError(false);
-    return props.onAddInstance(suppleantId, suppleantStartDate).then(() => {
-      props.onClose();
-    });
+    return props
+      .onAddInstance(suppleantId, suppleantStartDate)
+      .then(() => {
+        props.onClose();
+      })
+      .then(() => {
+        setSuppleantId(undefined);
+        setSuppleantStartDate(undefined);
+      });
   };
   return (
     <React.Fragment>

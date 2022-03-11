@@ -6,13 +6,14 @@ import DialogActions from '@mui/material/DialogActions';
 import DialogContent from '@mui/material/DialogContent';
 import * as React from 'react';
 import { useEffect, useState } from 'react';
-import { appContext } from '../../ApplicationContext';
-import { DeliberationDto } from '../../domain/organisme';
-import { LocalDate } from '../../domain/time';
-import { colors } from '../../styles/colors';
-import { TextInput } from '../base-component/TextInput';
-import { stringToLocalDate } from '../../utils';
-import { LoadingButton } from '../base-component/LoadingButton';
+import { DeliberationDto } from '../../../../domain/organisme';
+import { LocalDate } from '../../../../domain/time';
+import { colors } from '../../../../styles/colors';
+import { TextInput } from '../../../base-component/TextInput';
+import { stringToLocalDate } from '../../../../utils';
+import { LoadingButton } from '../../../base-component/LoadingButton';
+import { asString } from '../../../../utils/nominal-class';
+import { appContext } from '../../../../ApplicationContext';
 
 export const CreateDeliberationDialog = (props: {
   libelle: string;
@@ -23,8 +24,11 @@ export const CreateDeliberationDialog = (props: {
   const [dateMandatory, setDateMandatory] = useState(false);
   // libelle & deliberationDate because TextInput type=date doesn't seem to work with SimpleForm
   const [libelle, setLibelle] = useState(props.libelle);
-  useEffect(() => setLibelle(props.libelle), [props.libelle]);
   const [deliberationDate, setDeliberationDate] = useState<LocalDate>();
+  useEffect(() => {
+    setLibelle(props.libelle);
+    setDeliberationDate(undefined);
+  }, [props.libelle]);
   const onSubmit = (): Promise<void> => {
     if (!deliberationDate) {
       setDateMandatory(true);
@@ -71,6 +75,9 @@ export const CreateDeliberationDialog = (props: {
               name="deliberationDate"
               label="Date de délibération"
               type="date"
+              initialValue={
+                deliberationDate ? asString(deliberationDate) : undefined
+              }
               onChange={e => {
                 const date = stringToLocalDate(e.currentTarget.value);
                 setDeliberationDate(date);

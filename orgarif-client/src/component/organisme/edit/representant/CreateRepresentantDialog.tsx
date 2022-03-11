@@ -6,10 +6,10 @@ import DialogActions from '@mui/material/DialogActions';
 import DialogContent from '@mui/material/DialogContent';
 import * as React from 'react';
 import { useEffect, useState } from 'react';
-import { appContext } from '../../ApplicationContext';
-import { RepresentantDto } from '../../domain/organisme';
-import { TextInput } from '../base-component/TextInput';
-import { LoadingButton } from '../base-component/LoadingButton';
+import { appContext } from '../../../../ApplicationContext';
+import { RepresentantDto } from '../../../../domain/organisme';
+import { TextInput } from '../../../base-component/TextInput';
+import { LoadingButton } from '../../../base-component/LoadingButton';
 
 const extractPrenomNom = (nomComplet: string) => {
   const parts = nomComplet.split(' ');
