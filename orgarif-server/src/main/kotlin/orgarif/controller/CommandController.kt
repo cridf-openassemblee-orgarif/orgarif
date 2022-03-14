@@ -51,6 +51,8 @@ class CommandController(
     val updateInstancePresenceSuppleantsCommandHandler:
         UpdateInstancePresenceSuppleantsCommandHandler,
     val updateInstanceStatusCommandHandler: UpdateInstanceStatusCommandHandler,
+    val updateLienDeliberationCommentCommandHandler: UpdateLienDeliberationCommentCommandHandler,
+    val updateLienDeliberationStatusCommandHandler: UpdateLienDeliberationStatusCommandHandler,
     val updateNatureJuridiqueLibelleCommandHandler: UpdateNatureJuridiqueLibelleCommandHandler,
     val updateNatureJuridiqueStatusCommandHandler: UpdateNatureJuridiqueStatusCommandHandler,
     val updateOrganismeDepartementCommandHandler: UpdateOrganismeDepartementCommandHandler,
@@ -163,6 +165,8 @@ class CommandController(
             is UpdateInstancePresenceSuppleantsCommand ->
                 updateInstancePresenceSuppleantsCommandHandler
             is UpdateInstanceStatusCommand -> updateInstanceStatusCommandHandler
+            is UpdateLienDeliberationCommentCommand -> updateLienDeliberationCommentCommandHandler
+            is UpdateLienDeliberationStatusCommand -> updateLienDeliberationStatusCommandHandler
             is UpdateNatureJuridiqueLibelleCommand -> updateNatureJuridiqueLibelleCommandHandler
             is UpdateNatureJuridiqueStatusCommand -> updateNatureJuridiqueStatusCommandHandler
             is UpdateOrganismeDepartementCommand -> updateOrganismeDepartementCommandHandler

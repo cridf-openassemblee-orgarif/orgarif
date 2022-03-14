@@ -32,6 +32,8 @@ import {
   UpdateInstanceNomCommand,
   UpdateInstancePresenceSuppleantsCommand,
   UpdateInstanceStatusCommand,
+  UpdateLienDeliberationCommentCommand,
+  UpdateLienDeliberationStatusCommand,
   UpdateNatureJuridiqueLibelleCommand,
   UpdateNatureJuridiqueStatusCommand,
   UpdateOrganismeDepartementCommand,
@@ -144,6 +146,16 @@ export class CommandService {
   public updateInstanceStatusCommand = (
     command: UpdateInstanceStatusCommand
   ): Promise<void> => this.command('UpdateInstanceStatusCommand', command);
+
+  public updateLienDeliberationCommentCommand = (
+    command: UpdateLienDeliberationCommentCommand
+  ): Promise<void> =>
+    this.command('UpdateLienDeliberationCommentCommand', command);
+
+  public updateLienDeliberationStatusCommand = (
+    command: UpdateLienDeliberationStatusCommand
+  ): Promise<void> =>
+    this.command('UpdateLienDeliberationStatusCommand', command);
 
   public updateNatureJuridiqueLibelleCommand = (
     command: UpdateNatureJuridiqueLibelleCommand

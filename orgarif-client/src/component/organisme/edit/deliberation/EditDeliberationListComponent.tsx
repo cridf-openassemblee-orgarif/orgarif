@@ -13,6 +13,7 @@ export const EditDeliberationListComponent = (props: {
     deliberationId: DeliberationId,
     comment: string | undefined
   ) => Promise<void>;
+  onOtherUpdate: () => Promise<void>;
 }) => {
   return (
     <React.Fragment>
@@ -25,7 +26,11 @@ export const EditDeliberationListComponent = (props: {
       </div>
       <div css={editCommonClasses.columnPadding}>
         {props.lienDeliberations.map(l => (
-          <EditDeliberationListItem key={asString(l.id)} lienDeliberation={l} />
+          <EditDeliberationListItem
+            key={asString(l.id)}
+            lienDeliberation={l}
+            onUpdate={props.onOtherUpdate}
+          />
         ))}
       </div>
     </React.Fragment>

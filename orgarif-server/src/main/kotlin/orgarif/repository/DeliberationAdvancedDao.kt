@@ -2,6 +2,7 @@ package orgarif.repository
 
 import org.jooq.DSLContext
 import org.springframework.stereotype.Repository
+import orgarif.domain.ItemStatus
 import orgarif.domain.OrganismeId
 import orgarif.jooq.generated.Tables.DELIBERATION
 import orgarif.jooq.generated.Tables.LIEN_DELIBERATION
@@ -24,6 +25,7 @@ class DeliberationAdvancedDao(
             .join(l)
             .on(d.ID.equal(l.DELIBERATION_ID))
             .where(l.ORGANISME_ID.equal(organismeId.rawId))
+            .and(l.STATUS.equal(ItemStatus.live.name))
             .fetch()
             .map {
                 val deliberation = deliberationDao.map(it.into(d))

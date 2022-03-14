@@ -172,6 +172,16 @@ export interface UpdateInstanceStatusCommand {
   status: ItemStatus;
 }
 
+export interface UpdateLienDeliberationCommentCommand {
+  id: LienDeliberationId;
+  comment?: string;
+}
+
+export interface UpdateLienDeliberationStatusCommand {
+  id: LienDeliberationId;
+  status: ItemStatus;
+}
+
 export interface UpdateNatureJuridiqueLibelleCommand {
   id: NatureJuridiqueId;
   libelle: string;

@@ -27,6 +27,8 @@ object CommandConfiguration {
             is UpdateInstanceNomCommand -> user
             is UpdateInstancePresenceSuppleantsCommand -> user
             is UpdateInstanceStatusCommand -> user
+            is UpdateLienDeliberationCommentCommand -> user
+            is UpdateLienDeliberationStatusCommand -> user
             is UpdateNatureJuridiqueLibelleCommand -> user
             is UpdateNatureJuridiqueStatusCommand -> user
             is UpdateOrganismeDepartementCommand -> user

@@ -1,23 +1,20 @@
 /** @jsxImportSource @emotion/react */
 import { css } from '@emotion/react';
-import { Delete } from '@mui/icons-material';
-import { Button } from '@mui/material';
 import * as React from 'react';
-import { useState } from 'react';
 import { LienDeliberationDto } from '../../../../domain/organisme';
 import { formatLocaleDate } from '../../../../simple-fr';
 import { colors } from '../../../../styles/colors';
 import { clientUid } from '../../../../utils';
 import { asString } from '../../../../utils/nominal-class';
-import { ConfirmDialog } from '../../../base-component/ConfirmDialog';
 import { editCommonClasses } from '../EditOrganismeComponent';
+import { EditLienDeliberationCommentComponent } from './EditLienDeliberationCommentComponent';
 
 const actionsClass = asString(clientUid());
 
 export const EditDeliberationListItem = (props: {
   lienDeliberation: LienDeliberationDto;
+  onUpdate: () => Promise<void>;
 }) => {
-  const [displayDeleteDialog, setDisplayDeleteDialog] = useState(false);
   return (
     <div
       key={asString(props.lienDeliberation.id)}
@@ -81,32 +78,9 @@ export const EditDeliberationListItem = (props: {
               margin-left: 10px;
             `}
           >
-            <Button
-              variant="outlined"
-              size="small"
-              color={'error'}
-              css={css`
-                background: white;
-              `}
-              startIcon={<Delete />}
-              onClick={() => setDisplayDeleteDialog(true)}
-            >
-              Supprimer
-            </Button>
-            <ConfirmDialog
-              title={
-                'Êtes-vous sûr de vouloir supprimer le lien à la délibération ?'
-              }
-              message="La suppression est définitive et sert à corriger les erreurs de saisie uniquement."
-              confirmButtonLabel={'Supprimer'}
-              confirmButtonColor="error"
-              display={displayDeleteDialog}
-              onConfirm={() => {
-                throw Error('Not implemented');
-                // appContext.commandService().delete
-              }}
-              onClose={() => setDisplayDeleteDialog(false)}
-              isWip={true}
+            <EditLienDeliberationCommentComponent
+              lienDeliberation={props.lienDeliberation}
+              onUpdate={props.onUpdate}
             />
           </div>
         </div>

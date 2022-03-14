@@ -120,6 +120,14 @@ data class UpdateInstancePresenceSuppleantsCommand(
 
 data class UpdateInstanceStatusCommand(val id: InstanceId, val status: ItemStatus) : Command()
 
+data class UpdateLienDeliberationCommentCommand(
+    val id: LienDeliberationId,
+    val comment: String?
+) : Command()
+
+data class UpdateLienDeliberationStatusCommand(val id: LienDeliberationId, val status: ItemStatus) :
+    Command()
+
 data class UpdateNatureJuridiqueLibelleCommand(val id: NatureJuridiqueId, val libelle: String) :
     Command()
 

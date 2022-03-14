@@ -111,6 +111,7 @@ export const RepresentantsDeliberationsBlock = (props: {
       <EditDeliberationListComponent
         lienDeliberations={props.lienDeliberations}
         onNewLienDeliberation={props.onNewLienDeliberation}
+        onOtherUpdate={props.onOtherUpdate}
       />
     </div>
   </div>
