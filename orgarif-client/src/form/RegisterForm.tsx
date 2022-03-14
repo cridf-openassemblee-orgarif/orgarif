@@ -7,6 +7,7 @@ import { appContext } from '../ApplicationContext';
 import { useForm } from 'react-hook-form';
 import { ControlledTextInput } from '../component/base-component/ControlledTextInput';
 import { colors } from '../styles/colors';
+import { ControlledPasswordInput } from '../component/base-component/ControlledPasswordInput';
 
 export interface RegisterFormDto {
   mail: string;
@@ -68,7 +69,7 @@ export const RegisterForm = (props: Props) => {
           margin: 10px 0;
         `}
       >
-        <ControlledTextInput
+        <ControlledPasswordInput
           name="password"
           label="Mode de passe"
           control={control}
