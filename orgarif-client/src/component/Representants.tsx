@@ -15,7 +15,7 @@ export const Representants = ({ reps, type }: any) => {
     ListOfReps = (
       <Grid container spacing={1}>
         {reps.map((r: any, idx: number) => (
-          <React.Fragment key={idx}>
+          <React.Fragment key={r.id}>
             <SingleRepresentant representant={r} type={type} />
             {isTabletAndMore() && (
               <Divider
@@ -43,7 +43,7 @@ export const Representants = ({ reps, type }: any) => {
                 />
               </React.Fragment>
             ) : (
-              <React.Fragment key={idx}>
+              <React.Fragment key={r.id}>
                 <SingleEmptyRepresentant />
                 <Divider
                   orientation="horizontal"
@@ -63,7 +63,7 @@ export const Representants = ({ reps, type }: any) => {
     ListOfReps = (
       <Grid container spacing={1}>
         {reps.map((r: any, idx: number) => (
-          <React.Fragment key={idx}>
+          <React.Fragment key={r.id}>
             <SingleRepresentant representant={r} type={type} />
             <Divider
               orientation="horizontal"

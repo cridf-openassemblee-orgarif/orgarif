@@ -32,16 +32,14 @@ export const FilterSection = React.memo(
       >
         <HeaderChip label={label} />
         {filters &&
-          filters.map(
-            (filter: { libelle: string; code?: string }, idx: number) => (
-              <FilterChip
-                filter={filter}
-                isSticky={sticky}
-                showIcon={showIcon}
-                key={idx}
-              />
-            )
-          )}
+          filters.map((filter: { id: string; libelle: string }) => (
+            <FilterChip
+              filter={filter}
+              isSticky={sticky}
+              showIcon={showIcon}
+              key={filter.id}
+            />
+          ))}
       </Box>
     );
   }

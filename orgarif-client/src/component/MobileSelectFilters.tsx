@@ -67,8 +67,8 @@ export const MobileSelectFilters = ({ data, label }: any) => {
         )}
         MenuProps={MenuProps}
       >
-        {data.map((el: any, idx: number) => (
-          <MenuItem key={idx} value={el.libelle}>
+        {data.map((el: any) => (
+          <MenuItem key={el.id} value={el.libelle}>
             {el.libelle}
           </MenuItem>
         ))}
