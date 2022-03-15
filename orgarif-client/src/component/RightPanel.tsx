@@ -154,7 +154,7 @@ export const RightPanel = () => {
           return yearlyDelib[1].map((d: any, idx: any) => (
             <InView
               as="div"
-              key={idx}
+              key={d.title}
               threshold={1}
               onChange={(inView, entry) => {
                 setYearInview(prevState =>
@@ -186,11 +186,11 @@ export const RightPanel = () => {
             }
           `}
         >
-          {deliberationsByYear.map((yearlyDelib: any, idx: any) => {
+          {deliberationsByYear.map((yearlyDelib: any) => {
             const [year, delibs] = yearlyDelib;
 
             return (
-              <React.Fragment key={idx}>
+              <React.Fragment key={year}>
                 <Chip
                   label={year}
                   size="small"
@@ -204,9 +204,9 @@ export const RightPanel = () => {
                     border: 1px solid white;
                   `}
                 />
-                {delibs.map((i: any, idx: any) => (
+                {delibs.map((i: any) => (
                   <div
-                    key={idx}
+                    key={i.title}
                     css={css`
                       width: 0.5em;
                       height: 0.5em;

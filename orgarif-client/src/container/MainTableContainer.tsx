@@ -182,7 +182,6 @@ export const MainTableContainer = React.memo(() => {
   const [isOpened, setIsOpened] = useRecoilState(state.openedDrawer);
 
   const handleRequestSearch = (searchedVal: any) => {
-    console.log(searchedVal.target.value);
     const filteredRows = originalRows.filter(row => {
       return row.organisme
         .toLowerCase()
@@ -286,14 +285,14 @@ export const MainTableContainer = React.memo(() => {
                     hover
                     role="checkbox"
                     tabIndex={-1}
-                    key={idx}
+                    key={row.id}
                     onClick={() => setIsOpened(!isOpened)}
                   >
                     {columns.map((column, idx) => {
                       const value = row[column.id];
                       return (
                         <StyledTableCell
-                          key={idx}
+                          key={column.id}
                           align={column.align}
                           style={{
                             minWidth: column.minWidth,

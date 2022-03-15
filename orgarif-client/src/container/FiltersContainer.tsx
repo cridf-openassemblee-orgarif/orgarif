@@ -15,7 +15,6 @@ import * as React from 'react';
 import { useRecoilState } from 'recoil';
 import { FilterSection } from '../component/FilterSection';
 import { MobileSelectFilters } from '../component/MobileSelectFilters';
-import { departements } from '../data/departements';
 import useEventListener from '../hooks/useEventListener';
 import { state } from '../state/state';
 import { colors } from '../styles/colors';
@@ -94,6 +93,7 @@ const fadeIn = keyframes`
 `;
 
 export const FiltersContainer = () => {
+  const [departements] = useRecoilState(state.departements);
   const [secteurs] = useRecoilState(state.secteurs);
   const [natureJuridiques] = useRecoilState(state.natureJuridiques);
   const [typeStructures] = useRecoilState(state.typeStructures);
@@ -174,7 +174,7 @@ export const FiltersContainer = () => {
               {activeFilters.map((filter, idx) => (
                 <Chip
                   label={filter.libelle.toUpperCase()}
-                  key={idx}
+                  key={filter.id}
                   size="small"
                   color="error"
                   deleteIcon={<ClearIcon />}
