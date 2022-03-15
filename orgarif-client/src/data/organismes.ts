@@ -13,6 +13,7 @@ export const organismes = {
   representants: {
     ag: [
       {
+        id: 10,
         nom: 'Durand',
         prenom: 'Marc',
         dureeMandat: 4,
@@ -25,6 +26,7 @@ export const organismes = {
         }
       },
       {
+        id: 11,
         nom: 'Doe',
         prenom: 'John',
         dureeMandat: 4,
@@ -39,18 +41,21 @@ export const organismes = {
     ],
     ca: [
       {
+        id: 12,
         nom: 'Doub',
         prenom: 'Philippe',
         dureeMandat: 4,
         photo: ''
       },
       {
+        id: 13,
         nom: 'Dugny',
         prenom: 'Paul',
         dureeMandat: 4,
         photo: ''
       },
       {
+        id: 14,
         nom: 'Doe',
         prenom: 'John',
         dureeMandat: 4,
