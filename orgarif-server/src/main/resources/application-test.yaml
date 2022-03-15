@@ -17,3 +17,5 @@ mailjet:
   secret-key:
 #---------------------------------------------------------------------------
 elusSynchronizationUrl:
+remote-endpoint:
+  expected-secu:
