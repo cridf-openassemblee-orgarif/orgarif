@@ -89,7 +89,7 @@ export const AddRepresentationComponent = (props: {
         onNewRepresentant={representant => {
           setDisplayCreateRepresentantDialog(false);
           setCreateRepresentantNom('');
-          setRepresentant(representant);
+          updateRepresentant(representant);
         }}
       />
     </>
