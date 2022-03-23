@@ -8,6 +8,7 @@ import {
   RepresentantId,
   RepresentationId,
   SecteurId,
+  SelectionOrganismesId,
   SuppleanceId,
   TypeStructureId
 } from './ids';
@@ -86,6 +87,14 @@ export interface CreateOrganismeCommand {
 
 export interface CreateOrganismeCommandResponse {
   id: OrganismeId;
+}
+
+export interface CreateUserOrganismesSelectionCommand {
+  selectionOrganismes: OrganismeId[];
+}
+
+export interface CreateUserOrganismesSelectionCommandResponse {
+  selectionOrganismesId: SelectionOrganismesId;
 }
 
 export interface CreateRepresentantCommand {

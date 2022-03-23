@@ -21,6 +21,8 @@ import {
   CreateSecteurCommandResponse,
   CreateTypeStructureCommand,
   CreateTypeStructureCommandResponse,
+  CreateUserOrganismesSelectionCommand,
+  CreateUserOrganismesSelectionCommandResponse,
   LoginCommand,
   LoginCommandResponse,
   MoveRepresentationCommand,
@@ -107,6 +109,11 @@ export class CommandService {
     command: CreateTypeStructureCommand
   ): Promise<CreateTypeStructureCommandResponse> =>
     this.command('CreateTypeStructureCommand', command);
+
+  public createUserOrganismesSelectionCommand = (
+    command: CreateUserOrganismesSelectionCommand
+  ): Promise<CreateUserOrganismesSelectionCommandResponse> =>
+    this.command('CreateUserOrganismesSelectionCommand', command);
 
   public loginCommand = (
     command: LoginCommand

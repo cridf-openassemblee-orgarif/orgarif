@@ -17,6 +17,7 @@ export type OrgarifId =
   | RepresentationId
   | RequestErrorId
   | SecteurId
+  | SelectionOrganismesId
   | SuppleanceId
   | TypeStructureId
   | UserFileId
@@ -40,6 +41,7 @@ export type RepresentantId = NominalString<'RepresentantId'>;
 export type RepresentationId = NominalString<'RepresentationId'>;
 export type RequestErrorId = NominalString<'RequestErrorId'>;
 export type SecteurId = NominalString<'SecteurId'>;
+export type SelectionOrganismesId = NominalString<'SelectionOrganismesId'>;
 export type SuppleanceId = NominalString<'SuppleanceId'>;
 export type TypeStructureId = NominalString<'TypeStructureId'>;
 export type UserFileId = NominalString<'UserFileId'>;

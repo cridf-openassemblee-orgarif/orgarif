@@ -1,4 +1,10 @@
-import { OrganismeId, SecteurId } from './ids';
+import {
+  DepartementId,
+  NatureJuridiqueId,
+  OrganismeId,
+  SecteurId,
+  TypeStructureId
+} from './ids';
 import {
   DeliberationDto,
   OrganismeDto,
@@ -22,14 +28,31 @@ export interface IsLoginAlreadyTakenQueryResponse {
   alreadyTaken: boolean;
 }
 
+export interface ListOrganismesByLastModifiedQuery {
+  limit?: number;
+}
+
+export interface ListOrganismesByLastModifiedQueryResponse {
+  organismes: OrganismeListDto[];
+}
+
 export interface ListOrganismesBySecteurQuery {
   secteurId: SecteurId;
 }
-
 export interface ListOrganismesBySecteurQueryResponse {
   organismes: OrganismeListDto[];
 }
 
+export interface ListOrganismesByIdsQuery {
+  departementIds?: DepartementId[];
+  natureJuridiqueIds?: NatureJuridiqueId[];
+  secteurIds?: SecteurId[];
+  typeStructureIds?: TypeStructureId[];
+}
+
+export interface ListOrganismesByIdsQueryResponse {
+  organismes: OrganismeListDto[];
+}
 export interface ListOrganismesQueryResponse {
   organismes: OrganismeListDto[];
 }
@@ -40,6 +63,14 @@ export interface SearchDeliberationQuery {
 
 export interface SearchDeliberationQueryResponse {
   results: DeliberationDto[];
+}
+
+export interface SearchOrganismesQuery {
+  searchToken: string;
+}
+
+export interface SearchOrganismesQueryResponse {
+  organismes: OrganismeListDto[];
 }
 
 export interface SearchRepresentantsQuery {
