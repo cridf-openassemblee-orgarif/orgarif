@@ -8,7 +8,7 @@ import org.springframework.stereotype.Controller
 import org.springframework.web.bind.annotation.GetMapping
 import org.springframework.web.bind.annotation.PathVariable
 import orgarif.domain.UserFileId
-import orgarif.repository.UserFileDao
+import orgarif.repository.user.UserFileDao
 import orgarif.utils.OrgarifStringUtils
 import orgarif.utils.toTypeId
 

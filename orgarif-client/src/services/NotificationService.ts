@@ -1,5 +1,3 @@
-import { toast } from 'react-toastify';
-
 export type NotificationLevel = 'warning' | 'info';
 
 export class NotificationService {
@@ -12,7 +10,6 @@ export class NotificationService {
     message: string,
     level: NotificationLevel = 'info'
   ) => {
-    // TODO[error]
-    toast(message);
+    // TODO !
   };
 }

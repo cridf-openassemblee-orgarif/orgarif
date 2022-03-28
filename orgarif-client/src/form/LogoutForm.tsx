@@ -2,7 +2,7 @@
 import * as React from 'react';
 import { useState } from 'react';
 import { appContext } from '../ApplicationContext';
-import { FormLoadingButton } from '../component/base-component/LoadingButton';
+import { LoadingStateButton } from '../component/base-component/LoadingButton';
 import { LoadingState } from '../interfaces';
 import { css } from '@emotion/react';
 import { colors } from '../styles/vars';
@@ -22,16 +22,16 @@ export const LogoutForm = () => {
         name={appContext.csrfTokenService().inputName}
         value={appContext.csrfTokenService().token}
       />
-      <FormLoadingButton
+      <LoadingStateButton
         loadingState={loading}
-        forwardCss={css`
+        css={css`
           background: ${colors.clearGrey};
           height: 24px;
           top: -4px;
         `}
       >
         Logout
-      </FormLoadingButton>
+      </LoadingStateButton>
     </form>
   );
 };

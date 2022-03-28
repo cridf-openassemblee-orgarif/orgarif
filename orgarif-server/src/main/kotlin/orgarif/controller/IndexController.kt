@@ -16,7 +16,7 @@ import org.springframework.web.servlet.ModelAndView
 import orgarif.config.Routes
 import orgarif.domain.ApplicationBootstrapData
 import orgarif.domain.UserInfos
-import orgarif.repository.UserDao
+import orgarif.repository.user.UserDao
 import orgarif.serialization.Serializer.serialize
 import orgarif.service.ApplicationInstance
 import orgarif.service.LocaleService

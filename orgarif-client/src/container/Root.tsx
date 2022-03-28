@@ -2,7 +2,6 @@
 import { css } from '@emotion/react';
 import * as React from 'react';
 import { PropsWithChildren, useEffect, useState } from 'react';
-import { ToastContainer } from 'react-toastify';
 import { cleanScrollBar } from '../common-classes';
 
 // [doc] https://usehooks.com/useWindowSize/
@@ -43,7 +42,6 @@ export const Root = (props: PropsWithChildren<{}>) => {
         overflow: hidden;
       `}
     >
-      <ToastContainer />
       <div
         css={css`
           position: absolute;

@@ -8,7 +8,7 @@ import orgarif.config.Routes
 import orgarif.controller.IndexController
 import orgarif.controller.InvalidateMagicLinkTokenController
 import orgarif.domain.MailReference
-import orgarif.repository.UserDao
+import orgarif.repository.user.UserDao
 import orgarif.serialization.Serializer.serialize
 import orgarif.service.ApplicationInstance
 import orgarif.service.HttpService

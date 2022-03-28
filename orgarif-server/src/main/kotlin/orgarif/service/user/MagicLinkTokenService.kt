@@ -9,8 +9,8 @@ import javax.servlet.http.HttpServletResponse
 import mu.KotlinLogging
 import org.springframework.stereotype.Service
 import orgarif.domain.UserId
-import orgarif.repository.MagicLinkTokenDao
-import orgarif.repository.UserDao
+import orgarif.repository.user.MagicLinkTokenDao
+import orgarif.repository.user.UserDao
 import orgarif.service.DateService
 
 @Service

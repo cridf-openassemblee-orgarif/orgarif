@@ -21,7 +21,7 @@ export const Menu = () => {
       `}
     >
       <RouteLink
-        forwardCss={css`
+        css={css`
           color: ${colors.white};
           text-decoration: none;
           text-transform: uppercase;
@@ -51,7 +51,7 @@ export const Menu = () => {
         {!userInfos && (
           <React.Fragment>
             <RouteLink
-              forwardCss={css`
+              css={css`
                 color: ${colors.white};
                 margin: 0 10px;
               `}
@@ -62,7 +62,7 @@ export const Menu = () => {
               Login
             </RouteLink>
             <RouteLink
-              forwardCss={css`
+              css={css`
                 color: ${colors.white};
                 margin: 0 10px;
               `}

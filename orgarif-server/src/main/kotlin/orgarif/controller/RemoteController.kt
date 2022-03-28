@@ -2,6 +2,7 @@ package orgarif.controller
 
 import mu.KotlinLogging
 import org.jooq.DSLContext
+import org.springframework.beans.factory.annotation.Value
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken
 import org.springframework.security.core.context.SecurityContextImpl
 import org.springframework.session.Session as SpringSession
@@ -14,14 +15,15 @@ import orgarif.controller.RemoteController.Companion.remoteRoute
 import orgarif.domain.Role
 import orgarif.domain.Session as OrgarifSession
 import orgarif.domain.UserSession
-import orgarif.repository.UserDao
-import orgarif.repository.UserSessionLogDao
+import orgarif.repository.user.UserDao
+import orgarif.repository.user.UserSessionLogDao
 import orgarif.service.user.UserSessionService
 import orgarif.service.utils.TransactionIsolationService
 
 @RestController
 @RequestMapping(remoteRoute)
 class RemoteController(
+    @Value("\${remote-endpoint.expected-secu}") val expectedSecu: String,
     val jooq: DSLContext,
     val userDao: UserDao,
     val userSessionLogDao: UserSessionLogDao,
@@ -34,7 +36,6 @@ class RemoteController(
 
     companion object {
         const val remoteRoute = "/remote"
-        val expectedSecu = ""
         private val SPRING_SECURITY_CONTEXT = "SPRING_SECURITY_CONTEXT"
     }
 

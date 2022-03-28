@@ -10,7 +10,7 @@ import orgarif.domain.Language
 import orgarif.domain.RegisterAndAuthenticateResult
 import orgarif.domain.Role
 import orgarif.error.MailAlreadyRegisteredException
-import orgarif.repository.UserDao
+import orgarif.repository.user.UserDao
 import orgarif.service.DateService
 import orgarif.service.LocaleService
 import orgarif.service.NotificationService
@@ -79,7 +79,7 @@ class UserService(
     ): RegisterAndAuthenticateResult {
         val (cleanCommand, dirtyMail) = cleanRegisterUserDto(command)
         val locale = localeService.selectLanguage(request.locales)
-        val user = createUser(command, hashedPassword, locale, dirtyMail)
+        val user = createUser(cleanCommand, hashedPassword, locale, dirtyMail)
         val authResult = userSessionService.authenticateUser(user, request, response)
         notificationService.notify(
             "${user.mail} just suscribed.", NotificationService.Channel.newUser)

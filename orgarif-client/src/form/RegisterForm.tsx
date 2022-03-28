@@ -7,6 +7,7 @@ import { appContext } from '../ApplicationContext';
 import { useForm } from 'react-hook-form';
 import { ControlledTextInput } from '../component/base-component/ControlledTextInput';
 import { colors } from '../styles/vars';
+import { ControlledPasswordInput } from '../component/base-component/ControlledPasswordInput';
 
 export interface RegisterFormDto {
   mail: string;
@@ -14,12 +15,10 @@ export interface RegisterFormDto {
   displayName: string;
 }
 
-interface Props {
+export const RegisterForm = (props: {
   onSubmit: (dto: RegisterFormDto) => void;
   mailIsAlreadyTaken: boolean;
-}
-
-export const RegisterForm = (props: Props) => {
+}) => {
   const [mailIsAlreadyTaken, setMailIsAlreadyTaken] = useState(false);
   const checkLoginAvailability = (
     event: ChangeEvent<HTMLInputElement | HTMLTextAreaElement>
@@ -68,7 +67,7 @@ export const RegisterForm = (props: Props) => {
           margin: 10px 0;
         `}
       >
-        <ControlledTextInput
+        <ControlledPasswordInput
           name="password"
           label="Password"
           control={control}

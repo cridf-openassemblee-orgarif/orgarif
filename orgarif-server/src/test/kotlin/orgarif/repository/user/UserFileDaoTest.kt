@@ -1,4 +1,4 @@
-package orgarif.repository
+package orgarif.repository.user
 
 import org.jooq.TableField
 import org.junit.jupiter.api.Assertions.assertEquals

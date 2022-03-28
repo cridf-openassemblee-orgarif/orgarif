@@ -1,4 +1,4 @@
-package orgarif.repository
+package orgarif.repository.user
 
 import org.jooq.DSLContext
 import org.jooq.Record

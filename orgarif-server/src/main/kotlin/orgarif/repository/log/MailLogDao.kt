@@ -1,4 +1,4 @@
-package orgarif.repository
+package orgarif.repository.log
 
 import java.time.Instant
 import org.jooq.DSLContext

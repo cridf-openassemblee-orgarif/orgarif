@@ -6,7 +6,7 @@ import org.springframework.stereotype.Service
 import orgarif.domain.HashedPassword
 import orgarif.domain.Language
 import orgarif.domain.Role
-import orgarif.repository.UserDao
+import orgarif.repository.user.UserDao
 
 @Service
 // TODO naming fake / sample

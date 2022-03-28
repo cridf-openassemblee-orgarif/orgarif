@@ -13,7 +13,7 @@ import org.springframework.beans.factory.annotation.Value
 import org.springframework.stereotype.Service
 import orgarif.domain.*
 import orgarif.error.MessageNotSentException
-import orgarif.repository.MailLogDao
+import orgarif.repository.log.MailLogDao
 
 @Service
 class MailService(

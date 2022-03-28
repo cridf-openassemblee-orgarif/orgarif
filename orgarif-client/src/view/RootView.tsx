@@ -4,6 +4,7 @@ import { useRecoilState } from 'recoil';
 import { MainContainer } from '../container/MainContainer';
 import { RouteLink } from '../routing/RouteLink';
 import { state } from '../state/state';
+import { ComponentsDemonstration } from '../component/ComponentsDemonstration';
 
 export const RootView = () => {
   const [userInfos] = useRecoilState(state.userInfos);
@@ -19,6 +20,7 @@ export const RootView = () => {
         </RouteLink>
       )}
       {userInfos && <div>You're connected</div>}
+      <ComponentsDemonstration />
     </MainContainer>
   );
 };
