@@ -5,7 +5,7 @@ import { useState } from 'react';
 import { useForm } from 'react-hook-form';
 import { ControlledTextInput } from '../component/base-component/ControlledTextInput';
 import { ControlledPasswordInput } from '../component/base-component/ControlledPasswordInput';
-import { FormLoadingButton } from '../component/base-component/LoadingButton';
+import { LoadingStateButton } from '../component/base-component/LoadingButton';
 import { LoadingState } from '../interfaces';
 
 export interface LoginFormDto {
@@ -13,11 +13,9 @@ export interface LoginFormDto {
   password: string;
 }
 
-interface Props {
+export const LoginForm = (props: {
   onSubmit: (dto: LoginFormDto) => Promise<void>;
-}
-
-export const LoginForm = (props: Props) => {
+}) => {
   const {
     handleSubmit,
     control,
@@ -58,7 +56,9 @@ export const LoginForm = (props: Props) => {
           errors={errors}
         />
       </div>
-      <FormLoadingButton loadingState={loading}>Se connecter</FormLoadingButton>
+      <LoadingStateButton loadingState={loading} type="submit">
+        Se connecter
+      </LoadingStateButton>
     </form>
   );
 };

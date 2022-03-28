@@ -1,4 +1,4 @@
-package orgarif.repository
+package orgarif.repository.user
 
 import java.time.Instant
 import java.util.stream.Stream

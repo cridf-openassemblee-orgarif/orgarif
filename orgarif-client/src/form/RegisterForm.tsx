@@ -15,12 +15,10 @@ export interface RegisterFormDto {
   displayName: string;
 }
 
-interface Props {
+export const RegisterForm = (props: {
   onSubmit: (dto: RegisterFormDto) => void;
   mailIsAlreadyTaken: boolean;
-}
-
-export const RegisterForm = (props: Props) => {
+}) => {
   const [mailIsAlreadyTaken, setMailIsAlreadyTaken] = useState(false);
   const checkLoginAvailability = (
     event: ChangeEvent<HTMLInputElement | HTMLTextAreaElement>

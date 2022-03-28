@@ -2,11 +2,6 @@ package orgarif.controller
 
 import freemarker.ext.beans.BeansWrapperBuilder
 import freemarker.template.Configuration
-import java.io.File
-import java.net.URLEncoder
-import java.nio.file.Files
-import javax.servlet.http.HttpServletRequest
-import javax.servlet.http.HttpServletResponse
 import org.json.JSONObject
 import org.springframework.beans.factory.annotation.Value
 import org.springframework.context.annotation.DependsOn
@@ -17,13 +12,23 @@ import orgarif.config.Routes
 import orgarif.domain.ApplicationBootstrapData
 import orgarif.domain.OrganismeCategories
 import orgarif.domain.UserInfos
-import orgarif.repository.*
+import orgarif.repository.DepartementDao
+import orgarif.repository.EluDao
+import orgarif.repository.NatureJuridiqueDao
+import orgarif.repository.SecteurDao
+import orgarif.repository.TypeStructureDao
+import orgarif.repository.user.UserDao
 import orgarif.serialization.Serializer.serialize
 import orgarif.service.ApplicationInstance
 import orgarif.service.LocaleService
 import orgarif.service.user.MagicLinkTokenService
 import orgarif.service.user.UserService
 import orgarif.service.user.UserSessionService
+import java.io.File
+import java.net.URLEncoder
+import java.nio.file.Files
+import javax.servlet.http.HttpServletRequest
+import javax.servlet.http.HttpServletResponse
 
 @Controller
 @DependsOn(

@@ -18,4 +18,5 @@ mailjet:
 #---------------------------------------------------------------------------
 elusSynchronizationUrl:
 remote-endpoint:
-  expected-secu:
+  expected-secu: remote-secu
+#---------------------------------------------------------------------------

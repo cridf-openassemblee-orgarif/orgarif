@@ -5,7 +5,7 @@ import orgarif.config.ApplicationConstants
 import orgarif.domain.Language
 import orgarif.domain.Role
 import orgarif.domain.UserId
-import orgarif.repository.UserDao
+import orgarif.repository.user.UserDao
 
 object TestData {
 

@@ -10,8 +10,8 @@ import org.springframework.web.bind.annotation.RequestBody
 import org.springframework.web.bind.annotation.RestController
 import orgarif.command.*
 import orgarif.domain.CommandLogId
-import orgarif.repository.CommandLogDao
-import orgarif.repository.UserDao
+import orgarif.repository.log.CommandLogDao
+import orgarif.repository.user.UserDao
 import orgarif.serialization.Serializer
 import orgarif.service.ApplicationInstance
 import orgarif.service.DateService

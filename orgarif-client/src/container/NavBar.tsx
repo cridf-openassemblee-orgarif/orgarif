@@ -26,7 +26,7 @@ export function NavBar() {
           </Box>
           {!userInfos && (
             <RouteLink
-              forwardCss={css`
+              css={css`
                 display: flex;
                 flex-direction: row;
                 align-items: center;

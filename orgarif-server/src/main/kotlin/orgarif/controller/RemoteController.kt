@@ -5,7 +5,6 @@ import org.jooq.DSLContext
 import org.springframework.beans.factory.annotation.Value
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken
 import org.springframework.security.core.context.SecurityContextImpl
-import org.springframework.session.Session as SpringSession
 import org.springframework.web.bind.annotation.PostMapping
 import org.springframework.web.bind.annotation.RequestMapping
 import org.springframework.web.bind.annotation.RequestParam
@@ -13,17 +12,18 @@ import org.springframework.web.bind.annotation.RestController
 import orgarif.config.SafeSessionRepository
 import orgarif.controller.RemoteController.Companion.remoteRoute
 import orgarif.domain.Role
-import orgarif.domain.Session as OrgarifSession
 import orgarif.domain.UserSession
 import orgarif.repository.EluDao
 import orgarif.repository.RepresentantDao
 import orgarif.repository.RepresentationDao
 import orgarif.repository.SuppleanceDao
-import orgarif.repository.UserDao
-import orgarif.repository.UserSessionLogDao
+import orgarif.repository.user.UserDao
+import orgarif.repository.user.UserSessionLogDao
 import orgarif.service.RandomService
 import orgarif.service.user.UserSessionService
 import orgarif.service.utils.TransactionIsolationService
+import org.springframework.session.Session as SpringSession
+import orgarif.domain.Session as OrgarifSession
 
 @RestController
 @RequestMapping(remoteRoute)

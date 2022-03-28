@@ -2,7 +2,7 @@
 import * as React from 'react';
 import { useState } from 'react';
 import { appContext } from '../ApplicationContext';
-import { FormLoadingButton } from '../component/base-component/LoadingButton';
+import { LoadingStateButton } from '../component/base-component/LoadingButton';
 import { LoadingState } from '../interfaces';
 
 const logoutPath = '/logout';
@@ -20,7 +20,9 @@ export const LogoutForm = () => {
         name={appContext.csrfTokenService().inputName}
         value={appContext.csrfTokenService().token}
       />
-      <FormLoadingButton loadingState={loading}>Déconnexion</FormLoadingButton>
+      <LoadingStateButton loadingState={loading} type="submit">
+        Déconnexion
+      </LoadingStateButton>
     </form>
   );
 };

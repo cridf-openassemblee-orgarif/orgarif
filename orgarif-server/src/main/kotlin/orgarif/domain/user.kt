@@ -2,7 +2,7 @@ package orgarif.domain
 
 import com.fasterxml.jackson.annotation.JsonTypeInfo
 import com.fasterxml.jackson.annotation.JsonTypeName
-import orgarif.repository.UserDao
+import orgarif.repository.user.UserDao
 
 enum class Language {
     en,

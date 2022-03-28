@@ -10,7 +10,7 @@ import org.springframework.transaction.PlatformTransactionManager
 import org.springframework.transaction.support.TransactionTemplate
 import orgarif.TestData
 import orgarif.domain.HashedPassword
-import orgarif.repository.UserDao
+import orgarif.repository.user.UserDao
 import orgarif.service.RandomService
 
 @SpringBootTest

@@ -9,7 +9,7 @@ import orgarif.domain.HashedPassword
 import orgarif.domain.Language
 import orgarif.domain.RegisterAndAuthenticateResult
 import orgarif.error.MailAlreadyRegisteredException
-import orgarif.repository.UserDao
+import orgarif.repository.user.UserDao
 import orgarif.service.DateService
 import orgarif.service.LocaleService
 import orgarif.service.NotificationService

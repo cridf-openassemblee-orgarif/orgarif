@@ -2,6 +2,9 @@ import { ClientUid } from './domain/client-ids';
 import { LocalDate } from './domain/time';
 import { asString, instanciateNominalString } from './utils/nominal-class';
 
+export const extractEmotionCss = (props: any) =>
+  'className' in props ? { className: props['className'] } : {};
+
 export function assertUnreachable(x: never): never {
   throw new Error(`Expected unreachable code ! Value : "${JSON.stringify(x)}"`);
 }

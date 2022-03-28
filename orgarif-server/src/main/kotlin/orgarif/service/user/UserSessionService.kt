@@ -12,8 +12,8 @@ import org.springframework.stereotype.Service
 import orgarif.domain.*
 import orgarif.error.AppErrors
 import orgarif.error.OrgarifSecurityException
-import orgarif.repository.UserDao
-import orgarif.repository.UserSessionLogDao
+import orgarif.repository.user.UserDao
+import orgarif.repository.user.UserSessionLogDao
 import orgarif.service.ApplicationInstance
 import orgarif.service.DateService
 import orgarif.service.RandomService

@@ -2,8 +2,8 @@
 import { css } from '@emotion/react';
 import { Button, CircularProgress } from '@mui/material';
 import * as React from 'react';
-import { PropsWithChildren, useState } from 'react';
-import { assertUnreachable } from '../../utils';
+import { PropsWithChildren, ReactNode, useState } from 'react';
+import { assertUnreachable, extractEmotionCss } from '../../utils';
 import { EmotionStyles, LoadingState } from '../../interfaces';
 
 const ButtonContent = (
@@ -43,18 +43,24 @@ const ButtonContent = (
 
 const LoadingButtonBase = (
   props: PropsWithChildren<{
-    loadingState: LoadingState;
     onClick?: () => void;
+    loadingState: LoadingState;
     type?: 'submit';
-    forwardCss?: EmotionStyles;
+    variant?: 'text' | 'outlined' | 'contained';
+    startIcon?: ReactNode;
+    css?: EmotionStyles;
   }>
 ) => (
   <Button
-    variant="contained"
     onClick={props.onClick}
-    disabled={props.loadingState === 'loading'}
     type={props.type}
-    css={props.forwardCss}
+    variant={props.variant ?? 'contained'}
+    startIcon={props.loadingState === 'idle' ? props.startIcon : undefined}
+    disabled={props.loadingState === 'loading'}
+    css={css`
+      padding: 0 30px;
+    `}
+    {...extractEmotionCss(props)}
   >
     <ButtonContent loadingState={props.loadingState}>
       {props.children}
@@ -65,12 +71,15 @@ const LoadingButtonBase = (
 export const LoadingButton = (
   props: PropsWithChildren<{
     onClick: () => Promise<void>;
+    type?: 'submit';
+    variant?: 'text' | 'outlined' | 'contained';
+    startIcon?: ReactNode;
+    css?: EmotionStyles;
   }>
 ) => {
   const [loading, setLoading] = useState<LoadingState>('idle');
   return (
     <LoadingButtonBase
-      loadingState={loading}
       onClick={() => {
         setLoading('loading');
         props
@@ -78,22 +87,34 @@ export const LoadingButton = (
           .then(() => setLoading('idle'))
           .catch(() => setLoading('error'));
       }}
+      loadingState={loading}
+      type={props.type}
+      variant={props.variant}
+      startIcon={props.startIcon}
+      {...extractEmotionCss(props)}
     >
       {props.children}
     </LoadingButtonBase>
   );
 };
 
-export const FormLoadingButton = (
+export const LoadingStateButton = (
   props: PropsWithChildren<{
+    onClick?: () => void;
     loadingState: LoadingState;
-    forwardCss?: EmotionStyles;
+    type?: 'submit';
+    variant?: 'text' | 'outlined' | 'contained';
+    startIcon?: ReactNode;
+    css?: EmotionStyles;
   }>
 ) => (
   <LoadingButtonBase
+    onClick={props.onClick}
     loadingState={props.loadingState}
-    type="submit"
-    forwardCss={props.forwardCss}
+    type={props.type}
+    variant={props.variant}
+    startIcon={props.startIcon}
+    {...extractEmotionCss(props)}
   >
     {props.children}
   </LoadingButtonBase>

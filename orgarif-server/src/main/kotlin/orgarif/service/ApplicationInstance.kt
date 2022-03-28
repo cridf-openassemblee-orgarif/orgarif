@@ -10,7 +10,7 @@ import org.springframework.core.env.Environment
 import org.springframework.stereotype.Service
 import orgarif.domain.ApplicationEnvironment
 import orgarif.domain.DeploymentLogId
-import orgarif.repository.DeploymentLogDao
+import orgarif.repository.log.DeploymentLogDao
 
 @Service
 class ApplicationInstance(

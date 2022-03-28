@@ -1,8 +1,23 @@
 package orgarif.command
 
 import com.fasterxml.jackson.annotation.JsonTypeInfo
+import orgarif.domain.DeliberationId
+import orgarif.domain.DepartementId
+import orgarif.domain.InstanceId
+import orgarif.domain.ItemStatus
+import orgarif.domain.LienDeliberationId
+import orgarif.domain.LoginResult
+import orgarif.domain.NatureJuridiqueId
+import orgarif.domain.OrganismeId
+import orgarif.domain.PlainStringPassword
+import orgarif.domain.RegisterResult
+import orgarif.domain.RepresentantId
+import orgarif.domain.RepresentationId
+import orgarif.domain.SecteurId
+import orgarif.domain.SuppleanceId
+import orgarif.domain.TypeStructureId
+import orgarif.domain.UserInfos
 import java.time.LocalDate
-import orgarif.domain.*
 
 @JsonTypeInfo(
     use = JsonTypeInfo.Id.NAME, include = JsonTypeInfo.As.PROPERTY, property = "objectType")
@@ -120,10 +135,8 @@ data class UpdateInstancePresenceSuppleantsCommand(
 
 data class UpdateInstanceStatusCommand(val id: InstanceId, val status: ItemStatus) : Command()
 
-data class UpdateLienDeliberationCommentCommand(
-    val id: LienDeliberationId,
-    val comment: String?
-) : Command()
+data class UpdateLienDeliberationCommentCommand(val id: LienDeliberationId, val comment: String?) :
+    Command()
 
 data class UpdateLienDeliberationStatusCommand(val id: LienDeliberationId, val status: ItemStatus) :
     Command()

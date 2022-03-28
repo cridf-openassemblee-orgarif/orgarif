@@ -1,4 +1,4 @@
-package orgarif.repository
+package orgarif.repository.user
 
 import org.junit.jupiter.api.Assertions
 import org.junit.jupiter.api.Test

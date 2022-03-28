@@ -47,9 +47,11 @@ class InitializationService(
             ApplicationEnvironment.dev -> {
                 if (databaseIfEmpty(dataSource)) {
                     ResetDatabase.resetDatabaseSchema(databaseConfiguration)
+                    if (insertInitialData) {
+                        ResetDatabase.insertInitialData(databaseConfiguration)
+                    }
                 }
                 if (insertInitialData) {
-                    ResetDatabase.insertInitialData(databaseConfiguration)
                     devInitialDataInjectorService.initiateDevUsers()
                     devInitialDataInjectorService.injectInitialData()
                 }

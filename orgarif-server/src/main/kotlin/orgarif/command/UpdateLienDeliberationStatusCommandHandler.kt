@@ -1,7 +1,6 @@
 package orgarif.command
 
 import org.springframework.stereotype.Service
-import orgarif.repository.InstanceDao
 import orgarif.repository.LienDeliberationDao
 import orgarif.service.DateService
 

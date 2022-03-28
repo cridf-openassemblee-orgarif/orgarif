@@ -7,7 +7,7 @@ import org.springframework.stereotype.Service
 import orgarif.domain.LoginResult
 import orgarif.domain.UserInfos
 import orgarif.domain.UserSession
-import orgarif.repository.UserDao
+import orgarif.repository.user.UserDao
 import orgarif.service.user.UserService
 import orgarif.service.user.UserSessionService
 

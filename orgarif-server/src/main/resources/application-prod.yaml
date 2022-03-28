@@ -27,3 +27,4 @@ mailjet:
 elusSynchronizationUrl: https://siger.mlorber.net/api/publicdata/v2/elus
 remote-endpoint:
   expected-secu: ${REMOTE_ENDPOINT_EXCEPTED_SECU}
+#---------------------------------------------------------------------------

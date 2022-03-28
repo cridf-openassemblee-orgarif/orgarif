@@ -1,6 +1,5 @@
 package orgarif.service
 
-import java.util.concurrent.atomic.AtomicInteger
 import org.springframework.beans.factory.annotation.Value
 import org.springframework.security.crypto.password.PasswordEncoder
 import org.springframework.stereotype.Service
@@ -24,9 +23,10 @@ import orgarif.repository.RepresentationDao
 import orgarif.repository.SecteurDao
 import orgarif.repository.SuppleanceDao
 import orgarif.repository.TypeStructureDao
-import orgarif.repository.UserDao
+import orgarif.repository.user.UserDao
 import orgarif.utils.OrgarifStringUtils
 import java.time.LocalDate
+import java.util.concurrent.atomic.AtomicInteger
 
 @Service
 // TODO naming fake / sample
@@ -281,7 +281,12 @@ class DevInitialDataInjectorService(
                     .map {
                         val now = dateService.now()
                         DepartementDao.Record(
-                            randomService.id(), it.first, it.second.toString(), ItemStatus.live, now, now)
+                                randomService.id(),
+                                it.first,
+                                it.second.toString(),
+                                ItemStatus.live,
+                                now,
+                                now)
                             .also { departementDao.insert(it) }
                     }
             } else {
@@ -311,9 +316,8 @@ class DevInitialDataInjectorService(
                     "Commission d'appel d'offres")
                     .map {
                         val now = dateService.now()
-                        NatureJuridiqueDao.Record(randomService.id(), it, ItemStatus.live, now, now).apply {
-                            natureJuridiqueDao.insert(this)
-                        }
+                        NatureJuridiqueDao.Record(randomService.id(), it, ItemStatus.live, now, now)
+                            .apply { natureJuridiqueDao.insert(this) }
                     }
             } else {
                 it
@@ -375,9 +379,8 @@ class DevInitialDataInjectorService(
                     "Base de plein air et de loisirs (BPAL)")
                     .map {
                         val now = dateService.now()
-                        TypeStructureDao.Record(randomService.id(), it, ItemStatus.live, now, now).apply {
-                            typeStructureDao.insert(this)
-                        }
+                        TypeStructureDao.Record(randomService.id(), it, ItemStatus.live, now, now)
+                            .apply { typeStructureDao.insert(this) }
                     }
             } else {
                 it

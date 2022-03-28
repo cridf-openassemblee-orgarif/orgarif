@@ -3,7 +3,7 @@ package orgarif.service.utils
 import javax.annotation.PreDestroy
 import mu.KotlinLogging
 import org.springframework.stereotype.Service
-import orgarif.repository.DeploymentLogDao
+import orgarif.repository.log.DeploymentLogDao
 import orgarif.service.ApplicationInstance
 import orgarif.service.DateService
 
