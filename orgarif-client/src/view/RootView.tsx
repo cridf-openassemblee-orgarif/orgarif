@@ -7,6 +7,7 @@ import { RouteLink } from '../routing/RouteLink';
 import { state } from '../state/state';
 import { asString } from '../utils/nominal-class';
 import { css } from '@emotion/react';
+import { FileDropZone } from '../component/base-component/FileDropZone';
 
 export const RootView = () => {
   const [userInfos] = useRecoilState(state.userInfos);
@@ -14,6 +15,15 @@ export const RootView = () => {
 
   return (
     <MainContainer>
+      <div
+        css={css`
+          width: 60%;
+          margin: auto;
+          background: white;
+        `}
+      >
+        <FileDropZone />
+      </div>
       {!userInfos && (
         <Box>
           <Typography

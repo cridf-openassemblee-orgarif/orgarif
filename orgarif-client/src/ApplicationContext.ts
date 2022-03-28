@@ -4,6 +4,7 @@ import { CsrfTokenService } from './services/CsrfTokenService';
 import { HttpService } from './services/HttpService';
 import { NotificationService } from './services/NotificationService';
 import { QueryService } from './services/QueryService';
+import UploadService from "./services/UploadService";
 
 class ApplicationContext {
   private csrfTokenServiceInstance?: CsrfTokenService;
@@ -53,6 +54,14 @@ class ApplicationContext {
     }
     return this.commandServiceInstance;
   };
+
+    private uploadServiceInstance?: UploadService;
+    public uploadService = () => {
+        if (!this.uploadServiceInstance) {
+            this.uploadServiceInstance = new UploadService();
+        }
+        return this.uploadServiceInstance;
+    };
 }
 
 export const appContext = new ApplicationContext();
