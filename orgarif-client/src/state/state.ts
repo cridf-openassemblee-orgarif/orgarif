@@ -18,7 +18,7 @@ import { dict, Dict } from '../utils/nominal-class';
 export const state = {
   departements: atom({
     key: 'departements',
-    default: bootstrapData.categories.departements.sort(
+    default: [...bootstrapData.categories.departements].sort(
       compareByString(i => i.code)
     )
   }),
@@ -29,7 +29,7 @@ export const state = {
   }),
   natureJuridiques: atom({
     key: 'natureJuridiques',
-    default: bootstrapData.categories.natureJuridiques.sort(
+    default: [...bootstrapData.categories.natureJuridiques].sort(
       compareByString(i => i.libelle)
     )
   }),
@@ -44,7 +44,7 @@ export const state = {
   }),
   secteurs: atom({
     key: 'secteurs',
-    default: bootstrapData.categories.secteurs.sort(
+    default: [...bootstrapData.categories.secteurs].sort(
       compareByString(i => i.libelle)
     )
   }),
@@ -55,7 +55,7 @@ export const state = {
   }),
   typeStructures: atom({
     key: 'typeStructures',
-    default: bootstrapData.categories.typeStructures.sort(
+    default: [...bootstrapData.categories.typeStructures].sort(
       compareByString(i => i.libelle)
     )
   }),
