@@ -75,7 +75,7 @@ export const HeaderRepresentationsComponent = (props: {
             Représentation
           </Button>
         </div>
-        <div css={classes.label}>Représentants :</div>
+        <div css={classes.label}>Nombre :</div>
         <div css={classes.numberBlock}>
           <NumberInput
             initialValue={props.nombreRepresentants}
