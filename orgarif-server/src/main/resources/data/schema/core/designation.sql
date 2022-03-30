@@ -1,9 +1,10 @@
-CREATE TABLE representation
+CREATE TABLE designation
 (
     id UUID PRIMARY KEY NOT NULL,
     representant_id UUID NOT NULL,
     organisme_id UUID NOT NULL,
     instance_id UUID,
+    type VARCHAR(255) NOT NULL,
     position INT NOT NULL,
     start_date DATE,
     end_date DATE,
@@ -15,5 +16,5 @@ CREATE TABLE representation
     FOREIGN KEY (instance_id) REFERENCES instance (id)
 );
 
-CREATE INDEX ON representation (organisme_id);
-CREATE INDEX ON representation (instance_id);
+CREATE INDEX ON designation (organisme_id);
+CREATE INDEX ON designation (instance_id);

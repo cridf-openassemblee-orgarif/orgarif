@@ -3,7 +3,7 @@ CREATE TABLE instance
     id UUID PRIMARY KEY NOT NULL,
     nom VARCHAR(255) NOT NULL,
     organisme_id UUID NOT NULL,
-    nombre_representants INTEGER,
+    nombre_representants INTEGER NOT NULL,
     presence_suppleants BOOLEAN NOT NULL,
     status VARCHAR(255) NOT NULL,
     creation_date TIMESTAMPTZ NOT NULL,
