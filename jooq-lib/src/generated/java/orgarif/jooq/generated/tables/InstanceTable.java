@@ -74,7 +74,7 @@ public class InstanceTable extends TableImpl<InstanceRecord> {
     /**
      * The column <code>public.instance.nombre_representants</code>.
      */
-    public final TableField<InstanceRecord, Integer> NOMBRE_REPRESENTANTS = createField(DSL.name("nombre_representants"), SQLDataType.INTEGER, this, "");
+    public final TableField<InstanceRecord, Integer> NOMBRE_REPRESENTANTS = createField(DSL.name("nombre_representants"), SQLDataType.INTEGER.nullable(false), this, "");
 
     /**
      * The column <code>public.instance.presence_suppleants</code>.

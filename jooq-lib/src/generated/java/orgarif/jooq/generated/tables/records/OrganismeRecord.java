@@ -120,14 +120,14 @@ public class OrganismeRecord extends UpdatableRecordImpl<OrganismeRecord> implem
     /**
      * Setter for <code>public.organisme.nombre_representants</code>.
      */
-    public void setNombreRepresentants(@Nullable Integer value) {
+    public void setNombreRepresentants(@Nonnull Integer value) {
         set(6, value);
     }
 
     /**
      * Getter for <code>public.organisme.nombre_representants</code>.
      */
-    @Nullable
+    @Nonnull
     public Integer getNombreRepresentants() {
         return (Integer) get(6);
     }
@@ -321,7 +321,7 @@ public class OrganismeRecord extends UpdatableRecordImpl<OrganismeRecord> implem
     }
 
     @Override
-    @Nullable
+    @Nonnull
     public Integer component7() {
         return getNombreRepresentants();
     }
@@ -387,7 +387,7 @@ public class OrganismeRecord extends UpdatableRecordImpl<OrganismeRecord> implem
     }
 
     @Override
-    @Nullable
+    @Nonnull
     public Integer value7() {
         return getNombreRepresentants();
     }
@@ -460,7 +460,7 @@ public class OrganismeRecord extends UpdatableRecordImpl<OrganismeRecord> implem
 
     @Override
     @Nonnull
-    public OrganismeRecord value7(@Nullable Integer value) {
+    public OrganismeRecord value7(@Nonnull Integer value) {
         setNombreRepresentants(value);
         return this;
     }
@@ -495,7 +495,7 @@ public class OrganismeRecord extends UpdatableRecordImpl<OrganismeRecord> implem
 
     @Override
     @Nonnull
-    public OrganismeRecord values(@Nonnull UUID value1, @Nonnull String value2, @Nullable UUID value3, @Nullable UUID value4, @Nullable UUID value5, @Nullable UUID value6, @Nullable Integer value7, @Nonnull Boolean value8, @Nonnull String value9, @Nonnull Instant value10, @Nonnull Instant value11) {
+    public OrganismeRecord values(@Nonnull UUID value1, @Nonnull String value2, @Nullable UUID value3, @Nullable UUID value4, @Nullable UUID value5, @Nullable UUID value6, @Nonnull Integer value7, @Nonnull Boolean value8, @Nonnull String value9, @Nonnull Instant value10, @Nonnull Instant value11) {
         value1(value1);
         value2(value2);
         value3(value3);
@@ -524,7 +524,7 @@ public class OrganismeRecord extends UpdatableRecordImpl<OrganismeRecord> implem
     /**
      * Create a detached, initialised OrganismeRecord
      */
-    public OrganismeRecord(@Nonnull UUID id, @Nonnull String nom, @Nullable UUID departementId, @Nullable UUID natureJuridiqueId, @Nullable UUID secteurId, @Nullable UUID typeStructureId, @Nullable Integer nombreRepresentants, @Nonnull Boolean presenceSuppleants, @Nonnull String status, @Nonnull Instant creationDate, @Nonnull Instant lastModificationDate) {
+    public OrganismeRecord(@Nonnull UUID id, @Nonnull String nom, @Nullable UUID departementId, @Nullable UUID natureJuridiqueId, @Nullable UUID secteurId, @Nullable UUID typeStructureId, @Nonnull Integer nombreRepresentants, @Nonnull Boolean presenceSuppleants, @Nonnull String status, @Nonnull Instant creationDate, @Nonnull Instant lastModificationDate) {
         super(OrganismeTable.ORGANISME);
 
         setId(id);

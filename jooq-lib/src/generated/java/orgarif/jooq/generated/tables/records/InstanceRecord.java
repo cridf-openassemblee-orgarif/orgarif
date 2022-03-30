@@ -8,7 +8,6 @@ import java.time.Instant;
 import java.util.UUID;
 
 import javax.annotation.Nonnull;
-import javax.annotation.Nullable;
 
 import org.jooq.Field;
 import org.jooq.Record1;
@@ -75,14 +74,14 @@ public class InstanceRecord extends UpdatableRecordImpl<InstanceRecord> implemen
     /**
      * Setter for <code>public.instance.nombre_representants</code>.
      */
-    public void setNombreRepresentants(@Nullable Integer value) {
+    public void setNombreRepresentants(@Nonnull Integer value) {
         set(3, value);
     }
 
     /**
      * Getter for <code>public.instance.nombre_representants</code>.
      */
-    @Nullable
+    @Nonnull
     public Integer getNombreRepresentants() {
         return (Integer) get(3);
     }
@@ -240,7 +239,7 @@ public class InstanceRecord extends UpdatableRecordImpl<InstanceRecord> implemen
     }
 
     @Override
-    @Nullable
+    @Nonnull
     public Integer component4() {
         return getNombreRepresentants();
     }
@@ -288,7 +287,7 @@ public class InstanceRecord extends UpdatableRecordImpl<InstanceRecord> implemen
     }
 
     @Override
-    @Nullable
+    @Nonnull
     public Integer value4() {
         return getNombreRepresentants();
     }
@@ -340,7 +339,7 @@ public class InstanceRecord extends UpdatableRecordImpl<InstanceRecord> implemen
 
     @Override
     @Nonnull
-    public InstanceRecord value4(@Nullable Integer value) {
+    public InstanceRecord value4(@Nonnull Integer value) {
         setNombreRepresentants(value);
         return this;
     }
@@ -375,7 +374,7 @@ public class InstanceRecord extends UpdatableRecordImpl<InstanceRecord> implemen
 
     @Override
     @Nonnull
-    public InstanceRecord values(@Nonnull UUID value1, @Nonnull String value2, @Nonnull UUID value3, @Nullable Integer value4, @Nonnull Boolean value5, @Nonnull String value6, @Nonnull Instant value7, @Nonnull Instant value8) {
+    public InstanceRecord values(@Nonnull UUID value1, @Nonnull String value2, @Nonnull UUID value3, @Nonnull Integer value4, @Nonnull Boolean value5, @Nonnull String value6, @Nonnull Instant value7, @Nonnull Instant value8) {
         value1(value1);
         value2(value2);
         value3(value3);
@@ -401,7 +400,7 @@ public class InstanceRecord extends UpdatableRecordImpl<InstanceRecord> implemen
     /**
      * Create a detached, initialised InstanceRecord
      */
-    public InstanceRecord(@Nonnull UUID id, @Nonnull String nom, @Nonnull UUID organismeId, @Nullable Integer nombreRepresentants, @Nonnull Boolean presenceSuppleants, @Nonnull String status, @Nonnull Instant creationDate, @Nonnull Instant lastModificationDate) {
+    public InstanceRecord(@Nonnull UUID id, @Nonnull String nom, @Nonnull UUID organismeId, @Nonnull Integer nombreRepresentants, @Nonnull Boolean presenceSuppleants, @Nonnull String status, @Nonnull Instant creationDate, @Nonnull Instant lastModificationDate) {
         super(InstanceTable.INSTANCE);
 
         setId(id);

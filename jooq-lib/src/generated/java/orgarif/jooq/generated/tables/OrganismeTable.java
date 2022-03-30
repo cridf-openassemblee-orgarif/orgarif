@@ -87,7 +87,7 @@ public class OrganismeTable extends TableImpl<OrganismeRecord> {
     /**
      * The column <code>public.organisme.nombre_representants</code>.
      */
-    public final TableField<OrganismeRecord, Integer> NOMBRE_REPRESENTANTS = createField(DSL.name("nombre_representants"), SQLDataType.INTEGER, this, "");
+    public final TableField<OrganismeRecord, Integer> NOMBRE_REPRESENTANTS = createField(DSL.name("nombre_representants"), SQLDataType.INTEGER.nullable(false), this, "");
 
     /**
      * The column <code>public.organisme.presence_suppleants</code>.
