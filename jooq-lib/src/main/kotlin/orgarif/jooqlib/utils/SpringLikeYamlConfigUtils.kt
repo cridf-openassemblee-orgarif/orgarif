@@ -5,7 +5,7 @@ import java.io.InputStream
 import java.io.InputStreamReader
 import java.time.ZoneId
 import java.time.format.DateTimeFormatter
-import java.util.*
+import java.util.Date
 import org.yaml.snakeyaml.Yaml
 
 object SpringLikeYamlConfigUtils {

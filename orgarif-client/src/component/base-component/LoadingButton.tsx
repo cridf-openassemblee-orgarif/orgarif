@@ -2,7 +2,7 @@
 import { css } from '@emotion/react';
 import { Button, CircularProgress } from '@mui/material';
 import * as React from 'react';
-import { PropsWithChildren, ReactNode, useState } from 'react';
+import { PropsWithChildren, ReactElement, useState } from 'react';
 import { assertUnreachable, extractEmotionCss } from '../../utils';
 import { EmotionStyles, LoadingState } from '../../interfaces';
 
@@ -20,6 +20,7 @@ const ButtonContent = (
         <>
           <div
             css={css`
+              // so button sizing doesn't change
               visibility: hidden;
             `}
           >
@@ -47,7 +48,7 @@ const LoadingButtonBase = (
     loadingState: LoadingState;
     type?: 'submit';
     variant?: 'text' | 'outlined' | 'contained';
-    startIcon?: ReactNode;
+    startIcon?: ReactElement;
     css?: EmotionStyles;
   }>
 ) => (
@@ -55,7 +56,16 @@ const LoadingButtonBase = (
     onClick={props.onClick}
     type={props.type}
     variant={props.variant ?? 'contained'}
-    startIcon={props.loadingState === 'idle' ? props.startIcon : undefined}
+    startIcon={
+      props.startIcon
+        ? React.cloneElement(props.startIcon, {
+            style: {
+              // so button sizing doesn't change
+              visibility: props.loadingState === 'idle' ? 'visible' : 'hidden'
+            }
+          })
+        : undefined
+    }
     disabled={props.loadingState === 'loading'}
     css={css`
       padding: 0 30px;
@@ -73,7 +83,7 @@ export const LoadingButton = (
     onClick: () => Promise<void>;
     type?: 'submit';
     variant?: 'text' | 'outlined' | 'contained';
-    startIcon?: ReactNode;
+    startIcon?: ReactElement;
     css?: EmotionStyles;
   }>
 ) => {
@@ -104,7 +114,7 @@ export const LoadingStateButton = (
     loadingState: LoadingState;
     type?: 'submit';
     variant?: 'text' | 'outlined' | 'contained';
-    startIcon?: ReactNode;
+    startIcon?: ReactElement;
     css?: EmotionStyles;
   }>
 ) => (
