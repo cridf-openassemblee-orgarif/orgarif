@@ -2,6 +2,11 @@ package orgarif.controller
 
 import freemarker.ext.beans.BeansWrapperBuilder
 import freemarker.template.Configuration
+import java.io.File
+import java.net.URLEncoder
+import java.nio.file.Files
+import javax.servlet.http.HttpServletRequest
+import javax.servlet.http.HttpServletResponse
 import org.json.JSONObject
 import org.springframework.beans.factory.annotation.Value
 import org.springframework.context.annotation.DependsOn
@@ -24,11 +29,6 @@ import orgarif.service.LocaleService
 import orgarif.service.user.MagicLinkTokenService
 import orgarif.service.user.UserService
 import orgarif.service.user.UserSessionService
-import java.io.File
-import java.net.URLEncoder
-import java.nio.file.Files
-import javax.servlet.http.HttpServletRequest
-import javax.servlet.http.HttpServletResponse
 
 @Controller
 @DependsOn(

@@ -1,7 +1,8 @@
 package orgarif.command
 
 import org.springframework.stereotype.Service
-import orgarif.repository.*
+import orgarif.repository.OrganismeDao
+import orgarif.repository.TypeStructureDao
 import orgarif.service.DateService
 
 @Service

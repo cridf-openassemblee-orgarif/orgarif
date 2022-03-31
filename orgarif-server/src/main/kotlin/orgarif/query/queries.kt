@@ -1,7 +1,12 @@
 package orgarif.query
 
 import com.fasterxml.jackson.annotation.JsonTypeInfo
-import orgarif.domain.*
+import orgarif.domain.DeliberationDto
+import orgarif.domain.OrganismeDto
+import orgarif.domain.OrganismeId
+import orgarif.domain.OrganismeListDto
+import orgarif.domain.RepresentantDto
+import orgarif.domain.SecteurId
 
 @JsonTypeInfo(
     use = JsonTypeInfo.Id.NAME, include = JsonTypeInfo.As.PROPERTY, property = "objectType")

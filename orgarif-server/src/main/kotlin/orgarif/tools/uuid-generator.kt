@@ -1,6 +1,6 @@
 package orgarif.tools
 
-import java.util.*
+import java.util.UUID
 
 fun main() {
     val uuid = UUID.randomUUID()

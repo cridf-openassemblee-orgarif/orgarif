@@ -3,7 +3,7 @@ package orgarif.service.utils
 import java.time.LocalDate
 import java.time.LocalTime
 import java.time.ZoneId
-import java.util.*
+import java.util.UUID
 import org.jetbrains.annotations.TestOnly
 import orgarif.utils.OrgarifStringUtils
 

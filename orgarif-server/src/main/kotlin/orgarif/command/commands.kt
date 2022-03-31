@@ -1,6 +1,7 @@
 package orgarif.command
 
 import com.fasterxml.jackson.annotation.JsonTypeInfo
+import java.time.LocalDate
 import orgarif.domain.DeliberationId
 import orgarif.domain.DepartementId
 import orgarif.domain.InstanceId
@@ -17,7 +18,6 @@ import orgarif.domain.SecteurId
 import orgarif.domain.SuppleanceId
 import orgarif.domain.TypeStructureId
 import orgarif.domain.UserInfos
-import java.time.LocalDate
 
 @JsonTypeInfo(
     use = JsonTypeInfo.Id.NAME, include = JsonTypeInfo.As.PROPERTY, property = "objectType")

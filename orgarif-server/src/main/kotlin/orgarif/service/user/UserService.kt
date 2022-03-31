@@ -31,8 +31,7 @@ class UserService(
     companion object {
         // [doc] no automatic accent suppression : they're supported by the RFC...
         fun cleanMail(mail: String) =
-            mail
-                .trim()
+            mail.trim()
                 .lowercase()
                 .replace(" ", "")
                 // TODO [doc] a standard email could contain accents but in practice it's always a

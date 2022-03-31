@@ -19,8 +19,7 @@ class DeliberationAdvancedDao(
     ): List<Pair<LienDeliberationDao.Record, DeliberationDao.Record>> {
         val d = DELIBERATION.`as`("d")
         val l = LIEN_DELIBERATION.`as`("l")
-        return jooq
-            .select()
+        return jooq.select()
             .from(d)
             .join(l)
             .on(d.ID.equal(l.DELIBERATION_ID))

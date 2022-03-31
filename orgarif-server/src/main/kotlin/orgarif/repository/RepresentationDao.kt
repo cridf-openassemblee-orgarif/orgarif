@@ -1,5 +1,7 @@
 package orgarif.repository
 
+import java.time.Instant
+import java.time.LocalDate
 import org.jooq.DSLContext
 import org.springframework.stereotype.Repository
 import orgarif.domain.InstanceId
@@ -10,8 +12,6 @@ import orgarif.domain.RepresentationId
 import orgarif.jooq.generated.Tables.REPRESENTATION
 import orgarif.jooq.generated.tables.records.RepresentationRecord
 import orgarif.utils.toTypeId
-import java.time.Instant
-import java.time.LocalDate
 
 @Repository
 class RepresentationDao(val jooq: DSLContext) {
@@ -65,8 +65,7 @@ class RepresentationDao(val jooq: DSLContext) {
         organismeId: OrganismeId,
         instanceId: InstanceId?
     ): Int? =
-        jooq
-            .select(REPRESENTATION.POSITION)
+        jooq.select(REPRESENTATION.POSITION)
             .from(REPRESENTATION)
             .where(REPRESENTATION.ORGANISME_ID.equal(organismeId.rawId))
             .apply {

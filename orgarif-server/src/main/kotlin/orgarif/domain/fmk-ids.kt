@@ -1,6 +1,6 @@
 package orgarif.domain
 
-import java.util.*
+import java.util.UUID
 import orgarif.utils.OrgarifStringUtils
 
 interface OrgarifId<T> {

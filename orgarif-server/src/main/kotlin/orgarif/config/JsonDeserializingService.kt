@@ -1,6 +1,6 @@
 package orgarif.config
 
-import java.util.*
+import java.util.Arrays
 import org.springframework.core.convert.converter.Converter
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken
 import org.springframework.security.core.context.SecurityContextImpl

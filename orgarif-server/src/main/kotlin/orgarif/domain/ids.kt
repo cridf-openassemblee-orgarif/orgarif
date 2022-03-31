@@ -1,6 +1,6 @@
 package orgarif.domain
 
-import java.util.*
+import java.util.UUID
 
 // TODO[serialization] back as an inline class when Jackson supports it ?
 // are data classes instead of inline class because of serialization "bugs" with Jackson

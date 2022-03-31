@@ -1,5 +1,7 @@
 package orgarif.service
 
+import java.time.LocalDate
+import java.util.concurrent.atomic.AtomicInteger
 import org.springframework.beans.factory.annotation.Value
 import org.springframework.security.crypto.password.PasswordEncoder
 import org.springframework.stereotype.Service
@@ -25,8 +27,6 @@ import orgarif.repository.SuppleanceDao
 import orgarif.repository.TypeStructureDao
 import orgarif.repository.user.UserDao
 import orgarif.utils.OrgarifStringUtils
-import java.time.LocalDate
-import java.util.concurrent.atomic.AtomicInteger
 
 @Service
 // TODO naming fake / sample
@@ -211,9 +211,9 @@ class DevInitialDataInjectorService(
         val i = AtomicInteger(1)
         val representantByEluId = representantDao.fetchAll().associateBy { it.eluId }
         listOf(
-            fakeOrganismeId to null,
-            fakeOrganismeId2 to fakeInstanceId1,
-            fakeOrganismeId2 to fakeInstanceId2)
+                fakeOrganismeId to null,
+                fakeOrganismeId2 to fakeInstanceId1,
+                fakeOrganismeId2 to fakeInstanceId2)
             .forEach { (organismeId, instanceId) ->
                 val reps =
                     (1..nombreRepresentants).map { i.getAndIncrement() }.mapIndexed { index, incr ->
@@ -269,15 +269,15 @@ class DevInitialDataInjectorService(
         departementDao.fetchAll().let {
             if (it.isEmpty()) {
                 listOf(
-                    "Paris" to 75,
-                    "Seine-et-Marne" to 77,
-                    "Yvelines" to 78,
-                    "Essonne" to 91,
-                    "Hauts-de-Seine" to 92,
-                    "Seine-Saint-Denis" to 93,
-                    "Val-de-Marne" to 94,
-                    "Val-d'Oise" to 95,
-                )
+                        "Paris" to 75,
+                        "Seine-et-Marne" to 77,
+                        "Yvelines" to 78,
+                        "Essonne" to 91,
+                        "Hauts-de-Seine" to 92,
+                        "Seine-Saint-Denis" to 93,
+                        "Val-de-Marne" to 94,
+                        "Val-d'Oise" to 95,
+                    )
                     .map {
                         val now = dateService.now()
                         DepartementDao.Record(
@@ -298,22 +298,22 @@ class DevInitialDataInjectorService(
         natureJuridiqueDao.fetchAll().let {
             if (it.isEmpty()) {
                 listOf(
-                    "Association",
-                    "Fondation reconnue d'utilité publique (FRUP)",
-                    "Association reconnue d'utilité publique (ARUP)",
-                    "Établissement public industriel et commercial (EPIC)",
-                    "Syndicat mixte ",
-                    "Groupement d'intérêt public (GIP)",
-                    "Société d'économie mixte (SEM)",
-                    "Société anonyme (SA)",
-                    "Établissement public de coopération culturelle (EPCC)",
-                    "Établissement public à caractère scientifique, culturel et professionnel (EPCSCP)",
-                    "Établissement public administratif (EPA)",
-                    "Établissement public (EP)",
-                    "Jury",
-                    "Société coopérative d'intérêt collectif (SCIC)",
-                    "Établissement public de santé (EPS)",
-                    "Commission d'appel d'offres")
+                        "Association",
+                        "Fondation reconnue d'utilité publique (FRUP)",
+                        "Association reconnue d'utilité publique (ARUP)",
+                        "Établissement public industriel et commercial (EPIC)",
+                        "Syndicat mixte ",
+                        "Groupement d'intérêt public (GIP)",
+                        "Société d'économie mixte (SEM)",
+                        "Société anonyme (SA)",
+                        "Établissement public de coopération culturelle (EPCC)",
+                        "Établissement public à caractère scientifique, culturel et professionnel (EPCSCP)",
+                        "Établissement public administratif (EPA)",
+                        "Établissement public (EP)",
+                        "Jury",
+                        "Société coopérative d'intérêt collectif (SCIC)",
+                        "Établissement public de santé (EPS)",
+                        "Commission d'appel d'offres")
                     .map {
                         val now = dateService.now()
                         NatureJuridiqueDao.Record(randomService.id(), it, ItemStatus.live, now, now)
@@ -328,22 +328,22 @@ class DevInitialDataInjectorService(
         secteurDao.fetchAll().let {
             if (it.isEmpty()) {
                 listOf(
-                    "Lycées",
-                    "Culture - Patrimoine - Création",
-                    "Enseignement supérieur - Recherche",
-                    "Développement économique - Attractivité",
-                    "Emploi - Formation professionnelle - Apprentissage",
-                    "Écologie - Développement durable - Aménagement",
-                    "Agriculture - Ruralité",
-                    "Stratégie institutionnelle - Grand Paris",
-                    "Transports - Mobilités durables",
-                    "Logement - Handicap",
-                    "Solidarités - Santé - Famille",
-                    "Sports - Loisirs - Jeunesse - Citoyenneté - Vie associative",
-                    "Tourisme",
-                    "Affaires européennes",
-                    "Finances - Évaluation des politiques publiques",
-                    "Administration générale")
+                        "Lycées",
+                        "Culture - Patrimoine - Création",
+                        "Enseignement supérieur - Recherche",
+                        "Développement économique - Attractivité",
+                        "Emploi - Formation professionnelle - Apprentissage",
+                        "Écologie - Développement durable - Aménagement",
+                        "Agriculture - Ruralité",
+                        "Stratégie institutionnelle - Grand Paris",
+                        "Transports - Mobilités durables",
+                        "Logement - Handicap",
+                        "Solidarités - Santé - Famille",
+                        "Sports - Loisirs - Jeunesse - Citoyenneté - Vie associative",
+                        "Tourisme",
+                        "Affaires européennes",
+                        "Finances - Évaluation des politiques publiques",
+                        "Administration générale")
                     .map {
                         val now = dateService.now()
                         SecteurDao.Record(randomService.id(), it, ItemStatus.live, now, now).apply {
@@ -359,24 +359,24 @@ class DevInitialDataInjectorService(
         typeStructureDao.fetchAll().let {
             if (it.isEmpty()) {
                 listOf(
-                    "Dispositif régional",
-                    "Lycée",
-                    "Université",
-                    "Communauté d'universités et établissements (COMUE)",
-                    "Pôle de compétitivité",
-                    "Groupement d'établissements (GRETA)",
-                    "Mission locale",
-                    "Maison de l'emploi",
-                    "Établissement public d'aménagement (EPA)",
-                    "Commission consultative de l'environnement (CCE) ",
-                    "Commission locale de l'eau (CLE)",
-                    "Commission de suivi de site (CSS)",
-                    "Commission locale d'information (CLI)",
-                    "Commission locale d'information et de surveillance (CLIS)",
-                    "Parc naturel régional (PNR)",
-                    "Centre de formation en travail social (CFTS)",
-                    "Commission de coordination des politiques publiques de santé (CCPPS)",
-                    "Base de plein air et de loisirs (BPAL)")
+                        "Dispositif régional",
+                        "Lycée",
+                        "Université",
+                        "Communauté d'universités et établissements (COMUE)",
+                        "Pôle de compétitivité",
+                        "Groupement d'établissements (GRETA)",
+                        "Mission locale",
+                        "Maison de l'emploi",
+                        "Établissement public d'aménagement (EPA)",
+                        "Commission consultative de l'environnement (CCE) ",
+                        "Commission locale de l'eau (CLE)",
+                        "Commission de suivi de site (CSS)",
+                        "Commission locale d'information (CLI)",
+                        "Commission locale d'information et de surveillance (CLIS)",
+                        "Parc naturel régional (PNR)",
+                        "Centre de formation en travail social (CFTS)",
+                        "Commission de coordination des politiques publiques de santé (CCPPS)",
+                        "Base de plein air et de loisirs (BPAL)")
                     .map {
                         val now = dateService.now()
                         TypeStructureDao.Record(randomService.id(), it, ItemStatus.live, now, now)

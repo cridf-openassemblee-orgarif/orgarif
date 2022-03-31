@@ -1,7 +1,7 @@
 package orgarif.command
 
 import org.springframework.stereotype.Service
-import orgarif.domain.ItemStatus.*
+import orgarif.domain.ItemStatus.live
 import orgarif.domain.LienDeliberationId
 import orgarif.repository.LienDeliberationDao
 import orgarif.service.DateService

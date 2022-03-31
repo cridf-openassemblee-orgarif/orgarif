@@ -5,7 +5,7 @@ import com.google.common.base.Strings
 import com.google.common.io.Files
 import java.io.File
 import java.io.FileInputStream
-import java.util.*
+import java.util.Properties
 import org.springframework.core.env.Environment
 import org.springframework.stereotype.Service
 import orgarif.domain.ApplicationEnvironment

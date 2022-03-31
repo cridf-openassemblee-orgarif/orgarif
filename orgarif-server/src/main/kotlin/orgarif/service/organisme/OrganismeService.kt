@@ -1,8 +1,22 @@
 package orgarif.service.organisme
 
 import org.springframework.stereotype.Service
-import orgarif.domain.*
-import orgarif.repository.*
+import orgarif.domain.DeliberationDto
+import orgarif.domain.InstanceDto
+import orgarif.domain.ItemStatus
+import orgarif.domain.LienDeliberationDto
+import orgarif.domain.OrganismeDto
+import orgarif.domain.OrganismeId
+import orgarif.domain.RepresentantDto
+import orgarif.domain.RepresentationDto
+import orgarif.domain.SuppleanceDto
+import orgarif.repository.DeliberationAdvancedDao
+import orgarif.repository.EluDao
+import orgarif.repository.InstanceDao
+import orgarif.repository.OrganismeDao
+import orgarif.repository.RepresentantDao
+import orgarif.repository.RepresentationDao
+import orgarif.repository.SuppleanceDao
 
 @Service
 class OrganismeService(

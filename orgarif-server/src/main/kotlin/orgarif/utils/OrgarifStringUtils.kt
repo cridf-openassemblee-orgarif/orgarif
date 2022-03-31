@@ -1,6 +1,6 @@
 package orgarif.utils
 
-import java.util.*
+import java.util.UUID
 import org.apache.commons.lang3.StringUtils
 
 object OrgarifStringUtils {
