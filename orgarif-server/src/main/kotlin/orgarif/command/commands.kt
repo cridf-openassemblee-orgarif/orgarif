@@ -101,13 +101,6 @@ data class LoginCommandResponse(
     val csrfToken: String?
 ) : CommandResponse()
 
-data class MoveRepresentationCommand(
-    val id: RepresentationId,
-    val toOrganismeId: OrganismeId,
-    val toInstanceId: InstanceId?,
-    val toPosition: Int
-) : Command()
-
 data class RegisterCommand(
     val mail: String,
     val password: PlainStringPassword,

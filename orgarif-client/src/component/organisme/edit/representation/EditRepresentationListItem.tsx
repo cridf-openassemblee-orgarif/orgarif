@@ -1,6 +1,6 @@
 /** @jsxImportSource @emotion/react */
 import { css } from '@emotion/react';
-import { DragHandle, Edit } from '@mui/icons-material';
+import { Edit } from '@mui/icons-material';
 import { Button } from '@mui/material';
 import * as React from 'react';
 import { useState } from 'react';
@@ -37,20 +37,6 @@ export const EditRepresentationListItem = (props: {
           }
         `}
       >
-        <div
-          className={actionsClass}
-          css={css`
-            width: 40px;
-            height: 40px;
-            padding-top: 8px;
-            margin-right: 20px;
-            background: ${colors.clearGrey};
-            border-radius: 50%;
-            text-align: center;
-          `}
-        >
-          <DragHandle />
-        </div>
         <div>
           <div>
             {props.representation.representant.prenom}{' '}

@@ -23,7 +23,6 @@ import {
   CreateTypeStructureCommandResponse,
   LoginCommand,
   LoginCommandResponse,
-  MoveRepresentationCommand,
   RegisterCommand,
   RegisterCommandResponse,
   UpdateDepartementCommand,
@@ -111,10 +110,6 @@ export class CommandService {
   public loginCommand = (
     command: LoginCommand
   ): Promise<LoginCommandResponse> => this.command('LoginCommand', command);
-
-  public moveRepresentationCommand = (
-    command: MoveRepresentationCommand
-  ): Promise<void> => this.command('MoveRepresentationCommand', command);
 
   public registerCommand = (
     command: RegisterCommand

@@ -1,7 +1,6 @@
 export const colors = {
   clearGrey: 'hsl(0, 0%, 93%)',
   clearGrey2: 'hsl(0, 0%, 97%)',
-  dragableMoving: 'hsl(120, 73%, 75%)',
   // TODO remove
   wipColor: '#49cc90',
   errorBackground: 'hsl(2, 49%, 50%)',

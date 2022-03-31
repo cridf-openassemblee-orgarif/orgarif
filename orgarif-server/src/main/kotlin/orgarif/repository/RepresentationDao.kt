@@ -1,13 +1,17 @@
 package orgarif.repository
 
-import java.time.Instant
-import java.time.LocalDate
 import org.jooq.DSLContext
 import org.springframework.stereotype.Repository
-import orgarif.domain.*
+import orgarif.domain.InstanceId
+import orgarif.domain.ItemStatus
+import orgarif.domain.OrganismeId
+import orgarif.domain.RepresentantId
+import orgarif.domain.RepresentationId
 import orgarif.jooq.generated.Tables.REPRESENTATION
 import orgarif.jooq.generated.tables.records.RepresentationRecord
 import orgarif.utils.toTypeId
+import java.time.Instant
+import java.time.LocalDate
 
 @Repository
 class RepresentationDao(val jooq: DSLContext) {
@@ -55,22 +59,6 @@ class RepresentationDao(val jooq: DSLContext) {
             .fetch()
             .map(this::map)
 
-    fun fetchByOrganismeInstance(
-        organismeId: OrganismeId,
-        instanceId: InstanceId?,
-    ): List<Record> =
-        jooq.selectFrom(REPRESENTATION)
-            .where(REPRESENTATION.ORGANISME_ID.equal(organismeId.rawId))
-            .apply {
-                if (instanceId == null) {
-                    and(REPRESENTATION.INSTANCE_ID.isNull)
-                } else {
-                    and(REPRESENTATION.INSTANCE_ID.equal(instanceId.rawId))
-                }
-            }
-            .fetch()
-            .map(this::map)
-
     fun fetchAll() = jooq.selectFrom(REPRESENTATION).fetch().map(this::map)
 
     fun fetchCurrentPositionByOrganismeInstance(
@@ -93,37 +81,12 @@ class RepresentationDao(val jooq: DSLContext) {
             .fetchOne()
             ?.let { it.value1() }
 
-    fun updatePosition(id: RepresentationId, newPosition: Int, date: Instant) {
-        jooq.update(REPRESENTATION)
-            .set(REPRESENTATION.POSITION, newPosition)
-            .set(REPRESENTATION.LAST_MODIFICATION_DATE, date)
-            .where(REPRESENTATION.ID.equal(id.rawId))
-            .execute()
-    }
-
     fun updateStartDate(id: RepresentationId, startDate: LocalDate?, date: Instant) {
         jooq.update(REPRESENTATION)
             .set(REPRESENTATION.START_DATE, startDate)
             .set(REPRESENTATION.LAST_MODIFICATION_DATE, date)
             .where(REPRESENTATION.ID.equal(id.rawId))
             .execute()
-    }
-
-    fun updateRepresentation(
-        id: RepresentationId,
-        organismeId: OrganismeId,
-        instanceId: InstanceId?,
-        position: Int,
-        modificationDate: Instant
-    ) {
-        val r =
-            RepresentationRecord().also {
-                it.organismeId = organismeId.rawId
-                it.instanceId = instanceId?.rawId
-                it.position = position
-                it.lastModificationDate = modificationDate
-            }
-        jooq.update(REPRESENTATION).set(r).where(REPRESENTATION.ID.equal(id.rawId)).execute()
     }
 
     fun updateStatus(id: RepresentationId, status: ItemStatus, modificationDate: Instant) {

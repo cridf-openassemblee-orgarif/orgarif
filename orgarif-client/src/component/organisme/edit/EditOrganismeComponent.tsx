@@ -15,7 +15,6 @@ import {
 import { colors } from '../../../styles/colors';
 import { organismeActions } from '../../../utils/organisme-utils';
 import { EditDeliberationListComponent } from './deliberation/EditDeliberationListComponent';
-import { DragAndDropGlobalContext } from './DragAndDropGlobalContext';
 import { EditNomComponent } from './EditNomComponent';
 import {
   EditOrganismeDepartementComponent,
@@ -124,156 +123,152 @@ export const EditOrganismeComponent = (props: {
   const organisme = props.organisme;
   const actions = organismeActions(organisme, props.setOrganisme);
   return (
-    <DragAndDropGlobalContext
-      onMoveRepresentation={actions.onMoveRepresentation}
+    <div
+      css={css`
+        width: 100%;
+      `}
     >
+      <EditNomComponent
+        kind={'organisme'}
+        nom={organisme.nom}
+        onUpdateNom={actions.onOrganismeNomChange}
+        onUpdateStatus={actions.onOrganismeStatusUpdate}
+        titleElement={
+          <h2
+            css={css`
+              font-size: 2rem;
+              font-weight: bold;
+            `}
+          >
+            {/* eslint-disable-line jsx-a11y/heading-has-content */}
+          </h2>
+        }
+      />
       <div
         css={css`
-          width: 100%;
+          display: flex;
+          flex-direction: column;
+          @media (${TABLET}) {
+            flex-direction: row;
+          }
         `}
       >
-        <EditNomComponent
-          kind={'organisme'}
-          nom={organisme.nom}
-          onUpdateNom={actions.onOrganismeNomChange}
-          onUpdateStatus={actions.onOrganismeStatusUpdate}
-          titleElement={
-            <h2
-              css={css`
-                font-size: 2rem;
-                font-weight: bold;
-              `}
-            >
-              {/* eslint-disable-line jsx-a11y/heading-has-content */}
-            </h2>
+        <div css={classes.categories}>
+          <EditOrganismeDepartementComponent
+            departementId={organisme.departementId}
+            onChange={actions.onDepartementChange}
+          />
+        </div>
+        <div css={classes.categories}>
+          <EditOrganismeNatureJuridiqueComponent
+            natureJuridiqueId={organisme.natureJuridiqueId}
+            onChange={actions.onNatureJuridiqueChange}
+          />
+        </div>
+      </div>
+      <div
+        css={css`
+          display: flex;
+          flex-direction: column;
+          @media (${TABLET}) {
+            flex-direction: row;
           }
+        `}
+      >
+        <div css={classes.categories}>
+          <EditOrganismeSecteurComponent
+            secteurId={organisme.secteurId}
+            onChange={actions.onSecteurChange}
+          />
+        </div>
+        <div css={classes.categories}>
+          <EditOrganismeTypeStructureComponent
+            typeStructureId={organisme.typeStructureId}
+            onChange={actions.onTypeStructureChange}
+          />
+        </div>
+      </div>
+      <hr css={classes.separator} />
+      <div
+        css={css`
+          margin-top: 20px;
+        `}
+      >
+        <RepresentantsDeliberationsBlock
+          organismeOrInstanceId={organisme.id}
+          nombreRepresentants={organisme.nombreRepresentants}
+          onNombreRepresentantsChange={(nombre: number | undefined) =>
+            actions.onNombreRepresentantsChange(undefined, nombre)
+          }
+          presenceSuppleants={props.organisme.presenceSuppleants}
+          onPresenceSuppleantsChange={(presenceSuppleants: boolean) =>
+            actions.onPresenceSuppleantsChange(undefined, presenceSuppleants)
+          }
+          representations={organisme.representations}
+          onAddRepresentation={(
+            representantId: RepresentantId,
+            startDate: LocalDate | undefined,
+            suppleantId: RepresentantId | undefined,
+            suppleantStartDate: LocalDate | undefined
+          ) =>
+            actions.onAddRepresentation(
+              representantId,
+              startDate,
+              suppleantId,
+              suppleantStartDate,
+              undefined
+            )
+          }
+          lienDeliberations={organisme.lienDeliberations}
+          onNewLienDeliberation={(
+            deliberationId: DeliberationId,
+            comment: string | undefined
+          ) =>
+            actions.onNewLienDeliberation(undefined, deliberationId, comment)
+          }
+          onOtherUpdate={actions.updateOrganisme}
         />
+      </div>
+      <hr css={classes.separator} />
+      <div
+        css={css`
+          padding: 0 0 0 40px;
+        `}
+      >
+        <AddInstanceComponent addInstance={actions.onAddInstance} />
+      </div>
+      {organisme.instances.length !== 0 && (
         <div
           css={css`
-            display: flex;
-            flex-direction: column;
-            @media (${TABLET}) {
-              flex-direction: row;
-            }
+            margin: 0 20px;
           `}
         >
-          <div css={classes.categories}>
-            <EditOrganismeDepartementComponent
-              departementId={organisme.departementId}
-              onChange={actions.onDepartementChange}
-            />
-          </div>
-          <div css={classes.categories}>
-            <EditOrganismeNatureJuridiqueComponent
-              natureJuridiqueId={organisme.natureJuridiqueId}
-              onChange={actions.onNatureJuridiqueChange}
-            />
-          </div>
-        </div>
-        <div
-          css={css`
-            display: flex;
-            flex-direction: column;
-            @media (${TABLET}) {
-              flex-direction: row;
-            }
-          `}
-        >
-          <div css={classes.categories}>
-            <EditOrganismeSecteurComponent
-              secteurId={organisme.secteurId}
-              onChange={actions.onSecteurChange}
-            />
-          </div>
-          <div css={classes.categories}>
-            <EditOrganismeTypeStructureComponent
-              typeStructureId={organisme.typeStructureId}
-              onChange={actions.onTypeStructureChange}
-            />
-          </div>
-        </div>
-        <hr css={classes.separator} />
-        <div
-          css={css`
-            margin-top: 20px;
-          `}
-        >
-          <RepresentantsDeliberationsBlock
-            organismeOrInstanceId={organisme.id}
-            nombreRepresentants={organisme.nombreRepresentants}
-            onNombreRepresentantsChange={(nombre: number | undefined) =>
-              actions.onNombreRepresentantsChange(undefined, nombre)
-            }
-            presenceSuppleants={props.organisme.presenceSuppleants}
-            onPresenceSuppleantsChange={(presenceSuppleants: boolean) =>
-              actions.onPresenceSuppleantsChange(undefined, presenceSuppleants)
-            }
-            representations={organisme.representations}
+          <EditInstancesComponent
+            instances={organisme.instances}
+            onNomChange={actions.onInstanceNomChange}
+            onStatusChange={actions.onInstanceStatusChange}
+            onNombreRepresentantsChange={actions.onNombreRepresentantsChange}
+            onPresenceSuppleantsChange={actions.onPresenceSuppleantsChange}
             onAddRepresentation={(
               representantId: RepresentantId,
               startDate: LocalDate | undefined,
               suppleantId: RepresentantId | undefined,
-              suppleantStartDate: LocalDate | undefined
+              suppleantStartDate: LocalDate | undefined,
+              instanceId: InstanceId
             ) =>
               actions.onAddRepresentation(
                 representantId,
                 startDate,
                 suppleantId,
                 suppleantStartDate,
-                undefined
+                instanceId
               )
             }
-            lienDeliberations={organisme.lienDeliberations}
-            onNewLienDeliberation={(
-              deliberationId: DeliberationId,
-              comment: string | undefined
-            ) =>
-              actions.onNewLienDeliberation(undefined, deliberationId, comment)
-            }
+            onNewLienDeliberation={actions.onNewLienDeliberation}
             onOtherUpdate={actions.updateOrganisme}
           />
         </div>
-        <hr css={classes.separator} />
-        <div
-          css={css`
-            padding: 0 0 0 40px;
-          `}
-        >
-          <AddInstanceComponent addInstance={actions.onAddInstance} />
-        </div>
-        {organisme.instances.length !== 0 && (
-          <div
-            css={css`
-              margin: 0 20px;
-            `}
-          >
-            <EditInstancesComponent
-              instances={organisme.instances}
-              onNomChange={actions.onInstanceNomChange}
-              onStatusChange={actions.onInstanceStatusChange}
-              onNombreRepresentantsChange={actions.onNombreRepresentantsChange}
-              onPresenceSuppleantsChange={actions.onPresenceSuppleantsChange}
-              onAddRepresentation={(
-                representantId: RepresentantId,
-                startDate: LocalDate | undefined,
-                suppleantId: RepresentantId | undefined,
-                suppleantStartDate: LocalDate | undefined,
-                instanceId: InstanceId
-              ) =>
-                actions.onAddRepresentation(
-                  representantId,
-                  startDate,
-                  suppleantId,
-                  suppleantStartDate,
-                  instanceId
-                )
-              }
-              onNewLienDeliberation={actions.onNewLienDeliberation}
-              onOtherUpdate={actions.updateOrganisme}
-            />
-          </div>
-        )}
-      </div>
-    </DragAndDropGlobalContext>
+      )}
+    </div>
   );
 };

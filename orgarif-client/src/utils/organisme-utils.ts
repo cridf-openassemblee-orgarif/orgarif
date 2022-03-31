@@ -1,23 +1,14 @@
 import { appContext } from '../ApplicationContext';
-import { DropDestination } from '../component/organisme/edit/DragAndDropGlobalContext';
 import {
   DeliberationId,
   DepartementId,
   InstanceId,
   NatureJuridiqueId,
-  OrganismeId,
   RepresentantId,
-  RepresentationId,
   SecteurId,
   TypeStructureId
 } from '../domain/ids';
-import {
-  InstanceDto,
-  ItemStatus,
-  OrganismeDto,
-  RepresentationDto
-} from '../domain/organisme';
-import { pipe } from './Pipe';
+import { InstanceDto, ItemStatus, OrganismeDto } from '../domain/organisme';
 import { LocalDate } from '../domain/time';
 
 // TODO naming utils, actions...
@@ -196,89 +187,6 @@ const addRepresentation = async (
   return updateOrganisme(organisme, setOrganisme);
 };
 
-const representations = (
-  organisme: OrganismeDto,
-  instanceId: InstanceId | undefined
-) =>
-  pipe(
-    instanceId ? organisme.instances.find(i => i.id === instanceId) : organisme
-  )
-    .map(i => {
-      if (!i) {
-        throw Error(`${organisme.id} ${instanceId}`);
-      }
-      return i.representations;
-    })
-    .unwrap();
-
-const setRepresentations = (
-  organisme: OrganismeDto,
-  instanceId: InstanceId | undefined,
-  representations: RepresentationDto[]
-) => {
-  if (!instanceId) {
-    return { ...organisme, representations };
-  } else {
-    const instances = organisme.instances.map(i => {
-      if (i.id === instanceId) {
-        return { ...i, representations };
-      } else {
-        return i;
-      }
-    });
-    return { ...organisme, instances };
-  }
-};
-
-const onMoveRepresentation = (
-  organisme: OrganismeDto,
-  setOrganisme: (o: OrganismeDto) => void,
-  representationId: RepresentationId,
-  source: DropDestination<OrganismeId | InstanceId>,
-  destination?: DropDestination<OrganismeId | InstanceId>
-) => {
-  if (!destination) {
-    return;
-  }
-  const sourceInstanceId =
-    source.droppableId !== organisme.id
-      ? (source.droppableId as InstanceId)
-      : undefined;
-  const fromSourceRepresentations = representations(
-    organisme,
-    sourceInstanceId
-  );
-  const movedRepresentation = fromSourceRepresentations.find(
-    r => r.id === representationId
-  );
-  if (!movedRepresentation) {
-    throw Error(`${representationId}`);
-  }
-  const sourceRepresentations = fromSourceRepresentations.filter(
-    r => r.id !== representationId
-  );
-  const toInstanceId =
-    destination.droppableId !== organisme.id
-      ? (destination.droppableId as InstanceId)
-      : undefined;
-  const destinationRepresentation = [
-    ...representations(organisme, toInstanceId)
-  ].filter(r => r.id !== movedRepresentation.id);
-  destinationRepresentation.splice(destination.index, 0, movedRepresentation);
-  setOrganisme(
-    pipe(organisme)
-      .map(o => setRepresentations(o, sourceInstanceId, sourceRepresentations))
-      .map(o => setRepresentations(o, toInstanceId, destinationRepresentation))
-      .unwrap()
-  );
-  appContext.commandService().moveRepresentationCommand({
-    id: representationId,
-    toOrganismeId: organisme.id,
-    toInstanceId,
-    toPosition: destination.index
-  });
-};
-
 const addInstance = (
   organisme: OrganismeDto,
   setOrganisme: (o: OrganismeDto) => void,
@@ -405,18 +313,6 @@ export const organismeActions = (
       suppleantId,
       suppleantStartDate,
       instanceId
-    ),
-  onMoveRepresentation: (
-    representationId: RepresentationId,
-    source: DropDestination<OrganismeId | InstanceId>,
-    destination?: DropDestination<OrganismeId | InstanceId>
-  ) =>
-    onMoveRepresentation(
-      organisme,
-      setOrganisme,
-      representationId,
-      source,
-      destination
     ),
   onAddInstance: (nom: string) => addInstance(organisme, setOrganisme, nom),
   onNewLienDeliberation: (

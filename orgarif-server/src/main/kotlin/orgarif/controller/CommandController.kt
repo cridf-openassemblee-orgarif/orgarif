@@ -41,7 +41,6 @@ class CommandController(
     val createSecteurCommandHandler: CreateSecteurCommandHandler,
     val createTypeStructureCommandHandler: CreateTypeStructureCommandHandler,
     val loginCommandHandler: LoginCommandHandler,
-    val moveRepresentationCommandHandler: MoveRepresentationCommandHandler,
     val registerCommandHandler: RegisterCommandHandler,
     val updateDepartementCommandHandler: UpdateDepartementCommandHandler,
     val updateDepartementStatusCommandHandler: UpdateDepartementStatusCommandHandler,
@@ -155,7 +154,6 @@ class CommandController(
             is CreateSecteurCommand -> createSecteurCommandHandler
             is CreateTypeStructureCommand -> createTypeStructureCommandHandler
             is LoginCommand -> loginCommandHandler
-            is MoveRepresentationCommand -> moveRepresentationCommandHandler
             is RegisterCommand -> registerCommandHandler
             is UpdateDepartementCommand -> updateDepartementCommandHandler
             is UpdateDepartementStatusCommand -> updateDepartementStatusCommandHandler

@@ -123,13 +123,6 @@ export interface LoginCommandResponse {
   userinfos?: UserInfos;
 }
 
-export interface MoveRepresentationCommand {
-  id: RepresentationId;
-  toOrganismeId: OrganismeId;
-  toInstanceId?: InstanceId;
-  toPosition: number;
-}
-
 export interface RegisterCommand {
   mail: string;
   password: string;

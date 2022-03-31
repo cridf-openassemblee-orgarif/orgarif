@@ -26,7 +26,7 @@ export const AddInstanceComponent = (props: {
     <>
       <div
         css={css`
-          margin: 20px 0;
+          padding-bottom: 20px;
         `}
       >
         <Button
@@ -35,6 +35,9 @@ export const AddInstanceComponent = (props: {
           color="primary"
           size="small"
           onClick={() => setDisplayDialog(true)}
+          css={css`
+            background: ${colors.white};
+          `}
         >
           Instance
         </Button>
