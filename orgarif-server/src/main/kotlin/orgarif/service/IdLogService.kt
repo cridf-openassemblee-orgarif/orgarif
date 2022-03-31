@@ -1,6 +1,6 @@
 package orgarif.service
 
-import java.util.*
+import java.util.UUID
 import orgarif.domain.OrgarifId
 import orgarif.utils.OrgarifStringUtils
 

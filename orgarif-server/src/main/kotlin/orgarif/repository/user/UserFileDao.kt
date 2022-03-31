@@ -48,16 +48,14 @@ class UserFileDao(val jooq: DSLContext) {
         }
 
     fun fetchReference(id: UserFileId): UserFileReference? =
-        jooq
-            .select(nonDataFields)
+        jooq.select(nonDataFields)
             .from(USER_FILE)
             .where(USER_FILE.ID.equal(id.rawId))
             .fetchOne()
             ?.let { mapReference(it) }
 
     fun fetchReferencesByUserId(userId: UserId): List<UserFileReference> {
-        return jooq
-            .select(nonDataFields)
+        return jooq.select(nonDataFields)
             .from(USER_FILE)
             .where(USER_FILE.USER_ID.equal(userId.rawId))
             .toList()

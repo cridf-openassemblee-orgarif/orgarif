@@ -1,6 +1,6 @@
 package orgarif.domain
 
-import java.util.*
+import java.util.UUID
 
 object TestIds {
     val emptyUuid0 = UUID.fromString("00000000-0000-0000-0000-000000000000")

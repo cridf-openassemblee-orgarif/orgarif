@@ -1,6 +1,6 @@
 package orgarif.service
 
-import java.util.*
+import java.util.UUID
 import org.apache.commons.text.CharacterPredicates
 import org.apache.commons.text.RandomStringGenerator
 import orgarif.domain.OrgarifSecurityString

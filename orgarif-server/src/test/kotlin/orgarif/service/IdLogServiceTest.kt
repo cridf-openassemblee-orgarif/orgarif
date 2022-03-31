@@ -3,7 +3,12 @@ package orgarif.service
 import org.junit.jupiter.api.Assertions
 import org.junit.jupiter.api.Assertions.assertEquals
 import org.junit.jupiter.api.Test
-import orgarif.domain.*
+import orgarif.domain.TestPrefixSecurityString
+import orgarif.domain.TestPrefixStringId
+import orgarif.domain.TestPrefixUuidId
+import orgarif.domain.TestSecurityString
+import orgarif.domain.TestStringId
+import orgarif.domain.TestUuidId
 
 internal class IdLogServiceTest {
 

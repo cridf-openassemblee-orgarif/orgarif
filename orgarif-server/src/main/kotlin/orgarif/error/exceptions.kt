@@ -33,10 +33,13 @@ data class DisplayMessageException(
 // [doc] contains mail to be clear on the front ? Not really needed it smartly handled on the front
 // ?
 data class MailAlreadyRegisteredException(val mail: String) : Exception()
+
 // TODO this message ?
 data class ItemIdNotFoundException(val id: OrgarifId<*>) : Exception("Not found : $id")
+
 // TODO a message
 data class ItemNotFoundException(val itemClass: Class<*>, val reference: String) : Exception()
+
 // TODO ItemIdNotFoundException + ItemNotFoundException + OrgarifNotFoundException... it's a lot of
 // "not found"
 class OrgarifNotFoundException : Exception()

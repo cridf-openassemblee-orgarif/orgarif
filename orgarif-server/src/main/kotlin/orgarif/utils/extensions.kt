@@ -1,7 +1,7 @@
 package orgarif.utils
 
 import java.lang.reflect.InvocationTargetException
-import java.util.*
+import java.util.UUID
 import orgarif.domain.OrgarifSecurityString
 import orgarif.domain.OrgarifStringId
 import orgarif.domain.OrgarifUuidId

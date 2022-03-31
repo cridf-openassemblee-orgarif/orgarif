@@ -8,11 +8,16 @@ import com.fasterxml.jackson.module.kotlin.readValue
 import java.time.Instant
 import java.time.LocalDate
 import java.time.ZoneId
-import java.util.*
+import java.util.UUID
 import kotlin.jvm.internal.Reflection
 import kotlin.reflect.KClass
 import org.reflections.Reflections
-import orgarif.domain.*
+import orgarif.domain.OrgarifId
+import orgarif.domain.OrgarifSecurityString
+import orgarif.domain.OrgarifStringId
+import orgarif.domain.OrgarifUuidId
+import orgarif.domain.PlainStringPassword
+import orgarif.domain.SerializeAsString
 
 object Serializer {
 

@@ -4,7 +4,12 @@ import java.net.URLDecoder
 import javax.servlet.http.HttpServletRequest
 import org.springframework.web.bind.annotation.GetMapping
 import org.springframework.web.bind.annotation.RestController
-import orgarif.query.*
+import orgarif.query.IsLoginAlreadyTakenQuery
+import orgarif.query.IsLoginAlreadyTakenQueryHandler
+import orgarif.query.Query
+import orgarif.query.QueryConfiguration
+import orgarif.query.QueryHandler
+import orgarif.query.QueryResponse
 import orgarif.repository.user.UserDao
 import orgarif.serialization.Serializer
 import orgarif.service.user.UserSessionService

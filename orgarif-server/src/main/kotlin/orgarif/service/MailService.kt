@@ -6,12 +6,17 @@ import com.fasterxml.jackson.databind.SerializationFeature
 import com.fasterxml.jackson.databind.cfg.MapperConfig
 import com.fasterxml.jackson.databind.introspect.AnnotatedField
 import com.fasterxml.jackson.databind.introspect.AnnotatedMethod
-import java.util.*
+import java.util.Base64
 import mu.KotlinLogging
 import okhttp3.Credentials
 import org.springframework.beans.factory.annotation.Value
 import org.springframework.stereotype.Service
-import orgarif.domain.*
+import orgarif.domain.ApplicationEnvironment
+import orgarif.domain.DeploymentLogId
+import orgarif.domain.MailLogId
+import orgarif.domain.MailReference
+import orgarif.domain.MimeType
+import orgarif.domain.UserId
 import orgarif.error.MessageNotSentException
 import orgarif.repository.log.MailLogDao
 

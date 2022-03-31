@@ -1,6 +1,6 @@
 package orgarif.error
 
-import java.util.*
+import java.util.Date
 import javax.servlet.http.HttpServletResponse
 import mu.KotlinLogging
 import org.springframework.boot.web.error.ErrorAttributeOptions

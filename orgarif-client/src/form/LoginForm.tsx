@@ -56,7 +56,9 @@ export const LoginForm = (props: {
           errors={errors}
         />
       </div>
-      <LoadingStateButton loadingState={loading}>Login</LoadingStateButton>
+      <LoadingStateButton loadingState={loading} type="submit">
+        Login
+      </LoadingStateButton>
     </form>
   );
 };

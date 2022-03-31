@@ -89,8 +89,7 @@ class UserDao(val jooq: DSLContext) {
         jooq.selectFrom(APP_USER).where(APP_USER.ID.equal(id.rawId)).fetchOne()?.let(this::map)
 
     fun doesLoginExist(login: String): Boolean =
-        jooq
-            .selectCount()
+        jooq.selectCount()
             .from(APP_USER)
             .where(APP_USER.MAIL.equal(login))
             .or(APP_USER.USERNAME.equal(login))
@@ -107,8 +106,7 @@ class UserDao(val jooq: DSLContext) {
             ?.let(this::map)
 
     fun fetchPassword(id: UserId): HashedPassword? =
-        jooq
-            .select(APP_USER.PASSWORD)
+        jooq.select(APP_USER.PASSWORD)
             .from(APP_USER)
             .where(APP_USER.ID.equal(id.rawId))
             .fetchOne()

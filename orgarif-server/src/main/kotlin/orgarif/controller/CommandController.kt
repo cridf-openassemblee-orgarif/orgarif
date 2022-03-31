@@ -8,7 +8,15 @@ import org.springframework.transaction.PlatformTransactionManager
 import org.springframework.web.bind.annotation.PostMapping
 import org.springframework.web.bind.annotation.RequestBody
 import org.springframework.web.bind.annotation.RestController
-import orgarif.command.*
+import orgarif.command.Command
+import orgarif.command.CommandConfiguration
+import orgarif.command.CommandHandler
+import orgarif.command.CommandResponse
+import orgarif.command.EmptyCommandResponse
+import orgarif.command.LoginCommand
+import orgarif.command.LoginCommandHandler
+import orgarif.command.RegisterCommand
+import orgarif.command.RegisterCommandHandler
 import orgarif.domain.CommandLogId
 import orgarif.repository.log.CommandLogDao
 import orgarif.repository.user.UserDao

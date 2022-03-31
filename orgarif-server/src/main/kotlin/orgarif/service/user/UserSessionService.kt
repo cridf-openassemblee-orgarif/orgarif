@@ -9,7 +9,11 @@ import org.springframework.security.authentication.UsernamePasswordAuthenticatio
 import org.springframework.security.core.context.SecurityContextHolder
 import org.springframework.security.web.csrf.CookieCsrfTokenRepository
 import org.springframework.stereotype.Service
-import orgarif.domain.*
+import orgarif.domain.AuthResult
+import orgarif.domain.Role
+import orgarif.domain.Session
+import orgarif.domain.UserSession
+import orgarif.domain.UserSessionId
 import orgarif.error.AppErrors
 import orgarif.error.OrgarifSecurityException
 import orgarif.repository.user.UserDao

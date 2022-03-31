@@ -24,6 +24,7 @@ export const LogoutForm = () => {
       />
       <LoadingStateButton
         loadingState={loading}
+        type="submit"
         css={css`
           background: ${colors.clearGrey};
           height: 24px;
