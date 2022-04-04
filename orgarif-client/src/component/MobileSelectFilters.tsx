@@ -8,6 +8,8 @@ import MenuItem from '@mui/material/MenuItem';
 import OutlinedInput from '@mui/material/OutlinedInput';
 import Select, { SelectChangeEvent } from '@mui/material/Select';
 import * as React from 'react';
+import { useRecoilState } from 'recoil';
+import { state } from '../state/state';
 
 const ITEM_HEIGHT = 48;
 const ITEM_PADDING_TOP = 8;
@@ -21,13 +23,29 @@ const MenuProps = {
   }
 };
 
+// TODO - review how values are stored in recoil
 export const MobileSelectFilters = ({ data, label }: any) => {
   const [elementName, setElementName] = React.useState<string[]>([]);
+  const [activeFilters, setActiveFilters] = useRecoilState(state.activeFilters);
 
-  const handleChange = (event: SelectChangeEvent<typeof elementName>) => {
+  const handleChange = (
+    event: SelectChangeEvent<typeof elementName>,
+    child: any
+  ) => {
     const {
       target: { value }
     } = event;
+    const currentActiveFilters = [...activeFilters];
+    const indexFilter = currentActiveFilters
+      .map(f => f.id)
+      .indexOf(child.props.id);
+
+    indexFilter === -1
+      ? setActiveFilters((oldList: any) => [...oldList, child.props])
+      : setActiveFilters((oldList: any) => [
+          ...oldList.filter((f: any) => f.id !== child.props.id)
+        ]);
+
     setElementName(
       // On autofill we get a stringified value.
       typeof value === 'string' ? value.split(',') : value
@@ -68,7 +86,7 @@ export const MobileSelectFilters = ({ data, label }: any) => {
         MenuProps={MenuProps}
       >
         {data.map((el: any) => (
-          <MenuItem key={el.id} value={el.libelle}>
+          <MenuItem key={el.id} value={el.libelle} id={el.id}>
             {el.libelle}
           </MenuItem>
         ))}

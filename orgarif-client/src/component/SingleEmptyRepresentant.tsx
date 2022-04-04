@@ -8,6 +8,43 @@ import { experimentalStyled as styled } from '@mui/material/styles';
 import * as React from 'react';
 import { colors } from '../styles/colors';
 
+export const SingleEmptyRepresentant = () => {
+  return (
+    <Grid item xs md={6}>
+      <Item elevation={0}>
+        <Box
+          css={css`
+            display: flex;
+            align-items: center;
+          `}
+        >
+          <Avatar
+            alt="Siège vaquant"
+            css={css`
+              width: 90px;
+              height: 90px;
+              margin-right: 1em;
+              border: 2.5px dotted ${colors.dark};
+              background-color: ${colors.mainBackground};
+            `}
+          />
+
+          <Box
+            css={css`
+              padding: 0em 1.6em 0em 0em;
+            `}
+          >
+            <StyledChip
+              label={<Typography variant="body2">SIÈGE VAQUANT</Typography>}
+              variant="outlined"
+            />
+          </Box>
+        </Box>
+      </Item>
+    </Grid>
+  );
+};
+
 const Item = styled(Paper)(({ theme }) => ({
   backgroundColor: theme.palette.background.default,
   ...theme.typography.body2,
@@ -23,36 +60,3 @@ const StyledChip = styled(Chip)(({ theme }) => ({
   padding: `${theme.spacing(3)} ${theme.spacing(1)}`,
   borderRadius: '5em'
 }));
-
-export const SingleEmptyRepresentant = () => {
-  return (
-    <Grid item xs md={6}>
-      <Item elevation={0}>
-        <Box
-          css={css`
-            display: flex;
-            align-items: center;
-          `}
-        >
-          <Avatar
-            alt="Siège vaquant"
-            css={css`
-              width: 80px;
-              height: 80px;
-              margin-right: 1em;
-              border: 2.5px dotted ${colors.dark};
-              background-color: ${colors.mainBackground};
-            `}
-          />
-
-          <Box>
-            <StyledChip
-              label={<Typography variant="body2">SIÈGE VAQUANT</Typography>}
-              variant="outlined"
-            />
-          </Box>
-        </Box>
-      </Item>
-    </Grid>
-  );
-};

@@ -1,4 +1,5 @@
 import { atom, selector } from 'recoil';
+import { recoilPersist } from 'recoil-persist';
 import {
   Departement,
   NatureJuridique,
@@ -13,6 +14,8 @@ import {
 } from '../domain/ids';
 import { compareByString } from '../utils';
 import { dict, Dict } from '../utils/nominal-class';
+
+const { persistAtom } = recoilPersist();
 
 // FIXME typer pour lisibilité du state partagé...
 export const state = {
@@ -74,7 +77,13 @@ export const state = {
   }),
   activeFilters: atom({
     key: 'activeFilters',
-    default: [] as Filters[]
+    default: [] as Filters[],
+    effects_UNSTABLE: [persistAtom]
+  }),
+  userSelection: atom({
+    key: 'userOrganismesSelection',
+    default: [] as string[],
+    effects_UNSTABLE: [persistAtom]
   })
 };
 

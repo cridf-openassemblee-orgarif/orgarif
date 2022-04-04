@@ -103,6 +103,13 @@ const orgarifTheme = {
           }
         }
       }
+    },
+    MuiDataGrid: {
+      styleOverrides: {
+        root: {
+          fontSize: 'clamp(16px, 1.2vw, 1.2rem)'
+        }
+      }
     }
   }
 } as const;
