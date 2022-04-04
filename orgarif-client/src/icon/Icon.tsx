@@ -20,7 +20,7 @@ export type SpecificIconProps = Omit<IconProps, 'children' | 'name'> & {
 };
 
 /** Base SVG Icon Component */
-function IconComponent({
+const IconComponent = ({
   children,
   className,
   height,
@@ -30,7 +30,7 @@ function IconComponent({
   title,
   viewBox = `0 0 ${size} ${size}`,
   width
-}: IconProps): React.ReactElement<IconProps> {
+}: IconProps): React.ReactElement<IconProps> => {
   return (
     <SizedSvg
       aria-labelledby={title && 'title'}
@@ -49,6 +49,6 @@ function IconComponent({
       {children}
     </SizedSvg>
   );
-}
+};
 
 export const Icon = styled(IconComponent)<IconProps>``;

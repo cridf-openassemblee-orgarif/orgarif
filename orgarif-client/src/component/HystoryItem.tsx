@@ -3,11 +3,28 @@ import { css } from '@emotion/react';
 import { Avatar, Chip, Typography } from '@mui/material';
 import Box from '@mui/material/Box';
 import * as React from 'react';
+import { DeliberationId } from '../domain/ids';
+import { DeliberationDto } from '../domain/organisme';
+import { formatLocaleDate } from '../simple-fr';
 import * as breakpoint from '../styles/breakpoints';
 import { colors } from '../styles/colors';
 
-// TODO : typing props
-export const HystoryItem = ({ delib, yearlyDelib }: any) => {
+interface HystoryItemProps {
+  delib: {
+    id: DeliberationId;
+    deliberation: DeliberationDto;
+    comment?: string;
+    color?: string;
+  };
+  yearlyDelib: string[];
+  lastItem: boolean;
+}
+
+export const HystoryItem = ({
+  delib,
+  yearlyDelib,
+  lastItem
+}: HystoryItemProps) => {
   const TextContentRef = React.useRef<HTMLDivElement>(null);
 
   return (
@@ -15,7 +32,7 @@ export const HystoryItem = ({ delib, yearlyDelib }: any) => {
       css={css`
         display: grid;
         grid-auto-flow: row;
-        grid-template-columns: 1fr;
+        grid-template-columns: auto 1fr;
         gap: 0.5em;
         padding: 0 5vw 0 0;
         margin-bottom: 1em;
@@ -41,20 +58,22 @@ export const HystoryItem = ({ delib, yearlyDelib }: any) => {
             margin-right: clamp(1em, 1.4vw, 1.6rem);
           }
 
-          // FIXME : find solution for not adding after element on last item
+          // FIXME : hacky solution to hide after element on last item
           ::after {
             content: '';
             position: absolute;
-            border: 0.5px solid ${colors.white};
             ${TextContentRef.current
               ? `height: ${
-                  TextContentRef.current.getBoundingClientRect().height + 100
+                  TextContentRef.current.getBoundingClientRect().height + 200
                 }px;`
               : `height: 50vh;`}
 
             top: 50%;
             left: 50%;
             z-index: 0;
+            ${lastItem
+              ? `border: 0.5px solid ${colors.dark};`
+              : `border: 0.5px solid ${colors.white};`}
           }
         `}
       >
@@ -96,7 +115,7 @@ export const HystoryItem = ({ delib, yearlyDelib }: any) => {
       >
         <Chip
           variant="outlined"
-          label={delib.title}
+          label={delib.deliberation.libelle}
           size="small"
           css={css`
             color: ${colors.white};
@@ -108,30 +127,9 @@ export const HystoryItem = ({ delib, yearlyDelib }: any) => {
             }
           `}
         />
-        {/* </Box>
-      <Box
-        css={css`
-          justify-self: center;
-        `}
-      >
-        <Chip
-          label={delib.type.toUpperCase()}
-          size="small"
-          css={css`
-            background-color: ${colors.white};
-            color: ${colors.dark};
-            width: fit-content;
-          `}
-        />
-      </Box>
-      <Box
-        css={css`
-          justify-self: flex-end;
-        `}
-      > */}
         <Chip
           variant="outlined"
-          label={delib.date}
+          label={formatLocaleDate(delib.deliberation.deliberationDate)}
           size="small"
           css={css`
             color: ${colors.white};
@@ -158,7 +156,7 @@ export const HystoryItem = ({ delib, yearlyDelib }: any) => {
             padding-bottom: 1em;
           `}
         >
-          {delib.content}
+          {delib.comment}
         </Typography>
       </Box>
     </Box>
