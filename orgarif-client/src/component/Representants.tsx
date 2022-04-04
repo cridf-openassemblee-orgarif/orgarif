@@ -4,53 +4,79 @@ import { Divider } from '@mui/material';
 import Box from '@mui/material/Box';
 import Grid from '@mui/material/Grid';
 import * as React from 'react';
+import { InstanceDto, RepresentationDto } from '../domain/organisme';
 import { isTabletAndMore } from '../utils/viewport-utils';
 import { SingleEmptyRepresentant } from './SingleEmptyRepresentant';
 import { SingleRepresentant } from './SingleRepresentant';
 
-// TODO: dynamization
-export const Representants = ({ reps, type }: any) => {
-  let ListOfReps: React.ReactElement;
-  if (type === 'ag') {
-    ListOfReps = (
+export const Representants = (props: {
+  reps: RepresentationDto[] | InstanceDto[];
+  supp: boolean;
+}) => {
+  return (
+    <Box
+      css={css`
+        padding: 1em 0em 0em 0.5em;
+      `}
+    >
       <Grid container spacing={1}>
-        {reps.map((r: any, idx: number) => (
+        {props.reps.map((r: any, idx: number) => (
           <React.Fragment key={r.id}>
-            <SingleRepresentant representant={r} type={type} />
-            {isTabletAndMore() && (
-              <Divider
-                orientation="vertical"
-                flexItem
-                variant="middle"
-                style={{ marginRight: '-1px' }}
-              />
-            )}
-            {r.suppleant && Object.values(r.suppleant)[0] !== '' ? (
+            {r.suppleance ? (
               <React.Fragment>
                 <SingleRepresentant
-                  representant={r.suppleant}
-                  type={type}
-                  suppleant
+                  representation={r}
+                  isTitulaire
+                  hasSuppleance={props.supp || r.suppleance}
                 />
-
+                {isTabletAndMore() && (
+                  <Divider
+                    orientation="vertical"
+                    flexItem
+                    variant="middle"
+                    css={css`
+                      margin-right: -1px;
+                    `}
+                  />
+                )}
+                <SingleRepresentant
+                  representation={r.suppleance}
+                  hasSuppleance={props.supp || r.suppleance}
+                />
                 <Divider
                   orientation="horizontal"
                   css={css`
                     width: 100%;
                     padding: 0.5em 0em;
-                    margin-bottom: ${reps.length - 1 > idx && '1em'};
+                    margin-bottom: ${props.reps.length - 1 > idx && '1em'};
                   `}
                 />
               </React.Fragment>
             ) : (
-              <React.Fragment key={r.id}>
-                <SingleEmptyRepresentant />
+              <React.Fragment>
+                <SingleRepresentant
+                  representation={r}
+                  isTitulaire
+                  hasSuppleance={props.supp || r.suppleance}
+                />
+                {isTabletAndMore() && props.supp && (
+                  <Divider
+                    orientation="vertical"
+                    flexItem
+                    variant="middle"
+                    css={css`
+                      margin-right: -1px;
+                    `}
+                  />
+                )}
+                {props.supp && <SingleEmptyRepresentant />}
+
                 <Divider
                   orientation="horizontal"
                   css={css`
                     width: 100%;
                     padding: 0.5em 0em;
-                    margin-bottom: ${reps.length - 1 > idx && '1em'};
+                    margin-bottom: ${props.reps.length - 1 > idx && '1em'};
                   `}
                 />
               </React.Fragment>
@@ -58,34 +84,6 @@ export const Representants = ({ reps, type }: any) => {
           </React.Fragment>
         ))}
       </Grid>
-    );
-  } else {
-    ListOfReps = (
-      <Grid container spacing={1}>
-        {reps.map((r: any, idx: number) => (
-          <React.Fragment key={r.id}>
-            <SingleRepresentant representant={r} type={type} />
-            <Divider
-              orientation="horizontal"
-              css={css`
-                width: 100%;
-                padding: 0.5em 0em;
-                margin-bottom: ${reps.length - 1 > idx && '1em'};
-              `}
-            />
-          </React.Fragment>
-        ))}
-      </Grid>
-    );
-  }
-
-  return (
-    <Box
-      css={css`
-        padding: 1em 0em 1em 0.5em;
-      `}
-    >
-      {ListOfReps}
     </Box>
   );
 };

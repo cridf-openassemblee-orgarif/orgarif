@@ -8,59 +8,40 @@ import Tab from '@mui/material/Tab';
 import Tabs from '@mui/material/Tabs';
 import * as React from 'react';
 import { InView } from 'react-intersection-observer';
-import { deliberations } from '../data/deliberation';
+import { DeliberationId } from '../domain/ids';
+import { DeliberationDto, OrganismeDto } from '../domain/organisme';
 import * as breakpoint from '../styles/breakpoints';
 import { colors } from '../styles/colors';
 import { HystoryItem } from './HystoryItem';
 
-const StyledTab = styled(Tab)(({ theme }) => ({
-  fontSize: 'clamp(20px, 2em, 2vw);',
-  '&:first-of-type': {
-    marginLeft: '-1rem'
-  }
-}));
-interface TabPanelProps {
-  children?: React.ReactNode;
-  index: number;
-  value: number;
-}
-
-function TabPanel(props: TabPanelProps) {
-  const { children, value, index, ...other } = props;
-
-  return (
-    <div
-      role="tabpanel"
-      hidden={value !== index}
-      id={`simple-tabpanel-${index}`}
-      aria-labelledby={`simple-tab-${index}`}
-      {...other}
-    >
-      {value === index && <Box>{children}</Box>}
-    </div>
-  );
-}
-
-// TODO: dynamization
-export const RightPanel = () => {
+// TODO: complete dynamization
+export const RightPanel = (props: { organisme: OrganismeDto }) => {
   const [value, setValue] = React.useState(0);
   const [yearInView, setYearInview] = React.useState('2021');
 
-  const handleChange = (event: React.SyntheticEvent, newValue: number) => {
+  const handleTabChange = (event: React.SyntheticEvent, newValue: number) => {
     setValue(newValue);
   };
 
-  // grouping deliberations per year to be able to properly sorting the items by year + adding property color to style the avatar
-  const deliberationsByYear = Object.entries(
-    deliberations.reduce((r: any, a: any) => {
-      r[a.year] = r[a.year] || [];
+  // Flattening deliberations from organisme and instances
+  const orgDelibs = props.organisme.lienDeliberations;
+  const instancesDelibs = props.organisme.instances
+    .map(i => i.lienDeliberations)
+    .flat();
+  const allDelibs = [orgDelibs, instancesDelibs].flat();
 
-      if (r[a.year].length === 0) {
+  // grouping deliberations per year to be able to properly sort the deliberations per year + adding property color to style the avatar
+  const deliberationsByYear = Object.entries(
+    allDelibs.reduce((r: any, a: any) => {
+      r[a.deliberation.deliberationDate.substring(0, 4)] =
+        r[a.deliberation.deliberationDate.substring(0, 4)] || [];
+
+      if (r[a.deliberation.deliberationDate.substring(0, 4)].length === 0) {
         a.color = colors.dark;
       } else {
         a.color = colors.white;
       }
-      r[a.year].push(a);
+      r[a.deliberation.deliberationDate.substring(0, 4)].push(a);
       return r;
     }, Object.create(null))
   ).sort((a: any, b: any) => b[0] - a[0]);
@@ -105,7 +86,7 @@ export const RightPanel = () => {
       css={css`
         background-color: ${colors.dark};
         color: ${colors.white};
-        padding: 1em 1em 3em;
+        padding: 1em 1em 10em;
 
         @media (${breakpoint.LAPTOP}) {
           height: 99vh;
@@ -125,7 +106,7 @@ export const RightPanel = () => {
       >
         <Tabs
           value={value}
-          onChange={handleChange}
+          onChange={handleTabChange}
           textColor="inherit"
           indicatorColor="secondary"
         >
@@ -137,12 +118,6 @@ export const RightPanel = () => {
               font-size: clamp(1.5em, 2.4vw, 36px);
             `}
           />
-          {/* // NOTE : Disabling tabs for now */}
-          {/* <StyledTab
-            icon={CustomRadio(value - 1)}
-            iconPosition="end"
-            label="Instance"
-          /> */}
         </Tabs>
         <Box>
           <Typography variant="body2">DERNIÈRE MISE À JOUR</Typography>
@@ -150,13 +125,14 @@ export const RightPanel = () => {
         </Box>
       </Box>
       <TabPanel value={value} index={0}>
-        {deliberationsByYear.map((yearlyDelib: any, i: any) => {
+        {deliberationsByYear.map((yearlyDelib: any, i: number) => {
           return yearlyDelib[1].map((d: any, idx: any) => (
+            // FIXME - not working perfectly according to screen' height
             <InView
               as="div"
-              key={d.title}
-              threshold={1}
-              onChange={(inView, entry) => {
+              key={d.id}
+              threshold={0.5}
+              onChange={inView => {
                 setYearInview(prevState =>
                   inView ? yearlyDelib[0] : prevState
                 );
@@ -165,7 +141,7 @@ export const RightPanel = () => {
               <HystoryItem
                 delib={d}
                 yearlyDelib={yearlyDelib}
-                lastItem={deliberations.length - 1 === idx && 'last'}
+                lastItem={deliberationsByYear.length - 1 === i}
               />
             </InView>
           ));
@@ -190,7 +166,7 @@ export const RightPanel = () => {
             const [year, delibs] = yearlyDelib;
 
             return (
-              <React.Fragment key={year}>
+              <React.Fragment key={delibs[0].id}>
                 <Chip
                   label={year}
                   size="small"
@@ -204,29 +180,60 @@ export const RightPanel = () => {
                     border: 1px solid white;
                   `}
                 />
-                {delibs.map((i: any) => (
-                  <div
-                    key={i.title}
-                    css={css`
-                      width: 0.5em;
-                      height: 0.5em;
-                      background-color: ${colors.white};
-                      border-radius: 5em;
-                      margin: 0.25em;
-                    `}
-                  ></div>
-                ))}
+                {delibs.map(
+                  (d: {
+                    id: DeliberationId;
+                    deliberation: DeliberationDto;
+                    comment?: string;
+                    color?: string;
+                  }) => (
+                    <div
+                      //@ts-ignore
+                      key={d.id}
+                      css={css`
+                        width: 0.5em;
+                        height: 0.5em;
+                        background-color: ${colors.white};
+                        border-radius: 5em;
+                        margin: 0.25em;
+                      `}
+                    ></div>
+                  )
+                )}
               </React.Fragment>
             );
           })}
         </div>
       </TabPanel>
-
-      {/* 
-      // NOTE : Disabling tabs for now 
-      <TabPanel value={value} index={1}>
-        Instance
-      </TabPanel> */}
     </Box>
+  );
+};
+
+const StyledTab = styled(Tab)(({ theme }) => ({
+  fontSize: 'clamp(20px, 2em, 2vw);',
+  '&:first-of-type': {
+    marginLeft: '-1rem'
+  }
+}));
+
+interface TabPanelProps {
+  children?: React.ReactNode;
+  index: number;
+  value: number;
+}
+
+const TabPanel = (props: TabPanelProps) => {
+  const { children, value, index, ...other } = props;
+
+  return (
+    <div
+      role="tabpanel"
+      hidden={value !== index}
+      id={`simple-tabpanel-${index}`}
+      aria-labelledby={`simple-tab-${index}`}
+      {...other}
+    >
+      {value === index && <Box>{children}</Box>}
+    </div>
   );
 };

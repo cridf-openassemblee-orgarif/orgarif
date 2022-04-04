@@ -4,11 +4,13 @@ import * as React from 'react';
 import { PropsWithChildren } from 'react';
 import { NavBar } from './NavBar';
 
-export const MainContainer = (props: PropsWithChildren<{}>) => (
-  <Container maxWidth={false} disableGutters>
-    <Box position="fixed" width="100%">
-      <NavBar />
-      {props.children}
-    </Box>
-  </Container>
-);
+export const MainContainer = (props: PropsWithChildren<{}>) => {
+  return (
+    <Container maxWidth={false} disableGutters>
+      <Box position="fixed" width="100%">
+        <NavBar />
+        {props.children}
+      </Box>
+    </Container>
+  );
+};

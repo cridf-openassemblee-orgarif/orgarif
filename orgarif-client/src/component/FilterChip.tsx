@@ -2,12 +2,104 @@
 import { css } from '@emotion/react';
 import styled from '@emotion/styled';
 import { Chip } from '@mui/material';
+import Tooltip from '@mui/material/Tooltip';
 import * as React from 'react';
 import { useRecoilState } from 'recoil';
+import {
+  Departement,
+  NatureJuridique,
+  Secteur,
+  TypeStructure
+} from '../domain/bootstrap-data';
+import {
+  DepartementId,
+  NatureJuridiqueId,
+  SecteurId,
+  TypeStructureId
+} from '../domain/ids';
 import { Organigram } from '../icon/collection/Organigram';
 import { state } from '../state/state';
 import * as breakpoints from '../styles/breakpoints';
 import { colors } from '../styles/colors';
+
+interface FilterChipProps {
+  filter: Departement | NatureJuridique | Secteur | TypeStructure;
+  showIcon: boolean | undefined;
+  isSticky: boolean | undefined;
+}
+
+export const isDepartement = (object: unknown): object is Departement => {
+  return Object.prototype.hasOwnProperty.call(object, 'code');
+};
+
+export const FilterChip = ({ filter, showIcon, isSticky }: FilterChipProps) => {
+  const [activeFilters, setActiveFilters] = useRecoilState(state.activeFilters);
+
+  // Regex to check if libelle contains parentheses and if yes,
+  // extract the value between parentheses to display the abbreviation.
+  const regExp = /\((.*?)\)/;
+  let newLibelle;
+  if (filter.libelle.includes('(')) {
+    newLibelle = regExp.exec(filter.libelle)![1];
+  } else {
+    newLibelle = filter.libelle;
+  }
+
+  const handleFilterClick = (
+    id: DepartementId | NatureJuridiqueId | SecteurId | TypeStructureId
+  ) => {
+    const currentActiveFilters = [...activeFilters];
+    const indexFilter = currentActiveFilters.map(f => f.id).indexOf(id);
+
+    indexFilter === -1
+      ? setActiveFilters((oldList: any) => [...oldList, filter])
+      : setActiveFilters((oldList: any) => [
+          ...oldList.filter((f: any) => f.id !== id)
+        ]);
+  };
+
+  const chipColor = activeFilters.some((f: any) => f.id === filter.id)
+    ? 'error'
+    : 'primary';
+
+  return (
+    <>
+      {showIcon ? (
+        // Chip with icon
+        <StyledChip
+          key={filter.libelle}
+          color={chipColor}
+          icon={
+            <Organigram size={isSticky ? '24px' : 'clamp(24px, 1.4vw, 2rem)'} />
+          }
+          label={filter.libelle}
+          onClick={() => handleFilterClick(filter.id)}
+          css={isSticky ? skrinkedChips : ''}
+        />
+      ) : isDepartement(filter) ? (
+        // Chip with postal code
+        <StyledChip
+          key={filter.libelle}
+          color={chipColor}
+          label={`${filter.libelle} - ${filter.code}`}
+          onClick={() => handleFilterClick(filter.id)}
+          css={isSticky ? skrinkedChips : ''}
+        />
+      ) : (
+        // Chip with tooltip
+        <Tooltip title={filter.libelle} arrow>
+          <StyledChip
+            key={filter.libelle}
+            color={chipColor}
+            label={newLibelle}
+            onClick={() => handleFilterClick(filter.id)}
+            css={isSticky ? skrinkedChips : ''}
+          />
+        </Tooltip>
+      )}
+    </>
+  );
+};
 
 const StyledChip = styled(Chip)(({ theme }) => ({
   lineHeight: 1,
@@ -48,50 +140,3 @@ const skrinkedChips = css`
     max-width: 80vw;
   }
 `;
-
-/**
- * TODO : typing props + handle filters when selected
- */
-export const FilterChip = ({ filter, showIcon, isSticky }: any) => {
-  const [activeFilters, setActiveFilters] = useRecoilState(state.activeFilters);
-
-  const handleClick = (e: React.MouseEvent<HTMLElement>) => {
-    const currentFilters = [...activeFilters];
-    const indexFilter = currentFilters.indexOf(filter);
-
-    indexFilter === -1
-      ? setActiveFilters(oldList => [...oldList, filter])
-      : setActiveFilters(oldList => [
-          ...oldList.filter(item => item !== filter)
-        ]);
-  };
-
-  return (
-    <>
-      {showIcon ? (
-        <StyledChip
-          key={filter.libelle}
-          color={activeFilters.includes(filter) ? 'error' : 'primary'}
-          icon={
-            <Organigram size={isSticky ? '24px' : 'clamp(24px, 1.4vw, 2rem)'} />
-          }
-          label={filter.libelle}
-          onClick={handleClick}
-          css={isSticky ? skrinkedChips : ''}
-        />
-      ) : (
-        <StyledChip
-          key={filter.libelle}
-          color={activeFilters.includes(filter) ? 'error' : 'primary'}
-          label={
-            !filter.code
-              ? `${filter.libelle}`
-              : `${filter.libelle} - ${filter.code}`
-          }
-          onClick={(e: React.MouseEvent<HTMLElement>) => handleClick(e)}
-          css={isSticky ? skrinkedChips : ''}
-        />
-      )}
-    </>
-  );
-};
