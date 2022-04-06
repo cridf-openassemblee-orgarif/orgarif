@@ -9,10 +9,10 @@ database:
 spring:
   datasource:
     tomcat:
-      initialSize: 1
-      minIdle: 1
-      maxIdle: 1
-      maxActive: 1
+      initialSize: 5
+      minIdle: 5
+      maxIdle: 10
+      maxActive: 10
 server.forward-headers-strategy: framework
 #---------------------------------------------------------------------------
 assets:
