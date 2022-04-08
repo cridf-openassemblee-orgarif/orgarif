@@ -172,13 +172,14 @@ export const TableContainer = () => {
       <DrawerComponent />
       <TableHeader onSearch={requestSearch} />
       <div
+        id="table"
         css={css`
           height: calc(100vh - 245px);
           width: 100%;
           padding: 0px 16px;
 
           @media (${breakpoint.LAPTOP}) {
-            height: calc(100vh - 215px);
+            height: calc(100vh - 220px);
             padding: 0px 48px;
           }
         `}

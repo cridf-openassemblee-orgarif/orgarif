@@ -54,8 +54,7 @@ const orgarifTheme = {
     MuiAppBar: {
       styleOverrides: {
         root: {
-          // backgroundColor: `${colors.mainBackground}`,
-          backgroundColor: 'transparent',
+          backgroundColor: `${colors.mainBackground}`,
           boxShadow: 'none',
           borderBottom: `1px solid ${colors.dark}`
         }

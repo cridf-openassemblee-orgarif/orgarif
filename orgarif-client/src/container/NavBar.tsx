@@ -5,9 +5,7 @@ import AppBar from '@mui/material/AppBar';
 import Box from '@mui/material/Box';
 import Toolbar from '@mui/material/Toolbar';
 import * as React from 'react';
-import { useLocation } from 'react-router-dom';
 import { useRecoilState } from 'recoil';
-import { Header } from '../component/Header';
 import { MobileMenu } from '../component/MobileMenu';
 import { LogoutForm } from '../form/LogoutForm';
 import { Logo } from '../icon/collection/Logo';
@@ -20,68 +18,63 @@ import { isMobile, isTabletAndMore } from '../utils/viewport-utils';
 
 export const NavBar = () => {
   const [userInfos] = useRecoilState(state.userInfos);
-  const location = useLocation();
 
   return (
-    <Box>
-      <AppBar>
-        <Toolbar
+    <AppBar>
+      <Toolbar
+        css={css`
+          padding: 0;
+        `}
+      >
+        <Box
           css={css`
-            padding: 0;
+            flex-grow: 1;
           `}
         >
-          <Box
-            css={css`
-              flex-grow: 1;
+          <RouteLink route={{ name: 'RootRoute' }}>
+            <Logo width={isMobile() ? 120 : 200} height={70} />
+          </RouteLink>
+        </Box>
+        {isMobile() && <MobileMenu />}
+        {isTabletAndMore() && !userInfos && (
+          <RouteLink
+            forwardCss={css`
+              display: flex;
+              flex-direction: row;
+              align-items: center;
+              color: ${colors.dark};
             `}
+            route={{
+              name: 'LoginRoute'
+            }}
           >
-            <RouteLink route={{ name: 'RootRoute' }}>
-              <Logo width={isMobile() ? 120 : 200} height={70} />
-            </RouteLink>
-          </Box>
-          {isMobile() && <MobileMenu />}
-          {isTabletAndMore() && !userInfos && (
-            <RouteLink
-              forwardCss={css`
-                display: flex;
-                flex-direction: row;
-                align-items: center;
-                color: ${colors.dark};
-              `}
-              route={{
-                name: 'LoginRoute'
-              }}
-            >
-              <SignIn size={36} />
-              <Link
-                variant="body2"
-                underline="hover"
-                component="button"
-                css={css`
-                  margin-left: 0.5em;
-                  color: ${colors.dark};
-                  padding-right: 1em;
-                `}
-              >
-                Connexion
-              </Link>
-            </RouteLink>
-          )}
-          {isTabletAndMore() && userInfos && (
-            <Box
+            <SignIn size={36} />
+            <Link
+              variant="body2"
+              underline="hover"
+              component="button"
               css={css`
-                display: flex;
+                margin-left: 0.5em;
+                color: ${colors.dark};
                 padding-right: 1em;
               `}
             >
-              <SignOut size={36} />
-              <LogoutForm />
-            </Box>
-          )}
-        </Toolbar>
-      </AppBar>
-      {userInfos && <Header small />}
-      {location.pathname === '/' && !userInfos && <Header />}
-    </Box>
+              Connexion
+            </Link>
+          </RouteLink>
+        )}
+        {isTabletAndMore() && userInfos && (
+          <Box
+            css={css`
+              display: flex;
+              padding-right: 1em;
+            `}
+          >
+            <SignOut size={36} />
+            <LogoutForm />
+          </Box>
+        )}
+      </Toolbar>
+    </AppBar>
   );
 };

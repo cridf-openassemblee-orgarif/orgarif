@@ -26,12 +26,11 @@ export const FiltersContainer = () => {
   const [natureJuridiques] = useRecoilState(state.natureJuridiques);
   const [typeStructures] = useRecoilState(state.typeStructures);
   const [activeFilters] = useRecoilState(state.activeFilters);
-  const [isOpened] = useRecoilState(state.openedDrawer);
 
   const ChipRef = React.useRef<HTMLDivElement>(null);
 
   const [shrinkSectionFilters, setShrinkSectionFilters] =
-    React.useState<boolean>(true);
+    React.useState<boolean>(false);
   const [expandedAccordion, setExpandedAccordion] = React.useState<
     string | false
   >('section');
@@ -48,27 +47,27 @@ export const FiltersContainer = () => {
     !expandedAccordion && setHideExtraFilters(true);
   }, [expandedAccordion]);
 
-  useEventListener('wheel', e => {
-    if (ChipRef.current && isOpened === false) {
-      if (
-        ChipRef.current.getBoundingClientRect().top <= 100 &&
-        e.deltaY > 0 &&
-        !!expandedAccordion &&
-        shrinkSectionFilters === false
-      ) {
-        setShrinkSectionFilters(true);
-      } else if (
-        ChipRef.current.getBoundingClientRect().top <= 100 &&
-        e.deltaY > 0 &&
-        shrinkSectionFilters
-      ) {
-        setExpandedAccordion(false);
-      }
+  useEventListener('scroll', e => {
+    const filters = document.querySelector('#filters')! as HTMLElement;
+
+    if (isTabletAndMore() && filters.getBoundingClientRect().bottom < 140) {
+      setExpandedAccordion(false);
+      setShrinkSectionFilters(true);
+    } else if (isMobile() && filters.getBoundingClientRect().bottom < 180) {
+      setExpandedAccordion(false);
+      setShrinkSectionFilters(true);
     }
   });
 
   return (
-    <Box ref={ChipRef}>
+    <Box
+      ref={ChipRef}
+      id="filters"
+      css={css`
+        position: relative;
+        z-index: 2;
+      `}
+    >
       <Accordion
         expanded={expandedAccordion === 'section'}
         onChange={handleChange('section')}
@@ -200,6 +199,7 @@ const Accordion = styled((props: AccordionProps) => (
   />
 ))(({ theme }) => ({
   backgroundColor: `${colors.mainBackground}`,
+  // backgroundColor: `cyan`,
   '&:not(:last-child)': {
     borderBottom: 0
   },
