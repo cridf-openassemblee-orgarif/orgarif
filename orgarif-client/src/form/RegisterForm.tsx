@@ -20,13 +20,13 @@ export const RegisterForm = (props: {
   mailIsAlreadyTaken: boolean;
 }) => {
   const [mailIsAlreadyTaken, setMailIsAlreadyTaken] = useState(false);
-  const checkLoginAvailability = (
+  const checkMailAvailability = (
     event: ChangeEvent<HTMLInputElement | HTMLTextAreaElement>
   ) => {
-    const login = event.target.value;
+    const mail = event.target.value;
     appContext
       .queryService()
-      .isLoginAlreadyTakenQuery({ login })
+      .isMailAlreadyTakenQuery({ mail })
       .then(r => {
         setMailIsAlreadyTaken(r.alreadyTaken);
       });
@@ -46,7 +46,7 @@ export const RegisterForm = (props: {
         <ControlledTextInput
           name="mail"
           label="Email"
-          onChange={checkLoginAvailability}
+          onChange={checkMailAvailability}
           control={control}
           errors={errors}
         />

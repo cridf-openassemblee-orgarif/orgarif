@@ -1,17 +1,17 @@
 import org.jetbrains.kotlin.gradle.tasks.KotlinCompile
 
 plugins {
-    val kotlinVersion = "1.6.0"
+    val kotlinVersion = "1.6.20"
     kotlin("jvm") version kotlinVersion
     id("io.spring.dependency-management") version "1.0.11.RELEASE"
-    id("org.springframework.boot") version "2.6.1"
+    id("org.springframework.boot") version "2.6.6"
     // so we don't need to open Spring components classes
     id("org.jetbrains.kotlin.plugin.spring") version kotlinVersion
 }
 
 // TODO[build] find a way to declare it just once
 // don't forget to change the second one until then !
-val kotlinVersion = "1.6.0"
+val kotlinVersion = "1.6.20"
 
 kotlin {
     sourceSets.all {

@@ -16,7 +16,5 @@ class SerializeAsStringSerializer :
         value: SerializeAsString,
         gen: JsonGenerator,
         provider: SerializerProvider
-    ) {
-        gen.writeString(Companion.serialize(value))
-    }
+    ) = gen.writeString(Companion.serialize(value))
 }

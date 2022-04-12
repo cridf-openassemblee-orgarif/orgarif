@@ -13,7 +13,7 @@ internal class CommandControllerTest {
             """
         {
             "objectType":"LoginCommand",
-            "login": "username",
+            "mail": "username",
             "password": "password"
         }
         """

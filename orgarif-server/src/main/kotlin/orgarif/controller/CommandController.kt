@@ -12,6 +12,8 @@ import orgarif.command.Command
 import orgarif.command.CommandConfiguration
 import orgarif.command.CommandHandler
 import orgarif.command.CommandResponse
+import orgarif.command.DevLoginCommand
+import orgarif.command.DevLoginCommandHandler
 import orgarif.command.EmptyCommandResponse
 import orgarif.command.LoginCommand
 import orgarif.command.LoginCommandHandler
@@ -37,6 +39,7 @@ class CommandController(
     val transactionManager: PlatformTransactionManager,
     val idLogService: IdLogService,
     val userSessionService: UserSessionService,
+    val devLoginCommandHandler: DevLoginCommandHandler,
     val loginCommandHandler: LoginCommandHandler,
     val registerCommandHandler: RegisterCommandHandler,
 ) {
@@ -109,6 +112,7 @@ class CommandController(
     @Suppress("UNCHECKED_CAST")
     private fun handler(command: Command) =
         when (command) {
+            is DevLoginCommand -> devLoginCommandHandler
             is LoginCommand -> loginCommandHandler
             is RegisterCommand -> registerCommandHandler
         } as

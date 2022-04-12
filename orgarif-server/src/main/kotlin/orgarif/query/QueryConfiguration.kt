@@ -6,6 +6,6 @@ object QueryConfiguration {
 
     fun role(query: Query): Role? =
         when (query) {
-            is IsLoginAlreadyTakenQuery -> null
+            is IsMailAlreadyTakenQuery -> null
         }
 }

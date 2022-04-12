@@ -1,5 +1,7 @@
 import { appContext } from '../ApplicationContext';
 import {
+  DevLoginCommand,
+  DevLoginCommandResponse,
   LoginCommand,
   LoginCommandResponse,
   RegisterCommand,
@@ -7,6 +9,11 @@ import {
 } from '../domain/commands';
 
 export class CommandService {
+  public devLoginCommand = (
+    command: DevLoginCommand
+  ): Promise<DevLoginCommandResponse> =>
+    this.command('DevLoginCommand', command);
+
   public loginCommand = (
     command: LoginCommand
   ): Promise<LoginCommandResponse> => this.command('LoginCommand', command);

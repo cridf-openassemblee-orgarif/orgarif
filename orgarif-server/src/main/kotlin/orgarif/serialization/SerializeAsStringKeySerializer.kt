@@ -12,7 +12,5 @@ class SerializeAsStringKeySerializer :
         value: SerializeAsString,
         gen: JsonGenerator,
         provider: SerializerProvider
-    ) {
-        gen.writeFieldName(SerializeAsStringSerializer.serialize(value))
-    }
+    ) = gen.writeFieldName(SerializeAsStringSerializer.serialize(value))
 }

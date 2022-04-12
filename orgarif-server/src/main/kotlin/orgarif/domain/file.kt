@@ -22,5 +22,5 @@ data class UserFileReference(
     val userId: UserId,
     val contentType: String,
     val originalFilename: String,
-    val date: Instant
+    val uploadDate: Instant
 )

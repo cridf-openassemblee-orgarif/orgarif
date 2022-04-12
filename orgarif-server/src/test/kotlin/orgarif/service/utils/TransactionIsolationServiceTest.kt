@@ -55,7 +55,7 @@ internal class TransactionIsolationServiceTest(
                 throw e
             }
         }
-        assertNotNull(userDao.fetchByUsername("isolated"))
-        assertNull(userDao.fetchByUsername("not isolated"))
+        assertNotNull(userDao.fetchOrNullByMail("isolated"))
+        assertNull(userDao.fetchOrNullByMail("not isolated"))
     }
 }

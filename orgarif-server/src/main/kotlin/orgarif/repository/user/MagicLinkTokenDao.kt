@@ -14,30 +14,33 @@ class MagicLinkTokenDao(val jooq: DSLContext) {
     data class Record(
         val token: String,
         val userId: UserId,
+        val validity: Boolean,
         val creationDate: Instant,
-        val validity: Boolean
+        val lastUpdate: Instant
     )
 
     fun insert(r: Record) {
-        val record =
+        val jr =
             MagicLinkTokenRecord().apply {
                 token = r.token
                 userId = r.userId.rawId
-                creationDate = r.creationDate
                 validity = r.validity
+                creationDate = r.creationDate
+                lastUpdate = r.lastUpdate
             }
-        jooq.insertInto(MAGIC_LINK_TOKEN).set(record).execute()
+        jooq.insertInto(MAGIC_LINK_TOKEN).set(jr).execute()
     }
 
-    fun fetchOrNull(magicToken: String) =
+    fun fetchOrNull(magicToken: String): Record? =
         jooq.selectFrom(MAGIC_LINK_TOKEN)
             .where(MAGIC_LINK_TOKEN.TOKEN.equal(magicToken))
             .fetchOne()
             ?.let(this::map)
 
-    fun updateValidity(token: String, validity: Boolean) {
+    fun updateValidity(token: String, validity: Boolean, lastUpdateDate: Instant) {
         jooq.update(MAGIC_LINK_TOKEN)
             .set(MAGIC_LINK_TOKEN.VALIDITY, validity)
+            .set(MAGIC_LINK_TOKEN.LAST_UPDATE, lastUpdateDate)
             .where(MAGIC_LINK_TOKEN.TOKEN.equal(token))
             .execute()
     }
@@ -46,6 +49,7 @@ class MagicLinkTokenDao(val jooq: DSLContext) {
         Record(
             token = r.token,
             userId = r.userId.toTypeId(),
+            validity = r.validity,
             creationDate = r.creationDate,
-            validity = r.validity)
+            lastUpdate = r.lastUpdate)
 }

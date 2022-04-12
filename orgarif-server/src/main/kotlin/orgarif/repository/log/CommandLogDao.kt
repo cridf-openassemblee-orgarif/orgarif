@@ -30,7 +30,7 @@ class CommandLogDao(val jooq: DSLContext) {
     )
 
     fun insert(r: Record) {
-        val clr =
+        val jr =
             CommandLogRecord().apply {
                 id = r.id.rawId
                 userId = r.userId?.rawId
@@ -45,7 +45,7 @@ class CommandLogDao(val jooq: DSLContext) {
                 startDate = r.startDate
                 endDate = r.endDate
             }
-        jooq.insertInto(COMMAND_LOG).set(clr).execute()
+        jooq.insertInto(COMMAND_LOG).set(jr).execute()
     }
 
     fun updateExceptionStackTrace(id: CommandLogId, exceptionStackTrace: String, endDate: Instant) {

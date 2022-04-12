@@ -9,7 +9,6 @@ import org.springframework.security.authentication.UsernamePasswordAuthenticatio
 import org.springframework.security.core.context.SecurityContextHolder
 import org.springframework.security.web.csrf.CookieCsrfTokenRepository
 import org.springframework.stereotype.Service
-import orgarif.domain.AuthResult
 import orgarif.domain.Role
 import orgarif.domain.Session
 import orgarif.domain.UserSession
@@ -44,7 +43,7 @@ class UserSessionService(
         user: UserDao.Record,
         request: HttpServletRequest,
         response: HttpServletResponse
-    ): AuthResult {
+    ) {
         val sessionId = randomService.id<UserSessionId>()
 
         // create the session if doesn't exist
@@ -63,7 +62,6 @@ class UserSessionService(
 
         val csrfToken = cookieCsrfTokenRepository.generateToken(request)
         cookieCsrfTokenRepository.saveToken(csrfToken, request, response)
-        return AuthResult(userSession, csrfToken.token)
     }
 
     fun isAuthenticated() =

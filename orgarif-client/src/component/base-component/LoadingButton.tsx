@@ -67,9 +67,6 @@ const LoadingButtonBase = (
         : undefined
     }
     disabled={props.loadingState === 'loading'}
-    css={css`
-      padding: 0 30px;
-    `}
     {...extractEmotionCss(props)}
   >
     <ButtonContent loadingState={props.loadingState}>

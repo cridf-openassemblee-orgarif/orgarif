@@ -12,7 +12,6 @@ class LocalDateSerializer : StdSerializer<LocalDate>(LocalDate::class.java) {
         val formatter = DateTimeFormatter.ISO_LOCAL_DATE
     }
 
-    override fun serialize(value: LocalDate, gen: JsonGenerator, provider: SerializerProvider) {
+    override fun serialize(value: LocalDate, gen: JsonGenerator, provider: SerializerProvider) =
         gen.writeString(formatter.format(value))
-    }
 }

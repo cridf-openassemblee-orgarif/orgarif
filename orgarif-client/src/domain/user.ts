@@ -1,6 +1,6 @@
 import { UserId } from './ids';
 
-export type LoginResult = 'loggedIn' | 'userNotFound' | 'badPassword';
+export type LoginResult = 'loggedIn' | 'mailNotFound' | 'badPassword';
 
 export type RegisterResult = 'registered' | 'mailAlreadyExists';
 

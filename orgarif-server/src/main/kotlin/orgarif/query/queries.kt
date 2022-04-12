@@ -8,6 +8,6 @@ sealed class Query
 
 sealed class QueryResponse
 
-data class IsLoginAlreadyTakenQuery(val login: String) : Query()
+data class IsMailAlreadyTakenQuery(val mail: String) : Query()
 
-data class IsLoginAlreadyTakenQueryResponse(val alreadyTaken: Boolean) : QueryResponse()
+data class IsMailAlreadyTakenQueryResponse(val alreadyTaken: Boolean) : QueryResponse()

@@ -6,15 +6,20 @@ import { useState } from 'react';
 import { useRecoilState } from 'recoil';
 import { appContext } from '../ApplicationContext';
 import { MainContainer } from '../container/MainContainer';
-import { LoginResult } from '../domain/user';
-import { Errors } from '../errors';
+import { LoginResult, UserInfos } from '../domain/user';
 import { LoginForm, LoginFormDto } from '../form/LoginForm';
 import { state } from '../state/state';
 import { assertUnreachable } from '../utils';
+import { Errors } from '../errors';
 
 export const LoginView = () => {
   const [userInfos, setUserInfos] = useRecoilState(state.userInfos);
   const [loginResult, setLoginResult] = useState<LoginResult>();
+  const connect = (userInfos: UserInfos) => {
+    appContext.csrfTokenService().refreshToken();
+    setUserInfos(userInfos);
+    appContext.applicationHistory().goTo({ name: 'RootRoute' });
+  };
   const login = (data: LoginFormDto) =>
     appContext
       .commandService()
@@ -26,17 +31,20 @@ export const LoginView = () => {
             if (!r.userinfos) {
               throw Errors._198c103e();
             }
-            appContext.csrfTokenService().refreshToken();
-            setUserInfos(r.userinfos);
-            appContext.applicationHistory().goTo({ name: 'RootRoute' });
+            connect(r.userinfos);
             break;
-          case 'userNotFound':
+          case 'mailNotFound':
           case 'badPassword':
             break;
           default:
             assertUnreachable(r.result);
         }
       });
+  const devLogin = (username: string) =>
+    appContext
+      .commandService()
+      .devLoginCommand({ username })
+      .then(r => connect(r.userinfos));
   return (
     <MainContainer>
       <div
@@ -68,26 +76,8 @@ export const LoginView = () => {
                 `}
               >
                 dev user authent :{' '}
-                <Button
-                  onClick={() =>
-                    login({
-                      login: 'user',
-                      password: 'user'
-                    })
-                  }
-                >
-                  user
-                </Button>
-                <Button
-                  onClick={() =>
-                    login({
-                      login: 'admin',
-                      password: 'admin'
-                    })
-                  }
-                >
-                  admin
-                </Button>
+                <Button onClick={() => devLogin('user')}>user</Button>
+                <Button onClick={() => devLogin('admin')}>admin</Button>
               </div>
             )}
             {userInfos && (
@@ -110,7 +100,7 @@ export const LoginView = () => {
                   switch (loginResult) {
                     case 'loggedIn':
                       return null;
-                    case 'userNotFound':
+                    case 'mailNotFound':
                       return <div>User not found</div>;
                     case 'badPassword':
                       return <div>Bad password</div>;

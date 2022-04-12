@@ -2,7 +2,6 @@ package orgarif.command
 
 import javax.servlet.http.HttpServletRequest
 import javax.servlet.http.HttpServletResponse
-import org.springframework.security.crypto.password.PasswordEncoder
 import org.springframework.stereotype.Service
 import orgarif.domain.LoginResult
 import orgarif.domain.UserInfos
@@ -15,8 +14,7 @@ import orgarif.service.user.UserSessionService
 class LoginCommandHandler(
     val userDao: UserDao,
     val userService: UserService,
-    val userSessionService: UserSessionService,
-    val passwordEncoder: PasswordEncoder
+    val userSessionService: UserSessionService
 ) : CommandHandler<LoginCommand, LoginCommandResponse> {
 
     override fun handle(
@@ -31,18 +29,15 @@ class LoginCommandHandler(
             // OrgarifStandardException
             throw RuntimeException()
         }
-        val cleanLogin = UserService.cleanMail(command.login)
+        val cleanLogin = UserService.cleanMail(command.mail)
         val user =
-            userDao.fetchByMail(cleanLogin)
-                ?: userDao.fetchByUsername(cleanLogin)
-                    ?: return LoginCommandResponse(LoginResult.userNotFound, null, null)
-        val userPassword =
-            userDao.fetchPassword(user.id) ?: throw IllegalStateException("${user.id}")
-        if (!passwordEncoder.matches(command.password.password.trim(), userPassword.hash)) {
-            return LoginCommandResponse(LoginResult.badPassword, null, null)
+            userDao.fetchOrNullByMail(cleanLogin)
+                ?: return LoginCommandResponse(LoginResult.mailNotFound, null)
+        val userPassword = userDao.fetchPassword(user.id)
+        if (!userService.passwordMatches(command.password, userPassword)) {
+            return LoginCommandResponse(LoginResult.badPassword, null)
         }
-        val authResult = userSessionService.authenticateUser(user, request, response)
-        return LoginCommandResponse(
-            LoginResult.loggedIn, UserInfos.fromUser(user), authResult.csrfToken)
+        userSessionService.authenticateUser(user, request, response)
+        return LoginCommandResponse(LoginResult.loggedIn, UserInfos.fromUser(user))
     }
 }

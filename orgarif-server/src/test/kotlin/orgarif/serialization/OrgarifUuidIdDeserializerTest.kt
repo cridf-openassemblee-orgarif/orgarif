@@ -9,7 +9,7 @@ import orgarif.utils.toTypeId
 internal class OrgarifUuidIdDeserializerTest {
 
     @Test
-    fun `test DeviceId deserialization`() {
+    fun `test OrgarifUuidId deserialization`() {
         assertEquals(
             emptyUuid0.toTypeId<TestUuidId>(),
             Serializer.deserialize<TestUuidId>("\"00000000000000000000000000000000\""))

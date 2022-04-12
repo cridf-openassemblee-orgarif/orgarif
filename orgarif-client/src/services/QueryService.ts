@@ -1,14 +1,14 @@
 import { appContext } from '../ApplicationContext';
 import {
-  IsLoginAlreadyTakenQuery,
-  IsLoginAlreadyTakenQueryResponse
+  IsMailAlreadyTakenQuery,
+  IsMailAlreadyTakenQueryResponse
 } from '../domain/queries';
 
 export class QueryService {
-  public isLoginAlreadyTakenQuery = (
-    query: IsLoginAlreadyTakenQuery
-  ): Promise<IsLoginAlreadyTakenQueryResponse> =>
-    this.query('IsLoginAlreadyTakenQuery', query);
+  public isMailAlreadyTakenQuery = (
+    query: IsMailAlreadyTakenQuery
+  ): Promise<IsMailAlreadyTakenQueryResponse> =>
+    this.query('IsMailAlreadyTakenQuery', query);
 
   private query = <R>(queryName: string, query?: object): Promise<R> =>
     appContext

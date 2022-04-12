@@ -4,8 +4,8 @@ import java.net.URLDecoder
 import javax.servlet.http.HttpServletRequest
 import org.springframework.web.bind.annotation.GetMapping
 import org.springframework.web.bind.annotation.RestController
-import orgarif.query.IsLoginAlreadyTakenQuery
-import orgarif.query.IsLoginAlreadyTakenQueryHandler
+import orgarif.query.IsMailAlreadyTakenQuery
+import orgarif.query.IsMailAlreadyTakenQueryHandler
 import orgarif.query.Query
 import orgarif.query.QueryConfiguration
 import orgarif.query.QueryHandler
@@ -18,7 +18,7 @@ import orgarif.service.user.UserSessionService
 class QueryController(
     val userDao: UserDao,
     val userSessionService: UserSessionService,
-    val isLoginAlreadyTakenQueryHandler: IsLoginAlreadyTakenQueryHandler
+    val isMailAlreadyTakenQueryHandler: IsMailAlreadyTakenQueryHandler
 ) {
 
     @GetMapping("/query")
@@ -36,7 +36,7 @@ class QueryController(
     @Suppress("UNCHECKED_CAST")
     private fun handler(query: Query) =
         when (query) {
-            is IsLoginAlreadyTakenQuery -> isLoginAlreadyTakenQueryHandler
+            is IsMailAlreadyTakenQuery -> isMailAlreadyTakenQueryHandler
         } as
             QueryHandler<Query, QueryResponse>
 }

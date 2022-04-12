@@ -1,7 +1,15 @@
 import { LoginResult, RegisterResult, UserInfos } from './user';
 
+export interface DevLoginCommand {
+  username: string;
+}
+
+export interface DevLoginCommandResponse {
+  userinfos: UserInfos;
+}
+
 export interface LoginCommand {
-  login: string;
+  mail: string;
   password: string;
 }
 
