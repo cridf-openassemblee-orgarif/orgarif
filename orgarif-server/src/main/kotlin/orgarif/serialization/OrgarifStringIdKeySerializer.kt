@@ -11,5 +11,5 @@ class OrgarifStringIdKeySerializer : StdSerializer<OrgarifStringId>(OrgarifStrin
         value: OrgarifStringId,
         gen: JsonGenerator,
         provider: SerializerProvider
-    ): Unit = gen.writeFieldName(OrgarifStringIdSerializer.serialize(value))
+    ) = gen.writeFieldName(OrgarifStringIdSerializer.serialize(value))
 }

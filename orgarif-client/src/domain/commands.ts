@@ -113,8 +113,16 @@ export interface CreateTypeStructureCommandResponse {
   id: TypeStructureId;
 }
 
+export interface DevLoginCommand {
+  username: string;
+}
+
+export interface DevLoginCommandResponse {
+  userinfos: UserInfos;
+}
+
 export interface LoginCommand {
-  login: string;
+  mail: string;
   password: string;
 }
 

@@ -3,7 +3,6 @@ package orgarif.repository.user
 import java.time.Instant
 import java.util.stream.Stream
 import org.jooq.DSLContext
-import org.jooq.impl.DSL.lower
 import org.springframework.dao.DuplicateKeyException
 import org.springframework.stereotype.Repository
 import orgarif.domain.HashedPassword
@@ -27,19 +26,13 @@ class UserDao(val jooq: DSLContext) {
         val language: Language,
         val roles: Set<Role>,
         val signupDate: Instant,
-        // [doc] because some mail provider could choose to support character which usually aren't
-        // differentiated from another or usually just supported
-        // TODO[user] or we don't care, trace is kept in command log ?
-        // + former mails won't keep both
-        val dirtyMail: String?,
-        val formerMails: List<String>
+        val lastUpdate: Instant
     ) {
         override fun toString() = "User($id|$mail)"
     }
 
-    @Throws(MailAlreadyRegisteredException::class)
     fun insert(r: Record, hashedPassword: HashedPassword) {
-        val ur =
+        val jr =
             AppUserRecord().apply {
                 id = r.id.rawId
                 mail = r.mail
@@ -49,14 +42,25 @@ class UserDao(val jooq: DSLContext) {
                 language = r.language.name
                 roles = r.roles.map { it.name }.toTypedArray()
                 signupDate = r.signupDate
-                dirtyMail = r.dirtyMail
-                formerMails = r.formerMails.toTypedArray()
+                lastUpdate = r.lastUpdate
             }
 
         try {
-            jooq.insertInto(APP_USER).set(ur).execute()
+            jooq.insertInto(APP_USER).set(jr).execute()
         } catch (e: DuplicateKeyException) {
             handleDuplicateKeyException(e, r.mail)
+        }
+    }
+
+    fun updateMail(id: UserId, mail: String, lastUpdateDate: Instant) {
+        try {
+            jooq.update(APP_USER)
+                .set(APP_USER.MAIL, mail)
+                .set(APP_USER.LAST_UPDATE, lastUpdateDate)
+                .where(APP_USER.ID.equal(id.rawId))
+                .execute()
+        } catch (e: DuplicateKeyException) {
+            handleDuplicateKeyException(e, mail)
         }
     }
 
@@ -71,47 +75,54 @@ class UserDao(val jooq: DSLContext) {
         }
     }
 
-    fun updatePassword(id: UserId, password: HashedPassword) {
+    fun updatePassword(id: UserId, password: HashedPassword, lastUpdateDate: Instant) {
         jooq.update(APP_USER)
             .set(APP_USER.PASSWORD, password.hash)
+            .set(APP_USER.LAST_UPDATE, lastUpdateDate)
             .where(APP_USER.ID.equal(id.rawId))
             .execute()
     }
 
-    fun updateRoles(id: UserId, roles: Set<Role>) {
+    fun updateRoles(id: UserId, roles: Set<Role>, lastUpdateDate: Instant) {
         jooq.update(APP_USER)
             .set(APP_USER.ROLES, roles.map { it.name }.toTypedArray())
+            .set(APP_USER.LAST_UPDATE, lastUpdateDate)
             .where(APP_USER.ID.equal(id.rawId))
             .execute()
     }
 
-    fun fetch(id: UserId) =
+    fun doesMailExist(login: String): Boolean =
+        jooq.selectCount().from(APP_USER).where(APP_USER.MAIL.equal(login)).fetchSingle().let {
+            it.value1() > 0
+        }
+
+    fun fetchOrNull(id: UserId): Record? =
         jooq.selectFrom(APP_USER).where(APP_USER.ID.equal(id.rawId)).fetchOne()?.let(this::map)
 
-    fun doesLoginExist(login: String): Boolean =
-        jooq.selectCount()
-            .from(APP_USER)
-            .where(APP_USER.MAIL.equal(login))
-            .or(APP_USER.USERNAME.equal(login))
-            .fetchSingle()
-            .let { it.value1() > 0 }
+    fun fetch(id: UserId): Record = fetchOrNull(id).let { requireNotNull(it) { "$id" } }
 
-    fun fetchByMail(mail: String): Record? =
+    fun fetchOrNullByMail(mail: String): Record? =
         jooq.selectFrom(APP_USER).where(APP_USER.MAIL.equal(mail)).fetchOne()?.let(this::map)
 
-    fun fetchByUsername(username: String): Record? =
-        jooq.selectFrom(APP_USER)
-            .where(lower(APP_USER.USERNAME).equal(lower(username)))
-            .fetchOne()
-            ?.let(this::map)
+    fun fetchByMail(mail: String): Record =
+        fetchOrNullByMail(mail).let { requireNotNull(it) { mail } }
 
-    fun fetchPassword(id: UserId): HashedPassword? =
+    fun fetchPassword(id: UserId): HashedPassword =
         jooq.select(APP_USER.PASSWORD)
             .from(APP_USER)
             .where(APP_USER.ID.equal(id.rawId))
             .fetchOne()
             ?.value1()
             ?.let { HashedPassword(it) }
+            .let { requireNotNull(it) { "$id" } }
+
+    fun fetchMail(id: UserId): String =
+        jooq.select(APP_USER.MAIL)
+            .from(APP_USER)
+            .where(APP_USER.ID.equal(id.rawId))
+            .fetchOne()
+            ?.let { it.value1() }
+            .let { requireNotNull(it) { "$id" } }
 
     fun streamAll(): Stream<Record> = jooq.selectFrom(APP_USER).stream().map(this::map)
 
@@ -122,8 +133,7 @@ class UserDao(val jooq: DSLContext) {
             username = r.username,
             displayName = r.displayName,
             language = Language.valueOf(r.language),
-            signupDate = r.signupDate,
             roles = r.roles.map { Role.valueOf(it) }.toSet(),
-            dirtyMail = r.dirtyMail,
-            formerMails = r.formerMails.toList())
+            signupDate = r.signupDate,
+            lastUpdate = r.lastUpdate)
 }

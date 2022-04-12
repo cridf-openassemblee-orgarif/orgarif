@@ -20,7 +20,7 @@ class UserFileController(val userFileDao: UserFileDao) {
         // TODO[secu] todo secu
         val userFileId = OrgarifStringUtils.deserializeUuid(id).toTypeId<UserFileId>()
         val userFile =
-            userFileDao.fetchData(userFileId) ?: return ResponseEntity(HttpStatus.NOT_FOUND)
+            userFileDao.fetchDataOrNull(userFileId) ?: return ResponseEntity(HttpStatus.NOT_FOUND)
         val headers = HttpHeaders()
         headers.contentType = MediaType.parseMediaType(userFile.contentType)
         return ResponseEntity.ok().headers(headers).body(userFile.file)

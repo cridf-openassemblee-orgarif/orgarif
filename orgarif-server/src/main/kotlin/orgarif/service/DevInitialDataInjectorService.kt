@@ -3,14 +3,13 @@ package orgarif.service
 import java.time.LocalDate
 import java.util.concurrent.atomic.AtomicInteger
 import org.springframework.beans.factory.annotation.Value
-import org.springframework.security.crypto.password.PasswordEncoder
 import org.springframework.stereotype.Service
 import orgarif.domain.DeliberationId
-import orgarif.domain.HashedPassword
 import orgarif.domain.InstanceId
 import orgarif.domain.ItemStatus
 import orgarif.domain.Language
 import orgarif.domain.OrganismeId
+import orgarif.domain.PlainStringPassword
 import orgarif.domain.RepresentationId
 import orgarif.domain.Role
 import orgarif.repository.DeliberationDao
@@ -26,6 +25,7 @@ import orgarif.repository.SecteurDao
 import orgarif.repository.SuppleanceDao
 import orgarif.repository.TypeStructureDao
 import orgarif.repository.user.UserDao
+import orgarif.service.user.UserService
 import orgarif.utils.OrgarifStringUtils
 
 @Service
@@ -47,7 +47,7 @@ class DevInitialDataInjectorService(
     val lienDeliberationDao: LienDeliberationDao,
     val dateService: DateService,
     val randomService: RandomService,
-    val passwordEncoder: PasswordEncoder
+    val userService: UserService
 ) {
     val fakeOrganismeId =
         OrganismeId(OrgarifStringUtils.deserializeUuid("ddf9d23e60294a8b823162f014a53968"))
@@ -61,37 +61,28 @@ class DevInitialDataInjectorService(
     val deliberationIncrement = AtomicInteger(0)
 
     fun initiateDevUsers() {
-        val (mailPrefix, mailSuffix) =
-            run {
-                // FIXME double + if some + in conf (which is the case...) !
-                val arobaseIndex = developerDestinationMail.indexOf('@')
-                val mailPrefix = developerDestinationMail.substring(0, arobaseIndex)
-                val mailSuffix = developerDestinationMail.substring(arobaseIndex)
-                mailPrefix to mailSuffix
-            }
-        insertUser("user", false, mailPrefix, mailSuffix)
-        insertUser("admin", true, mailPrefix, mailSuffix)
+        insertUser("user", false)
+        insertUser("admin", true)
     }
 
     private fun insertUser(
         username: String,
         admin: Boolean,
-        mailPrefix: String,
-        mailSuffix: String
     ) {
-        if (userDao.fetchByUsername(username) == null) {
+        val mail = devUserMail(username)
+        if (userDao.fetchOrNullByMail(mail) == null) {
+            val now = dateService.now()
             userDao.insert(
                 UserDao.Record(
                     id = randomService.id(),
-                    mail = "$mailPrefix+$username$mailSuffix",
+                    mail = mail,
                     username = username,
                     displayName = username,
                     language = Language.en,
-                    signupDate = dateService.now(),
                     roles = setOf(Role.user).let { if (admin) it + Role.admin else it },
-                    dirtyMail = null,
-                    formerMails = emptyList()),
-                HashedPassword(passwordEncoder.encode(username)))
+                    signupDate = now,
+                    lastUpdate = now),
+                userService.hashPassword(PlainStringPassword(username)))
         }
     }
 
@@ -386,4 +377,12 @@ class DevInitialDataInjectorService(
                 it
             }
         }
+
+    fun devUserMail(username: String): String {
+        // FIXME double + if some + in conf (which is the case...) !
+        val arobaseIndex = developerDestinationMail.indexOf('@')
+        val mailPrefix = developerDestinationMail.substring(0, arobaseIndex)
+        val mailSuffix = developerDestinationMail.substring(arobaseIndex)
+        return "$mailPrefix+$username$mailSuffix"
+    }
 }

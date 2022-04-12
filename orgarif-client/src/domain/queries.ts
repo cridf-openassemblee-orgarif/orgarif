@@ -14,11 +14,11 @@ export interface GetOrganismeQueryResponse {
   organisme: OrganismeDto;
 }
 
-export interface IsLoginAlreadyTakenQuery {
-  login: string;
+export interface IsMailAlreadyTakenQuery {
+  mail: string;
 }
 
-export interface IsLoginAlreadyTakenQueryResponse {
+export interface IsMailAlreadyTakenQueryResponse {
   alreadyTaken: boolean;
 }
 

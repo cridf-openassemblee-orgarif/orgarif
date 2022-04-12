@@ -30,7 +30,8 @@ class MagicLinkTokenService(
 
     fun createToken(userId: UserId): String {
         val token = BigInteger(128, SecureRandom()).toString(16)
-        magicLinkTokenDao.insert(MagicLinkTokenDao.Record(token, userId, dateService.now(), true))
+        val now = dateService.now()
+        magicLinkTokenDao.insert(MagicLinkTokenDao.Record(token, userId, true, now, now))
         return token
     }
 
@@ -53,14 +54,12 @@ class MagicLinkTokenService(
             logger.info { "Out of date token $token" }
             return
         }
-        val user =
-            userDao.fetch(token.userId)
-                ?: throw IllegalArgumentException("No user for token $token")
+        val user = userDao.fetch(token.userId)
         userSessionService.authenticateUser(user, request, response)
         // TODO[magictoken] update to invalidate ?? if not, doc
     }
 
     fun invalidate(magicToken: String) {
-        magicLinkTokenDao.updateValidity(magicToken, false)
+        magicLinkTokenDao.updateValidity(magicToken, false, dateService.now())
     }
 }

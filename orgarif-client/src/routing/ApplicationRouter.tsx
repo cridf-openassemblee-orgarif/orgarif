@@ -15,9 +15,11 @@ export const ApplicationRouter = () => {
       <Switch>
         {Object.entries(routes).map(entry => {
           const [k, r] = entry;
+          // [doc] DO NOT use a key here, because router Switch only displays once at one,
+          // and it's complicated to use a key which doesn't produce useless re-rendering
+          // TODO is NOT enough ! force key in MainContainer ? hierarchical views if same view for several paths ?
           return (
             <Route
-              key={r.path}
               exact={true}
               path={r.path}
               render={(routerProps: RouteComponentProps<any>) => {

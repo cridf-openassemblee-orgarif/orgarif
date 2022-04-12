@@ -12,5 +12,5 @@ class OrgarifSecurityStringKeySerializer :
         value: OrgarifSecurityString,
         gen: JsonGenerator,
         provider: SerializerProvider
-    ): Unit = gen.writeFieldName(OrgarifSecurityStringSerializer.serialize(value))
+    ) = gen.writeFieldName(OrgarifSecurityStringSerializer.serialize(value))
 }

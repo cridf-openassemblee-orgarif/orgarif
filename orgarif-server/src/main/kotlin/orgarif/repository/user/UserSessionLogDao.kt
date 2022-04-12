@@ -19,21 +19,21 @@ class UserSessionLogDao(val jooq: DSLContext) {
         val springSessionId: String,
         val userId: UserId,
         val deploymentLogId: DeploymentLogId,
-        val date: Instant,
+        val creationDate: Instant,
         val ip: String
     )
 
     fun insert(r: Record) {
-        val lr =
+        val jr =
             UserSessionLogRecord().apply {
                 id = r.id.rawId
                 springSessionId = r.springSessionId
                 userId = r.userId.rawId
                 deploymentLogId = r.deploymentLogId.rawId
-                date = r.date
+                creationDate = r.creationDate
                 ip = r.ip
             }
-        jooq.insertInto(USER_SESSION_LOG).set(lr).execute()
+        jooq.insertInto(USER_SESSION_LOG).set(jr).execute()
     }
 
     fun fetchIdsByUserId(userId: UserId): List<UserSessionId> =

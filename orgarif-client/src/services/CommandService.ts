@@ -21,6 +21,8 @@ import {
   CreateSecteurCommandResponse,
   CreateTypeStructureCommand,
   CreateTypeStructureCommandResponse,
+  DevLoginCommand,
+  DevLoginCommandResponse,
   LoginCommand,
   LoginCommandResponse,
   RegisterCommand,
@@ -106,6 +108,11 @@ export class CommandService {
     command: CreateTypeStructureCommand
   ): Promise<CreateTypeStructureCommandResponse> =>
     this.command('CreateTypeStructureCommand', command);
+
+  public devLoginCommand = (
+    command: DevLoginCommand
+  ): Promise<DevLoginCommandResponse> =>
+    this.command('DevLoginCommand', command);
 
   public loginCommand = (
     command: LoginCommand

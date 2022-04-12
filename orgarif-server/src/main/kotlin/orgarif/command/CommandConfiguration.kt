@@ -18,6 +18,7 @@ object CommandConfiguration {
             is CreateRepresentantCommand -> user
             is CreateSecteurCommand -> user
             is CreateTypeStructureCommand -> user
+            is DevLoginCommand -> null
             is LoginCommand -> null
             is RegisterCommand -> null
             is UpdateDepartementCommand -> user

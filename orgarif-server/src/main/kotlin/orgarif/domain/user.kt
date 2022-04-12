@@ -14,6 +14,11 @@ enum class Role {
     admin
 }
 
+enum class UserMailLogType {
+    dirtyMail,
+    formerMail
+}
+
 data class UserInfos(
     val id: UserId,
     val mail: String,
@@ -53,11 +58,9 @@ data class UserSession(val sessionId: UserSessionId, val userId: UserId, val rol
     override fun toString() = "[$sessionId|$userId]"
 }
 
-data class AuthResult(val userSession: UserSession, val csrfToken: String)
-
 enum class LoginResult {
     loggedIn,
-    userNotFound,
+    mailNotFound,
     badPassword
 }
 
@@ -70,8 +73,6 @@ enum class UpdateIdentityResult {
     updated,
     mailAlreadyExists
 }
-
-data class RegisterAndAuthenticateResult(val user: UserDao.Record, val authResult: AuthResult)
 
 enum class SendLostPasswordMailResponse {
     unknownLogin,

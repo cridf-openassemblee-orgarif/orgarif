@@ -8,7 +8,7 @@ import orgarif.domain.TestStringId
 internal class OrgarifStringIdDeserializerTest {
 
     @Test
-    fun `test DeviceId deserialization`() {
+    fun `test OrgarifStringId deserialization`() {
         assertEquals(
             TestStringId(sampleStringId),
             Serializer.deserialize<TestStringId>("\"$sampleStringId\""))

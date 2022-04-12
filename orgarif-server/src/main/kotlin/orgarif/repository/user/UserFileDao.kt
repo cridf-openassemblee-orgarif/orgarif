@@ -21,7 +21,7 @@ class UserFileDao(val jooq: DSLContext) {
         file(USER_FILE.FILE, true),
         contentType(USER_FILE.CONTENT_TYPE, false),
         originalFilename(USER_FILE.ORIGINAL_FILENAME, false),
-        date(USER_FILE.DATE, false)
+        uploadDate(USER_FILE.UPLOAD_DATE, false)
     }
 
     val nonDataFields by lazy {
@@ -30,24 +30,24 @@ class UserFileDao(val jooq: DSLContext) {
 
     fun insert(r: UserFileReference, fileData: ByteArray) {
         // FIMENOW refactor proposition
-        val record =
+        val jr =
             UserFileRecord().apply {
                 id = r.id.rawId
                 userId = r.userId.rawId
                 contentType = r.contentType
                 file = fileData
                 originalFilename = r.originalFilename
-                date = r.date
+                uploadDate = r.uploadDate
             }
-        jooq.insertInto(USER_FILE).set(record).execute()
+        jooq.insertInto(USER_FILE).set(jr).execute()
     }
 
-    fun fetchData(id: UserFileId): UserFileData? =
+    fun fetchDataOrNull(id: UserFileId): UserFileData? =
         jooq.selectFrom(USER_FILE).where(USER_FILE.ID.equal(id.rawId)).fetchOne()?.let {
             mapData(it.into(USER_FILE))
         }
 
-    fun fetchReference(id: UserFileId): UserFileReference? =
+    fun fetchReferenceOrNull(id: UserFileId): UserFileReference? =
         jooq.select(nonDataFields)
             .from(USER_FILE)
             .where(USER_FILE.ID.equal(id.rawId))
@@ -73,6 +73,6 @@ class UserFileDao(val jooq: DSLContext) {
             userId = r.userId.toTypeId(),
             contentType = r.contentType,
             originalFilename = r.originalFilename,
-            date = r.date)
+            uploadDate = r.uploadDate)
     }
 }

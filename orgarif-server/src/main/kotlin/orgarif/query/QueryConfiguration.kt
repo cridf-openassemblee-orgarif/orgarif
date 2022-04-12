@@ -7,7 +7,7 @@ object QueryConfiguration {
     fun role(query: Query): Role? =
         when (query) {
             is GetOrganismeQuery -> null
-            is IsLoginAlreadyTakenQuery -> null
+            is IsMailAlreadyTakenQuery -> null
             is ListOrganismesBySecteurQuery -> null
             is ListOrganismesQuery -> null
             is SearchDeliberationQuery -> Role.user

@@ -18,7 +18,7 @@ import orgarif.domain.MailReference
 import orgarif.domain.MimeType
 import orgarif.domain.UserId
 import orgarif.error.MessageNotSentException
-import orgarif.repository.log.MailLogDao
+import orgarif.repository.log.SentMailLogDao
 
 @Service
 class MailService(
@@ -27,7 +27,7 @@ class MailService(
     @Value("\${mailjet.secret-key}") val secretKey: String,
     @Value("\${mail.devLogSender}") val devLogSenderMail: String,
     val httpService: HttpService,
-    val mailLogDao: MailLogDao,
+    val sentMailLogDao: SentMailLogDao,
     val dateService: DateService,
     val randomService: RandomService
 ) {
@@ -184,8 +184,8 @@ class MailService(
             MailLog.doLog -> {
                 mailLogProperties ?: throw IllegalArgumentException("$recipientMail $mailSubject")
                 try {
-                    mailLogDao.insert(
-                        MailLogDao.Record(
+                    sentMailLogDao.insert(
+                        SentMailLogDao.Record(
                             mailLogId,
                             mailLogProperties.deploymentLogId,
                             mailLogProperties.userId,

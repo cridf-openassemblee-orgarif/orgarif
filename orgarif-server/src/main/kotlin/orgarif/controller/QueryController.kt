@@ -6,8 +6,8 @@ import org.springframework.web.bind.annotation.GetMapping
 import org.springframework.web.bind.annotation.RestController
 import orgarif.query.GetOrganismeQuery
 import orgarif.query.GetOrganismeQueryHandler
-import orgarif.query.IsLoginAlreadyTakenQuery
-import orgarif.query.IsLoginAlreadyTakenQueryHandler
+import orgarif.query.IsMailAlreadyTakenQuery
+import orgarif.query.IsMailAlreadyTakenQueryHandler
 import orgarif.query.ListOrganismesBySecteurQuery
 import orgarif.query.ListOrganismesBySecteurQueryHandler
 import orgarif.query.ListOrganismesQuery
@@ -29,7 +29,7 @@ class QueryController(
     val userDao: UserDao,
     val userSessionService: UserSessionService,
     val getOrganismeQueryHandler: GetOrganismeQueryHandler,
-    val isLoginAlreadyTakenQueryHandler: IsLoginAlreadyTakenQueryHandler,
+    val isMailAlreadyTakenQueryHandler: IsMailAlreadyTakenQueryHandler,
     val listOrganismesBySecteurQueryHandler: ListOrganismesBySecteurQueryHandler,
     val listOrganismesQueryHandler: ListOrganismesQueryHandler,
     val searchDeliberationQueryHandler: SearchDeliberationQueryHandler,
@@ -52,7 +52,7 @@ class QueryController(
     private fun handler(query: Query) =
         when (query) {
             is GetOrganismeQuery -> getOrganismeQueryHandler
-            is IsLoginAlreadyTakenQuery -> isLoginAlreadyTakenQueryHandler
+            is IsMailAlreadyTakenQuery -> isMailAlreadyTakenQueryHandler
             is ListOrganismesBySecteurQuery -> listOrganismesBySecteurQueryHandler
             is ListOrganismesQuery -> listOrganismesQueryHandler
             is SearchDeliberationQuery -> searchDeliberationQueryHandler

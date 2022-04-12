@@ -92,14 +92,14 @@ data class CreateTypeStructureCommand(val libelle: String) : Command()
 
 data class CreateTypeStructureCommandResponse(val id: TypeStructureId) : CommandResponse()
 
-// [doc] login as username|mail
-data class LoginCommand(val login: String, val password: PlainStringPassword) : Command()
+data class DevLoginCommand(val username: String) : Command()
 
-data class LoginCommandResponse(
-    val result: LoginResult,
-    val userinfos: UserInfos?,
-    val csrfToken: String?
-) : CommandResponse()
+data class DevLoginCommandResponse(val userinfos: UserInfos) : CommandResponse()
+
+data class LoginCommand(val mail: String, val password: PlainStringPassword) : Command()
+
+data class LoginCommandResponse(val result: LoginResult, val userinfos: UserInfos?) :
+    CommandResponse()
 
 data class RegisterCommand(
     val mail: String,

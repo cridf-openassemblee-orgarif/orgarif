@@ -2,8 +2,8 @@ import { appContext } from '../ApplicationContext';
 import {
   GetOrganismeQuery,
   GetOrganismeQueryResponse,
-  IsLoginAlreadyTakenQuery,
-  IsLoginAlreadyTakenQueryResponse,
+  IsMailAlreadyTakenQuery,
+  IsMailAlreadyTakenQueryResponse,
   ListOrganismesBySecteurQuery,
   ListOrganismesBySecteurQueryResponse,
   ListOrganismesQueryResponse,
@@ -19,10 +19,10 @@ export class QueryService {
   ): Promise<GetOrganismeQueryResponse> =>
     this.query('GetOrganismeQuery', query);
 
-  public isLoginAlreadyTakenQuery = (
-    query: IsLoginAlreadyTakenQuery
-  ): Promise<IsLoginAlreadyTakenQueryResponse> =>
-    this.query('IsLoginAlreadyTakenQuery', query);
+  public isMailAlreadyTakenQuery = (
+    query: IsMailAlreadyTakenQuery
+  ): Promise<IsMailAlreadyTakenQueryResponse> =>
+    this.query('IsMailAlreadyTakenQuery', query);
 
   public listOrganismesBySecteurQuery = (
     query: ListOrganismesBySecteurQuery

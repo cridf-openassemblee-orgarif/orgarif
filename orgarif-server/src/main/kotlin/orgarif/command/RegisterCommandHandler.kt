@@ -2,22 +2,30 @@ package orgarif.command
 
 import javax.servlet.http.HttpServletRequest
 import javax.servlet.http.HttpServletResponse
-import org.springframework.security.crypto.password.PasswordEncoder
 import org.springframework.stereotype.Service
-import orgarif.domain.HashedPassword
 import orgarif.domain.RegisterResult
 import orgarif.domain.UserInfos
 import orgarif.domain.UserSession
 import orgarif.error.MailAlreadyRegisteredException
+import orgarif.service.LocaleService
 import orgarif.service.user.UserService
+import orgarif.service.user.UserSessionService
 
 @Service
-class RegisterCommandHandler(val userService: UserService, val passwordEncoder: PasswordEncoder) :
-    CommandHandler<RegisterCommand, RegisterCommandResponse> {
+class RegisterCommandHandler(
+    val userService: UserService,
+    val userSessionService: UserSessionService,
+    val localeService: LocaleService
+) : CommandHandler<RegisterCommand, RegisterCommandResponse> {
 
     companion object {
-        fun validatePassword(password: String) {
-            if (password.isBlank()) throw IllegalArgumentException("Password is blank")
+        // TODO[fmk] those validations should be done in another place too. Also :
+        // * should not be longer than 255 chars (because of the database)
+        fun validateRegisterCommand(c: RegisterCommand) {
+            // TODO use require
+            if (c.mail.isBlank()) throw IllegalArgumentException("Mail is blank")
+            if (c.password.password.isBlank()) throw IllegalArgumentException("Password is blank")
+            if (c.displayName.isBlank()) throw IllegalArgumentException("Display name is blank")
         }
     }
 
@@ -33,16 +41,18 @@ class RegisterCommandHandler(val userService: UserService, val passwordEncoder: 
             // OrgarifStandardException
             throw RuntimeException("$userSession")
         }
-        UserService.validateRegisterUserDto(command)
-        validatePassword(command.password.password)
-        val hashedPassword = HashedPassword(passwordEncoder.encode(command.password.password))
-        val registerAndAuthenticateResult =
+        validateRegisterCommand(command)
+        val user =
             try {
-                userService.createAndAuthenticateUser(command, hashedPassword, request, response)
+                userService.createUser(
+                    command.mail.trim(),
+                    userService.hashPassword(command.password),
+                    command.displayName,
+                    localeService.selectLanguage(request.locales))
             } catch (e: MailAlreadyRegisteredException) {
                 return RegisterCommandResponse(RegisterResult.mailAlreadyExists, null)
             }
-        return RegisterCommandResponse(
-            RegisterResult.registered, UserInfos.fromUser(registerAndAuthenticateResult.user))
+        userSessionService.authenticateUser(user, request, response)
+        return RegisterCommandResponse(RegisterResult.registered, UserInfos.fromUser(user))
     }
 }

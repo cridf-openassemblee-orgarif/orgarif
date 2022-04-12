@@ -116,8 +116,7 @@ class IndexController(
         val userInfos =
             if (userSessionService.isAuthenticated()) {
                 val userSession = userSessionService.getUserSession()
-                val user =
-                    userDao.fetch(userSession.userId) ?: throw IllegalStateException("$userSession")
+                val user = userDao.fetch(userSession.userId)
                 UserInfos.fromUser(user)
             } else null
         val categories =

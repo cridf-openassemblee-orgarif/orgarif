@@ -20,14 +20,14 @@ class DeploymentLogDao(val jooq: DSLContext) {
     )
 
     fun insert(r: Record) {
-        val lr =
+        val jr =
             DeploymentLogRecord().apply {
                 id = r.id.rawId
                 buildVersion = r.buildVersion
                 systemZoneId = r.systemZoneId.id
                 startupDate = r.startupDate
             }
-        jooq.insertInto(DEPLOYMENT_LOG).set(lr).execute()
+        jooq.insertInto(DEPLOYMENT_LOG).set(jr).execute()
     }
 
     fun updateShutdownTime(id: DeploymentLogId, shutdownDate: Instant) =

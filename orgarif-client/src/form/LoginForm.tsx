@@ -9,7 +9,7 @@ import { LoadingStateButton } from '../component/base-component/LoadingButton';
 import { LoadingState } from '../interfaces';
 
 export interface LoginFormDto {
-  login: string;
+  mail: string;
   password: string;
 }
 
@@ -38,7 +38,7 @@ export const LoginForm = (props: {
         `}
       >
         <ControlledTextInput
-          name="login"
+          name="mail"
           label="E-mail"
           control={control}
           errors={errors}

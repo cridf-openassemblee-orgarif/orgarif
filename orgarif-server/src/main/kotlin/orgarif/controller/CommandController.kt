@@ -34,6 +34,8 @@ import orgarif.command.CreateSecteurCommand
 import orgarif.command.CreateSecteurCommandHandler
 import orgarif.command.CreateTypeStructureCommand
 import orgarif.command.CreateTypeStructureCommandHandler
+import orgarif.command.DevLoginCommand
+import orgarif.command.DevLoginCommandHandler
 import orgarif.command.EmptyCommandResponse
 import orgarif.command.LoginCommand
 import orgarif.command.LoginCommandHandler
@@ -120,6 +122,7 @@ class CommandController(
     val createRepresentantCommandHandler: CreateRepresentantCommandHandler,
     val createSecteurCommandHandler: CreateSecteurCommandHandler,
     val createTypeStructureCommandHandler: CreateTypeStructureCommandHandler,
+    val devLoginCommandHandler: DevLoginCommandHandler,
     val loginCommandHandler: LoginCommandHandler,
     val registerCommandHandler: RegisterCommandHandler,
     val updateDepartementCommandHandler: UpdateDepartementCommandHandler,
@@ -233,6 +236,7 @@ class CommandController(
             is CreateRepresentantCommand -> createRepresentantCommandHandler
             is CreateSecteurCommand -> createSecteurCommandHandler
             is CreateTypeStructureCommand -> createTypeStructureCommandHandler
+            is DevLoginCommand -> devLoginCommandHandler
             is LoginCommand -> loginCommandHandler
             is RegisterCommand -> registerCommandHandler
             is UpdateDepartementCommand -> updateDepartementCommandHandler

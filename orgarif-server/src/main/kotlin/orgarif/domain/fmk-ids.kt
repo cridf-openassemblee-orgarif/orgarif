@@ -41,4 +41,6 @@ data class UserFileId(override val rawId: UUID) : OrgarifUuidId()
 
 data class UserId(override val rawId: UUID) : OrgarifUuidId()
 
+data class UserMailLogId(override val rawId: UUID) : OrgarifUuidId()
+
 data class UserSessionId(override val rawId: UUID) : OrgarifUuidId()
