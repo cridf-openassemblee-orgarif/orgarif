@@ -1,30 +1,23 @@
 import {
   DeliberationId,
   DepartementId,
+  DesignationId,
   InstanceId,
   LienDeliberationId,
   NatureJuridiqueId,
   OrganismeId,
   RepresentantId,
-  RepresentationId,
   SecteurId,
-  SuppleanceId,
   TypeStructureId
 } from './ids';
 import { LocalDate } from './time';
 
 export type ItemStatus = 'live' | 'archive' | 'trash';
 
-export interface RepresentationDto {
-  id: RepresentationId;
-  representant: RepresentantDto;
-  startDate?: LocalDate;
-  endDate?: LocalDate;
-  suppleance?: SuppleanceDto;
-}
+export type DesignationType = 'representant' | 'suppleant';
 
-export interface SuppleanceDto {
-  id: SuppleanceId;
+export interface DesignationDto {
+  id: DesignationId;
   representant: RepresentantDto;
   startDate?: LocalDate;
   endDate?: LocalDate;
@@ -57,10 +50,11 @@ export interface LienDeliberationDto {
 export interface InstanceDto {
   id: InstanceId;
   nom: string;
-  nombreRepresentants?: number;
+  nombreRepresentants: number;
   presenceSuppleants: boolean;
+  designationRepresentants: DesignationDto[];
+  designationSuppleants: DesignationDto[];
   lienDeliberations: LienDeliberationDto[];
-  representations: RepresentationDto[];
   status: ItemStatus;
 }
 
@@ -79,9 +73,10 @@ export interface OrganismeDto {
   natureJuridiqueId?: NatureJuridiqueId;
   secteurId?: SecteurId;
   typeStructureId?: TypeStructureId;
-  nombreRepresentants?: number;
+  nombreRepresentants: number;
   presenceSuppleants: boolean;
-  representations: RepresentationDto[];
+  designationRepresentants: DesignationDto[];
+  designationSuppleants: DesignationDto[];
   lienDeliberations: LienDeliberationDto[];
   instances: InstanceDto[];
   status: ItemStatus;

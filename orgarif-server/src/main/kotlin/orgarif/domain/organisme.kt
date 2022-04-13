@@ -9,16 +9,13 @@ enum class ItemStatus {
     trash
 }
 
-data class RepresentationDto(
-    val id: RepresentationId,
-    val representant: RepresentantDto,
-    val startDate: LocalDate?,
-    val endDate: LocalDate?,
-    val suppleance: SuppleanceDto?,
-)
+enum class DesignationType {
+    representant,
+    suppleant
+}
 
-data class SuppleanceDto(
-    val id: SuppleanceId,
+data class DesignationDto(
+    val id: DesignationId,
     val representant: RepresentantDto,
     val startDate: LocalDate?,
     val endDate: LocalDate?,
@@ -53,8 +50,9 @@ data class InstanceDto(
     val nom: String,
     val nombreRepresentants: Int?,
     val presenceSuppleants: Boolean,
+    val designationRepresentants: List<DesignationDto?>,
+    val designationSuppleants: List<DesignationDto?>,
     val lienDeliberations: List<LienDeliberationDto>,
-    val representations: List<RepresentationDto>,
     val status: ItemStatus
 )
 
@@ -79,7 +77,8 @@ data class OrganismeDto(
     val typeStructureId: TypeStructureId?,
     val nombreRepresentants: Int?,
     val presenceSuppleants: Boolean,
-    val representations: List<RepresentationDto>,
+    val designationRepresentants: List<DesignationDto?>,
+    val designationSuppleants: List<DesignationDto?>,
     val lienDeliberations: List<LienDeliberationDto>,
     val instances: List<InstanceDto>,
     val status: ItemStatus

@@ -1,19 +1,31 @@
 import {
   DeliberationId,
   DepartementId,
+  DesignationId,
   InstanceId,
   LienDeliberationId,
   NatureJuridiqueId,
   OrganismeId,
   RepresentantId,
-  RepresentationId,
   SecteurId,
-  SuppleanceId,
   TypeStructureId
 } from './ids';
-import { ItemStatus } from './organisme';
+import { DesignationType, ItemStatus } from './organisme';
 import { LocalDate } from './time';
 import { LoginResult, RegisterResult, UserInfos } from './user';
+
+export interface AddDesignationCommand {
+  representantId: RepresentantId;
+  type: DesignationType;
+  position: number;
+  startDate: LocalDate | undefined;
+  organismeId: OrganismeId;
+  instanceId?: InstanceId;
+}
+
+export interface AddDesignationCommandResponse {
+  id: DesignationId;
+}
 
 export interface AddInstanceCommand {
   nomInstance: string;
@@ -33,25 +45,6 @@ export interface AddLienDeliberationCommand {
 
 export interface AddLienDeliberationCommandResponse {
   lienDeliberationId: LienDeliberationId;
-}
-
-export interface AddRepresentationCommand {
-  representantId: RepresentantId;
-  startDate: LocalDate | undefined;
-  suppleantId: RepresentantId | undefined;
-  suppleantStartDate: LocalDate | undefined;
-  organismeId: OrganismeId;
-  instanceId?: InstanceId;
-}
-
-export interface AddRepresentationCommandResponse {
-  id: RepresentationId;
-}
-
-export interface AddSuppleanceCommand {
-  representationId: RepresentationId;
-  suppleantId: RepresentantId;
-  suppleantStartDate?: LocalDate;
 }
 
 export interface CreateDeliberationCommand {
@@ -153,9 +146,20 @@ export interface UpdateDepartementStatusCommand {
   status: ItemStatus;
 }
 
+export interface UpdateDesignationDatesCommand {
+  designationId: DesignationId;
+  startDate?: LocalDate;
+  endDate?: LocalDate;
+}
+
+export interface UpdateDesignationStatusCommand {
+  id: DesignationId;
+  status: ItemStatus;
+}
+
 export interface UpdateInstanceNombreRepresentantsCommand {
   instanceId: InstanceId;
-  nombre: number | undefined;
+  nombre: number;
 }
 
 export interface UpdateInstanceNomCommand {
@@ -205,7 +209,7 @@ export interface UpdateOrganismeNatureJuridiqueCommand {
 
 export interface UpdateOrganismeNombreRepresentantsCommand {
   id: OrganismeId;
-  nombre: number | undefined;
+  nombre: number;
 }
 
 export interface UpdateOrganismeNomCommand {
@@ -238,19 +242,6 @@ export interface UpdateOrganismeTypeStructureCommand {
   typeStructureId: TypeStructureId | undefined;
 }
 
-export interface UpdateRepresentationDatesCommand {
-  representationId: RepresentationId;
-  representationStartDate?: LocalDate;
-  suppleanceId?: SuppleanceId;
-  suppleanceStartDate?: LocalDate;
-}
-
-export interface UpdateRepresentationStatusCommand {
-  id: RepresentationId;
-  suppleanceId?: SuppleanceId;
-  status: ItemStatus;
-}
-
 export interface UpdateSecteurLibelleCommand {
   id: SecteurId;
   libelle: string;
@@ -258,11 +249,6 @@ export interface UpdateSecteurLibelleCommand {
 
 export interface UpdateSecteurStatusCommand {
   id: SecteurId;
-  status: ItemStatus;
-}
-
-export interface UpdateSuppleanceStatusCommand {
-  id: SuppleanceId;
   status: ItemStatus;
 }
 

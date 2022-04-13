@@ -8,6 +8,8 @@ data class DeliberationId(override val rawId: UUID) : OrgarifUuidId()
 
 data class DepartementId(override val rawId: UUID) : OrgarifUuidId()
 
+data class DesignationId(override val rawId: UUID) : OrgarifUuidId()
+
 data class EluId(override val rawId: UUID) : OrgarifUuidId()
 
 data class InstanceId(override val rawId: UUID) : OrgarifUuidId()
@@ -20,10 +22,6 @@ data class OrganismeId(override val rawId: UUID) : OrgarifUuidId()
 
 data class RepresentantId(override val rawId: UUID) : OrgarifUuidId()
 
-data class RepresentationId(override val rawId: UUID) : OrgarifUuidId()
-
 data class SecteurId(override val rawId: UUID) : OrgarifUuidId()
-
-data class SuppleanceId(override val rawId: UUID) : OrgarifUuidId()
 
 data class TypeStructureId(override val rawId: UUID) : OrgarifUuidId()

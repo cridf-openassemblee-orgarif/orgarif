@@ -52,3 +52,6 @@ export const stringToLocalDate = (value: string): LocalDate | undefined => {
   }
   return instanciateNominalString(value);
 };
+
+export const capitalizeFirstLetter = (value: string) =>
+  value.charAt(0).toUpperCase() + value.slice(1);

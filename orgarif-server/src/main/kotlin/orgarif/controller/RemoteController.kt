@@ -15,10 +15,9 @@ import orgarif.config.SafeSessionRepository
 import orgarif.controller.RemoteController.Companion.remoteRoute
 import orgarif.domain.Role
 import orgarif.domain.UserSession
+import orgarif.repository.DesignationDao
 import orgarif.repository.EluDao
 import orgarif.repository.RepresentantDao
-import orgarif.repository.RepresentationDao
-import orgarif.repository.SuppleanceDao
 import orgarif.repository.user.UserDao
 import orgarif.repository.user.UserSessionLogDao
 import orgarif.service.DateService
@@ -35,8 +34,7 @@ class RemoteController(
     val userSessionLogDao: UserSessionLogDao,
     val eluDao: EluDao,
     val representantDao: RepresentantDao,
-    val representationDao: RepresentationDao,
-    val suppleanceDao: SuppleanceDao,
+    val designationDao: DesignationDao,
     val sessionRepository: SafeSessionRepository,
     val userSessionService: UserSessionService,
     val randomService: RandomService,

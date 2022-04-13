@@ -124,8 +124,9 @@ class ElusSynchronizationService(
                             newElu.groupePolitiqueCourt,
                             newElu.imageUrl,
                             newElu.actif,
-                            newElu.lastModificationDate,
+                            now,
                         )
+                        representantDao.updateByEluId(existing.id, newElu.prenom, newElu.nom, now)
                         InsertResult.update
                     } else {
                         InsertResult.unmodified

@@ -58,7 +58,7 @@ class InitializationService(
                 taskExecutor.execute {
                     elusSynchronizationService.synchronize()
                     if (insertInitialData) {
-                        devInitialDataInjectorService.injectRepresentations()
+                        devInitialDataInjectorService.injectDesignations()
                     }
                 }
             }

@@ -6,7 +6,11 @@ import {
   InstanceId,
   RepresentantId
 } from '../../../../domain/ids';
-import { InstanceDto, ItemStatus } from '../../../../domain/organisme';
+import {
+  DesignationType,
+  InstanceDto,
+  ItemStatus
+} from '../../../../domain/organisme';
 import { EditNomComponent } from '../EditNomComponent';
 import { RepresentantsDeliberationsBlock } from '../EditOrganismeComponent';
 import { LocalDate } from '../../../../domain/time';
@@ -15,19 +19,16 @@ export const EditInstancesComponent = (props: {
   instances: InstanceDto[];
   onNomChange: (instanceId: InstanceId, nom: string) => Promise<void>;
   onStatusChange: (instanceId: InstanceId, status: ItemStatus) => Promise<void>;
-  onNombreRepresentantsChange: (
-    instanceId: InstanceId,
-    nombre: number | undefined
-  ) => void;
+  onNombreRepresentantsChange: (instanceId: InstanceId, nombre: number) => void;
   onPresenceSuppleantsChange: (
     instanceId: InstanceId,
     presenceSuppleants: boolean
   ) => void;
-  onAddRepresentation: (
+  onAddDesignation: (
     representantId: RepresentantId,
+    type: DesignationType,
+    position: number,
     startDate: LocalDate | undefined,
-    suppleantId: RepresentantId | undefined,
-    suppleantStartDate: LocalDate | undefined,
     instanceId: InstanceId
   ) => Promise<void>;
   onNewLienDeliberation: (
@@ -84,7 +85,7 @@ export const EditInstancesComponent = (props: {
             <RepresentantsDeliberationsBlock
               organismeOrInstanceId={instance.id}
               nombreRepresentants={instance.nombreRepresentants}
-              onNombreRepresentantsChange={(nombre: number | undefined) =>
+              onNombreRepresentantsChange={(nombre: number) =>
                 props.onNombreRepresentantsChange(instance.id, nombre)
               }
               presenceSuppleants={instance.presenceSuppleants}
@@ -94,18 +95,19 @@ export const EditInstancesComponent = (props: {
                   presenceSuppleants
                 )
               }
-              representations={instance.representations}
-              onAddRepresentation={(
+              designationRepresentants={instance.designationRepresentants}
+              designationSuppleants={instance.designationSuppleants}
+              onAddDesignation={(
                 representantId: RepresentantId,
-                startDate: LocalDate | undefined,
-                suppleantId: RepresentantId | undefined,
-                suppleantStartDate: LocalDate | undefined
+                type: DesignationType,
+                position: number,
+                startDate: LocalDate | undefined
               ) =>
-                props.onAddRepresentation(
+                props.onAddDesignation(
                   representantId,
+                  type,
+                  position,
                   startDate,
-                  suppleantId,
-                  suppleantStartDate,
                   instance.id
                 )
               }

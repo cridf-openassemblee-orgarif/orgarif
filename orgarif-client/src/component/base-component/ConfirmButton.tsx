@@ -15,7 +15,7 @@ import { LoadingButton } from './LoadingButton';
 export const ConfirmButton = (
   props: PropsWithChildren<{
     onConfirm: () => Promise<void>;
-    color?: 'primary' | 'error';
+    color?: 'primary' | 'warning' | 'error';
     dialogTitle: string;
     dialogContent?: ReactNode;
     okButton: string;
@@ -27,7 +27,7 @@ export const ConfirmButton = (
   return (
     <>
       <Button
-        variant="outlined"
+        variant="contained"
         color={props.color}
         onClick={() => setOpen(true)}
         css={css`

@@ -1,12 +1,11 @@
 import { appContext } from '../ApplicationContext';
 import {
+  AddDesignationCommand,
+  AddDesignationCommandResponse,
   AddInstanceCommand,
   AddInstanceCommandResponse,
   AddLienDeliberationCommand,
   AddLienDeliberationCommandResponse,
-  AddRepresentationCommand,
-  AddRepresentationCommandResponse,
-  AddSuppleanceCommand,
   CreateDeliberationCommand,
   CreateDeliberationCommandResponse,
   CreateDepartementCommand,
@@ -29,6 +28,8 @@ import {
   RegisterCommandResponse,
   UpdateDepartementCommand,
   UpdateDepartementStatusCommand,
+  UpdateDesignationDatesCommand,
+  UpdateDesignationStatusCommand,
   UpdateInstanceNombreRepresentantsCommand,
   UpdateInstanceNomCommand,
   UpdateInstancePresenceSuppleantsCommand,
@@ -45,16 +46,18 @@ import {
   UpdateOrganismeSecteurCommand,
   UpdateOrganismeStatusCommand,
   UpdateOrganismeTypeStructureCommand,
-  UpdateRepresentationDatesCommand,
-  UpdateRepresentationStatusCommand,
   UpdateSecteurLibelleCommand,
   UpdateSecteurStatusCommand,
-  UpdateSuppleanceStatusCommand,
   UpdateTypeStructureLibelleCommand,
   UpdateTypeStructureStatusCommand
 } from '../domain/commands';
 
 export class CommandService {
+  public addDesignationCommand = (
+    command: AddDesignationCommand
+  ): Promise<AddDesignationCommandResponse> =>
+    this.command('AddDesignationCommand', command);
+
   public addInstanceCommand = (
     command: AddInstanceCommand
   ): Promise<AddInstanceCommandResponse> =>
@@ -64,15 +67,6 @@ export class CommandService {
     command: AddLienDeliberationCommand
   ): Promise<AddLienDeliberationCommandResponse> =>
     this.command('AddLienDeliberationCommand', command);
-
-  public addRepresentationCommand = (
-    command: AddRepresentationCommand
-  ): Promise<AddRepresentationCommandResponse> =>
-    this.command('AddRepresentationCommand', command);
-
-  public addSuppleanceCommand = (
-    command: AddSuppleanceCommand
-  ): Promise<void> => this.command('AddSuppleanceCommand', command);
 
   public createDeliberationCommand = (
     command: CreateDeliberationCommand
@@ -130,6 +124,14 @@ export class CommandService {
   public updateDepartementStatusCommand = (
     command: UpdateDepartementStatusCommand
   ): Promise<void> => this.command('UpdateDepartementStatusCommand', command);
+
+  public updateDesignationDatesCommand = (
+    command: UpdateDesignationDatesCommand
+  ): Promise<void> => this.command('UpdateDesignationDatesCommand', command);
+
+  public updateDesignationStatusCommand = (
+    command: UpdateDesignationStatusCommand
+  ): Promise<void> => this.command('UpdateDesignationStatusCommand', command);
 
   public updateInstanceNombreRepresentantsCommand = (
     command: UpdateInstanceNombreRepresentantsCommand
@@ -206,15 +208,6 @@ export class CommandService {
   ): Promise<void> =>
     this.command('UpdateOrganismeTypeStructureCommand', command);
 
-  public updateRepresentationDatesCommand = (
-    command: UpdateRepresentationDatesCommand
-  ): Promise<void> => this.command('UpdateRepresentationDatesCommand', command);
-
-  public updateRepresentationStatusCommand = (
-    command: UpdateRepresentationStatusCommand
-  ): Promise<void> =>
-    this.command('UpdateRepresentationStatusCommand', command);
-
   public updateSecteurLibelleCommand = (
     command: UpdateSecteurLibelleCommand
   ): Promise<void> => this.command('UpdateSecteurLibelleCommand', command);
@@ -222,10 +215,6 @@ export class CommandService {
   public updateSecteurStatusCommand = (
     command: UpdateSecteurStatusCommand
   ): Promise<void> => this.command('UpdateSecteurStatusCommand', command);
-
-  public updateSuppleanceStatusCommand = (
-    command: UpdateSuppleanceStatusCommand
-  ): Promise<void> => this.command('UpdateSuppleanceStatusCommand', command);
 
   public updateTypeStructureLibelleCommand = (
     command: UpdateTypeStructureLibelleCommand

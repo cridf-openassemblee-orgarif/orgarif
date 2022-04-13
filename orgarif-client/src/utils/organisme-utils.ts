@@ -8,7 +8,12 @@ import {
   SecteurId,
   TypeStructureId
 } from '../domain/ids';
-import { InstanceDto, ItemStatus, OrganismeDto } from '../domain/organisme';
+import {
+  DesignationType,
+  InstanceDto,
+  ItemStatus,
+  OrganismeDto
+} from '../domain/organisme';
 import { LocalDate } from '../domain/time';
 
 // TODO naming utils, actions...
@@ -141,7 +146,7 @@ const onNombreRepresentantsChange = (
   organisme: OrganismeDto,
   setOrganisme: (o: OrganismeDto) => void,
   instanceId: InstanceId | undefined,
-  nombre: number | undefined
+  nombre: number
 ) => {
   if (!instanceId) {
     setOrganisme({ ...organisme, nombreRepresentants: nombre });
@@ -165,20 +170,20 @@ const onNombreRepresentantsChange = (
   }
 };
 
-const addRepresentation = async (
+const addDesignation = async (
   organisme: OrganismeDto,
   setOrganisme: (o: OrganismeDto) => void,
   representantId: RepresentantId,
+  type: DesignationType,
+  position: number,
   startDate: LocalDate | undefined,
-  suppleantId: RepresentantId | undefined,
-  suppleantStartDate: LocalDate | undefined,
   instanceId: InstanceId | undefined
 ) => {
-  await appContext.commandService().addRepresentationCommand({
+  await appContext.commandService().addDesignationCommand({
     representantId,
+    type,
+    position,
     startDate,
-    suppleantId,
-    suppleantStartDate,
     organismeId: organisme.id,
     instanceId
   });
@@ -199,10 +204,11 @@ const addInstance = (
       const instance: InstanceDto = {
         id: r.id,
         nom: nomInstance,
-        nombreRepresentants: undefined,
+        nombreRepresentants: 0,
         presenceSuppleants: false,
+        designationRepresentants: [],
+        designationSuppleants: [],
         lienDeliberations: [],
-        representations: [],
         status: 'live'
       };
       setOrganisme({
@@ -296,22 +302,22 @@ export const organismeActions = (
     onTypeStructureChange(organisme, setOrganisme, typeStructureId),
   onNombreRepresentantsChange: (
     instanceId: InstanceId | undefined,
-    nombre: number | undefined
+    nombre: number
   ) => onNombreRepresentantsChange(organisme, setOrganisme, instanceId, nombre),
-  onAddRepresentation: (
+  onAddDesignation: (
     representantId: RepresentantId,
+    type: DesignationType,
+    position: number,
     startDate: LocalDate | undefined,
-    suppleantId: RepresentantId | undefined,
-    suppleantStartDate: LocalDate | undefined,
     instanceId: InstanceId | undefined
   ) =>
-    addRepresentation(
+    addDesignation(
       organisme,
       setOrganisme,
       representantId,
+      type,
+      position,
       startDate,
-      suppleantId,
-      suppleantStartDate,
       instanceId
     ),
   onAddInstance: (nom: string) => addInstance(organisme, setOrganisme, nom),

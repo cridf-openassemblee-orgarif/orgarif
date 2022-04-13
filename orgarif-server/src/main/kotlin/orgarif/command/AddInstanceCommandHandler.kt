@@ -22,7 +22,7 @@ class AddInstanceCommandHandler(
                 id = instanceId,
                 nom = command.nomInstance,
                 organismeId = command.organismeId,
-                nombreRepresentants = null,
+                nombreRepresentants = 0,
                 presenceSuppleants = false,
                 status = live,
                 creationDate = now,

@@ -8,14 +8,12 @@ import org.springframework.transaction.PlatformTransactionManager
 import org.springframework.web.bind.annotation.PostMapping
 import org.springframework.web.bind.annotation.RequestBody
 import org.springframework.web.bind.annotation.RestController
+import orgarif.command.AddDesignationCommand
+import orgarif.command.AddDesignationCommandHandler
 import orgarif.command.AddInstanceCommand
 import orgarif.command.AddInstanceCommandHandler
 import orgarif.command.AddLienDeliberationCommand
 import orgarif.command.AddLienDeliberationCommandHandler
-import orgarif.command.AddRepresentationCommand
-import orgarif.command.AddRepresentationCommandHandler
-import orgarif.command.AddSuppleanceCommand
-import orgarif.command.AddSuppleanceCommandHandler
 import orgarif.command.Command
 import orgarif.command.CommandConfiguration
 import orgarif.command.CommandHandler
@@ -45,6 +43,10 @@ import orgarif.command.UpdateDepartementCommand
 import orgarif.command.UpdateDepartementCommandHandler
 import orgarif.command.UpdateDepartementStatusCommand
 import orgarif.command.UpdateDepartementStatusCommandHandler
+import orgarif.command.UpdateDesignationDatesCommand
+import orgarif.command.UpdateDesignationDatesCommandHandler
+import orgarif.command.UpdateDesignationStatusCommand
+import orgarif.command.UpdateDesignationStatusCommandHandler
 import orgarif.command.UpdateInstanceNomCommand
 import orgarif.command.UpdateInstanceNomCommandHandler
 import orgarif.command.UpdateInstanceNombreRepresentantsCommand
@@ -77,16 +79,10 @@ import orgarif.command.UpdateOrganismeStatusCommand
 import orgarif.command.UpdateOrganismeStatusCommandHandler
 import orgarif.command.UpdateOrganismeTypeStructureCommand
 import orgarif.command.UpdateOrganismeTypeStructureCommandHandler
-import orgarif.command.UpdateRepresentationDatesCommand
-import orgarif.command.UpdateRepresentationDatesCommandHandler
-import orgarif.command.UpdateRepresentationStatusCommand
-import orgarif.command.UpdateRepresentationStatusCommandHandler
 import orgarif.command.UpdateSecteurLibelleCommand
 import orgarif.command.UpdateSecteurLibelleCommandHandler
 import orgarif.command.UpdateSecteurStatusCommand
 import orgarif.command.UpdateSecteurStatusCommandHandler
-import orgarif.command.UpdateSuppleanceStatusCommand
-import orgarif.command.UpdateSuppleanceStatusCommandHandler
 import orgarif.command.UpdateTypeStructureLibelleCommand
 import orgarif.command.UpdateTypeStructureLibelleCommandHandler
 import orgarif.command.UpdateTypeStructureStatusCommand
@@ -111,10 +107,9 @@ class CommandController(
     val transactionManager: PlatformTransactionManager,
     val idLogService: IdLogService,
     val userSessionService: UserSessionService,
+    val addDesignationCommandHandler: AddDesignationCommandHandler,
     val addInstanceCommandHandler: AddInstanceCommandHandler,
     val addLienDeliberationCommandHandler: AddLienDeliberationCommandHandler,
-    val addRepresentationCommandHandler: AddRepresentationCommandHandler,
-    val addSuppleanceCommandHandler: AddSuppleanceCommandHandler,
     val createDeliberationCommandHandler: CreateDeliberationCommandHandler,
     val createDepartementCommandHandler: CreateDepartementCommandHandler,
     val createNatureJuridiqueCommandHandler: CreateNatureJuridiqueCommandHandler,
@@ -127,6 +122,8 @@ class CommandController(
     val registerCommandHandler: RegisterCommandHandler,
     val updateDepartementCommandHandler: UpdateDepartementCommandHandler,
     val updateDepartementStatusCommandHandler: UpdateDepartementStatusCommandHandler,
+    val updateDesignationDatesCommandHandler: UpdateDesignationDatesCommandHandler,
+    val updateDesignationStatusCommandHandler: UpdateDesignationStatusCommandHandler,
     val updateInstanceNombreRepresentantsCommandHandler:
         UpdateInstanceNombreRepresentantsCommandHandler,
     val updateInstanceNomCommandHandler: UpdateInstanceNomCommandHandler,
@@ -148,11 +145,8 @@ class CommandController(
     val updateOrganismeStatusCommandHandler: UpdateOrganismeStatusCommandHandler,
     val updateOrganismeTypeStructureCommandCommandHandler:
         UpdateOrganismeTypeStructureCommandHandler,
-    val updateRepresentationDatesCommandHandler: UpdateRepresentationDatesCommandHandler,
-    val updateRepresentationStatusCommandHandler: UpdateRepresentationStatusCommandHandler,
     val updateSecteurLibelleCommandHandler: UpdateSecteurLibelleCommandHandler,
     val updateSecteurStatusCommandHandler: UpdateSecteurStatusCommandHandler,
-    val updateSuppleanceStatusCommandHandler: UpdateSuppleanceStatusCommandHandler,
     val updateTypeStructureLibelleCommandHandler: UpdateTypeStructureLibelleCommandHandler,
     val updateTypeStructureStatusCommandHandler: UpdateTypeStructureStatusCommandHandler,
 ) {
@@ -225,10 +219,9 @@ class CommandController(
     @Suppress("UNCHECKED_CAST")
     private fun handler(command: Command) =
         when (command) {
+            is AddDesignationCommand -> addDesignationCommandHandler
             is AddInstanceCommand -> addInstanceCommandHandler
             is AddLienDeliberationCommand -> addLienDeliberationCommandHandler
-            is AddRepresentationCommand -> addRepresentationCommandHandler
-            is AddSuppleanceCommand -> addSuppleanceCommandHandler
             is CreateDeliberationCommand -> createDeliberationCommandHandler
             is CreateDepartementCommand -> createDepartementCommandHandler
             is CreateNatureJuridiqueCommand -> createNatureJuridiqueCommandHandler
@@ -241,6 +234,8 @@ class CommandController(
             is RegisterCommand -> registerCommandHandler
             is UpdateDepartementCommand -> updateDepartementCommandHandler
             is UpdateDepartementStatusCommand -> updateDepartementStatusCommandHandler
+            is UpdateDesignationDatesCommand -> updateDesignationDatesCommandHandler
+            is UpdateDesignationStatusCommand -> updateDesignationStatusCommandHandler
             is UpdateInstanceNombreRepresentantsCommand ->
                 updateInstanceNombreRepresentantsCommandHandler
             is UpdateInstanceNomCommand -> updateInstanceNomCommandHandler
@@ -262,11 +257,8 @@ class CommandController(
             is UpdateOrganismeStatusCommand -> updateOrganismeStatusCommandHandler
             is UpdateOrganismeTypeStructureCommand ->
                 updateOrganismeTypeStructureCommandCommandHandler
-            is UpdateRepresentationDatesCommand -> updateRepresentationDatesCommandHandler
-            is UpdateRepresentationStatusCommand -> updateRepresentationStatusCommandHandler
             is UpdateSecteurLibelleCommand -> updateSecteurLibelleCommandHandler
             is UpdateSecteurStatusCommand -> updateSecteurStatusCommandHandler
-            is UpdateSuppleanceStatusCommand -> updateSuppleanceStatusCommandHandler
             is UpdateTypeStructureLibelleCommand -> updateTypeStructureLibelleCommandHandler
             is UpdateTypeStructureStatusCommand -> updateTypeStructureStatusCommandHandler
         } as

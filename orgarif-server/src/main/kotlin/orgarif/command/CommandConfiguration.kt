@@ -7,10 +7,9 @@ object CommandConfiguration {
 
     fun role(command: Command): Role? =
         when (command) {
+            is AddDesignationCommand -> user
             is AddInstanceCommand -> user
             is AddLienDeliberationCommand -> user
-            is AddRepresentationCommand -> user
-            is AddSuppleanceCommand -> user
             is CreateDeliberationCommand -> user
             is CreateDepartementCommand -> user
             is CreateNatureJuridiqueCommand -> user
@@ -23,6 +22,8 @@ object CommandConfiguration {
             is RegisterCommand -> null
             is UpdateDepartementCommand -> user
             is UpdateDepartementStatusCommand -> user
+            is UpdateDesignationDatesCommand -> user
+            is UpdateDesignationStatusCommand -> user
             is UpdateInstanceNombreRepresentantsCommand -> user
             is UpdateInstanceNomCommand -> user
             is UpdateInstancePresenceSuppleantsCommand -> user
@@ -39,11 +40,8 @@ object CommandConfiguration {
             is UpdateOrganismeSecteurCommand -> user
             is UpdateOrganismeStatusCommand -> user
             is UpdateOrganismeTypeStructureCommand -> user
-            is UpdateRepresentationDatesCommand -> user
-            is UpdateRepresentationStatusCommand -> user
             is UpdateSecteurLibelleCommand -> user
             is UpdateSecteurStatusCommand -> user
-            is UpdateSuppleanceStatusCommand -> user
             is UpdateTypeStructureLibelleCommand -> user
             is UpdateTypeStructureStatusCommand -> user
         }

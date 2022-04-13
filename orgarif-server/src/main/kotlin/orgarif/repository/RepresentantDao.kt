@@ -37,6 +37,21 @@ class RepresentantDao(val jooq: DSLContext) {
         jooq.insertInto(REPRESENTANT).set(record).execute()
     }
 
+    fun updateByEluId(eluId: EluId, prenom: String, nom: String, lastModificationDate: Instant) {
+        val record =
+            RepresentantRecord().also {
+                it.prenom = prenom
+                it.nom = nom
+                it.searchPrenom = OrgarifStringUtils.cleanForSearch(prenom)
+                it.searchNom = OrgarifStringUtils.cleanForSearch(nom)
+                it.lastModificationDate = lastModificationDate
+            }
+        jooq.update(REPRESENTANT)
+            .set(record)
+            .where(REPRESENTANT.ELU_ID.equal(eluId.rawId))
+            .execute()
+    }
+
     fun fetch(id: RepresentantId) =
         jooq.selectFrom(REPRESENTANT)
             .where(REPRESENTANT.ID.equal(id.rawId))

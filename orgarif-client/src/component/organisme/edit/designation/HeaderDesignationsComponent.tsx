@@ -1,18 +1,13 @@
 /** @jsxImportSource @emotion/react */
 import { css } from '@emotion/react';
-import { Add } from '@mui/icons-material';
-import { Button } from '@mui/material';
 import * as React from 'react';
-import { useState } from 'react';
-import { BooleanAsNominalString, RepresentantId } from '../../../../domain/ids';
+import { BooleanAsNominalString } from '../../../../domain/ids';
 import { Errors } from '../../../../errors';
 import { colors } from '../../../../styles/colors';
 import { instanciateNominalString } from '../../../../utils/nominal-class';
 import { NumberInput } from '../../../base-component/NumberInput';
 import { SelectInput } from '../../../base-component/SelectInput';
 import { editCommonClasses } from '../EditOrganismeComponent';
-import { AddRepresentationDialog } from './AddRepresentationDialog';
-import { LocalDate } from '../../../../domain/time';
 
 const classes = {
   numberBlock: css`
@@ -30,20 +25,12 @@ const classes = {
   `
 };
 
-export const HeaderRepresentationsComponent = (props: {
-  nombreRepresentants?: number;
-  onNombreRepresentantsChange: (nombre: number | undefined) => void;
+export const HeaderDesignationsComponent = (props: {
+  nombreRepresentants: number;
+  onNombreRepresentantsChange: (nombre: number) => void;
   presenceSuppleants: boolean;
   onPresenceSuppleantsChange: (presenceSuppleants: boolean) => void;
-  onAddRepresentation: (
-    representantId: RepresentantId,
-    startDate: LocalDate | undefined,
-    suppleantId: RepresentantId | undefined,
-    suppleantStartDate: LocalDate | undefined
-  ) => Promise<void>;
 }) => {
-  const [displayAddRepresentantionDialog, setDisplayAddRepresentantionDialog] =
-    useState(false);
   return (
     <React.Fragment>
       <div
@@ -59,22 +46,8 @@ export const HeaderRepresentationsComponent = (props: {
         <div
           css={css`
             flex: 1;
-            text-align: left;
-            padding: 4px 0 0 10px;
           `}
-        >
-          <Button
-            variant="outlined"
-            size="small"
-            css={css`
-              background: white;
-            `}
-            startIcon={<Add />}
-            onClick={() => setDisplayAddRepresentantionDialog(true)}
-          >
-            Représentation
-          </Button>
-        </div>
+        />
         <div css={classes.label}>Nombre :</div>
         <div css={classes.numberBlock}>
           <NumberInput
@@ -111,25 +84,6 @@ export const HeaderRepresentationsComponent = (props: {
           />
         </div>
       </div>
-      <AddRepresentationDialog
-        display={displayAddRepresentantionDialog}
-        onClose={() => setDisplayAddRepresentantionDialog(false)}
-        onAddRepresentation={(
-          representantId: RepresentantId,
-          startDate: LocalDate | undefined,
-          suppleantId: RepresentantId | undefined,
-          suppleantStartDate: LocalDate | undefined
-        ) =>
-          props
-            .onAddRepresentation(
-              representantId,
-              startDate,
-              suppleantId,
-              suppleantStartDate
-            )
-            .then(() => setDisplayAddRepresentantionDialog(false))
-        }
-      />
     </React.Fragment>
   );
 };

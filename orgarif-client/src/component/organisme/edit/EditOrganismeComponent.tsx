@@ -8,9 +8,10 @@ import {
   RepresentantId
 } from '../../../domain/ids';
 import {
+  DesignationDto,
+  DesignationType,
   LienDeliberationDto,
-  OrganismeDto,
-  RepresentationDto
+  OrganismeDto
 } from '../../../domain/organisme';
 import { colors } from '../../../styles/colors';
 import { organismeActions } from '../../../utils/organisme-utils';
@@ -24,7 +25,7 @@ import {
 } from './EditOrganismeCategoryComponent';
 import { AddInstanceComponent } from './instance/AddInstanceComponent';
 import { EditInstancesComponent } from './instance/EditInstancesComponent';
-import { EditRepresentationListComponent } from './representation/EditRepresentationListComponent';
+import { EditDesignationListComponent } from './designation/EditDesignationListComponent';
 import { TABLET } from '../../../styles/breakpoints';
 import { LocalDate } from '../../../domain/time';
 
@@ -60,16 +61,17 @@ const classes = {
 
 export const RepresentantsDeliberationsBlock = (props: {
   organismeOrInstanceId: OrganismeId | InstanceId;
-  nombreRepresentants: number | undefined;
-  onNombreRepresentantsChange: (nombre: number | undefined) => void;
+  nombreRepresentants: number;
+  onNombreRepresentantsChange: (nombre: number) => void;
   presenceSuppleants: boolean;
   onPresenceSuppleantsChange: (presenceSuppleants: boolean) => void;
-  representations: RepresentationDto[];
-  onAddRepresentation: (
+  designationRepresentants: DesignationDto[];
+  designationSuppleants: DesignationDto[];
+  onAddDesignation: (
     representantId: RepresentantId,
-    startDate: LocalDate | undefined,
-    suppleantId: RepresentantId | undefined,
-    suppleantStartDate: LocalDate | undefined
+    type: DesignationType,
+    position: number,
+    startDate: LocalDate | undefined
   ) => Promise<void>;
   lienDeliberations: LienDeliberationDto[];
   onNewLienDeliberation: (
@@ -88,14 +90,15 @@ export const RepresentantsDeliberationsBlock = (props: {
     `}
   >
     <div css={classes.column}>
-      <EditRepresentationListComponent
+      <EditDesignationListComponent
         organismeOrInstanceId={props.organismeOrInstanceId}
         nombreRepresentants={props.nombreRepresentants}
         onNombreRepresentantsChange={props.onNombreRepresentantsChange}
         presenceSuppleants={props.presenceSuppleants}
         onPresenceSuppleantsChange={props.onPresenceSuppleantsChange}
-        representations={props.representations}
-        onAddRepresentation={props.onAddRepresentation}
+        designationRepresentants={props.designationRepresentants}
+        designationSuppleants={props.designationSuppleants}
+        onAddDesignation={props.onAddDesignation}
         onOtherUpdate={props.onOtherUpdate}
       />
     </div>
@@ -143,6 +146,7 @@ export const EditOrganismeComponent = (props: {
             {/* eslint-disable-line jsx-a11y/heading-has-content */}
           </h2>
         }
+        deletionReturnRoute={{ name: 'ListOrganismesRoute' }}
       />
       <div
         css={css`
@@ -197,25 +201,26 @@ export const EditOrganismeComponent = (props: {
         <RepresentantsDeliberationsBlock
           organismeOrInstanceId={organisme.id}
           nombreRepresentants={organisme.nombreRepresentants}
-          onNombreRepresentantsChange={(nombre: number | undefined) =>
+          onNombreRepresentantsChange={(nombre: number) =>
             actions.onNombreRepresentantsChange(undefined, nombre)
           }
           presenceSuppleants={props.organisme.presenceSuppleants}
           onPresenceSuppleantsChange={(presenceSuppleants: boolean) =>
             actions.onPresenceSuppleantsChange(undefined, presenceSuppleants)
           }
-          representations={organisme.representations}
-          onAddRepresentation={(
+          designationRepresentants={organisme.designationRepresentants}
+          designationSuppleants={organisme.designationSuppleants}
+          onAddDesignation={(
             representantId: RepresentantId,
-            startDate: LocalDate | undefined,
-            suppleantId: RepresentantId | undefined,
-            suppleantStartDate: LocalDate | undefined
+            type: DesignationType,
+            position: number,
+            startDate: LocalDate | undefined
           ) =>
-            actions.onAddRepresentation(
+            actions.onAddDesignation(
               representantId,
+              type,
+              position,
               startDate,
-              suppleantId,
-              suppleantStartDate,
               undefined
             )
           }
@@ -249,18 +254,18 @@ export const EditOrganismeComponent = (props: {
             onStatusChange={actions.onInstanceStatusChange}
             onNombreRepresentantsChange={actions.onNombreRepresentantsChange}
             onPresenceSuppleantsChange={actions.onPresenceSuppleantsChange}
-            onAddRepresentation={(
+            onAddDesignation={(
               representantId: RepresentantId,
+              type: DesignationType,
+              position: number,
               startDate: LocalDate | undefined,
-              suppleantId: RepresentantId | undefined,
-              suppleantStartDate: LocalDate | undefined,
               instanceId: InstanceId
             ) =>
-              actions.onAddRepresentation(
+              actions.onAddDesignation(
                 representantId,
+                type,
+                position,
                 startDate,
-                suppleantId,
-                suppleantStartDate,
                 instanceId
               )
             }

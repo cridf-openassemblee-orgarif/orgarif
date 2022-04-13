@@ -4,6 +4,8 @@ import com.fasterxml.jackson.annotation.JsonTypeInfo
 import java.time.LocalDate
 import orgarif.domain.DeliberationId
 import orgarif.domain.DepartementId
+import orgarif.domain.DesignationId
+import orgarif.domain.DesignationType
 import orgarif.domain.InstanceId
 import orgarif.domain.ItemStatus
 import orgarif.domain.LienDeliberationId
@@ -13,9 +15,7 @@ import orgarif.domain.OrganismeId
 import orgarif.domain.PlainStringPassword
 import orgarif.domain.RegisterResult
 import orgarif.domain.RepresentantId
-import orgarif.domain.RepresentationId
 import orgarif.domain.SecteurId
-import orgarif.domain.SuppleanceId
 import orgarif.domain.TypeStructureId
 import orgarif.domain.UserInfos
 
@@ -26,6 +26,18 @@ sealed class Command
 sealed class CommandResponse
 
 object EmptyCommandResponse : CommandResponse()
+
+data class AddDesignationCommand(
+    val representantId: RepresentantId,
+    val type: DesignationType,
+    val position: Int,
+    val startDate: LocalDate?,
+    val organismeId: OrganismeId,
+    val instanceId: InstanceId?
+) : Command()
+
+// TODO wtf retour juste DesignationId
+data class AddDesignationCommandResponse(val id: DesignationId) : CommandResponse()
 
 data class AddInstanceCommand(
     val nomInstance: String,
@@ -43,23 +55,6 @@ data class AddLienDeliberationCommand(
 
 data class AddLienDeliberationCommandResponse(val lienDeliberationId: LienDeliberationId) :
     CommandResponse()
-
-data class AddRepresentationCommand(
-    val representantId: RepresentantId,
-    val startDate: LocalDate?,
-    val suppleantId: RepresentantId?,
-    val suppleantStartDate: LocalDate?,
-    val organismeId: OrganismeId,
-    val instanceId: InstanceId?
-) : Command()
-
-data class AddRepresentationCommandResponse(val id: RepresentationId) : CommandResponse()
-
-data class AddSuppleanceCommand(
-    val representationId: RepresentationId,
-    val suppleantId: RepresentantId,
-    val suppleantStartDate: LocalDate?
-) : Command()
 
 data class CreateDeliberationCommand(val libelle: String, val deliberationDate: LocalDate) :
     Command()
@@ -116,7 +111,18 @@ data class UpdateDepartementCommand(val id: DepartementId, val libelle: String, 
 data class UpdateDepartementStatusCommand(val id: DepartementId, val status: ItemStatus) :
     Command()
 
-data class UpdateInstanceNombreRepresentantsCommand(val instanceId: InstanceId, val nombre: Int?) :
+data class UpdateDesignationDatesCommand(
+    val designationId: DesignationId,
+    val startDate: LocalDate?,
+    val endDate: LocalDate?,
+) : Command()
+
+data class UpdateDesignationStatusCommand(
+    val id: DesignationId,
+    val status: ItemStatus
+) : Command()
+
+data class UpdateInstanceNombreRepresentantsCommand(val instanceId: InstanceId, val nombre: Int) :
     Command()
 
 data class UpdateInstanceNomCommand(val id: InstanceId, val nom: String) : Command()
@@ -150,7 +156,7 @@ data class UpdateOrganismeNatureJuridiqueCommand(
     val natureJuridiqueId: NatureJuridiqueId?
 ) : Command()
 
-data class UpdateOrganismeNombreRepresentantsCommand(val id: OrganismeId, val nombre: Int?) :
+data class UpdateOrganismeNombreRepresentantsCommand(val id: OrganismeId, val nombre: Int) :
     Command()
 
 data class UpdateOrganismeNomCommand(val id: OrganismeId, val nom: String) : Command()
@@ -170,24 +176,9 @@ data class UpdateOrganismeTypeStructureCommand(
     val typeStructureId: TypeStructureId?
 ) : Command()
 
-data class UpdateRepresentationDatesCommand(
-    val representationId: RepresentationId,
-    val representationStartDate: LocalDate?,
-    val suppleanceId: SuppleanceId?,
-    val suppleanceStartDate: LocalDate?
-) : Command()
-
-data class UpdateRepresentationStatusCommand(
-    val id: RepresentationId,
-    val suppleanceId: SuppleanceId?,
-    val status: ItemStatus
-) : Command()
-
 data class UpdateSecteurLibelleCommand(val id: SecteurId, val libelle: String) : Command()
 
 data class UpdateSecteurStatusCommand(val id: SecteurId, val status: ItemStatus) : Command()
-
-data class UpdateSuppleanceStatusCommand(val id: SuppleanceId, val status: ItemStatus) : Command()
 
 data class UpdateTypeStructureLibelleCommand(val id: TypeStructureId, val libelle: String) :
     Command()

@@ -4,7 +4,6 @@ import { Edit } from '@mui/icons-material';
 import { DialogContent, DialogTitle } from '@mui/material';
 import Button from '@mui/material/Button';
 import Dialog from '@mui/material/Dialog';
-import DialogActions from '@mui/material/DialogActions';
 import * as React from 'react';
 import { PropsWithChildren, ReactElement, useState } from 'react';
 import { ItemStatus } from '../../../domain/organisme';
@@ -13,6 +12,10 @@ import { asString } from '../../../utils/nominal-class';
 import { TextInput } from '../../base-component/TextInput';
 import { classes } from '../../category/EditCategoriesComponent';
 import { dialogClasses } from './dialog-common';
+import { TabPanel, TabsContainer } from '../../base-component/TabsContainer';
+import { Route } from '../../../routing/routes';
+import { useGoTo } from '../../../routing/useGoTo';
+import { ConfirmButton } from '../../base-component/ConfirmButton';
 
 const editClass = asString(clientUid());
 
@@ -24,6 +27,7 @@ export const EditNomComponent = (
     onUpdateNom: (nom: string) => Promise<void>;
     onUpdateStatus: (status: ItemStatus) => Promise<void>;
     titleElement: ReactElement;
+    deletionReturnRoute?: Route;
   }>
 ) => {
   const [displayDialog, setDisplayDialog] = useState(false);
@@ -32,6 +36,7 @@ export const EditNomComponent = (
     setNom(props.nom);
     setDisplayDialog(false);
   };
+  const goTo = useGoTo();
   return (
     <React.Fragment>
       <div
@@ -76,81 +81,108 @@ export const EditNomComponent = (
       <Dialog open={displayDialog} onClose={cancel}>
         <DialogTitle>Édition</DialogTitle>
         <DialogContent>
-          <div css={dialogClasses.editBlock}>
-            <h3>Modifier libelle</h3>
-            <TextInput
-              name="libelle"
-              initialValue={nom}
-              onChange={value => setNom(value.currentTarget.value)}
-            />
-            <div css={classes.editButton}>
-              <Button
-                type="submit"
-                variant="contained"
-                color="primary"
-                size="small"
-                onClick={() =>
-                  props.onUpdateNom(nom).then(() => setDisplayDialog(false))
-                }
-              >
-                Enregistrer
-              </Button>
-            </div>
-          </div>
-          <div css={dialogClasses.editBlock}>
-            <h3>Archivage</h3>
-            {(() => {
-              switch (props.kind) {
-                case 'organisme':
-                  return "L'organisme pourra être retrouvé";
-                case 'instance':
-                  return "L'instance pourra être retrouvée";
-                default:
-                  assertUnreachable(props.kind);
-              }
-            })()}{' '}
-            dans les archives.
-            <div css={classes.editButton}>
-              <Button
-                type="submit"
-                variant="contained"
-                color="warning"
-                size="small"
-                onClick={() =>
-                  props
-                    .onUpdateStatus('archive')
-                    .then(() => setDisplayDialog(false))
-                }
-              >
-                Archiver
-              </Button>
-            </div>
-          </div>
-          <div css={dialogClasses.editBlock}>
-            <h3>Suppression</h3>À utiliser en cas d'<b>erreur de saisie</b>{' '}
-            uniquement.
-            <div css={classes.editButton}>
-              <Button
-                type="submit"
-                variant="contained"
-                color="error"
-                size="small"
-                onClick={() =>
-                  props
-                    .onUpdateStatus('trash')
-                    .then(() => setDisplayDialog(false))
-                }
-              >
-                Supprimer
-              </Button>
-            </div>
-          </div>
+          <TabsContainer>
+            <TabPanel label="Modifier libellé">
+              <div css={dialogClasses.editBlock}>
+                <TextInput
+                  name="libelle"
+                  initialValue={nom}
+                  onChange={value => setNom(value.currentTarget.value)}
+                />
+                <div css={classes.editButton}>
+                  <Button
+                    onClick={() => setDisplayDialog(false)}
+                    color="primary"
+                  >
+                    Annuler
+                  </Button>{' '}
+                  <Button
+                    type="submit"
+                    variant="contained"
+                    color="primary"
+                    size="small"
+                    onClick={() =>
+                      props.onUpdateNom(nom).then(() => setDisplayDialog(false))
+                    }
+                  >
+                    Enregistrer
+                  </Button>
+                </div>
+              </div>
+            </TabPanel>
+            <TabPanel label="Archivage">
+              <div css={dialogClasses.editBlock}>
+                {(() => {
+                  switch (props.kind) {
+                    case 'organisme':
+                      return "L'organisme pourra être retrouvé";
+                    case 'instance':
+                      return "L'instance pourra être retrouvée";
+                    default:
+                      assertUnreachable(props.kind);
+                  }
+                })()}{' '}
+                dans les archives.
+                <div css={classes.editButton}>
+                  <Button
+                    onClick={() => setDisplayDialog(false)}
+                    color="primary"
+                  >
+                    Annuler
+                  </Button>
+                  <ConfirmButton
+                    color="warning"
+                    onConfirm={() =>
+                      props.onUpdateStatus('archive').then(() => {
+                        setDisplayDialog(false);
+                        if (props.deletionReturnRoute) {
+                          goTo(props.deletionReturnRoute);
+                        }
+                      })
+                    }
+                    dialogTitle="Confirmation de l'archivage"
+                    cancelButton="Annuler"
+                    okButton="Archiver"
+                  >
+                    Archiver
+                  </ConfirmButton>
+                </div>
+              </div>
+            </TabPanel>
+            <TabPanel label="Suppression">
+              <div css={dialogClasses.editBlock}>
+                <p>
+                  À utiliser en cas d'
+                  <b>erreur de saisie</b> uniquement.
+                </p>
+                <div css={classes.editButton}>
+                  <Button
+                    onClick={() => setDisplayDialog(false)}
+                    color="primary"
+                  >
+                    Annuler
+                  </Button>
+                  <ConfirmButton
+                    color="error"
+                    onConfirm={() =>
+                      props.onUpdateStatus('trash').then(() => {
+                        setDisplayDialog(false);
+                        if (props.deletionReturnRoute) {
+                          goTo(props.deletionReturnRoute);
+                        }
+                      })
+                    }
+                    dialogTitle="Confirmation de la suppression"
+                    cancelButton="Annuler"
+                    okButton="Supprimer"
+                  >
+                    Supprimer
+                  </ConfirmButton>
+                </div>
+              </div>
+            </TabPanel>
+          </TabsContainer>
         </DialogContent>
-        <DialogActions>
-          <Button onClick={() => setDisplayDialog(false)} color="primary">
-            Annuler
-          </Button>
-        </DialogActions>
       </Dialog>
     </React.Fragment>
   );

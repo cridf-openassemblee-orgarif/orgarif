@@ -23,7 +23,7 @@ class OrganismeDao(val jooq: DSLContext) {
         val natureJuridiqueId: NatureJuridiqueId?,
         val secteurId: SecteurId?,
         val typeStructureId: TypeStructureId?,
-        val nombreRepresentants: Int?,
+        val nombreRepresentants: Int,
         val presenceSuppleants: Boolean,
         val status: ItemStatus,
         val creationDate: Instant,
@@ -85,7 +85,7 @@ class OrganismeDao(val jooq: DSLContext) {
             .execute()
     }
 
-    fun updateNombreRepresentants(id: OrganismeId, nombre: Int?, modificationDate: Instant) {
+    fun updateNombreRepresentants(id: OrganismeId, nombre: Int, modificationDate: Instant) {
         jooq.update(ORGANISME)
             .set(ORGANISME.NOMBRE_REPRESENTANTS, nombre)
             .set(ORGANISME.LAST_MODIFICATION_DATE, modificationDate)

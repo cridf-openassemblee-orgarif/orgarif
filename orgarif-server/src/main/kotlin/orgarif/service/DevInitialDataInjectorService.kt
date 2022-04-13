@@ -5,24 +5,23 @@ import java.util.concurrent.atomic.AtomicInteger
 import org.springframework.beans.factory.annotation.Value
 import org.springframework.stereotype.Service
 import orgarif.domain.DeliberationId
+import orgarif.domain.DesignationType
 import orgarif.domain.InstanceId
 import orgarif.domain.ItemStatus
 import orgarif.domain.Language
 import orgarif.domain.OrganismeId
 import orgarif.domain.PlainStringPassword
-import orgarif.domain.RepresentationId
 import orgarif.domain.Role
 import orgarif.repository.DeliberationDao
 import orgarif.repository.DepartementDao
+import orgarif.repository.DesignationDao
 import orgarif.repository.EluDao
 import orgarif.repository.InstanceDao
 import orgarif.repository.LienDeliberationDao
 import orgarif.repository.NatureJuridiqueDao
 import orgarif.repository.OrganismeDao
 import orgarif.repository.RepresentantDao
-import orgarif.repository.RepresentationDao
 import orgarif.repository.SecteurDao
-import orgarif.repository.SuppleanceDao
 import orgarif.repository.TypeStructureDao
 import orgarif.repository.user.UserDao
 import orgarif.service.user.UserService
@@ -38,9 +37,8 @@ class DevInitialDataInjectorService(
     val natureJuridiqueDao: NatureJuridiqueDao,
     val secteurDao: SecteurDao,
     val typeStructureDao: TypeStructureDao,
-    val representationDao: RepresentationDao,
+    val designationDao: DesignationDao,
     val representantDao: RepresentantDao,
-    val suppleanceDao: SuppleanceDao,
     val instanceDao: InstanceDao,
     val eluDao: EluDao,
     val deliberationDao: DeliberationDao,
@@ -187,15 +185,15 @@ class DevInitialDataInjectorService(
                 }
             }
         }
-        injectRepresentations()
+        injectDesignations()
     }
 
-    fun injectRepresentations() {
+    fun injectDesignations() {
         val elus = eluDao.fetchAll().sortedBy { it.id.rawId.toString() }
         if (elus.isEmpty()) {
             return
         }
-        if (representationDao.fetchAll().isNotEmpty()) {
+        if (designationDao.fetchAll().isNotEmpty()) {
             return
         }
         val now = dateService.now()
@@ -206,31 +204,31 @@ class DevInitialDataInjectorService(
                 fakeOrganismeId2 to fakeInstanceId1,
                 fakeOrganismeId2 to fakeInstanceId2)
             .forEach { (organismeId, instanceId) ->
-                val reps =
-                    (1..nombreRepresentants).map { i.getAndIncrement() }.mapIndexed { index, incr ->
-                        val id = randomService.id<RepresentationId>()
-                        representationDao.insert(
-                            RepresentationDao.Record(
-                                id = id,
+                (1..nombreRepresentants).map { i.getAndIncrement() }.forEachIndexed { index, incr ->
+                    designationDao.insert(
+                        DesignationDao.Record(
+                            id = randomService.id(),
+                            representantId = representantByEluId.getValue(elus.get(incr).id).id,
+                            organismeId = organismeId,
+                            instanceId = instanceId,
+                            type = DesignationType.representant,
+                            position = index,
+                            startDate = null,
+                            endDate = null,
+                            status = ItemStatus.live,
+                            creationDate = now,
+                            lastModificationDate = now))
+                }
+                (1..nombreRepresentants).map { i.getAndIncrement() }.forEachIndexed { index, incr ->
+                    if (incr % 2 == 0) {
+                        designationDao.insert(
+                            DesignationDao.Record(
+                                id = randomService.id(),
                                 representantId = representantByEluId.getValue(elus.get(incr).id).id,
                                 organismeId = organismeId,
                                 instanceId = instanceId,
+                                type = DesignationType.suppleant,
                                 position = index,
-                                startDate = null,
-                                endDate = null,
-                                status = ItemStatus.live,
-                                creationDate = now,
-                                lastModificationDate = now))
-                        id
-                    }
-                (1..nombreRepresentants).map { i.getAndIncrement() }.forEachIndexed { index, incr ->
-                    if (incr % 2 == 0) {
-                        suppleanceDao.insert(
-                            SuppleanceDao.Record(
-                                id = randomService.id(),
-                                representantId = representantByEluId.getValue(elus.get(incr).id).id,
-                                representationId = reps.get(index),
-                                organismeId = organismeId,
                                 startDate = null,
                                 endDate = null,
                                 status = ItemStatus.live,

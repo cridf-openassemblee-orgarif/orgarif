@@ -17,7 +17,7 @@ class InstanceDao(val jooq: DSLContext) {
         val id: InstanceId,
         val nom: String,
         val organismeId: OrganismeId,
-        val nombreRepresentants: Int?,
+        val nombreRepresentants: Int,
         val presenceSuppleants: Boolean,
         val status: ItemStatus,
         val creationDate: Instant,
@@ -56,7 +56,7 @@ class InstanceDao(val jooq: DSLContext) {
             .execute()
     }
 
-    fun updateNombreRepresentants(id: InstanceId, nombre: Int?, modificationDate: Instant) {
+    fun updateNombreRepresentants(id: InstanceId, nombre: Int, modificationDate: Instant) {
         jooq.update(INSTANCE)
             .set(INSTANCE.NOMBRE_REPRESENTANTS, nombre)
             .set(INSTANCE.LAST_MODIFICATION_DATE, modificationDate)

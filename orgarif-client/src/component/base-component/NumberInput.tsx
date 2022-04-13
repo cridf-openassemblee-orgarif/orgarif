@@ -9,7 +9,7 @@ export const NumberInput = (props: {
   label?: string;
   initialValue?: number;
   autoFocus?: boolean;
-  onChange?: (value: number | undefined) => void;
+  onChange?: (value: number) => void;
 }) => {
   const [textValue, setTextValue] = useState(props.initialValue ?? '');
   return (
@@ -27,8 +27,8 @@ export const NumberInput = (props: {
       onChange={(e: ChangeEvent<HTMLInputElement>) => {
         const v = e.currentTarget.value;
         setTextValue(v);
-        if (props.onChange) {
-          props.onChange(v !== '' ? parseInt(v, 10) : undefined);
+        if (props.onChange && v !== '') {
+          props.onChange(parseInt(v, 10));
         }
       }}
       css={css`
