@@ -12,6 +12,7 @@ import { OrganismeView } from '../view/OrganismeView';
 import { RegisterView } from '../view/RegisterView';
 import { RootView } from '../view/RootView';
 import { EditDepartementsView } from '../view/EditDepartementsView';
+import { UsersManagementView } from '../view/UsersManagementView';
 
 export type Route =
   | EditDepartementsRoute
@@ -24,20 +25,16 @@ export type Route =
   | LoginRoute
   | OrganismeRoute
   | RegisterRoute
-  | RootRoute;
+  | RootRoute
+  | UsersManagementRoute;
 
-interface ViewParameters<R extends Route> {
-  routeParams: R;
-}
-
-interface RouteProps {
+export interface ApplicationRouteProps {
   path: string;
-  component: FunctionComponent<ViewParameters<any>>;
+  component: FunctionComponent;
   role?: Role;
-  onEnter?: () => void;
 }
 
-export const routes: Record<Route['name'], RouteProps> = {
+export const routes: Record<Route['name'], ApplicationRouteProps> = {
   EditDepartementsRoute: {
     path: '/edition-departements',
     component: EditDepartementsView,
@@ -86,6 +83,11 @@ export const routes: Record<Route['name'], RouteProps> = {
   RootRoute: {
     path: '/',
     component: RootView
+  },
+  UsersManagementRoute: {
+    path: '/users-management',
+    component: UsersManagementView,
+    role: 'admin'
   }
 };
 
@@ -134,4 +136,8 @@ interface RegisterRoute {
 
 interface RootRoute {
   name: 'RootRoute';
+}
+
+interface UsersManagementRoute {
+  name: 'UsersManagementRoute';
 }

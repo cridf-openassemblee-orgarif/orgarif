@@ -12,14 +12,21 @@ import { RouteLink } from '../routing/RouteLink';
 import { state } from '../state/state';
 import { assertUnreachable } from '../utils';
 import { Errors } from '../errors';
+import { useGoTo } from '../routing/useGoTo';
 
 export const LoginView = () => {
   const [userInfos, setUserInfos] = useRecoilState(state.userInfos);
   const [loginResult, setLoginResult] = useState<LoginResult>();
+  const goTo = useGoTo();
   const connect = (userInfos: UserInfos) => {
     appContext.csrfTokenService().refreshToken();
     setUserInfos(userInfos);
-    appContext.applicationHistory().goTo({ name: 'RootRoute' });
+    goTo(
+      { name: 'RootRoute' },
+      {
+        useTargetPath: true
+      }
+    );
   };
   const login = (data: LoginFormDto) =>
     appContext

@@ -1,4 +1,3 @@
-import { ApplicationHistory } from './routing/ApplicationHistory';
 import { CommandService } from './services/CommandService';
 import { CsrfTokenService } from './services/CsrfTokenService';
 import { HttpService } from './services/HttpService';
@@ -28,14 +27,6 @@ class ApplicationContext {
       this.notificationServiceInstance = new NotificationService();
     }
     return this.notificationServiceInstance;
-  };
-
-  private applicationHistoryInstance?: ApplicationHistory;
-  public applicationHistory = () => {
-    if (!this.applicationHistoryInstance) {
-      this.applicationHistoryInstance = new ApplicationHistory();
-    }
-    return this.applicationHistoryInstance;
   };
 
   private queryServiceInstance?: QueryService;
