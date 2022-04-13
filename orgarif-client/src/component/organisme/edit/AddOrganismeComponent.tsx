@@ -13,11 +13,13 @@ import { useEffect, useState } from 'react';
 import { colors } from '../../../styles/colors';
 import { appContext } from '../../../ApplicationContext';
 import { TextInput } from '../../base-component/TextInput';
+import { useGoTo } from '../../../routing/useGoTo';
 
 export const AddOrganismeComponent = () => {
   const [displayDialog, setDisplayDialog] = useState(false);
   const [nom, setNom] = useState('');
   const [displayError, setDisplayError] = useState(false);
+  const goTo = useGoTo();
   useEffect(() => {
     setNom('');
   }, [displayDialog]);
@@ -85,7 +87,7 @@ export const AddOrganismeComponent = () => {
                 .commandService()
                 .createOrganismeCommand({ nom })
                 .then(r => {
-                  appContext.applicationHistory().goTo({
+                  goTo({
                     name: 'EditOrganismeRoute',
                     id: r.id
                   });

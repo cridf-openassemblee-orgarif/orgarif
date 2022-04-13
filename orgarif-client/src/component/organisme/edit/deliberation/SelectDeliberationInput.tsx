@@ -6,6 +6,7 @@ import { SharedConstants } from '../../../../constants';
 import { DeliberationId } from '../../../../domain/ids';
 import { DeliberationDto } from '../../../../domain/organisme';
 import { formatLocaleDate } from '../../../../simple-fr';
+import { asString } from '../../../../utils/nominal-class';
 import {
   AlreadySet,
   AutocompleteInput
@@ -80,7 +81,7 @@ export const SelectDeliberationInput = (props: {
                   padding-left: 10px;
                 `}
               >
-                (du {d.deliberationDate})
+                (du {asString(d.deliberationDate)})
               </span>
             )}
           </li>

@@ -6,18 +6,19 @@ import { OrganismeComponent } from '../component/OrganismeComponent';
 import { MainContainer } from '../container/MainContainer';
 import { OrganismeDto } from '../domain/organisme';
 import { RouteLink } from '../routing/RouteLink';
-import { EditOrganismeRoute } from '../routing/routes';
+import { EditOrganismeRoute, useRouteParams } from '../routing/routes';
 
-export const OrganismeView = (props: { routeParams: EditOrganismeRoute }) => {
+export const OrganismeView = () => {
+  const routeParams = useRouteParams<EditOrganismeRoute>();
   const [organisme, setOrganisme] = useState<OrganismeDto>();
   useEffect(() => {
     appContext
       .queryService()
-      .getOrganismeQuery({ id: props.routeParams.id })
+      .getOrganismeQuery({ id: routeParams.id })
       .then(r => {
         setOrganisme(r.organisme);
       });
-  }, [props.routeParams.id]);
+  }, [routeParams.id]);
   return (
     <MainContainer>
       <RouteLink route={{ name: 'ListOrganismesRoute' }}>list</RouteLink>
