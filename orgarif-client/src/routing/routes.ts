@@ -3,21 +3,21 @@ import { Role } from '../domain/user';
 import { LoginView } from '../view/LoginView';
 import { RegisterView } from '../view/RegisterView';
 import { RootView } from '../view/RootView';
+import { UsersManagementView } from '../view/UsersManagementView';
 
-export type Route = LoginRoute | RegisterRoute | RootRoute;
+export type Route =
+  | LoginRoute
+  | RegisterRoute
+  | RootRoute
+  | UsersManagementRoute;
 
-interface ViewParameters<R extends Route> {
-  routeParams: R;
-}
-
-interface RouteProps {
+export interface ApplicationRouteProps {
   path: string;
-  component: FunctionComponent<ViewParameters<any>>;
+  component: FunctionComponent;
   role?: Role;
-  onEnter?: () => void;
 }
 
-export const routes: Record<Route['name'], RouteProps> = {
+export const routes: Record<Route['name'], ApplicationRouteProps> = {
   LoginRoute: {
     path: '/login',
     component: LoginView
@@ -29,6 +29,11 @@ export const routes: Record<Route['name'], RouteProps> = {
   RootRoute: {
     path: '/',
     component: RootView
+  },
+  UsersManagementRoute: {
+    path: '/users-management',
+    component: UsersManagementView,
+    role: 'admin'
   }
 };
 
@@ -42,4 +47,8 @@ interface RegisterRoute {
 
 interface RootRoute {
   name: 'RootRoute';
+}
+
+interface UsersManagementRoute {
+  name: 'UsersManagementRoute';
 }
