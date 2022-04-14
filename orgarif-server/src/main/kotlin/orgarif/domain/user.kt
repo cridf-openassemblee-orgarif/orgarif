@@ -14,7 +14,7 @@ enum class Role {
     admin
 }
 
-enum class UserMailLogType {
+enum class AuthLogType {
     dirtyMail,
     formerMail
 }
