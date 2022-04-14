@@ -87,17 +87,17 @@ public class UserSessionLogRecord extends UpdatableRecordImpl<UserSessionLogReco
     }
 
     /**
-     * Setter for <code>public.user_session_log.date</code>.
+     * Setter for <code>public.user_session_log.creation_date</code>.
      */
-    public void setDate(@Nonnull Instant value) {
+    public void setCreationDate(@Nonnull Instant value) {
         set(4, value);
     }
 
     /**
-     * Getter for <code>public.user_session_log.date</code>.
+     * Getter for <code>public.user_session_log.creation_date</code>.
      */
     @Nonnull
-    public Instant getDate() {
+    public Instant getCreationDate() {
         return (Instant) get(4);
     }
 
@@ -169,7 +169,7 @@ public class UserSessionLogRecord extends UpdatableRecordImpl<UserSessionLogReco
     @Override
     @Nonnull
     public Field<Instant> field5() {
-        return UserSessionLogTable.USER_SESSION_LOG.DATE;
+        return UserSessionLogTable.USER_SESSION_LOG.CREATION_DATE;
     }
 
     @Override
@@ -205,7 +205,7 @@ public class UserSessionLogRecord extends UpdatableRecordImpl<UserSessionLogReco
     @Override
     @Nonnull
     public Instant component5() {
-        return getDate();
+        return getCreationDate();
     }
 
     @Override
@@ -241,7 +241,7 @@ public class UserSessionLogRecord extends UpdatableRecordImpl<UserSessionLogReco
     @Override
     @Nonnull
     public Instant value5() {
-        return getDate();
+        return getCreationDate();
     }
 
     @Override
@@ -281,7 +281,7 @@ public class UserSessionLogRecord extends UpdatableRecordImpl<UserSessionLogReco
     @Override
     @Nonnull
     public UserSessionLogRecord value5(@Nonnull Instant value) {
-        setDate(value);
+        setCreationDate(value);
         return this;
     }
 
@@ -318,14 +318,14 @@ public class UserSessionLogRecord extends UpdatableRecordImpl<UserSessionLogReco
     /**
      * Create a detached, initialised UserSessionLogRecord
      */
-    public UserSessionLogRecord(@Nonnull UUID id, @Nonnull String springSessionId, @Nonnull UUID userId, @Nonnull UUID deploymentLogId, @Nonnull Instant date, @Nonnull String ip) {
+    public UserSessionLogRecord(@Nonnull UUID id, @Nonnull String springSessionId, @Nonnull UUID userId, @Nonnull UUID deploymentLogId, @Nonnull Instant creationDate, @Nonnull String ip) {
         super(UserSessionLogTable.USER_SESSION_LOG);
 
         setId(id);
         setSpringSessionId(springSessionId);
         setUserId(userId);
         setDeploymentLogId(deploymentLogId);
-        setDate(date);
+        setCreationDate(creationDate);
         setIp(ip);
     }
 }

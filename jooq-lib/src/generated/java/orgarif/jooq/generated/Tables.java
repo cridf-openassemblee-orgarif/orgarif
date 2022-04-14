@@ -5,6 +5,7 @@ package orgarif.jooq.generated;
 
 
 import orgarif.jooq.generated.tables.AppUserTable;
+import orgarif.jooq.generated.tables.AuthLogTable;
 import orgarif.jooq.generated.tables.CommandLogTable;
 import orgarif.jooq.generated.tables.DeliberationTable;
 import orgarif.jooq.generated.tables.DepartementTable;
@@ -35,6 +36,11 @@ public class Tables {
      * The table <code>public.app_user</code>.
      */
     public static final AppUserTable APP_USER = AppUserTable.APP_USER;
+
+    /**
+     * The table <code>public.auth_log</code>.
+     */
+    public static final AuthLogTable AUTH_LOG = AuthLogTable.AUTH_LOG;
 
     /**
      * The table <code>public.command_log</code>.

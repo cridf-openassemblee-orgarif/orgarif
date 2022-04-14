@@ -102,17 +102,17 @@ public class UserFileRecord extends UpdatableRecordImpl<UserFileRecord> implemen
     }
 
     /**
-     * Setter for <code>public.user_file.date</code>.
+     * Setter for <code>public.user_file.upload_date</code>.
      */
-    public void setDate(@Nonnull Instant value) {
+    public void setUploadDate(@Nonnull Instant value) {
         set(5, value);
     }
 
     /**
-     * Getter for <code>public.user_file.date</code>.
+     * Getter for <code>public.user_file.upload_date</code>.
      */
     @Nonnull
-    public Instant getDate() {
+    public Instant getUploadDate() {
         return (Instant) get(5);
     }
 
@@ -175,7 +175,7 @@ public class UserFileRecord extends UpdatableRecordImpl<UserFileRecord> implemen
     @Override
     @Nonnull
     public Field<Instant> field6() {
-        return UserFileTable.USER_FILE.DATE;
+        return UserFileTable.USER_FILE.UPLOAD_DATE;
     }
 
     @Override
@@ -211,7 +211,7 @@ public class UserFileRecord extends UpdatableRecordImpl<UserFileRecord> implemen
     @Override
     @Nonnull
     public Instant component6() {
-        return getDate();
+        return getUploadDate();
     }
 
     @Override
@@ -247,7 +247,7 @@ public class UserFileRecord extends UpdatableRecordImpl<UserFileRecord> implemen
     @Override
     @Nonnull
     public Instant value6() {
-        return getDate();
+        return getUploadDate();
     }
 
     @Override
@@ -288,7 +288,7 @@ public class UserFileRecord extends UpdatableRecordImpl<UserFileRecord> implemen
     @Override
     @Nonnull
     public UserFileRecord value6(@Nonnull Instant value) {
-        setDate(value);
+        setUploadDate(value);
         return this;
     }
 
@@ -318,7 +318,7 @@ public class UserFileRecord extends UpdatableRecordImpl<UserFileRecord> implemen
     /**
      * Create a detached, initialised UserFileRecord
      */
-    public UserFileRecord(@Nonnull UUID id, @Nonnull UUID userId, @Nonnull byte[] file, @Nonnull String contentType, @Nonnull String originalFilename, @Nonnull Instant date) {
+    public UserFileRecord(@Nonnull UUID id, @Nonnull UUID userId, @Nonnull byte[] file, @Nonnull String contentType, @Nonnull String originalFilename, @Nonnull Instant uploadDate) {
         super(UserFileTable.USER_FILE);
 
         setId(id);
@@ -326,6 +326,6 @@ public class UserFileRecord extends UpdatableRecordImpl<UserFileRecord> implemen
         setFile(file);
         setContentType(contentType);
         setOriginalFilename(originalFilename);
-        setDate(date);
+        setUploadDate(uploadDate);
     }
 }

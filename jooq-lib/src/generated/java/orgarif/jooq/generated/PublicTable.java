@@ -14,6 +14,7 @@ import org.jooq.Table;
 import org.jooq.impl.SchemaImpl;
 
 import orgarif.jooq.generated.tables.AppUserTable;
+import orgarif.jooq.generated.tables.AuthLogTable;
 import orgarif.jooq.generated.tables.CommandLogTable;
 import orgarif.jooq.generated.tables.DeliberationTable;
 import orgarif.jooq.generated.tables.DepartementTable;
@@ -51,6 +52,11 @@ public class PublicTable extends SchemaImpl {
      * The table <code>public.app_user</code>.
      */
     public final AppUserTable APP_USER = AppUserTable.APP_USER;
+
+    /**
+     * The table <code>public.auth_log</code>.
+     */
+    public final AuthLogTable AUTH_LOG = AuthLogTable.AUTH_LOG;
 
     /**
      * The table <code>public.command_log</code>.
@@ -161,6 +167,7 @@ public class PublicTable extends SchemaImpl {
     public final List<Table<?>> getTables() {
         return Arrays.<Table<?>>asList(
             AppUserTable.APP_USER,
+            AuthLogTable.AUTH_LOG,
             CommandLogTable.COMMAND_LOG,
             DeliberationTable.DELIBERATION,
             DepartementTable.DEPARTEMENT,

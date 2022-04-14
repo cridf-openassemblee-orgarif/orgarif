@@ -80,9 +80,9 @@ public class UserFileTable extends TableImpl<UserFileRecord> {
     public final TableField<UserFileRecord, String> ORIGINAL_FILENAME = createField(DSL.name("original_filename"), SQLDataType.CLOB.nullable(false), this, "");
 
     /**
-     * The column <code>public.user_file.date</code>.
+     * The column <code>public.user_file.upload_date</code>.
      */
-    public final TableField<UserFileRecord, Instant> DATE = createField(DSL.name("date"), SQLDataType.TIMESTAMPWITHTIMEZONE(6).nullable(false), this, "", new TimestampWithTimeZoneToInstantConverter());
+    public final TableField<UserFileRecord, Instant> UPLOAD_DATE = createField(DSL.name("upload_date"), SQLDataType.TIMESTAMPWITHTIMEZONE(6).nullable(false), this, "", new TimestampWithTimeZoneToInstantConverter());
 
     private UserFileTable(Name alias, Table<UserFileRecord> aliased) {
         this(alias, aliased, null);

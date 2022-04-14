@@ -11,6 +11,7 @@ import org.jooq.impl.DSL;
 import org.jooq.impl.Internal;
 
 import orgarif.jooq.generated.tables.AppUserTable;
+import orgarif.jooq.generated.tables.AuthLogTable;
 import orgarif.jooq.generated.tables.CommandLogTable;
 import orgarif.jooq.generated.tables.DeliberationTable;
 import orgarif.jooq.generated.tables.DepartementTable;
@@ -30,6 +31,7 @@ import orgarif.jooq.generated.tables.TypeStructureTable;
 import orgarif.jooq.generated.tables.UserFileTable;
 import orgarif.jooq.generated.tables.UserSessionLogTable;
 import orgarif.jooq.generated.tables.records.AppUserRecord;
+import orgarif.jooq.generated.tables.records.AuthLogRecord;
 import orgarif.jooq.generated.tables.records.CommandLogRecord;
 import orgarif.jooq.generated.tables.records.DeliberationRecord;
 import orgarif.jooq.generated.tables.records.DepartementRecord;
@@ -64,6 +66,7 @@ public class Keys {
     public static final UniqueKey<AppUserRecord> APP_USER_MAIL_KEY = Internal.createUniqueKey(AppUserTable.APP_USER, DSL.name("app_user_mail_key"), new TableField[] { AppUserTable.APP_USER.MAIL }, true);
     public static final UniqueKey<AppUserRecord> APP_USER_PKEY = Internal.createUniqueKey(AppUserTable.APP_USER, DSL.name("app_user_pkey"), new TableField[] { AppUserTable.APP_USER.ID }, true);
     public static final UniqueKey<AppUserRecord> APP_USER_USERNAME_KEY = Internal.createUniqueKey(AppUserTable.APP_USER, DSL.name("app_user_username_key"), new TableField[] { AppUserTable.APP_USER.USERNAME }, true);
+    public static final UniqueKey<AuthLogRecord> AUTH_LOG_PKEY = Internal.createUniqueKey(AuthLogTable.AUTH_LOG, DSL.name("auth_log_pkey"), new TableField[] { AuthLogTable.AUTH_LOG.ID }, true);
     public static final UniqueKey<CommandLogRecord> COMMAND_LOG_PKEY = Internal.createUniqueKey(CommandLogTable.COMMAND_LOG, DSL.name("command_log_pkey"), new TableField[] { CommandLogTable.COMMAND_LOG.ID }, true);
     public static final UniqueKey<DeliberationRecord> DELIBERATION_PKEY = Internal.createUniqueKey(DeliberationTable.DELIBERATION, DSL.name("deliberation_pkey"), new TableField[] { DeliberationTable.DELIBERATION.ID }, true);
     public static final UniqueKey<DepartementRecord> DEPARTEMENT_PKEY = Internal.createUniqueKey(DepartementTable.DEPARTEMENT, DSL.name("departement_pkey"), new TableField[] { DepartementTable.DEPARTEMENT.ID }, true);
@@ -87,6 +90,7 @@ public class Keys {
     // FOREIGN KEY definitions
     // -------------------------------------------------------------------------
 
+    public static final ForeignKey<AuthLogRecord, AppUserRecord> AUTH_LOG__AUTH_LOG_USER_ID_FKEY = Internal.createForeignKey(AuthLogTable.AUTH_LOG, DSL.name("auth_log_user_id_fkey"), new TableField[] { AuthLogTable.AUTH_LOG.USER_ID }, Keys.APP_USER_PKEY, new TableField[] { AppUserTable.APP_USER.ID }, true);
     public static final ForeignKey<CommandLogRecord, DeploymentLogRecord> COMMAND_LOG__COMMAND_LOG_DEPLOYMENT_LOG_ID_FKEY = Internal.createForeignKey(CommandLogTable.COMMAND_LOG, DSL.name("command_log_deployment_log_id_fkey"), new TableField[] { CommandLogTable.COMMAND_LOG.DEPLOYMENT_LOG_ID }, Keys.DEPLOYMENT_LOG_PKEY, new TableField[] { DeploymentLogTable.DEPLOYMENT_LOG.ID }, true);
     public static final ForeignKey<CommandLogRecord, AppUserRecord> COMMAND_LOG__COMMAND_LOG_USER_ID_FKEY = Internal.createForeignKey(CommandLogTable.COMMAND_LOG, DSL.name("command_log_user_id_fkey"), new TableField[] { CommandLogTable.COMMAND_LOG.USER_ID }, Keys.APP_USER_PKEY, new TableField[] { AppUserTable.APP_USER.ID }, true);
     public static final ForeignKey<CommandLogRecord, UserSessionLogRecord> COMMAND_LOG__COMMAND_LOG_USER_SESSION_ID_FKEY = Internal.createForeignKey(CommandLogTable.COMMAND_LOG, DSL.name("command_log_user_session_id_fkey"), new TableField[] { CommandLogTable.COMMAND_LOG.USER_SESSION_ID }, Keys.USER_SESSION_LOG_PKEY, new TableField[] { UserSessionLogTable.USER_SESSION_LOG.ID }, true);

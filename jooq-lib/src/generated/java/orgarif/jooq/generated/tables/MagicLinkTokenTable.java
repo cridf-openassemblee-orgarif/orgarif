@@ -17,7 +17,7 @@ import org.jooq.Field;
 import org.jooq.ForeignKey;
 import org.jooq.Name;
 import org.jooq.Record;
-import org.jooq.Row4;
+import org.jooq.Row5;
 import org.jooq.Schema;
 import org.jooq.Table;
 import org.jooq.TableField;
@@ -65,14 +65,19 @@ public class MagicLinkTokenTable extends TableImpl<MagicLinkTokenRecord> {
     public final TableField<MagicLinkTokenRecord, UUID> USER_ID = createField(DSL.name("user_id"), SQLDataType.UUID.nullable(false), this, "");
 
     /**
+     * The column <code>public.magic_link_token.validity</code>.
+     */
+    public final TableField<MagicLinkTokenRecord, Boolean> VALIDITY = createField(DSL.name("validity"), SQLDataType.BOOLEAN.nullable(false), this, "");
+
+    /**
      * The column <code>public.magic_link_token.creation_date</code>.
      */
     public final TableField<MagicLinkTokenRecord, Instant> CREATION_DATE = createField(DSL.name("creation_date"), SQLDataType.TIMESTAMPWITHTIMEZONE(6).nullable(false), this, "", new TimestampWithTimeZoneToInstantConverter());
 
     /**
-     * The column <code>public.magic_link_token.validity</code>.
+     * The column <code>public.magic_link_token.last_update</code>.
      */
-    public final TableField<MagicLinkTokenRecord, Boolean> VALIDITY = createField(DSL.name("validity"), SQLDataType.BOOLEAN.nullable(false), this, "");
+    public final TableField<MagicLinkTokenRecord, Instant> LAST_UPDATE = createField(DSL.name("last_update"), SQLDataType.TIMESTAMPWITHTIMEZONE(6).nullable(false), this, "", new TimestampWithTimeZoneToInstantConverter());
 
     private MagicLinkTokenTable(Name alias, Table<MagicLinkTokenRecord> aliased) {
         this(alias, aliased, null);
@@ -171,12 +176,12 @@ public class MagicLinkTokenTable extends TableImpl<MagicLinkTokenRecord> {
     }
 
     // -------------------------------------------------------------------------
-    // Row4 type methods
+    // Row5 type methods
     // -------------------------------------------------------------------------
 
     @Override
     @Nonnull
-    public Row4<String, UUID, Instant, Boolean> fieldsRow() {
-        return (Row4) super.fieldsRow();
+    public Row5<String, UUID, Boolean, Instant, Instant> fieldsRow() {
+        return (Row5) super.fieldsRow();
     }
 }

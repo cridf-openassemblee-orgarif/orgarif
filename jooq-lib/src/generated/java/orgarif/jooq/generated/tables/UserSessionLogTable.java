@@ -77,9 +77,9 @@ public class UserSessionLogTable extends TableImpl<UserSessionLogRecord> {
     public final TableField<UserSessionLogRecord, UUID> DEPLOYMENT_LOG_ID = createField(DSL.name("deployment_log_id"), SQLDataType.UUID.nullable(false), this, "");
 
     /**
-     * The column <code>public.user_session_log.date</code>.
+     * The column <code>public.user_session_log.creation_date</code>.
      */
-    public final TableField<UserSessionLogRecord, Instant> DATE = createField(DSL.name("date"), SQLDataType.TIMESTAMPWITHTIMEZONE(6).nullable(false), this, "", new TimestampWithTimeZoneToInstantConverter());
+    public final TableField<UserSessionLogRecord, Instant> CREATION_DATE = createField(DSL.name("creation_date"), SQLDataType.TIMESTAMPWITHTIMEZONE(6).nullable(false), this, "", new TimestampWithTimeZoneToInstantConverter());
 
     /**
      * The column <code>public.user_session_log.ip</code>.

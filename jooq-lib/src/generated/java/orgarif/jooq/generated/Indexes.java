@@ -10,6 +10,7 @@ import org.jooq.impl.DSL;
 import org.jooq.impl.Internal;
 
 import orgarif.jooq.generated.tables.AppUserTable;
+import orgarif.jooq.generated.tables.AuthLogTable;
 import orgarif.jooq.generated.tables.InstanceTable;
 import orgarif.jooq.generated.tables.LienDeliberationTable;
 import orgarif.jooq.generated.tables.MailLogTable;
@@ -30,6 +31,7 @@ public class Indexes {
 
     public static final Index APP_USER_MAIL_IDX = Internal.createIndex(DSL.name("app_user_mail_idx"), AppUserTable.APP_USER, new OrderField[] { AppUserTable.APP_USER.MAIL }, false);
     public static final Index APP_USER_USERNAME_IDX = Internal.createIndex(DSL.name("app_user_username_idx"), AppUserTable.APP_USER, new OrderField[] { AppUserTable.APP_USER.USERNAME }, false);
+    public static final Index AUTH_LOG_USER_ID_IDX = Internal.createIndex(DSL.name("auth_log_user_id_idx"), AuthLogTable.AUTH_LOG, new OrderField[] { AuthLogTable.AUTH_LOG.USER_ID }, false);
     public static final Index INSTANCE_ORGANISME_ID_IDX = Internal.createIndex(DSL.name("instance_organisme_id_idx"), InstanceTable.INSTANCE, new OrderField[] { InstanceTable.INSTANCE.ORGANISME_ID }, false);
     public static final Index LIEN_DELIBERATION_ORGANISME_ID_IDX = Internal.createIndex(DSL.name("lien_deliberation_organisme_id_idx"), LienDeliberationTable.LIEN_DELIBERATION, new OrderField[] { LienDeliberationTable.LIEN_DELIBERATION.ORGANISME_ID }, false);
     public static final Index MAIL_LOG_USER_ID_IDX = Internal.createIndex(DSL.name("mail_log_user_id_idx"), MailLogTable.MAIL_LOG, new OrderField[] { MailLogTable.MAIL_LOG.USER_ID }, false);
