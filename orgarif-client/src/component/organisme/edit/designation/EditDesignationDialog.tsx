@@ -27,7 +27,7 @@ const DesignationPanel = (props: {
     props.designation.startDate
   );
   const [endDate, setEndDate] = useState<LocalDate | undefined>(
-    props.designation.startDate
+    props.designation.endDate
   );
   const submit = () => {
     return appContext
