@@ -5,7 +5,6 @@ package orgarif.jooq.generated;
 
 
 import orgarif.jooq.generated.tables.AppUserTable;
-import orgarif.jooq.generated.tables.AuthLogTable;
 import orgarif.jooq.generated.tables.CommandLogTable;
 import orgarif.jooq.generated.tables.DeliberationTable;
 import orgarif.jooq.generated.tables.DepartementTable;
@@ -22,6 +21,7 @@ import orgarif.jooq.generated.tables.RepresentantTable;
 import orgarif.jooq.generated.tables.SecteurTable;
 import orgarif.jooq.generated.tables.TypeStructureTable;
 import orgarif.jooq.generated.tables.UserFileTable;
+import orgarif.jooq.generated.tables.UserMailLogTable;
 import orgarif.jooq.generated.tables.UserSessionLogTable;
 
 
@@ -35,11 +35,6 @@ public class Tables {
      * The table <code>public.app_user</code>.
      */
     public static final AppUserTable APP_USER = AppUserTable.APP_USER;
-
-    /**
-     * The table <code>public.auth_log</code>.
-     */
-    public static final AuthLogTable AUTH_LOG = AuthLogTable.AUTH_LOG;
 
     /**
      * The table <code>public.command_log</code>.
@@ -120,6 +115,11 @@ public class Tables {
      * The table <code>public.user_file</code>.
      */
     public static final UserFileTable USER_FILE = UserFileTable.USER_FILE;
+
+    /**
+     * The table <code>public.user_mail_log</code>.
+     */
+    public static final UserMailLogTable USER_MAIL_LOG = UserMailLogTable.USER_MAIL_LOG;
 
     /**
      * The table <code>public.user_session_log</code>.

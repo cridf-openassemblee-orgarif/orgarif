@@ -7,29 +7,29 @@ import { appContext } from '../ApplicationContext';
 import { MainContainer } from '../container/MainContainer';
 import { OrganismeListDto } from '../domain/organisme';
 import { RouteLink } from '../routing/RouteLink';
-import {
-  ListOrganismesBySecteurRoute,
-  useRouteParams
-} from '../routing/routes';
+import { ListOrganismesBySecteurRoute } from '../routing/routes';
 import { state } from '../state/state';
 import { colors } from '../styles/colors';
 import { asString, getValue } from '../utils/nominal-class';
 
-export const ListOrganismesBySecteurView = () => {
-  const routeParams = useRouteParams<ListOrganismesBySecteurRoute>();
+export const ListOrganismesBySecteurView = ({
+  route
+}: {
+  route: ListOrganismesBySecteurRoute;
+}) => {
   const [organismes, setOrganismes] = useState<OrganismeListDto[]>();
   const secteurById = useRecoilValue(state.secteursById);
-  const secteur = getValue(secteurById, routeParams.secteurId);
+  const secteur = getValue(secteurById, route.secteurId);
   useEffect(() => {
     appContext
       .queryService()
       .listOrganismesBySecteurQuery({
-        secteurId: routeParams.secteurId
+        secteurId: route.secteurId
       })
       .then(r => {
         setOrganismes(r.organismes);
       });
-  }, [routeParams.secteurId]);
+  }, [route.secteurId]);
   return (
     <MainContainer>
       <h1>{secteur.libelle}</h1>

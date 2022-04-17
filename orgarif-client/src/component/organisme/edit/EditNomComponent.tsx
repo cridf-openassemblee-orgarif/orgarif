@@ -13,7 +13,7 @@ import { TextInput } from '../../base-component/TextInput';
 import { classes } from '../../category/EditCategoriesComponent';
 import { dialogClasses } from './dialog-common';
 import { TabPanel, TabsContainer } from '../../base-component/TabsContainer';
-import { Route } from '../../../routing/routes';
+import { ApplicationRoute } from '../../../routing/routes';
 import { useGoTo } from '../../../routing/useGoTo';
 import { ConfirmButton } from '../../base-component/ConfirmButton';
 
@@ -27,7 +27,7 @@ export const EditNomComponent = (
     onUpdateNom: (nom: string) => Promise<void>;
     onUpdateStatus: (status: ItemStatus) => Promise<void>;
     titleElement: ReactElement;
-    deletionReturnRoute?: Route;
+    deletionReturnRoute?: ApplicationRoute;
   }>
 ) => {
   const [displayDialog, setDisplayDialog] = useState(false);

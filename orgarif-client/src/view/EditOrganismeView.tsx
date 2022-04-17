@@ -9,7 +9,7 @@ import { MainContainer } from '../container/MainContainer';
 import { OrganismeDto } from '../domain/organisme';
 import { LoadingState } from '../interfaces';
 import { RouteLink } from '../routing/RouteLink';
-import { EditOrganismeRoute, useRouteParams } from '../routing/routes';
+import { EditOrganismeRoute } from '../routing/routes';
 import { assertUnreachable } from '../utils';
 
 const displayLoading = (loading: LoadingState) => {
@@ -25,8 +25,7 @@ const displayLoading = (loading: LoadingState) => {
   }
 };
 
-export const EditOrganismeView = () => {
-  const routeParams = useRouteParams<EditOrganismeRoute>();
+export const EditOrganismeView = ({ route }: { route: EditOrganismeRoute }) => {
   const [organisme, setOrganisme] = useState<OrganismeDto>();
   const [loading, setLoading] = useState<LoadingState>('idle');
   useEffect(() => {
@@ -35,7 +34,7 @@ export const EditOrganismeView = () => {
     const exec = async () => {
       const organisme = await appContext
         .queryService()
-        .getOrganismeQuery({ id: routeParams.id })
+        .getOrganismeQuery({ id: route.id })
         .then(r => r.organisme);
       if (!organisme) {
         return;
@@ -44,7 +43,7 @@ export const EditOrganismeView = () => {
       setOrganisme(organisme);
     };
     exec();
-  }, [routeParams.id]);
+  }, [route.id]);
   return (
     <MainContainer>
       <div

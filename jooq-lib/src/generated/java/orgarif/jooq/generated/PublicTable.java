@@ -14,7 +14,6 @@ import org.jooq.Table;
 import org.jooq.impl.SchemaImpl;
 
 import orgarif.jooq.generated.tables.AppUserTable;
-import orgarif.jooq.generated.tables.AuthLogTable;
 import orgarif.jooq.generated.tables.CommandLogTable;
 import orgarif.jooq.generated.tables.DeliberationTable;
 import orgarif.jooq.generated.tables.DepartementTable;
@@ -31,6 +30,7 @@ import orgarif.jooq.generated.tables.RepresentantTable;
 import orgarif.jooq.generated.tables.SecteurTable;
 import orgarif.jooq.generated.tables.TypeStructureTable;
 import orgarif.jooq.generated.tables.UserFileTable;
+import orgarif.jooq.generated.tables.UserMailLogTable;
 import orgarif.jooq.generated.tables.UserSessionLogTable;
 
 
@@ -51,11 +51,6 @@ public class PublicTable extends SchemaImpl {
      * The table <code>public.app_user</code>.
      */
     public final AppUserTable APP_USER = AppUserTable.APP_USER;
-
-    /**
-     * The table <code>public.auth_log</code>.
-     */
-    public final AuthLogTable AUTH_LOG = AuthLogTable.AUTH_LOG;
 
     /**
      * The table <code>public.command_log</code>.
@@ -138,6 +133,11 @@ public class PublicTable extends SchemaImpl {
     public final UserFileTable USER_FILE = UserFileTable.USER_FILE;
 
     /**
+     * The table <code>public.user_mail_log</code>.
+     */
+    public final UserMailLogTable USER_MAIL_LOG = UserMailLogTable.USER_MAIL_LOG;
+
+    /**
      * The table <code>public.user_session_log</code>.
      */
     public final UserSessionLogTable USER_SESSION_LOG = UserSessionLogTable.USER_SESSION_LOG;
@@ -161,7 +161,6 @@ public class PublicTable extends SchemaImpl {
     public final List<Table<?>> getTables() {
         return Arrays.<Table<?>>asList(
             AppUserTable.APP_USER,
-            AuthLogTable.AUTH_LOG,
             CommandLogTable.COMMAND_LOG,
             DeliberationTable.DELIBERATION,
             DepartementTable.DEPARTEMENT,
@@ -178,6 +177,7 @@ public class PublicTable extends SchemaImpl {
             SecteurTable.SECTEUR,
             TypeStructureTable.TYPE_STRUCTURE,
             UserFileTable.USER_FILE,
+            UserMailLogTable.USER_MAIL_LOG,
             UserSessionLogTable.USER_SESSION_LOG);
     }
 }
