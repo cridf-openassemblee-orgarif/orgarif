@@ -1,5 +1,5 @@
 import { FunctionComponent } from 'react';
-import { OrganismeId, SecteurId } from '../domain/ids';
+import { OrganismeId, SecteurId, UserId } from '../domain/ids';
 import { Role } from '../domain/user';
 import { EditNatureJuridiquesView } from '../view/EditNatureJuridiquesView';
 import { EditOrganismeView } from '../view/EditOrganismeView';
@@ -13,11 +13,10 @@ import { RegisterView } from '../view/RegisterView';
 import { RootView } from '../view/RootView';
 import { EditDepartementsView } from '../view/EditDepartementsView';
 import { UsersManagementView } from '../view/UsersManagementView';
-import { UserId } from '../domain/ids';
-import { useParams } from 'react-router-dom';
 import { UserManagementView } from '../view/UserManagementView';
 
-export type Route =
+// TODO secure that "name" can't be a route parameter
+export type ApplicationRoute =
   | EditDepartementsRoute
   | EditNatureJuridiquesRoute
   | EditOrganismeRoute
@@ -32,16 +31,16 @@ export type Route =
   | UserManagementRoute
   | UsersManagementRoute;
 
-export const useRouteParams = <T extends Route>() =>
-  useParams() as unknown as Omit<T, 'name'>;
-
-export interface ApplicationRouteProps {
+export interface ApplicationRouteProps<T extends ApplicationRoute> {
   path: string;
-  component: FunctionComponent;
+  component: FunctionComponent<{ route: T | undefined }>;
   role?: Role;
 }
 
-export const routes: Record<Route['name'], ApplicationRouteProps> = {
+export const routes: Record<
+  ApplicationRoute['name'],
+  ApplicationRouteProps<any>
+> = {
   EditDepartementsRoute: {
     path: '/edition-departements',
     component: EditDepartementsView,

@@ -1,7 +1,7 @@
-import { Route, routes } from './routes';
+import { ApplicationRoute, routes } from './routes';
 import { useLocation, useNavigate } from 'react-router-dom';
 
-export const buildPath = (route: Route) => {
+export const buildPath = (route: ApplicationRoute) => {
   let path = routes[route.name].path;
   Object.keys(route)
     .filter(k => k !== 'name')
@@ -20,7 +20,7 @@ export const useGoTo = () => {
   const navigate = useNavigate();
   const location = useLocation();
   return (
-    route: Route,
+    route: ApplicationRoute,
     options?: {
       replace?: boolean;
       targetPath?: string;

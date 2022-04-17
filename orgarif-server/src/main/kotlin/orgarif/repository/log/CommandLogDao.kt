@@ -58,11 +58,18 @@ class CommandLogDao(val jooq: DSLContext) {
 
     fun updateResult(
         id: CommandLogId,
+        user: Pair<UserId, UserSessionId>?,
         resultingIds: String,
         jsonResult: String?,
         endDate: Instant
     ) {
         jooq.update(COMMAND_LOG)
+            .also {
+                if (user != null) {
+                    it.set(COMMAND_LOG.USER_ID, user.first.rawId)
+                    it.set(COMMAND_LOG.USER_SESSION_ID, user.second.rawId)
+                }
+            }
             .set(COMMAND_LOG.RESULTING_IDS, resultingIds)
             .set(COMMAND_LOG.JSON_RESULT, jsonResult)
             .set(COMMAND_LOG.END_DATE, endDate)
