@@ -14,11 +14,14 @@ import orgarif.command.CommandHandler
 import orgarif.command.CommandResponse
 import orgarif.command.DevLoginCommand
 import orgarif.command.DevLoginCommandHandler
+import orgarif.command.DevLoginCommandResponse
 import orgarif.command.EmptyCommandResponse
 import orgarif.command.LoginCommand
 import orgarif.command.LoginCommandHandler
+import orgarif.command.LoginCommandResponse
 import orgarif.command.RegisterCommand
 import orgarif.command.RegisterCommandHandler
+import orgarif.command.RegisterCommandResponse
 import orgarif.domain.CommandLogId
 import orgarif.repository.log.CommandLogDao
 import orgarif.repository.user.UserDao
@@ -88,6 +91,13 @@ class CommandController(
             try {
                 commandLogDao.updateResult(
                     commandLogId,
+                    // TODO verify
+                    when (result) {
+                        is DevLoginCommandResponse -> result.userinfos.id
+                        is LoginCommandResponse -> result.userinfos?.id
+                        is RegisterCommandResponse -> result.userinfos?.id
+                        else -> null
+                    }?.let { it to userSessionService.getUserSession().sessionId },
                     idLogService.getIdsString(),
                     if (result !is EmptyCommandResponse) Serializer.serialize(result) else null,
                     dateService.now())

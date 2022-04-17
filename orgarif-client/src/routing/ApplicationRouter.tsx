@@ -1,17 +1,23 @@
 /** @jsxImportSource @emotion/react */
 import * as React from 'react';
 import { FunctionComponent, useEffect } from 'react';
-import { Route } from 'react-router';
-import { BrowserRouter, Routes, useLocation } from 'react-router-dom';
+import {
+  BrowserRouter,
+  Route,
+  Routes,
+  useLocation,
+  useParams
+} from 'react-router-dom';
 import { useRecoilState } from 'recoil';
 import { state } from '../state/state';
 import { NotFoundView } from '../view/NotFoundView';
-import { routes } from './routes';
+import { ApplicationRoute, routes } from './routes';
 import { useGoTo } from './useGoTo';
 import { Role } from '../domain/user';
 
 const RouteComponent = (props: {
-  component: FunctionComponent;
+  component: FunctionComponent<{ route: ApplicationRoute | undefined }>;
+  routeName: ApplicationRoute['name'];
   role?: Role;
 }) => {
   const [userInfos] = useRecoilState(state.userInfos);
@@ -39,22 +45,31 @@ const RouteComponent = (props: {
       }
     }
   }, [props.role, userInfos, goTo, location.pathname]);
-  return React.createElement(props.component);
+  const route = {
+    name: props.routeName,
+    ...useParams()
+  } as ApplicationRoute;
+  return React.createElement(props.component, { route });
 };
 
 // TODO see useRoutes
 export const ApplicationRouter = () => (
   <BrowserRouter>
     <Routes>
-      {Object.values(routes).map(route => {
+      {Object.entries(routes).map(e => {
         // [doc] DO NOT use a key here, because router Switch only displays once at one,
         // and it's complicated to use a key which doesn't produce useless re-rendering
         // TODO is NOT enough ! force key in MainContainer ? hierarchical views if same view for several paths ?
+        const route = e[1];
         return (
           <Route
             path={route.path}
             element={
-              <RouteComponent component={route.component} role={route.role} />
+              <RouteComponent
+                component={route.component}
+                role={route.role}
+                routeName={e[0] as ApplicationRoute['name']}
+              />
             }
           />
         );

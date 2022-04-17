@@ -6,11 +6,11 @@ import org.springframework.stereotype.Repository
 import orgarif.domain.AuthLogId
 import orgarif.domain.AuthLogType
 import orgarif.domain.UserId
-import orgarif.jooq.generated.Tables.AUTH_LOG
-import orgarif.jooq.generated.tables.records.AuthLogRecord
+import orgarif.jooq.generated.Tables.USER_MAIL_LOG
+import orgarif.jooq.generated.tables.records.UserMailLogRecord
 
 @Repository
-class AuthLogDao(val jooq: DSLContext) {
+class UserMailLogDao(val jooq: DSLContext) {
 
     data class Record(
         val id: AuthLogId,
@@ -18,13 +18,11 @@ class AuthLogDao(val jooq: DSLContext) {
         val mail: String,
         val type: AuthLogType,
         val creationDate: Instant
-    ) {
-        override fun toString() = "User($id|$mail)"
-    }
+    )
 
     fun insert(r: Record) {
         val jr =
-            AuthLogRecord().apply {
+            UserMailLogRecord().apply {
                 id = r.id.rawId
                 userId = r.userId.rawId
                 mail = r.mail
@@ -32,6 +30,6 @@ class AuthLogDao(val jooq: DSLContext) {
                 creationDate = r.creationDate
             }
 
-        jooq.insertInto(AUTH_LOG).set(jr).execute()
+        jooq.insertInto(USER_MAIL_LOG).set(jr).execute()
     }
 }
