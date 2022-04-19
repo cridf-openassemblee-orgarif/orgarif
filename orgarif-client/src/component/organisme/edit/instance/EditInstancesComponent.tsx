@@ -95,8 +95,12 @@ export const EditInstancesComponent = (props: {
                   presenceSuppleants
                 )
               }
-              designationRepresentants={instance.designationRepresentants}
-              designationSuppleants={instance.designationSuppleants}
+              designationRepresentants={instance.designationRepresentants.map(
+                r => r ?? undefined
+              )}
+              designationSuppleants={instance.designationSuppleants.map(
+                r => r ?? undefined
+              )}
               onAddDesignation={(
                 representantId: RepresentantId,
                 type: DesignationType,

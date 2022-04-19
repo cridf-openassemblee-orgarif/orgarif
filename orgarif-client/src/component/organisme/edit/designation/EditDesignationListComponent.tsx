@@ -19,8 +19,8 @@ export const EditDesignationListComponent = (props: {
   onNombreRepresentantsChange: (nombre: number) => void;
   presenceSuppleants: boolean;
   onPresenceSuppleantsChange: (presenceSuppleants: boolean) => void;
-  designationRepresentants: DesignationDto[];
-  designationSuppleants: DesignationDto[];
+  designationRepresentants: (DesignationDto | undefined)[];
+  designationSuppleants: (DesignationDto | undefined)[];
   onAddDesignation: (
     representantId: RepresentantId,
     type: DesignationType,

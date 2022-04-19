@@ -52,8 +52,9 @@ export interface InstanceDto {
   nom: string;
   nombreRepresentants: number;
   presenceSuppleants: boolean;
-  designationRepresentants: DesignationDto[];
-  designationSuppleants: DesignationDto[];
+  // DesignationDto | null & not undefined because of serialization
+  designationRepresentants: (DesignationDto | null)[];
+  designationSuppleants: (DesignationDto | null)[];
   lienDeliberations: LienDeliberationDto[];
   status: ItemStatus;
 }
@@ -75,8 +76,9 @@ export interface OrganismeDto {
   typeStructureId?: TypeStructureId;
   nombreRepresentants: number;
   presenceSuppleants: boolean;
-  designationRepresentants: DesignationDto[];
-  designationSuppleants: DesignationDto[];
+  // DesignationDto | null & not undefined because of serialization
+  designationRepresentants: (DesignationDto | null)[];
+  designationSuppleants: (DesignationDto | null)[];
   lienDeliberations: LienDeliberationDto[];
   instances: InstanceDto[];
   status: ItemStatus;

@@ -65,8 +65,8 @@ export const RepresentantsDeliberationsBlock = (props: {
   onNombreRepresentantsChange: (nombre: number) => void;
   presenceSuppleants: boolean;
   onPresenceSuppleantsChange: (presenceSuppleants: boolean) => void;
-  designationRepresentants: DesignationDto[];
-  designationSuppleants: DesignationDto[];
+  designationRepresentants: (DesignationDto | undefined)[];
+  designationSuppleants: (DesignationDto | undefined)[];
   onAddDesignation: (
     representantId: RepresentantId,
     type: DesignationType,
@@ -208,8 +208,12 @@ export const EditOrganismeComponent = (props: {
           onPresenceSuppleantsChange={(presenceSuppleants: boolean) =>
             actions.onPresenceSuppleantsChange(undefined, presenceSuppleants)
           }
-          designationRepresentants={organisme.designationRepresentants}
-          designationSuppleants={organisme.designationSuppleants}
+          designationRepresentants={organisme.designationRepresentants.map(
+            r => r ?? undefined
+          )}
+          designationSuppleants={organisme.designationSuppleants.map(
+            r => r ?? undefined
+          )}
           onAddDesignation={(
             representantId: RepresentantId,
             type: DesignationType,
