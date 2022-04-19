@@ -37,7 +37,7 @@ class DevElasticSearchFixInitializingBean(
 
     @PostConstruct
     fun init() {
-        deliberationSearchRepository.saveAll(deliberationRepository.findAll())
+//        deliberationSearchRepository.saveAll(deliberationRepository.findAll())
     }
 
 }
