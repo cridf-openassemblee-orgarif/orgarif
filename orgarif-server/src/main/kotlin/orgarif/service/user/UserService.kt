@@ -7,7 +7,6 @@ import orgarif.domain.AuthLogType
 import orgarif.domain.HashedPassword
 import orgarif.domain.Language
 import orgarif.domain.PlainStringPassword
-import orgarif.domain.Role
 import orgarif.domain.UserId
 import orgarif.repository.user.UserDao
 import orgarif.repository.user.UserMailLogDao
@@ -62,7 +61,7 @@ class UserService(
                 username = null,
                 displayName = displayName.trim(),
                 language = language,
-                roles = setOf(Role.user),
+                roles = emptySet(),
                 signupDate = now,
                 lastUpdate = now)
         userDao.insert(user, hashedPassword)
