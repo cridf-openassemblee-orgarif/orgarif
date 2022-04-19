@@ -70,9 +70,6 @@ export const AddOrganismeComponent = () => {
           </div>
         </DialogContent>
         <DialogActions>
-          <Button onClick={() => setDisplayDialog(false)} color="primary">
-            Annuler
-          </Button>
           <Button
             type="submit"
             variant="contained"
@@ -95,6 +92,9 @@ export const AddOrganismeComponent = () => {
             }}
           >
             Créer organisme
+          </Button>
+          <Button onClick={() => setDisplayDialog(false)} color="primary">
+            Annuler
           </Button>
         </DialogActions>
       </Dialog>

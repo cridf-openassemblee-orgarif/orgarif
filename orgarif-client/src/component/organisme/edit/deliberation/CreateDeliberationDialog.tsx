@@ -97,10 +97,10 @@ export const CreateDeliberationDialog = (props: {
         </div>
       </DialogContent>
       <DialogActions>
+        <LoadingButton onClick={onSubmit}>Ajouter</LoadingButton>
         <Button onClick={props.close} color="primary">
           Annuler
         </Button>
-        <LoadingButton onClick={onSubmit}>Ajouter</LoadingButton>
       </DialogActions>
     </Dialog>
   );

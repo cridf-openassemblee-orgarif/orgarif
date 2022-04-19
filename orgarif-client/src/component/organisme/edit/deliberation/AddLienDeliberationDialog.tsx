@@ -100,10 +100,10 @@ export const AddLienDeliberationDialog = (props: {
           </div>
         </DialogContent>
         <DialogActions>
+          <LoadingButton onClick={onSubmit}>Ajouter</LoadingButton>
           <Button onClick={props.onClose} color="primary">
             Annuler
           </Button>
-          <LoadingButton onClick={onSubmit}>Ajouter</LoadingButton>
         </DialogActions>
       </Dialog>
       <CreateDeliberationDialog

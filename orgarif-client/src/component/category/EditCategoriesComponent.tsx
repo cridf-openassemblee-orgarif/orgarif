@@ -362,28 +362,26 @@ export const EditCategoriesComponent = (props: {
               Informations nécessaires
             </div>
           )}
-          <div css={classes.editButton}>
-            <LoadingButton
-              onClick={() => {
-                if (!newCategoryLibelle) {
-                  setError(true);
-                  return Promise.resolve();
-                }
-                if (props.hasCode && !newCategoryCode) {
-                  setError(true);
-                  return Promise.resolve();
-                }
-                setError(false);
-                return props
-                  .onAdd(newCategoryLibelle, newCategoryCode)
-                  .then(() => setDisplayAddPopup(false));
-              }}
-            >
-              Ajouter
-            </LoadingButton>
-          </div>
         </DialogContent>
         <DialogActions>
+          <LoadingButton
+            onClick={() => {
+              if (!newCategoryLibelle) {
+                setError(true);
+                return Promise.resolve();
+              }
+              if (props.hasCode && !newCategoryCode) {
+                setError(true);
+                return Promise.resolve();
+              }
+              setError(false);
+              return props
+                .onAdd(newCategoryLibelle, newCategoryCode)
+                .then(() => setDisplayAddPopup(false));
+            }}
+          >
+            Ajouter
+          </LoadingButton>
           <Button onClick={() => setDisplayAddPopup(false)} color="primary">
             Annuler
           </Button>

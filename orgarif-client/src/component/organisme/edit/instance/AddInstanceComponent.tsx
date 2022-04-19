@@ -72,9 +72,6 @@ export const AddInstanceComponent = (props: {
           </div>
         </DialogContent>
         <DialogActions>
-          <Button onClick={() => setDisplayDialog(false)} color="primary">
-            Annuler
-          </Button>
           <Button
             type="submit"
             variant="contained"
@@ -91,6 +88,9 @@ export const AddInstanceComponent = (props: {
             }}
           >
             Créer instance
+          </Button>
+          <Button onClick={() => setDisplayDialog(false)} color="primary">
+            Annuler
           </Button>
         </DialogActions>
       </Dialog>

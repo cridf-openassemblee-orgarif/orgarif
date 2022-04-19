@@ -104,16 +104,10 @@ export const AddDesignationDialog = (props: {
           />
         </DialogContent>
         <DialogActions>
+          <LoadingButton onClick={onSubmit}>Ajouter</LoadingButton>
           <Button onClick={props.onClose} color="primary">
             Annuler
           </Button>
-          <div
-            css={css`
-              padding-left: 10px;
-            `}
-          >
-            <LoadingButton onClick={onSubmit}>Ajouter</LoadingButton>
-          </div>
         </DialogActions>
       </Dialog>
     </React.Fragment>

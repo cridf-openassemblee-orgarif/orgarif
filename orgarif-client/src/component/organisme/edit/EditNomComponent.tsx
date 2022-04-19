@@ -91,12 +91,6 @@ export const EditNomComponent = (
                 />
                 <div css={classes.editButton}>
                   <Button
-                    onClick={() => setDisplayDialog(false)}
-                    color="primary"
-                  >
-                    Annuler
-                  </Button>{' '}
-                  <Button
                     type="submit"
                     variant="contained"
                     color="primary"
@@ -106,6 +100,12 @@ export const EditNomComponent = (
                     }
                   >
                     Enregistrer
+                  </Button>
+                  <Button
+                    onClick={() => setDisplayDialog(false)}
+                    color="primary"
+                  >
+                    Annuler
                   </Button>
                 </div>
               </div>

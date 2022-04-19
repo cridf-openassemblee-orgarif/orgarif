@@ -86,10 +86,10 @@ const DesignationPanel = (props: {
           padding-top: 40px;
         `}
       >
+        <LoadingButton onClick={submit}>Enregistrer</LoadingButton>
         <Button onClick={props.onClose} color="primary">
           Annuler
         </Button>
-        <LoadingButton onClick={submit}>Enregistrer</LoadingButton>
       </div>
     </>
   );
@@ -110,9 +110,6 @@ const SuppressionPanel = (props: {
           ${classes.editButton}
         `}
       >
-        <Button onClick={props.onClose} color="primary">
-          Annuler
-        </Button>
         <ConfirmButton
           dialogTitle="Supprimer la désignation"
           okButton="Supprimer"
@@ -130,6 +127,9 @@ const SuppressionPanel = (props: {
         >
           Supprimer
         </ConfirmButton>
+        <Button onClick={props.onClose} color="primary">
+          Annuler
+        </Button>
       </div>
     </React.Fragment>
   );
