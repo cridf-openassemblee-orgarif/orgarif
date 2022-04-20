@@ -15,7 +15,7 @@ import { Secteur } from '../icon/collection/Secteur';
 import { state } from '../state/state';
 import { isMobile } from '../utils/viewport-utils';
 
-// TODO : retrieve missing props localité
+// TODO: add missing props localité once available in state
 export const Informations = (props: { data: OrganismeDto }) => {
   const [departements] = useRecoilState(state.departements);
   const [secteurs] = useRecoilState(state.secteurs);
@@ -39,7 +39,7 @@ export const Informations = (props: { data: OrganismeDto }) => {
             <Localite size={isMobile() ? 90 : 110} />
             <Chip variant="outlined" label="LOCALITÉ" />
             <Typography variant="body2" mt={1}>
-              ??
+              {'information non disponible'}
             </Typography>
           </Item>
         </Grid>
@@ -48,7 +48,7 @@ export const Informations = (props: { data: OrganismeDto }) => {
             <Departement size={isMobile() ? 90 : 110} />
             <Chip variant="outlined" label="DÉPARTEMENT" />
             <Typography variant="body2" mt={1}>
-              {dept?.code}
+              {dept?.code ?? 'information non disponible'}
             </Typography>
             <Typography variant="body2">{dept?.libelle}</Typography>
           </Item>
@@ -58,7 +58,7 @@ export const Informations = (props: { data: OrganismeDto }) => {
             <Secteur size={isMobile() ? 90 : 110} />
             <Chip variant="outlined" label="SECTEUR" />
             <Typography variant="body2" mt={1}>
-              {sect?.libelle}
+              {sect?.libelle ?? 'information non disponible'}
             </Typography>
           </Item>
         </Grid>
@@ -67,7 +67,7 @@ export const Informations = (props: { data: OrganismeDto }) => {
             <NatureJuridique size={isMobile() ? 90 : 110} />
             <Chip variant="outlined" label="NATURE JURIDQIQUE" />
             <Typography variant="body2" mt={1}>
-              {nJ?.libelle}
+              {nJ?.libelle ?? 'information non disponible'}
             </Typography>
           </Item>
         </Grid>

@@ -8,6 +8,7 @@ import {
   Secteur,
   TypeStructure
 } from '../domain/bootstrap-data';
+import { asString } from '../utils/nominal-class';
 import { FilterChip } from './FilterChip';
 import { HeaderChip } from './HeaderChip';
 
@@ -41,7 +42,7 @@ export const FilterSection = React.memo(
                 filter={filter}
                 isSticky={sticky}
                 showIcon={showIcon}
-                key={filter.id.toString()}
+                key={asString(filter.id)}
               />
             )
           )}
