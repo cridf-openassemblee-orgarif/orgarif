@@ -49,7 +49,7 @@ export const MobileMenu = () => {
         <MenuItem onClick={handleClose}>
           {!userInfos && (
             <RouteLink
-              forwardCss={css`
+              css={css`
                 display: flex;
                 flex-direction: row;
                 align-items: center;

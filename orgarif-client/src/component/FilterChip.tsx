@@ -21,6 +21,7 @@ import { Organigram } from '../icon/collection/Organigram';
 import { state } from '../state/state';
 import * as breakpoints from '../styles/breakpoints';
 import { colors } from '../styles/colors';
+import { asString } from '../utils/nominal-class';
 
 interface FilterChipProps {
   filter: Departement | NatureJuridique | Secteur | TypeStructure;
@@ -49,7 +50,9 @@ export const FilterChip = ({ filter, showIcon, isSticky }: FilterChipProps) => {
     id: DepartementId | NatureJuridiqueId | SecteurId | TypeStructureId
   ) => {
     const currentActiveFilters = [...activeFilters];
-    const indexFilter = currentActiveFilters.map(f => f.id).indexOf(id);
+    const indexFilter = currentActiveFilters
+      .map(f => f.id)
+      .indexOf(asString(id));
 
     indexFilter === -1
       ? setActiveFilters((oldList: any) => [...oldList, filter])

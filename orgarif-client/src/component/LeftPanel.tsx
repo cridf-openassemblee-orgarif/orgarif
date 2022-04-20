@@ -12,7 +12,7 @@ import {
 import Box from '@mui/material/Box';
 import { styled } from '@mui/material/styles';
 import * as React from 'react';
-import { useHistory } from 'react-router-dom';
+import { useNavigate } from 'react-router-dom';
 import { useRecoilState } from 'recoil';
 import { OrganismeDto } from '../domain/organisme';
 import { Edit } from '../icon/collection/Edit';
@@ -20,6 +20,7 @@ import { Share } from '../icon/collection/Share';
 import { state } from '../state/state';
 import * as breakpoint from '../styles/breakpoints';
 import { colors } from '../styles/colors';
+import { asString } from '../utils/nominal-class';
 import { Informations } from './Informations';
 import { Representants } from './Representants';
 
@@ -28,11 +29,11 @@ export const LeftPanel = (props: { organisme: OrganismeDto }) => {
   const [isOpened, setIsOpened] = useRecoilState(state.openedDrawer);
   const [openSnackbar, setOpenSnackbar] = React.useState(false);
 
-  const history = useHistory();
+  const navigate = useNavigate();
   const organisme = props.organisme;
 
   const handleBackButtonClick = () => {
-    history.push('/');
+    navigate('/');
     setIsOpened(!isOpened);
   };
 
@@ -147,30 +148,67 @@ export const LeftPanel = (props: { organisme: OrganismeDto }) => {
       <Informations data={organisme} />
       <Divider variant="fullWidth" />
 
-      {organisme.nombreRepresentants && organisme.nombreRepresentants > 0 && (
-        <React.Fragment>
+      {organisme.designationRepresentants.length === 0 &&
+        organisme.designationSuppleants.length === 0 &&
+        organisme.nombreRepresentants === 0 && (
+          <>
+            <Typography
+              variant="h4"
+              component="div"
+              css={css`
+                font-size: clamp(1.5em, 2.4vw, 24px);
+                margin: 0.5em 0;
+              `}
+            >
+              Aucun représentant pour cet organisme
+            </Typography>
+            <Divider variant="fullWidth" />
+          </>
+        )}
+
+      {organisme.nombreRepresentants &&
+        organisme.designationRepresentants.length > 0 && (
+          <React.Fragment>
+            <Typography
+              variant="h4"
+              component="div"
+              css={css`
+                font-size: clamp(1.5em, 2.4vw, 36px);
+                margin: 0.25em 0;
+              `}
+            >
+              Représentants
+            </Typography>
+            <Divider variant="fullWidth" />
+            <Representants
+              reps={organisme.designationRepresentants.map(r => r ?? undefined)}
+              supps={organisme.designationSuppleants.map(r => r ?? undefined)}
+              hasSuppleance={organisme.presenceSuppleants}
+            />
+          </React.Fragment>
+        )}
+
+      {organisme.instances.length === 0 && (
+        <>
           <Typography
             variant="h4"
             component="div"
             css={css`
-              font-size: clamp(1.5em, 2.4vw, 36px);
-              margin: 0.25em 0;
+              font-size: clamp(1.5em, 2.4vw, 24px);
+              margin: 0.5em 0;
             `}
           >
-            Représentants
+            Aucune instance pour cet organisme
           </Typography>
           <Divider variant="fullWidth" />
-          <Representants
-            reps={organisme.representations}
-            supp={organisme.presenceSuppleants}
-          />
-        </React.Fragment>
+        </>
       )}
 
       {organisme.instances.length > 0 &&
-        organisme.instances.map((i, idx) => {
+        organisme.instances.map((instance, idx) => {
           return (
-            <React.Fragment key={idx}>
+            <React.Fragment key={asString(instance.id)}>
+              <Divider variant="fullWidth" />
               <Typography
                 variant="h4"
                 component="div"
@@ -179,13 +217,36 @@ export const LeftPanel = (props: { organisme: OrganismeDto }) => {
                   margin: 0.25em 0;
                 `}
               >
-                {i.nom} - Représentants
+                {instance.nom} - Représentants
               </Typography>
               <Divider variant="fullWidth" />
-              <Representants
-                reps={i.representations}
-                supp={i.presenceSuppleants}
-              />
+
+              {instance.designationRepresentants.length === 0 &&
+              instance.designationSuppleants.length === 0 ? (
+                <>
+                  <Typography
+                    variant="h4"
+                    component="div"
+                    css={css`
+                      font-size: clamp(1.5em, 2.4vw, 24px);
+                      margin: 0.5em 0 1.5em;
+                    `}
+                  >
+                    Aucun représentant pour cette instance
+                  </Typography>
+                  <Divider variant="fullWidth" />
+                </>
+              ) : (
+                <Representants
+                  reps={instance.designationRepresentants.map(
+                    r => r ?? undefined
+                  )}
+                  supps={instance.designationSuppleants.map(
+                    r => r ?? undefined
+                  )}
+                  hasSuppleance={instance.presenceSuppleants}
+                />
+              )}
             </React.Fragment>
           );
         })}

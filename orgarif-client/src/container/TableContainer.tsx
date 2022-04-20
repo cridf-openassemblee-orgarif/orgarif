@@ -17,7 +17,7 @@ import {
 } from '@mui/x-data-grid';
 import type {} from '@mui/x-data-grid/themeAugmentation';
 import * as React from 'react';
-import { useHistory } from 'react-router-dom';
+import { useNavigate } from 'react-router-dom';
 import { useRecoilState } from 'recoil';
 import { DrawerComponent } from '../component/Drawer';
 import { TableHeader } from '../component/TableHeader';
@@ -118,7 +118,7 @@ export const TableContainer = () => {
   const [loading, setLoading] = React.useState<boolean>(false);
   const [activeFilters] = useRecoilState(state.activeFilters);
 
-  const history = useHistory();
+  const navigate = useNavigate();
 
   // TODO: improve search feature
   const requestSearch = (searchedValue: string) => {
@@ -144,7 +144,7 @@ export const TableContainer = () => {
   const handleRowClick = (id: GridRowId) => {
     const parameters = new URLSearchParams();
     parameters.append('organisme', id.toString());
-    history.push({
+    navigate({
       search: encodeURI(parameters.toString().toLowerCase().trim())
     });
   };

@@ -12,6 +12,7 @@ import { DeliberationId } from '../domain/ids';
 import { DeliberationDto, OrganismeDto } from '../domain/organisme';
 import * as breakpoint from '../styles/breakpoints';
 import { colors } from '../styles/colors';
+import { asString } from '../utils/nominal-class';
 import { HystoryItem } from './HystoryItem';
 
 // TODO: complete dynamization
@@ -125,6 +126,12 @@ export const RightPanel = (props: { organisme: OrganismeDto }) => {
         </Box>
       </Box>
       <TabPanel value={value} index={0}>
+        {allDelibs.length === 0 && (
+          <Typography variant="h5" mt={1}>
+            Aucune délibération pour l'instant
+          </Typography>
+        )}
+
         {deliberationsByYear.map((yearlyDelib: any, i: number) => {
           return yearlyDelib[1].map((d: any, idx: any) => (
             // FIXME - not working perfectly according to screen' height
@@ -141,7 +148,11 @@ export const RightPanel = (props: { organisme: OrganismeDto }) => {
               <HystoryItem
                 delib={d}
                 yearlyDelib={yearlyDelib}
-                lastItem={deliberationsByYear.length - 1 === i}
+                lastItem={
+                  deliberationsByYear.length > 1
+                    ? deliberationsByYear.length - 1 === i
+                    : yearlyDelib[1].length - 1 === idx
+                }
               />
             </InView>
           ));
@@ -188,8 +199,7 @@ export const RightPanel = (props: { organisme: OrganismeDto }) => {
                     color?: string;
                   }) => (
                     <div
-                      //@ts-ignore
-                      key={d.id}
+                      key={asString(d.id)}
                       css={css`
                         width: 0.5em;
                         height: 0.5em;
