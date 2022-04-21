@@ -80,7 +80,7 @@ export const NavBar = () => {
           )}
         </Toolbar>
       </AppBar>
-      <Header />
+      {location.pathname !== '/' ? <Header shrinked={true} /> : <Header />}
     </Box>
   );
 };

@@ -1,6 +1,7 @@
 import { FunctionComponent } from 'react';
 import { OrganismeId, SecteurId, UserId } from '../domain/ids';
 import { Role } from '../domain/user';
+import { EditDepartementsView } from '../view/EditDepartementsView';
 import { EditNatureJuridiquesView } from '../view/EditNatureJuridiquesView';
 import { EditOrganismeView } from '../view/EditOrganismeView';
 import { EditSecteursView } from '../view/EditSecteursView';
@@ -11,9 +12,9 @@ import { LoginView } from '../view/LoginView';
 import { OrganismeView } from '../view/OrganismeView';
 import { RegisterView } from '../view/RegisterView';
 import { RootView } from '../view/RootView';
-import { EditDepartementsView } from '../view/EditDepartementsView';
-import { UsersManagementView } from '../view/UsersManagementView';
 import { UserManagementView } from '../view/UserManagementView';
+import { UsersManagementView } from '../view/UsersManagementView';
+import { ResultsView } from './../view/ResultsView';
 
 // TODO secure that "name" can't be a route parameter
 export type ApplicationRoute =
@@ -28,6 +29,7 @@ export type ApplicationRoute =
   | OrganismeRoute
   | RegisterRoute
   | RootRoute
+  | ResultsRoute
   | UserManagementRoute
   | UsersManagementRoute;
 
@@ -86,6 +88,10 @@ export const routes: Record<
     path: '/register',
     component: RegisterView
   },
+  ResultsRoute: {
+    path: '/results',
+    component: ResultsView
+  },
   RootRoute: {
     path: '/',
     component: RootView
@@ -143,6 +149,10 @@ interface OrganismeRoute {
 
 interface RegisterRoute {
   name: 'RegisterRoute';
+}
+
+interface ResultsRoute {
+  name: 'ResultsRoute';
 }
 
 interface RootRoute {

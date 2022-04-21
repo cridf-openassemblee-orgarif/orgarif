@@ -7,10 +7,10 @@ import { state } from '../state/state';
 import * as breakpoint from '../styles/breakpoints';
 
 interface HeaderProps {
-  small?: boolean;
+  shrinked?: boolean;
 }
 
-export const Header = React.memo(({ small = false }: HeaderProps) => {
+export const Header = React.memo(({ shrinked = false }: HeaderProps) => {
   const headerRef = React.useRef<HTMLDivElement>(null);
   const isShrink = useRecoilValue(state.headerShrinked);
   const [isDrawerOpened] = useRecoilState(state.openedDrawer);
@@ -44,7 +44,7 @@ export const Header = React.memo(({ small = false }: HeaderProps) => {
           component="h1"
           align="center"
           ref={headerRef}
-          css={isShrink ? animatedHeader : baseHeaderStyle}
+          css={shrinked === true ? smallHeader : baseHeaderStyle}
         >
           ORGARIF
         </Typography>
@@ -54,14 +54,14 @@ export const Header = React.memo(({ small = false }: HeaderProps) => {
 });
 
 const baseHeaderStyle = css`
-  font-size: 22vw;
+  font-size: 23vw;
   line-height: 80%;
   user-select: none;
   transition: all 1s ease-in-out;
-  padding-top: clamp(75px, 3vw, 3rem);
+  padding-top: 60px;
 `;
 
-const animatedHeader = css`
+const smallHeader = css`
   font-size: 30px;
   padding-top: 25px;
   padding-bottom: 22px;

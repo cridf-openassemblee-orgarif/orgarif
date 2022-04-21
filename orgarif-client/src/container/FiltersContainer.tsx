@@ -33,6 +33,9 @@ export const FiltersContainer = () => {
   const [expandedAccordion, setExpandedAccordion] = useRecoilState(
     state.filtersExpandedAccordion
   );
+  const [enableScrollOnTable, setEnableScrollOnTable] = useRecoilState(
+    state.enableScrollOnTable
+  );
   const [hideExtraFilters, setHideExtraFilters] = React.useState<boolean>(true);
   const [transitionValue, setTransitionValue] = React.useState<number>(1000);
   const ChipRef = React.useRef<HTMLDivElement>(null);
@@ -44,24 +47,35 @@ export const FiltersContainer = () => {
 
   const animationHandler = () => {
     const filters = document.querySelector('#filters')! as HTMLElement;
-
+    console.log(filters.getBoundingClientRect().bottom);
     if (isTabletAndMore() && filters.getBoundingClientRect().bottom < 140) {
-      filters.style.paddingTop = '71px';
       setTransitionValue(0);
-      setExpandedAccordion(false);
+      // setExpandedAccordion(false);
       setShrinkSectionFilters(true);
       setIsShrink(true);
+      setEnableScrollOnTable(true);
     } else if (isMobile() && filters.getBoundingClientRect().bottom < 180) {
-      setExpandedAccordion(false);
+      // setExpandedAccordion(false);
       setShrinkSectionFilters(true);
       setIsShrink(true);
+    } else if (
+      isTabletAndMore() &&
+      filters.getBoundingClientRect().bottom > 140
+    ) {
+      setEnableScrollOnTable(false);
     }
   };
 
   useEventListener('scroll', animationHandler);
 
   return (
-    <Box ref={ChipRef} id="filters">
+    <Box
+      ref={ChipRef}
+      id="filters"
+      css={css`
+        padding-top: 71px;
+      `}
+    >
       <Accordion
         expanded={expandedAccordion}
         onChange={() => setExpandedAccordion(!expandedAccordion)}

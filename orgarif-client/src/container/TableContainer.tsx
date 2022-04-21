@@ -120,6 +120,7 @@ export const TableContainer = () => {
   const filtersExpandedAccordion = useRecoilValue(
     state.filtersExpandedAccordion
   );
+  const enableScrollOnTable = useRecoilValue(state.enableScrollOnTable);
 
   const navigate = useNavigate();
 
@@ -182,7 +183,7 @@ export const TableContainer = () => {
           padding: 0px 16px;
 
           @media (${breakpoint.LAPTOP}) {
-            height: calc(100vh - 220px);
+            height: calc(100vh - 215px);
             padding: 0px 48px;
           }
         `}
@@ -191,7 +192,7 @@ export const TableContainer = () => {
           sx={overrideStyleGrid}
           css={css`
             .MuiDataGrid-virtualScroller {
-              overflow-y: ${!filtersExpandedAccordion ? 'auto' : 'hidden'};
+              overflow-y: ${enableScrollOnTable ? 'auto' : 'hidden'};
             }
           `}
         >
