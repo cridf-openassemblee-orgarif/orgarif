@@ -73,7 +73,7 @@ export const FiltersContainer = () => {
       ref={ChipRef}
       id="filters"
       css={css`
-        padding-top: 71px;
+        padding-top: 69px;
       `}
     >
       <Accordion
