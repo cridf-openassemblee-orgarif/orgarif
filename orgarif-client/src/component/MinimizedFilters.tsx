@@ -16,7 +16,7 @@ export const MinimizedFilters = () => {
       css={css`
         margin-left: 60px;
         align-self: center;
-        animation: ${fadeIn} 300ms 800ms both;
+        animation: ${fadeIn} 400ms 300ms both;
       `}
     >
       {activeFilters.map((filter: any) => {
