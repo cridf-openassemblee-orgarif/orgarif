@@ -27,6 +27,7 @@ export const FiltersContainer = () => {
   const [typeStructures] = useRecoilState(state.typeStructures);
   const [activeFilters] = useRecoilState(state.activeFilters);
   const [isOpened] = useRecoilState(state.openedDrawer);
+  const [isShrink, setIsShrink] = useRecoilState(state.headerShrinked);
 
   const ChipRef = React.useRef<HTMLDivElement>(null);
 
@@ -36,6 +37,7 @@ export const FiltersContainer = () => {
     string | false
   >('section');
   const [hideExtraFilters, setHideExtraFilters] = React.useState<boolean>(true);
+  const [transitionValue, setTransitionValue] = React.useState<number>(1000);
 
   const handleChange = React.useCallback(
     (panel: string) => (event: React.SyntheticEvent, newExpanded: boolean) => {
@@ -46,32 +48,38 @@ export const FiltersContainer = () => {
 
   React.useEffect(() => {
     !expandedAccordion && setHideExtraFilters(true);
+    setTransitionValue(1000);
   }, [expandedAccordion]);
 
-  useEventListener('wheel', e => {
-    if (ChipRef.current && isOpened === false) {
-      if (
-        ChipRef.current.getBoundingClientRect().top <= 100 &&
-        e.deltaY > 0 &&
-        !!expandedAccordion &&
-        shrinkSectionFilters === false
-      ) {
-        setShrinkSectionFilters(true);
-      } else if (
-        ChipRef.current.getBoundingClientRect().top <= 100 &&
-        e.deltaY > 0 &&
-        shrinkSectionFilters
-      ) {
-        setExpandedAccordion(false);
-      }
+  useEventListener('scroll', e => {
+    const filters = document.querySelector('#filters')! as HTMLElement;
+
+    if (isTabletAndMore() && filters.getBoundingClientRect().bottom < 140) {
+      filters.style.paddingTop = '70px';
+      setTransitionValue(0);
+      setExpandedAccordion(false);
+      setShrinkSectionFilters(true);
+      setIsShrink(true);
+    } else if (isMobile() && filters.getBoundingClientRect().bottom < 180) {
+      setExpandedAccordion(false);
+      setShrinkSectionFilters(true);
+      setIsShrink(true);
     }
   });
 
   return (
-    <Box ref={ChipRef}>
+    <Box ref={ChipRef} id="filters">
       <Accordion
         expanded={expandedAccordion === 'section'}
         onChange={handleChange('section')}
+        TransitionProps={{
+          mountOnEnter: true,
+          unmountOnExit: true,
+          timeout: {
+            enter: 1000,
+            exit: transitionValue
+          }
+        }}
       >
         <AccordionSummary aria-controls="section-content" id="section-header">
           <Typography

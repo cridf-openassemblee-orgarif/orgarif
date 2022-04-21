@@ -2,9 +2,7 @@
 import { css } from '@emotion/react';
 import * as React from 'react';
 import { useRecoilState } from 'recoil';
-import { FiltersContainer } from '../container/FiltersContainer';
 import { MainContainer } from '../container/MainContainer';
-import { TableContainer } from '../container/TableContainer';
 import { RouteLink } from '../routing/RouteLink';
 import { state } from '../state/state';
 import { asString } from '../utils/nominal-class';
@@ -15,13 +13,6 @@ export const RootView = () => {
 
   return (
     <MainContainer>
-      {!userInfos && (
-        <>
-          <FiltersContainer />
-          <TableContainer />
-        </>
-      )}
-
       {userInfos && (
         <div
           css={css`

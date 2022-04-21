@@ -84,6 +84,10 @@ export const state = {
     key: 'userOrganismesSelection',
     default: [] as string[],
     effects_UNSTABLE: [persistAtom]
+  }),
+  headerShrinked: atom({
+    key: 'header-shrinked',
+    default: false
   })
 };
 
