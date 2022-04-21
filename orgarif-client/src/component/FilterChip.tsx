@@ -4,6 +4,7 @@ import styled from '@emotion/styled';
 import { Chip } from '@mui/material';
 import Tooltip from '@mui/material/Tooltip';
 import * as React from 'react';
+import { useNavigate } from 'react-router-dom';
 import { useRecoilState } from 'recoil';
 import {
   Departement,
@@ -35,6 +36,10 @@ export const isDepartement = (object: unknown): object is Departement => {
 
 export const FilterChip = ({ filter, showIcon, isSticky }: FilterChipProps) => {
   const [activeFilters, setActiveFilters] = useRecoilState(state.activeFilters);
+  const [shrinkSectionFilters, setShrinkSectionFilters] = useRecoilState(
+    state.filtersSectionShrinked
+  );
+  const navigate = useNavigate();
 
   // Regex to check if libelle contains parentheses and if yes,
   // extract the value between parentheses to display the abbreviation.
@@ -59,6 +64,8 @@ export const FilterChip = ({ filter, showIcon, isSticky }: FilterChipProps) => {
       : setActiveFilters((oldList: any) => [
           ...oldList.filter((f: any) => f.id !== id)
         ]);
+    setShrinkSectionFilters(true);
+    navigate('/results');
   };
 
   const chipColor = activeFilters.some((f: any) => f.id === filter.id)

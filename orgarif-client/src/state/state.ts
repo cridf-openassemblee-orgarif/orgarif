@@ -91,11 +91,15 @@ export const state = {
   }),
   filtersSectionShrinked: atom({
     key: 'filters-section-shrinked',
-    default: false
+    default: true
   }),
   filtersExpandedAccordion: atom({
     key: 'filters-expanded-Accordion',
     default: true
+  }),
+  enableScrollOnTable: atom({
+    key: 'enable-scroll-on-table',
+    default: false
   })
 };
 
