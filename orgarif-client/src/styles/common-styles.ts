@@ -27,6 +27,13 @@ export const globalStyles = css`
 
   html {
     height: -webkit-fill-available;
+
+    /* hide scrollbar */
+    scrollbar-width: none;
+    ::-webkit-scrollbar {
+      width: 0;
+      background: transparent;
+    }
   }
 
   a {
