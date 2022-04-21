@@ -39,7 +39,7 @@ export const TableHeader = ({ onSearch }: TableHeaderProps) => {
         component="h5"
         variant="h4"
         css={css`
-          font-size: clamp(24px, 2vw, 2.125rem);
+          font-size: 2rem;
           white-space: nowrap;
           min-width: 260px;
 
