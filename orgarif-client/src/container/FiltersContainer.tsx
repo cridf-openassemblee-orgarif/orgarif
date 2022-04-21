@@ -26,36 +26,27 @@ export const FiltersContainer = () => {
   const [natureJuridiques] = useRecoilState(state.natureJuridiques);
   const [typeStructures] = useRecoilState(state.typeStructures);
   const [activeFilters] = useRecoilState(state.activeFilters);
-  const [isOpened] = useRecoilState(state.openedDrawer);
   const [isShrink, setIsShrink] = useRecoilState(state.headerShrinked);
-
-  const ChipRef = React.useRef<HTMLDivElement>(null);
-
-  const [shrinkSectionFilters, setShrinkSectionFilters] =
-    React.useState<boolean>(true);
-  const [expandedAccordion, setExpandedAccordion] = React.useState<
-    string | false
-  >('section');
+  const [shrinkSectionFilters, setShrinkSectionFilters] = useRecoilState(
+    state.filtersSectionShrinked
+  );
+  const [expandedAccordion, setExpandedAccordion] = useRecoilState(
+    state.filtersExpandedAccordion
+  );
   const [hideExtraFilters, setHideExtraFilters] = React.useState<boolean>(true);
   const [transitionValue, setTransitionValue] = React.useState<number>(1000);
-
-  const handleChange = React.useCallback(
-    (panel: string) => (event: React.SyntheticEvent, newExpanded: boolean) => {
-      setExpandedAccordion(newExpanded ? panel : false);
-    },
-    []
-  );
+  const ChipRef = React.useRef<HTMLDivElement>(null);
 
   React.useEffect(() => {
-    !expandedAccordion && setHideExtraFilters(true);
+    expandedAccordion === false && setHideExtraFilters(true);
     setTransitionValue(1000);
   }, [expandedAccordion]);
 
-  useEventListener('scroll', e => {
+  const animationHandler = () => {
     const filters = document.querySelector('#filters')! as HTMLElement;
 
     if (isTabletAndMore() && filters.getBoundingClientRect().bottom < 140) {
-      filters.style.paddingTop = '70px';
+      filters.style.paddingTop = '71px';
       setTransitionValue(0);
       setExpandedAccordion(false);
       setShrinkSectionFilters(true);
@@ -65,13 +56,15 @@ export const FiltersContainer = () => {
       setShrinkSectionFilters(true);
       setIsShrink(true);
     }
-  });
+  };
+
+  useEventListener('scroll', animationHandler);
 
   return (
     <Box ref={ChipRef} id="filters">
       <Accordion
-        expanded={expandedAccordion === 'section'}
-        onChange={handleChange('section')}
+        expanded={expandedAccordion}
+        onChange={() => setExpandedAccordion(!expandedAccordion)}
         TransitionProps={{
           mountOnEnter: true,
           unmountOnExit: true,
@@ -86,7 +79,7 @@ export const FiltersContainer = () => {
             component="h4"
             variant="h4"
             css={css`
-              font-size: clamp(24px, 2vw, 2.125rem);
+              font-size: 2rem;
               white-space: nowrap;
             `}
           >
@@ -237,9 +230,7 @@ const AccordionSummary = styled((props: AccordionSummaryProps) => (
   '& .MuiAccordionSummary-expandIconWrapper': {
     transform: 'rotate(90deg) scale(2)',
     position: 'absolute',
-    left: isTabletAndMore()
-      ? 'clamp(200px, 16vw, 270px)'
-      : 'clamp(270px, 16vw, 320px)'
+    left: isTabletAndMore() ? '250px' : 'calc(100vw - 27vw);'
   },
   '& .MuiAccordionSummary-expandIconWrapper.Mui-expanded': {
     transform: 'rotate(-90deg) scale(2)'
@@ -254,5 +245,5 @@ const AccordionSummary = styled((props: AccordionSummaryProps) => (
 }));
 
 const AccordionDetails = styled(MuiAccordionDetails)(({ theme }) => ({
-  padding: theme.spacing(2)
+  padding: '8px 16px'
 }));

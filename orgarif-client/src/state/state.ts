@@ -88,6 +88,14 @@ export const state = {
   headerShrinked: atom({
     key: 'header-shrinked',
     default: false
+  }),
+  filtersSectionShrinked: atom({
+    key: 'filters-section-shrinked',
+    default: false
+  }),
+  filtersExpandedAccordion: atom({
+    key: 'filters-expanded-Accordion',
+    default: true
   })
 };
 

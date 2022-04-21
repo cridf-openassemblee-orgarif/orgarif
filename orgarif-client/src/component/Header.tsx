@@ -59,10 +59,6 @@ const baseHeaderStyle = css`
   user-select: none;
   transition: all 1s ease-in-out;
   padding-top: clamp(75px, 3vw, 3rem);
-
-  @media (${breakpoint.TABLET}) {
-    margin-bottom: 20px;
-  }
 `;
 
 const animatedHeader = css`
@@ -75,8 +71,8 @@ const animatedHeader = css`
   left: 50%;
   width: min-content;
 
-  -webkit-animation: slide-in-top 1s cubic-bezier(0.25, 0.46, 0.45, 0.94) both;
-  animation: slide-in-top 1s cubic-bezier(0.25, 0.46, 0.45, 0.94) both;
+  -webkit-animation: slide-in-top 0.4s cubic-bezier(0.25, 0.46, 0.45, 0.94) both;
+  animation: slide-in-top 0.4s cubic-bezier(0.25, 0.46, 0.45, 0.94) both;
 
   @media (${breakpoint.TABLET}) {
     font-size: 42px;

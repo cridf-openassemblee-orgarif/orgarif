@@ -117,7 +117,9 @@ export const TableContainer = () => {
   const [isOpened, setIsOpened] = useRecoilState(state.openedDrawer);
   const [loading, setLoading] = React.useState<boolean>(false);
   const [activeFilters] = useRecoilState(state.activeFilters);
-  const headerShrinked = useRecoilValue(state.headerShrinked);
+  const filtersExpandedAccordion = useRecoilValue(
+    state.filtersExpandedAccordion
+  );
 
   const navigate = useNavigate();
 
@@ -180,9 +182,7 @@ export const TableContainer = () => {
           padding: 0px 16px;
 
           @media (${breakpoint.LAPTOP}) {
-            height: ${headerShrinked
-              ? `calc(100vh - 215px)`
-              : `calc(100vh - 220px)`};
+            height: calc(100vh - 220px);
             padding: 0px 48px;
           }
         `}
@@ -191,7 +191,7 @@ export const TableContainer = () => {
           sx={overrideStyleGrid}
           css={css`
             .MuiDataGrid-virtualScroller {
-              overflow-y: ${headerShrinked ? 'auto' : 'hidden'};
+              overflow-y: ${!filtersExpandedAccordion ? 'auto' : 'hidden'};
             }
           `}
         >

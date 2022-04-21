@@ -80,8 +80,7 @@ export const NavBar = () => {
           )}
         </Toolbar>
       </AppBar>
-      {userInfos && <Header small />}
-      {location.pathname === '/' && !userInfos && <Header />}
+      <Header />
     </Box>
   );
 };
