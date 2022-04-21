@@ -18,7 +18,7 @@ import {
 import type {} from '@mui/x-data-grid/themeAugmentation';
 import * as React from 'react';
 import { useNavigate } from 'react-router-dom';
-import { useRecoilState } from 'recoil';
+import { useRecoilState, useRecoilValue } from 'recoil';
 import { DrawerComponent } from '../component/Drawer';
 import { TableHeader } from '../component/TableHeader';
 import { listOrganismes } from '../data/listOrganismes';
@@ -117,6 +117,7 @@ export const TableContainer = () => {
   const [isOpened, setIsOpened] = useRecoilState(state.openedDrawer);
   const [loading, setLoading] = React.useState<boolean>(false);
   const [activeFilters] = useRecoilState(state.activeFilters);
+  const headerShrinked = useRecoilValue(state.headerShrinked);
 
   const navigate = useNavigate();
 
@@ -179,12 +180,21 @@ export const TableContainer = () => {
           padding: 0px 16px;
 
           @media (${breakpoint.LAPTOP}) {
-            height: calc(100vh - 220px);
+            height: ${headerShrinked
+              ? `calc(100vh - 215px)`
+              : `calc(100vh - 220px)`};
             padding: 0px 48px;
           }
         `}
       >
-        <Box sx={overrideStyleGrid}>
+        <Box
+          sx={overrideStyleGrid}
+          css={css`
+            .MuiDataGrid-virtualScroller {
+              overflow-y: ${headerShrinked ? 'auto' : 'hidden'};
+            }
+          `}
+        >
           <DataGrid
             rows={rows}
             columns={columns}
@@ -425,6 +435,7 @@ const overrideStyleGrid = {
       color: colors.white
     }
   }
+
   // '& .MuiDataGrid-iconButtonContainer': {
   //   visibility: 'visible',
   //   width: 'auto',
