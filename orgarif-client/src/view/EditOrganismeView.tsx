@@ -50,9 +50,10 @@ export const EditOrganismeView = ({ route }: { route: EditOrganismeRoute }) => {
         css={css`
           width: 80%;
           margin: auto;
+          padding-top: 70px;
         `}
       >
-        <RouteLink route={{ name: 'ListOrganismesRoute' }}>
+        <RouteLink route={{ name: 'EditListOrganismesRoute' }}>
           <span
             css={css`
               top: 6px;

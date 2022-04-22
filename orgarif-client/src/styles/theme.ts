@@ -37,8 +37,8 @@ const orgarifTheme = {
           font-display: swap;
           font-weight: 400;
           src: local('IBM Plex Sans'),
-               url("static/IbmPlexSans.woff2") format('woff2'), 
-               url("static/IbmPlexSans.woff") format('woff'); 
+               url("/static/IbmPlexSans.woff2") format('woff2'), 
+               url("/static/IbmPlexSans.woff") format('woff'); 
         }
       `
     },

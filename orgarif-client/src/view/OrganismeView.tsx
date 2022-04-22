@@ -20,7 +20,7 @@ export const OrganismeView = ({ route }: { route: EditOrganismeRoute }) => {
   }, [route.id]);
   return (
     <MainContainer>
-      <RouteLink route={{ name: 'ListOrganismesRoute' }}>list</RouteLink>
+      <RouteLink route={{ name: 'EditListOrganismesRoute' }}>list</RouteLink>
       {!organisme && <div>Chargement...</div>}
       {organisme && <OrganismeComponent organisme={organisme} />}
     </MainContainer>

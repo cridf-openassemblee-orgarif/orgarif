@@ -7,13 +7,14 @@ import {
   Divider,
   Snackbar,
   Stack,
+  Tooltip,
   Typography
 } from '@mui/material';
 import Box from '@mui/material/Box';
 import { styled } from '@mui/material/styles';
 import * as React from 'react';
 import { useNavigate } from 'react-router-dom';
-import { useRecoilState } from 'recoil';
+import { useRecoilState, useRecoilValue } from 'recoil';
 import { OrganismeDto } from '../domain/organisme';
 import { Edit } from '../icon/collection/Edit';
 import { Share } from '../icon/collection/Share';
@@ -27,14 +28,16 @@ import { Representants } from './Representants';
 // TODO: edition link + should button be always visible ?
 export const LeftPanel = (props: { organisme: OrganismeDto }) => {
   const [isOpened, setIsOpened] = useRecoilState(state.openedDrawer);
+  const userInfos = useRecoilValue(state.userInfos);
   const [openSnackbar, setOpenSnackbar] = React.useState(false);
 
   const navigate = useNavigate();
+
   const organisme = props.organisme;
 
   const handleBackButtonClick = () => {
-    navigate('/');
-    setIsOpened(!isOpened);
+    setIsOpened(isOpened => !isOpened);
+    navigate('/organismes');
   };
 
   const handleClose = (
@@ -95,16 +98,20 @@ export const LeftPanel = (props: { organisme: OrganismeDto }) => {
             copyToClipboard();
           }}
         />
-        <StyledChip
-          variant="outlined"
-          icon={<Edit size={20} />}
-          size="small"
-          onClick={() => console.log('renvoyer vers edition organisme ...')}
-          css={css`
-            padding-right: 0 !important;
-            padding-left: 0.8em !important;
-          `}
-        />
+        {userInfos && (
+          <Tooltip title="Éditer la fiche de l'organisme" arrow>
+            <StyledChip
+              variant="outlined"
+              icon={<Edit size={20} />}
+              size="small"
+              onClick={() => navigate(`/organisme/${organisme.id}/edit`)}
+              css={css`
+                padding-right: 0 !important;
+                padding-left: 0.8em !important;
+              `}
+            />
+          </Tooltip>
+        )}
         <Snackbar
           open={openSnackbar}
           autoHideDuration={6000}

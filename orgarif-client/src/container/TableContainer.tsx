@@ -2,7 +2,7 @@
 import { css } from '@emotion/react';
 import StarIcon from '@mui/icons-material/Star';
 import StarOutline from '@mui/icons-material/StarOutline';
-import { Checkbox, Chip } from '@mui/material';
+import { Checkbox, Chip, Tooltip } from '@mui/material';
 import LinearProgress from '@mui/material/LinearProgress';
 import { styled } from '@mui/material/styles';
 import { Box } from '@mui/system';
@@ -19,7 +19,6 @@ import type {} from '@mui/x-data-grid/themeAugmentation';
 import * as React from 'react';
 import { useNavigate } from 'react-router-dom';
 import { useRecoilState, useRecoilValue } from 'recoil';
-import { DrawerComponent } from '../component/Drawer';
 import { TableHeader } from '../component/TableHeader';
 import { listOrganismes } from '../data/listOrganismes';
 import { Edit } from '../icon/collection/Edit';
@@ -27,6 +26,114 @@ import { Share } from '../icon/collection/Share';
 import { state } from '../state/state';
 import * as breakpoint from '../styles/breakpoints';
 import { colors } from '../styles/colors';
+
+export const TableContainer = () => {
+  const [rows, setRows] = React.useState<GridRowsProp>(listOrganismes);
+  const [isOpened, setIsOpened] = useRecoilState(state.openedDrawer);
+  const [loading, setLoading] = React.useState<boolean>(false);
+  const [activeFilters] = useRecoilState(state.activeFilters);
+  const enableScrollOnTable = useRecoilValue(state.enableScrollOnTable);
+  const userInfos = useRecoilValue(state.userInfos);
+
+  const navigate = useNavigate();
+
+  // TODO: improve search feature
+  const requestSearch = (searchedValue: string) => {
+    if (activeFilters.length > 0 && searchedValue.length >= 3) {
+      const filteredRows = listOrganismes.filter(row => {
+        setLoading(true);
+        return row.organisme
+          .toLowerCase()
+          .includes(searchedValue.toLowerCase());
+      });
+      setRows(filteredRows);
+      setLoading(false);
+    } else if (activeFilters.length === 0 && searchedValue.length >= 3) {
+      // TODO - send request to server...
+      setLoading(true);
+      console.log('fetching results from server...');
+      setTimeout(() => setLoading(false), 1000);
+    } else if (searchedValue.length === 0) {
+      setRows(listOrganismes);
+    }
+  };
+
+  const handleRowClick = (id: GridRowId) => {
+    setIsOpened(true);
+    navigate(`../organisme/${id}`, { replace: false });
+  };
+
+  React.useEffect(() => {
+    //TODO - request server
+    setLoading(true);
+    setTimeout(() => setLoading(false), 500);
+    //  appContext
+    //    .queryService()
+    //    .getFilteredListOrganismeQuery({ id })
+    //    .then(r => {
+    //      setRows(r.organismes);
+    //    });
+    // const filteredRows = listOrganismes.filter(row => {
+    // setLoading(true);
+    // return row.organisme.toLowerCase().includes(searchValue.toLowerCase());
+    // });
+    // setRows(filteredRows);
+  }, [activeFilters]);
+
+  return (
+    <>
+      <TableHeader onSearch={requestSearch} />
+      <div
+        id="table"
+        css={css`
+          height: calc(100vh - 245px);
+          width: 100%;
+          padding: 0px 16px;
+
+          @media (${breakpoint.LAPTOP}) {
+            height: calc(100vh - 215px);
+            padding: 0px 48px;
+          }
+        `}
+      >
+        <Box
+          sx={overrideStyleGrid}
+          css={css`
+            .MuiDataGrid-virtualScroller {
+              overflow-y: ${enableScrollOnTable ? 'auto' : 'hidden'};
+            }
+          `}
+        >
+          <DataGrid
+            rows={rows}
+            columns={userInfos ? columnsEdit : columns}
+            disableColumnMenu
+            disableDensitySelector
+            rowHeight={38}
+            localeText={frFR.components.MuiDataGrid.defaultProps.localeText}
+            onCellClick={details => {
+              handleRowClick(details.id);
+              setIsOpened(!isOpened);
+            }}
+            initialState={{
+              sorting: {
+                sortModel: [{ field: 'organisme', sort: 'asc' }]
+              }
+            }}
+            rowBuffer={5}
+            hideFooterSelectedRowCount
+            rowsPerPageOptions={[50, 100, 200]}
+            components={{
+              LoadingOverlay: LinearProgress,
+              NoRowsOverlay: CustomNoRowsOverlay
+            }}
+            loading={loading}
+          />
+        </Box>
+      </div>
+    </>
+  );
+};
 
 const columns: GridColDef[] = [
   {
@@ -79,7 +186,63 @@ const columns: GridColDef[] = [
     renderCell: (params: GridRenderCellParams) => (
       <>
         <SelectRow id={params.id} />
-        <EditRow />
+      </>
+    )
+  }
+];
+
+const columnsEdit: GridColDef[] = [
+  {
+    field: 'organisme',
+    headerName: `Organismes`,
+    minWidth: 250,
+    flex: 1,
+    renderHeader: (params: GridColumnHeaderParams) => (
+      <HeaderChip size="small" label={`${listOrganismes.length} ORGANISMES`} />
+    )
+  },
+  {
+    field: 'localité',
+    headerName: 'Localité',
+    minWidth: 150,
+    flex: 0.5,
+    renderHeader: (params: GridColumnHeaderParams) => (
+      <HeaderChip size="small" label="LOCALITÉ" />
+    )
+  },
+  {
+    field: 'département',
+    headerName: 'Département',
+    minWidth: 150,
+    flex: 0.3,
+    renderHeader: (params: GridColumnHeaderParams) => (
+      <HeaderChip size="small" label="DÉPARTEMENT" />
+    ),
+    renderCell: (params: GridRenderCellParams) =>
+      params.formattedValue.toString().slice(0, 2)
+  },
+  {
+    field: 'structure',
+    headerName: 'Type de Structure',
+    minWidth: 180,
+    flex: 0.4,
+    renderHeader: (params: GridColumnHeaderParams) => (
+      <HeaderChip size="small" label="TYPE DE STRUCTURE" />
+    )
+  },
+  {
+    field: 'selection',
+    headerName: 'Envoyer la sélection',
+    minWidth: 220,
+    maxWidth: 220,
+    flex: 0.4,
+    align: 'center',
+    sortable: false,
+    renderHeader: (params: GridColumnHeaderParams) => <HeaderChipWithState />,
+    renderCell: (params: GridRenderCellParams) => (
+      <>
+        <SelectRow id={params.id} />
+        <EditRow id={params.id} />
       </>
     )
   }
@@ -100,130 +263,25 @@ const SelectRow = ({ id }: any) => {
   };
 
   return (
-    <Checkbox
-      icon={<UnSelectedIcon />}
-      checkedIcon={<SelectedIcon />}
-      checked={userSelection.includes(id)}
-      onClick={event => {
-        event.stopPropagation();
-        handleClick();
-      }}
-    />
-  );
-};
-
-export const TableContainer = () => {
-  const [rows, setRows] = React.useState<GridRowsProp>(listOrganismes);
-  const [isOpened, setIsOpened] = useRecoilState(state.openedDrawer);
-  const [loading, setLoading] = React.useState<boolean>(false);
-  const [activeFilters] = useRecoilState(state.activeFilters);
-  const filtersExpandedAccordion = useRecoilValue(
-    state.filtersExpandedAccordion
-  );
-  const enableScrollOnTable = useRecoilValue(state.enableScrollOnTable);
-
-  const navigate = useNavigate();
-
-  // TODO: improve search feature
-  const requestSearch = (searchedValue: string) => {
-    if (activeFilters.length > 0 && searchedValue.length >= 3) {
-      const filteredRows = listOrganismes.filter(row => {
-        setLoading(true);
-        return row.organisme
-          .toLowerCase()
-          .includes(searchedValue.toLowerCase());
-      });
-      setRows(filteredRows);
-      setLoading(false);
-    } else if (activeFilters.length === 0 && searchedValue.length >= 3) {
-      // TODO - send request to server...
-      setLoading(true);
-      console.log('fetching results from server...');
-      setTimeout(() => setLoading(false), 1000);
-    } else if (searchedValue.length === 0) {
-      setRows(listOrganismes);
-    }
-  };
-
-  const handleRowClick = (id: GridRowId) => {
-    const parameters = new URLSearchParams();
-    parameters.append('organisme', id.toString());
-    navigate({
-      search: encodeURI(parameters.toString().toLowerCase().trim())
-    });
-  };
-
-  React.useEffect(() => {
-    //TODO - request server
-    setLoading(true);
-    setTimeout(() => setLoading(false), 1000);
-
-    //  appContext
-    //    .queryService()
-    //    .getFilteredListOrganismeQuery({ id })
-    //    .then(r => {
-    //      setRows(r.organismes);
-    //    });
-    // const filteredRows = listOrganismes.filter(row => {
-    // setLoading(true);
-    // return row.organisme.toLowerCase().includes(searchValue.toLowerCase());
-    // });
-    // setRows(filteredRows);
-  }, [activeFilters]);
-
-  return (
-    <>
-      <DrawerComponent />
-      <TableHeader onSearch={requestSearch} />
-      <div
-        id="table"
-        css={css`
-          height: calc(100vh - 245px);
-          width: 100%;
-          padding: 0px 16px;
-
-          @media (${breakpoint.LAPTOP}) {
-            height: calc(100vh - 215px);
-            padding: 0px 48px;
-          }
-        `}
-      >
-        <Box
-          sx={overrideStyleGrid}
-          css={css`
-            .MuiDataGrid-virtualScroller {
-              overflow-y: ${enableScrollOnTable ? 'auto' : 'hidden'};
-            }
-          `}
-        >
-          <DataGrid
-            rows={rows}
-            columns={columns}
-            disableColumnMenu
-            disableDensitySelector
-            rowHeight={38}
-            localeText={frFR.components.MuiDataGrid.defaultProps.localeText}
-            onCellClick={details => {
-              handleRowClick(details.id);
-              setIsOpened(!isOpened);
-            }}
-            initialState={{
-              sorting: {
-                sortModel: [{ field: 'organisme', sort: 'asc' }]
-              }
-            }}
-            rowBuffer={5}
-            hideFooterSelectedRowCount
-            rowsPerPageOptions={[50, 100, 200]}
-            components={{
-              LoadingOverlay: LinearProgress,
-              NoRowsOverlay: CustomNoRowsOverlay
-            }}
-            loading={loading}
-          />
-        </Box>
-      </div>
-    </>
+    <Tooltip
+      title={
+        userSelection.includes(id)
+          ? 'Retirer de la sélection'
+          : 'Ajouter à la sélection'
+      }
+      arrow
+      placement="left-start"
+    >
+      <Checkbox
+        icon={<UnSelectedIcon />}
+        checkedIcon={<SelectedIcon />}
+        checked={userSelection.includes(id)}
+        onClick={event => {
+          event.stopPropagation();
+          handleClick();
+        }}
+      />
+    </Tooltip>
   );
 };
 
@@ -287,28 +345,37 @@ const UnSelectedIcon = () => (
     `}
   />
 );
-const EditRow = () => (
-  <Chip
-    label={<Edit size={24} />}
-    size="small"
-    css={css`
-      height: 2em;
-      background-color: white;
-      margin-left: 4em;
-      border: 1px solid white;
+const EditRow = ({ id }: any) => {
+  const navigate = useNavigate();
+  return (
+    <Tooltip
+      title="Éditer la fiche de l'organisme"
+      arrow
+      placement="left-start"
+    >
+      <Chip
+        label={<Edit size={24} />}
+        size="small"
+        css={css`
+          height: 2em;
+          background-color: white;
+          margin-left: 4em;
+          border: 1px solid white;
 
-      :hover {
-        background-color: ${colors.errorRed};
-        color: white;
-        border: 1px solid white;
-      }
-    `}
-    onClick={e => {
-      e.stopPropagation();
-      console.log('edit row');
-    }}
-  />
-);
+          :hover {
+            background-color: ${colors.errorRed};
+            color: white;
+            border: 1px solid white;
+          }
+        `}
+        onClick={e => {
+          e.stopPropagation();
+          navigate(`/organisme/${id}/edit`);
+        }}
+      />
+    </Tooltip>
+  );
+};
 
 const CustomNoRowsOverlay = () => {
   return (
@@ -410,6 +477,9 @@ const overrideStyleGrid = {
   },
   '& .MuiDataGrid-columnSeparator': {
     display: 'none !important'
+  },
+  '& .MuiCheckbox-root.MuiButtonBase-root ': {
+    padding: 0
   },
   '& .MuiCheckbox-root:hover ': {
     backgroundColor: 'transparent'

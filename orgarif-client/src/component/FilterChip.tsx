@@ -65,7 +65,7 @@ export const FilterChip = ({ filter, showIcon, isSticky }: FilterChipProps) => {
           ...oldList.filter((f: any) => f.id !== id)
         ]);
     setShrinkSectionFilters(true);
-    navigate('/results');
+    navigate('/organismes');
   };
 
   const chipColor = activeFilters.some((f: any) => f.id === filter.id)
@@ -116,9 +116,9 @@ const StyledChip = styled(Chip)(({ theme }) => ({
   fontWeight: 500,
   borderRadius: '40px',
   height: 'fit-content',
-  margin: '9px',
+  margin: '8px',
   padding: '8px',
-  fontSize: 'clamp(18px, 1.1vw, 2rem)',
+  fontSize: 'clamp(16px, 1vw, 2rem)',
   transition: 'font-size 0.4s ease-in-out',
   boxShadow: '0px 5px 10px 0px rgba(191, 191, 191, 0.4)',
   '&.MuiChip-colorPrimary': {

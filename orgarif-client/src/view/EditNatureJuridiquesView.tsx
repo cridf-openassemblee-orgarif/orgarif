@@ -67,6 +67,7 @@ export const EditNatureJuridiquesView = () => {
       <div
         css={css`
           padding: 0 20px;
+          padding-top: 70px;
         `}
       >
         <h1>Édition des natures juridiques</h1>

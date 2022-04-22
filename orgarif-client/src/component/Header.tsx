@@ -1,9 +1,7 @@
 /** @jsxImportSource @emotion/react */
 import { css } from '@emotion/react';
-import { Typography } from '@mui/material';
+import { Slide, Typography } from '@mui/material';
 import * as React from 'react';
-import { useRecoilState, useRecoilValue } from 'recoil';
-import { state } from '../state/state';
 import * as breakpoint from '../styles/breakpoints';
 
 interface HeaderProps {
@@ -12,42 +10,39 @@ interface HeaderProps {
 
 export const Header = React.memo(({ shrinked = false }: HeaderProps) => {
   const headerRef = React.useRef<HTMLDivElement>(null);
-  const isShrink = useRecoilValue(state.headerShrinked);
-  const [isDrawerOpened] = useRecoilState(state.openedDrawer);
 
   return (
     <>
-      {isDrawerOpened ? (
+      {shrinked ? (
         <Typography
           variant="h1"
           component="h1"
           align="center"
           ref={headerRef}
-          css={css`
-            font-size: 30px;
-            padding-top: 25px;
-            padding-bottom: 22px;
-            line-height: 80%;
-
-            @media (${breakpoint.TABLET}) {
-              font-size: 42px;
-              padding-top: 18px;
-              padding-bottom: 18px;
-            }
-          `}
+          css={smallHeader}
         >
           ORGARIF
         </Typography>
       ) : (
-        <Typography
-          variant="h1"
-          component="h1"
-          align="center"
-          ref={headerRef}
-          css={shrinked === true ? smallHeader : baseHeaderStyle}
+        <Slide
+          direction="down"
+          in={true}
+          timeout={400}
+          mountOnEnter
+          unmountOnExit
         >
-          ORGARIF
-        </Typography>
+          <div>
+            <Typography
+              variant="h1"
+              component="h1"
+              align="center"
+              ref={headerRef}
+              css={baseHeaderStyle}
+            >
+              ORGARIF
+            </Typography>
+          </div>
+        </Slide>
       )}
     </>
   );
@@ -70,6 +65,7 @@ const smallHeader = css`
   position: fixed;
   left: 50%;
   width: min-content;
+  top: 0;
 
   -webkit-animation: slide-in-top 0.4s cubic-bezier(0.25, 0.46, 0.45, 0.94) both;
   animation: slide-in-top 0.4s cubic-bezier(0.25, 0.46, 0.45, 0.94) both;
