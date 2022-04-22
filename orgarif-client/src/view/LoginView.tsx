@@ -5,14 +5,13 @@ import * as React from 'react';
 import { useState } from 'react';
 import { useRecoilState } from 'recoil';
 import { appContext } from '../ApplicationContext';
-import { MainContainer } from '../container/MainContainer';
 import { LoginResult, UserInfos } from '../domain/user';
+import { Errors } from '../errors';
 import { LoginForm, LoginFormDto } from '../form/LoginForm';
 import { RouteLink } from '../routing/RouteLink';
+import { useGoTo } from '../routing/useGoTo';
 import { state } from '../state/state';
 import { assertUnreachable } from '../utils';
-import { Errors } from '../errors';
-import { useGoTo } from '../routing/useGoTo';
 
 export const LoginView = () => {
   const [userInfos, setUserInfos] = useRecoilState(state.userInfos);
@@ -54,11 +53,12 @@ export const LoginView = () => {
       .devLoginCommand({ username })
       .then(r => connect(r.userinfos));
   return (
-    <MainContainer>
+    <>
       <div
         css={css`
           display: flex;
           justify-content: center;
+          padding: 2em;
         `}
       >
         <div>
@@ -98,7 +98,7 @@ export const LoginView = () => {
                 <br />
                 <RouteLink
                   route={{
-                    name: 'ListOrganismesRoute'
+                    name: 'EditListOrganismesRoute'
                   }}
                 >
                   Liste des organismes
@@ -129,6 +129,6 @@ export const LoginView = () => {
           </div>
         </div>
       </div>
-    </MainContainer>
+    </>
   );
 };

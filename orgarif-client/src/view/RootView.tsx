@@ -1,7 +1,9 @@
 /** @jsxImportSource @emotion/react */
 import { css } from '@emotion/react';
+import { Fade, Slide } from '@mui/material';
 import * as React from 'react';
 import { useRecoilState } from 'recoil';
+import { BasicFiltersContainer } from '../container/BasicFiltersContainer';
 import { MainContainer } from '../container/MainContainer';
 import { RouteLink } from '../routing/RouteLink';
 import { state } from '../state/state';
@@ -13,17 +15,39 @@ export const RootView = () => {
 
   return (
     <MainContainer>
+      {!userInfos && (
+        <Slide
+          direction="up"
+          in={true}
+          timeout={400}
+          mountOnEnter
+          unmountOnExit
+        >
+          <div>
+            <BasicFiltersContainer />
+          </div>
+        </Slide>
+      )}
+
       {userInfos && (
         <div
           css={css`
             margin: auto;
             width: 80%;
+            padding-top: 70px;
           `}
         >
+          <RouteLink
+            route={{
+              name: 'OrganismesRoute'
+            }}
+          >
+            Afficher le tableau des organismes
+          </RouteLink>
           <h2>Liste des organismes</h2>
           <RouteLink
             route={{
-              name: 'ListOrganismesRoute'
+              name: 'EditListOrganismesRoute'
             }}
           >
             Tous les organismes

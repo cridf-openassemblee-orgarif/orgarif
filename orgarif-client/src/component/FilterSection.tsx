@@ -27,7 +27,7 @@ export const FilterSection = React.memo(
         css={chipsContainer}
         sx={{
           top: sticky ? '80px' : '22vw',
-          py: sticky ? '0.2em' : '1em',
+          py: sticky ? '0.4em' : '.8vw',
           pl: standalone ? '1em' : '1em',
           pr: standalone ? 0 : '1em'
         }}

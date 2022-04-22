@@ -3,12 +3,12 @@ import { css } from '@emotion/react';
 import * as React from 'react';
 import { useEffect, useState } from 'react';
 import { appContext } from '../ApplicationContext';
+import { AddOrganismeComponent } from '../component/organisme/edit/AddOrganismeComponent';
 import { MainContainer } from '../container/MainContainer';
 import { OrganismeListDto } from '../domain/organisme';
 import { RouteLink } from '../routing/RouteLink';
 import { colors } from '../styles/colors';
 import { asString } from '../utils/nominal-class';
-import { AddOrganismeComponent } from '../component/organisme/edit/AddOrganismeComponent';
 
 export const ListOrganismesView = () => {
   const [organismes, setOrganismes] = useState<OrganismeListDto[]>();
@@ -34,6 +34,7 @@ export const ListOrganismesView = () => {
         css={css`
           width: 80%;
           margin: auto;
+          padding-top: 70px;
         `}
       >
         <h1>Liste des organismes</h1>

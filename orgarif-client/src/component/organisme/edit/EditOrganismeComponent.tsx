@@ -13,9 +13,12 @@ import {
   LienDeliberationDto,
   OrganismeDto
 } from '../../../domain/organisme';
+import { LocalDate } from '../../../domain/time';
+import { TABLET } from '../../../styles/breakpoints';
 import { colors } from '../../../styles/colors';
 import { organismeActions } from '../../../utils/organisme-utils';
 import { EditDeliberationListComponent } from './deliberation/EditDeliberationListComponent';
+import { EditDesignationListComponent } from './designation/EditDesignationListComponent';
 import { EditNomComponent } from './EditNomComponent';
 import {
   EditOrganismeDepartementComponent,
@@ -25,9 +28,6 @@ import {
 } from './EditOrganismeCategoryComponent';
 import { AddInstanceComponent } from './instance/AddInstanceComponent';
 import { EditInstancesComponent } from './instance/EditInstancesComponent';
-import { EditDesignationListComponent } from './designation/EditDesignationListComponent';
-import { TABLET } from '../../../styles/breakpoints';
-import { LocalDate } from '../../../domain/time';
 
 export const editCommonClasses = {
   columnPadding: css`
@@ -146,7 +146,7 @@ export const EditOrganismeComponent = (props: {
             {/* eslint-disable-line jsx-a11y/heading-has-content */}
           </h2>
         }
-        deletionReturnRoute={{ name: 'ListOrganismesRoute' }}
+        deletionReturnRoute={{ name: 'EditListOrganismesRoute' }}
       />
       <div
         css={css`

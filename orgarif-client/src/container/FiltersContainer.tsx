@@ -50,12 +50,10 @@ export const FiltersContainer = () => {
 
     if (isTabletAndMore() && filters.getBoundingClientRect().bottom <= 135) {
       setTransitionValue(0);
-      // setExpandedAccordion(false);
       setShrinkSectionFilters(true);
       setIsShrink(true);
       setEnableScrollOnTable(true);
     } else if (isMobile() && filters.getBoundingClientRect().bottom < 135) {
-      // setExpandedAccordion(false);
       setShrinkSectionFilters(true);
       setIsShrink(true);
     } else if (
@@ -223,9 +221,6 @@ const Accordion = styled((props: AccordionProps) => (
   },
   display: 'flex',
   flexDirection: 'column-reverse'
-  // '&:not(.Mui-expanded)': {
-  //   borderTop: !isMobile() && `1px solid hsl(0, 0%, 6%)`
-  // }
 }));
 
 const AccordionSummary = styled((props: AccordionSummaryProps) => (

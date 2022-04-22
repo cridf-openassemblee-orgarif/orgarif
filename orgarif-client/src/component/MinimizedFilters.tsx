@@ -4,11 +4,13 @@ import ClearIcon from '@mui/icons-material/Clear';
 import { Box, Chip } from '@mui/material';
 import Tooltip from '@mui/material/Tooltip';
 import * as React from 'react';
-import { useRecoilState } from 'recoil';
+import { useRecoilState, useRecoilValue } from 'recoil';
 import { state } from '../state/state';
 
 export const MinimizedFilters = () => {
   const [activeFilters, setActiveFilters] = useRecoilState(state.activeFilters);
+  const expandedAccordion = useRecoilValue(state.filtersExpandedAccordion);
+  const enableScrollOnTable = useRecoilValue(state.enableScrollOnTable);
 
   return (
     <Box
@@ -16,7 +18,8 @@ export const MinimizedFilters = () => {
       css={css`
         margin-left: 60px;
         align-self: center;
-        animation: ${fadeIn} 400ms 300ms both;
+        animation: ${fadeIn} 400ms
+          ${!expandedAccordion && enableScrollOnTable ? '300ms' : '900ms'} both;
       `}
     >
       {activeFilters.map((filter: any) => {
