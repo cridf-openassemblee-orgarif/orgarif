@@ -7,6 +7,7 @@ import { experimentalStyled as styled } from '@mui/material/styles';
 import * as React from 'react';
 import { DesignationDto } from '../domain/organisme';
 import { Representant } from '../icon/collection/Representant';
+import * as breakpoint from '../styles/breakpoints';
 import { colors } from '../styles/colors';
 
 export const SingleRepresentant = (props: {
@@ -30,7 +31,7 @@ export const SingleRepresentant = (props: {
           right: -8px;
           background-color: ${isTitulaire &&
           hasSuppleance &&
-          window.innerWidth > 1024
+          window.innerWidth > 768
             ? colors.dark
             : 'transparent'};
         }
@@ -40,8 +41,12 @@ export const SingleRepresentant = (props: {
         css={css`
           display: flex;
           align-items: center;
-          min-width: 90%;
-          justify-content: center;
+          min-width: 285px;
+          justify-content: flex-start;
+
+          @media (${breakpoint.LAPTOP}) {
+            justify-content: center;
+          }
         `}
       >
         {representation?.representant?.imageUrl ? (
@@ -76,7 +81,7 @@ export const SingleRepresentant = (props: {
           />
           <Stack
             css={css`
-              padding: 0.3em 1.6em;
+              padding: 0.3em 0 0 1.6em;
             `}
           >
             <Typography variant="body2">
@@ -100,8 +105,10 @@ const Item = styled(Paper)(({ theme }) => ({
   display: 'flex',
   flexDirection: 'column',
   alignItems: 'center',
-  minHeight: '130px',
-  padding: `${theme.spacing(2)} ${theme.spacing(0)}`
+  [theme.breakpoints.up(1024)]: {
+    minHeight: '130px',
+    padding: `${theme.spacing(2)} ${theme.spacing(0)}`
+  }
 }));
 
 const StyledChip = styled(Chip)(({ theme }) => ({

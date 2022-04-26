@@ -9,7 +9,6 @@ import * as React from 'react';
 import { useRecoilState } from 'recoil';
 import { LogoutForm } from '../form/LogoutForm';
 import { SignIn } from '../icon/collection/SignIn';
-import { SignOut } from '../icon/collection/SignOut';
 import { RouteLink } from '../routing/RouteLink';
 import { state } from '../state/state';
 import { colors } from '../styles/colors';
@@ -46,7 +45,14 @@ export const MobileMenu = () => {
           'aria-labelledby': 'basic-button'
         }}
       >
-        <MenuItem onClick={handleClose}>
+        <MenuItem
+          onClick={handleClose}
+          css={css`
+            @media (hover: none) {
+              background-color: ${colors.white} !important ;
+            }
+          `}
+        >
           {!userInfos && (
             <RouteLink
               css={css`
@@ -81,7 +87,6 @@ export const MobileMenu = () => {
                 padding-right: 1em;
               `}
             >
-              <SignOut size={36} />
               <LogoutForm />
             </Box>
           )}

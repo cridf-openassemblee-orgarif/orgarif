@@ -15,17 +15,15 @@ import { styled } from '@mui/material/styles';
 import * as React from 'react';
 import { useNavigate } from 'react-router-dom';
 import { useRecoilState, useRecoilValue } from 'recoil';
+import { Informations } from '../component/Informations';
+import { Representants } from '../component/Representants';
 import { OrganismeDto } from '../domain/organisme';
 import { Edit } from '../icon/collection/Edit';
 import { Share } from '../icon/collection/Share';
 import { state } from '../state/state';
-import * as breakpoint from '../styles/breakpoints';
 import { colors } from '../styles/colors';
 import { asString } from '../utils/nominal-class';
-import { Informations } from './Informations';
-import { Representants } from './Representants';
 
-// TODO: edition link + should button be always visible ?
 export const LeftPanel = (props: { organisme: OrganismeDto }) => {
   const [isOpened, setIsOpened] = useRecoilState(state.openedDrawer);
   const userInfos = useRecoilValue(state.userInfos);
@@ -66,9 +64,10 @@ export const LeftPanel = (props: { organisme: OrganismeDto }) => {
       css={css`
         background-color: ${colors.mainBackground};
         color: ${colors.grey};
-        padding: 2em 1em;
+        padding: 1.5em 1em 2em;
+        height: 100%;
 
-        @media (${breakpoint.LAPTOP}) {
+        @media (min-width: 1170px) {
           height: 99vh;
           padding: 2em 2vw;
           overflow-y: auto;

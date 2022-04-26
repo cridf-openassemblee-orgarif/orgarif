@@ -5,6 +5,7 @@ import Avatar from '@mui/material/Avatar';
 import Box from '@mui/material/Box';
 import { experimentalStyled as styled } from '@mui/material/styles';
 import * as React from 'react';
+import * as breakpoint from '../styles/breakpoints';
 import { colors } from '../styles/colors';
 
 export const SingleEmptyRepresentant = (props: { hasSuppleance?: boolean }) => {
@@ -20,7 +21,7 @@ export const SingleEmptyRepresentant = (props: { hasSuppleance?: boolean }) => {
           height: 80%;
           width: 1px;
           right: -8px;
-          background-color: ${props.hasSuppleance && window.innerWidth > 1024
+          background-color: ${props.hasSuppleance && window.innerWidth > 768
             ? colors.dark
             : 'transparent'};
         }
@@ -30,8 +31,12 @@ export const SingleEmptyRepresentant = (props: { hasSuppleance?: boolean }) => {
         css={css`
           display: flex;
           align-items: center;
-          min-width: 90%;
-          justify-content: center;
+          min-width: 285px;
+          justify-content: flex-start;
+
+          @media (${breakpoint.LAPTOP}) {
+            justify-content: center;
+          }
         `}
       >
         <Avatar
@@ -47,7 +52,7 @@ export const SingleEmptyRepresentant = (props: { hasSuppleance?: boolean }) => {
 
         <Box
           css={css`
-            padding: 0em 1.6em 0em 0em;
+            padding: 0.3em 0;
           `}
         >
           <StyledChip
@@ -68,8 +73,10 @@ const Item = styled(Paper)(({ theme }) => ({
   display: 'flex',
   flexDirection: 'column',
   alignItems: 'center',
-  minHeight: '130px',
-  padding: `${theme.spacing(2)} ${theme.spacing(0)}`
+  [theme.breakpoints.up(1024)]: {
+    minHeight: '130px',
+    padding: `${theme.spacing(2)} ${theme.spacing(0)}`
+  }
 }));
 
 const StyledChip = styled(Chip)(({ theme }) => ({

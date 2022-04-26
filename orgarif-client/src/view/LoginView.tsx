@@ -71,7 +71,12 @@ export const LoginView = () => {
           </h1>
           <div
             css={css`
-              width: 400px;
+              min-width: 90vw;
+              max-width: 90vw;
+              @media (min-width: 768px) {
+                min-width: 400px;
+                max-width: 400px;
+              }
             `}
           >
             {loginResult !== 'loggedIn' && !userInfos && (

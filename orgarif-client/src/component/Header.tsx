@@ -53,7 +53,13 @@ const baseHeaderStyle = css`
   line-height: 80%;
   user-select: none;
   transition: all 1s ease-in-out;
-  padding-top: 60px;
+  padding-top: 80px;
+  padding-bottom: 10px;
+
+  @media (${breakpoint.LAPTOP}) {
+    padding-top: 60px;
+    padding-bottom: 0px;
+  }
 `;
 
 const smallHeader = css`

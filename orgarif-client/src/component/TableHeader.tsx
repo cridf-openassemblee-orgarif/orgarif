@@ -21,7 +21,7 @@ export const TableHeader = ({ onSearch }: TableHeaderProps) => {
         flex-wrap: wrap;
         justify-content: space-between;
         align-items: center;
-        padding: 8px 16px;
+        padding: 8px 8px;
         border-top: 1px solid ${colors.dark};
         border-bottom: 1px solid ${colors.dark};
         margin-bottom: 1em;

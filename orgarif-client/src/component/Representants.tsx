@@ -7,6 +7,7 @@ import * as React from 'react';
 import { DesignationDto } from '../domain/organisme';
 import * as breakpoint from '../styles/breakpoints';
 import { asString } from '../utils/nominal-class';
+import { isMobile } from '../utils/viewport-utils';
 import { SingleEmptyRepresentant } from './SingleEmptyRepresentant';
 import { SingleRepresentant } from './SingleRepresentant';
 
@@ -35,7 +36,7 @@ export const Representants = (props: {
         margin-bottom: 1em;
         flex-direction: column;
 
-        @media (${breakpoint.LAPTOP}) {
+        @media (${breakpoint.TABLET}) {
           flex-direction: row;
         }
       `}
@@ -56,7 +57,7 @@ export const Representants = (props: {
                       isTitulaire
                       hasSuppleance={props.hasSuppleance}
                     />
-                    {designations.length - 1 > index && (
+                    {(designations.length - 1 > index || isMobile()) && (
                       <Divider
                         orientation="horizontal"
                         css={css`
@@ -72,7 +73,7 @@ export const Representants = (props: {
                     <SingleEmptyRepresentant
                       hasSuppleance={props.hasSuppleance}
                     />
-                    {designations.length - 1 > index && (
+                    {(designations.length - 1 > index || isMobile()) && (
                       <Divider
                         orientation="horizontal"
                         css={css`
