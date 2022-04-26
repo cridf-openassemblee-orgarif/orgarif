@@ -8,17 +8,20 @@ import Tab from '@mui/material/Tab';
 import Tabs from '@mui/material/Tabs';
 import * as React from 'react';
 import { InView } from 'react-intersection-observer';
+import { HystoryItem } from '../component/HystoryItem';
 import { DeliberationId } from '../domain/ids';
 import { DeliberationDto, OrganismeDto } from '../domain/organisme';
+import useEventListener from '../hooks/useEventListener';
 import * as breakpoint from '../styles/breakpoints';
 import { colors } from '../styles/colors';
 import { asString } from '../utils/nominal-class';
-import { HystoryItem } from './HystoryItem';
+import { isMobile } from '../utils/viewport-utils';
 
 // TODO: complete dynamization
 export const RightPanel = (props: { organisme: OrganismeDto }) => {
   const [value, setValue] = React.useState(0);
-  const [yearInView, setYearInview] = React.useState('2021');
+  const [yearInView, setYearInview] = React.useState('');
+  const [scrolling, setScrolling] = React.useState(false);
 
   const handleTabChange = (event: React.SyntheticEvent, newValue: number) => {
     setValue(newValue);
@@ -46,6 +49,18 @@ export const RightPanel = (props: { organisme: OrganismeDto }) => {
       return r;
     }, Object.create(null))
   ).sort((a: any, b: any) => b[0] - a[0]);
+
+  // basic logic to handle side chips displaying yearly delibs to update their background color when they enter the viewport.
+  React.useEffect(() => {
+    setYearInview(
+      Math.max
+        .apply(0, deliberationsByYear.map((item: any) => item[0]).map(Number))
+        .toString()
+    );
+  }, []);
+  useEventListener('wheel', () => {
+    setScrolling(true);
+  });
 
   const CustomRadio = (value: number) =>
     value === 0 ? (
@@ -88,6 +103,7 @@ export const RightPanel = (props: { organisme: OrganismeDto }) => {
         background-color: ${colors.dark};
         color: ${colors.white};
         padding: 1em 1em 10em;
+        overflow-y: hidden;
 
         @media (${breakpoint.LAPTOP}) {
           height: 99vh;
@@ -121,7 +137,9 @@ export const RightPanel = (props: { organisme: OrganismeDto }) => {
           />
         </Tabs>
         <Box>
-          <Typography variant="body2">DERNIÈRE MISE À JOUR</Typography>
+          <Typography variant={isMobile() ? 'caption' : 'body2'}>
+            DERNIÈRE MISE À JOUR
+          </Typography>
           <Typography variant="body2">LE 26/03/21</Typography>
         </Box>
       </Box>
@@ -132,41 +150,42 @@ export const RightPanel = (props: { organisme: OrganismeDto }) => {
           </Typography>
         )}
 
-        {deliberationsByYear.map((yearlyDelib: any, i: number) => {
-          return yearlyDelib[1].map((d: any, idx: any) => (
-            // FIXME - not working perfectly according to screen' height
-            <InView
-              as="div"
-              key={d.id}
-              threshold={0.5}
-              onChange={inView => {
-                setYearInview(prevState =>
-                  inView ? yearlyDelib[0] : prevState
-                );
-              }}
-            >
-              <HystoryItem
-                delib={d}
-                yearlyDelib={yearlyDelib}
-                lastItem={
-                  deliberationsByYear.length > 1
-                    ? deliberationsByYear.length - 1 === i
-                    : yearlyDelib[1].length - 1 === idx
-                }
-              />
-            </InView>
-          ));
-        })}
+        {allDelibs.length > 0 &&
+          deliberationsByYear.map((yearlyDelib: any, i: number) => {
+            return yearlyDelib[1].map((d: any, idx: any) => (
+              <InView
+                as="div"
+                key={d.id}
+                threshold={0.8}
+                onChange={inView => {
+                  scrolling &&
+                    setYearInview(prevState =>
+                      inView ? yearlyDelib[0] : prevState
+                    );
+                }}
+              >
+                <HystoryItem
+                  delib={d}
+                  yearlyDelib={yearlyDelib}
+                  lastItem={
+                    deliberationsByYear.length > 1
+                      ? deliberationsByYear.length - 1 === i
+                      : yearlyDelib[1].length - 1 === idx
+                  }
+                />
+              </InView>
+            ));
+          })}
         <div
           css={css`
             display: none;
 
-            @media (${breakpoint.LAPTOP}) {
+            @media (min-width: 1170px) {
               position: fixed;
               width: 60px;
               height: fit-content;
-              right: 30px;
-              top: 40%;
+              right: 25px;
+              top: 45%;
               display: flex;
               flex-direction: column;
               align-items: center;

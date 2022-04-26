@@ -6,19 +6,19 @@ import * as React from 'react';
 import { useNavigate } from 'react-router-dom';
 import { useRecoilValue } from 'recoil';
 import { appContext } from '../ApplicationContext';
-import { LeftPanel } from '../component/LeftPanel';
-import { RightPanel } from '../component/RightPanel';
+import { LeftPanel } from '../container/LeftPanel';
 import { MainContainer } from '../container/MainContainer';
+import { RightPanel } from '../container/RightPanel';
 import { OrganismeId } from '../domain/ids';
 import { OrganismeDto } from '../domain/organisme';
 import { state } from '../state/state';
-import * as breakpoint from '../styles/breakpoints';
 
 // TODO : dynamization
 export const SingleOrganismeView = () => {
   const [organisme, setOrganisme] = React.useState<OrganismeDto>();
   const [error, setError] = React.useState(false);
   const isOpened = useRecoilValue(state.openedDrawer);
+
   const navigate = useNavigate();
 
   // TODO - remove once dynamization is done
@@ -50,9 +50,9 @@ export const SingleOrganismeView = () => {
             display: grid;
             grid-template-columns: 1fr;
             padding-top: 70px;
-            position: fixed;
 
-            @media (${breakpoint.LAPTOP}) {
+            @media (min-width: 1170px) {
+              position: fixed;
               grid-template-columns: 51% 49%;
             }
           `}
@@ -85,6 +85,7 @@ export const SingleOrganismeView = () => {
             align-items: center;
             flex-direction: column;
             margin-top: 2rem;
+            padding: 0.2rem;
           `}
         >
           <Typography variant="body1">
