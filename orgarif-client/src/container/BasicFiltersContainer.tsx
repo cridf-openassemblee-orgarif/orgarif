@@ -1,13 +1,13 @@
 /** @jsxImportSource @emotion/react */
 import { css } from '@emotion/react';
-import { Box, Button, Stack } from '@mui/material';
+import { Box, Button, Fade, Stack } from '@mui/material';
 import Collapse from '@mui/material/Collapse';
 import * as React from 'react';
 import { useNavigate } from 'react-router-dom';
 import { useRecoilState } from 'recoil';
 import { FilterSection } from '../component/FilterSection';
-import { MobileSelectFilters } from '../component/MobileSelectFilters';
 import { state } from '../state/state';
+import * as breakpoint from '../styles/breakpoints';
 import { isMobile } from '../utils/viewport-utils';
 
 export const BasicFiltersContainer = () => {
@@ -20,7 +20,7 @@ export const BasicFiltersContainer = () => {
   );
 
   const [hideExtraFilters, setHideExtraFilters] = React.useState<boolean>(true);
-  const ChipRef = React.useRef<HTMLDivElement>(null);
+
   const navigate = useNavigate();
 
   const handleClick = () => {
@@ -30,21 +30,23 @@ export const BasicFiltersContainer = () => {
 
   return (
     <>
-      <Box ref={ChipRef} id="filters">
-        {isMobile() && (
-          <>
-            <MobileSelectFilters data={departements} label="départements" />
-            <MobileSelectFilters data={secteurs} label="secteurs" />
-            <Collapse in={!hideExtraFilters}>
-              <MobileSelectFilters
-                data={natureJuridiques}
-                label="nature juridique"
-              />
-              <MobileSelectFilters
-                data={typeStructures}
-                label="type de structure"
-              />
-            </Collapse>
+      <Box id="filters">
+        <FilterSection
+          filters={departements}
+          label="départements"
+          showIcon={false}
+          sticky={false}
+        />
+        <FilterSection
+          filters={secteurs}
+          label="secteurs"
+          showIcon={true}
+          sticky={false}
+        />
+        <Collapse in={hideExtraFilters} timeout={{ enter: 1400, exit: 0 }}>
+          <Stack direction="row">
+            <FilterSection label="nature juridique" standalone={true} />
+            <FilterSection label="type de structure" standalone={true} />
             <Button
               variant="contained"
               size="small"
@@ -52,85 +54,61 @@ export const BasicFiltersContainer = () => {
               css={css`
                 max-height: 2em;
                 align-self: center;
-                margin-left: 0.6em;
-                width: 95%;
+                margin-left: 2em;
               `}
               component="button"
               onClick={() => setHideExtraFilters(!hideExtraFilters)}
             >
-              {hideExtraFilters
-                ? 'Afficher plus de filtres'
-                : 'Cacher les filtres'}
+              Afficher les détails
             </Button>
-          </>
-        )}
-        {!isMobile() && (
-          <>
+          </Stack>
+        </Collapse>
+        {!hideExtraFilters && (
+          <Collapse in={!hideExtraFilters}>
             <FilterSection
-              filters={departements}
-              label="départements"
+              filters={natureJuridiques}
+              label="nature juridique"
               showIcon={false}
               sticky={false}
             />
             <FilterSection
-              filters={secteurs}
-              label="secteurs"
-              showIcon={true}
+              filters={typeStructures}
+              label="type structure"
+              showIcon={false}
               sticky={false}
             />
-            <Collapse
-              in={hideExtraFilters}
-              timeout={{ enter: 1400, exit: 400 }}
-            >
-              <Stack direction="row">
-                <FilterSection label="nature juridique" standalone={true} />
-                <FilterSection label="type de structure" standalone={true} />
-                <Button
-                  variant="contained"
-                  size="small"
-                  color="secondary"
-                  css={css`
-                    max-height: 2em;
-                    align-self: center;
-                    margin-left: 2em;
-                  `}
-                  component="button"
-                  onClick={() => setHideExtraFilters(!hideExtraFilters)}
-                >
-                  Afficher les détails
-                </Button>
-              </Stack>
-            </Collapse>
-            {!hideExtraFilters && (
-              <Collapse in={!hideExtraFilters}>
-                <FilterSection
-                  filters={natureJuridiques}
-                  label="nature juridique"
-                  showIcon={false}
-                  sticky={false}
-                />
-                <FilterSection
-                  filters={typeStructures}
-                  label="type structure"
-                  showIcon={false}
-                  sticky={false}
-                />
-              </Collapse>
-            )}
-          </>
+          </Collapse>
         )}
       </Box>
       <Box
         css={css`
-          position: relative;
-          display: flex;
-          justify-content: center;
-          padding: 1rem 0 2rem;
+          position: absolute;
+          bottom: 30px;
+          left: 50%;
+          transform: translateX(-50%);
+          width: fit-content;
+
+          @media (${breakpoint.TABLET}) and (max-height: 1024px) {
+            position: relative;
+            display: flex;
+            justify-content: center;
+            margin-top: 2rem;
+          }
+
+          @media (min-width: 2000px) and (min-height: 1024px) {
+            position: relative;
+            display: flex;
+            justify-content: center;
+            padding: 1rem 0 1rem;
+            margin-top: 3rem;
+          }
         `}
       >
-        <Button variant="outlined" color="secondary" onClick={handleClick}>
-          Afficher tous les organismes
-        </Button>
+        <Fade timeout={2000} in={true}>
+          <Button variant="outlined" color="secondary" onClick={handleClick}>
+            Afficher tous les organismes
+          </Button>
+        </Fade>
       </Box>
     </>
   );

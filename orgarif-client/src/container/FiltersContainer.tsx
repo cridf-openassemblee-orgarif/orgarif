@@ -12,6 +12,7 @@ import { styled } from '@mui/material/styles';
 import Typography from '@mui/material/Typography';
 import * as React from 'react';
 import { useRecoilState } from 'recoil';
+import { DeleteFiltersDialog } from '../component/DeleteFiltersDialog';
 import { FilterSection } from '../component/FilterSection';
 import { MinimizedFilters } from '../component/MinimizedFilters';
 import { MobileSelectFilters } from '../component/MobileSelectFilters';
@@ -25,7 +26,7 @@ export const FiltersContainer = () => {
   const [secteurs] = useRecoilState(state.secteurs);
   const [natureJuridiques] = useRecoilState(state.natureJuridiques);
   const [typeStructures] = useRecoilState(state.typeStructures);
-  const [activeFilters] = useRecoilState(state.activeFilters);
+  const [activeFilters, setActiveFilters] = useRecoilState(state.activeFilters);
   const [isShrink, setIsShrink] = useRecoilState(state.headerShrinked);
   const [shrinkSectionFilters, setShrinkSectionFilters] = useRecoilState(
     state.filtersSectionShrinked
@@ -135,6 +136,7 @@ export const FiltersContainer = () => {
                 ? 'Afficher plus de filtres'
                 : 'Cacher les filtres'}
             </Button>
+            {activeFilters.length > 0 && <DeleteFiltersDialog />}
           </AccordionDetails>
         )}
         {!isMobile() && (
@@ -151,10 +153,7 @@ export const FiltersContainer = () => {
               showIcon={true}
               sticky={shrinkSectionFilters}
             />
-            <Collapse
-              in={hideExtraFilters}
-              timeout={{ enter: 1400, exit: 400 }}
-            >
+            <Collapse in={hideExtraFilters} timeout={{ enter: 1400, exit: 0 }}>
               <Stack direction="row">
                 <FilterSection label="nature juridique" standalone={true} />
                 <FilterSection label="type de structure" standalone={true} />
