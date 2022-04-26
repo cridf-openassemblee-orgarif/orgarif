@@ -5,6 +5,7 @@ import {
   Alert,
   Chip,
   Divider,
+  Slide,
   Snackbar,
   Stack,
   Tooltip,
@@ -12,6 +13,8 @@ import {
 } from '@mui/material';
 import Box from '@mui/material/Box';
 import { styled } from '@mui/material/styles';
+import { TransitionProps } from '@mui/material/transitions';
+import copy from 'copy-to-clipboard';
 import * as React from 'react';
 import { useNavigate } from 'react-router-dom';
 import { useRecoilState, useRecoilValue } from 'recoil';
@@ -27,7 +30,17 @@ import { asString } from '../utils/nominal-class';
 export const LeftPanel = (props: { organisme: OrganismeDto }) => {
   const [isOpened, setIsOpened] = useRecoilState(state.openedDrawer);
   const userInfos = useRecoilValue(state.userInfos);
-  const [openSnackbar, setOpenSnackbar] = React.useState(false);
+  const [openSnackbar, setOpenSnackbar] = React.useState<{
+    open: boolean;
+    Transition: React.ComponentType<
+      TransitionProps & {
+        children: React.ReactElement<any, any>;
+      }
+    >;
+  }>({
+    open: false,
+    Transition: Slide
+  });
 
   const navigate = useNavigate();
 
@@ -45,15 +58,13 @@ export const LeftPanel = (props: { organisme: OrganismeDto }) => {
     if (reason === 'clickaway') {
       return;
     }
-    setOpenSnackbar(false);
+    setOpenSnackbar({ ...openSnackbar, open: false });
   };
 
-  // TODO - consider installing copy-to-clipboard package instead if need to add support for IE
   const copyToClipboard = async () => {
-    // Note: Clipboard feature is available only in secure contexts (HTTPS)
     try {
-      await navigator.clipboard.writeText(window.location.href);
-      setOpenSnackbar(true);
+      copy(window.location.href);
+      setOpenSnackbar({ ...openSnackbar, open: true });
     } catch (err) {
       console.error('Failed to copy: ', err);
     }
@@ -112,8 +123,10 @@ export const LeftPanel = (props: { organisme: OrganismeDto }) => {
           </Tooltip>
         )}
         <Snackbar
-          open={openSnackbar}
-          autoHideDuration={6000}
+          open={openSnackbar.open}
+          autoHideDuration={5000}
+          onClose={handleClose}
+          TransitionComponent={openSnackbar.Transition}
           anchorOrigin={{
             vertical: 'bottom',
             horizontal: 'center'
