@@ -26,6 +26,7 @@ import { Share } from '../icon/collection/Share';
 import { state } from '../state/state';
 import * as breakpoint from '../styles/breakpoints';
 import { colors } from '../styles/colors';
+import { isMobile } from '../utils/viewport-utils';
 
 export const TableContainer = () => {
   const [rows, setRows] = React.useState<GridRowsProp>(listOrganismes);
@@ -37,7 +38,7 @@ export const TableContainer = () => {
 
   const navigate = useNavigate();
 
-  // TODO: improve search feature
+  // TODO:  search feature request to server
   const requestSearch = (searchedValue: string) => {
     if (activeFilters.length > 0 && searchedValue.length >= 3) {
       const filteredRows = listOrganismes.filter(row => {
@@ -86,9 +87,13 @@ export const TableContainer = () => {
       <div
         id="table"
         css={css`
-          height: calc(100vh - 245px);
+          height: calc(100vh - 72px);
           width: 100%;
-          padding: 0px 16px;
+          padding: 0px;
+
+          @media (${breakpoint.TABLET}) {
+            padding: 0px 24px;
+          }
 
           @media (${breakpoint.LAPTOP}) {
             height: calc(100vh - 215px);
@@ -100,7 +105,10 @@ export const TableContainer = () => {
           sx={overrideStyleGrid}
           css={css`
             .MuiDataGrid-virtualScroller {
-              overflow-y: ${enableScrollOnTable ? 'auto' : 'hidden'};
+              // disable scroll on table until filters section hides completely
+              @media (${breakpoint.LAPTOP}) {
+                overflow-y: ${enableScrollOnTable ? 'auto' : 'hidden'};
+              }
             }
           `}
         >
@@ -118,6 +126,13 @@ export const TableContainer = () => {
             initialState={{
               sorting: {
                 sortModel: [{ field: 'organisme', sort: 'asc' }]
+              },
+              columns: {
+                columnVisibilityModel: {
+                  département: isMobile() ? false : true,
+                  structure: isMobile() ? false : true,
+                  selection: isMobile() ? false : true
+                }
               }
             }}
             rowBuffer={5}
@@ -148,7 +163,7 @@ const columns: GridColDef[] = [
   {
     field: 'localité',
     headerName: 'Localité',
-    minWidth: 150,
+    minWidth: isMobile() ? 120 : 150,
     flex: 0.5,
     renderHeader: (params: GridColumnHeaderParams) => (
       <HeaderChip size="small" label="LOCALITÉ" />
@@ -506,12 +521,4 @@ const overrideStyleGrid = {
       color: colors.white
     }
   }
-
-  // '& .MuiDataGrid-iconButtonContainer': {
-  //   visibility: 'visible',
-  //   width: 'auto',
-  //   '& .MuiDataGrid-sortIcon': {
-  //     opacity: 1
-  //   }
-  // }
 };

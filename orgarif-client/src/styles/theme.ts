@@ -109,6 +109,23 @@ const orgarifTheme = {
           fontSize: 'clamp(16px, 1.2vw, 1.2rem)'
         }
       }
+    },
+    MuiMenuItem: {
+      styleOverrides: {
+        root: {
+          '&.Mui-selected': {
+            backgroundColor: colors.errorRed,
+            color: colors.white,
+            '&:hover': {
+              backgroundColor: colors.errorRed,
+              color: colors.white
+            },
+            '@media (hover: none)': {
+              backgroundColor: `${colors.errorRed} !important`
+            }
+          }
+        }
+      }
     }
   }
 } as const;

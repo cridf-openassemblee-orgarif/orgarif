@@ -1,13 +1,16 @@
 /** @jsxImportSource @emotion/react */
 import { css } from '@emotion/react';
-import { Fade, Slide } from '@mui/material';
+import { Slide } from '@mui/material';
 import * as React from 'react';
 import { useRecoilState } from 'recoil';
 import { BasicFiltersContainer } from '../container/BasicFiltersContainer';
+import { FiltersContainer } from '../container/FiltersContainer';
 import { MainContainer } from '../container/MainContainer';
+import { TableContainer } from '../container/TableContainer';
 import { RouteLink } from '../routing/RouteLink';
 import { state } from '../state/state';
 import { asString } from '../utils/nominal-class';
+import { isMobile } from '../utils/viewport-utils';
 
 export const RootView = () => {
   const [userInfos] = useRecoilState(state.userInfos);
@@ -15,7 +18,13 @@ export const RootView = () => {
 
   return (
     <MainContainer>
-      {!userInfos && (
+      {!userInfos && isMobile() && (
+        <>
+          <FiltersContainer />
+          <TableContainer />
+        </>
+      )}
+      {!userInfos && !isMobile() && (
         <Slide
           direction="up"
           in={true}
