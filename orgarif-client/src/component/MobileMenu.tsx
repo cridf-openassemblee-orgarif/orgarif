@@ -28,7 +28,7 @@ export const MobileMenu = () => {
   return (
     <>
       <Button
-        id="basic-button"
+        id="bouton-menu"
         aria-controls={open ? 'basic-menu' : undefined}
         aria-haspopup="true"
         aria-expanded={open ? 'true' : undefined}
@@ -42,7 +42,7 @@ export const MobileMenu = () => {
         open={open}
         onClose={handleClose}
         MenuListProps={{
-          'aria-labelledby': 'basic-button'
+          'aria-labelledby': 'bouton-menu'
         }}
       >
         <MenuItem

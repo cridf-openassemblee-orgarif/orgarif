@@ -17,9 +17,9 @@ import { TransitionProps } from '@mui/material/transitions';
 import copy from 'copy-to-clipboard';
 import * as React from 'react';
 import { useNavigate } from 'react-router-dom';
-import { useRecoilState, useRecoilValue } from 'recoil';
-import { Informations } from '../component/Informations';
-import { Representants } from '../component/Representants';
+import { useRecoilValue, useSetRecoilState } from 'recoil';
+import { Informations } from '../component/singleOrganisme/Informations';
+import { Representants } from '../component/singleOrganisme/Representants';
 import { OrganismeDto } from '../domain/organisme';
 import { Edit } from '../icon/collection/Edit';
 import { Share } from '../icon/collection/Share';
@@ -28,7 +28,7 @@ import { colors } from '../styles/colors';
 import { asString } from '../utils/nominal-class';
 
 export const LeftPanel = (props: { organisme: OrganismeDto }) => {
-  const [isOpened, setIsOpened] = useRecoilState(state.openedDrawer);
+  const setIsOpened = useSetRecoilState(state.openedDrawer);
   const userInfos = useRecoilValue(state.userInfos);
   const [openSnackbar, setOpenSnackbar] = React.useState<{
     open: boolean;
@@ -247,7 +247,7 @@ export const LeftPanel = (props: { organisme: OrganismeDto }) => {
                     variant="h4"
                     component="div"
                     css={css`
-                      font-size: clamp(1.5em, 2.4vw, 24px);
+                      font-size: clamp(20px, 2.4vw, 24px);
                       margin: 0.5em 0 1.5em;
                     `}
                   >

@@ -4,11 +4,10 @@ import { Chip, Paper, Stack, Typography } from '@mui/material';
 import Avatar from '@mui/material/Avatar';
 import Box from '@mui/material/Box';
 import { experimentalStyled as styled } from '@mui/material/styles';
-import * as React from 'react';
-import { DesignationDto } from '../domain/organisme';
-import { Representant } from '../icon/collection/Representant';
-import * as breakpoint from '../styles/breakpoints';
-import { colors } from '../styles/colors';
+import { DesignationDto } from '../../domain/organisme';
+import { Representant } from '../../icon/collection/Representant';
+import * as breakpoint from '../../styles/breakpoints';
+import { colors } from '../../styles/colors';
 
 export const SingleRepresentant = (props: {
   representation: DesignationDto | undefined;

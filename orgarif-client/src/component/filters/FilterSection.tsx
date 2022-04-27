@@ -7,10 +7,10 @@ import {
   NatureJuridique,
   Secteur,
   TypeStructure
-} from '../domain/bootstrap-data';
-import { asString } from '../utils/nominal-class';
+} from '../../domain/bootstrap-data';
+import { asString } from '../../utils/nominal-class';
 import { FilterChip } from './FilterChip';
-import { HeaderChip } from './HeaderChip';
+import { HeaderFiltersChip } from './HeaderFiltersChip';
 
 interface FilterSectionProps {
   filters?: Departement[] | NatureJuridique[] | Secteur[] | TypeStructure[];
@@ -32,7 +32,7 @@ export const FilterSection = React.memo(
           pr: standalone ? 0 : '1em'
         }}
       >
-        <HeaderChip label={label} />
+        <HeaderFiltersChip label={label} />
         {filters &&
           filters.map(
             (

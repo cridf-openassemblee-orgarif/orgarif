@@ -2,7 +2,7 @@ import SearchIcon from '@mui/icons-material/Search';
 import InputBase from '@mui/material/InputBase';
 import { alpha, styled } from '@mui/material/styles';
 import * as React from 'react';
-import { colors } from '../styles/colors';
+import { colors } from '../../styles/colors';
 
 interface SearchBarProps {
   handleChange: (
@@ -30,14 +30,18 @@ export const SearchBar = ({ handleChange }: SearchBarProps) => {
 const Search = styled('div')(({ theme }) => ({
   position: 'relative',
   borderRadius: '5em',
-  border: `1px solid ${theme.palette.secondary.main}`,
+  border: `1px solid ${colors.grey2}`,
   backgroundColor: theme.palette.background.default,
   '&:hover': {
     backgroundColor: alpha(theme.palette.secondary.main, 0.03)
   },
   width: '100%',
-  height: '1.6em',
-  maxWidth: '240px',
+  height: '2em',
+  [theme.breakpoints.up('md')]: {
+    maxWidth: '240px',
+    border: `1px solid ${theme.palette.secondary.main}`
+  },
+  maxWidth: '80vw',
   display: 'flex',
   margin: '5px 0px',
   justifyContent: 'space-between',

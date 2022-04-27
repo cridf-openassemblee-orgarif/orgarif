@@ -3,15 +3,15 @@ import { css } from '@emotion/react';
 import { Typography } from '@mui/material';
 import { Box } from '@mui/system';
 import * as React from 'react';
-import * as breakpoint from '../styles/breakpoints';
-import { colors } from '../styles/colors';
+import * as breakpoint from '../../styles/breakpoints';
+import { colors } from '../../styles/colors';
 import { SearchBar } from './SearchBar';
 
 interface TableHeaderProps {
   onSearch: (searchedValue: string) => void;
 }
 
-// TODO : missing dynamization
+// TODO : missing dynamization for last updated date
 export const TableHeader = ({ onSearch }: TableHeaderProps) => {
   return (
     <Box

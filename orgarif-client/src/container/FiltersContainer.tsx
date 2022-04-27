@@ -11,35 +11,32 @@ import Collapse from '@mui/material/Collapse';
 import { styled } from '@mui/material/styles';
 import Typography from '@mui/material/Typography';
 import * as React from 'react';
-import { useRecoilState } from 'recoil';
-import { DeleteFiltersDialog } from '../component/DeleteFiltersDialog';
-import { FilterSection } from '../component/FilterSection';
-import { MinimizedFilters } from '../component/MinimizedFilters';
-import { MobileSelectFilters } from '../component/MobileSelectFilters';
+import { useRecoilState, useSetRecoilState } from 'recoil';
+import { DeleteFiltersDialog } from '../component/filters/DeleteFiltersDialog';
+import { FilterSection } from '../component/filters/FilterSection';
 import useEventListener from '../hooks/useEventListener';
 import { state } from '../state/state';
 import { colors } from '../styles/colors';
 import { isMobile, isTabletAndMore } from '../utils/viewport-utils';
+import { MinimizedFilters } from './MinimizedFilters';
+import { MobileSelectFilters } from './MobileSelectFilters';
 
 export const FiltersContainer = () => {
   const [departements] = useRecoilState(state.departements);
   const [secteurs] = useRecoilState(state.secteurs);
   const [natureJuridiques] = useRecoilState(state.natureJuridiques);
   const [typeStructures] = useRecoilState(state.typeStructures);
-  const [activeFilters, setActiveFilters] = useRecoilState(state.activeFilters);
-  const [isShrink, setIsShrink] = useRecoilState(state.headerShrinked);
+  const [activeFilters] = useRecoilState(state.activeFilters);
+  const setIsShrink = useSetRecoilState(state.headerShrinked);
   const [shrinkSectionFilters, setShrinkSectionFilters] = useRecoilState(
     state.filtersSectionShrinked
   );
   const [expandedAccordion, setExpandedAccordion] = useRecoilState(
     state.filtersExpandedAccordion
   );
-  const [enableScrollOnTable, setEnableScrollOnTable] = useRecoilState(
-    state.enableScrollOnTable
-  );
+  const setEnableScrollOnTable = useSetRecoilState(state.enableScrollOnTable);
   const [hideExtraFilters, setHideExtraFilters] = React.useState<boolean>(true);
   const [transitionValue, setTransitionValue] = React.useState<number>(1000);
-  const ChipRef = React.useRef<HTMLDivElement>(null);
 
   React.useEffect(() => {
     expandedAccordion === false && setHideExtraFilters(true);
@@ -69,7 +66,6 @@ export const FiltersContainer = () => {
 
   return (
     <Box
-      ref={ChipRef}
       id="filters"
       css={css`
         padding-top: 69px;

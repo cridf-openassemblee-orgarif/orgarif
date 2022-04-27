@@ -19,7 +19,7 @@ import type {} from '@mui/x-data-grid/themeAugmentation';
 import * as React from 'react';
 import { useNavigate } from 'react-router-dom';
 import { useRecoilState, useRecoilValue } from 'recoil';
-import { TableHeader } from '../component/TableHeader';
+import { TableHeader } from '../component/table/TableHeader';
 import { listOrganismes } from '../data/listOrganismes';
 import { Edit } from '../icon/collection/Edit';
 import { Share } from '../icon/collection/Share';
@@ -157,7 +157,7 @@ const columns: GridColDef[] = [
     minWidth: 250,
     flex: 1,
     renderHeader: (params: GridColumnHeaderParams) => (
-      <HeaderChip size="small" label={`${listOrganismes.length} ORGANISMES`} />
+      <HeaderChip label={`${listOrganismes.length} ORGANISMES`} />
     )
   },
   {
@@ -263,24 +263,24 @@ const columnsEdit: GridColDef[] = [
   }
 ];
 
-const SelectRow = ({ id }: any) => {
+const SelectRow = (props: { id: GridRowId }) => {
   const [userSelection, setUserSelection] = useRecoilState(state.userSelection);
 
   const handleClick = () => {
     const currentSelection = [...userSelection];
-    const indexSelection = currentSelection.indexOf(id);
+    const indexSelection = currentSelection.indexOf(props.id);
 
     indexSelection === -1
-      ? setUserSelection((oldList: any) => [...oldList, id])
-      : setUserSelection((oldList: any) => [
-          ...oldList.filter((item: any) => item !== id)
+      ? setUserSelection((prevList: GridRowId[]) => [...prevList, props.id])
+      : setUserSelection((prevList: GridRowId[]) => [
+          ...prevList.filter((row: GridRowId) => row !== props.id)
         ]);
   };
 
   return (
     <Tooltip
       title={
-        userSelection.includes(id)
+        userSelection.includes(props.id)
           ? 'Retirer de la sélection'
           : 'Ajouter à la sélection'
       }
@@ -290,7 +290,7 @@ const SelectRow = ({ id }: any) => {
       <Checkbox
         icon={<UnSelectedIcon />}
         checkedIcon={<SelectedIcon />}
-        checked={userSelection.includes(id)}
+        checked={userSelection.includes(props.id)}
         onClick={event => {
           event.stopPropagation();
           handleClick();
@@ -303,9 +303,12 @@ const SelectRow = ({ id }: any) => {
 const HeaderChip = styled(Chip)(({ theme }) => ({
   backgroundColor: colors.white,
   color: colors.dark,
-  padding: '0em .5em'
+  padding: '0em .5em',
+  height: '24px',
+  cursor: 'pointer'
 }));
 
+// TODO - missing logic to store/send to user selection
 const HeaderChipWithState = () => {
   const [userSelection] = useRecoilState(state.userSelection);
 
@@ -360,7 +363,7 @@ const UnSelectedIcon = () => (
     `}
   />
 );
-const EditRow = ({ id }: any) => {
+const EditRow = (props: { id: GridRowId }) => {
   const navigate = useNavigate();
   return (
     <Tooltip
@@ -385,7 +388,7 @@ const EditRow = ({ id }: any) => {
         `}
         onClick={e => {
           e.stopPropagation();
-          navigate(`/organisme/${id}/edit`);
+          navigate(`/organisme/${props.id}/edit`);
         }}
       />
     </Tooltip>
@@ -434,7 +437,7 @@ const CustomNoRowsOverlay = () => {
           </g>
         </g>
       </svg>
-      <Box sx={{ mt: 1 }}>Aucun résultat ne correspond à votre recherche</Box>
+      <Box css={{ mt: 1 }}>Aucun résultat ne correspond à votre recherche</Box>
     </StyledGridOverlay>
   );
 };
@@ -443,7 +446,11 @@ const StyledGridOverlay = styled('div')(({ theme }) => ({
   display: 'flex',
   flexDirection: 'column',
   alignItems: 'center',
-  justifyContent: 'center',
+  justifyContent: 'flex-start',
+  marginTop: '3em',
+  [theme.breakpoints.up('md')]: {
+    marginTop: '8em'
+  },
   height: '100%',
   '& .ant-empty-img-1': {
     fill: theme.palette.mode === 'light' ? '#b6bdc4' : '#262626'
@@ -520,5 +527,9 @@ const overrideStyleGrid = {
       backgroundColor: colors.errorRed,
       color: colors.white
     }
+  },
+  '& .MuiDataGrid-columnHeadersInner': {
+    transform:
+      'none !important' /* Firefox fix to prevent chips layout from being altered */
   }
 };

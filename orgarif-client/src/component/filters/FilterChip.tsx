@@ -11,24 +11,27 @@ import {
   NatureJuridique,
   Secteur,
   TypeStructure
-} from '../domain/bootstrap-data';
+} from '../../domain/bootstrap-data';
 import {
   DepartementId,
   NatureJuridiqueId,
   SecteurId,
   TypeStructureId
-} from '../domain/ids';
-import { Organigram } from '../icon/collection/Organigram';
-import { state } from '../state/state';
-import * as breakpoints from '../styles/breakpoints';
-import { colors } from '../styles/colors';
-import { asString } from '../utils/nominal-class';
+} from '../../domain/ids';
+import { state } from '../../state/state';
+import * as breakpoints from '../../styles/breakpoints';
+import { colors } from '../../styles/colors';
+import { asString } from '../../utils/nominal-class';
 
 interface FilterChipProps {
   filter: Departement | NatureJuridique | Secteur | TypeStructure;
   showIcon: boolean | undefined;
   isSticky: boolean | undefined;
 }
+
+type setActiveFiltersProps =
+  | (Departement | NatureJuridique | Secteur | TypeStructure)[]
+  | [];
 
 export const isDepartement = (object: unknown): object is Departement => {
   return Object.prototype.hasOwnProperty.call(object, 'code');
@@ -60,33 +63,30 @@ export const FilterChip = ({ filter, showIcon, isSticky }: FilterChipProps) => {
       .indexOf(asString(id));
 
     indexFilter === -1
-      ? setActiveFilters((oldList: any) => [...oldList, filter])
-      : setActiveFilters((oldList: any) => [
-          ...oldList.filter((f: any) => f.id !== id)
+      ? setActiveFilters((prevList: setActiveFiltersProps) => [
+          ...prevList,
+          filter
+        ])
+      : setActiveFilters((prevList: setActiveFiltersProps) => [
+          ...prevList.filter(
+            (f: Departement | NatureJuridique | Secteur | TypeStructure) =>
+              f.id !== id
+          )
         ]);
     setShrinkSectionFilters(true);
     navigate('/organismes');
   };
 
-  const chipColor = activeFilters.some((f: any) => f.id === filter.id)
+  const chipColor = activeFilters.some(
+    (f: Departement | NatureJuridique | Secteur | TypeStructure) =>
+      f.id === filter.id
+  )
     ? 'error'
     : 'primary';
 
   return (
     <>
-      {showIcon ? (
-        // Chip with icon
-        <StyledChip
-          key={filter.libelle}
-          color={chipColor}
-          icon={
-            <Organigram size={isSticky ? '24px' : 'clamp(24px, 1.4vw, 2rem)'} />
-          }
-          label={filter.libelle}
-          onClick={() => handleFilterClick(filter.id)}
-          css={isSticky ? skrinkedChips : ''}
-        />
-      ) : isDepartement(filter) ? (
+      {isDepartement(filter) ? (
         // Chip with postal code
         <StyledChip
           key={filter.libelle}

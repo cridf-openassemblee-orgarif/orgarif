@@ -3,11 +3,10 @@ import { css } from '@emotion/react';
 import { Divider } from '@mui/material';
 import Box from '@mui/material/Box';
 import Grid from '@mui/material/Grid';
-import * as React from 'react';
-import { DesignationDto } from '../domain/organisme';
-import * as breakpoint from '../styles/breakpoints';
-import { asString } from '../utils/nominal-class';
-import { isMobile } from '../utils/viewport-utils';
+import { DesignationDto } from '../../domain/organisme';
+import * as breakpoint from '../../styles/breakpoints';
+import { asString } from '../../utils/nominal-class';
+import { isMobile } from '../../utils/viewport-utils';
 import { SingleEmptyRepresentant } from './SingleEmptyRepresentant';
 import { SingleRepresentant } from './SingleRepresentant';
 

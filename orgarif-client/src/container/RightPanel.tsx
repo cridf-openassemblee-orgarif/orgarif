@@ -8,7 +8,7 @@ import Tab from '@mui/material/Tab';
 import Tabs from '@mui/material/Tabs';
 import * as React from 'react';
 import { InView } from 'react-intersection-observer';
-import { HystoryItem } from '../component/HystoryItem';
+import { HystoryItem } from '../component/singleOrganisme/HystoryItem';
 import { DeliberationId } from '../domain/ids';
 import { DeliberationDto, OrganismeDto } from '../domain/organisme';
 import useEventListener from '../hooks/useEventListener';
@@ -17,7 +17,7 @@ import { colors } from '../styles/colors';
 import { asString } from '../utils/nominal-class';
 import { isMobile } from '../utils/viewport-utils';
 
-// TODO: complete dynamization
+// TODO: complete dynamization once last updated date is available
 export const RightPanel = (props: { organisme: OrganismeDto }) => {
   const [value, setValue] = React.useState(0);
   const [yearInView, setYearInview] = React.useState('');
@@ -50,7 +50,7 @@ export const RightPanel = (props: { organisme: OrganismeDto }) => {
     }, Object.create(null))
   ).sort((a: any, b: any) => b[0] - a[0]);
 
-  // basic logic to handle side chips displaying yearly delibs to update their background color when they enter the viewport.
+  // basic logic to handle side chips displaying yearly delibs to update their background color when they enter the viewport
   React.useEffect(() => {
     setYearInview(
       Math.max

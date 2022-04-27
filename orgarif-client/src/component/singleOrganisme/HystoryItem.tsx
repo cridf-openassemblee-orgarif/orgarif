@@ -3,11 +3,11 @@ import { css } from '@emotion/react';
 import { Avatar, Chip, Typography } from '@mui/material';
 import Box from '@mui/material/Box';
 import * as React from 'react';
-import { DeliberationId } from '../domain/ids';
-import { DeliberationDto } from '../domain/organisme';
-import { formatLocaleDate } from '../simple-fr';
-import * as breakpoint from '../styles/breakpoints';
-import { colors } from '../styles/colors';
+import { DeliberationId } from '../../domain/ids';
+import { DeliberationDto } from '../../domain/organisme';
+import { formatLocaleDate } from '../../simple-fr';
+import * as breakpoint from '../../styles/breakpoints';
+import { colors } from '../../styles/colors';
 
 interface HystoryItemProps {
   delib: {

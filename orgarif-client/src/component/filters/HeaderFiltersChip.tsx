@@ -1,13 +1,12 @@
 /** @jsxImportSource @emotion/react */
 import { css } from '@emotion/react';
 import { Chip } from '@mui/material';
-import * as React from 'react';
 
-interface HeaderChipProps {
+interface HeaderFiltersChipProps {
   label: string;
 }
 
-export const HeaderChip = ({ label }: HeaderChipProps) => {
+export const HeaderFiltersChip = ({ label }: HeaderFiltersChipProps) => {
   return (
     <Chip
       label={label.toUpperCase()}

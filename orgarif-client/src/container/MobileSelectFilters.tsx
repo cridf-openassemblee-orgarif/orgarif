@@ -16,13 +16,28 @@ import {
   Secteur,
   TypeStructure
 } from '../domain/bootstrap-data';
+import {
+  DepartementId,
+  NatureJuridiqueId,
+  SecteurId,
+  TypeStructureId
+} from '../domain/ids';
 import { state } from '../state/state';
 import { colors } from '../styles/colors';
+import { asString } from '../utils/nominal-class';
 
 interface MobileFilterSectionProps {
   data: Departement[] | NatureJuridique[] | Secteur[] | TypeStructure[];
   label: string;
 }
+
+interface FiltersMobileProps {
+  value: string;
+  id: DepartementId | NatureJuridiqueId | SecteurId | TypeStructureId;
+  children: string;
+}
+
+interface setActiveFiltersMobileProps extends Array<FiltersMobileProps> {}
 
 export const MobileSelectFilters = ({
   data,
@@ -38,15 +53,19 @@ export const MobileSelectFilters = ({
     const {
       target: { value }
     } = event;
+
     const currentActiveFilters = [...activeFilters];
     const indexFilter = currentActiveFilters
       .map(f => f.id)
       .indexOf(child.props.id);
 
     indexFilter === -1
-      ? setActiveFilters((oldList: any) => [...oldList, child.props])
-      : setActiveFilters((oldList: any) => [
-          ...oldList.filter((f: any) => f.id !== child.props.id)
+      ? setActiveFilters((prevList: setActiveFiltersMobileProps) => [
+          ...prevList,
+          child.props
+        ])
+      : setActiveFilters((prevList: setActiveFiltersMobileProps) => [
+          ...prevList.filter((f: FiltersMobileProps) => f.id !== child.props.id)
         ]);
 
     setElementName(
@@ -106,11 +125,17 @@ export const MobileSelectFilters = ({
         )}
         MenuProps={MenuProps}
       >
-        {data.map((el: any) => (
-          <MenuItem key={el.id} value={el.libelle} id={el.id}>
-            {el.libelle}
-          </MenuItem>
-        ))}
+        {data.map(
+          (el: Departement | NatureJuridique | Secteur | TypeStructure) => (
+            <MenuItem
+              key={asString(el.id)}
+              value={el.libelle}
+              id={asString(el.id)}
+            >
+              {el.libelle}
+            </MenuItem>
+          )
+        )}
       </Select>
     </FormControl>
   );

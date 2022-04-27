@@ -5,10 +5,9 @@ import Collapse from '@mui/material/Collapse';
 import * as React from 'react';
 import { useNavigate } from 'react-router-dom';
 import { useRecoilState } from 'recoil';
-import { FilterSection } from '../component/FilterSection';
+import { FilterSection } from '../component/filters/FilterSection';
 import { state } from '../state/state';
 import * as breakpoint from '../styles/breakpoints';
-import { isMobile } from '../utils/viewport-utils';
 
 export const BasicFiltersContainer = () => {
   const [departements] = useRecoilState(state.departements);

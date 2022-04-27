@@ -9,8 +9,6 @@ interface HeaderProps {
 }
 
 export const Header = React.memo(({ shrinked = false }: HeaderProps) => {
-  const headerRef = React.useRef<HTMLDivElement>(null);
-
   return (
     <>
       {shrinked ? (
@@ -18,7 +16,6 @@ export const Header = React.memo(({ shrinked = false }: HeaderProps) => {
           variant="h1"
           component="h1"
           align="center"
-          ref={headerRef}
           css={smallHeader}
         >
           ORGARIF
@@ -36,7 +33,6 @@ export const Header = React.memo(({ shrinked = false }: HeaderProps) => {
               variant="h1"
               component="h1"
               align="center"
-              ref={headerRef}
               css={baseHeaderStyle}
             >
               ORGARIF
