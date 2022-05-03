@@ -22,37 +22,68 @@ export const DeleteFiltersDialog = () => {
         variant="contained"
         size="small"
         css={css`
-          max-height: 2em;
+          background-color: ${colors.white};
+          color: ${colors.dark};
+          border-radius: 50px;
+          height: 30px;
+          width: 100%;
           align-self: center;
-          margin-left: 0.6em;
-          margin-top: 1em;
-          width: 95%;
-          background-color: ${colors.errorBackground};
+          margin-top: 12px;
+          padding: 0 1rem;
+          box-shadow: 0px 5px 10px 0px rgba(191, 191, 191, 0.4);
         `}
         component="button"
         onClick={() => setOpenDialog(true)}
       >
         Effacer les filtres
-        <DeleteOutlined fontSize="small" />
+        <DeleteOutlined
+          sx={{
+            fontSize: 20,
+            marginLeft: '8px'
+          }}
+        />
       </Button>
       <Dialog
         open={openDialog}
         onClose={() => setOpenDialog(false)}
         aria-labelledby="alert-dialog-title"
         aria-describedby="alert-dialog-description"
+        PaperProps={{
+          style: {
+            borderRadius: '20px',
+            width: '100%'
+          }
+        }}
       >
-        <DialogTitle id="alert-dialog-title">Effacer les filtres</DialogTitle>
-        <DialogContent>
+        <DialogTitle
+          id="alert-dialog-title"
+          css={css`
+            padding: 48px 12px 8px;
+          `}
+        >
+          EFFACER LES FILTRES
+        </DialogTitle>
+        <DialogContent
+          css={css`
+            padding: 0 12px 32px;
+          `}
+        >
           <DialogContentText id="alert-dialog-description">
             Êtes-vous sûr de vouloir effacer les filtres ?
           </DialogContentText>
         </DialogContent>
-        <DialogActions>
-          <Button variant="outlined" onClick={() => setOpenDialog(false)}>
-            Non
-          </Button>
+        <DialogActions
+          css={css`
+            align-self: center;
+            padding-bottom: 16px;
+          `}
+        >
           <Button
-            variant="outlined"
+            css={css`
+              border-radius: 40px;
+              padding: 2px 32px;
+            `}
+            variant="contained"
             color="secondary"
             onClick={() => {
               setActiveFilters([]);
@@ -60,6 +91,17 @@ export const DeleteFiltersDialog = () => {
             }}
           >
             Oui
+          </Button>
+          <Button
+            css={css`
+              border-radius: 40px;
+              padding: 2px 32px;
+            `}
+            variant="outlined"
+            color="secondary"
+            onClick={() => setOpenDialog(false)}
+          >
+            Non
           </Button>
         </DialogActions>
       </Dialog>

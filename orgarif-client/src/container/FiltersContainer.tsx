@@ -1,6 +1,9 @@
 /** @jsxImportSource @emotion/react */
 import { css } from '@emotion/react';
+import { DeleteOutlined } from '@mui/icons-material';
 import ArrowForwardIosSharpIcon from '@mui/icons-material/ArrowForwardIosSharp';
+import UnfoldLessIcon from '@mui/icons-material/UnfoldLess';
+import UnfoldMoreIcon from '@mui/icons-material/UnfoldMore';
 import { Box, Button, Stack } from '@mui/material';
 import MuiAccordion, { AccordionProps } from '@mui/material/Accordion';
 import MuiAccordionDetails from '@mui/material/AccordionDetails';
@@ -26,7 +29,7 @@ export const FiltersContainer = () => {
   const [secteurs] = useRecoilState(state.secteurs);
   const [natureJuridiques] = useRecoilState(state.natureJuridiques);
   const [typeStructures] = useRecoilState(state.typeStructures);
-  const [activeFilters] = useRecoilState(state.activeFilters);
+  const [activeFilters, setActiveFilters] = useRecoilState(state.activeFilters);
   const setIsShrink = useSetRecoilState(state.headerShrinked);
   const [shrinkSectionFilters, setShrinkSectionFilters] = useRecoilState(
     state.filtersSectionShrinked
@@ -99,6 +102,33 @@ export const FiltersContainer = () => {
           {isTabletAndMore() && !expandedAccordion && activeFilters && (
             <MinimizedFilters />
           )}
+
+          {isTabletAndMore() && activeFilters.length > 0 && (
+            <Button
+              variant="contained"
+              color="inherit"
+              size="small"
+              css={css`
+                background-color: ${colors.white};
+                color: ${colors.dark};
+                right: 0;
+                border-radius: 50px;
+                min-width: max-content;
+                align-self: center;
+                margin-left: auto;
+                padding: 0 1rem;
+                box-shadow: 0px 5px 10px 0px rgba(191, 191, 191, 0.4);
+              `}
+              component="button"
+              onClick={(e: any) => {
+                e.stopPropagation();
+                setActiveFilters([]);
+              }}
+            >
+              Effacer les filtres
+              <DeleteOutlined sx={{ fontSize: 16, marginLeft: '5px' }} />
+            </Button>
+          )}
         </AccordionSummary>
 
         {isMobile() && (
@@ -120,17 +150,40 @@ export const FiltersContainer = () => {
               size="small"
               color="secondary"
               css={css`
-                max-height: 2em;
-                align-self: center;
-                margin-left: 0.6em;
-                width: 95%;
+                background-color: ${colors.white};
+                color: ${colors.dark};
+                border-radius: 50px;
+                padding: 0 1rem;
+                height: 30px;
+                box-shadow: 0px 5px 10px 0px rgba(191, 191, 191, 0.4);
+                width: 100%;
+                &:focus,
+                :active {
+                  background-color: ${colors.white};
+                  box-shadow: 0px 5px 10px 0px rgba(191, 191, 191, 0.4);
+                }
               `}
               component="button"
               onClick={() => setHideExtraFilters(!hideExtraFilters)}
             >
-              {hideExtraFilters
-                ? 'Afficher plus de filtres'
-                : 'Cacher les filtres'}
+              {hideExtraFilters ? 'Afficher les filtres' : 'Cacher les filtres'}
+              {hideExtraFilters ? (
+                <UnfoldMoreIcon
+                  sx={{
+                    fontSize: 20,
+                    transform: 'rotate(45deg)',
+                    marginLeft: '8px'
+                  }}
+                />
+              ) : (
+                <UnfoldLessIcon
+                  sx={{
+                    fontSize: 20,
+                    transform: 'rotate(45deg)',
+                    marginLeft: '8px'
+                  }}
+                />
+              )}
             </Button>
             {activeFilters.length > 0 && <DeleteFiltersDialog />}
           </AccordionDetails>
@@ -155,17 +208,35 @@ export const FiltersContainer = () => {
                 <FilterSection label="type de structure" standalone={true} />
                 <Button
                   variant="contained"
+                  color="inherit"
                   size="small"
-                  color="secondary"
                   css={css`
+                    background-color: ${colors.white};
+                    color: ${colors.dark};
+                    border-radius: 50px;
                     max-height: 2em;
+                    min-width: max-content;
                     align-self: center;
                     margin-left: 2em;
+                    padding: 0 2rem;
+                    margin-top: 5px;
+                    box-shadow: 0px 5px 10px 0px rgba(191, 191, 191, 0.4);
                   `}
                   component="button"
                   onClick={() => setHideExtraFilters(!hideExtraFilters)}
                 >
-                  Afficher les détails
+                  Afficher les filtres
+                  {hideExtraFilters ? (
+                    <UnfoldMoreIcon
+                      sx={{
+                        fontSize: 16,
+                        transform: 'rotate(45deg)',
+                        marginLeft: '5px'
+                      }}
+                    />
+                  ) : (
+                    <UnfoldLessIcon sx={{ fontSize: 12 }} />
+                  )}
                 </Button>
               </Stack>
             </Collapse>
@@ -220,7 +291,11 @@ const Accordion = styled((props: AccordionProps) => (
 
 const AccordionSummary = styled((props: AccordionSummaryProps) => (
   <MuiAccordionSummary
-    expandIcon={<ArrowForwardIosSharpIcon sx={{ fontSize: '0.9rem' }} />}
+    expandIcon={
+      <ArrowForwardIosSharpIcon
+        sx={{ fontSize: '0.9rem', color: colors.dark }}
+      />
+    }
     {...props}
   />
 ))(({ theme }) => ({
@@ -243,6 +318,7 @@ const AccordionSummary = styled((props: AccordionSummaryProps) => (
     marginRight: theme.spacing(4),
     flexGrow: 1,
     alignItems: 'center',
+    justifyContent: 'space-between',
 
     [theme.breakpoints.down('md')]: { justifyContent: 'center' }
   }

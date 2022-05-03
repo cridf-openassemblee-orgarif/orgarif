@@ -96,14 +96,20 @@ export const MobileSelectFilters = ({
     <FormControl
       css={css`
         width: 100%;
-        margin: 0.5em auto;
+        margin: 0.4em auto;
+        & .MuiOutlinedInput-notchedOutline {
+          padding: 0 10px 0 14px;
+        }
       `}
     >
       <InputLabel
         id="multiple-chip-label"
         css={css`
-          ::first-letter {
-            text-transform: capitalize;
+          font-size: 0.75rem;
+          text-transform: uppercase;
+          top: 2px;
+          &.MuiFormLabel-root.MuiInputLabel-root[data-shrink='true'] {
+            transform: translate(20px, -8px) scale(0.75);
           }
         `}
       >
@@ -124,6 +130,9 @@ export const MobileSelectFilters = ({
           </Box>
         )}
         MenuProps={MenuProps}
+        css={css`
+          border-radius: 20px;
+        `}
       >
         {data.map(
           (el: Departement | NatureJuridique | Secteur | TypeStructure) => (
@@ -165,7 +174,7 @@ const ITEM_PADDING_TOP = 8;
 const MenuProps = {
   PaperProps: {
     style: {
-      maxHeight: ITEM_HEIGHT * 7.5 + ITEM_PADDING_TOP,
+      maxHeight: ITEM_HEIGHT * 9.5 + ITEM_PADDING_TOP,
       width: '90%',
       minWidth: '300px'
     }

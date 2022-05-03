@@ -1,5 +1,6 @@
 /** @jsxImportSource @emotion/react */
 import { css } from '@emotion/react';
+import { DeleteForever } from '@mui/icons-material';
 import StarIcon from '@mui/icons-material/Star';
 import StarOutline from '@mui/icons-material/StarOutline';
 import { Checkbox, Chip, Tooltip } from '@mui/material';
@@ -89,14 +90,14 @@ export const TableContainer = () => {
         css={css`
           height: calc(100vh - 72px);
           width: 100%;
-          padding: 0px;
+          padding: 0px 8px;
 
           @media (${breakpoint.TABLET}) {
             padding: 0px 24px;
           }
 
           @media (${breakpoint.LAPTOP}) {
-            height: calc(100vh - 215px);
+            height: calc(100vh - 209px);
             padding: 0px 48px;
           }
         `}
@@ -310,7 +311,7 @@ const HeaderChip = styled(Chip)(({ theme }) => ({
 
 // TODO - missing logic to store/send to user selection
 const HeaderChipWithState = () => {
-  const [userSelection] = useRecoilState(state.userSelection);
+  const [userSelection, setUserSelection] = useRecoilState(state.userSelection);
 
   return (
     <>
@@ -330,6 +331,18 @@ const HeaderChipWithState = () => {
           }
         `}
       />
+      {userSelection.length > 0 && (
+        <Tooltip title="Effacer la sélection">
+          <DeleteForever
+            fontSize="small"
+            css={css`
+              position: absolute;
+              right: -16px;
+            `}
+            onClick={() => setUserSelection([])}
+          />
+        </Tooltip>
+      )}
     </>
   );
 };
@@ -531,5 +544,8 @@ const overrideStyleGrid = {
   '& .MuiDataGrid-columnHeadersInner': {
     transform:
       'none !important' /* Firefox fix to prevent chips layout from being altered */
+  },
+  '& .MuiDataGrid-columnHeaders': {
+    borderBottom: 'none'
   }
 };

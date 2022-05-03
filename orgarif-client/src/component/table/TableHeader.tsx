@@ -24,7 +24,7 @@ export const TableHeader = ({ onSearch }: TableHeaderProps) => {
         padding: 8px 8px;
         border-top: 1px solid ${colors.dark};
         border-bottom: 1px solid ${colors.dark};
-        margin-bottom: 1em;
+        margin-bottom: 0.5em;
 
         @media (${breakpoint.TABLET}) {
           flex-direction: row;

@@ -6,13 +6,13 @@ const orgarifTheme = {
   palette: {
     type: 'light',
     primary: {
-      main: 'hsl(1, 80%, 53%)'
+      main: 'hsl(1, 100%, 51%)'
     },
     secondary: {
       main: 'hsl(0, 0%, 6%)'
     },
     error: {
-      main: 'hsl(1, 80%, 53%)'
+      main: 'hsl(1, 100%, 51%)'
     },
     background: {
       default: 'hsl(0, 0%, 96%)'
@@ -98,7 +98,8 @@ const orgarifTheme = {
       styleOverrides: {
         root: {
           '&.Mui-focused .MuiOutlinedInput-notchedOutline': {
-            borderColor: colors.dark
+            borderColor: colors.dark,
+            borderWidth: '1px'
           }
         }
       }
@@ -114,14 +115,35 @@ const orgarifTheme = {
       styleOverrides: {
         root: {
           '&.Mui-selected': {
-            backgroundColor: colors.errorRed,
+            backgroundColor: colors.grey2,
             color: colors.white,
+            '&::after': {
+              content: "'\\2715'",
+              position: 'absolute',
+              width: 'auto',
+              height: 'auto',
+              right: '12px',
+              top: '17px',
+              fontSize: '10px'
+            },
             '&:hover': {
-              backgroundColor: colors.errorRed,
+              backgroundColor: colors.grey2,
               color: colors.white
             },
             '@media (hover: none)': {
-              backgroundColor: `${colors.errorRed} !important`
+              backgroundColor: `${colors.grey2} !important`
+            }
+          }
+        }
+      }
+    },
+
+    MuiButton: {
+      styleOverrides: {
+        contained: {
+          '@media (hover: none)': {
+            '&:hover': {
+              backgroundColor: `${colors.white} !important`
             }
           }
         }

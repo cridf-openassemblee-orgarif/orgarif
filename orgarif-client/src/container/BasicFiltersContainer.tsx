@@ -1,20 +1,23 @@
 /** @jsxImportSource @emotion/react */
 import { css } from '@emotion/react';
+import UnfoldLessIcon from '@mui/icons-material/UnfoldLess';
+import UnfoldMoreIcon from '@mui/icons-material/UnfoldMore';
 import { Box, Button, Fade, Stack } from '@mui/material';
 import Collapse from '@mui/material/Collapse';
 import * as React from 'react';
 import { useNavigate } from 'react-router-dom';
-import { useRecoilState } from 'recoil';
+import { useRecoilState, useSetRecoilState } from 'recoil';
 import { FilterSection } from '../component/filters/FilterSection';
 import { state } from '../state/state';
 import * as breakpoint from '../styles/breakpoints';
+import { colors } from '../styles/colors';
 
 export const BasicFiltersContainer = () => {
   const [departements] = useRecoilState(state.departements);
   const [secteurs] = useRecoilState(state.secteurs);
   const [natureJuridiques] = useRecoilState(state.natureJuridiques);
   const [typeStructures] = useRecoilState(state.typeStructures);
-  const [shrinkSectionFilters, setShrinkSectionFilters] = useRecoilState(
+  const setShrinkSectionFilters = useSetRecoilState(
     state.filtersSectionShrinked
   );
 
@@ -48,17 +51,34 @@ export const BasicFiltersContainer = () => {
             <FilterSection label="type de structure" standalone={true} />
             <Button
               variant="contained"
+              color="inherit"
               size="small"
-              color="secondary"
               css={css`
+                background-color: ${colors.white};
+                color: ${colors.dark};
+                border-radius: 50px;
                 max-height: 2em;
                 align-self: center;
                 margin-left: 2em;
+                padding: 0 2rem;
+                margin-top: 5px;
+                box-shadow: 0px 5px 10px 0px rgba(191, 191, 191, 0.4);
               `}
               component="button"
               onClick={() => setHideExtraFilters(!hideExtraFilters)}
             >
-              Afficher les détails
+              Afficher les filtres
+              {hideExtraFilters ? (
+                <UnfoldMoreIcon
+                  sx={{
+                    fontSize: 16,
+                    transform: 'rotate(45deg)',
+                    marginLeft: '5px'
+                  }}
+                />
+              ) : (
+                <UnfoldLessIcon sx={{ fontSize: 12 }} />
+              )}
             </Button>
           </Stack>
         </Collapse>
@@ -104,7 +124,12 @@ export const BasicFiltersContainer = () => {
         `}
       >
         <Fade timeout={2000} in={true}>
-          <Button variant="outlined" color="secondary" onClick={handleClick}>
+          <Button
+            variant="outlined"
+            color="secondary"
+            onClick={handleClick}
+            sx={{ borderRadius: '50px' }}
+          >
             Afficher tous les organismes
           </Button>
         </Fade>
