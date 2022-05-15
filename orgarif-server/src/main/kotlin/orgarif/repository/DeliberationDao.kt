@@ -38,14 +38,16 @@ class DeliberationDao(val jooq: DSLContext) {
     }
 
     fun fetch(id: DeliberationId) =
-        jooq.selectFrom(DELIBERATION)
+        jooq
+            .selectFrom(DELIBERATION)
             .where(DELIBERATION.ID.equal(id.rawId))
             .fetchOne()
             ?.let(this::map)
             ?: throw IllegalArgumentException("$id")
 
     fun search(searchToken: String): List<Record> =
-        jooq.selectFrom(DELIBERATION)
+        jooq
+            .selectFrom(DELIBERATION)
             .where(DELIBERATION.SEARCH_LIBELLE.like("%$searchToken%"))
             .fetch()
             .map(this::map)

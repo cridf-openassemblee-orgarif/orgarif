@@ -37,7 +37,8 @@ class DepartementDao(val jooq: DSLContext) {
     fun fetchAll() = jooq.selectFrom(DEPARTEMENT).fetch().map(this::map)
 
     fun update(id: DepartementId, libelle: String, code: String, modificationDate: Instant) {
-        jooq.update(DEPARTEMENT)
+        jooq
+            .update(DEPARTEMENT)
             .set(DEPARTEMENT.LIBELLE, libelle)
             .set(DEPARTEMENT.CODE, code)
             .set(DEPARTEMENT.LAST_MODIFICATION_DATE, modificationDate)
@@ -46,7 +47,8 @@ class DepartementDao(val jooq: DSLContext) {
     }
 
     fun updateStatus(id: DepartementId, status: ItemStatus, modificationDate: Instant) {
-        jooq.update(DEPARTEMENT)
+        jooq
+            .update(DEPARTEMENT)
             .set(DEPARTEMENT.STATUS, status.name)
             .set(DEPARTEMENT.LAST_MODIFICATION_DATE, modificationDate)
             .where(DEPARTEMENT.ID.equal(id.rawId))

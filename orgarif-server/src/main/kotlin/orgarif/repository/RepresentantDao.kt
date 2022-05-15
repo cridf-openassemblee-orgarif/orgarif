@@ -46,26 +46,30 @@ class RepresentantDao(val jooq: DSLContext) {
                 it.searchNom = OrgarifStringUtils.cleanForSearch(nom)
                 it.lastModificationDate = lastModificationDate
             }
-        jooq.update(REPRESENTANT)
+        jooq
+            .update(REPRESENTANT)
             .set(record)
             .where(REPRESENTANT.ELU_ID.equal(eluId.rawId))
             .execute()
     }
 
     fun fetch(id: RepresentantId) =
-        jooq.selectFrom(REPRESENTANT)
+        jooq
+            .selectFrom(REPRESENTANT)
             .where(REPRESENTANT.ID.equal(id.rawId))
             .fetchOne()
             ?.let(this::map)
 
     fun fetch(ids: Set<RepresentantId>): List<Record> =
-        jooq.selectFrom(REPRESENTANT)
+        jooq
+            .selectFrom(REPRESENTANT)
             .where(REPRESENTANT.ID.`in`(ids.map { it.rawId }))
             .fetch()
             .map(this::map)
 
     fun search(searchToken: String): List<Record> =
-        jooq.selectFrom(REPRESENTANT)
+        jooq
+            .selectFrom(REPRESENTANT)
             .where(REPRESENTANT.SEARCH_PRENOM.like("%$searchToken%"))
             .or(REPRESENTANT.SEARCH_NOM.like("%$searchToken%"))
             .fetch()

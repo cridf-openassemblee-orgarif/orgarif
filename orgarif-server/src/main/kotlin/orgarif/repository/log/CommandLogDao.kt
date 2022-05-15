@@ -49,7 +49,8 @@ class CommandLogDao(val jooq: DSLContext) {
     }
 
     fun updateExceptionStackTrace(id: CommandLogId, exceptionStackTrace: String, endDate: Instant) {
-        jooq.update(COMMAND_LOG)
+        jooq
+            .update(COMMAND_LOG)
             .set(COMMAND_LOG.EXCEPTION_STACK_TRACE, exceptionStackTrace)
             .set(COMMAND_LOG.END_DATE, endDate)
             .where(COMMAND_LOG.ID.equal(id.rawId))
@@ -63,7 +64,8 @@ class CommandLogDao(val jooq: DSLContext) {
         jsonResult: String?,
         endDate: Instant
     ) {
-        jooq.update(COMMAND_LOG)
+        jooq
+            .update(COMMAND_LOG)
             .also {
                 if (user != null) {
                     it.set(COMMAND_LOG.USER_ID, user.first.rawId)

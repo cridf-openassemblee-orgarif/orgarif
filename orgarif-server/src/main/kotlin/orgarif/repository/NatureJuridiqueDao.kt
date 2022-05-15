@@ -35,7 +35,8 @@ class NatureJuridiqueDao(val jooq: DSLContext) {
     fun fetchAll() = jooq.selectFrom(NATURE_JURIDIQUE).fetch().map(this::map)
 
     fun updateLibelle(id: NatureJuridiqueId, libelle: String, modificationDate: Instant) {
-        jooq.update(NATURE_JURIDIQUE)
+        jooq
+            .update(NATURE_JURIDIQUE)
             .set(NATURE_JURIDIQUE.LIBELLE, libelle)
             .set(NATURE_JURIDIQUE.LAST_MODIFICATION_DATE, modificationDate)
             .where(NATURE_JURIDIQUE.ID.equal(id.rawId))
@@ -43,7 +44,8 @@ class NatureJuridiqueDao(val jooq: DSLContext) {
     }
 
     fun updateStatus(id: NatureJuridiqueId, status: ItemStatus, modificationDate: Instant) {
-        jooq.update(NATURE_JURIDIQUE)
+        jooq
+            .update(NATURE_JURIDIQUE)
             .set(NATURE_JURIDIQUE.STATUS, status.name)
             .set(NATURE_JURIDIQUE.LAST_MODIFICATION_DATE, modificationDate)
             .where(NATURE_JURIDIQUE.ID.equal(id.rawId))

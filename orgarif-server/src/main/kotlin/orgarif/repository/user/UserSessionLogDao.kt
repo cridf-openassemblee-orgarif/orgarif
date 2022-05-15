@@ -37,7 +37,8 @@ class UserSessionLogDao(val jooq: DSLContext) {
     }
 
     fun fetchIdsByUserId(userId: UserId): List<UserSessionId> =
-        jooq.select(USER_SESSION_LOG.ID)
+        jooq
+            .select(USER_SESSION_LOG.ID)
             .from(USER_SESSION_LOG)
             .where(USER_SESSION_LOG.USER_ID.equal(userId.rawId))
             .fetch()

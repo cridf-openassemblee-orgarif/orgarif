@@ -83,8 +83,7 @@ class InitializationService(
 
     fun databaseIfEmpty(datasource: DataSource): Boolean {
         val r =
-            datasource
-                .connection
+            datasource.connection
                 .createStatement()
                 .executeQuery(
                     "SELECT * FROM pg_catalog.pg_tables WHERE schemaname != 'pg_catalog' AND schemaname != 'information_schema';")

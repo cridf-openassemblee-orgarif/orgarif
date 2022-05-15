@@ -16,11 +16,15 @@ object OrgarifSerializationPrefixUtils {
             ?: ""
 
     fun removePrefix(itemClass: KClass<*>, value: String) =
-        itemClass.annotations.mapNotNull { it as? Prefix }.firstOrNull()?.value?.let { prefix ->
-            if (!value.startsWith(prefix)) {
-                throw IllegalArgumentException("Missing id prefix $prefix on $itemClass : $value")
+        itemClass.annotations
+            .mapNotNull { it as? Prefix }
+            .firstOrNull()
+            ?.value?.let { prefix ->
+                if (!value.startsWith(prefix)) {
+                    throw IllegalArgumentException(
+                        "Missing id prefix $prefix on $itemClass : $value")
+                }
+                value.substring(prefix.length + 1)
             }
-            value.substring(prefix.length + 1)
-        }
             ?: value
 }

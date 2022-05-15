@@ -43,13 +43,15 @@ class InstanceDao(val jooq: DSLContext) {
         jooq.selectFrom(INSTANCE).where(INSTANCE.ID.equal(id.rawId)).fetchOne()?.let(this::map)
 
     fun fetchByOrganismeId(organismeId: OrganismeId) =
-        jooq.selectFrom(INSTANCE)
+        jooq
+            .selectFrom(INSTANCE)
             .where(INSTANCE.ORGANISME_ID.equal(organismeId.rawId))
             .fetch()
             .map(this::map)
 
     fun updateNom(id: InstanceId, nom: String, modificationDate: Instant) {
-        jooq.update(INSTANCE)
+        jooq
+            .update(INSTANCE)
             .set(INSTANCE.NOM, nom)
             .set(INSTANCE.LAST_MODIFICATION_DATE, modificationDate)
             .where(INSTANCE.ID.equal(id.rawId))
@@ -57,7 +59,8 @@ class InstanceDao(val jooq: DSLContext) {
     }
 
     fun updateNombreRepresentants(id: InstanceId, nombre: Int, modificationDate: Instant) {
-        jooq.update(INSTANCE)
+        jooq
+            .update(INSTANCE)
             .set(INSTANCE.NOMBRE_REPRESENTANTS, nombre)
             .set(INSTANCE.LAST_MODIFICATION_DATE, modificationDate)
             .where(INSTANCE.ID.equal(id.rawId))
@@ -69,7 +72,8 @@ class InstanceDao(val jooq: DSLContext) {
         presenceSuppleants: Boolean,
         modificationDate: Instant
     ) {
-        jooq.update(INSTANCE)
+        jooq
+            .update(INSTANCE)
             .set(INSTANCE.PRESENCE_SUPPLEANTS, presenceSuppleants)
             .set(INSTANCE.LAST_MODIFICATION_DATE, modificationDate)
             .where(INSTANCE.ID.equal(id.rawId))
@@ -77,7 +81,8 @@ class InstanceDao(val jooq: DSLContext) {
     }
 
     fun updateStatus(id: InstanceId, status: ItemStatus, modificationDate: Instant) {
-        jooq.update(INSTANCE)
+        jooq
+            .update(INSTANCE)
             .set(INSTANCE.STATUS, status.name)
             .set(INSTANCE.LAST_MODIFICATION_DATE, modificationDate)
             .where(INSTANCE.ID.equal(id.rawId))

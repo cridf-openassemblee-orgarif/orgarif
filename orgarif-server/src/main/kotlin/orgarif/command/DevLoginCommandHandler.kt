@@ -20,7 +20,8 @@ class DevLoginCommandHandler(
         response: HttpServletResponse
     ): DevLoginCommandResponse {
         val mail = devInitialDataInjectorService.devUserMail(command.username)
-        return loginCommandHandler.handle(
+        return loginCommandHandler
+            .handle(
                 LoginCommand(mail, PlainStringPassword(command.username)),
                 userSession,
                 request,

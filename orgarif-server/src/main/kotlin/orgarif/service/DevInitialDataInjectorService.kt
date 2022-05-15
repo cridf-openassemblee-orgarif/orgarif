@@ -204,30 +204,16 @@ class DevInitialDataInjectorService(
                 fakeOrganismeId2 to fakeInstanceId1,
                 fakeOrganismeId2 to fakeInstanceId2)
             .forEach { (organismeId, instanceId) ->
-                (1..nombreRepresentants).map { i.getAndIncrement() }.forEachIndexed { index, incr ->
-                    designationDao.insert(
-                        DesignationDao.Record(
-                            id = randomService.id(),
-                            representantId = representantByEluId.getValue(elus.get(incr).id).id,
-                            organismeId = organismeId,
-                            instanceId = instanceId,
-                            type = DesignationType.representant,
-                            position = index,
-                            startDate = null,
-                            endDate = null,
-                            status = ItemStatus.live,
-                            creationDate = now,
-                            lastModificationDate = now))
-                }
-                (1..nombreRepresentants).map { i.getAndIncrement() }.forEachIndexed { index, incr ->
-                    if (incr % 2 == 0) {
+                (1..nombreRepresentants)
+                    .map { i.getAndIncrement() }
+                    .forEachIndexed { index, incr ->
                         designationDao.insert(
                             DesignationDao.Record(
                                 id = randomService.id(),
                                 representantId = representantByEluId.getValue(elus.get(incr).id).id,
                                 organismeId = organismeId,
                                 instanceId = instanceId,
-                                type = DesignationType.suppleant,
+                                type = DesignationType.representant,
                                 position = index,
                                 startDate = null,
                                 endDate = null,
@@ -235,7 +221,26 @@ class DevInitialDataInjectorService(
                                 creationDate = now,
                                 lastModificationDate = now))
                     }
-                }
+                (1..nombreRepresentants)
+                    .map { i.getAndIncrement() }
+                    .forEachIndexed { index, incr ->
+                        if (incr % 2 == 0) {
+                            designationDao.insert(
+                                DesignationDao.Record(
+                                    id = randomService.id(),
+                                    representantId =
+                                        representantByEluId.getValue(elus.get(incr).id).id,
+                                    organismeId = organismeId,
+                                    instanceId = instanceId,
+                                    type = DesignationType.suppleant,
+                                    position = index,
+                                    startDate = null,
+                                    endDate = null,
+                                    status = ItemStatus.live,
+                                    creationDate = now,
+                                    lastModificationDate = now))
+                        }
+                    }
             }
     }
 

@@ -35,7 +35,8 @@ class TypeStructureDao(val jooq: DSLContext) {
     fun fetchAll() = jooq.selectFrom(TYPE_STRUCTURE).fetch().map(this::map)
 
     fun updateLibelle(id: TypeStructureId, libelle: String, modificationDate: Instant) {
-        jooq.update(TYPE_STRUCTURE)
+        jooq
+            .update(TYPE_STRUCTURE)
             .set(TYPE_STRUCTURE.LIBELLE, libelle)
             .set(TYPE_STRUCTURE.LAST_MODIFICATION_DATE, modificationDate)
             .where(TYPE_STRUCTURE.ID.equal(id.rawId))
@@ -43,7 +44,8 @@ class TypeStructureDao(val jooq: DSLContext) {
     }
 
     fun updateStatus(id: TypeStructureId, status: ItemStatus, modificationDate: Instant) {
-        jooq.update(TYPE_STRUCTURE)
+        jooq
+            .update(TYPE_STRUCTURE)
             .set(TYPE_STRUCTURE.STATUS, status.name)
             .set(TYPE_STRUCTURE.LAST_MODIFICATION_DATE, modificationDate)
             .where(TYPE_STRUCTURE.ID.equal(id.rawId))

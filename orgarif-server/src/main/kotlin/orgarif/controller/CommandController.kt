@@ -271,6 +271,6 @@ class CommandController(
             is UpdateSecteurStatusCommand -> updateSecteurStatusCommandHandler
             is UpdateTypeStructureLibelleCommand -> updateTypeStructureLibelleCommandHandler
             is UpdateTypeStructureStatusCommand -> updateTypeStructureStatusCommandHandler
-        } as
-            CommandHandler<Command, CommandResponse>
+        }
+            as CommandHandler<Command, CommandResponse>
 }

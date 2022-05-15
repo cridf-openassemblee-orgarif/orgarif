@@ -31,7 +31,8 @@ class DeploymentLogDao(val jooq: DSLContext) {
     }
 
     fun updateShutdownTime(id: DeploymentLogId, shutdownDate: Instant) =
-        jooq.update(DEPLOYMENT_LOG)
+        jooq
+            .update(DEPLOYMENT_LOG)
             .set(DEPLOYMENT_LOG.SHUTDOWN_DATE, shutdownDate)
             .where(DEPLOYMENT_LOG.ID.equal(id.rawId))
             .execute()

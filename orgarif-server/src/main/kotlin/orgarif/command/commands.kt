@@ -117,10 +117,8 @@ data class UpdateDesignationDatesCommand(
     val endDate: LocalDate?,
 ) : Command()
 
-data class UpdateDesignationStatusCommand(
-    val id: DesignationId,
-    val status: ItemStatus
-) : Command()
+data class UpdateDesignationStatusCommand(val id: DesignationId, val status: ItemStatus) :
+    Command()
 
 data class UpdateInstanceNombreRepresentantsCommand(val instanceId: InstanceId, val nombre: Int) :
     Command()

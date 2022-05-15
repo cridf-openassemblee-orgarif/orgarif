@@ -53,6 +53,6 @@ class QueryController(
             is ListOrganismesQuery -> listOrganismesQueryHandler
             is SearchDeliberationQuery -> searchDeliberationQueryHandler
             is SearchRepresentantsQuery -> searchRepresentantsQueryHandler
-        } as
-            QueryHandler<Query, QueryResponse>
+        }
+            as QueryHandler<Query, QueryResponse>
 }

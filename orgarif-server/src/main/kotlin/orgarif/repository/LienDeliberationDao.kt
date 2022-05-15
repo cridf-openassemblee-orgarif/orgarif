@@ -42,7 +42,8 @@ class LienDeliberationDao(val jooq: DSLContext) {
     }
 
     fun updateComment(id: LienDeliberationId, comment: String?, modificationDate: Instant) {
-        jooq.update(LIEN_DELIBERATION)
+        jooq
+            .update(LIEN_DELIBERATION)
             .set(LIEN_DELIBERATION.COMMENT, comment)
             .set(LIEN_DELIBERATION.LAST_MODIFICATION_DATE, modificationDate)
             .where(LIEN_DELIBERATION.ID.equal(id.rawId))
@@ -50,7 +51,8 @@ class LienDeliberationDao(val jooq: DSLContext) {
     }
 
     fun updateStatus(id: LienDeliberationId, status: ItemStatus, modificationDate: Instant) {
-        jooq.update(LIEN_DELIBERATION)
+        jooq
+            .update(LIEN_DELIBERATION)
             .set(LIEN_DELIBERATION.STATUS, status.name)
             .set(LIEN_DELIBERATION.LAST_MODIFICATION_DATE, modificationDate)
             .where(LIEN_DELIBERATION.ID.equal(id.rawId))

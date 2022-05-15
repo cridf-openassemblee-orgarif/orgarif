@@ -54,7 +54,8 @@ class UserDao(val jooq: DSLContext) {
 
     fun updateMail(id: UserId, mail: String, lastUpdateDate: Instant) {
         try {
-            jooq.update(APP_USER)
+            jooq
+                .update(APP_USER)
                 .set(APP_USER.MAIL, mail)
                 .set(APP_USER.LAST_UPDATE, lastUpdateDate)
                 .where(APP_USER.ID.equal(id.rawId))
@@ -76,7 +77,8 @@ class UserDao(val jooq: DSLContext) {
     }
 
     fun updatePassword(id: UserId, password: HashedPassword, lastUpdateDate: Instant) {
-        jooq.update(APP_USER)
+        jooq
+            .update(APP_USER)
             .set(APP_USER.PASSWORD, password.hash)
             .set(APP_USER.LAST_UPDATE, lastUpdateDate)
             .where(APP_USER.ID.equal(id.rawId))
@@ -84,7 +86,8 @@ class UserDao(val jooq: DSLContext) {
     }
 
     fun updateRoles(id: UserId, roles: Set<Role>, lastUpdateDate: Instant) {
-        jooq.update(APP_USER)
+        jooq
+            .update(APP_USER)
             .set(APP_USER.ROLES, roles.map { it.name }.toTypedArray())
             .set(APP_USER.LAST_UPDATE, lastUpdateDate)
             .where(APP_USER.ID.equal(id.rawId))
@@ -108,7 +111,8 @@ class UserDao(val jooq: DSLContext) {
         fetchOrNullByMail(mail).let { requireNotNull(it) { mail } }
 
     fun fetchPassword(id: UserId): HashedPassword =
-        jooq.select(APP_USER.PASSWORD)
+        jooq
+            .select(APP_USER.PASSWORD)
             .from(APP_USER)
             .where(APP_USER.ID.equal(id.rawId))
             .fetchOne()
@@ -117,7 +121,8 @@ class UserDao(val jooq: DSLContext) {
             .let { requireNotNull(it) { "$id" } }
 
     fun fetchMail(id: UserId): String =
-        jooq.select(APP_USER.MAIL)
+        jooq
+            .select(APP_USER.MAIL)
             .from(APP_USER)
             .where(APP_USER.ID.equal(id.rawId))
             .fetchOne()

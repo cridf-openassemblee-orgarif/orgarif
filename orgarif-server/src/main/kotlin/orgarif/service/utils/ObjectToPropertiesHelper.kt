@@ -87,7 +87,7 @@ object ObjectToPropertiesHelper {
 
     @TestOnly
     fun prepareTest(properties: List<Pair<String, String>>) =
-        properties.map { (key, value) -> "  \"${key}\" to \"${value}\"," }.reduce { acc, s ->
-            "$acc\n$s"
-        }
+        properties
+            .map { (key, value) -> "  \"${key}\" to \"${value}\"," }
+            .reduce { acc, s -> "$acc\n$s" }
 }

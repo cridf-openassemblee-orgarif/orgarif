@@ -50,7 +50,8 @@ class DesignationDao(val jooq: DSLContext) {
     }
 
     fun fetch(id: DesignationId) =
-        jooq.selectFrom(DESIGNATION)
+        jooq
+            .selectFrom(DESIGNATION)
             .where(DESIGNATION.ID.equal(id.rawId))
             .fetchOne()
             ?.let(this::map)
@@ -60,7 +61,8 @@ class DesignationDao(val jooq: DSLContext) {
         endDate: LocalDate?,
         status: ItemStatus
     ) =
-        jooq.selectFrom(DESIGNATION)
+        jooq
+            .selectFrom(DESIGNATION)
             .where(DESIGNATION.ORGANISME_ID.equal(organismeId.rawId))
             .let {
                 if (endDate != null) {
@@ -76,7 +78,8 @@ class DesignationDao(val jooq: DSLContext) {
     fun fetchAll() = jooq.selectFrom(DESIGNATION).fetch().map(this::map)
 
     fun updateDates(id: DesignationId, startDate: LocalDate?, endDate: LocalDate?, date: Instant) {
-        jooq.update(DESIGNATION)
+        jooq
+            .update(DESIGNATION)
             .set(DESIGNATION.START_DATE, startDate)
             .set(DESIGNATION.END_DATE, endDate)
             .set(DESIGNATION.LAST_MODIFICATION_DATE, date)
@@ -85,7 +88,8 @@ class DesignationDao(val jooq: DSLContext) {
     }
 
     fun updateStatus(id: DesignationId, status: ItemStatus, modificationDate: Instant) {
-        jooq.update(DESIGNATION)
+        jooq
+            .update(DESIGNATION)
             .set(DESIGNATION.STATUS, status.name)
             .set(DESIGNATION.LAST_MODIFICATION_DATE, modificationDate)
             .where(DESIGNATION.ID.equal(id.rawId))

@@ -34,32 +34,37 @@ class OrganismeService(
                 .fetchDeliberationByOrganismeId(id)
                 .groupBy { it.first.instanceId }
                 .mapValues {
-                    it.value.sortedByDescending { it.second.deliberationDate }.map {
-                        LienDeliberationDto(
-                            it.first.id,
-                            DeliberationDto(
-                                it.second.id, it.second.libelle, it.second.deliberationDate),
-                            it.first.comment)
-                    }
+                    it.value
+                        .sortedByDescending { it.second.deliberationDate }
+                        .map {
+                            LienDeliberationDto(
+                                it.first.id,
+                                DeliberationDto(
+                                    it.second.id, it.second.libelle, it.second.deliberationDate),
+                                it.first.comment)
+                        }
                 }
         val designationsMap = let {
             val designations =
-                designationDao.fetchByOrganismeIdEndDateAndStatus(organisme.id, null, ItemStatus.live)
+                designationDao.fetchByOrganismeIdEndDateAndStatus(
+                    organisme.id, null, ItemStatus.live)
             val representantById =
                 representantDao
                     .fetch(designations.map { it.representantId }.toSet())
                     .let { representantDtos(it) }
                     .associateBy { it.id }
-            designations.groupBy { it.type to it.instanceId }.mapValues {
-                it.value.associate {
-                    it.position to
-                        DesignationDto(
-                            it.id,
-                            representantById.getValue(it.representantId),
-                            it.startDate,
-                            it.endDate)
+            designations
+                .groupBy { it.type to it.instanceId }
+                .mapValues {
+                    it.value.associate {
+                        it.position to
+                            DesignationDto(
+                                it.id,
+                                representantById.getValue(it.representantId),
+                                it.startDate,
+                                it.endDate)
+                    }
                 }
-            }
         }
         val instances =
             instanceDao.fetchByOrganismeId(organisme.id).map {
@@ -96,9 +101,10 @@ class OrganismeService(
 
     fun representantDtos(representants: List<RepresentantDao.Record>): List<RepresentantDto> {
         val elus =
-            representants.mapNotNull { it.eluId }.let { eluDao.fetch(it.toSet()) }.associateBy {
-                it.id
-            }
+            representants
+                .mapNotNull { it.eluId }
+                .let { eluDao.fetch(it.toSet()) }
+                .associateBy { it.id }
         return representants.map {
             val elu = it.eluId?.let { elus.getValue(it) }
             RepresentantDto(

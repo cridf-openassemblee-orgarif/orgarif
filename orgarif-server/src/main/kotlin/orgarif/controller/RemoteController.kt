@@ -1,12 +1,11 @@
 package orgarif.controller
 
-import org.springframework.session.Session as SpringSession
-import orgarif.domain.Session as OrgarifSession
 import mu.KotlinLogging
 import org.jooq.DSLContext
 import org.springframework.beans.factory.annotation.Value
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken
 import org.springframework.security.core.context.SecurityContextImpl
+import org.springframework.session.Session as SpringSession
 import org.springframework.web.bind.annotation.PostMapping
 import org.springframework.web.bind.annotation.RequestMapping
 import org.springframework.web.bind.annotation.RequestParam
@@ -14,6 +13,7 @@ import org.springframework.web.bind.annotation.RestController
 import orgarif.config.SafeSessionRepository
 import orgarif.controller.RemoteController.Companion.remoteRoute
 import orgarif.domain.Role
+import orgarif.domain.Session as OrgarifSession
 import orgarif.domain.UserSession
 import orgarif.repository.DesignationDao
 import orgarif.repository.EluDao
@@ -65,17 +65,19 @@ class RemoteController(
                         val r = it.executeQuery("select session_id from spring_session")
                         jooq.fetch(r).map { it.getValue("session_id") as String }
                     }
-                sessionIds.mapNotNull { sessionRepository.findById(it) }.forEach { session ->
-                    val context = session.getAttribute<SecurityContextImpl>(SPRING_SECURITY_CONTEXT)
-                    val conversion =
-                        ((context.authentication as UsernamePasswordAuthenticationToken)
-                                .principal as
-                                OrgarifSession)
-                            .let { userSessionService.convert(it) }
-                    if (conversion.needsUpdate) {
-                        updateSession(session, conversion.session)
+                sessionIds
+                    .mapNotNull { sessionRepository.findById(it) }
+                    .forEach { session ->
+                        val context =
+                            session.getAttribute<SecurityContextImpl>(SPRING_SECURITY_CONTEXT)
+                        val conversion =
+                            ((context.authentication as UsernamePasswordAuthenticationToken)
+                                    .principal as OrgarifSession)
+                                .let { userSessionService.convert(it) }
+                        if (conversion.needsUpdate) {
+                            updateSession(session, conversion.session)
+                        }
                     }
-                }
             }
         }
 

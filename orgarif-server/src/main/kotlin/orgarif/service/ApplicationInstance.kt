@@ -27,7 +27,8 @@ class ApplicationInstance(
                 // for dev env environment, is set by OrgarifApplication
                 ?: System.getProperty("dev-env")
                 // -
-                )?.let { ApplicationEnvironment.valueOf(it) }
+                )
+                ?.let { ApplicationEnvironment.valueOf(it) }
             // for test environment
             ?: ApplicationEnvironment.test
     }

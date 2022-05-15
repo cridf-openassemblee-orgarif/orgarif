@@ -59,7 +59,8 @@ class MailLogDao(val jooq: DSLContext) {
     fun fetchAll(): List<Record> = jooq.selectFrom(MAIL_LOG).fetch().map(this::map)
 
     fun fetchOrNullContent(id: MailLogId): ContentPartialRecord? =
-        jooq.select(*contentPartialRecordFields)
+        jooq
+            .select(*contentPartialRecordFields)
             .from(MAIL_LOG)
             .where(MAIL_LOG.ID.equal(id.rawId))
             .fetchOne()
@@ -70,7 +71,8 @@ class MailLogDao(val jooq: DSLContext) {
         userId: UserId,
         mailReferences: List<MailReference>
     ): List<Record> =
-        jooq.selectFrom(MAIL_LOG)
+        jooq
+            .selectFrom(MAIL_LOG)
             .where(MAIL_LOG.USER_ID.equal(userId.rawId))
             .and(MAIL_LOG.REFERENCE.`in`(mailReferences.map { it.name }))
             .fetch()
@@ -80,7 +82,8 @@ class MailLogDao(val jooq: DSLContext) {
         userId: UserId,
         mailReferences: Set<MailReference>
     ): List<HistoryPartialRecord> =
-        jooq.select(*historyPartialRecordFields)
+        jooq
+            .select(*historyPartialRecordFields)
             .from(MAIL_LOG)
             .where(MAIL_LOG.USER_ID.equal(userId.rawId))
             .and(MAIL_LOG.REFERENCE.`in`(mailReferences.map { it.name }))
