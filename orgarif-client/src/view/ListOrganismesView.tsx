@@ -15,7 +15,12 @@ export const ListOrganismesView = () => {
   useEffect(() => {
     appContext
       .queryService()
-      .listOrganismesQuery()
+      .listOrganismesQuery({
+        departementIds: [],
+        natureJuridiqueIds: [],
+        secteurIds: [],
+        typeStructureIds: []
+      })
       .then(r => {
         setOrganismes(r.organismes);
       });

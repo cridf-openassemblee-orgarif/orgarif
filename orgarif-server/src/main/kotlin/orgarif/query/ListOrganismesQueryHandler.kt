@@ -11,5 +11,12 @@ class ListOrganismesQueryHandler(val organismeDao: OrganismeDao) :
 
     override fun handle(query: ListOrganismesQuery) =
         ListOrganismesQueryResponse(
-            organismeDao.fetchByStatus(ItemStatus.live).map { OrganismeListDto(it) })
+            organismeDao
+                .fetchByCategories(
+                    ItemStatus.live,
+                    query.departementIds,
+                    query.natureJuridiqueIds,
+                    query.secteurIds,
+                    query.typeStructureIds)
+                .map { OrganismeListDto(it) })
 }

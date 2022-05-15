@@ -8,7 +8,6 @@ object QueryConfiguration {
         when (query) {
             is GetOrganismeQuery -> null
             is IsMailAlreadyTakenQuery -> null
-            is ListOrganismesBySecteurQuery -> null
             is ListOrganismesQuery -> null
             is SearchDeliberationQuery -> Role.user
             is SearchRepresentantsQuery -> Role.user

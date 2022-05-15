@@ -4,8 +4,7 @@ import {
   GetOrganismeQueryResponse,
   IsMailAlreadyTakenQuery,
   IsMailAlreadyTakenQueryResponse,
-  ListOrganismesBySecteurQuery,
-  ListOrganismesBySecteurQueryResponse,
+  ListOrganismesQuery,
   ListOrganismesQueryResponse,
   SearchDeliberationQuery,
   SearchDeliberationQueryResponse,
@@ -24,13 +23,10 @@ export class QueryService {
   ): Promise<IsMailAlreadyTakenQueryResponse> =>
     this.query('IsMailAlreadyTakenQuery', query);
 
-  public listOrganismesBySecteurQuery = (
-    query: ListOrganismesBySecteurQuery
-  ): Promise<ListOrganismesBySecteurQueryResponse> =>
-    this.query('ListOrganismesBySecteurQuery', query);
-
-  public listOrganismesQuery = (): Promise<ListOrganismesQueryResponse> =>
-    this.query('ListOrganismesQuery');
+  public listOrganismesQuery = (
+    query: ListOrganismesQuery
+  ): Promise<ListOrganismesQueryResponse> =>
+    this.query('ListOrganismesQuery', query);
 
   public searchDeliberationQuery = (
     query: SearchDeliberationQuery

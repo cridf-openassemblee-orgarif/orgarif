@@ -23,8 +23,11 @@ export const ListOrganismesBySecteurView = ({
   useEffect(() => {
     appContext
       .queryService()
-      .listOrganismesBySecteurQuery({
-        secteurId: route.secteurId
+      .listOrganismesQuery({
+        departementIds: [],
+        natureJuridiqueIds: [],
+        secteurIds: [route.secteurId],
+        typeStructureIds: []
       })
       .then(r => {
         setOrganismes(r.organismes);

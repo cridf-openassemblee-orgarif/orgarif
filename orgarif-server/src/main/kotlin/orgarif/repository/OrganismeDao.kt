@@ -53,12 +53,54 @@ class OrganismeDao(val jooq: DSLContext) {
 
     fun fetch(id: OrganismeId) = fetchOrNull(id) ?: throw IllegalArgumentException("$id")
 
+    fun fetchByCategories(
+        status: ItemStatus,
+        departementIds: List<DepartementId>,
+        natureJuridiqueIds: List<NatureJuridiqueId>,
+        secteurIds: List<SecteurId>,
+        typeStructureIds: List<TypeStructureId>,
+    ) =
+        jooq
+            .selectFrom(ORGANISME)
+            .where(ORGANISME.STATUS.equal(status.name))
+            .let {
+                if (departementIds.isNotEmpty()) {
+                    it.and(ORGANISME.DEPARTEMENT_ID.`in`(departementIds.map { it.rawId }))
+                } else {
+                    it
+                }
+            }
+            .let {
+                if (natureJuridiqueIds.isNotEmpty()) {
+                    it.and(ORGANISME.NATURE_JURIDIQUE_ID.`in`(natureJuridiqueIds.map { it.rawId }))
+                } else {
+                    it
+                }
+            }
+            .let {
+                if (secteurIds.isNotEmpty()) {
+                    it.and(ORGANISME.SECTEUR_ID.`in`(secteurIds.map { it.rawId }))
+                } else {
+                    it
+                }
+            }
+            .let {
+                if (typeStructureIds.isNotEmpty()) {
+                    it.and(ORGANISME.TYPE_STRUCTURE_ID.`in`(typeStructureIds.map { it.rawId }))
+                } else {
+                    it
+                }
+            }
+            .fetch()
+            .map(this::map)
+
     fun updateDepartementId(
         id: OrganismeId,
         departementId: DepartementId?,
         modificationDate: Instant
     ) {
-        jooq.update(ORGANISME)
+        jooq
+            .update(ORGANISME)
             .set(ORGANISME.DEPARTEMENT_ID, departementId?.rawId)
             .set(ORGANISME.LAST_MODIFICATION_DATE, modificationDate)
             .where(ORGANISME.ID.equal(id.rawId))
@@ -70,7 +112,8 @@ class OrganismeDao(val jooq: DSLContext) {
         natureJuridiqueId: NatureJuridiqueId?,
         modificationDate: Instant
     ) {
-        jooq.update(ORGANISME)
+        jooq
+            .update(ORGANISME)
             .set(ORGANISME.NATURE_JURIDIQUE_ID, natureJuridiqueId?.rawId)
             .set(ORGANISME.LAST_MODIFICATION_DATE, modificationDate)
             .where(ORGANISME.ID.equal(id.rawId))
@@ -78,7 +121,8 @@ class OrganismeDao(val jooq: DSLContext) {
     }
 
     fun updateNom(id: OrganismeId, nom: String, modificationDate: Instant) {
-        jooq.update(ORGANISME)
+        jooq
+            .update(ORGANISME)
             .set(ORGANISME.NOM, nom)
             .set(ORGANISME.LAST_MODIFICATION_DATE, modificationDate)
             .where(ORGANISME.ID.equal(id.rawId))
@@ -86,7 +130,8 @@ class OrganismeDao(val jooq: DSLContext) {
     }
 
     fun updateNombreRepresentants(id: OrganismeId, nombre: Int, modificationDate: Instant) {
-        jooq.update(ORGANISME)
+        jooq
+            .update(ORGANISME)
             .set(ORGANISME.NOMBRE_REPRESENTANTS, nombre)
             .set(ORGANISME.LAST_MODIFICATION_DATE, modificationDate)
             .where(ORGANISME.ID.equal(id.rawId))
@@ -98,7 +143,8 @@ class OrganismeDao(val jooq: DSLContext) {
         presenceSuppleants: Boolean,
         modificationDate: Instant
     ) {
-        jooq.update(ORGANISME)
+        jooq
+            .update(ORGANISME)
             .set(ORGANISME.PRESENCE_SUPPLEANTS, presenceSuppleants)
             .set(ORGANISME.LAST_MODIFICATION_DATE, modificationDate)
             .where(ORGANISME.ID.equal(id.rawId))
@@ -106,7 +152,8 @@ class OrganismeDao(val jooq: DSLContext) {
     }
 
     fun updateSecteurId(id: OrganismeId, secteurId: SecteurId?, modificationDate: Instant) {
-        jooq.update(ORGANISME)
+        jooq
+            .update(ORGANISME)
             .set(ORGANISME.SECTEUR_ID, secteurId?.rawId)
             .set(ORGANISME.LAST_MODIFICATION_DATE, modificationDate)
             .where(ORGANISME.ID.equal(id.rawId))
@@ -114,7 +161,8 @@ class OrganismeDao(val jooq: DSLContext) {
     }
 
     fun updateStatus(id: OrganismeId, status: ItemStatus, modificationDate: Instant) {
-        jooq.update(ORGANISME)
+        jooq
+            .update(ORGANISME)
             .set(ORGANISME.STATUS, status.name)
             .set(ORGANISME.LAST_MODIFICATION_DATE, modificationDate)
             .where(ORGANISME.ID.equal(id.rawId))
@@ -126,47 +174,13 @@ class OrganismeDao(val jooq: DSLContext) {
         typeStructureId: TypeStructureId?,
         modificationDate: Instant
     ) {
-        jooq.update(ORGANISME)
+        jooq
+            .update(ORGANISME)
             .set(ORGANISME.TYPE_STRUCTURE_ID, typeStructureId?.rawId)
             .set(ORGANISME.LAST_MODIFICATION_DATE, modificationDate)
             .where(ORGANISME.ID.equal(id.rawId))
             .execute()
     }
-
-    fun fetchByStatus(status: ItemStatus) =
-        jooq.selectFrom(ORGANISME)
-            .where(ORGANISME.STATUS.equal(status.name))
-            .orderBy(ORGANISME.CREATION_DATE.desc())
-            .fetch()
-            .map(this::map)
-
-    fun fetchBySecteurId(secteurId: SecteurId) =
-        jooq.selectFrom(ORGANISME)
-            .where(ORGANISME.SECTEUR_ID.equal(secteurId.rawId))
-            .orderBy(ORGANISME.CREATION_DATE.desc())
-            .fetch()
-            .map(this::map)
-
-    fun countBySecteur(secteurId: SecteurId): Int =
-        jooq.selectCount()
-            .from(ORGANISME)
-            .where(ORGANISME.SECTEUR_ID.equal(secteurId.rawId))
-            .fetchSingle()
-            .value1()
-
-    fun countByNatureJuridique(natureJuridiqueId: NatureJuridiqueId): Int =
-        jooq.selectCount()
-            .from(ORGANISME)
-            .where(ORGANISME.NATURE_JURIDIQUE_ID.equal(natureJuridiqueId.rawId))
-            .fetchSingle()
-            .value1()
-
-    fun countByTypeStructure(typeStructureId: TypeStructureId): Int =
-        jooq.selectCount()
-            .from(ORGANISME)
-            .where(ORGANISME.TYPE_STRUCTURE_ID.equal(typeStructureId.rawId))
-            .fetchSingle()
-            .value1()
 
     private fun map(r: OrganismeRecord) =
         Record(

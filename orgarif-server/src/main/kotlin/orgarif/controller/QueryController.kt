@@ -8,8 +8,6 @@ import orgarif.query.GetOrganismeQuery
 import orgarif.query.GetOrganismeQueryHandler
 import orgarif.query.IsMailAlreadyTakenQuery
 import orgarif.query.IsMailAlreadyTakenQueryHandler
-import orgarif.query.ListOrganismesBySecteurQuery
-import orgarif.query.ListOrganismesBySecteurQueryHandler
 import orgarif.query.ListOrganismesQuery
 import orgarif.query.ListOrganismesQueryHandler
 import orgarif.query.Query
@@ -30,7 +28,6 @@ class QueryController(
     val userSessionService: UserSessionService,
     val getOrganismeQueryHandler: GetOrganismeQueryHandler,
     val isMailAlreadyTakenQueryHandler: IsMailAlreadyTakenQueryHandler,
-    val listOrganismesBySecteurQueryHandler: ListOrganismesBySecteurQueryHandler,
     val listOrganismesQueryHandler: ListOrganismesQueryHandler,
     val searchDeliberationQueryHandler: SearchDeliberationQueryHandler,
     val searchRepresentantsQueryHandler: SearchRepresentantsQueryHandler,
@@ -53,7 +50,6 @@ class QueryController(
         when (query) {
             is GetOrganismeQuery -> getOrganismeQueryHandler
             is IsMailAlreadyTakenQuery -> isMailAlreadyTakenQueryHandler
-            is ListOrganismesBySecteurQuery -> listOrganismesBySecteurQueryHandler
             is ListOrganismesQuery -> listOrganismesQueryHandler
             is SearchDeliberationQuery -> searchDeliberationQueryHandler
             is SearchRepresentantsQuery -> searchRepresentantsQueryHandler

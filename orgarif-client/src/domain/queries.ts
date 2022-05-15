@@ -1,4 +1,10 @@
-import { OrganismeId, SecteurId } from './ids';
+import {
+  DepartementId,
+  NatureJuridiqueId,
+  OrganismeId,
+  SecteurId,
+  TypeStructureId
+} from './ids';
 import {
   DeliberationDto,
   OrganismeDto,
@@ -22,12 +28,11 @@ export interface IsMailAlreadyTakenQueryResponse {
   alreadyTaken: boolean;
 }
 
-export interface ListOrganismesBySecteurQuery {
-  secteurId: SecteurId;
-}
-
-export interface ListOrganismesBySecteurQueryResponse {
-  organismes: OrganismeListDto[];
+export interface ListOrganismesQuery {
+  departementIds: DepartementId[];
+  natureJuridiqueIds: NatureJuridiqueId[];
+  secteurIds: SecteurId[];
+  typeStructureIds: TypeStructureId[];
 }
 
 export interface ListOrganismesQueryResponse {
