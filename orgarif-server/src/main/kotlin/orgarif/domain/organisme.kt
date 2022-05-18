@@ -59,13 +59,14 @@ data class InstanceDto(
 data class OrganismeListDto(
     val id: OrganismeId,
     val nom: String,
-    val secteurId: SecteurId?,
+    val departementId: DepartementId?,
     val natureJuridiqueId: NatureJuridiqueId?,
+    val secteurId: SecteurId?,
     val typeStructureId: TypeStructureId?
 ) {
     constructor(
         r: OrganismeDao.Record
-    ) : this(r.id, r.nom, r.secteurId, r.natureJuridiqueId, r.typeStructureId)
+    ) : this(r.id, r.nom, r.departementId, r.natureJuridiqueId, r.secteurId, r.typeStructureId)
 }
 
 data class OrganismeDto(

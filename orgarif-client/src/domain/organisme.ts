@@ -62,8 +62,9 @@ export interface InstanceDto {
 export interface OrganismeListDto {
   id: OrganismeId;
   nom: string;
-  secteurId?: SecteurId;
+  departementId?: DepartementId;
   natureJuridiqueId?: NatureJuridiqueId;
+  secteurId?: SecteurId;
   typeStructureId?: TypeStructureId;
 }
 
