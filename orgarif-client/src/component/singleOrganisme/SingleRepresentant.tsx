@@ -40,11 +40,12 @@ export const SingleRepresentant = (props: {
         css={css`
           display: flex;
           align-items: center;
-          min-width: 285px;
+          min-width: 300px;
+          max-width: 300px;
           justify-content: flex-start;
 
           @media (${breakpoint.LAPTOP}) {
-            justify-content: center;
+            justify-content: flex-start;
           }
         `}
       >

@@ -80,7 +80,7 @@ export const LeftPanel = (props: { organisme: OrganismeDto }) => {
 
         @media (min-width: 1170px) {
           height: 99vh;
-          padding: 2em 2vw;
+          padding: 2em 2vw 3em;
           overflow-y: auto;
         }
       `}
@@ -181,11 +181,13 @@ export const LeftPanel = (props: { organisme: OrganismeDto }) => {
             >
               Aucun représentant pour cet organisme
             </Typography>
-            <Divider variant="fullWidth" />
+            {organisme.nombreRepresentants > 0 && (
+              <Divider variant="fullWidth" />
+            )}
           </>
         )}
 
-      {organisme.nombreRepresentants &&
+      {organisme.nombreRepresentants > 0 &&
         organisme.designationRepresentants.length > 0 && (
           <React.Fragment>
             <Typography
@@ -204,6 +206,7 @@ export const LeftPanel = (props: { organisme: OrganismeDto }) => {
               supps={organisme.designationSuppleants.map(r => r ?? undefined)}
               hasSuppleance={organisme.presenceSuppleants}
             />
+            <Divider variant="fullWidth" />
           </React.Fragment>
         )}
 
@@ -214,12 +217,11 @@ export const LeftPanel = (props: { organisme: OrganismeDto }) => {
             component="div"
             css={css`
               font-size: clamp(1.5em, 2.4vw, 24px);
-              margin: 0.5em 0;
+              margin: 0.5em 0 1.5em;
             `}
           >
             Aucune instance pour cet organisme
           </Typography>
-          <Divider variant="fullWidth" />
         </>
       )}
 

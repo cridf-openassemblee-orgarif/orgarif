@@ -100,6 +100,10 @@ export const state = {
   enableScrollOnTable: atom({
     key: 'enable-scroll-on-table',
     default: false
+  }),
+  countRows: atom({
+    key: 'count-number-of-rows',
+    default: 0
   })
 };
 

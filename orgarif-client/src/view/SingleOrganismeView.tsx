@@ -3,7 +3,7 @@ import { css } from '@emotion/react';
 import { LinearProgress, Link, Slide, Typography } from '@mui/material';
 import Box from '@mui/material/Box';
 import * as React from 'react';
-import { useNavigate } from 'react-router-dom';
+import { useLocation, useNavigate } from 'react-router-dom';
 import { useRecoilValue } from 'recoil';
 import { appContext } from '../ApplicationContext';
 import { LeftPanel } from '../container/LeftPanel';
@@ -13,16 +13,16 @@ import { OrganismeId } from '../domain/ids';
 import { OrganismeDto } from '../domain/organisme';
 import { state } from '../state/state';
 
-// TODO : dynamization
 export const SingleOrganismeView = () => {
   const [organisme, setOrganisme] = React.useState<OrganismeDto>();
   const [error, setError] = React.useState(false);
   const isOpened = useRecoilValue(state.openedDrawer);
-
+  let location = useLocation();
   const navigate = useNavigate();
 
-  // TODO - remove once dynamization is done
-  const id = '460501860274414193277180d056e079' as unknown as OrganismeId;
+  // extract id from url
+  const regex = RegExp('([^/]+[^/]|[^/]+[/])$', 'g');
+  const id = regex.exec(location.pathname)![0] as unknown as OrganismeId;
 
   React.useEffect(() => {
     appContext
@@ -54,6 +54,7 @@ export const SingleOrganismeView = () => {
             @media (min-width: 1170px) {
               position: fixed;
               grid-template-columns: 51% 49%;
+              width: 100%;
             }
           `}
         >

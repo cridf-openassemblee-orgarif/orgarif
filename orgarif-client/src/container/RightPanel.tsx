@@ -176,63 +176,67 @@ export const RightPanel = (props: { organisme: OrganismeDto }) => {
               </InView>
             ));
           })}
-        <div
-          css={css`
-            display: none;
+        {allDelibs.length > 1 && (
+          <div
+            css={css`
+              display: none;
 
-            @media (min-width: 1170px) {
-              position: fixed;
-              width: 60px;
-              height: fit-content;
-              right: 25px;
-              top: 45%;
-              display: flex;
-              flex-direction: column;
-              align-items: center;
-            }
-          `}
-        >
-          {deliberationsByYear.map((yearlyDelib: any) => {
-            const [year, delibs] = yearlyDelib;
+              @media (min-width: 1170px) {
+                position: fixed;
+                width: 60px;
+                height: fit-content;
+                right: 25px;
+                top: 45%;
+                display: flex;
+                flex-direction: column;
+                align-items: center;
+              }
+            `}
+          >
+            {deliberationsByYear.map((yearlyDelib: any) => {
+              const [year, delibs] = yearlyDelib;
 
-            return (
-              <React.Fragment key={delibs[0].id}>
-                <Chip
-                  label={year}
-                  size="small"
-                  css={css`
-                    background-color: ${year === yearInView
-                      ? colors.white
-                      : colors.dark};
-                    margin-top: 0.3em;
-                    margin-bottom: 0.3em;
-                    color: ${year === yearInView ? colors.dark : colors.white};
-                    border: 1px solid white;
-                  `}
-                />
-                {delibs.map(
-                  (d: {
-                    id: DeliberationId;
-                    deliberation: DeliberationDto;
-                    comment?: string;
-                    color?: string;
-                  }) => (
-                    <div
-                      key={asString(d.id)}
-                      css={css`
-                        width: 0.5em;
-                        height: 0.5em;
-                        background-color: ${colors.white};
-                        border-radius: 5em;
-                        margin: 0.25em;
-                      `}
-                    ></div>
-                  )
-                )}
-              </React.Fragment>
-            );
-          })}
-        </div>
+              return (
+                <React.Fragment key={delibs[0].id}>
+                  <Chip
+                    label={year}
+                    size="small"
+                    css={css`
+                      background-color: ${year === yearInView
+                        ? colors.white
+                        : colors.dark};
+                      margin-top: 0.3em;
+                      margin-bottom: 0.3em;
+                      color: ${year === yearInView
+                        ? colors.dark
+                        : colors.white};
+                      border: 1px solid white;
+                    `}
+                  />
+                  {delibs.map(
+                    (d: {
+                      id: DeliberationId;
+                      deliberation: DeliberationDto;
+                      comment?: string;
+                      color?: string;
+                    }) => (
+                      <div
+                        key={asString(d.id)}
+                        css={css`
+                          width: 0.5em;
+                          height: 0.5em;
+                          background-color: ${colors.white};
+                          border-radius: 5em;
+                          margin: 0.25em;
+                        `}
+                      ></div>
+                    )
+                  )}
+                </React.Fragment>
+              );
+            })}
+          </div>
+        )}
       </TabPanel>
     </Box>
   );

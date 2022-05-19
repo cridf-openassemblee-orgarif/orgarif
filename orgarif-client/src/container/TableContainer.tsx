@@ -19,9 +19,11 @@ import {
 import type {} from '@mui/x-data-grid/themeAugmentation';
 import * as React from 'react';
 import { useNavigate } from 'react-router-dom';
-import { useRecoilState, useRecoilValue } from 'recoil';
+import { useRecoilState, useRecoilValue, useSetRecoilState } from 'recoil';
+import { appContext } from '../ApplicationContext';
 import { TableHeader } from '../component/table/TableHeader';
-import { listOrganismes } from '../data/listOrganismes';
+import { DepartementId, TypeStructureId } from '../domain/ids';
+import { OrganismeListDto } from '../domain/organisme';
 import { Edit } from '../icon/collection/Edit';
 import { Share } from '../icon/collection/Share';
 import { state } from '../state/state';
@@ -30,33 +32,57 @@ import { colors } from '../styles/colors';
 import { isMobile } from '../utils/viewport-utils';
 
 export const TableContainer = () => {
-  const [rows, setRows] = React.useState<GridRowsProp>(listOrganismes);
+  const [rows, setRows] = React.useState<GridRowsProp>([]);
   const [isOpened, setIsOpened] = useRecoilState(state.openedDrawer);
-  const [loading, setLoading] = React.useState<boolean>(false);
+  const [loading, setLoading] = React.useState<boolean>(true);
   const [activeFilters] = useRecoilState(state.activeFilters);
   const enableScrollOnTable = useRecoilValue(state.enableScrollOnTable);
   const userInfos = useRecoilValue(state.userInfos);
+  const [organismes, setOrganismes] = React.useState<OrganismeListDto[]>();
+  const [departements] = useRecoilState(state.departements);
+  const [typeStructures] = useRecoilState(state.typeStructures);
+  const [secteurs] = useRecoilState(state.secteurs);
+  const [natureJuridiques] = useRecoilState(state.natureJuridiques);
+  const setCountRows = useSetRecoilState(state.countRows);
 
   const navigate = useNavigate();
 
   // TODO:  search feature request to server
   const requestSearch = (searchedValue: string) => {
-    if (activeFilters.length > 0 && searchedValue.length >= 3) {
-      const filteredRows = listOrganismes.filter(row => {
-        setLoading(true);
-        return row.organisme
-          .toLowerCase()
-          .includes(searchedValue.toLowerCase());
+    // if (activeFilters.length > 0 && searchedValue.length >= 3) {
+    //   const filteredRows = organismes?.filter(row => {
+    //     setLoading(true);
+    //     return row.nom.toLowerCase().includes(searchedValue.toLowerCase());
+    //   });
+    //   if (filteredRows) {
+    //     setRows(filteredRows);
+    //   }
+    //   setLoading(false);
+    // } else if (activeFilters.length === 0 && searchedValue.length >= 3) {
+    //   // TODO - send request to server...
+    //   setLoading(true);
+    //   console.log('fetching results from server...');
+    //   setTimeout(() => setLoading(false), 1000);
+    // } else if (searchedValue.length === 0) {
+    //   if (organismes) setRows(organismes);
+    // }
+    // Temp search feature
+    setLoading(true);
+    if (searchedValue.length >= 3) {
+      const filteredRows = organismes?.filter(row => {
+        return row.nom.toLowerCase().includes(searchedValue.toLowerCase());
       });
-      setRows(filteredRows);
+      if (filteredRows) {
+        setRows(filteredRows);
+        setCountRows(filteredRows.length);
+        setLoading(false);
+      }
+    } else {
+      if (organismes) {
+        setRows(organismes);
+        setCountRows(organismes.length);
+      }
       setLoading(false);
-    } else if (activeFilters.length === 0 && searchedValue.length >= 3) {
-      // TODO - send request to server...
-      setLoading(true);
-      console.log('fetching results from server...');
-      setTimeout(() => setLoading(false), 1000);
-    } else if (searchedValue.length === 0) {
-      setRows(listOrganismes);
     }
   };
 
@@ -66,21 +92,38 @@ export const TableContainer = () => {
   };
 
   React.useEffect(() => {
-    //TODO - request server
     setLoading(true);
-    setTimeout(() => setLoading(false), 500);
-    //  appContext
-    //    .queryService()
-    //    .getFilteredListOrganismeQuery({ id })
-    //    .then(r => {
-    //      setRows(r.organismes);
-    //    });
-    // const filteredRows = listOrganismes.filter(row => {
-    // setLoading(true);
-    // return row.organisme.toLowerCase().includes(searchValue.toLowerCase());
-    // });
-    // setRows(filteredRows);
-  }, [activeFilters]);
+    appContext
+      .queryService()
+      .listOrganismesQuery({
+        departementIds: activeFilters
+          .map((f: any) => departements.find(el => el.id === f.id)?.id)
+          .filter(Boolean),
+        natureJuridiqueIds: activeFilters
+          .map((f: any) => natureJuridiques.find(el => el.id === f.id)?.id)
+          .filter(Boolean),
+        secteurIds: activeFilters
+          .map((f: any) => secteurs.find(el => el.id === f.id)?.id)
+          .filter(Boolean),
+        typeStructureIds: activeFilters
+          .map((f: any) => typeStructures.find(el => el.id === f.id)?.id)
+          .filter(Boolean)
+      })
+      .then(r => {
+        setRows(r.organismes);
+        setOrganismes(r.organismes);
+        setCountRows(r.organismes.length);
+        setLoading(false);
+      });
+  }, [
+    activeFilters,
+    departements,
+    natureJuridiques,
+    secteurs,
+    typeStructures,
+    setCountRows,
+    setLoading
+  ]);
 
   return (
     <>
@@ -125,18 +168,15 @@ export const TableContainer = () => {
               setIsOpened(!isOpened);
             }}
             initialState={{
-              sorting: {
-                sortModel: [{ field: 'organisme', sort: 'asc' }]
-              },
               columns: {
                 columnVisibilityModel: {
                   département: isMobile() ? false : true,
-                  structure: isMobile() ? false : true,
+                  typeStructureId: isMobile() ? false : true,
                   selection: isMobile() ? false : true
                 }
               }
             }}
-            rowBuffer={5}
+            rowBuffer={25}
             hideFooterSelectedRowCount
             rowsPerPageOptions={[50, 100, 200]}
             components={{
@@ -153,41 +193,37 @@ export const TableContainer = () => {
 
 const columns: GridColDef[] = [
   {
-    field: 'organisme',
+    field: 'nom',
     headerName: `Organismes`,
     minWidth: 250,
     flex: 1,
     renderHeader: (params: GridColumnHeaderParams) => (
-      <HeaderChip label={`${listOrganismes.length} ORGANISMES`} />
-    )
-  },
-  {
-    field: 'localité',
-    headerName: 'Localité',
-    minWidth: isMobile() ? 120 : 150,
-    flex: 0.5,
-    renderHeader: (params: GridColumnHeaderParams) => (
-      <HeaderChip size="small" label="LOCALITÉ" />
+      <HeaderChip label={`${TotalOrganismes().props.children} ORGANISMES`} />
     )
   },
   {
     field: 'département',
     headerName: 'Département',
-    minWidth: 150,
-    flex: 0.3,
+    minWidth: 180,
+    flex: 0.35,
     renderHeader: (params: GridColumnHeaderParams) => (
       <HeaderChip size="small" label="DÉPARTEMENT" />
     ),
     renderCell: (params: GridRenderCellParams) =>
-      params.formattedValue.toString().slice(0, 2)
+      DepartementRow(params.row.departementId)
   },
   {
-    field: 'structure',
+    field: 'typeStructureId',
     headerName: 'Type de Structure',
-    minWidth: 180,
+    minWidth: 160,
     flex: 0.4,
     renderHeader: (params: GridColumnHeaderParams) => (
       <HeaderChip size="small" label="TYPE DE STRUCTURE" />
+    ),
+    renderCell: (params: GridRenderCellParams) => (
+      <span style={{ overflow: 'hidden', textOverflow: 'ellipsis' }}>
+        {TypeStructureRow(params.formattedValue)}
+      </span>
     )
   },
   {
@@ -209,21 +245,12 @@ const columns: GridColDef[] = [
 
 const columnsEdit: GridColDef[] = [
   {
-    field: 'organisme',
+    field: 'nom',
     headerName: `Organismes`,
     minWidth: 250,
     flex: 1,
     renderHeader: (params: GridColumnHeaderParams) => (
-      <HeaderChip size="small" label={`${listOrganismes.length} ORGANISMES`} />
-    )
-  },
-  {
-    field: 'localité',
-    headerName: 'Localité',
-    minWidth: 150,
-    flex: 0.5,
-    renderHeader: (params: GridColumnHeaderParams) => (
-      <HeaderChip size="small" label="LOCALITÉ" />
+      <HeaderChip label={`${TotalOrganismes().props.children} ORGANISMES`} />
     )
   },
   {
@@ -235,15 +262,20 @@ const columnsEdit: GridColDef[] = [
       <HeaderChip size="small" label="DÉPARTEMENT" />
     ),
     renderCell: (params: GridRenderCellParams) =>
-      params.formattedValue.toString().slice(0, 2)
+      DepartementRow(params.row.departementId)
   },
   {
-    field: 'structure',
+    field: 'typeStructureId',
     headerName: 'Type de Structure',
     minWidth: 180,
     flex: 0.4,
     renderHeader: (params: GridColumnHeaderParams) => (
       <HeaderChip size="small" label="TYPE DE STRUCTURE" />
+    ),
+    renderCell: (params: GridRenderCellParams) => (
+      <span style={{ overflow: 'hidden', textOverflow: 'ellipsis' }}>
+        {TypeStructureRow(params.formattedValue)}
+      </span>
     )
   },
   {
@@ -263,6 +295,34 @@ const columnsEdit: GridColDef[] = [
     )
   }
 ];
+
+const TotalOrganismes = () => {
+  const countRows = useRecoilValue(state.countRows);
+
+  return <>{countRows}</>;
+};
+
+const TypeStructureRow = (id: TypeStructureId) => {
+  const [typeStructures] = useRecoilState(state.typeStructures);
+  const typeStructureLibelle = typeStructures.find(
+    typeStructure => typeStructure.id === id
+  );
+
+  return <>{typeStructureLibelle?.libelle ?? '-'}</>;
+};
+
+const DepartementRow = (id: DepartementId) => {
+  const [departements] = useRecoilState(state.departements);
+  const departementLibelle = departements.find(
+    departement => departement.id === id
+  );
+
+  return (
+    <>{`${departementLibelle?.libelle ?? ''} - ${
+      departementLibelle?.code ?? ''
+    }`}</>
+  );
+};
 
 const SelectRow = (props: { id: GridRowId }) => {
   const [userSelection, setUserSelection] = useRecoilState(state.userSelection);
@@ -337,7 +397,7 @@ const HeaderChipWithState = () => {
             fontSize="small"
             css={css`
               position: absolute;
-              right: -16px;
+              right: -4px;
             `}
             onClick={() => setUserSelection([])}
           />

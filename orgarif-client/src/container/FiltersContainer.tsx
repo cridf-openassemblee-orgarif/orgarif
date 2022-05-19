@@ -43,8 +43,10 @@ export const FiltersContainer = () => {
 
   React.useEffect(() => {
     expandedAccordion === false && setHideExtraFilters(true);
+    expandedAccordion === false && setEnableScrollOnTable(true);
+    expandedAccordion === true && setEnableScrollOnTable(false);
     setTransitionValue(1000);
-  }, [expandedAccordion]);
+  }, [expandedAccordion, setEnableScrollOnTable]);
 
   const animationHandler = () => {
     const filters = document.querySelector('#filters')! as HTMLElement;
@@ -61,6 +63,7 @@ export const FiltersContainer = () => {
       isTabletAndMore() &&
       filters.getBoundingClientRect().bottom > 135
     ) {
+      setTransitionValue(1000);
       setEnableScrollOnTable(false);
     }
   };
