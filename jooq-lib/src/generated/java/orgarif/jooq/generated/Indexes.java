@@ -14,6 +14,7 @@ import orgarif.jooq.generated.tables.DesignationTable;
 import orgarif.jooq.generated.tables.InstanceTable;
 import orgarif.jooq.generated.tables.LienDeliberationTable;
 import orgarif.jooq.generated.tables.MailLogTable;
+import orgarif.jooq.generated.tables.OrganismeTable;
 import orgarif.jooq.generated.tables.UserMailLogTable;
 import orgarif.jooq.generated.tables.UserSessionLogTable;
 
@@ -35,6 +36,10 @@ public class Indexes {
     public static final Index INSTANCE_ORGANISME_ID_IDX = Internal.createIndex(DSL.name("instance_organisme_id_idx"), InstanceTable.INSTANCE, new OrderField[] { InstanceTable.INSTANCE.ORGANISME_ID }, false);
     public static final Index LIEN_DELIBERATION_ORGANISME_ID_IDX = Internal.createIndex(DSL.name("lien_deliberation_organisme_id_idx"), LienDeliberationTable.LIEN_DELIBERATION, new OrderField[] { LienDeliberationTable.LIEN_DELIBERATION.ORGANISME_ID }, false);
     public static final Index MAIL_LOG_USER_ID_IDX = Internal.createIndex(DSL.name("mail_log_user_id_idx"), MailLogTable.MAIL_LOG, new OrderField[] { MailLogTable.MAIL_LOG.USER_ID }, false);
+    public static final Index ORGANISME_DEPARTEMENT_ID_IDX = Internal.createIndex(DSL.name("organisme_departement_id_idx"), OrganismeTable.ORGANISME, new OrderField[] { OrganismeTable.ORGANISME.DEPARTEMENT_ID }, false);
+    public static final Index ORGANISME_NATURE_JURIDIQUE_ID_IDX = Internal.createIndex(DSL.name("organisme_nature_juridique_id_idx"), OrganismeTable.ORGANISME, new OrderField[] { OrganismeTable.ORGANISME.NATURE_JURIDIQUE_ID }, false);
+    public static final Index ORGANISME_SECTEUR_ID_IDX = Internal.createIndex(DSL.name("organisme_secteur_id_idx"), OrganismeTable.ORGANISME, new OrderField[] { OrganismeTable.ORGANISME.SECTEUR_ID }, false);
+    public static final Index ORGANISME_TYPE_STRUCTURE_ID_IDX = Internal.createIndex(DSL.name("organisme_type_structure_id_idx"), OrganismeTable.ORGANISME, new OrderField[] { OrganismeTable.ORGANISME.TYPE_STRUCTURE_ID }, false);
     public static final Index USER_MAIL_LOG_USER_ID_IDX = Internal.createIndex(DSL.name("user_mail_log_user_id_idx"), UserMailLogTable.USER_MAIL_LOG, new OrderField[] { UserMailLogTable.USER_MAIL_LOG.USER_ID }, false);
     public static final Index USER_SESSION_LOG_USER_ID_IDX = Internal.createIndex(DSL.name("user_session_log_user_id_idx"), UserSessionLogTable.USER_SESSION_LOG, new OrderField[] { UserSessionLogTable.USER_SESSION_LOG.USER_ID }, false);
 }

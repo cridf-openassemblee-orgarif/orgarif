@@ -15,6 +15,7 @@ import jooqutils.jooq.TimestampWithTimeZoneToInstantConverter;
 
 import org.jooq.Field;
 import org.jooq.ForeignKey;
+import org.jooq.Index;
 import org.jooq.Name;
 import org.jooq.Record;
 import org.jooq.Row11;
@@ -27,6 +28,7 @@ import org.jooq.impl.DSL;
 import org.jooq.impl.SQLDataType;
 import org.jooq.impl.TableImpl;
 
+import orgarif.jooq.generated.Indexes;
 import orgarif.jooq.generated.Keys;
 import orgarif.jooq.generated.PublicTable;
 import orgarif.jooq.generated.tables.records.OrganismeRecord;
@@ -146,6 +148,12 @@ public class OrganismeTable extends TableImpl<OrganismeRecord> {
     @Nonnull
     public Schema getSchema() {
         return PublicTable.PUBLIC;
+    }
+
+    @Override
+    @Nonnull
+    public List<Index> getIndexes() {
+        return Arrays.<Index>asList(Indexes.ORGANISME_DEPARTEMENT_ID_IDX, Indexes.ORGANISME_NATURE_JURIDIQUE_ID_IDX, Indexes.ORGANISME_SECTEUR_ID_IDX, Indexes.ORGANISME_TYPE_STRUCTURE_ID_IDX);
     }
 
     @Override
