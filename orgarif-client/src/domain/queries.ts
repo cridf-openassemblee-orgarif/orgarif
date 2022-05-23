@@ -11,6 +11,7 @@ import {
   OrganismeListDto,
   RepresentantDto
 } from './organisme';
+import { OrganismeOrderColumn } from './display';
 
 export interface GetOrganismeQuery {
   id: OrganismeId;
@@ -33,10 +34,15 @@ export interface ListOrganismesQuery {
   natureJuridiqueIds: NatureJuridiqueId[];
   secteurIds: SecteurId[];
   typeStructureIds: TypeStructureId[];
+  searchLabel?: string;
+  page: number;
+  itemsNumber: number;
+  orderBy: OrganismeOrderColumn;
 }
 
 export interface ListOrganismesQueryResponse {
   organismes: OrganismeListDto[];
+  totalNumber: number;
 }
 
 export interface SearchDeliberationQuery {

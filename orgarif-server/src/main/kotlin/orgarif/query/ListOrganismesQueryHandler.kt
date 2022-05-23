@@ -9,8 +9,8 @@ import orgarif.repository.OrganismeDao
 class ListOrganismesQueryHandler(val organismeDao: OrganismeDao) :
     QueryHandler.Handler<ListOrganismesQuery, ListOrganismesQueryResponse>() {
 
-    override fun handle(query: ListOrganismesQuery) =
-        ListOrganismesQueryResponse(
+    override fun handle(query: ListOrganismesQuery): ListOrganismesQueryResponse {
+        val dtos =
             organismeDao
                 .fetchByCategories(
                     ItemStatus.live,
@@ -18,5 +18,16 @@ class ListOrganismesQueryHandler(val organismeDao: OrganismeDao) :
                     query.natureJuridiqueIds,
                     query.secteurIds,
                     query.typeStructureIds)
-                .map { OrganismeListDto(it) })
+                // TODO make a real implenmentation
+                .subList(0, query.itemsNumber)
+                .map { OrganismeListDto(it) }
+        val itemsNumber =
+            organismeDao.count(
+                ItemStatus.live,
+                query.departementIds,
+                query.natureJuridiqueIds,
+                query.secteurIds,
+                query.typeStructureIds)
+        return ListOrganismesQueryResponse(dtos, itemsNumber)
+    }
 }

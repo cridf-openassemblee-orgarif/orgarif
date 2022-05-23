@@ -19,7 +19,10 @@ export const ListOrganismesView = () => {
         departementIds: [],
         natureJuridiqueIds: [],
         secteurIds: [],
-        typeStructureIds: []
+        typeStructureIds: [],
+        page: 0,
+        itemsNumber: 100,
+        orderBy: 'nom'
       })
       .then(r => {
         setOrganismes(r.organismes);

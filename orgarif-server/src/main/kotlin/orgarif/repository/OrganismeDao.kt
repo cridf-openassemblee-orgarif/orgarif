@@ -59,7 +59,7 @@ class OrganismeDao(val jooq: DSLContext) {
         natureJuridiqueIds: List<NatureJuridiqueId>,
         secteurIds: List<SecteurId>,
         typeStructureIds: List<TypeStructureId>,
-    ) =
+    ): List<Record> =
         jooq
             .selectFrom(ORGANISME)
             .where(ORGANISME.STATUS.equal(status.name))
@@ -93,6 +93,48 @@ class OrganismeDao(val jooq: DSLContext) {
             }
             .fetch()
             .map(this::map)
+
+    fun count(
+        status: ItemStatus,
+        departementIds: List<DepartementId>,
+        natureJuridiqueIds: List<NatureJuridiqueId>,
+        secteurIds: List<SecteurId>,
+        typeStructureIds: List<TypeStructureId>,
+    ): Int =
+        jooq
+            .selectCount()
+            .from(ORGANISME)
+            .where(ORGANISME.STATUS.equal(status.name))
+            .let {
+                if (departementIds.isNotEmpty()) {
+                    it.and(ORGANISME.DEPARTEMENT_ID.`in`(departementIds.map { it.rawId }))
+                } else {
+                    it
+                }
+            }
+            .let {
+                if (natureJuridiqueIds.isNotEmpty()) {
+                    it.and(ORGANISME.NATURE_JURIDIQUE_ID.`in`(natureJuridiqueIds.map { it.rawId }))
+                } else {
+                    it
+                }
+            }
+            .let {
+                if (secteurIds.isNotEmpty()) {
+                    it.and(ORGANISME.SECTEUR_ID.`in`(secteurIds.map { it.rawId }))
+                } else {
+                    it
+                }
+            }
+            .let {
+                if (typeStructureIds.isNotEmpty()) {
+                    it.and(ORGANISME.TYPE_STRUCTURE_ID.`in`(typeStructureIds.map { it.rawId }))
+                } else {
+                    it
+                }
+            }
+            .fetchSingle()
+            .let { it.value1() }
 
     fun updateDepartementId(
         id: OrganismeId,

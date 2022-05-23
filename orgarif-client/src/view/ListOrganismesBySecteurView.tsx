@@ -27,7 +27,10 @@ export const ListOrganismesBySecteurView = ({
         departementIds: [],
         natureJuridiqueIds: [],
         secteurIds: [route.secteurId],
-        typeStructureIds: []
+        typeStructureIds: [],
+        page: 0,
+        itemsNumber: 100,
+        orderBy: 'nom'
       })
       .then(r => {
         setOrganismes(r.organismes);

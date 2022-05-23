@@ -7,6 +7,7 @@ import orgarif.domain.NatureJuridiqueId
 import orgarif.domain.OrganismeDto
 import orgarif.domain.OrganismeId
 import orgarif.domain.OrganismeListDto
+import orgarif.domain.OrganismeOrderColumn
 import orgarif.domain.RepresentantDto
 import orgarif.domain.SecteurId
 import orgarif.domain.TypeStructureId
@@ -29,10 +30,17 @@ data class ListOrganismesQuery(
     val departementIds: List<DepartementId>,
     val natureJuridiqueIds: List<NatureJuridiqueId>,
     val secteurIds: List<SecteurId>,
-    val typeStructureIds: List<TypeStructureId>
+    val typeStructureIds: List<TypeStructureId>,
+    val searchLabel: String?,
+    val page: Int,
+    val itemsNumber: Int,
+    val orderBy: OrganismeOrderColumn
 ) : Query()
 
-data class ListOrganismesQueryResponse(val organismes: List<OrganismeListDto>) : QueryResponse()
+data class ListOrganismesQueryResponse(
+    val organismes: List<OrganismeListDto>,
+    val totalNumber: Int
+) : QueryResponse()
 
 data class SearchDeliberationQuery(val searchToken: String) : Query()
 
