@@ -16,3 +16,8 @@ CREATE TABLE organisme
     FOREIGN KEY (type_structure_id) REFERENCES type_structure (id)
 );
 
+CREATE INDEX ON organisme (departement_id);
+CREATE INDEX ON organisme (nature_juridique_id);
+CREATE INDEX ON organisme (secteur_id);
+CREATE INDEX ON organisme (type_structure_id);
+
