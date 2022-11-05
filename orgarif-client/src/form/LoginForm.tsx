@@ -7,29 +7,39 @@ import { ControlledTextInput } from '../component/base-component/ControlledTextI
 import { ControlledPasswordInput } from '../component/base-component/ControlledPasswordInput';
 import { LoadingStateButton } from '../component/base-component/LoadingButton';
 import { LoadingState } from '../interfaces';
+import { PlainStringPassword } from '../generated/domain/security';
+import { asNominalString } from '../utils/nominal-class';
 
-export interface LoginFormDto {
+export interface LoginFormInput {
+  mail: string;
+  password: PlainStringPassword;
+}
+
+export interface LoginFormRawInput {
   mail: string;
   password: string;
 }
 
 export const LoginForm = (props: {
-  onSubmit: (dto: LoginFormDto) => Promise<void>;
+  onSubmit: (dto: LoginFormInput) => Promise<void>;
 }) => {
   const {
     handleSubmit,
     control,
     formState: { errors }
-  } = useForm<LoginFormDto>();
-  const [loading, setLoading] = useState<LoadingState>('idle');
+  } = useForm<LoginFormRawInput>();
+  const [loading, setLoading] = useState<LoadingState>('Idle');
   return (
     <form
-      onSubmit={handleSubmit(dto => {
-        setLoading('loading');
+      onSubmit={handleSubmit(input => {
+        setLoading('Loading');
         props
-          .onSubmit(dto)
-          .then(() => setLoading('idle'))
-          .catch(() => setLoading('error'));
+          .onSubmit({
+            mail: input.mail,
+            password: asNominalString(input.password)
+          })
+          .then(() => setLoading('Idle'))
+          .catch(() => setLoading('Error'));
       })}
     >
       <div

@@ -20,7 +20,7 @@ import orgarif.service.DummyRandomService
 import orgarif.utils.OrgarifStringUtils
 import orgarif.utils.OrgarifStringUtils.filteredPassword
 
-// TODO test maps keys
+// TODO[fmk] test maps keys
 internal class SerializerTest {
 
     @Test
@@ -35,8 +35,8 @@ internal class SerializerTest {
     //        assertEquals("{\"first\":\"bonjour\"}", serialize(Test("bonjour", null)))
     //    }
 
-    // TODO test some SerializeAsString
-    // TODO test some StringId
+    // TODO[fmk] test some SerializeAsString
+    // TODO[fmk] test some StringId
     data class SerializationTest(
         val instant: Instant,
         val testSerializeAsString: TestSerializeAsString,
@@ -86,7 +86,8 @@ internal class SerializerTest {
   "uuid": "a8f088f151794107a30b1eaaa6519c98",
   "zoneId": "Europe/Paris"
 }
-""".trim()
+"""
+                .trim()
         val json = Serializer.serialize(s)
         JSONAssert.assertEquals(expectedJson, JSONObject(json).toString(2), true)
         val u = Serializer.deserialize<SerializationTest>(json)

@@ -12,7 +12,7 @@ import orgarif.jooq.generated.tables.records.MailLogRecord
 import orgarif.utils.toTypeId
 
 @Repository
-class MailLogDao(val jooq: DSLContext) {
+class MailLogDao(private val jooq: DSLContext) {
 
     data class Record(
         val id: MailLogId,
@@ -58,19 +58,20 @@ class MailLogDao(val jooq: DSLContext) {
 
     fun fetchAll(): List<Record> = jooq.selectFrom(MAIL_LOG).fetch().map(this::map)
 
-    fun fetchOrNullContent(id: MailLogId): ContentPartialRecord? =
-        jooq.select(*contentPartialRecordFields)
+    fun fetchContentOrNull(id: MailLogId): ContentPartialRecord? =
+        jooq
+            .select(*contentPartialRecordFields)
             .from(MAIL_LOG)
             .where(MAIL_LOG.ID.equal(id.rawId))
             .fetchOne()
             ?.let(this::mapContentPartialRecord)
-            ?: throw IllegalArgumentException("$id")
 
     fun fetchByUserIdAndReferences(
         userId: UserId,
         mailReferences: List<MailReference>
     ): List<Record> =
-        jooq.selectFrom(MAIL_LOG)
+        jooq
+            .selectFrom(MAIL_LOG)
             .where(MAIL_LOG.USER_ID.equal(userId.rawId))
             .and(MAIL_LOG.REFERENCE.`in`(mailReferences.map { it.name }))
             .fetch()
@@ -80,18 +81,13 @@ class MailLogDao(val jooq: DSLContext) {
         userId: UserId,
         mailReferences: Set<MailReference>
     ): List<HistoryPartialRecord> =
-        jooq.select(*historyPartialRecordFields)
+        jooq
+            .select(*historyPartialRecordFields)
             .from(MAIL_LOG)
             .where(MAIL_LOG.USER_ID.equal(userId.rawId))
             .and(MAIL_LOG.REFERENCE.`in`(mailReferences.map { it.name }))
             .fetch()
             .map(this::mapHistoryPartialRecord)
-
-    //     fun fetchByRecipientMail(mail: String): List<Record> =
-    //            jooq.selectFrom(MAIL_LOG)
-    //                    .where(MAIL_LOG.RECIPIENT_MAIL.equal(mail))
-    //                    .fetch()
-    //                    .map(this::map)
 
     fun map(r: MailLogRecord) =
         Record(

@@ -16,15 +16,15 @@ import orgarif.service.RandomService
 
 @RestController
 class ApplicationErrorController(
-    val errorAttributes: ErrorAttributes,
-    val randomService: RandomService,
-    val applicationExceptionHandler: ApplicationExceptionHandler
+    private val errorAttributes: ErrorAttributes,
+    private val randomService: RandomService,
+    private val applicationExceptionHandler: ApplicationExceptionHandler
 ) : ErrorController {
 
     private val logger = KotlinLogging.logger {}
 
-    // TODO[secu] test this, it silently broke twice in the past
-    // TODO[secu] if direct access, redirect
+    // TODO[fmk][secu] test this, it silently broke twice in the past
+    // TODO[fmk][secu] if direct access, redirect
     @RequestMapping(Routes.error)
     fun error(request: WebRequest, response: HttpServletResponse): ModelAndView {
         val errorMap =
@@ -42,7 +42,7 @@ class ApplicationErrorController(
         }
         val initialError = errorMap["error"] as String
         val exception = errorAttributes.getError(request)
-        // TODO[secu] rewrite return applicationExceptionHandler.render(..., when() {})
+        // TODO[fmk][secu] rewrite return applicationExceptionHandler.render(..., when() {})
         val errorId = randomService.id<RequestErrorId>()
         val (status, error) =
             when (response.status) {
@@ -50,7 +50,7 @@ class ApplicationErrorController(
                 // we'are arrived here with a status 200
                 200 -> 404 to "Not Found"
                 500 -> {
-                    // TODO[secu] in which case are we getting here ?
+                    // TODO[fmk][secu] in which case are we getting here ?
                     // if // within the url
                     // with SecurityException
                     //                when (exception) {
@@ -62,7 +62,7 @@ class ApplicationErrorController(
                     //                    }
                     //                }
                 }
-                // TODO[secu] what do we do ?
+                // TODO[fmk][secu] what do we do ?
                 else -> response.status to initialError
             }
         val date = errorMap["timestamp"] as Date

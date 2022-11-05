@@ -9,8 +9,8 @@ import orgarif.service.DevInitialDataInjectorService
 
 @Service
 class DevLoginCommandHandler(
-    val devInitialDataInjectorService: DevInitialDataInjectorService,
-    val loginCommandHandler: LoginCommandHandler,
+    private val devInitialDataInjectorService: DevInitialDataInjectorService,
+    private val loginCommandHandler: LoginCommandHandler,
 ) : CommandHandler<DevLoginCommand, DevLoginCommandResponse> {
 
     override fun handle(
@@ -20,7 +20,8 @@ class DevLoginCommandHandler(
         response: HttpServletResponse
     ): DevLoginCommandResponse {
         val mail = devInitialDataInjectorService.devUserMail(command.username)
-        return loginCommandHandler.handle(
+        return loginCommandHandler
+            .handle(
                 LoginCommand(mail, PlainStringPassword(command.username)),
                 userSession,
                 request,

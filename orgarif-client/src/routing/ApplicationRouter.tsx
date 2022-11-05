@@ -1,6 +1,11 @@
 /** @jsxImportSource @emotion/react */
 import * as React from 'react';
 import { FunctionComponent, useEffect } from 'react';
+import { useRecoilState } from 'recoil';
+import { state } from '../state/state';
+import { NotFoundView } from '../view/NotFoundView';
+import { ApplicationRoute, ApplicationRouteProps, routes } from './routes';
+import { useGoTo } from './routing-utils';
 import {
   BrowserRouter,
   Route,
@@ -8,26 +13,16 @@ import {
   useLocation,
   useParams
 } from 'react-router-dom';
-import { useRecoilState } from 'recoil';
-import { state } from '../state/state';
-import { NotFoundView } from '../view/NotFoundView';
-import { ApplicationRoute, routes } from './routes';
-import { useGoTo } from './useGoTo';
-import { Role } from '../domain/user';
 
-const RouteComponent = (props: {
-  component: FunctionComponent<{ route: ApplicationRoute | undefined }>;
-  routeName: ApplicationRoute['name'];
-  role?: Role;
-}) => {
+const RouteComponent = (props: ApplicationRouteProps<any>) => {
   const [userInfos] = useRecoilState(state.userInfos);
   const location = useLocation();
   const goTo = useGoTo();
   useEffect(() => {
-    // TODO test all this...
+    // TODO[fmk] test all this...
     if (props.role && (!userInfos || !userInfos.roles.includes(props.role))) {
       if (userInfos) {
-        // TODO make a notification "unauthorized"
+        // TODO[fmk] make a notification "unauthorized"
         goTo(
           { name: 'RootRoute' },
           {
@@ -46,34 +41,63 @@ const RouteComponent = (props: {
     }
   }, [props.role, userInfos, goTo, location.pathname]);
   const route = {
-    name: props.routeName,
+    name: props.name,
     ...useParams()
   } as ApplicationRoute;
   return React.createElement(props.component, { route });
 };
 
-// TODO see useRoutes
-export const ApplicationRouter = () => (
-  <BrowserRouter>
-    <Routes>
-      {Object.entries(routes).map(e => {
-        // [doc] DO NOT use a key here, because router Switch only displays once at one,
-        // and it's complicated to use a key which doesn't produce useless re-rendering
-        // TODO is NOT enough ! force key in MainContainer ? hierarchical views if same view for several paths ?
-        const route = e[1];
-        return (
+const RootSubComponent = (props: {
+  name: ApplicationRoute['name'];
+  component: FunctionComponent<{ route: any | undefined }>;
+}) => {
+  const route = {
+    name: props.name,
+    ...useParams()
+  } as ApplicationRoute;
+  return React.createElement(props.component, { route });
+};
+
+const renderRoutes = (
+  parentPath: string,
+  routes: ApplicationRouteProps<any>[]
+) =>
+  routes.map(route => {
+    const path = parentPath + route.path;
+    return (
+      <Route path={path} element={<RouteComponent {...route} />}>
+        {route.rootSubComponent && (
           <Route
-            path={route.path}
+            index
             element={
-              <RouteComponent
-                component={route.component}
-                role={route.role}
-                routeName={e[0] as ApplicationRoute['name']}
+              <RootSubComponent
+                name={route.name}
+                component={route.rootSubComponent}
               />
             }
           />
-        );
-      })}
+        )}
+        {route.subRoutes && renderRoutes(path, route.subRoutes)}
+      </Route>
+    );
+  });
+
+// TODO[fmk] questions about routing :
+// * how roles work with subrouting
+// Checking to do :
+// * path declaration consistency
+// * path parameters with interface consistency
+// * components parameters with interface consistency
+// TODO[fmk] see useRoutes
+export const ApplicationRouter = () => (
+  <BrowserRouter>
+    <Routes>
+      {/*
+      // [doc] DO NOT use a key here, because router Switch only displays once at one,
+      // and it's complicated to use a key which doesn't produce useless re-rendering
+      // TODO[fmk] is NOT enough ! force key in MainContainer ? hierarchical views if same view for several paths ?
+      */}
+      {renderRoutes('', routes)}
       <Route element={<NotFoundView />} />
     </Routes>
   </BrowserRouter>

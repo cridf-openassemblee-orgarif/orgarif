@@ -17,11 +17,10 @@ import orgarif.service.user.MagicLinkTokenService
 
 @Service
 class LostPasswordMailSenderService(
-    @Value("\${app.url}") val appUrl: String,
-    val applicationInstance: ApplicationInstance,
-    val httpService: HttpService,
-    val magicLinkTokenService: MagicLinkTokenService,
-    val mailService: MailService
+    @Value("\${app.url}") private val appUrl: String,
+    private val httpService: HttpService,
+    private val magicLinkTokenService: MagicLinkTokenService,
+    private val mailService: MailService,
 ) {
 
     private val logger = KotlinLogging.logger {}
@@ -44,10 +43,10 @@ class LostPasswordMailSenderService(
             user.mail,
             "Change your password",
             mailContent,
-            MailReference.lostPassword,
-            MailService.MailLog.doLog,
+            MailReference.LostPassword,
+            MailService.MailLog.DoLog,
             MailService.MailLogProperties(
-                applicationInstance.deploymentId, user.id, serialize(data)))
+                ApplicationInstance.deploymentLogId, user.id, serialize(data)))
     }
 
     fun fetchMailContent(data: LostPasswordMailPayload): String {
@@ -60,7 +59,7 @@ class LostPasswordMailSenderService(
         //            else -> throw RuntimeException("Node server responded ${httpResponse.code},
         // message : ${httpResponse.body}")
         //        }
-        // TODO[user]
+        // TODO[fmk][user]
         return "bonjour"
     }
 }

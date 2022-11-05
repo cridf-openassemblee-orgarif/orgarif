@@ -21,7 +21,7 @@ export const ControlledPasswordInput = <
 }) => {
   const [showPassword, setShowPassword] = useState(false);
   const toggleShowPassword = () => setShowPassword(!showPassword);
-  // TODO why ??
+  // TODO[fmk] why ?? for mobile ?
   const handleMouseDownPassword = (
     event: React.MouseEvent<HTMLButtonElement>
   ) => {
@@ -39,7 +39,7 @@ export const ControlledPasswordInput = <
           {...field}
           label={props.label}
           error={!!props.errors[props.name]}
-          size={'small'}
+          size="small"
           type={showPassword ? 'text' : 'password'}
           helperText={
             props.errors[props.name] && !props.hideErrorMessage

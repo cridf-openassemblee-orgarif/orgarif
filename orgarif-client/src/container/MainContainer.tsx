@@ -9,24 +9,20 @@ export const MainContainer = (props: PropsWithChildren<{}>) => (
     css={css`
       position: absolute;
       display: flex;
+      flex-direction: column;
       height: 100%;
       width: 100%;
     `}
   >
+    <Menu />
     <div
       css={css`
         flex: 1;
         overflow: scroll;
+        padding: 10px;
       `}
     >
-      <Menu />
-      <div
-        css={css`
-          margin: 10px;
-        `}
-      >
-        {props.children}
-      </div>
+      {props.children}
     </div>
   </div>
 );

@@ -9,9 +9,8 @@ import orgarif.service.DateService
 
 @Service
 class PreDestroySchedulerService(
-    val deploymentLogDao: DeploymentLogDao,
-    val applicationInstance: ApplicationInstance,
-    val dateService: DateService
+    private val deploymentLogDao: DeploymentLogDao,
+    private val dateService: DateService
 ) {
 
     private val logger = KotlinLogging.logger {}
@@ -19,7 +18,7 @@ class PreDestroySchedulerService(
     @PreDestroy
     fun preDestroy() {
         logger.info { "Process predestroy tasks" }
-        deploymentLogDao.updateShutdownTime(applicationInstance.deploymentId, dateService.now())
+        deploymentLogDao.updateShutdownTime(ApplicationInstance.deploymentLogId, dateService.now())
         logger.info { "Predestroy OK" }
     }
 }

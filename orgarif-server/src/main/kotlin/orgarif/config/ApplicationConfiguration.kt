@@ -22,9 +22,8 @@ class ApplicationConfiguration {
     @Bean
     fun webMvcRegistrations() =
         object : WebMvcRegistrations {
-            override fun getExceptionHandlerExceptionResolver(): ExceptionHandlerExceptionResolver {
-                return ApplicationExceptionHandlerExceptionResolver()
-            }
+            override fun getExceptionHandlerExceptionResolver(): ExceptionHandlerExceptionResolver =
+                ApplicationExceptionHandlerExceptionResolver()
         }
 
     @Bean fun passwordEncoder() = BCryptPasswordEncoder()
@@ -38,7 +37,7 @@ class ApplicationConfiguration {
             object : ValveBase() {
                 override fun invoke(request: Request, response: Response) {
                     // because the application is deployed behind a proxy
-                    // TODO why Spring seems not to handle it with
+                    // TODO[fmk] why Spring seems not to handle it with
                     // server.forward-headers-strategy=framework ?
                     val forwardedProto = request.getHeader("X-Forwarded-Proto")
                     if (forwardedProto != null) {

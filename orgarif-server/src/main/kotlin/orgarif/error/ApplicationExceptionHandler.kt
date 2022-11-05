@@ -24,9 +24,9 @@ import orgarif.utils.OrgarifStringUtils
 
 @ControllerAdvice
 class ApplicationExceptionHandler(
-    val dateService: DateService,
-    val randomService: RandomService,
-    val userSessionService: UserSessionService
+    private val dateService: DateService,
+    private val randomService: RandomService,
+    private val userSessionService: UserSessionService
 ) {
 
     private val logger = KotlinLogging.logger {}
@@ -40,12 +40,12 @@ class ApplicationExceptionHandler(
         response: HttpServletResponse,
         exception: Exception
     ): ModelAndView {
-        // TODO[secu] handle exceptions
+        // TODO[fmk][secu] handle exceptions
         // log userid, mail, ip
         val id = randomService.id<RequestErrorId>()
         val readableStackTrace =
-            if (ApplicationInstance.env == ApplicationEnvironment.dev ||
-                userSessionService.hasRole(Role.admin)) {
+            if (ApplicationInstance.env == ApplicationEnvironment.Dev ||
+                userSessionService.hasRole(Role.Admin)) {
                 ReadableStackTrace(exception)
             } else {
                 null
@@ -53,12 +53,12 @@ class ApplicationExceptionHandler(
         val subCause = exception.cause?.cause
         when {
             subCause is SizeLimitExceededException -> {
-                // TODO[secu] in practice what happens with user null ?
+                // TODO[fmk][secu] in practice what happens with user null ?
                 logger.info {
-                    // TODO[secu] which means user must be connected...
+                    // TODO[fmk][secu] which means user must be connected...
                     "User ${userSessionService.getUserSession()} tried to upload a file to big : ${subCause.message}"
                 }
-                // TODO[secu] error codes for the front !
+                // TODO[fmk][secu] error codes for the front !
                 return render(
                     request,
                     response,
@@ -71,7 +71,7 @@ class ApplicationExceptionHandler(
                         readableStackTrace))
             }
             exception is DisplayMessageException -> {
-                // TODO[secu] this "DisplayError" is used on front
+                // TODO[fmk][secu] this "DisplayError" is used on front
                 logger.info { "[user message exception] ${exception.logMessage}" }
                 return render(
                     request,
@@ -92,7 +92,7 @@ class ApplicationExceptionHandler(
                 } else {
                     logger.warn(exception) { "Unhandled exception [$id]" }
                 }
-                // TODO[secu] i18n, & i18n from spring
+                // TODO[fmk][secu] i18n, & i18n from spring
                 // all strings should come from a central place
                 return render(
                     request,
@@ -111,9 +111,9 @@ class ApplicationExceptionHandler(
         val mav = ModelAndView()
         response.status = requestError.status
         val stackTrace = requestError.stackTrace
-        // TODO[secu] reliable ?
-        if (request.getHeader("Content-Type") == MimeType.json.fullType) {
-            response.contentType = MimeType.json.fullType
+        // TODO[fmk][secu] reliable ?
+        if (request.getHeader("Content-Type") == MimeType.Json.fullType) {
+            response.contentType = MimeType.Json.fullType
             // write in the buffer with
             // objectMapper.writeValue(response.outputStream, requestErrorNode)
             // is buggy...
@@ -130,7 +130,7 @@ class ApplicationExceptionHandler(
             mav.model["requestErrorIdAsString"] =
                 OrgarifStringUtils.serializeUuid(requestError.id.rawId)
             mav.model["requestError"] = requestError
-            if (ApplicationInstance.env == ApplicationEnvironment.dev && stackTrace != null) {
+            if (ApplicationInstance.env == ApplicationEnvironment.Dev && stackTrace != null) {
                 mav.model[ApplicationConstants.springMvcModelKeyStackTrace] =
                     stackTrace.toReadableString()
             }

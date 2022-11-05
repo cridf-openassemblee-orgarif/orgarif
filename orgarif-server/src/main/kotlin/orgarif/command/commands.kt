@@ -1,16 +1,18 @@
 package orgarif.command
 
 import com.fasterxml.jackson.annotation.JsonTypeInfo
+import kttots.Shared
 import orgarif.domain.LoginResult
 import orgarif.domain.PlainStringPassword
 import orgarif.domain.RegisterResult
 import orgarif.domain.UserInfos
 
+@Shared
 @JsonTypeInfo(
     use = JsonTypeInfo.Id.NAME, include = JsonTypeInfo.As.PROPERTY, property = "objectType")
 sealed class Command
 
-sealed class CommandResponse
+@Shared sealed class CommandResponse
 
 object EmptyCommandResponse : CommandResponse()
 

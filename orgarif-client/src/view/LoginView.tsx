@@ -6,12 +6,17 @@ import { useState } from 'react';
 import { useRecoilState } from 'recoil';
 import { appContext } from '../ApplicationContext';
 import { MainContainer } from '../container/MainContainer';
-import { LoginResult, UserInfos } from '../domain/user';
-import { LoginForm, LoginFormDto } from '../form/LoginForm';
+import { LoginForm, LoginFormInput } from '../form/LoginForm';
 import { state } from '../state/state';
 import { assertUnreachable } from '../utils';
 import { Errors } from '../errors';
-import { useGoTo } from '../routing/useGoTo';
+import { useGoTo } from '../routing/routing-utils';
+import { LoginResult, UserInfos } from '../generated/domain/user';
+import {
+  DevLoginCommandResponse,
+  LoginCommandResponse
+} from '../generated/command/commands';
+import { space } from '../component/component-utils';
 
 export const LoginView = () => {
   const [userInfos, setUserInfos] = useRecoilState(state.userInfos);
@@ -27,21 +32,24 @@ export const LoginView = () => {
       }
     );
   };
-  const login = (data: LoginFormDto) =>
+  const login = (input: LoginFormInput) =>
     appContext
       .commandService()
-      .loginCommand(data)
+      .send<LoginCommandResponse>({
+        objectType: 'LoginCommand',
+        ...input
+      })
       .then(r => {
         setLoginResult(r.result);
         switch (r.result) {
-          case 'loggedIn':
+          case 'LoggedIn':
             if (!r.userinfos) {
               throw Errors._198c103e();
             }
             connect(r.userinfos);
             break;
-          case 'mailNotFound':
-          case 'badPassword':
+          case 'MailNotFound':
+          case 'BadPassword':
             break;
           default:
             assertUnreachable(r.result);
@@ -50,7 +58,10 @@ export const LoginView = () => {
   const devLogin = (username: string) =>
     appContext
       .commandService()
-      .devLoginCommand({ username })
+      .send<DevLoginCommandResponse>({
+        objectType: 'DevLoginCommand',
+        username
+      })
       .then(r => connect(r.userinfos));
   return (
     <MainContainer>
@@ -73,16 +84,16 @@ export const LoginView = () => {
               width: 400px;
             `}
           >
-            {loginResult !== 'loggedIn' && !userInfos && (
+            {loginResult !== 'LoggedIn' && !userInfos && (
               <LoginForm onSubmit={login} />
             )}
-            {!userInfos && bootstrapData.env === 'dev' && (
+            {!userInfos && bootstrapData.env === 'Dev' && (
               <div
                 css={css`
                   margin-top: 20px;
                 `}
               >
-                dev user authent :{' '}
+                dev user authent :{space}
                 <Button onClick={() => devLogin('user')}>user</Button>
                 <Button onClick={() => devLogin('admin')}>admin</Button>
               </div>
@@ -105,11 +116,11 @@ export const LoginView = () => {
               >
                 {(() => {
                   switch (loginResult) {
-                    case 'loggedIn':
+                    case 'LoggedIn':
                       return null;
-                    case 'mailNotFound':
+                    case 'MailNotFound':
                       return <div>User not found</div>;
-                    case 'badPassword':
+                    case 'BadPassword':
                       return <div>Bad password</div>;
                     default:
                       assertUnreachable(loginResult);

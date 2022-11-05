@@ -11,7 +11,7 @@ import org.springframework.web.servlet.config.annotation.ResourceHandlerRegistry
 import org.springframework.web.servlet.config.annotation.WebMvcConfigurer
 
 @Configuration
-class WebConfiguration(val env: Environment) : WebMvcConfigurer, ServletContextInitializer {
+class WebConfiguration(private val env: Environment) : WebMvcConfigurer, ServletContextInitializer {
 
     private val logger = KotlinLogging.logger {}
 

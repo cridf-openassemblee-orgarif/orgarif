@@ -7,7 +7,7 @@ import orgarif.jooqlib.utils.SpringLikeYamlConfigUtils
 object ResetTestDatabase {
 
     fun resetDatabaseSchema(insertInitialData: Boolean) {
-        // FIXME vs transaction strategy vs containers
+        // FIXME[fmk] vs transaction strategy vs containers
         val databaseName =
             SpringLikeYamlConfigUtils.yamlFilesToMap(
                     ResetTestDatabase.javaClass.classLoader.getResourceAsStream(

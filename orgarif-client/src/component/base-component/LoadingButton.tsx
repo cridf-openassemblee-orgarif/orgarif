@@ -5,6 +5,8 @@ import * as React from 'react';
 import { PropsWithChildren, ReactElement, useState } from 'react';
 import { assertUnreachable, extractEmotionCss } from '../../utils';
 import { EmotionStyles, LoadingState } from '../../interfaces';
+import { ClientUid } from '../../domain/client-ids';
+import { ButtonTypeMap } from '@mui/material/Button/Button';
 
 const ButtonContent = (
   props: PropsWithChildren<{
@@ -12,10 +14,10 @@ const ButtonContent = (
   }>
 ) => {
   switch (props.loadingState) {
-    case 'idle':
-    case 'error':
+    case 'Idle':
+    case 'Error':
       return <>{props.children}</>;
-    case 'loading':
+    case 'Loading':
       return (
         <>
           <div
@@ -47,9 +49,10 @@ const LoadingButtonBase = (
     onClick?: () => void;
     loadingState: LoadingState;
     type?: 'submit';
-    variant?: 'text' | 'outlined' | 'contained';
+    variant?: ButtonTypeMap['props']['variant'];
     startIcon?: ReactElement;
     css?: EmotionStyles;
+    formId?: ClientUid;
   }>
 ) => (
   <Button
@@ -61,12 +64,13 @@ const LoadingButtonBase = (
         ? React.cloneElement(props.startIcon, {
             style: {
               // so button sizing doesn't change
-              visibility: props.loadingState === 'idle' ? 'visible' : 'hidden'
+              visibility: props.loadingState === 'Idle' ? 'visible' : 'hidden'
             }
           })
         : undefined
     }
-    disabled={props.loadingState === 'loading'}
+    disabled={props.loadingState === 'Loading'}
+    form={props.formId}
     {...extractEmotionCss(props)}
   >
     <ButtonContent loadingState={props.loadingState}>
@@ -79,20 +83,20 @@ export const LoadingButton = (
   props: PropsWithChildren<{
     onClick: () => Promise<void>;
     type?: 'submit';
-    variant?: 'text' | 'outlined' | 'contained';
+    variant?: ButtonTypeMap['props']['variant'];
     startIcon?: ReactElement;
     css?: EmotionStyles;
   }>
 ) => {
-  const [loading, setLoading] = useState<LoadingState>('idle');
+  const [loading, setLoading] = useState<LoadingState>('Idle');
   return (
     <LoadingButtonBase
       onClick={() => {
-        setLoading('loading');
+        setLoading('Loading');
         props
           .onClick()
-          .then(() => setLoading('idle'))
-          .catch(() => setLoading('error'));
+          .then(() => setLoading('Idle'))
+          .catch(() => setLoading('Error'));
       }}
       loadingState={loading}
       type={props.type}
@@ -110,9 +114,10 @@ export const LoadingStateButton = (
     onClick?: () => void;
     loadingState: LoadingState;
     type?: 'submit';
-    variant?: 'text' | 'outlined' | 'contained';
+    variant?: ButtonTypeMap['props']['variant'];
     startIcon?: ReactElement;
     css?: EmotionStyles;
+    formId?: ClientUid;
   }>
 ) => (
   <LoadingButtonBase
@@ -121,6 +126,7 @@ export const LoadingStateButton = (
     type={props.type}
     variant={props.variant}
     startIcon={props.startIcon}
+    formId={props.formId}
     {...extractEmotionCss(props)}
   >
     {props.children}

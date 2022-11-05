@@ -10,7 +10,7 @@ import orgarif.jooqlib.GenerateJooqAndDiff.sqlInsertFilesDir
 import orgarif.jooqlib.GenerateJooqAndDiff.sqlSchemaFilesDir
 
 fun main() {
-    System.setProperty("logback.configurationFile", "logback-jooq-tooling.xml")
+    System.setProperty("logback.configurationFile", "logback-jooq-lib.xml")
     ResetDatabase.resetDatabaseSchema(Configuration.configuration)
     ResetDatabase.insertInitialData(Configuration.configuration)
     ResetDatabase.logger.info {
@@ -19,7 +19,7 @@ fun main() {
 }
 
 object ResetDatabase {
-    // TODO[doc] generated directory can be deleted if there is a problem
+    // TODO[fmk][doc] generated directory can be deleted if there is a problem
     internal val logger = KotlinLogging.logger {}
 
     fun resetDatabaseSchema(configuration: DatabaseConfiguration) {

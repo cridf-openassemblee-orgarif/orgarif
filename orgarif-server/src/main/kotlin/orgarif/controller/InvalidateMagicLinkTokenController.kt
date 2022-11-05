@@ -9,7 +9,7 @@ import org.springframework.web.servlet.ModelAndView
 import orgarif.service.user.MagicLinkTokenService
 
 @Controller
-class InvalidateMagicLinkTokenController(val magicLinkTokenService: MagicLinkTokenService) {
+class InvalidateMagicLinkTokenController(private val magicLinkTokenService: MagicLinkTokenService) {
 
     private val logger = KotlinLogging.logger {}
 
@@ -24,7 +24,7 @@ class InvalidateMagicLinkTokenController(val magicLinkTokenService: MagicLinkTok
         mav: ModelAndView
     ): ModelAndView {
         val magicToken = request.getParameter(IndexController.magicTokenParameterName)
-        // TODO[secu] delete sesssions
+        // TODO[fmk][secu] delete sesssions
         if (magicToken != null) {
             logger.warn { "Invalidate magic token $magicToken" }
             magicLinkTokenService.invalidate(magicToken)

@@ -24,6 +24,6 @@ mailjet:
   api-key:
   secret-key:
 #---------------------------------------------------------------------------
-remote-endpoint:
-  expected-secu: ${REMOTE_ENDPOINT_EXCEPTED_SECU}
+remote-controller:
+  expected-secu: ${REMOTE_CONTROLLER_EXPECTED_SECU}
 #---------------------------------------------------------------------------

@@ -23,22 +23,21 @@ import orgarif.service.RandomService
 
 @Service
 class UserSessionService(
-    val cookieCsrfTokenRepository: CookieCsrfTokenRepository,
-    val userDao: UserDao,
-    val userSessionLogDao: UserSessionLogDao,
-    val applicationInstance: ApplicationInstance,
-    val dateService: DateService,
-    val randomService: RandomService
+    private val cookieCsrfTokenRepository: CookieCsrfTokenRepository,
+    private val userDao: UserDao,
+    private val userSessionLogDao: UserSessionLogDao,
+    private val dateService: DateService,
+    private val randomService: RandomService
 ) {
 
     val logger = KotlinLogging.logger {}
 
     data class SessionConvertion(val needsUpdate: Boolean, val session: UserSession)
 
-    // TODO[secu] ?
+    // TODO[fmk][secu] ?
     val sessionDuration = Duration.ofDays(100)
 
-    // TODO[secu] change cookie ?
+    // TODO[fmk][secu] change cookie ?
     fun authenticateUser(
         user: UserDao.Record,
         request: HttpServletRequest,
@@ -54,7 +53,7 @@ class UserSessionService(
         val ip = request.remoteAddr
         userSessionLogDao.insert(
             UserSessionLogDao.Record(
-                sessionId, session.id, user.id, applicationInstance.deploymentId, now, ip))
+                sessionId, session.id, user.id, ApplicationInstance.deploymentLogId, now, ip))
 
         val userSession = UserSession(sessionId, user.id, user.roles)
         val springAuthentication = UsernamePasswordAuthenticationToken(userSession, null, null)
@@ -69,13 +68,12 @@ class UserSessionService(
             it != null && it !is AnonymousAuthenticationToken && it.isAuthenticated
         }
 
-    fun hasRole(role: Role): Boolean {
+    fun hasRole(role: Role): Boolean =
         if (!isAuthenticated()) {
-            return false
+            false
+        } else {
+            role in getUserSession().roles
         }
-        val userSession = getUserSession()
-        return role in userSession.roles
-    }
 
     fun verifyRoleOrFail(role: Role?, logIp: String, logClass: Class<Any>) {
         if (role != null) {
@@ -94,9 +92,9 @@ class UserSessionService(
             when (it) {
                 // [doc] allows UserSession object evolution without breaking existing sessions
                 is Session -> convert(it).session
-                // TODO[secu] do 403 if anonymousUser
+                // TODO[fmk][secu] do 403 if anonymousUser
                 is AnonymousAuthenticationToken -> throw AppErrors.NotConnectedUser()
-                // TODO[secu] log ?
+                // TODO[fmk][secu] log ?
                 else -> throw IllegalStateException("Unexpected principal type ${it.javaClass} $it")
             }
         }

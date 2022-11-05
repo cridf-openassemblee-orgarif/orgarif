@@ -1,6 +1,5 @@
 /** @jsxImportSource @emotion/react */
 import { css } from '@emotion/react';
-import { Button } from '@mui/material';
 import * as React from 'react';
 import { ChangeEvent, useState } from 'react';
 import { appContext } from '../ApplicationContext';
@@ -8,15 +7,26 @@ import { useForm } from 'react-hook-form';
 import { ControlledTextInput } from '../component/base-component/ControlledTextInput';
 import { colors } from '../styles/vars';
 import { ControlledPasswordInput } from '../component/base-component/ControlledPasswordInput';
+import { PlainStringPassword } from '../generated/domain/security';
+import { asNominalString } from '../utils/nominal-class';
+import { LoadingState } from '../interfaces';
+import { LoadingStateButton } from '../component/base-component/LoadingButton';
+import { IsMailAlreadyTakenQueryResponse } from '../generated/query/queries';
 
-export interface RegisterFormDto {
+export interface RegisterFormInput {
+  mail: string;
+  password: PlainStringPassword;
+  displayName: string;
+}
+
+export interface RegisterFormRawInput {
   mail: string;
   password: string;
   displayName: string;
 }
 
 export const RegisterForm = (props: {
-  onSubmit: (dto: RegisterFormDto) => void;
+  onSubmit: (dto: RegisterFormInput) => Promise<void>;
   mailIsAlreadyTaken: boolean;
 }) => {
   const [mailIsAlreadyTaken, setMailIsAlreadyTaken] = useState(false);
@@ -26,7 +36,10 @@ export const RegisterForm = (props: {
     const mail = event.target.value;
     appContext
       .queryService()
-      .isMailAlreadyTakenQuery({ mail })
+      .send<IsMailAlreadyTakenQueryResponse>({
+        objectType: 'IsMailAlreadyTakenQuery',
+        mail
+      })
       .then(r => {
         setMailIsAlreadyTaken(r.alreadyTaken);
       });
@@ -35,9 +48,22 @@ export const RegisterForm = (props: {
     handleSubmit,
     control,
     formState: { errors }
-  } = useForm<RegisterFormDto>();
+  } = useForm<RegisterFormRawInput>();
+  const [loading, setLoading] = useState<LoadingState>('Idle');
   return (
-    <form onSubmit={handleSubmit(props.onSubmit)}>
+    <form
+      onSubmit={handleSubmit(input => {
+        setLoading('Loading');
+        props
+          .onSubmit({
+            mail: input.mail,
+            password: asNominalString(input.password),
+            displayName: input.displayName
+          })
+          .then(() => setLoading('Idle'))
+          .catch(() => setLoading('Error'));
+      })}
+    >
       <div
         css={css`
           margin: 10px 0;
@@ -86,7 +112,9 @@ export const RegisterForm = (props: {
           errors={errors}
         />
       </div>
-      <Button type="submit">Register</Button>
+      <LoadingStateButton loadingState={loading} type="submit">
+        Register
+      </LoadingStateButton>
     </form>
   );
 };

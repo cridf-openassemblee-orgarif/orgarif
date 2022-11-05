@@ -3,6 +3,8 @@ package orgarif.service
 import mu.KotlinLogging
 import okhttp3.Credentials
 import org.springframework.beans.factory.annotation.Value
+import org.springframework.http.HttpMethod
+import org.springframework.http.HttpStatus
 import org.springframework.stereotype.Service
 import orgarif.domain.ApplicationEnvironment
 import orgarif.service.MailService.MailJetMail
@@ -10,13 +12,13 @@ import orgarif.service.utils.ApplicationTaskExecutor
 
 @Service
 class DebugMailService(
-    @Value("\${mailjet.url}") val url: String,
-    @Value("\${mailjet.api-key}") val apiKey: String,
-    @Value("\${mailjet.secret-key}") val secretKey: String,
-    @Value("\${mail.devLogSender}") val devLogSenderMail: String,
-    @Value("\${mail.devDestination}") val devDestinationMail: String,
-    val httpService: HttpService,
-    val taskExecutor: ApplicationTaskExecutor
+    @Value("\${mailjet.url}") private val url: String,
+    @Value("\${mailjet.api-key}") private val apiKey: String,
+    @Value("\${mailjet.secret-key}") private val secretKey: String,
+    @Value("\${mail.devLogSender}") private val devLogSenderMail: String,
+    @Value("\${mail.devDestination}") private val devDestinationMail: String,
+    private val httpService: HttpService,
+    private val taskExecutor: ApplicationTaskExecutor
 ) {
 
     private val logger = KotlinLogging.logger {}
@@ -31,11 +33,11 @@ class DebugMailService(
 
     private data class DebugMailJetMessages(val Messages: List<DebugMailJetMessage>)
 
-    // TODO warn if devDestination empty at start (async)
+    // TODO[fmk] warn if devDestination empty at start (async)
     fun devMail(mailSubject: String, mailContent: String, monitoringCategory: String? = null) {
-        // TODO in conf instead ?
+        // TODO[fmk] in conf instead ?
         if (ApplicationInstance.env !in
-            setOf(ApplicationEnvironment.dev, ApplicationEnvironment.test)) {
+            setOf(ApplicationEnvironment.Dev, ApplicationEnvironment.Test)) {
             taskExecutor.execute {
                 val body =
                     DebugMailJetMessages(
@@ -47,24 +49,19 @@ class DebugMailService(
                                 mailContent,
                                 monitoringCategory)))
                 val json = MailService.mailJetObjectMapper.writeValueAsString(body)
-                val r =
-                    try {
-                        httpService.postAndReturnString(
+                try {
+                    val r =
+                        httpService.execute(
+                            HttpMethod.POST,
                             url,
                             json,
                             HttpService.Header.Authorization to
                                 Credentials.basic(apiKey, secretKey))
-                    } catch (e: Exception) {
-                        logger.error { "Failed to send debug mail" }
-                        throw e
+                    if (r.code != HttpStatus.OK) {
+                        logger.error { "Couldn't send mail :\n${r.bodyString}\n----\n$json\n----" }
                     }
-                if (r.code != 200) {
-                    val body =
-                        when (r) {
-                            is HttpService.MaybeStringResponse.EmptyResponse -> "[no response body]"
-                            is HttpService.MaybeStringResponse.StringResponse -> r.body
-                        }
-                    logger.error { "Couldn't send mail :\n$body\n----\n$json" }
+                } catch (e: Exception) {
+                    logger.error(e) { "Failed to send debug mail\n----\n$json\n----" }
                 }
             }
         }

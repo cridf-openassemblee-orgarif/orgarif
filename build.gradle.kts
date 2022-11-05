@@ -1,3 +1,14 @@
+plugins {
+    val kotlinVersion = "1.7.20"
+    kotlin("jvm") version kotlinVersion apply false
+    id("org.jetbrains.kotlin.plugin.spring") version kotlinVersion apply false
+}
+
+buildscript {
+    val kotlinVersion = "1.7.20"
+    dependencies { classpath(kotlin("gradle-plugin", version = kotlinVersion)) }
+}
+
 fun String.runCommand(workingDir: File = file("./")): String {
     val parts = this.split("\\s".toRegex())
     val proc =
@@ -40,14 +51,13 @@ tasks {
         into("build")
         doLast {
             val buildPropertiesFile by extra("${rootProject.buildDir}/build.properties")
-            val buildGitDiffFile by extra("${rootProject.buildDir}/git.diff")
             File(buildPropertiesFile)
                 .writeText(
                     """
                 shortGitRevision=$shortGitRevision
                 gitRevision=$gitRevision
-            """.trimIndent())
-            File(buildGitDiffFile).writeText("git diff HEAD".runCommand())
+            """
+                        .trimIndent())
             delete("build/kotlin")
         }
     }

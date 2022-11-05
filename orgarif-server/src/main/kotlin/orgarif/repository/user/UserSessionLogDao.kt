@@ -10,9 +10,9 @@ import orgarif.jooq.generated.Tables.USER_SESSION_LOG
 import orgarif.jooq.generated.tables.records.UserSessionLogRecord
 import orgarif.utils.toTypeId
 
-// TODO[user] : try to keep Spring id
+// TODO[fmk][user] : try to keep Spring id
 @Repository
-class UserSessionLogDao(val jooq: DSLContext) {
+class UserSessionLogDao(private val jooq: DSLContext) {
 
     data class Record(
         val id: UserSessionId,
@@ -37,7 +37,8 @@ class UserSessionLogDao(val jooq: DSLContext) {
     }
 
     fun fetchIdsByUserId(userId: UserId): List<UserSessionId> =
-        jooq.select(USER_SESSION_LOG.ID)
+        jooq
+            .select(USER_SESSION_LOG.ID)
             .from(USER_SESSION_LOG)
             .where(USER_SESSION_LOG.USER_ID.equal(userId.rawId))
             .fetch()

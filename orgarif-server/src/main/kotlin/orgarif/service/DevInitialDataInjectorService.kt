@@ -7,20 +7,24 @@ import orgarif.domain.PlainStringPassword
 import orgarif.domain.Role
 import orgarif.repository.user.UserDao
 import orgarif.service.user.UserService
+import orgarif.service.utils.TransactionIsolationService
 
 @Service
-// TODO naming fake / sample
+// TODO[fmk] naming fake / sample
 class DevInitialDataInjectorService(
-    @Value("\${mail.devDestination}") val developerDestinationMail: String,
-    val userDao: UserDao,
-    val dateService: DateService,
-    val randomService: RandomService,
-    val userService: UserService
+    @Value("\${mail.devDestination}") private val developerDestinationMail: String,
+    private val userDao: UserDao,
+    private val dateService: DateService,
+    private val randomService: RandomService,
+    private val userService: UserService,
+    private val transactionIsolationService: TransactionIsolationService
 ) {
 
-    fun initiateDevUsers() {
-        insertUser("user", false)
-        insertUser("admin", true)
+    fun initiateDevData() {
+        transactionIsolationService.execute {
+            insertUser("user", false)
+            insertUser("admin", true)
+        }
     }
 
     private fun insertUser(
@@ -36,8 +40,8 @@ class DevInitialDataInjectorService(
                     mail = mail,
                     username = username,
                     displayName = username,
-                    language = Language.en,
-                    roles = setOf(Role.user).let { if (admin) it + Role.admin else it },
+                    language = Language.En,
+                    roles = setOf(Role.User).let { if (admin) it + Role.Admin else it },
                     signupDate = now,
                     lastUpdate = now),
                 userService.hashPassword(PlainStringPassword(username)))
@@ -45,7 +49,7 @@ class DevInitialDataInjectorService(
     }
 
     fun devUserMail(username: String): String {
-        // FIXME double + if some + in conf (which is the case...) !
+        // FIXME[fmk] double + if some + in conf (which is the case...) !
         val arobaseIndex = developerDestinationMail.indexOf('@')
         val mailPrefix = developerDestinationMail.substring(0, arobaseIndex)
         val mailSuffix = developerDestinationMail.substring(arobaseIndex)

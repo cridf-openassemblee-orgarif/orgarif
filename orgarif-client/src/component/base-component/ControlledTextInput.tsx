@@ -5,7 +5,7 @@ import { FieldErrors } from 'react-hook-form/dist/types/errors';
 import * as React from 'react';
 import { ChangeEvent } from 'react';
 
-// TODO from former "manual" inputs :
+// TODO[fmk] from former "manual" inputs :
 // const [value, setValue] = useState(props.initialValue ?? ''); // ?? '' is needed for type=date
 // what happends with react-hook-form ?
 export const ControlledTextInput = <
@@ -42,14 +42,15 @@ export const ControlledTextInput = <
           {...field}
           onChange={e => {
             field.onChange(e);
-            // TODO version onChange on form via react-hook-form ?
+            // TODO[fmk] version onChange on form via react-hook-form ?
             if (props.onChange) {
               props.onChange(e);
             }
           }}
           label={props.label}
           error={!!props.errors[props.name]}
-          size={'small'}
+          size="small"
+          type={props.type}
           autoFocus={props.autoFocus}
           helperText={
             props.errors[props.name] && !props.hideErrorMessage

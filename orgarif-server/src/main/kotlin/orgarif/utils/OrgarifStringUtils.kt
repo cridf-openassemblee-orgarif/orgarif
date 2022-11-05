@@ -9,14 +9,14 @@ object OrgarifStringUtils {
 
     fun removeAccents(value: String) = StringUtils.stripAccents(value)
 
-    // TODO better impl
+    // TODO[fmk] better impl
     fun serializeUuid(uuid: UUID) = uuid.toString().replace("-", "")
     // problem with this implementation with initial 0 (for instance
     // 0c9e5f71-40c4-4059-b4d9-bb3ec200b6bd)
     // fun serializeUuid(uuid: UUID) = uuid.mostSignificantBits.toHexString() +
     // uuid.leastSignificantBits.toHexString()
 
-    // TODO better impl
+    // TODO[fmk] better impl
     fun deserializeUuid(id: String) =
         if (id.length == 32) {
             UUID.fromString(

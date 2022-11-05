@@ -1,4 +1,4 @@
-# TODO[config] no / in urls end ?
+# TODO[fmk][config] no / in urls end ?
 # configuration validation
 app.url: http://devorgarif:8300
 #---------------------------------------------------------------------------
@@ -21,6 +21,6 @@ mailjet:
   api-key:
   secret-key:
 #---------------------------------------------------------------------------
-remote-endpoint:
+remote-controller:
   expected-secu: remote-secu
 #---------------------------------------------------------------------------

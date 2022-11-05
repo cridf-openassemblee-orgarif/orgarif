@@ -10,35 +10,34 @@ import orgarif.service.ApplicationInstance
 // https://sdqali.in/blog/2016/11/02/handling-deserialization-errors-in-spring-redis-sessions/
 // and https://github.com/spring-projects/spring-session/issues/280
 // updated for spring boot 2...
-class SafeSessionRepository(val repository: FindByIndexNameSessionRepository<Session>) :
+class SafeSessionRepository(private val repository: FindByIndexNameSessionRepository<Session>) :
     FindByIndexNameSessionRepository<Session> by repository {
 
     private val logger = KotlinLogging.logger {}
 
-    override fun findById(id: String): Session? {
+    override fun findById(id: String): Session? =
         try {
-            return repository.findById(id)
+            repository.findById(id)
         } catch (e: Exception) {
-            if (ApplicationInstance.env == ApplicationEnvironment.dev) {
-                // TODO[user] better mess
+            if (ApplicationInstance.env == ApplicationEnvironment.Dev) {
+                // TODO[fmk][user] better mess
                 throw IllegalArgumentException(
                     "WARNING session deserialization problem - please prevent it for production", e)
             } else {
                 logger.error { "Deleting session $id" }
                 deleteById(id)
             }
-            return null
+            null
         }
-    }
 
     override fun save(session: Session) {
         try {
             repository.save(session)
         } catch (e: Exception) {
-            if (ApplicationInstance.env == ApplicationEnvironment.dev) {
-                // TODO[user] better mess
+            if (ApplicationInstance.env == ApplicationEnvironment.Dev) {
+                // TODO[fmk][user] better mess
                 throw IllegalArgumentException(
-                    "ATTENTION problème de serialization de session - ça pique en prod", e)
+                    "WARNING session deserialization problem - please prevent it for production", e)
             } else {
                 logger.error { "Deleting session ${session.id}" }
                 deleteById(session.id)

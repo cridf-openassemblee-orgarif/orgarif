@@ -18,12 +18,12 @@ import orgarif.utils.OrgarifStringUtils
 
 @Service
 class UserService(
-    val userDao: UserDao,
-    val userMailLogDao: UserMailLogDao,
-    val dateService: DateService,
-    val randomService: RandomService,
-    val notificationService: NotificationService,
-    val passwordEncoder: PasswordEncoder
+    private val userDao: UserDao,
+    private val userMailLogDao: UserMailLogDao,
+    private val dateService: DateService,
+    private val randomService: RandomService,
+    private val notificationService: NotificationService,
+    private val passwordEncoder: PasswordEncoder
 ) {
 
     private val logger = KotlinLogging.logger {}
@@ -34,9 +34,10 @@ class UserService(
         fun cleanMail(dirtyMail: String) =
             dirtyMail
                 .lowercase()
+                .replace("\t", "")
                 .replace(" ", "")
-                // TODO [doc] a standard email could contain accents but in practice it's always
-                // a user input error
+                // TODO[fmk][doc] a standard email could contain accents but in practice it's
+                // always a user input error
                 .let { OrgarifStringUtils.removeAccents(it) }
 
         fun cleanMailAndReturnDirty(dirtyMail: String) = let {
@@ -62,17 +63,17 @@ class UserService(
                 username = null,
                 displayName = displayName.trim(),
                 language = language,
-                roles = setOf(Role.user),
+                roles = setOf(Role.User),
                 signupDate = now,
                 lastUpdate = now)
         userDao.insert(user, hashedPassword)
         if (dirtyMail != null) {
             userMailLogDao.insert(
                 UserMailLogDao.Record(
-                    randomService.id(), user.id, dirtyMail, AuthLogType.dirtyMail, now))
+                    randomService.id(), user.id, dirtyMail, AuthLogType.DirtyMail, now))
         }
         notificationService.notify(
-            "${user.mail} just suscribed.", NotificationService.Channel.newUser)
+            "${user.mail} just suscribed.", NotificationService.Channel.NewUser)
         return user
     }
 
@@ -82,22 +83,22 @@ class UserService(
         val now = dateService.now()
         // [doc] Is done first on purpose. If user has tried to use é@gmail.com, it has been change
         // to e@gmail.com, if he retries we should re-log
-        // TODO need integration tests !
+        // TODO[fmk] need integration tests !
         if (newDirtyMail != null) {
             userMailLogDao.insert(
                 UserMailLogDao.Record(
-                    randomService.id(), userId, newDirtyMail, AuthLogType.dirtyMail, now))
+                    randomService.id(), userId, newDirtyMail, AuthLogType.DirtyMail, now))
         }
         if (newMail == formerMail) {
-            // TODO user should be warned (maybe he tried a cleaned email)
+            // TODO[fmk] user should be warned (maybe he tried a cleaned email)
             return
         }
-        // TODO make logs...
+        // TODO[fmk] make logs...
         logger.info { "Update mail $userId $formerMail => $newMail" }
         userDao.updateMail(userId, newMail, now)
         userMailLogDao.insert(
             UserMailLogDao.Record(
-                randomService.id(), userId, formerMail, AuthLogType.formerMail, now))
+                randomService.id(), userId, formerMail, AuthLogType.FormerMail, now))
     }
 
     fun hashPassword(password: PlainStringPassword): HashedPassword {

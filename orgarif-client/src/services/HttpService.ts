@@ -1,8 +1,8 @@
 import { appContext } from '../ApplicationContext';
-import { RequestErrorId } from '../domain/ids';
-import { Instant } from '../domain/time';
+import { Instant } from '../domain/date';
+import { NominalString } from '../utils/nominal-class';
 
-type RequestType = 'get' | 'post';
+type RequestType = 'Get' | 'Post';
 
 export const displayErrorMessage = 'DisplayError';
 
@@ -10,6 +10,8 @@ export interface HttpResponse {
   status: number;
   body?: any;
 }
+
+type RequestErrorId = NominalString<'RequestErrorId'>;
 
 export interface RequestError {
   id?: RequestErrorId;
@@ -24,10 +26,10 @@ export class HttpService {
   public credentials: RequestCredentials = 'same-origin';
 
   public get = (url: string, getParams?: any) =>
-    this.fetchAndDeserialize('get', url, getParams);
+    this.fetchAndDeserialize('Get', url, getParams);
 
   public post = (url: string, bodyObject?: any) =>
-    this.fetchAndDeserialize('post', url, null, JSON.stringify(bodyObject));
+    this.fetchAndDeserialize('Post', url, null, JSON.stringify(bodyObject));
 
   public fetch(
     requestType: RequestType,

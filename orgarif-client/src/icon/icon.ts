@@ -1,7 +1,7 @@
 export interface IconProps {
   size: number;
   sizeAxe: 'width' | 'height';
-  // FIXME ?
+  // FIXME[fmk] ?
   sizeUnit?: 'px' | '%';
 }
 

@@ -30,7 +30,8 @@ TestUuidId f89ac98cacc54eea98561cc9658a6663
 TestPrefixUuidId bf23ea927f8a4e14a9a11b6604f979eb
 TestStringId 03LOeGFj5ZibyaqdISrO
 TestPrefixStringId rSSPouSEbuXmda1rHUFC
-        """.trimIndent(),
+        """
+                .trimIndent(),
             service.getIdsString())
     }
 

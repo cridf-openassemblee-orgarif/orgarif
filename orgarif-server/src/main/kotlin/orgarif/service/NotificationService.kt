@@ -6,17 +6,20 @@ import orgarif.domain.ApplicationEnvironment
 import orgarif.service.utils.ApplicationTaskExecutor
 
 @Service
-class NotificationService(val taskExecutor: ApplicationTaskExecutor, val httpService: HttpService) {
+class NotificationService(
+    private val taskExecutor: ApplicationTaskExecutor,
+    val httpService: HttpService
+) {
 
     private val logger = KotlinLogging.logger {}
 
     enum class Channel {
-        newUser,
-        info,
+        NewUser,
+        Info,
     }
 
     fun notify(message: String, channel: Channel) {
-        if (ApplicationInstance.env == ApplicationEnvironment.prod) {
+        if (ApplicationInstance.env == ApplicationEnvironment.Prod) {
             taskExecutor.execute {}
         } else {
             logger.info { "[${channel.name}] $message" }

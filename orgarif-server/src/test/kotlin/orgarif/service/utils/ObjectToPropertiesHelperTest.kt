@@ -13,7 +13,8 @@ internal class ObjectToPropertiesHelperTest {
                     ${diff1.map { "${it.first}: ${it.second}" }}
                     Found in value and not in expected :
                     ${diff2.map { "${it.first}: ${it.second}" }}
-                """.trimIndent())
+                """
+                        .trimIndent())
             }
             throw AssertionError("Lists contains the same items - order difference")
         }

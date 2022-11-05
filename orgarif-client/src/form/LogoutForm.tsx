@@ -10,12 +10,12 @@ import { colors } from '../styles/vars';
 const logoutPath = '/logout';
 
 export const LogoutForm = () => {
-  const [loading, setLoading] = useState<LoadingState>('idle');
+  const [loading, setLoading] = useState<LoadingState>('Idle');
   return (
     <form
       method="post"
       action={logoutPath}
-      onSubmit={() => setLoading('loading')}
+      onSubmit={() => setLoading('Loading')}
     >
       <input
         type="hidden"

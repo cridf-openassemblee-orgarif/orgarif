@@ -10,12 +10,12 @@ import {
 import { LoadingState } from '../interfaces';
 
 export const ComponentsDemonstration = () => {
-  const [loading, setLoading] = useState<LoadingState>('idle');
+  const [loading, setLoading] = useState<LoadingState>('Idle');
   const onClick = () => {
-    setLoading('loading');
+    setLoading('Loading');
     const p = new Promise<void>((resolve, reject) => {
       setTimeout(() => {
-        setLoading('idle');
+        setLoading('Idle');
         resolve();
       }, 1000);
     });

@@ -1,4 +1,4 @@
-export type NotificationLevel = 'warning' | 'info';
+export type NotificationLevel = 'Warning' | 'Info';
 
 export class NotificationService {
   public notifications = [] as [
@@ -8,8 +8,8 @@ export class NotificationService {
 
   public displayNotification = (
     message: string,
-    level: NotificationLevel = 'info'
+    level: NotificationLevel = 'Info'
   ) => {
-    // TODO !
+    // TODO[fmk] !
   };
 }

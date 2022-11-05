@@ -5,38 +5,39 @@ import { useState } from 'react';
 import { useRecoilState } from 'recoil';
 import { appContext } from '../ApplicationContext';
 import { MainContainer } from '../container/MainContainer';
-import { RegisterCommand } from '../domain/commands';
-import { RegisterResult } from '../domain/user';
 import { Errors } from '../errors';
-import { RegisterForm, RegisterFormDto } from '../form/RegisterForm';
+import { RegisterForm, RegisterFormInput } from '../form/RegisterForm';
 import { state } from '../state/state';
 import { assertUnreachable } from '../utils';
+import { RegisterCommandResponse } from '../generated/command/commands';
+import { RegisterResult } from '../generated/domain/user';
 
 export const RegisterView = () => {
   const [userInfos, setUserInfos] = useRecoilState(state.userInfos);
   const [registerResult, setRegisterResult] = useState<RegisterResult>();
-  const register = (registerInput: RegisterFormDto) => {
-    const registerCommand: RegisterCommand = registerInput;
+  const register = (input: RegisterFormInput) =>
     appContext
       .commandService()
-      .registerCommand(registerCommand)
+      .send<RegisterCommandResponse>({
+        objectType: 'RegisterCommand',
+        ...input
+      })
       .then(r => {
         switch (r.result) {
-          case 'registered':
+          case 'Registered':
             if (!r.userinfos) {
               throw Errors._db434940();
             }
             appContext.csrfTokenService().refreshToken();
             setUserInfos(r.userinfos);
             break;
-          case 'mailAlreadyExists':
+          case 'MailAlreadyExists':
             break;
           default:
             assertUnreachable(r.result);
         }
         setRegisterResult(r.result);
       });
-  };
   return (
     <MainContainer>
       <div
@@ -58,10 +59,10 @@ export const RegisterView = () => {
               width: 400px;
             `}
           >
-            {registerResult !== 'registered' && !userInfos && (
+            {registerResult !== 'Registered' && !userInfos && (
               <RegisterForm
                 onSubmit={register}
-                mailIsAlreadyTaken={registerResult === 'mailAlreadyExists'}
+                mailIsAlreadyTaken={registerResult === 'MailAlreadyExists'}
               />
             )}
             {userInfos && (

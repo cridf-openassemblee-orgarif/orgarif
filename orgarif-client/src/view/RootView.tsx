@@ -5,6 +5,7 @@ import { MainContainer } from '../container/MainContainer';
 import { RouteLink } from '../routing/RouteLink';
 import { state } from '../state/state';
 import { ComponentsDemonstration } from '../component/ComponentsDemonstration';
+import { RouteLinkDemonstration } from '../component/RouteLinkDemonstration';
 
 export const RootView = () => {
   const [userInfos] = useRecoilState(state.userInfos);
@@ -21,6 +22,16 @@ export const RootView = () => {
       )}
       {userInfos && <div>You're connected</div>}
       <ComponentsDemonstration />
+      <RouteLinkDemonstration />
+      {userInfos && userInfos.roles.includes('Admin') && (
+        <RouteLink
+          route={{
+            name: 'UsersManagementRoute'
+          }}
+        >
+          Users management
+        </RouteLink>
+      )}
     </MainContainer>
   );
 };

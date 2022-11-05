@@ -1,6 +1,9 @@
 rootProject.name = "orgarif"
 
-include("orgarif-client", "jooq-lib", "orgarif-server")
+include("jooq-lib", "orgarif-client", "orgarif-server", "tooling", "kt-to-ts-annotations")
+
+// TODO quel impact ?
+// enableFeaturePreview("GRADLE_METADATA")
 
 pluginManagement {
     repositories {

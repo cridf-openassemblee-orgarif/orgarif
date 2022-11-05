@@ -9,7 +9,7 @@ import orgarif.jooq.generated.tables.records.MagicLinkTokenRecord
 import orgarif.utils.toTypeId
 
 @Repository
-class MagicLinkTokenDao(val jooq: DSLContext) {
+class MagicLinkTokenDao(private val jooq: DSLContext) {
 
     data class Record(
         val token: String,
@@ -32,13 +32,15 @@ class MagicLinkTokenDao(val jooq: DSLContext) {
     }
 
     fun fetchOrNull(magicToken: String): Record? =
-        jooq.selectFrom(MAGIC_LINK_TOKEN)
+        jooq
+            .selectFrom(MAGIC_LINK_TOKEN)
             .where(MAGIC_LINK_TOKEN.TOKEN.equal(magicToken))
             .fetchOne()
             ?.let(this::map)
 
     fun updateValidity(token: String, validity: Boolean, lastUpdateDate: Instant) {
-        jooq.update(MAGIC_LINK_TOKEN)
+        jooq
+            .update(MAGIC_LINK_TOKEN)
             .set(MAGIC_LINK_TOKEN.VALIDITY, validity)
             .set(MAGIC_LINK_TOKEN.LAST_UPDATE, lastUpdateDate)
             .where(MAGIC_LINK_TOKEN.TOKEN.equal(token))

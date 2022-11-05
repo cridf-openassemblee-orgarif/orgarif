@@ -4,7 +4,10 @@ import mu.KotlinLogging
 import org.springframework.core.task.TaskExecutor
 
 // TODO[fmk] executorName vs the name of executor thread
-class ApplicationTaskExecutor(val taskExecutor: TaskExecutor, val executorName: String) {
+class ApplicationTaskExecutor(
+    private val taskExecutor: TaskExecutor,
+    private val executorName: String
+) {
 
     private val logger = KotlinLogging.logger {}
 

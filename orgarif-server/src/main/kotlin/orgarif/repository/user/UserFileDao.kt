@@ -13,15 +13,15 @@ import orgarif.jooq.generated.tables.records.UserFileRecord
 import orgarif.utils.toTypeId
 
 @Repository
-class UserFileDao(val jooq: DSLContext) {
+class UserFileDao(private val jooq: DSLContext) {
 
     enum class UserFileField(val field: TableField<UserFileRecord, *>, val isDataField: Boolean) {
-        id(USER_FILE.ID, false),
-        userId(USER_FILE.USER_ID, false),
-        file(USER_FILE.FILE, true),
-        contentType(USER_FILE.CONTENT_TYPE, false),
-        originalFilename(USER_FILE.ORIGINAL_FILENAME, false),
-        uploadDate(USER_FILE.UPLOAD_DATE, false)
+        Id(USER_FILE.ID, false),
+        UserId(USER_FILE.USER_ID, false),
+        File(USER_FILE.FILE, true),
+        ContentType(USER_FILE.CONTENT_TYPE, false),
+        OriginalFilename(USER_FILE.ORIGINAL_FILENAME, false),
+        UploadDate(USER_FILE.UPLOAD_DATE, false)
     }
 
     val nonDataFields by lazy {
@@ -48,19 +48,20 @@ class UserFileDao(val jooq: DSLContext) {
         }
 
     fun fetchReferenceOrNull(id: UserFileId): UserFileReference? =
-        jooq.select(nonDataFields)
+        jooq
+            .select(nonDataFields)
             .from(USER_FILE)
             .where(USER_FILE.ID.equal(id.rawId))
             .fetchOne()
             ?.let { mapReference(it) }
 
-    fun fetchReferencesByUserId(userId: UserId): List<UserFileReference> {
-        return jooq.select(nonDataFields)
+    fun fetchReferencesByUserId(userId: UserId): List<UserFileReference> =
+        jooq
+            .select(nonDataFields)
             .from(USER_FILE)
             .where(USER_FILE.USER_ID.equal(userId.rawId))
             .toList()
             .map { mapReference(it) }
-    }
 
     fun count(): Int = jooq.selectCount().from(USER_FILE).fetchSingle().let { it.value1() }
 
