@@ -40,11 +40,9 @@ export const NavBar = () => {
           {isTabletAndMore() && userInfos && <LogoutForm />}
         </Toolbar>
       </AppBar>
-      {userInfos || location.pathname !== '/' || isMobile() ? (
-        <Header shrinked={true} />
-      ) : (
-        <Header />
-      )}
+      <Header
+        shrinked={!!userInfos || location.pathname !== '/' || isMobile()}
+      />
     </Box>
   );
 };

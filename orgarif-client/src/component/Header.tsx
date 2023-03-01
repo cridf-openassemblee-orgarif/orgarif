@@ -5,44 +5,29 @@ import * as React from 'react';
 import * as breakpoint from '../styles/breakpoints';
 
 interface HeaderProps {
-  shrinked?: boolean;
+  shrinked: boolean;
 }
 
-export const Header = React.memo(({ shrinked = false }: HeaderProps) => {
-  return (
-    <>
-      {shrinked ? (
+export const Header = React.memo(({ shrinked }: HeaderProps) =>
+  shrinked ? (
+    <Typography variant="h1" component="h1" align="center" css={smallHeader}>
+      ORGARIF
+    </Typography>
+  ) : (
+    <Slide direction="down" in={true} timeout={400} mountOnEnter unmountOnExit>
+      <div>
         <Typography
           variant="h1"
           component="h1"
           align="center"
-          css={smallHeader}
+          css={baseHeaderStyle}
         >
           ORGARIF
         </Typography>
-      ) : (
-        <Slide
-          direction="down"
-          in={true}
-          timeout={400}
-          mountOnEnter
-          unmountOnExit
-        >
-          <div>
-            <Typography
-              variant="h1"
-              component="h1"
-              align="center"
-              css={baseHeaderStyle}
-            >
-              ORGARIF
-            </Typography>
-          </div>
-        </Slide>
-      )}
-    </>
-  );
-});
+      </div>
+    </Slide>
+  )
+);
 
 const baseHeaderStyle = css`
   font-size: 23vw;
