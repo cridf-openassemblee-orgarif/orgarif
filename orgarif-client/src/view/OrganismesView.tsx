@@ -1,5 +1,4 @@
 /** @jsxImportSource @emotion/react */
-import { css } from '@emotion/react';
 import { Fade } from '@mui/material';
 import * as React from 'react';
 import { FiltersContainer } from '../container/FiltersContainer';

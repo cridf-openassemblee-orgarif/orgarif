@@ -39,9 +39,6 @@ export const isDepartement = (object: unknown): object is Departement => {
 
 export const FilterChip = ({ filter, showIcon, isSticky }: FilterChipProps) => {
   const [activeFilters, setActiveFilters] = useRecoilState(state.activeFilters);
-  const [shrinkSectionFilters, setShrinkSectionFilters] = useRecoilState(
-    state.filtersSectionShrinked
-  );
   const navigate = useNavigate();
 
   // Regex to check if libelle contains parentheses and if yes,
@@ -73,7 +70,6 @@ export const FilterChip = ({ filter, showIcon, isSticky }: FilterChipProps) => {
               f.id !== id
           )
         ]);
-    setShrinkSectionFilters(true);
     navigate('/organismes');
   };
 

@@ -57,7 +57,7 @@ export const RightPanel = (props: { organisme: OrganismeDto }) => {
         .apply(0, deliberationsByYear.map((item: any) => item[0]).map(Number))
         .toString()
     );
-  }, []);
+  }, [deliberationsByYear]);
   useEventListener('wheel', () => {
     setScrolling(true);
   });
