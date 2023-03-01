@@ -22,7 +22,12 @@ import { useNavigate } from 'react-router-dom';
 import { useRecoilState, useRecoilValue, useSetRecoilState } from 'recoil';
 import { appContext } from '../ApplicationContext';
 import { TableHeader } from '../component/table/TableHeader';
-import { DepartementId, TypeStructureId } from '../domain/ids';
+import {
+  DepartementId,
+  NatureJuridiqueId,
+  SecteurId,
+  TypeStructureId
+} from '../domain/ids';
 import { OrganismeListDto } from '../domain/organisme';
 import { Edit } from '../icon/collection/Edit';
 import { Share } from '../icon/collection/Share';
@@ -96,18 +101,25 @@ export const TableContainer = () => {
     appContext
       .queryService()
       .listOrganismesQuery({
+        // TODO pas comme ça
         departementIds: activeFilters
           .map((f: any) => departements.find(el => el.id === f.id)?.id)
-          .filter(Boolean),
+          .filter(Boolean) as DepartementId[],
         natureJuridiqueIds: activeFilters
           .map((f: any) => natureJuridiques.find(el => el.id === f.id)?.id)
-          .filter(Boolean),
+          .filter(Boolean) as NatureJuridiqueId[],
         secteurIds: activeFilters
           .map((f: any) => secteurs.find(el => el.id === f.id)?.id)
-          .filter(Boolean),
+          .filter(Boolean) as SecteurId[],
         typeStructureIds: activeFilters
           .map((f: any) => typeStructures.find(el => el.id === f.id)?.id)
-          .filter(Boolean)
+          .filter(Boolean) as TypeStructureId[],
+        // TODO
+        page: 0,
+        // TODO
+        itemsNumber: 25,
+        // TODO
+        orderBy: 'nom'
       })
       .then(r => {
         setRows(r.organismes);
@@ -382,9 +394,11 @@ const HeaderChipWithState = () => {
         onClick={() => console.log(userSelection)}
         css={css`
           justify-self: center;
+
           :hover {
             background-color: ${colors.errorRed};
             color: ${colors.white};
+
             svg {
               fill: ${colors.white};
             }
