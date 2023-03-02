@@ -10,7 +10,7 @@ export abstract class NominalNumber<T extends string> {
 
 export const asString = (v: NominalString<any>) => v as unknown as string;
 
-export const asNumber = (v: NominalNumber<any>) => v as unknown as string;
+export const asNumber = (v: NominalNumber<any>) => v as unknown as number;
 
 export const instanciateNominalString = <T extends NominalString<any>>(
   value: string
