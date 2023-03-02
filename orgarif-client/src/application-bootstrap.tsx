@@ -21,21 +21,22 @@ const muiTheme = createTheme({
     // htmlFontSize: fonts.baseSize
   }
 });
-// TODO[tmpl] ok to use ! ?
-const root = createRoot(document.getElementById('root')!);
-root.render(
-  <RecoilRoot>
-    <Global styles={[globalStyles]} />
-    <StylesProvider injectFirst>
-      <StyledEngineProvider injectFirst>
-        <ThemeProvider theme={muiTheme}>
-          <SnackbarProvider maxSnack={3}>
-            <Root>
-              <ApplicationRouter />
-            </Root>
-          </SnackbarProvider>
-        </ThemeProvider>
-      </StyledEngineProvider>
-    </StylesProvider>
-  </RecoilRoot>
-);
+const root = document.getElementById('root');
+if (root) {
+  createRoot(root).render(
+    <RecoilRoot>
+      <Global styles={[globalStyles]} />
+      <StylesProvider injectFirst>
+        <StyledEngineProvider injectFirst>
+          <ThemeProvider theme={muiTheme}>
+            <SnackbarProvider maxSnack={3}>
+              <Root>
+                <ApplicationRouter />
+              </Root>
+            </SnackbarProvider>
+          </ThemeProvider>
+        </StyledEngineProvider>
+      </StylesProvider>
+    </RecoilRoot>
+  );
+}
