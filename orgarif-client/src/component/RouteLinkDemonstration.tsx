@@ -2,7 +2,7 @@
 import { css } from '@emotion/react';
 import * as React from 'react';
 import { colors } from '../styles/vars';
-import { RouteLink, MatchRouteLink } from '../routing/RouteLink';
+import { MatchRouteLink, RouteLink } from '../routing/RouteLink';
 
 const styles = {
   link: css`

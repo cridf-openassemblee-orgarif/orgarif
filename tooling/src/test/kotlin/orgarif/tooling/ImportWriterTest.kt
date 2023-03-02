@@ -3,7 +3,7 @@ package orgarif.tooling
 import orgarif.tooling.kttots.ImportWriter.relativePath
 import orgarif.tooling.kttots.KtToTsConfiguration
 import java.nio.file.Paths
-import org.junit.jupiter.api.Assertions.*
+import org.junit.jupiter.api.Assertions.assertEquals
 import org.junit.jupiter.api.Test
 
 internal class ImportWriterTest {

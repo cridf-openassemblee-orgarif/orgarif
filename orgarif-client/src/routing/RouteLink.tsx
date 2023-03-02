@@ -8,7 +8,7 @@ import { assertUnreachable, extractEmotionCss } from '../utils';
 import { buildPath } from './routing-utils';
 import { Button, ButtonTypeMap } from '@mui/material';
 import { getValue } from '../utils/nominal-class';
-import { cx, css } from '@emotion/css';
+import { css, cx } from '@emotion/css';
 
 const linkDefaultElement = 'Link';
 
