@@ -58,7 +58,6 @@ class UserService(
             UserDao.Record(
                 id = randomService.id(),
                 mail = cleanMail,
-                username = null,
                 displayName = displayName.trim(),
                 language = language,
                 roles = setOf(Role.User),

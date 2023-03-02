@@ -40,7 +40,6 @@ class DevInitialDataInjectorService(
                 UserDao.Record(
                     id = randomService.id(),
                     mail = mail,
-                    username = username,
                     displayName = username,
                     language = Language.En,
                     roles = setOf(Role.User).let { if (admin) it + Role.Admin else it },

@@ -16,7 +16,6 @@ object TestData {
         return UserDao.Record(
             id = userId,
             mail = "mail",
-            username = "username",
             displayName = "displayName",
             language = Language.En,
             roles = setOf(Role.User),

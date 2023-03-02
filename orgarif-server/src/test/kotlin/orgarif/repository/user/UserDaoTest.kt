@@ -40,7 +40,7 @@ internal class UserDaoTest(
         userDao.insert(u1, HashedPassword("sdv"))
         val u2 =
             TestData.dummyUser(randomService.id())
-                .copy(mail = "another mail", username = "another", displayName = "another")
+                .copy(mail = "another mail", displayName = "another")
         userDao.insert(u2, HashedPassword("sdv"))
         Assertions.assertThrows(MailAlreadyRegisteredException::class.java) {
             userDao.updateMail(u2.id, u1.mail, dateService.now())

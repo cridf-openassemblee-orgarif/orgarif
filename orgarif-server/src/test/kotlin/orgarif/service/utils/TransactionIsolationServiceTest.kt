@@ -38,9 +38,9 @@ internal class TransactionIsolationServiceTest(
 
         val recordNotIsolated =
             TestData.dummyUser(randomService.id())
-                .copy(mail = "not isolated", username = "not isolated")
+                .copy(mail = "not isolated")
         val recordIsolated =
-            TestData.dummyUser(randomService.id()).copy(mail = "isolated", username = "isolated")
+            TestData.dummyUser(randomService.id()).copy(mail = "isolated")
         val transactionTemplate = TransactionTemplate(transactionManager)
         try {
             transactionTemplate.execute {

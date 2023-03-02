@@ -21,7 +21,6 @@ class UserDao(private val jooq: DSLContext) {
     data class Record(
         val id: UserId,
         val mail: String,
-        val username: String?,
         val displayName: String,
         val language: Language,
         val roles: Set<Role>,
@@ -36,7 +35,6 @@ class UserDao(private val jooq: DSLContext) {
             AppUserRecord().apply {
                 id = r.id.rawId
                 mail = r.mail
-                username = r.username
                 password = hashedPassword.hash
                 displayName = r.displayName
                 language = r.language.name
@@ -134,7 +132,6 @@ class UserDao(private val jooq: DSLContext) {
         Record(
             id = r.id.toTypeId(),
             mail = r.mail,
-            username = r.username,
             displayName = r.displayName,
             language = Language.valueOf(r.language),
             roles = r.roles.map { Role.valueOf(it) }.toSet(),
