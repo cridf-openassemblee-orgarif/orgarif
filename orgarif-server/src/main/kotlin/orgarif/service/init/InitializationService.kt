@@ -6,6 +6,7 @@ import orgarif.jooqlib.ResetDatabase
 import orgarif.repository.log.DeploymentLogDao
 import orgarif.service.utils.ApplicationInstance
 import orgarif.service.utils.DateService
+import java.util.Locale
 import java.util.TimeZone
 import javax.sql.DataSource
 import jooqutils.DatabaseConfiguration
@@ -46,6 +47,7 @@ class InitializationService(
 
     init {
         TimeZone.setDefault(TimeZone.getTimeZone("UTC"))
+        Locale.setDefault(Locale.ENGLISH)
         when (ApplicationInstance.env) {
             ApplicationEnvironment.Dev -> {
                 if (databaseIfEmpty(dataSource)) {

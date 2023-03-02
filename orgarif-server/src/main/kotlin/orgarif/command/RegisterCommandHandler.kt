@@ -48,7 +48,7 @@ class RegisterCommandHandler(
                     command.mail.trim(),
                     userService.hashPassword(command.password),
                     command.displayName,
-                    localeService.selectLanguage(request.locales))
+                    localeService.selectLanguage(request.locales.toList()))
             } catch (e: MailAlreadyRegisteredException) {
                 return RegisterCommandResponse(RegisterResult.MailAlreadyExists, null)
             }
