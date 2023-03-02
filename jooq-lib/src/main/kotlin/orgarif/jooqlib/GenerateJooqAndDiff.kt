@@ -7,7 +7,7 @@ import jooqutils.JooqGeneration
 import mu.KotlinLogging
 
 fun main() {
-    System.setProperty("logback.configurationFile", "logback-jooq-tooling.xml")
+    System.setProperty("logback.configurationFile", "logback-jooq-lib.xml")
     GenerateJooqAndDiff.generate()
     GenerateJooqAndDiff.logger.info { "[OK] Jooq generation" }
 }

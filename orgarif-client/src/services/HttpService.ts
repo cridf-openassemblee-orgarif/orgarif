@@ -1,6 +1,6 @@
 import { appContext } from '../ApplicationContext';
-import { RequestErrorId } from '../domain/ids';
 import { Instant } from '../domain/date';
+import { NominalString } from '../utils/nominal-class';
 
 type RequestType = 'get' | 'post';
 
@@ -10,6 +10,8 @@ export interface HttpResponse {
   status: number;
   body?: any;
 }
+
+type RequestErrorId = NominalString<'RequestErrorId'>;
 
 export interface RequestError {
   id?: RequestErrorId;

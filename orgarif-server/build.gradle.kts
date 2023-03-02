@@ -1,15 +1,15 @@
 import org.jetbrains.kotlin.gradle.tasks.KotlinCompile
 
 plugins {
-    val kotlinVersion = "1.7.0"
-    kotlin("jvm") version kotlinVersion
+    kotlin("jvm")
     id("io.spring.dependency-management") version "1.0.12.RELEASE"
     id("org.springframework.boot") version "2.7.1"
     // so we don't need to open Spring components classes
-    id("org.jetbrains.kotlin.plugin.spring") version kotlinVersion
+    id("org.jetbrains.kotlin.plugin.spring")
+    id("com.google.devtools.ksp") version "1.7.10-1.0.6"
 }
 
-val kotlinVersion = "1.7.0"
+val kotlinVersion = "1.7.10"
 
 kotlin {
     sourceSets.all {
@@ -50,16 +50,34 @@ repositories {
     mavenCentral()
     maven("https://repo.spring.io/milestone")
     maven("https://repo.spring.io/snapshot")
+    gradlePluginPortal()
 }
 
 configurations.all { exclude("junit") }
 
+ksp {
+    arg("ktToTs:destinationSrc", "$rootDir/orgarif-client/src")
+    arg("ktToTs:generatedDirectory", "generated")
+    arg("ktToTs:mappings", "$rootDir/orgarif-client/kt-to-ts-mappings.json")
+    arg(
+        "ktToTs:nominalStringMappings",
+        "orgarif.domain.SerializeAsString" +
+            "|orgarif.domain.OrgarifId" +
+            "|orgarif.domain.PlainStringPassword")
+    // can  arg("ktToTsNominalStringImport", "utils/nominal-class.ts.MyNominalString")
+    arg("ktToTs:nominalStringImport", "utils/nominal-class.ts")
+    arg("ktToTs:debugFile", "$rootDir/orgarif-client/build/debug-generation.html")
+}
+
 dependencies {
     implementation(project(":jooq-lib"))
+    implementation(project(":kt-to-ts-annotations"))
 
     // kotlin
-    implementation("org.jetbrains.kotlin:kotlin-stdlib:$kotlinVersion")
+    implementation(kotlin("stdlib-jdk8"))
     implementation("org.jetbrains.kotlin:kotlin-reflect:$kotlinVersion")
+    implementation(project(":tooling"))
+    ksp(project(":tooling"))
 
     // spring
     implementation("org.springframework.boot:spring-boot-starter-web")

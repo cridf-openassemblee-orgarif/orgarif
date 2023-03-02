@@ -1,34 +1,10 @@
 import { appContext } from '../ApplicationContext';
-import {
-  DevLoginCommand,
-  DevLoginCommandResponse,
-  LoginCommand,
-  LoginCommandResponse,
-  RegisterCommand,
-  RegisterCommandResponse
-} from '../domain/commands';
+import { Command, CommandResponse } from '../generated/command/commands';
 
 export class CommandService {
-  public devLoginCommand = (
-    command: DevLoginCommand
-  ): Promise<DevLoginCommandResponse> =>
-    this.command('DevLoginCommand', command);
-
-  public loginCommand = (
-    command: LoginCommand
-  ): Promise<LoginCommandResponse> => this.command('LoginCommand', command);
-
-  public registerCommand = (
-    command: RegisterCommand
-  ): Promise<RegisterCommandResponse> =>
-    this.command('RegisterCommand', command);
-
-  private command = <R>(commandName: string, command?: object): Promise<R> =>
+  public send = <R extends CommandResponse>(command: Command): Promise<R> =>
     appContext
       .httpService()
-      .post('/command', {
-        ...command,
-        objectType: commandName
-      })
+      .post('/command', command)
       .then(r => r.body);
 }

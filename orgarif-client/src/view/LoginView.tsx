@@ -6,12 +6,16 @@ import { useState } from 'react';
 import { useRecoilState } from 'recoil';
 import { appContext } from '../ApplicationContext';
 import { MainContainer } from '../container/MainContainer';
-import { LoginResult, UserInfos } from '../domain/user';
-import { LoginForm, LoginFormDto } from '../form/LoginForm';
+import { LoginForm, LoginFormInput } from '../form/LoginForm';
 import { state } from '../state/state';
 import { assertUnreachable } from '../utils';
 import { Errors } from '../errors';
 import { useGoTo } from '../routing/useGoTo';
+import { LoginResult, UserInfos } from '../generated/domain/user';
+import {
+  DevLoginCommandResponse,
+  LoginCommandResponse
+} from '../generated/command/commands';
 
 export const LoginView = () => {
   const [userInfos, setUserInfos] = useRecoilState(state.userInfos);
@@ -27,10 +31,13 @@ export const LoginView = () => {
       }
     );
   };
-  const login = (data: LoginFormDto) =>
+  const login = (input: LoginFormInput) =>
     appContext
       .commandService()
-      .loginCommand(data)
+      .send<LoginCommandResponse>({
+        objectType: 'LoginCommand',
+        ...input
+      })
       .then(r => {
         setLoginResult(r.result);
         switch (r.result) {
@@ -50,7 +57,10 @@ export const LoginView = () => {
   const devLogin = (username: string) =>
     appContext
       .commandService()
-      .devLoginCommand({ username })
+      .send<DevLoginCommandResponse>({
+        objectType: 'DevLoginCommand',
+        username
+      })
       .then(r => connect(r.userinfos));
   return (
     <MainContainer>

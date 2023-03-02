@@ -1,21 +1,10 @@
 import { appContext } from '../ApplicationContext';
-import {
-  IsMailAlreadyTakenQuery,
-  IsMailAlreadyTakenQueryResponse
-} from '../domain/queries';
+import { Query, QueryResponse } from '../generated/query/queries';
 
 export class QueryService {
-  public isMailAlreadyTakenQuery = (
-    query: IsMailAlreadyTakenQuery
-  ): Promise<IsMailAlreadyTakenQueryResponse> =>
-    this.query('IsMailAlreadyTakenQuery', query);
-
-  private query = <R>(queryName: string, query?: object): Promise<R> =>
+  public send = <R extends QueryResponse>(query: Query): Promise<R> =>
     appContext
       .httpService()
-      .get('/query', {
-        ...query,
-        objectType: queryName
-      })
+      .get('/query', query)
       .then(r => r.body);
 }

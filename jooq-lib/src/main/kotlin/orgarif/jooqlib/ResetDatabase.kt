@@ -10,7 +10,7 @@ import jooqutils.DatabaseInitializer
 import mu.KotlinLogging
 
 fun main() {
-    System.setProperty("logback.configurationFile", "logback-jooq-tooling.xml")
+    System.setProperty("logback.configurationFile", "logback-jooq-lib.xml")
     ResetDatabase.resetDatabaseSchema(Configuration.configuration)
     ResetDatabase.insertInitialData(Configuration.configuration)
     ResetDatabase.logger.info {

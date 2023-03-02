@@ -5,21 +5,23 @@ import { useState } from 'react';
 import { useRecoilState } from 'recoil';
 import { appContext } from '../ApplicationContext';
 import { MainContainer } from '../container/MainContainer';
-import { RegisterCommand } from '../domain/commands';
-import { RegisterResult } from '../domain/user';
 import { Errors } from '../errors';
-import { RegisterForm, RegisterFormDto } from '../form/RegisterForm';
+import { RegisterForm, RegisterFormInput } from '../form/RegisterForm';
 import { state } from '../state/state';
 import { assertUnreachable } from '../utils';
+import { RegisterCommandResponse } from '../generated/command/commands';
+import { RegisterResult } from '../generated/domain/user';
 
 export const RegisterView = () => {
   const [userInfos, setUserInfos] = useRecoilState(state.userInfos);
   const [registerResult, setRegisterResult] = useState<RegisterResult>();
-  const register = (registerInput: RegisterFormDto) => {
-    const registerCommand: RegisterCommand = registerInput;
+  const register = (input: RegisterFormInput) =>
     appContext
       .commandService()
-      .registerCommand(registerCommand)
+      .send<RegisterCommandResponse>({
+        objectType: 'RegisterCommand',
+        ...input
+      })
       .then(r => {
         switch (r.result) {
           case 'registered':
@@ -36,7 +38,6 @@ export const RegisterView = () => {
         }
         setRegisterResult(r.result);
       });
-  };
   return (
     <MainContainer>
       <div

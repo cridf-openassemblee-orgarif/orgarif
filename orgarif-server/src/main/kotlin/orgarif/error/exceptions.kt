@@ -7,6 +7,7 @@ import org.apache.commons.lang3.exception.ExceptionUtils
 import org.slf4j.event.Level
 
 // FIXME[tmpl] can remove ? ReadableStackTrace ? and ReadableStackTraceSerializer ?
+// @Shared
 data class RequestError(
     val id: RequestErrorId,
     val status: Int,

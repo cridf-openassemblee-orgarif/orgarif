@@ -5,12 +5,14 @@ import orgarif.domain.LoginResult
 import orgarif.domain.PlainStringPassword
 import orgarif.domain.RegisterResult
 import orgarif.domain.UserInfos
+import kttots.Shared
 
+@Shared
 @JsonTypeInfo(
     use = JsonTypeInfo.Id.NAME, include = JsonTypeInfo.As.PROPERTY, property = "objectType")
 sealed class Command
 
-sealed class CommandResponse
+@Shared sealed class CommandResponse
 
 object EmptyCommandResponse : CommandResponse()
 
