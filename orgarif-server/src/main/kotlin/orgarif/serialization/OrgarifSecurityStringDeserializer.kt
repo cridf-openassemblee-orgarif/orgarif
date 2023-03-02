@@ -15,9 +15,9 @@ class OrgarifSecurityStringDeserializer<T : OrgarifSecurityString>(
             OrgarifSecurityStringClass: KClass<T>,
             value: String
         ): T =
-            OrgarifSerializationPrefixUtils.removePrefix(OrgarifSecurityStringClass, value).let {
-                OrgarifSecurityStringClass.constructors.first().call(it)
-            }
+            OrgarifSerializationPrefixUtils.removePrefix(
+                    OrgarifSecurityStringClass, value)
+                .let { OrgarifSecurityStringClass.constructors.first().call(it) }
     }
 
     override fun deserialize(p: JsonParser, ctxt: DeserializationContext): T =

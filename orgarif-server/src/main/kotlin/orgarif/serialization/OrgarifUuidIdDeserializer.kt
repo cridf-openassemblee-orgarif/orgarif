@@ -7,11 +7,15 @@ import orgarif.domain.OrgarifUuidId
 import orgarif.utils.OrgarifStringUtils
 import kotlin.reflect.KClass
 
-class OrgarifUuidIdDeserializer<T : OrgarifUuidId>(val orgarifUuidIdClass: KClass<T>) :
-    StdDeserializer<T>(orgarifUuidIdClass.java) {
+class OrgarifUuidIdDeserializer<T : OrgarifUuidId>(
+    val orgarifUuidIdClass: KClass<T>
+) : StdDeserializer<T>(orgarifUuidIdClass.java) {
 
     companion object {
-        fun <T : OrgarifUuidId> deserialize(orgarifUuidIdClass: KClass<T>, value: String): T =
+        fun <T : OrgarifUuidId> deserialize(
+            orgarifUuidIdClass: KClass<T>,
+            value: String
+        ): T =
             OrgarifSerializationPrefixUtils.removePrefix(orgarifUuidIdClass, value)
                 .let { OrgarifStringUtils.deserializeUuid(it) }
                 .let { orgarifUuidIdClass.constructors.first().call(it) }

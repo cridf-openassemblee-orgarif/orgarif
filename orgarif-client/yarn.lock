@@ -6704,39 +6704,6 @@ __metadata:
   languageName: node
   linkType: hard
 
-"fmk-base-client@workspace:.":
-  version: 0.0.0-use.local
-  resolution: "fmk-base-client@workspace:."
-  dependencies:
-    "@emotion/babel-preset-css-prop": ^11.2.0
-    "@emotion/css": ^11.10.0
-    "@emotion/react": ^11.9.3
-    "@emotion/styled": ^11.9.3
-    "@mui/icons-material": ^5.8.4
-    "@mui/material": ^5.10.4
-    "@mui/styles": ^5.10.3
-    "@mui/x-data-grid": ^5.17.2
-    "@trivago/prettier-plugin-sort-imports": ^3.4.0
-    "@types/node": ^18.0.1
-    "@types/react": ^18.0.14
-    "@types/react-dom": ^18.0.6
-    es6-promise: ^4.2.8
-    es6-shim: ^0.35.6
-    es7-shim: ^6.0.0
-    http-proxy-middleware: ^2.0.6
-    notistack: ^2.0.5
-    prettier: ^2.7.1
-    react: ^18.2.0
-    react-dom: ^18.2.0
-    react-hook-form: ^7.33.1
-    react-router-dom: ^6.3.0
-    react-scripts: 5.0.1
-    recoil: ^0.7.4
-    typescript: ^4.7.4
-    whatwg-fetch: ^3.6.2
-  languageName: unknown
-  linkType: soft
-
 "follow-redirects@npm:^1.0.0":
   version: 1.15.2
   resolution: "follow-redirects@npm:1.15.2"
@@ -12464,6 +12431,39 @@ __metadata:
   checksum: cc4f0404bf8d6ae1a166e0e64f3f409b423f4d1274d8c02814a59a5529f07db6cd070a749664141b992b2c1af337fa9bb451a460a43bb9bcddc49f235d3115aa
   languageName: node
   linkType: hard
+
+"template-sample-client@workspace:.":
+  version: 0.0.0-use.local
+  resolution: "template-sample-client@workspace:."
+  dependencies:
+    "@emotion/babel-preset-css-prop": ^11.2.0
+    "@emotion/css": ^11.10.0
+    "@emotion/react": ^11.9.3
+    "@emotion/styled": ^11.9.3
+    "@mui/icons-material": ^5.8.4
+    "@mui/material": ^5.10.4
+    "@mui/styles": ^5.10.3
+    "@mui/x-data-grid": ^5.17.2
+    "@trivago/prettier-plugin-sort-imports": ^3.4.0
+    "@types/node": ^18.0.1
+    "@types/react": ^18.0.14
+    "@types/react-dom": ^18.0.6
+    es6-promise: ^4.2.8
+    es6-shim: ^0.35.6
+    es7-shim: ^6.0.0
+    http-proxy-middleware: ^2.0.6
+    notistack: ^2.0.5
+    prettier: ^2.7.1
+    react: ^18.2.0
+    react-dom: ^18.2.0
+    react-hook-form: ^7.33.1
+    react-router-dom: ^6.3.0
+    react-scripts: 5.0.1
+    recoil: ^0.7.4
+    typescript: ^4.7.4
+    whatwg-fetch: ^3.6.2
+  languageName: unknown
+  linkType: soft
 
 "tempy@npm:^0.6.0":
   version: 0.6.0

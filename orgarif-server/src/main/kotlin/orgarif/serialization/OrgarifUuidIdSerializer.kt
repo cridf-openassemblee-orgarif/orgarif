@@ -6,7 +6,8 @@ import com.fasterxml.jackson.databind.ser.std.StdSerializer
 import orgarif.domain.OrgarifUuidId
 import orgarif.utils.OrgarifStringUtils
 
-class OrgarifUuidIdSerializer : StdSerializer<OrgarifUuidId>(OrgarifUuidId::class.java) {
+class OrgarifUuidIdSerializer :
+    StdSerializer<OrgarifUuidId>(OrgarifUuidId::class.java) {
 
     companion object {
         fun serialize(value: OrgarifUuidId) =
@@ -14,6 +15,9 @@ class OrgarifUuidIdSerializer : StdSerializer<OrgarifUuidId>(OrgarifUuidId::clas
                 OrgarifStringUtils.serializeUuid(value.rawId)
     }
 
-    override fun serialize(value: OrgarifUuidId, gen: JsonGenerator, provider: SerializerProvider) =
-        gen.writeString(serialize(value))
+    override fun serialize(
+        value: OrgarifUuidId,
+        gen: JsonGenerator,
+        provider: SerializerProvider
+    ) = gen.writeString(serialize(value))
 }

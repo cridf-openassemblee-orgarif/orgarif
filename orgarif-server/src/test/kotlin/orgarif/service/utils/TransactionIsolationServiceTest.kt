@@ -36,11 +36,8 @@ internal class TransactionIsolationServiceTest(
         PROPAGATION_REQUIRES_NEW or PROPAGATION_NESTED
          */
 
-        val recordNotIsolated =
-            TestData.dummyUser(randomService.id())
-                .copy(mail = "not isolated")
-        val recordIsolated =
-            TestData.dummyUser(randomService.id()).copy(mail = "isolated")
+        val recordNotIsolated = TestData.dummyUser(randomService.id()).copy(mail = "not isolated")
+        val recordIsolated = TestData.dummyUser(randomService.id()).copy(mail = "isolated")
         val transactionTemplate = TransactionTemplate(transactionManager)
         try {
             transactionTemplate.execute {

@@ -50,7 +50,7 @@ class InitializationService(
         Locale.setDefault(Locale.ENGLISH)
         when (ApplicationInstance.env) {
             ApplicationEnvironment.Dev -> {
-                if (databaseIfEmpty(dataSource)) {
+                if (databaseIsEmpty(dataSource)) {
                     ResetDatabase.resetDatabaseSchema(databaseConfiguration)
                     if (insertInitialData) {
                         ResetDatabase.insertInitialData(databaseConfiguration)
@@ -89,7 +89,7 @@ class InitializationService(
         verifySpringProfilesConsistency()
     }
 
-    fun databaseIfEmpty(datasource: DataSource): Boolean {
+    fun databaseIsEmpty(datasource: DataSource): Boolean {
         val r =
             datasource.connection
                 .createStatement()

@@ -1,5 +1,13 @@
 package orgarif.tooling
 
+import com.google.devtools.ksp.processing.CodeGenerator
+import com.google.devtools.ksp.processing.KSPLogger
+import com.google.devtools.ksp.processing.Resolver
+import com.google.devtools.ksp.processing.SymbolProcessor
+import com.google.devtools.ksp.symbol.KSAnnotated
+import com.google.devtools.ksp.symbol.KSClassDeclaration
+import com.google.devtools.ksp.symbol.KSPropertyDeclaration
+import com.google.devtools.ksp.validate
 import orgarif.tooling.kttots.ClassMapper
 import orgarif.tooling.kttots.ClassParser
 import orgarif.tooling.kttots.ClassWriter
@@ -9,14 +17,6 @@ import orgarif.tooling.kttots.ImportWriter.relativePath
 import orgarif.tooling.kttots.KtToTsConfiguration
 import orgarif.tooling.kttots.ShellRunner
 import orgarif.tooling.kttots.prettyPrint
-import com.google.devtools.ksp.processing.CodeGenerator
-import com.google.devtools.ksp.processing.KSPLogger
-import com.google.devtools.ksp.processing.Resolver
-import com.google.devtools.ksp.processing.SymbolProcessor
-import com.google.devtools.ksp.symbol.KSAnnotated
-import com.google.devtools.ksp.symbol.KSClassDeclaration
-import com.google.devtools.ksp.symbol.KSPropertyDeclaration
-import com.google.devtools.ksp.validate
 import java.nio.file.Files
 import java.time.LocalDateTime
 import kotlin.io.path.absolutePathString

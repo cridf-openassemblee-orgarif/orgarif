@@ -9,7 +9,8 @@ object Configuration {
 
     val configuration by lazy {
         val additionalConfig =
-            System.getenv("ORGARIF_DEV_ADDITIONAL_CONFIG") ?: ("dev-" + System.getenv("USER"))
+            System.getenv("ORGARIF_DEV_ADDITIONAL_CONFIG")
+                ?: ("dev-" + System.getenv("USER"))
         configuration("application-dev.yaml", "application-$additionalConfig.yaml")
     }
 
@@ -25,7 +26,8 @@ object Configuration {
                     .toTypedArray())
         val host = config.getValue("database.host")
         val allowRemoteHost =
-            System.getenv("ORGARIF_DB_TOOLING_ALLOW_REMOTE_HOST")?.let { it == "true" } ?: false
+            System.getenv("ORGARIF_DB_TOOLING_ALLOW_REMOTE_HOST")?.let { it == "true" }
+                ?: false
         // TODO[tmpl] test ip not extension !
         if (host.endsWith(".com") && !allowRemoteHost) {
             throw RuntimeException("Warning run database operations on $host")

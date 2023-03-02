@@ -35,7 +35,9 @@ object GenerateJooqAndDiff {
         Paths.get(rootDir).also { logger.info { "Project dir is $it" } }
     }
 
-    val webServerResourcesDir by lazy { projectDir.resolve("orgarif-server/src/main/resources") }
+    val webServerResourcesDir by lazy {
+        projectDir.resolve("orgarif-server/src/main/resources")
+    }
 
     val sqlSchemaFilesDir by lazy { webServerResourcesDir.resolve("data/schema") }
 
