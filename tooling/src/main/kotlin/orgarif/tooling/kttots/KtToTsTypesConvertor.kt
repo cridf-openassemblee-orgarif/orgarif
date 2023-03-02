@@ -1,4 +1,4 @@
-package orgarif.tooling
+package orgarif.tooling.kttots
 
 import com.google.devtools.ksp.symbol.KSTypeReference
 

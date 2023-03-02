@@ -1,4 +1,4 @@
-package orgarif.tooling
+package orgarif.tooling.kttots
 
 object Debug {
 

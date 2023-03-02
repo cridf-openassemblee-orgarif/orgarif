@@ -1,11 +1,11 @@
-package orgarif.tooling
+package orgarif.tooling.kttots
 
 import com.google.devtools.ksp.symbol.KSClassDeclaration
 import com.google.devtools.ksp.symbol.KSFile
 import com.google.devtools.ksp.symbol.KSPropertyDeclaration
 import com.google.devtools.ksp.symbol.KSType
 import com.google.devtools.ksp.symbol.KSTypeReference
-import orgarif.tooling.ClassMapper.mapProperty
+import orgarif.tooling.kttots.ClassMapper.mapProperty
 
 // TODO[tmpl] name
 object ClassParser {

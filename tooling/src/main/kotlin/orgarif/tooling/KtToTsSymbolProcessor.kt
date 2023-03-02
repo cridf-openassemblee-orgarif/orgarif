@@ -9,8 +9,14 @@ import com.google.devtools.ksp.symbol.KSClassDeclaration
 import com.google.devtools.ksp.symbol.KSFile
 import com.google.devtools.ksp.symbol.KSPropertyDeclaration
 import com.google.devtools.ksp.validate
-import orgarif.tooling.ImportWriter.fileToPath
-import orgarif.tooling.ImportWriter.relativePath
+import orgarif.tooling.kttots.ClassMapper
+import orgarif.tooling.kttots.ClassParser
+import orgarif.tooling.kttots.ClassWriter
+import orgarif.tooling.kttots.Debug
+import orgarif.tooling.kttots.ImportWriter.fileToPath
+import orgarif.tooling.kttots.ImportWriter.relativePath
+import orgarif.tooling.kttots.KtToTsConfiguration
+import orgarif.tooling.kttots.prettyPrint
 import java.nio.file.Files
 import java.time.LocalDateTime
 import kttots.Shared
