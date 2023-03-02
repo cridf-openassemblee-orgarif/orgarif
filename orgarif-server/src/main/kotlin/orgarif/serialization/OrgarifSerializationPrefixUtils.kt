@@ -19,18 +19,11 @@ object OrgarifSerializationPrefixUtils {
         itemClass.annotations
             .mapNotNull { it as? Prefix }
             .firstOrNull()
-<<<<<<< HEAD
-            ?.value?.let { prefix ->
-                if (!value.startsWith(prefix)) {
-                    throw IllegalArgumentException(
-                        "Missing id prefix $prefix on $itemClass : $value")
-=======
             ?.value
             ?.let { prefix ->
                 if (!value.startsWith(prefix)) {
                     throw IllegalArgumentException(
                         "Missing id prefix $prefix on $itemClass: $value")
->>>>>>> template
                 }
                 value.substring(prefix.length + 1)
             }

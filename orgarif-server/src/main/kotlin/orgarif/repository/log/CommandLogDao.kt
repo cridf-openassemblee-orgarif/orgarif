@@ -50,40 +50,6 @@ class CommandLogDao(private val jooq: DSLContext) {
         jooq.insertInto(COMMAND_LOG).set(jr).execute()
     }
 
-<<<<<<< HEAD
-    fun updateExceptionStackTrace(id: CommandLogId, exceptionStackTrace: String, endDate: Instant) {
-        jooq
-            .update(COMMAND_LOG)
-            .set(COMMAND_LOG.EXCEPTION_STACK_TRACE, exceptionStackTrace)
-            .set(COMMAND_LOG.END_DATE, endDate)
-            .where(COMMAND_LOG.ID.equal(id.rawId))
-            .execute()
-    }
-
-    fun updateResult(
-        id: CommandLogId,
-        user: Pair<UserId, UserSessionId>?,
-        resultingIds: String,
-        jsonResult: String?,
-        endDate: Instant
-    ) {
-        jooq
-            .update(COMMAND_LOG)
-            .also {
-                if (user != null) {
-                    it.set(COMMAND_LOG.USER_ID, user.first.rawId)
-                    it.set(COMMAND_LOG.USER_SESSION_ID, user.second.rawId)
-                }
-            }
-            .set(COMMAND_LOG.RESULTING_IDS, resultingIds)
-            .set(COMMAND_LOG.JSON_RESULT, jsonResult)
-            .set(COMMAND_LOG.END_DATE, endDate)
-            .where(COMMAND_LOG.ID.equal(id.rawId))
-            .execute()
-    }
-
-=======
->>>>>>> template
     private fun map(r: CommandLogRecord) =
         Record(
             id = r.id.toTypeId(),

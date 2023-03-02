@@ -14,7 +14,11 @@ import org.springframework.web.bind.annotation.GetMapping
 import org.springframework.web.servlet.ModelAndView
 import orgarif.config.Routes
 import orgarif.domain.ApplicationBootstrapData
+import orgarif.domain.Departement
+import orgarif.domain.NatureJuridique
 import orgarif.domain.OrganismeCategories
+import orgarif.domain.Secteur
+import orgarif.domain.TypeStructure
 import orgarif.domain.UserInfos
 import orgarif.repository.DepartementDao
 import orgarif.repository.EluDao
@@ -23,34 +27,27 @@ import orgarif.repository.SecteurDao
 import orgarif.repository.TypeStructureDao
 import orgarif.repository.user.UserDao
 import orgarif.serialization.Serializer.serialize
+import orgarif.service.user.LocaleService
 import orgarif.service.user.MagicLinkTokenService
+import orgarif.service.user.UserService
 import orgarif.service.user.UserSessionService
 import orgarif.service.utils.ApplicationInstance
 import orgarif.utils.OrgarifStringUtils
 
 @Controller
 class IndexController(
-<<<<<<< HEAD
-    @Value("\${assets.webpackDevPort}") val assetsWebpackDevPort: String,
-    @Value("\${assets.useBuildFiles}") val assetsUseBuildFiles: Boolean,
-    val userDao: UserDao,
-    val departementDao: DepartementDao,
-    val natureJuridiqueDao: NatureJuridiqueDao,
-    val secteurDao: SecteurDao,
-    val typeStructureDao: TypeStructureDao,
-    val eluDao: EluDao,
-    val localeService: LocaleService,
-    val userService: UserService,
-    val applicationInstance: ApplicationInstance,
-    val magicLinkTokenService: MagicLinkTokenService,
-    val userSessionService: UserSessionService
-=======
     @Value("\${assets.webpackDevPort}") private val assetsWebpackDevPort: String,
     @Value("\${assets.useBuildFiles}") private val assetsUseBuildFiles: Boolean,
     private val userDao: UserDao,
+    private val departementDao: DepartementDao,
+    private val natureJuridiqueDao: NatureJuridiqueDao,
+    private val secteurDao: SecteurDao,
+    private val typeStructureDao: TypeStructureDao,
+    private val eluDao: EluDao,
+    private val localeService: LocaleService,
+    private val userService: UserService,
     private val magicLinkTokenService: MagicLinkTokenService,
     private val userSessionService: UserSessionService
->>>>>>> template
 ) {
 
     companion object {
@@ -115,22 +112,19 @@ class IndexController(
             } else null
         val categories =
             OrganismeCategories(
-                departementDao.fetchAll(),
-                natureJuridiqueDao.fetchAll(),
-                secteurDao.fetchAll(),
-                typeStructureDao.fetchAll())
+                departementDao.fetchAll().map {
+                    Departement(it.id, it.libelle, it.code, it.status)
+                },
+                natureJuridiqueDao.fetchAll().map { NatureJuridique(it.id, it.libelle, it.status) },
+                secteurDao.fetchAll().map { Secteur(it.id, it.libelle, it.status) },
+                typeStructureDao.fetchAll().map { TypeStructure(it.id, it.libelle, it.status) },
+            )
         val elus = eluDao.fetchAll()
         mav.model["bootstrapData"] =
-<<<<<<< HEAD
             serialize(ApplicationBootstrapData(ApplicationInstance.env, userInfos, categories))
-        mav.model["deploymentId"] = applicationInstance.deploymentId.rawId
-        mav.model["gitRevisionLabel"] = applicationInstance.gitRevisionLabel
-=======
-            serialize(ApplicationBootstrapData(ApplicationInstance.env, userInfos))
         mav.model["deploymentId"] =
             OrgarifStringUtils.serializeUuid(ApplicationInstance.deploymentLogId.rawId)
         mav.model["gitRevisionLabel"] = ApplicationInstance.gitRevisionLabel
->>>>>>> template
         mav.model["jsAssets"] = jsAssets(request)
         mav.model["cssAssets"] = cssAssets
         mav.model["statics"] = statics

@@ -2,11 +2,16 @@ package orgarif.service
 
 import mu.KotlinLogging
 import org.springframework.beans.factory.annotation.Value
+import org.springframework.http.HttpMethod
+import org.springframework.http.HttpStatus
 import org.springframework.stereotype.Service
 import orgarif.domain.Civilite
 import orgarif.repository.EluDao
 import orgarif.repository.RepresentantDao
 import orgarif.serialization.Serializer
+import orgarif.service.utils.DateService
+import orgarif.service.utils.HttpService
+import orgarif.service.utils.random.RandomService
 import orgarif.utils.OrgarifStringUtils.deserializeUuid
 import orgarif.utils.toTypeId
 
@@ -17,7 +22,7 @@ class ElusSynchronizationService(
     val representantDao: RepresentantDao,
     val randomService: RandomService,
     val httpService: HttpService,
-    val dateService: DateService
+    val dateService: DateService,
 ) {
 
     private val logger = KotlinLogging.logger {}
@@ -45,13 +50,9 @@ class ElusSynchronizationService(
         logger.info { "Synchronize elus avec SIGER" }
         val elusJons =
             try {
-                val r = httpService.getString(elusSynchronizationUrl)
-                if (r.code == 200) {
-                    when (r) {
-                        is HttpService.MaybeStringResponse.EmptyResponse ->
-                            throw RuntimeException("$r")
-                        is HttpService.MaybeStringResponse.StringResponse -> r.body
-                    }
+                val r = httpService.execute(HttpMethod.GET, elusSynchronizationUrl)
+                if (r.code == HttpStatus.OK) {
+                    r.bodyString ?: throw RuntimeException("$r")
                 } else {
                     logger.error { "Could not synchronize élus. ${r.code}" }
                     return

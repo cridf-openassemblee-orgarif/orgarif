@@ -4,14 +4,14 @@ import org.springframework.stereotype.Service
 import orgarif.domain.ItemStatus
 import orgarif.domain.TypeStructureId
 import orgarif.repository.TypeStructureDao
-import orgarif.service.DateService
-import orgarif.service.RandomService
+import orgarif.service.utils.DateService
+import orgarif.service.utils.random.RandomService
 
 @Service
 class CreateTypeStructureCommandHandler(
-    val typeStructureDao: TypeStructureDao,
-    val randomService: RandomService,
-    val dateService: DateService
+    private val typeStructureDao: TypeStructureDao,
+    private val randomService: RandomService,
+    private val dateService: DateService
 ) : CommandHandler.Handler<CreateTypeStructureCommand, CreateTypeStructureCommandResponse>() {
 
     override fun handle(command: CreateTypeStructureCommand): CreateTypeStructureCommandResponse {

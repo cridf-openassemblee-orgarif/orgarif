@@ -16,11 +16,7 @@ mailjet:
   api-key:
   secret-key:
 #---------------------------------------------------------------------------
-<<<<<<< HEAD
 elusSynchronizationUrl:
-remote-endpoint:
-=======
 remote-controller:
->>>>>>> template
   expected-secu: remote-secu
 #---------------------------------------------------------------------------

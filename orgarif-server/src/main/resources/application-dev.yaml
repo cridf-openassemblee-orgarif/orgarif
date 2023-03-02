@@ -1,10 +1,10 @@
 # TODO[tmpl][config] no / in urls end ?
 # configuration validation
-app.url: http://devorgarif:8200
+app.url: http://devorgarif:8300
 #---------------------------------------------------------------------------
 insertInitialData: true
 #---------------------------------------------------------------------------
-server.port: 8200
+server.port: 8300
 database:
   host: localhost
   port: 5432
@@ -14,18 +14,14 @@ database:
 #---------------------------------------------------------------------------
 assets:
   useBuildFiles: false
-  webpackDevPort: 3200
+  webpackDevPort: 3300
   webpackDevHost: localhost
 #---------------------------------------------------------------------------
 mailjet:
   api-key:
   secret-key:
 #---------------------------------------------------------------------------
-<<<<<<< HEAD
 elusSynchronizationUrl: http://127.0.0.1:8080/api/publicdata/v2/elus
-remote-endpoint:
-=======
 remote-controller:
->>>>>>> template
   expected-secu: remote-secu
 #---------------------------------------------------------------------------

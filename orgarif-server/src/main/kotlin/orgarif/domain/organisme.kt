@@ -48,7 +48,7 @@ data class LienDeliberationDto(
 data class InstanceDto(
     val id: InstanceId,
     val nom: String,
-    val nombreRepresentants: Int?,
+    val nombreRepresentants: Int,
     val presenceSuppleants: Boolean,
     val designationRepresentants: List<DesignationDto?>,
     val designationSuppleants: List<DesignationDto?>,
@@ -76,7 +76,7 @@ data class OrganismeDto(
     val natureJuridiqueId: NatureJuridiqueId?,
     val secteurId: SecteurId?,
     val typeStructureId: TypeStructureId?,
-    val nombreRepresentants: Int?,
+    val nombreRepresentants: Int,
     val presenceSuppleants: Boolean,
     val designationRepresentants: List<DesignationDto?>,
     val designationSuppleants: List<DesignationDto?>,

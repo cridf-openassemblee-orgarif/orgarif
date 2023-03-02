@@ -59,11 +59,7 @@ class UserService(
                 mail = cleanMail,
                 displayName = displayName.trim(),
                 language = language,
-<<<<<<< HEAD
                 roles = emptySet(),
-=======
-                roles = setOf(Role.User),
->>>>>>> template
                 signupDate = now,
                 lastUpdate = now)
         userDao.insert(user, hashedPassword)

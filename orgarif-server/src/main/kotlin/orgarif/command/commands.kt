@@ -1,8 +1,8 @@
 package orgarif.command
 
 import com.fasterxml.jackson.annotation.JsonTypeInfo
-<<<<<<< HEAD
 import java.time.LocalDate
+import kttots.Shared
 import orgarif.domain.DeliberationId
 import orgarif.domain.DepartementId
 import orgarif.domain.DesignationId
@@ -10,9 +10,6 @@ import orgarif.domain.DesignationType
 import orgarif.domain.InstanceId
 import orgarif.domain.ItemStatus
 import orgarif.domain.LienDeliberationId
-=======
-import kttots.Shared
->>>>>>> template
 import orgarif.domain.LoginResult
 import orgarif.domain.NatureJuridiqueId
 import orgarif.domain.OrganismeId

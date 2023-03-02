@@ -7,19 +7,21 @@ import jooqutils.DatabaseConfiguration
 import mu.KotlinLogging
 import org.springframework.beans.factory.annotation.Value
 import org.springframework.core.env.Environment
+import org.springframework.core.task.TaskExecutor
 import org.springframework.stereotype.Service
 import orgarif.domain.ApplicationEnvironment
 import orgarif.jooqlib.Configuration
 import orgarif.jooqlib.ResetDatabase
 import orgarif.repository.log.DeploymentLogDao
+import orgarif.service.ElusSynchronizationService
 import orgarif.service.utils.ApplicationInstance
 import orgarif.service.utils.DateService
 
 @Service
 class InitializationService(
     dataSource: DataSource,
-    devInitialDataInjectorService: DevInitialDataInjectorService,
     deploymentLogDao: DeploymentLogDao,
+    devInitialDataInjectorService: DevInitialDataInjectorService,
     @Value("\${database.host}") private val databaseHost: String,
     @Value("\${database.port}") private val databasePort: Int,
     @Value("\${database.name}") private val databaseName: String,
@@ -28,6 +30,8 @@ class InitializationService(
     @Value("\${insertInitialData}") private val insertInitialData: Boolean,
     private val dateService: DateService,
     private val environment: Environment,
+    private val taskExecutor: TaskExecutor,
+    private val elusSynchronizationService: ElusSynchronizationService,
 ) {
 
     private val logger = KotlinLogging.logger {}
@@ -57,7 +61,14 @@ class InitializationService(
                     }
                 }
                 if (insertInitialData) {
-                    devInitialDataInjectorService.initiateDevData()
+                    devInitialDataInjectorService.initiateDevUsers()
+                    devInitialDataInjectorService.injectInitialData()
+                }
+                taskExecutor.execute {
+                    elusSynchronizationService.synchronize()
+                    if (insertInitialData) {
+                        devInitialDataInjectorService.injectDesignations()
+                    }
                 }
             }
             ApplicationEnvironment.Test -> {
