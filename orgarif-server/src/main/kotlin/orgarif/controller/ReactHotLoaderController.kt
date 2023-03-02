@@ -42,7 +42,7 @@ class ReactHotLoaderController(
             httpService.execute(
                 HttpMethod.GET, "http://$assetsWebpackDevHost:$assetsWebpackDevPort$path")
         if (r.code == HttpStatus.OK) {
-            response.writer.print(r.body)
+            response.writer.print(r.bodyString)
         } else {
             logger.error { "Error webpack hot update $r" }
         }
