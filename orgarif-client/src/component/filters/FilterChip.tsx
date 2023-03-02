@@ -6,105 +6,64 @@ import Tooltip from '@mui/material/Tooltip';
 import * as React from 'react';
 import { useNavigate } from 'react-router-dom';
 import { useRecoilState } from 'recoil';
-import {
-  Departement,
-  NatureJuridique,
-  Secteur,
-  TypeStructure
-} from '../../domain/bootstrap-data';
-import {
-  DepartementId,
-  NatureJuridiqueId,
-  SecteurId,
-  TypeStructureId
-} from '../../domain/ids';
+import { Category, CategoryId } from '../../domain/bootstrap-data';
 import { state } from '../../state/state';
 import * as breakpoints from '../../styles/breakpoints';
 import { colors } from '../../styles/colors';
 import { asString } from '../../utils/nominal-class';
 
 interface FilterChipProps {
-  filter: Departement | NatureJuridique | Secteur | TypeStructure;
-  showIcon: boolean | undefined;
+  filter: Category;
+  label: string;
+  tooltipLabel?: string;
   isSticky: boolean | undefined;
 }
 
-type setActiveFiltersProps =
-  | (Departement | NatureJuridique | Secteur | TypeStructure)[]
-  | [];
-
-export const isDepartement = (object: unknown): object is Departement => {
-  return Object.prototype.hasOwnProperty.call(object, 'code');
-};
-
-export const FilterChip = ({ filter, showIcon, isSticky }: FilterChipProps) => {
+export const FilterChip = ({
+  filter,
+  label,
+  tooltipLabel,
+  isSticky
+}: FilterChipProps) => {
   const [activeFilters, setActiveFilters] = useRecoilState(state.activeFilters);
   const navigate = useNavigate();
 
-  // Regex to check if libelle contains parentheses and if yes,
-  // extract the value between parentheses to display the abbreviation.
-  const regExp = /\((.*?)\)/;
-  let newLibelle;
-  if (filter.libelle.includes('(')) {
-    newLibelle = regExp.exec(filter.libelle)![1];
-  } else {
-    newLibelle = filter.libelle;
-  }
-
-  const handleFilterClick = (
-    id: DepartementId | NatureJuridiqueId | SecteurId | TypeStructureId
-  ) => {
+  const handleFilterClick = (id: CategoryId) => {
     const currentActiveFilters = [...activeFilters];
     const indexFilter = currentActiveFilters
       .map(f => f.id)
       .indexOf(asString(id));
 
     indexFilter === -1
-      ? setActiveFilters((prevList: setActiveFiltersProps) => [
-          ...prevList,
-          filter
-        ])
-      : setActiveFilters((prevList: setActiveFiltersProps) => [
-          ...prevList.filter(
-            (f: Departement | NatureJuridique | Secteur | TypeStructure) =>
-              f.id !== id
-          )
+      ? setActiveFilters((prevList: Category[]) => [...prevList, filter])
+      : setActiveFilters((prevList: Category[]) => [
+          ...prevList.filter((f: Category) => f.id !== id)
         ]);
     navigate('/organismes');
   };
 
-  const chipColor = activeFilters.some(
-    (f: Departement | NatureJuridique | Secteur | TypeStructure) =>
-      f.id === filter.id
-  )
+  const chipColor = activeFilters.some((f: Category) => f.id === filter.id)
     ? 'error'
     : 'primary';
 
-  return (
-    <>
-      {isDepartement(filter) ? (
-        // Chip with postal code
-        <StyledChip
-          key={filter.libelle}
-          color={chipColor}
-          label={`${filter.libelle} - ${filter.code}`}
-          onClick={() => handleFilterClick(filter.id)}
-          css={isSticky ? skrinkedChips : ''}
-        />
-      ) : (
-        // Chip with tooltip
-        <Tooltip title={filter.libelle} arrow>
-          <StyledChip
-            key={filter.libelle}
-            color={chipColor}
-            label={newLibelle}
-            onClick={() => handleFilterClick(filter.id)}
-            css={isSticky ? skrinkedChips : ''}
-          />
-        </Tooltip>
-      )}
-    </>
+  const chip = (
+    <StyledChip
+      key={filter.libelle}
+      color={chipColor}
+      label={label}
+      onClick={() => handleFilterClick(filter.id)}
+      css={isSticky ? skrinkedChips : ''}
+    />
   );
+  if (tooltipLabel) {
+    return (
+      <Tooltip title={tooltipLabel} arrow>
+        {chip}
+      </Tooltip>
+    );
+  } else {
+    return chip;
+  }
 };
 
 const StyledChip = styled(Chip)(({ theme }) => ({

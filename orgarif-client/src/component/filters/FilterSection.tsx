@@ -2,26 +2,27 @@
 import { css } from '@emotion/react';
 import { Box } from '@mui/material';
 import * as React from 'react';
-import {
-  Departement,
-  NatureJuridique,
-  Secteur,
-  TypeStructure
-} from '../../domain/bootstrap-data';
+import { Category } from '../../domain/bootstrap-data';
 import { asString } from '../../utils/nominal-class';
 import { FilterChip } from './FilterChip';
 import { HeaderFiltersChip } from './HeaderFiltersChip';
 
-interface FilterSectionProps {
-  filters?: Departement[] | NatureJuridique[] | Secteur[] | TypeStructure[];
-  label: string;
-  showIcon?: boolean | undefined;
+interface FilterSectionProps<T extends Category> {
+  filters?: T[];
+  categoryLabel: string;
+  filterLabelAndTooltip: (f: T) => [string, string?];
   sticky?: boolean | undefined;
   standalone?: boolean | undefined;
 }
 
 export const FilterSection = React.memo(
-  ({ filters, label, showIcon, sticky, standalone }: FilterSectionProps) => {
+  <T extends Category>({
+    filters,
+    categoryLabel,
+    filterLabelAndTooltip,
+    sticky,
+    standalone
+  }: FilterSectionProps<T>) => {
     return (
       <Box
         css={chipsContainer}
@@ -32,20 +33,20 @@ export const FilterSection = React.memo(
           pr: standalone ? 0 : '1em'
         }}
       >
-        <HeaderFiltersChip label={label} />
+        <HeaderFiltersChip label={categoryLabel} />
         {filters &&
-          filters.map(
-            (
-              filter: Departement | NatureJuridique | Secteur | TypeStructure
-            ) => (
+          filters.map(c => {
+            const [label, tooltipLabel] = filterLabelAndTooltip(c);
+            return (
               <FilterChip
-                filter={filter}
+                key={asString(c.id)}
+                filter={c}
+                label={label}
+                tooltipLabel={tooltipLabel}
                 isSticky={sticky}
-                showIcon={showIcon}
-                key={asString(filter.id)}
               />
-            )
-          )}
+            );
+          })}
       </Box>
     );
   }

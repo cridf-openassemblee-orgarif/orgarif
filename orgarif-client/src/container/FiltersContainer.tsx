@@ -23,6 +23,8 @@ import { colors } from '../styles/colors';
 import { isMobile, isTabletAndMore } from '../utils/viewport-utils';
 import { MinimizedFilters } from './MinimizedFilters';
 import { MobileSelectFilters } from './MobileSelectFilters';
+import { extractLabelAndTooltip } from './BasicFiltersContainer';
+import { Departement } from '../domain/bootstrap-data';
 
 export const FiltersContainer = () => {
   const [departements] = useRecoilState(state.departements);
@@ -195,20 +197,30 @@ export const FiltersContainer = () => {
           <AccordionDetails>
             <FilterSection
               filters={departements}
-              label="départements"
-              showIcon={false}
+              categoryLabel="départements"
+              filterLabelAndTooltip={f => [
+                `${f.libelle} - ${(f as unknown as Departement).code}`
+              ]}
               sticky={shrinkSectionFilters}
             />
             <FilterSection
               filters={secteurs}
-              label="secteurs"
-              showIcon={true}
+              categoryLabel="secteurs"
+              filterLabelAndTooltip={c => extractLabelAndTooltip(c.libelle)}
               sticky={shrinkSectionFilters}
             />
             <Collapse in={hideExtraFilters} timeout={{ enter: 1400, exit: 0 }}>
               <Stack direction="row">
-                <FilterSection label="nature juridique" standalone={true} />
-                <FilterSection label="type de structure" standalone={true} />
+                <FilterSection
+                  categoryLabel="nature juridique"
+                  filterLabelAndTooltip={c => extractLabelAndTooltip(c.libelle)}
+                  standalone={true}
+                />
+                <FilterSection
+                  categoryLabel="type de structure"
+                  filterLabelAndTooltip={c => extractLabelAndTooltip(c.libelle)}
+                  standalone={true}
+                />
                 <Button
                   variant="contained"
                   color="inherit"
@@ -247,14 +259,14 @@ export const FiltersContainer = () => {
               <Collapse in={!hideExtraFilters}>
                 <FilterSection
                   filters={natureJuridiques}
-                  label="nature juridique"
-                  showIcon={false}
+                  categoryLabel="nature juridique"
+                  filterLabelAndTooltip={c => extractLabelAndTooltip(c.libelle)}
                   sticky={shrinkSectionFilters}
                 />
                 <FilterSection
                   filters={typeStructures}
-                  label="type structure"
-                  showIcon={false}
+                  categoryLabel="type structure"
+                  filterLabelAndTooltip={c => extractLabelAndTooltip(c.libelle)}
                   sticky={shrinkSectionFilters}
                 />
               </Collapse>

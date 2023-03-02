@@ -5,6 +5,7 @@ import { Box, Chip } from '@mui/material';
 import Tooltip from '@mui/material/Tooltip';
 import { useRecoilState, useRecoilValue } from 'recoil';
 import {
+  Category,
   Departement,
   NatureJuridique,
   Secteur,
@@ -12,10 +13,6 @@ import {
 } from '../domain/bootstrap-data';
 import { state } from '../state/state';
 import { asString } from '../utils/nominal-class';
-
-type setActiveFiltersProps =
-  | (Departement | NatureJuridique | Secteur | TypeStructure)[]
-  | [];
 
 export const MinimizedFilters = () => {
   const [activeFilters, setActiveFilters] = useRecoilState(state.activeFilters);
@@ -32,49 +29,18 @@ export const MinimizedFilters = () => {
           ${!expandedAccordion && enableScrollOnTable ? '300ms' : '900ms'} both;
       `}
     >
-      {activeFilters.map(
-        (filter: Departement | NatureJuridique | Secteur | TypeStructure) => {
-          return filter.libelle.length > 20 ? (
-            <Tooltip title={filter.libelle} arrow key={asString(filter.id)}>
-              <Chip
-                label={filter.libelle.toUpperCase()}
-                size="small"
-                color="error"
-                deleteIcon={<ClearIcon />}
-                onDelete={() =>
-                  setActiveFilters((prevList: setActiveFiltersProps) => [
-                    ...prevList.filter(
-                      (
-                        f:
-                          | Departement
-                          | NatureJuridique
-                          | Secteur
-                          | TypeStructure
-                      ) => f !== filter
-                    )
-                  ])
-                }
-                css={css`
-                  padding: 0.25em;
-                  margin: 0.25em;
-                  max-width: 200px;
-                `}
-              />
-            </Tooltip>
-          ) : (
+      {activeFilters.map((filter: Category) => {
+        return filter.libelle.length > 20 ? (
+          <Tooltip title={filter.libelle} arrow key={asString(filter.id)}>
             <Chip
-              label={filter.libelle.toUpperCase()}
               key={asString(filter.id)}
+              label={filter.libelle.toUpperCase()}
               size="small"
               color="error"
               deleteIcon={<ClearIcon />}
               onDelete={() =>
-                setActiveFilters((prevList: setActiveFiltersProps) => [
-                  ...prevList.filter(
-                    (
-                      f: Departement | NatureJuridique | Secteur | TypeStructure
-                    ) => f !== filter
-                  )
+                setActiveFilters((prevList: Category[]) => [
+                  ...prevList.filter((f: Category) => f !== filter)
                 ])
               }
               css={css`
@@ -83,9 +49,27 @@ export const MinimizedFilters = () => {
                 max-width: 200px;
               `}
             />
-          );
-        }
-      )}
+          </Tooltip>
+        ) : (
+          <Chip
+            key={asString(filter.id)}
+            label={filter.libelle.toUpperCase()}
+            size="small"
+            color="error"
+            deleteIcon={<ClearIcon />}
+            onDelete={() =>
+              setActiveFilters((prevList: Category[]) => [
+                ...prevList.filter((f: Category) => f !== filter)
+              ])
+            }
+            css={css`
+              padding: 0.25em;
+              margin: 0.25em;
+              max-width: 200px;
+            `}
+          />
+        );
+      })}
     </Box>
   );
 };

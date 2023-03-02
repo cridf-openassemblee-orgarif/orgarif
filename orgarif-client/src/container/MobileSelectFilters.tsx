@@ -11,6 +11,8 @@ import Select, { SelectChangeEvent } from '@mui/material/Select';
 import * as React from 'react';
 import { useRecoilState } from 'recoil';
 import {
+  Category,
+  CategoryId,
   Departement,
   NatureJuridique,
   Secteur,
@@ -27,13 +29,13 @@ import { colors } from '../styles/colors';
 import { asString } from '../utils/nominal-class';
 
 interface MobileFilterSectionProps {
-  data: Departement[] | NatureJuridique[] | Secteur[] | TypeStructure[];
+  data: Category[];
   label: string;
 }
 
 interface FiltersMobileProps {
   value: string;
-  id: DepartementId | NatureJuridiqueId | SecteurId | TypeStructureId;
+  id: CategoryId;
   children: string;
 }
 
@@ -76,19 +78,9 @@ export const MobileSelectFilters = ({
 
   React.useEffect(() => {
     // check if we have active filters in localstorage to autofill the select menus
-    let matchFilters = (
-      data as Array<Departement | NatureJuridique | Secteur | TypeStructure>
-    )
-      .filter(o1 =>
-        activeFilters.some(
-          (o2: Departement | NatureJuridique | Secteur | TypeStructure) =>
-            o1.id === o2.id
-        )
-      )
-      .map(
-        (o: Departement | NatureJuridique | Secteur | TypeStructure) =>
-          o.libelle
-      );
+    let matchFilters = (data as Category[])
+      .filter(o1 => activeFilters.some((o2: Category) => o1.id === o2.id))
+      .map((o: Category) => o.libelle);
     setElementName(matchFilters);
   }, [data, activeFilters]);
 
@@ -134,17 +126,15 @@ export const MobileSelectFilters = ({
           border-radius: 20px;
         `}
       >
-        {data.map(
-          (el: Departement | NatureJuridique | Secteur | TypeStructure) => (
-            <MenuItem
-              key={asString(el.id)}
-              value={el.libelle}
-              id={asString(el.id)}
-            >
-              {el.libelle}
-            </MenuItem>
-          )
-        )}
+        {data.map((el: Category) => (
+          <MenuItem
+            key={asString(el.id)}
+            value={el.libelle}
+            id={asString(el.id)}
+          >
+            {el.libelle}
+          </MenuItem>
+        ))}
       </Select>
     </FormControl>
   );
