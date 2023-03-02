@@ -17,7 +17,6 @@ const RouteLinkBase = (
     route: ApplicationRoute;
     doesMatch: boolean;
     variant?: ButtonTypeMap['props']['variant'];
-    css?: EmotionStyles;
     activeCss?: EmotionStyles;
     element?: 'Link' | 'Button';
     className?: string;
