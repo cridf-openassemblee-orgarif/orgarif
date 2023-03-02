@@ -7,10 +7,10 @@ package orgarif.jooq.generated;
 import orgarif.jooq.generated.tables.AppUserTable;
 import orgarif.jooq.generated.tables.CommandLogTable;
 import orgarif.jooq.generated.tables.DeploymentLogTable;
-import orgarif.jooq.generated.tables.FormerMailTable;
 import orgarif.jooq.generated.tables.MagicLinkTokenTable;
-import orgarif.jooq.generated.tables.MailLogTable;
+import orgarif.jooq.generated.tables.SentMailLogTable;
 import orgarif.jooq.generated.tables.UserFileTable;
+import orgarif.jooq.generated.tables.UserMailLogTable;
 import orgarif.jooq.generated.tables.UserSessionLogTable;
 
 import java.util.Arrays;
@@ -52,24 +52,24 @@ public class PublicTable extends SchemaImpl {
     public final DeploymentLogTable DEPLOYMENT_LOG = DeploymentLogTable.DEPLOYMENT_LOG;
 
     /**
-     * The table <code>public.former_mail</code>.
-     */
-    public final FormerMailTable FORMER_MAIL = FormerMailTable.FORMER_MAIL;
-
-    /**
      * The table <code>public.magic_link_token</code>.
      */
     public final MagicLinkTokenTable MAGIC_LINK_TOKEN = MagicLinkTokenTable.MAGIC_LINK_TOKEN;
 
     /**
-     * The table <code>public.mail_log</code>.
+     * The table <code>public.sent_mail_log</code>.
      */
-    public final MailLogTable MAIL_LOG = MailLogTable.MAIL_LOG;
+    public final SentMailLogTable SENT_MAIL_LOG = SentMailLogTable.SENT_MAIL_LOG;
 
     /**
      * The table <code>public.user_file</code>.
      */
     public final UserFileTable USER_FILE = UserFileTable.USER_FILE;
+
+    /**
+     * The table <code>public.user_mail_log</code>.
+     */
+    public final UserMailLogTable USER_MAIL_LOG = UserMailLogTable.USER_MAIL_LOG;
 
     /**
      * The table <code>public.user_session_log</code>.
@@ -97,10 +97,10 @@ public class PublicTable extends SchemaImpl {
             AppUserTable.APP_USER,
             CommandLogTable.COMMAND_LOG,
             DeploymentLogTable.DEPLOYMENT_LOG,
-            FormerMailTable.FORMER_MAIL,
             MagicLinkTokenTable.MAGIC_LINK_TOKEN,
-            MailLogTable.MAIL_LOG,
+            SentMailLogTable.SENT_MAIL_LOG,
             UserFileTable.USER_FILE,
+            UserMailLogTable.USER_MAIL_LOG,
             UserSessionLogTable.USER_SESSION_LOG);
     }
 }

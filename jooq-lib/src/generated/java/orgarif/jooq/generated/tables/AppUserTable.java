@@ -23,7 +23,7 @@ import org.jooq.ForeignKey;
 import org.jooq.Index;
 import org.jooq.Name;
 import org.jooq.Record;
-import org.jooq.Row10;
+import org.jooq.Row9;
 import org.jooq.Schema;
 import org.jooq.Table;
 import org.jooq.TableField;
@@ -90,11 +90,6 @@ public class AppUserTable extends TableImpl<AppUserRecord> {
      * The column <code>public.app_user.roles</code>.
      */
     public final TableField<AppUserRecord, String[]> ROLES = createField(DSL.name("roles"), SQLDataType.VARCHAR(255).getArrayDataType(), this, "");
-
-    /**
-     * The column <code>public.app_user.dirty_mail</code>.
-     */
-    public final TableField<AppUserRecord, String> DIRTY_MAIL = createField(DSL.name("dirty_mail"), SQLDataType.VARCHAR(255), this, "");
 
     /**
      * The column <code>public.app_user.signup_date</code>.
@@ -194,12 +189,12 @@ public class AppUserTable extends TableImpl<AppUserRecord> {
     }
 
     // -------------------------------------------------------------------------
-    // Row10 type methods
+    // Row9 type methods
     // -------------------------------------------------------------------------
 
     @Override
     @Nonnull
-    public Row10<UUID, String, String, String, String, String, String[], String, Instant, Instant> fieldsRow() {
-        return (Row10) super.fieldsRow();
+    public Row9<UUID, String, String, String, String, String, String[], Instant, Instant> fieldsRow() {
+        return (Row9) super.fieldsRow();
     }
 }
