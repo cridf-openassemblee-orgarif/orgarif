@@ -98,7 +98,7 @@ export const ApplicationRouter = () => (
       // TODO[tmpl] is NOT enough ! force key in MainContainer ? hierarchical views if same view for several paths ?
       */}
       {renderRoutes('', routes)}
-      <Route element={<NotFoundView />} />
+      <Route path="*" element={<NotFoundView />} />
     </Routes>
   </BrowserRouter>
 );
