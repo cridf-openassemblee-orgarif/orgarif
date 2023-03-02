@@ -76,13 +76,14 @@ class CommandController(
                 startDate = dateService.now(),
                 endDate = Instant.ofEpochMilli(0))
         try {
+            userSessionService.verifyRoleOrFail(
+                CommandConfiguration.role(command), request.remoteAddr, command.javaClass)
+            idLogService.enableLogging()
             val result =
                 transactionIsolationService.execute {
-                    userSessionService.verifyRoleOrFail(
-                        CommandConfiguration.role(command), request.remoteAddr, command.javaClass)
-                    idLogService.enableLogging()
                     handler.handle(command, getSession(), request, response)
                 }
+            // [doc] because of login, register...
             val updatedSession = getSession()
             commandLogDao.insert(
                 commandLog.copy(
