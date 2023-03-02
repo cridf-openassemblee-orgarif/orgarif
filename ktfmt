@@ -1,4 +1,4 @@
-KTFMT_VERSION=0.41
+KTFMT_VERSION=0.42
 ##################
 FILENAME=ktfmt-$KTFMT_VERSION-jar-with-dependencies.jar
 DIR=.ktfmt

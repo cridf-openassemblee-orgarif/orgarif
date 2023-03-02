@@ -20,8 +20,6 @@ import orgarif.tooling.kttots.prettyPrint
 import java.nio.file.Files
 import java.time.LocalDateTime
 import kotlin.io.path.absolutePathString
-import kotlin.io.path.deleteExisting
-import kotlin.io.path.deleteIfExists
 import kotlin.io.path.moveTo
 import kttots.Shared
 
@@ -190,7 +188,8 @@ class KtToTsSymbolProcessor(
                 "--write",
                 it.second.absolutePathString())
             it.second.moveTo(
-                configuration.srcDirectory.resolve(kotlinToTsFile(it.first, configuration)), overwrite = true)
+                configuration.srcDirectory.resolve(kotlinToTsFile(it.first, configuration)),
+                overwrite = true)
         }
         tempDir.toFile().deleteRecursively()
         return unableToProcess
