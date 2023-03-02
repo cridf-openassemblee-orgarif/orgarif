@@ -1,23 +1,25 @@
 /** @jsxImportSource @emotion/react */
 import * as React from 'react';
-import { useEffect } from 'react';
+import { FunctionComponent, useEffect } from 'react';
 import { Route } from 'react-router';
-import { BrowserRouter, Routes } from 'react-router-dom';
+import { BrowserRouter, Routes, useLocation } from 'react-router-dom';
 import { useRecoilState } from 'recoil';
 import { state } from '../state/state';
 import { NotFoundView } from '../view/NotFoundView';
-import { ApplicationRouteProps, routes } from './routes';
+import { routes } from './routes';
 import { useGoTo } from './useGoTo';
+import { Role } from '../domain/user';
 
-const RouteComponent = (props: { route: ApplicationRouteProps }) => {
+const RouteComponent = (props: {
+  component: FunctionComponent;
+  role?: Role;
+}) => {
   const [userInfos] = useRecoilState(state.userInfos);
+  const location = useLocation();
   const goTo = useGoTo();
   useEffect(() => {
     // TODO[tmpl] test all this...
-    if (
-      props.route.role &&
-      (!userInfos || !userInfos.roles.includes(props.route.role))
-    ) {
+    if (props.role && (!userInfos || !userInfos.roles.includes(props.role))) {
       if (userInfos) {
         // TODO[tmpl] make a notification "unauthorized"
         goTo(
@@ -31,15 +33,16 @@ const RouteComponent = (props: { route: ApplicationRouteProps }) => {
           { name: 'LoginRoute' },
           {
             replace: false,
-            targetPath: props.route.path
+            targetPath: location.pathname
           }
         );
       }
     }
-  }, [props.route, userInfos, goTo]);
-  return React.createElement(props.route.component);
+  }, [props.role, userInfos, goTo, location.pathname]);
+  return React.createElement(props.component);
 };
 
+// TODO[tmpl] see useRoutes
 export const ApplicationRouter = () => (
   <BrowserRouter>
     <Routes>
@@ -48,7 +51,12 @@ export const ApplicationRouter = () => (
         // and it's complicated to use a key which doesn't produce useless re-rendering
         // TODO[tmpl] is NOT enough ! force key in MainContainer ? hierarchical views if same view for several paths ?
         return (
-          <Route path={route.path} element={<RouteComponent route={route} />} />
+          <Route
+            path={route.path}
+            element={
+              <RouteComponent component={route.component} role={route.role} />
+            }
+          />
         );
       })}
       <Route element={<NotFoundView />} />
