@@ -10,6 +10,7 @@ import orgarif.service.LocaleService
 import orgarif.service.user.MagicLinkTokenService
 import orgarif.service.user.UserService
 import orgarif.service.user.UserSessionService
+import orgarif.utils.OrgarifStringUtils
 import freemarker.ext.beans.BeansWrapperBuilder
 import freemarker.template.Configuration
 import java.io.File
@@ -97,7 +98,8 @@ class IndexController(
             } else null
         mav.model["bootstrapData"] =
             serialize(ApplicationBootstrapData(ApplicationInstance.env, userInfos))
-        mav.model["deploymentId"] = applicationInstance.deploymentId.rawId
+        mav.model["deploymentId"] =
+            OrgarifStringUtils.serializeUuid(applicationInstance.deploymentId.rawId)
         mav.model["gitRevisionLabel"] = applicationInstance.gitRevisionLabel
         mav.model["jsAssets"] = jsAssets(request)
         mav.model["cssAssets"] = cssAssets
