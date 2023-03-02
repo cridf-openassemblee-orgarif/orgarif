@@ -1,18 +1,11 @@
 /** @jsxImportSource @emotion/react */
+import { Category } from '../../domain/category';
+import { state } from '../../state/state';
 import { css, keyframes } from '@emotion/react';
 import ClearIcon from '@mui/icons-material/Clear';
 import { Box, Chip } from '@mui/material';
 import Tooltip from '@mui/material/Tooltip';
 import { useRecoilState, useRecoilValue } from 'recoil';
-import {
-  Category,
-  Departement,
-  NatureJuridique,
-  Secteur,
-  TypeStructure
-} from '../domain/bootstrap-data';
-import { state } from '../state/state';
-import { asString } from '../utils/nominal-class';
 
 export const MinimizedFilters = () => {
   const [activeFilters, setActiveFilters] = useRecoilState(state.activeFilters);
@@ -32,7 +25,7 @@ export const MinimizedFilters = () => {
       {activeFilters.map((filter: Category) => {
         const chip = (
           <Chip
-            key={asString(filter.id)}
+            key={filter.id}
             label={filter.libelle.toUpperCase()}
             size="small"
             color="error"
@@ -50,7 +43,7 @@ export const MinimizedFilters = () => {
           />
         );
         return filter.libelle.length > 20 ? (
-          <Tooltip title={filter.libelle} arrow key={asString(filter.id)}>
+          <Tooltip title={filter.libelle} arrow key={filter.id}>
             {chip}
           </Tooltip>
         ) : (

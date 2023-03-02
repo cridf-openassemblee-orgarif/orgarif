@@ -1,7 +1,7 @@
 package orgarif.query
 
 import com.fasterxml.jackson.annotation.JsonTypeInfo
-<<<<<<< HEAD
+import kttots.Shared
 import orgarif.domain.DeliberationDto
 import orgarif.domain.DepartementId
 import orgarif.domain.NatureJuridiqueId
@@ -12,11 +12,8 @@ import orgarif.domain.OrganismeOrderColumn
 import orgarif.domain.RepresentantDto
 import orgarif.domain.SecteurId
 import orgarif.domain.TypeStructureId
-=======
-import kttots.Shared
 import orgarif.domain.UserId
 import orgarif.domain.UserInfos
->>>>>>> template
 
 @Shared
 @JsonTypeInfo(

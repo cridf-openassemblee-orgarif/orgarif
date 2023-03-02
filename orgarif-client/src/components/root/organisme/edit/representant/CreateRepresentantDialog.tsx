@@ -1,4 +1,9 @@
 /** @jsxImportSource @emotion/react */
+import { CreateRepresentantCommandResponse } from '../../../../../generated/command/commands';
+import { RepresentantDto } from '../../../../../generated/domain/organisme';
+import { appContext } from '../../../../../services/ApplicationContext';
+import { LoadingButton } from '../../../../common/LoadingButton';
+import { TextInput } from '../../../../common/form/TextInput';
 import { css } from '@emotion/react';
 import { Button, DialogTitle } from '@mui/material';
 import Dialog from '@mui/material/Dialog';
@@ -6,10 +11,6 @@ import DialogActions from '@mui/material/DialogActions';
 import DialogContent from '@mui/material/DialogContent';
 import * as React from 'react';
 import { useEffect, useState } from 'react';
-import { appContext } from '../../../../ApplicationContext';
-import { RepresentantDto } from '../../../../domain/organisme';
-import { TextInput } from '../../../base-component/TextInput';
-import { LoadingButton } from '../../../base-component/LoadingButton';
 
 const extractPrenomNom = (nomComplet: string) => {
   const parts = nomComplet.split(' ');
@@ -40,7 +41,11 @@ export const CreateRepresentantDialog = (props: {
   const onSubmit = () =>
     appContext
       .commandService()
-      .createRepresentantCommand({ prenom, nom })
+      .send<CreateRepresentantCommandResponse>({
+        objectType: 'CreateRepresentantCommand',
+        prenom,
+        nom
+      })
       .then(r => {
         const representant: RepresentantDto = {
           id: r.representantId,

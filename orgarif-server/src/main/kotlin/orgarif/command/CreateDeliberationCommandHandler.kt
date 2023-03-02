@@ -5,15 +5,15 @@ import orgarif.domain.DeliberationId
 import orgarif.domain.ItemStatus
 import orgarif.repository.DeliberationDao
 import orgarif.repository.LienDeliberationDao
-import orgarif.service.DateService
-import orgarif.service.RandomService
+import orgarif.service.utils.DateService
+import orgarif.service.utils.random.RandomService
 
 @Service
 class CreateDeliberationCommandHandler(
-    val deliberationDao: DeliberationDao,
-    val lienDeliberationDao: LienDeliberationDao,
-    val randomService: RandomService,
-    val dateService: DateService
+    private val deliberationDao: DeliberationDao,
+    private val lienDeliberationDao: LienDeliberationDao,
+    private val randomService: RandomService,
+    private val dateService: DateService
 ) : CommandHandler.Handler<CreateDeliberationCommand, CreateDeliberationCommandResponse>() {
 
     override fun handle(command: CreateDeliberationCommand): CreateDeliberationCommandResponse {

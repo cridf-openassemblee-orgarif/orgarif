@@ -58,11 +58,7 @@ class MailLogDao(private val jooq: DSLContext) {
 
     fun fetchAll(): List<Record> = jooq.selectFrom(MAIL_LOG).fetch().map(this::map)
 
-<<<<<<< HEAD
-    fun fetchOrNullContent(id: MailLogId): ContentPartialRecord? =
-=======
     fun fetchContentOrNull(id: MailLogId): ContentPartialRecord? =
->>>>>>> template
         jooq
             .select(*contentPartialRecordFields)
             .from(MAIL_LOG)

@@ -3,14 +3,14 @@ package orgarif.command
 import org.springframework.stereotype.Service
 import orgarif.domain.RepresentantId
 import orgarif.repository.RepresentantDao
-import orgarif.service.DateService
-import orgarif.service.RandomService
+import orgarif.service.utils.DateService
+import orgarif.service.utils.random.RandomService
 
 @Service
 class CreateRepresentantCommandHandler(
-    val representantDao: RepresentantDao,
-    val randomService: RandomService,
-    val dateService: DateService
+    private val representantDao: RepresentantDao,
+    private val randomService: RandomService,
+    private val dateService: DateService
 ) : CommandHandler.Handler<CreateRepresentantCommand, CreateRepresentantCommandResponse>() {
 
     override fun handle(command: CreateRepresentantCommand): CreateRepresentantCommandResponse {

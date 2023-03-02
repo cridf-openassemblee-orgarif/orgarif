@@ -3,14 +3,14 @@ package orgarif.command
 import org.springframework.stereotype.Service
 import orgarif.domain.ItemStatus
 import orgarif.repository.DepartementDao
-import orgarif.service.DateService
-import orgarif.service.RandomService
+import orgarif.service.utils.DateService
+import orgarif.service.utils.random.RandomService
 
 @Service
 class CreateDepartementCommandHandler(
-    val departementDao: DepartementDao,
-    val randomService: RandomService,
-    val dateService: DateService
+    private val departementDao: DepartementDao,
+    private val randomService: RandomService,
+    private val dateService: DateService
 ) : CommandHandler.Handler<CreateDepartementCommand, CreateDepartementCommandResponse>() {
 
     override fun handle(command: CreateDepartementCommand): CreateDepartementCommandResponse {

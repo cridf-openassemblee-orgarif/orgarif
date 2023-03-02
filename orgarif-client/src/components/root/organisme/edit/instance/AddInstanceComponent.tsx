@@ -1,8 +1,8 @@
 /** @jsxImportSource @emotion/react */
+import { TextInput } from '../../../../common/form/TextInput';
+import { colors } from '../../../../styles/colors';
 import { css } from '@emotion/react';
-import * as React from 'react';
-import { useEffect, useState } from 'react';
-import { TextInput } from '../../../base-component/TextInput';
+import { Add } from '@mui/icons-material';
 import {
   Button,
   Dialog,
@@ -10,8 +10,8 @@ import {
   DialogContent,
   DialogTitle
 } from '@mui/material';
-import { Add } from '@mui/icons-material';
-import { colors } from '../../../../styles/colors';
+import * as React from 'react';
+import { useEffect, useState } from 'react';
 
 export const AddInstanceComponent = (props: {
   addInstance: (nom: string) => void;

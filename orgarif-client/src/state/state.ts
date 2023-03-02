@@ -1,24 +1,34 @@
-import { atom, selector } from 'recoil';
-import { recoilPersist } from 'recoil-persist';
+import { CategoryId } from '../domain/category';
 import {
   Departement,
   NatureJuridique,
   Secteur,
   TypeStructure
-} from '../domain/bootstrap-data';
+} from '../generated/domain/bootstrap-data';
 import {
   DepartementId,
   NatureJuridiqueId,
   SecteurId,
   TypeStructureId
-} from '../domain/ids';
+} from '../generated/domain/ids';
 import { compareByString } from '../utils';
 import { dict, Dict } from '../utils/nominal-class';
+import { atom, selector } from 'recoil';
+import { recoilPersist } from 'recoil-persist';
 
 const { persistAtom } = recoilPersist();
 
 // FIXME typer pour lisibilité du state partagé...
 export const state = {
+  activeFilters: atom({
+    key: 'activeFilters',
+    default: [] as Filters[],
+    effects_UNSTABLE: [persistAtom]
+  }),
+  countRows: atom({
+    key: 'count-number-of-rows',
+    default: 0
+  }),
   departements: atom({
     key: 'departements',
     default: [...bootstrapData.categories.departements].sort(
@@ -30,6 +40,22 @@ export const state = {
     get: ({ get }): Dict<DepartementId, Departement> =>
       dict(get(state.departements).map(n => [n.id, n]))
   }),
+  enableScrollOnTable: atom({
+    key: 'enable-scroll-on-table',
+    default: false
+  }),
+  filtersExpandedAccordion: atom({
+    key: 'filters-expanded-Accordion',
+    default: true
+  }),
+  filtersSectionShrinked: atom({
+    key: 'filters-section-shrinked',
+    default: true
+  }),
+  headerShrinked: atom({
+    key: 'header-shrinked',
+    default: false
+  }),
   natureJuridiques: atom({
     key: 'natureJuridiques',
     default: [...bootstrapData.categories.natureJuridiques].sort(
@@ -40,6 +66,10 @@ export const state = {
     key: 'natureJuridiquesById',
     get: ({ get }): Dict<NatureJuridiqueId, NatureJuridique> =>
       dict(get(state.natureJuridiques).map(n => [n.id, n]))
+  }),
+  openedDrawer: atom({
+    key: 'drawer',
+    default: false
   }),
   organismeCategories: atom({
     key: 'organismeCategories',
@@ -71,47 +101,16 @@ export const state = {
     key: 'userInfos',
     default: bootstrapData.userInfos
   }),
-  openedDrawer: atom({
-    key: 'drawer',
-    default: false
-  }),
-  activeFilters: atom({
-    key: 'activeFilters',
-    default: [] as Filters[],
-    effects_UNSTABLE: [persistAtom]
-  }),
   userSelection: atom({
     key: 'userOrganismesSelection',
     default: [] as string[],
     effects_UNSTABLE: [persistAtom]
-  }),
-  headerShrinked: atom({
-    key: 'header-shrinked',
-    default: false
-  }),
-  filtersSectionShrinked: atom({
-    key: 'filters-section-shrinked',
-    default: true
-  }),
-  filtersExpandedAccordion: atom({
-    key: 'filters-expanded-Accordion',
-    default: true
-  }),
-  enableScrollOnTable: atom({
-    key: 'enable-scroll-on-table',
-    default: false
-  }),
-  countRows: atom({
-    key: 'count-number-of-rows',
-    default: 0
   })
 };
 
 // TODO check
 // Temp types
 export interface Filters {
-  id?: string;
+  id: CategoryId;
   libelle: string;
-  code?: boolean;
-  active?: boolean;
 }

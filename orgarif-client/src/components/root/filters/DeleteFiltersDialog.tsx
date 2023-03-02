@@ -1,4 +1,6 @@
 /** @jsxImportSource @emotion/react */
+import { state } from '../../../state/state';
+import { colors } from '../../styles/colors';
 import { css } from '@emotion/react';
 import { DeleteOutlined } from '@mui/icons-material';
 import { Button } from '@mui/material';
@@ -9,8 +11,6 @@ import DialogContentText from '@mui/material/DialogContentText';
 import DialogTitle from '@mui/material/DialogTitle';
 import * as React from 'react';
 import { useSetRecoilState } from 'recoil';
-import { state } from '../../state/state';
-import { colors } from '../../styles/colors';
 
 export const DeleteFiltersDialog = () => {
   const setActiveFilters = useSetRecoilState(state.activeFilters);

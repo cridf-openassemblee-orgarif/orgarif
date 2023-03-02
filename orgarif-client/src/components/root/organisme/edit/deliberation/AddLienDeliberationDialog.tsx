@@ -1,4 +1,11 @@
 /** @jsxImportSource @emotion/react */
+import { DeliberationId } from '../../../../../generated/domain/ids';
+import { DeliberationDto } from '../../../../../generated/domain/organisme';
+import { LoadingButton } from '../../../../common/LoadingButton';
+import { TextInput } from '../../../../common/form/TextInput';
+import { colors } from '../../../../styles/colors';
+import { CreateDeliberationDialog } from './CreateDeliberationDialog';
+import { SelectDeliberationInput } from './SelectDeliberationInput';
 import { css } from '@emotion/react';
 import {
   Button,
@@ -9,13 +16,6 @@ import {
 } from '@mui/material';
 import * as React from 'react';
 import { useEffect, useState } from 'react';
-import { DeliberationId } from '../../../../domain/ids';
-import { DeliberationDto } from '../../../../domain/organisme';
-import { colors } from '../../../../styles/colors';
-import { TextInput } from '../../../base-component/TextInput';
-import { SelectDeliberationInput } from './SelectDeliberationInput';
-import { LoadingButton } from '../../../base-component/LoadingButton';
-import { CreateDeliberationDialog } from './CreateDeliberationDialog';
 
 export const AddLienDeliberationDialog = (props: {
   display: boolean;

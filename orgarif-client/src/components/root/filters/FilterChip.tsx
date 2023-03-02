@@ -1,4 +1,8 @@
 /** @jsxImportSource @emotion/react */
+import { Category, CategoryId } from '../../../domain/category';
+import { state } from '../../../state/state';
+import * as breakpoints from '../../styles/breakpoints';
+import { colors } from '../../styles/colors';
 import { css } from '@emotion/react';
 import styled from '@emotion/styled';
 import { Chip } from '@mui/material';
@@ -6,11 +10,6 @@ import Tooltip from '@mui/material/Tooltip';
 import * as React from 'react';
 import { useNavigate } from 'react-router-dom';
 import { useRecoilState } from 'recoil';
-import { Category, CategoryId } from '../../domain/bootstrap-data';
-import { state } from '../../state/state';
-import * as breakpoints from '../../styles/breakpoints';
-import { colors } from '../../styles/colors';
-import { asString } from '../../utils/nominal-class';
 
 interface FilterChipProps {
   filter: Category;
@@ -30,9 +29,7 @@ export const FilterChip = ({
 
   const handleFilterClick = (id: CategoryId) => {
     const currentActiveFilters = [...activeFilters];
-    const indexFilter = currentActiveFilters
-      .map(f => f.id)
-      .indexOf(asString(id));
+    const indexFilter = currentActiveFilters.map(f => f.id).indexOf(id);
 
     indexFilter === -1
       ? setActiveFilters((prevList: Category[]) => [...prevList, filter])

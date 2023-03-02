@@ -35,7 +35,7 @@ class DesignationDao(val jooq: DSLContext) {
         val record =
             DesignationRecord().apply {
                 id = r.id.rawId
-                representantId = r.representantId?.rawId
+                representantId = r.representantId.rawId
                 organismeId = r.organismeId.rawId
                 instanceId = r.instanceId?.rawId
                 type = r.type.name

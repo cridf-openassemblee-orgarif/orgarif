@@ -8,13 +8,6 @@ import {
 import { ItemStatus } from './organisme';
 import { UserInfos } from './user';
 
-export type CategoryId =
-  | DepartementId
-  | NatureJuridiqueId
-  | SecteurId
-  | TypeStructureId;
-export type Category = Departement | NatureJuridique | Secteur | TypeStructure;
-
 export interface Departement {
   id: DepartementId;
   libelle: string;
@@ -47,7 +40,6 @@ export interface OrganismeCategories {
   typeStructures: TypeStructure[];
 }
 
-// TODO[doc] doc fait que readonly jamais utilisé... ou l'utiliser ? à voir...
 export interface ApplicationBootstrapData {
   env: ApplicationEnvironment;
   userInfos?: UserInfos;

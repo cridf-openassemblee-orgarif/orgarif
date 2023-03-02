@@ -1,7 +1,7 @@
 /** @jsxImportSource @emotion/react */
+import { OrganismeDto } from '../../generated/domain/organisme';
 import { css } from '@emotion/react';
 import * as React from 'react';
-import { OrganismeDto } from '../domain/organisme';
 
 export const OrganismeComponent = (props: { organisme: OrganismeDto }) => {
   return (

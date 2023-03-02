@@ -1,4 +1,11 @@
 /** @jsxImportSource @emotion/react */
+import { OrganismeDto } from '../../generated/domain/organisme';
+import { Edit } from '../../icon/collection/Edit';
+import { Share } from '../../icon/collection/Share';
+import { state } from '../../state/state';
+import { Informations } from '../root/singleOrganisme/Informations';
+import { Representants } from '../root/singleOrganisme/Representants';
+import { colors } from '../styles/colors';
 import { css } from '@emotion/react';
 import ChevronLeftRoundedIcon from '@mui/icons-material/ChevronLeftRounded';
 import {
@@ -18,14 +25,6 @@ import copy from 'copy-to-clipboard';
 import * as React from 'react';
 import { useNavigate } from 'react-router-dom';
 import { useRecoilValue, useSetRecoilState } from 'recoil';
-import { Informations } from '../component/singleOrganisme/Informations';
-import { Representants } from '../component/singleOrganisme/Representants';
-import { OrganismeDto } from '../domain/organisme';
-import { Edit } from '../icon/collection/Edit';
-import { Share } from '../icon/collection/Share';
-import { state } from '../state/state';
-import { colors } from '../styles/colors';
-import { asString } from '../utils/nominal-class';
 
 export const LeftPanel = (props: { organisme: OrganismeDto }) => {
   const setIsOpened = useSetRecoilState(state.openedDrawer);
@@ -228,7 +227,7 @@ export const LeftPanel = (props: { organisme: OrganismeDto }) => {
       {organisme.instances.length > 0 &&
         organisme.instances.map((instance, idx) => {
           return (
-            <React.Fragment key={asString(instance.id)}>
+            <React.Fragment key={instance.id}>
               <Divider variant="fullWidth" />
               <Typography
                 variant="h4"

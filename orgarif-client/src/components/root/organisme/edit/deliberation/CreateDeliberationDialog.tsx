@@ -1,4 +1,12 @@
 /** @jsxImportSource @emotion/react */
+import { LocalDate } from '../../../../../domain/datetime';
+import { CreateDeliberationCommandResponse } from '../../../../../generated/command/commands';
+import { DeliberationDto } from '../../../../../generated/domain/organisme';
+import { appContext } from '../../../../../services/ApplicationContext';
+import { stringToLocalDate } from '../../../../../utils';
+import { LoadingButton } from '../../../../common/LoadingButton';
+import { TextInput } from '../../../../common/form/TextInput';
+import { colors } from '../../../../styles/colors';
 import { css } from '@emotion/react';
 import { Button, DialogTitle } from '@mui/material';
 import Dialog from '@mui/material/Dialog';
@@ -6,14 +14,6 @@ import DialogActions from '@mui/material/DialogActions';
 import DialogContent from '@mui/material/DialogContent';
 import * as React from 'react';
 import { useEffect, useState } from 'react';
-import { DeliberationDto } from '../../../../domain/organisme';
-import { LocalDate } from '../../../../domain/time';
-import { colors } from '../../../../styles/colors';
-import { TextInput } from '../../../base-component/TextInput';
-import { stringToLocalDate } from '../../../../utils';
-import { LoadingButton } from '../../../base-component/LoadingButton';
-import { asString } from '../../../../utils/nominal-class';
-import { appContext } from '../../../../ApplicationContext';
 
 export const CreateDeliberationDialog = (props: {
   libelle: string;
@@ -37,7 +37,8 @@ export const CreateDeliberationDialog = (props: {
     setDateMandatory(false);
     return appContext
       .commandService()
-      .createDeliberationCommand({
+      .send<CreateDeliberationCommandResponse>({
+        objectType: 'CreateDeliberationCommand',
         libelle,
         deliberationDate
       })
@@ -75,9 +76,7 @@ export const CreateDeliberationDialog = (props: {
               name="deliberationDate"
               label="Date de délibération"
               type="date"
-              initialValue={
-                deliberationDate ? asString(deliberationDate) : undefined
-              }
+              initialValue={deliberationDate}
               onChange={e => {
                 const date = stringToLocalDate(e.currentTarget.value);
                 setDeliberationDate(date);

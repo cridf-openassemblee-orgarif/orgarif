@@ -1,19 +1,19 @@
 /** @jsxImportSource @emotion/react */
-import { css } from '@emotion/react';
-import * as React from 'react';
+import { LocalDate } from '../../../../../domain/datetime';
 import {
   DeliberationId,
   InstanceId,
   RepresentantId
-} from '../../../../domain/ids';
+} from '../../../../../generated/domain/ids';
 import {
   DesignationType,
   InstanceDto,
   ItemStatus
-} from '../../../../domain/organisme';
+} from '../../../../../generated/domain/organisme';
 import { EditNomComponent } from '../EditNomComponent';
 import { RepresentantsDeliberationsBlock } from '../EditOrganismeComponent';
-import { LocalDate } from '../../../../domain/time';
+import { css } from '@emotion/react';
+import * as React from 'react';
 
 export const EditInstancesComponent = (props: {
   instances: InstanceDto[];

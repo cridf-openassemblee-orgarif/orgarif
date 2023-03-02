@@ -25,42 +25,31 @@ import orgarif.repository.SecteurDao
 import orgarif.repository.TypeStructureDao
 import orgarif.repository.user.UserDao
 import orgarif.service.user.UserService
-<<<<<<< HEAD:orgarif-server/src/main/kotlin/orgarif/service/DevInitialDataInjectorService.kt
-import orgarif.utils.OrgarifStringUtils
-=======
 import orgarif.service.utils.DateService
 import orgarif.service.utils.TransactionIsolationService
 import orgarif.service.utils.random.RandomService
->>>>>>> template:orgarif-server/src/main/kotlin/orgarif/service/init/DevInitialDataInjectorService.kt
+import orgarif.utils.OrgarifStringUtils
 
 @Service
 // TODO[tmpl] naming fake / sample
 class DevInitialDataInjectorService(
-<<<<<<< HEAD:orgarif-server/src/main/kotlin/orgarif/service/DevInitialDataInjectorService.kt
-    @Value("\${mail.devDestination}") val developerDestinationMail: String,
-    val userDao: UserDao,
-    val organismeDao: OrganismeDao,
-    val departementDao: DepartementDao,
-    val natureJuridiqueDao: NatureJuridiqueDao,
-    val secteurDao: SecteurDao,
-    val typeStructureDao: TypeStructureDao,
-    val designationDao: DesignationDao,
-    val representantDao: RepresentantDao,
-    val instanceDao: InstanceDao,
-    val eluDao: EluDao,
-    val deliberationDao: DeliberationDao,
-    val lienDeliberationDao: LienDeliberationDao,
-    val dateService: DateService,
-    val randomService: RandomService,
-    val userService: UserService
-=======
     @Value("\${mail.devDestination}") private val developerDestinationMail: String,
     private val userDao: UserDao,
+    private val organismeDao: OrganismeDao,
+    private val departementDao: DepartementDao,
+    private val natureJuridiqueDao: NatureJuridiqueDao,
+    private val secteurDao: SecteurDao,
+    private val typeStructureDao: TypeStructureDao,
+    private val designationDao: DesignationDao,
+    private val representantDao: RepresentantDao,
+    private val instanceDao: InstanceDao,
+    private val eluDao: EluDao,
+    private val deliberationDao: DeliberationDao,
+    private val lienDeliberationDao: LienDeliberationDao,
     private val dateService: DateService,
     private val randomService: RandomService,
     private val userService: UserService,
-    private val transactionIsolationService: TransactionIsolationService
->>>>>>> template:orgarif-server/src/main/kotlin/orgarif/service/init/DevInitialDataInjectorService.kt
+    private val transactionIsolationService: TransactionIsolationService,
 ) {
     val fakeOrganismeId =
         OrganismeId(OrgarifStringUtils.deserializeUuid("ddf9d23e60294a8b823162f014a53968"))
@@ -73,7 +62,7 @@ class DevInitialDataInjectorService(
     val nombreRepresentants = 3
     val deliberationIncrement = AtomicInteger(0)
 
-    fun initiateDevData() {
+    fun initiateDevUsers() {
         transactionIsolationService.execute {
             insertUser("user", false)
             insertUser("admin", true)

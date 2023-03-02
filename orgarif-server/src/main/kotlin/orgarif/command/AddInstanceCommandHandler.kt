@@ -4,14 +4,14 @@ import org.springframework.stereotype.Service
 import orgarif.domain.InstanceId
 import orgarif.domain.ItemStatus.live
 import orgarif.repository.InstanceDao
-import orgarif.service.DateService
-import orgarif.service.RandomService
+import orgarif.service.utils.DateService
+import orgarif.service.utils.random.RandomService
 
 @Service
 class AddInstanceCommandHandler(
-    val instanceDao: InstanceDao,
-    val randomService: RandomService,
-    val dateService: DateService
+    private val instanceDao: InstanceDao,
+    private val randomService: RandomService,
+    private val dateService: DateService
 ) : CommandHandler.Handler<AddInstanceCommand, AddInstanceCommandResponse>() {
 
     override fun handle(command: AddInstanceCommand): AddInstanceCommandResponse {

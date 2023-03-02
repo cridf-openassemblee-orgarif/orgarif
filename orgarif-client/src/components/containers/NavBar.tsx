@@ -1,18 +1,18 @@
 /** @jsxImportSource @emotion/react */
+import { Logo } from '../../icon/collection/Logo';
+import { state } from '../../state/state';
+import { isMobile, isTabletAndMore } from '../../utils/viewport-utils';
+import { LogoutButton } from '../common/form/LogoutButton';
+import { Header } from '../root/Header';
+import { MobileMenu } from '../root/MobileMenu';
+import SigninDialog from '../root/SigninDialog';
+import { RouteLink } from '../routing/RouteLink';
 import { css } from '@emotion/react';
 import AppBar from '@mui/material/AppBar';
 import Box from '@mui/material/Box';
 import Toolbar from '@mui/material/Toolbar';
 import { useLocation } from 'react-router-dom';
 import { useRecoilState } from 'recoil';
-import { Header } from '../component/Header';
-import { MobileMenu } from '../component/MobileMenu';
-import SigninDialog from '../component/SigninDialog';
-import { LogoutForm } from '../form/LogoutForm';
-import { Logo } from '../icon/collection/Logo';
-import { RouteLink } from '../routing/RouteLink';
-import { state } from '../state/state';
-import { isMobile, isTabletAndMore } from '../utils/viewport-utils';
 
 export const NavBar = () => {
   const [userInfos] = useRecoilState(state.userInfos);
@@ -37,7 +37,7 @@ export const NavBar = () => {
           </Box>
           {isMobile() && <MobileMenu />}
           {isTabletAndMore() && !userInfos && <SigninDialog />}
-          {isTabletAndMore() && userInfos && <LogoutForm />}
+          {isTabletAndMore() && userInfos && <LogoutButton />}
         </Toolbar>
       </AppBar>
       <Header

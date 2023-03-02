@@ -10,15 +10,11 @@ import org.jooq.impl.DSL;
 import org.jooq.impl.Internal;
 
 import orgarif.jooq.generated.tables.AppUserTable;
-<<<<<<< HEAD
 import orgarif.jooq.generated.tables.DesignationTable;
 import orgarif.jooq.generated.tables.InstanceTable;
 import orgarif.jooq.generated.tables.LienDeliberationTable;
 import orgarif.jooq.generated.tables.MailLogTable;
 import orgarif.jooq.generated.tables.OrganismeTable;
-=======
-import orgarif.jooq.generated.tables.MailLogTable;
->>>>>>> template
 import orgarif.jooq.generated.tables.UserMailLogTable;
 import orgarif.jooq.generated.tables.UserSessionLogTable;
 
@@ -34,8 +30,6 @@ public class Indexes {
     // -------------------------------------------------------------------------
 
     public static final Index APP_USER_MAIL_IDX = Internal.createIndex(DSL.name("app_user_mail_idx"), AppUserTable.APP_USER, new OrderField[] { AppUserTable.APP_USER.MAIL }, false);
-<<<<<<< HEAD
-    public static final Index APP_USER_USERNAME_IDX = Internal.createIndex(DSL.name("app_user_username_idx"), AppUserTable.APP_USER, new OrderField[] { AppUserTable.APP_USER.USERNAME }, false);
     public static final Index DESIGNATION_INSTANCE_ID_IDX = Internal.createIndex(DSL.name("designation_instance_id_idx"), DesignationTable.DESIGNATION, new OrderField[] { DesignationTable.DESIGNATION.INSTANCE_ID }, false);
     public static final Index DESIGNATION_ORGANISME_ID_IDX = Internal.createIndex(DSL.name("designation_organisme_id_idx"), DesignationTable.DESIGNATION, new OrderField[] { DesignationTable.DESIGNATION.ORGANISME_ID }, false);
     public static final Index INSTANCE_ORGANISME_ID_IDX = Internal.createIndex(DSL.name("instance_organisme_id_idx"), InstanceTable.INSTANCE, new OrderField[] { InstanceTable.INSTANCE.ORGANISME_ID }, false);
@@ -45,9 +39,6 @@ public class Indexes {
     public static final Index ORGANISME_NATURE_JURIDIQUE_ID_IDX = Internal.createIndex(DSL.name("organisme_nature_juridique_id_idx"), OrganismeTable.ORGANISME, new OrderField[] { OrganismeTable.ORGANISME.NATURE_JURIDIQUE_ID }, false);
     public static final Index ORGANISME_SECTEUR_ID_IDX = Internal.createIndex(DSL.name("organisme_secteur_id_idx"), OrganismeTable.ORGANISME, new OrderField[] { OrganismeTable.ORGANISME.SECTEUR_ID }, false);
     public static final Index ORGANISME_TYPE_STRUCTURE_ID_IDX = Internal.createIndex(DSL.name("organisme_type_structure_id_idx"), OrganismeTable.ORGANISME, new OrderField[] { OrganismeTable.ORGANISME.TYPE_STRUCTURE_ID }, false);
-=======
-    public static final Index MAIL_LOG_USER_ID_IDX = Internal.createIndex(DSL.name("mail_log_user_id_idx"), MailLogTable.MAIL_LOG, new OrderField[] { MailLogTable.MAIL_LOG.USER_ID }, false);
->>>>>>> template
     public static final Index USER_MAIL_LOG_USER_ID_IDX = Internal.createIndex(DSL.name("user_mail_log_user_id_idx"), UserMailLogTable.USER_MAIL_LOG, new OrderField[] { UserMailLogTable.USER_MAIL_LOG.USER_ID }, false);
     public static final Index USER_SESSION_LOG_USER_ID_IDX = Internal.createIndex(DSL.name("user_session_log_user_id_idx"), UserSessionLogTable.USER_SESSION_LOG, new OrderField[] { UserSessionLogTable.USER_SESSION_LOG.USER_ID }, false);
 }

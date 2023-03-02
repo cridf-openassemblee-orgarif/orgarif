@@ -6,23 +6,12 @@ import { appContext } from '../../services/ApplicationContext';
 import { state } from '../../state/state';
 import { assertUnreachable } from '../../utils';
 import { MainContainer } from '../containers/MainContainer';
+import { RouteLink } from '../routing/RouteLink';
 import { RegisterForm, RegisterFormInput } from './RegisterForm';
 import { css } from '@emotion/react';
 import * as React from 'react';
 import { useState } from 'react';
 import { useRecoilState } from 'recoil';
-<<<<<<< HEAD:orgarif-client/src/view/RegisterView.tsx
-import { appContext } from '../ApplicationContext';
-import { MainContainer } from '../container/MainContainer';
-import { RegisterCommand } from '../domain/commands';
-import { RegisterResult } from '../domain/user';
-import { Errors } from '../errors';
-import { RegisterForm, RegisterFormDto } from '../form/RegisterForm';
-import { RouteLink } from '../routing/RouteLink';
-import { state } from '../state/state';
-import { assertUnreachable } from '../utils';
-=======
->>>>>>> template:orgarif-client/src/components/register/RegisterView.tsx
 
 export const RegisterView = () => {
   const [userInfos, setUserInfos] = useRecoilState(state.userInfos);

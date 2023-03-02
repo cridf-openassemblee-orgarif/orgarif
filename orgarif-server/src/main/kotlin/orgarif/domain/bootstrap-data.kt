@@ -1,18 +1,19 @@
 package orgarif.domain
 
-<<<<<<< HEAD
-import orgarif.repository.DepartementDao
-import orgarif.repository.NatureJuridiqueDao
-import orgarif.repository.SecteurDao
-import orgarif.repository.TypeStructureDao
+import kttots.Shared
 
-typealias Departement = DepartementDao.Record
+data class Departement(
+    val id: DepartementId,
+    val libelle: String,
+    val code: String,
+    val status: ItemStatus,
+)
 
-typealias NatureJuridique = NatureJuridiqueDao.Record
+data class NatureJuridique(val id: NatureJuridiqueId, val libelle: String, val status: ItemStatus)
 
-typealias Secteur = SecteurDao.Record
+data class Secteur(val id: SecteurId, val libelle: String, val status: ItemStatus)
 
-typealias TypeStructure = TypeStructureDao.Record
+data class TypeStructure(val id: TypeStructureId, val libelle: String, val status: ItemStatus)
 
 data class OrganismeCategories(
     val departements: List<Departement>,
@@ -21,18 +22,11 @@ data class OrganismeCategories(
     val typeStructures: List<TypeStructure>
 )
 
-// TODO[user] naming start / initial / boot / launch / base Infos ?
+// TODO[tmpl][user] naming start / initial / boot / launch / base Infos ?
 // ConnectedUserInfos (logged is bad wording btw)
+@Shared
 data class ApplicationBootstrapData(
     val env: ApplicationEnvironment,
     val userInfos: UserInfos?,
     val categories: OrganismeCategories
 )
-=======
-import kttots.Shared
-
-// TODO[tmpl][user] naming start / initial / boot / launch / base Infos ?
-// ConnectedUserInfos (logged is bad wording btw)
-@Shared
-data class ApplicationBootstrapData(val env: ApplicationEnvironment, val userInfos: UserInfos?)
->>>>>>> template

@@ -15,7 +15,6 @@ import org.jooq.impl.SchemaImpl;
 
 import orgarif.jooq.generated.tables.AppUserTable;
 import orgarif.jooq.generated.tables.CommandLogTable;
-<<<<<<< HEAD
 import orgarif.jooq.generated.tables.DeliberationTable;
 import orgarif.jooq.generated.tables.DepartementTable;
 import orgarif.jooq.generated.tables.DeploymentLogTable;
@@ -30,11 +29,6 @@ import orgarif.jooq.generated.tables.OrganismeTable;
 import orgarif.jooq.generated.tables.RepresentantTable;
 import orgarif.jooq.generated.tables.SecteurTable;
 import orgarif.jooq.generated.tables.TypeStructureTable;
-=======
-import orgarif.jooq.generated.tables.DeploymentLogTable;
-import orgarif.jooq.generated.tables.MagicLinkTokenTable;
-import orgarif.jooq.generated.tables.MailLogTable;
->>>>>>> template
 import orgarif.jooq.generated.tables.UserFileTable;
 import orgarif.jooq.generated.tables.UserMailLogTable;
 import orgarif.jooq.generated.tables.UserSessionLogTable;
@@ -64,7 +58,6 @@ public class PublicTable extends SchemaImpl {
     public final CommandLogTable COMMAND_LOG = CommandLogTable.COMMAND_LOG;
 
     /**
-<<<<<<< HEAD
      * The table <code>public.deliberation</code>.
      */
     public final DeliberationTable DELIBERATION = DeliberationTable.DELIBERATION;
@@ -75,14 +68,11 @@ public class PublicTable extends SchemaImpl {
     public final DepartementTable DEPARTEMENT = DepartementTable.DEPARTEMENT;
 
     /**
-=======
->>>>>>> template
      * The table <code>public.deployment_log</code>.
      */
     public final DeploymentLogTable DEPLOYMENT_LOG = DeploymentLogTable.DEPLOYMENT_LOG;
 
     /**
-<<<<<<< HEAD
      * The table <code>public.designation</code>.
      */
     public final DesignationTable DESIGNATION = DesignationTable.DESIGNATION;
@@ -103,8 +93,6 @@ public class PublicTable extends SchemaImpl {
     public final LienDeliberationTable LIEN_DELIBERATION = LienDeliberationTable.LIEN_DELIBERATION;
 
     /**
-=======
->>>>>>> template
      * The table <code>public.magic_link_token</code>.
      */
     public final MagicLinkTokenTable MAGIC_LINK_TOKEN = MagicLinkTokenTable.MAGIC_LINK_TOKEN;
@@ -115,7 +103,6 @@ public class PublicTable extends SchemaImpl {
     public final MailLogTable MAIL_LOG = MailLogTable.MAIL_LOG;
 
     /**
-<<<<<<< HEAD
      * The table <code>public.nature_juridique</code>.
      */
     public final NatureJuridiqueTable NATURE_JURIDIQUE = NatureJuridiqueTable.NATURE_JURIDIQUE;
@@ -141,8 +128,6 @@ public class PublicTable extends SchemaImpl {
     public final TypeStructureTable TYPE_STRUCTURE = TypeStructureTable.TYPE_STRUCTURE;
 
     /**
-=======
->>>>>>> template
      * The table <code>public.user_file</code>.
      */
     public final UserFileTable USER_FILE = UserFileTable.USER_FILE;
@@ -177,7 +162,6 @@ public class PublicTable extends SchemaImpl {
         return Arrays.<Table<?>>asList(
             AppUserTable.APP_USER,
             CommandLogTable.COMMAND_LOG,
-<<<<<<< HEAD
             DeliberationTable.DELIBERATION,
             DepartementTable.DEPARTEMENT,
             DeploymentLogTable.DEPLOYMENT_LOG,
@@ -192,11 +176,6 @@ public class PublicTable extends SchemaImpl {
             RepresentantTable.REPRESENTANT,
             SecteurTable.SECTEUR,
             TypeStructureTable.TYPE_STRUCTURE,
-=======
-            DeploymentLogTable.DEPLOYMENT_LOG,
-            MagicLinkTokenTable.MAGIC_LINK_TOKEN,
-            MailLogTable.MAIL_LOG,
->>>>>>> template
             UserFileTable.USER_FILE,
             UserMailLogTable.USER_MAIL_LOG,
             UserSessionLogTable.USER_SESSION_LOG);

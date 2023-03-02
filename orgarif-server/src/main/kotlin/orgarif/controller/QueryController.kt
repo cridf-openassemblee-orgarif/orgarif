@@ -4,15 +4,12 @@ import java.net.URLDecoder
 import javax.servlet.http.HttpServletRequest
 import org.springframework.web.bind.annotation.GetMapping
 import org.springframework.web.bind.annotation.RestController
-<<<<<<< HEAD
 import orgarif.query.GetOrganismeQuery
 import orgarif.query.GetOrganismeQueryHandler
-=======
 import orgarif.query.GetUserInfosQuery
 import orgarif.query.GetUserInfosQueryHandler
 import orgarif.query.GetUsersQuery
 import orgarif.query.GetUsersQueryHandler
->>>>>>> template
 import orgarif.query.IsMailAlreadyTakenQuery
 import orgarif.query.IsMailAlreadyTakenQueryHandler
 import orgarif.query.ListOrganismesQuery
@@ -32,22 +29,16 @@ import orgarif.service.utils.TransactionIsolationService
 
 @RestController
 class QueryController(
-<<<<<<< HEAD
-    val userDao: UserDao,
-    val userSessionService: UserSessionService,
-    val getOrganismeQueryHandler: GetOrganismeQueryHandler,
-    val isMailAlreadyTakenQueryHandler: IsMailAlreadyTakenQueryHandler,
-    val listOrganismesQueryHandler: ListOrganismesQueryHandler,
-    val searchDeliberationQueryHandler: SearchDeliberationQueryHandler,
-    val searchRepresentantsQueryHandler: SearchRepresentantsQueryHandler,
-=======
     private val userDao: UserDao,
     private val userSessionService: UserSessionService,
+    private val getOrganismeQueryHandler: GetOrganismeQueryHandler,
     private val getUserInfosQueryHandler: GetUserInfosQueryHandler,
     private val getUsersQueryHandler: GetUsersQueryHandler,
     private val isMailAlreadyTakenQueryHandler: IsMailAlreadyTakenQueryHandler,
+    private val listOrganismesQueryHandler: ListOrganismesQueryHandler,
+    private val searchDeliberationQueryHandler: SearchDeliberationQueryHandler,
+    private val searchRepresentantsQueryHandler: SearchRepresentantsQueryHandler,
     private val transactionIsolationService: TransactionIsolationService,
->>>>>>> template
 ) {
 
     @GetMapping("/query")
@@ -64,18 +55,12 @@ class QueryController(
 
     private fun handler(query: Query) =
         when (query) {
-<<<<<<< HEAD
             is GetOrganismeQuery -> getOrganismeQueryHandler
+            is GetUserInfosQuery -> getUserInfosQueryHandler
+            is GetUsersQuery -> getUsersQueryHandler
             is IsMailAlreadyTakenQuery -> isMailAlreadyTakenQueryHandler
             is ListOrganismesQuery -> listOrganismesQueryHandler
             is SearchDeliberationQuery -> searchDeliberationQueryHandler
             is SearchRepresentantsQuery -> searchRepresentantsQueryHandler
-        }
-            as QueryHandler<Query, QueryResponse>
-=======
-            is GetUserInfosQuery -> getUserInfosQueryHandler
-            is GetUsersQuery -> getUsersQueryHandler
-            is IsMailAlreadyTakenQuery -> isMailAlreadyTakenQueryHandler
         }.let { @Suppress("UNCHECKED_CAST") (it as QueryHandler<Query, QueryResponse>) }
->>>>>>> template
 }

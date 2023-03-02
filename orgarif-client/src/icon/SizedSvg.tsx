@@ -1,7 +1,7 @@
 /** @jsxImportSource @emotion/react */
+import { InlineSvg } from './InlineSvg';
 import { css } from '@emotion/react';
 import styled from '@emotion/styled';
-import { InlineSvg } from './InlineSvg';
 
 export const SizedSvg = styled(InlineSvg)<{
   height?: number | string;

@@ -1,28 +1,27 @@
 /** @jsxImportSource @emotion/react */
+import { Category } from '../../../domain/category';
+import { FilterChip } from './FilterChip';
+import { HeaderFiltersChip } from './HeaderFiltersChip';
 import { css } from '@emotion/react';
 import { Box } from '@mui/material';
 import * as React from 'react';
-import { Category } from '../../domain/bootstrap-data';
-import { asString } from '../../utils/nominal-class';
-import { FilterChip } from './FilterChip';
-import { HeaderFiltersChip } from './HeaderFiltersChip';
 
-interface FilterSectionProps<T extends Category> {
-  filters?: T[];
+interface FilterSectionProps {
+  filters?: Category[];
   categoryLabel: string;
-  filterLabelAndTooltip: (f: T) => [string, string?];
+  filterLabelAndTooltip: (f: Category) => [string, string?];
   sticky?: boolean | undefined;
   standalone?: boolean | undefined;
 }
 
 export const FilterSection = React.memo(
-  <T extends Category>({
+  ({
     filters,
     categoryLabel,
     filterLabelAndTooltip,
     sticky,
     standalone
-  }: FilterSectionProps<T>) => {
+  }: FilterSectionProps) => {
     return (
       <Box
         css={chipsContainer}
@@ -39,7 +38,7 @@ export const FilterSection = React.memo(
             const [label, tooltipLabel] = filterLabelAndTooltip(c);
             return (
               <FilterChip
-                key={asString(c.id)}
+                key={c.id}
                 filter={c}
                 label={label}
                 tooltipLabel={tooltipLabel}

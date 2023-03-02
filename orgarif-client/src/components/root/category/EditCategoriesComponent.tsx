@@ -1,4 +1,12 @@
 /** @jsxImportSource @emotion/react */
+import { Category, CategoryId } from '../../../domain/category';
+import { ItemStatus } from '../../../generated/domain/organisme';
+import { assertUnreachable, clientUid } from '../../../utils';
+import { NominalString } from '../../../utils/nominal-class';
+import { LoadingButton } from '../../common/LoadingButton';
+import { TextInput } from '../../common/form/TextInput';
+import { colors } from '../../styles/colors';
+import { dialogClasses } from '../organisme/edit/dialog-common';
 import { css } from '@emotion/react';
 import { Add, Edit } from '@mui/icons-material';
 import { DialogContent, DialogTitle } from '@mui/material';
@@ -7,16 +15,8 @@ import Dialog from '@mui/material/Dialog';
 import DialogActions from '@mui/material/DialogActions';
 import * as React from 'react';
 import { useState } from 'react';
-import { Category, CategoryId } from '../../domain/bootstrap-data';
-import { ItemStatus } from '../../domain/organisme';
-import { colors } from '../../styles/colors';
-import { assertUnreachable, clientUid } from '../../utils';
-import { asString, NominalString } from '../../utils/nominal-class';
-import { TextInput } from '../base-component/TextInput';
-import { dialogClasses } from '../organisme/edit/dialog-common';
-import { LoadingButton } from '../base-component/LoadingButton';
 
-const buttonClass = asString(clientUid());
+const buttonClass = clientUid();
 
 export const classes = {
   editButton: css`
@@ -296,7 +296,7 @@ export const EditCategoriesComponent = (props: {
         <tbody>
           {live.map(c => (
             <EditCategoryComponent
-              key={asString(c.id)}
+              key={c.id}
               kind={props.kind}
               hasCode={props.hasCode}
               category={c}
@@ -319,7 +319,7 @@ export const EditCategoriesComponent = (props: {
             <tbody>
               {archive.map(c => (
                 <EditCategoryComponent
-                  key={asString(c.id)}
+                  key={c.id}
                   kind={props.kind}
                   category={c}
                   hasCode={props.hasCode}

@@ -1,11 +1,10 @@
 /** @jsxImportSource @emotion/react */
-import * as React from 'react';
-import { DeliberationId } from '../../../../domain/ids';
-import { LienDeliberationDto } from '../../../../domain/organisme';
-import { asString } from '../../../../utils/nominal-class';
+import { DeliberationId } from '../../../../../generated/domain/ids';
+import { LienDeliberationDto } from '../../../../../generated/domain/organisme';
 import { editCommonClasses } from '../EditOrganismeComponent';
 import { EditDeliberationListItem } from './EditDeliberationListItem';
 import { HeaderDeliberationsComponent } from './HeaderDeliberationsComponent';
+import * as React from 'react';
 
 export const EditDeliberationListComponent = (props: {
   lienDeliberations: LienDeliberationDto[];
@@ -27,7 +26,7 @@ export const EditDeliberationListComponent = (props: {
       <div css={editCommonClasses.columnPadding}>
         {props.lienDeliberations.map(l => (
           <EditDeliberationListItem
-            key={asString(l.id)}
+            key={l.id}
             lienDeliberation={l}
             onUpdate={props.onOtherUpdate}
           />

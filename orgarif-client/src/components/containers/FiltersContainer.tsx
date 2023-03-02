@@ -1,4 +1,14 @@
 /** @jsxImportSource @emotion/react */
+import { Departement } from '../../generated/domain/bootstrap-data';
+import useEventListener from '../../hooks/useEventListener';
+import { state } from '../../state/state';
+import { isMobile, isTabletAndMore } from '../../utils/viewport-utils';
+import { DeleteFiltersDialog } from '../root/filters/DeleteFiltersDialog';
+import { FilterSection } from '../root/filters/FilterSection';
+import { colors } from '../styles/colors';
+import { extractLabelAndTooltip } from './BasicFiltersContainer';
+import { MinimizedFilters } from './MinimizedFilters';
+import { MobileSelectFilters } from './MobileSelectFilters';
 import { css } from '@emotion/react';
 import { DeleteOutlined } from '@mui/icons-material';
 import ArrowForwardIosSharpIcon from '@mui/icons-material/ArrowForwardIosSharp';
@@ -11,20 +21,10 @@ import MuiAccordionSummary, {
   AccordionSummaryProps
 } from '@mui/material/AccordionSummary';
 import Collapse from '@mui/material/Collapse';
-import { styled } from '@mui/material/styles';
 import Typography from '@mui/material/Typography';
+import { styled } from '@mui/material/styles';
 import * as React from 'react';
 import { useRecoilState, useSetRecoilState } from 'recoil';
-import { DeleteFiltersDialog } from '../component/filters/DeleteFiltersDialog';
-import { FilterSection } from '../component/filters/FilterSection';
-import useEventListener from '../hooks/useEventListener';
-import { state } from '../state/state';
-import { colors } from '../styles/colors';
-import { isMobile, isTabletAndMore } from '../utils/viewport-utils';
-import { MinimizedFilters } from './MinimizedFilters';
-import { MobileSelectFilters } from './MobileSelectFilters';
-import { extractLabelAndTooltip } from './BasicFiltersContainer';
-import { Departement } from '../domain/bootstrap-data';
 
 export const FiltersContainer = () => {
   const [departements] = useRecoilState(state.departements);

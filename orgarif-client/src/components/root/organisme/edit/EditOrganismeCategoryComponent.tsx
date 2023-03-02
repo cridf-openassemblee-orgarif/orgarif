@@ -1,24 +1,23 @@
 /** @jsxImportSource @emotion/react */
-import { css } from '@emotion/react';
-import * as React from 'react';
-import { useRecoilValue } from 'recoil';
-import { Category } from '../../../domain/bootstrap-data';
+import { Category, CategoryId } from '../../../../domain/category';
 import {
   DepartementId,
   NatureJuridiqueId,
-  OrgarifId,
   SecteurId,
   TypeStructureId
-} from '../../../domain/ids';
-import { state } from '../../../state/state';
+} from '../../../../generated/domain/ids';
+import { state } from '../../../../state/state';
+import { Dict } from '../../../../utils/nominal-class';
+import { SelectInput, SelectOption } from '../../../common/form/SelectInput';
 import { colors } from '../../../styles/colors';
-import { Dict } from '../../../utils/nominal-class';
-import { SelectInput, SelectOption } from '../../base-component/SelectInput';
 import { editCommonClasses } from './EditOrganismeComponent';
+import { css } from '@emotion/react';
+import * as React from 'react';
+import { useRecoilValue } from 'recoil';
 
 const EditOrganismeCategoryComponent = <
   C extends Category,
-  Id extends OrgarifId
+  Id extends CategoryId
 >(props: {
   label: string;
   categoryList: C[];
@@ -26,7 +25,7 @@ const EditOrganismeCategoryComponent = <
   currentId: Id | undefined;
   onChange: (id: Id | undefined) => void;
 }) => {
-  const options: SelectOption<OrgarifId>[] = props.categoryList.map(e => ({
+  const options: SelectOption<CategoryId>[] = props.categoryList.map(e => ({
     value: e.id,
     label: e.libelle + ('code' in e ? ' (' + e.code + ')' : '')
   }));

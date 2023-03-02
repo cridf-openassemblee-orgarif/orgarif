@@ -1,20 +1,19 @@
 /** @jsxImportSource @emotion/react */
+import { LocalDate } from '../../../../../domain/datetime';
+import { RepresentantId } from '../../../../../generated/domain/ids';
+import { DesignationDto } from '../../../../../generated/domain/organisme';
+import { formatLocaleDate } from '../../../../../simple-fr';
+import { clientUid } from '../../../../../utils';
+import { colors } from '../../../../styles/colors';
+import { AddDesignationDialog } from './AddDesignationDialog';
+import { EditDesignationDialog } from './EditDesignationDialog';
 import { css } from '@emotion/react';
 import { Add, Edit } from '@mui/icons-material';
 import { Button } from '@mui/material';
 import * as React from 'react';
 import { useState } from 'react';
-import { colors } from '../../../../styles/colors';
-import { clientUid } from '../../../../utils';
-import { asString } from '../../../../utils/nominal-class';
-import { formatLocaleDate } from '../../../../simple-fr';
-import { DesignationDto } from '../../../../domain/organisme';
-import { AddDesignationDialog } from './AddDesignationDialog';
-import { RepresentantId } from '../../../../domain/ids';
-import { LocalDate } from '../../../../domain/time';
-import { EditDesignationDialog } from './EditDesignationDialog';
 
-const actionsClass = asString(clientUid());
+const actionsClass = clientUid();
 
 export const EditDesignationListItem = (props: {
   designation: DesignationDto | undefined;

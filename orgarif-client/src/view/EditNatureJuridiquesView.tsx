@@ -1,15 +1,16 @@
 /** @jsxImportSource @emotion/react */
+import { MainContainer } from '../components/containers/MainContainer';
+import { EditCategoriesComponent } from '../components/root/category/EditCategoriesComponent';
+import { CreateNatureJuridiqueCommandResponse } from '../generated/command/commands';
+import { NatureJuridique } from '../generated/domain/bootstrap-data';
+import { NatureJuridiqueId } from '../generated/domain/ids';
+import { ItemStatus } from '../generated/domain/organisme';
+import { appContext } from '../services/ApplicationContext';
+import { state } from '../state/state';
+import { compareByString } from '../utils';
 import { css } from '@emotion/react';
 import * as React from 'react';
 import { useRecoilState } from 'recoil';
-import { appContext } from '../ApplicationContext';
-import { EditCategoriesComponent } from '../component/category/EditCategoriesComponent';
-import { MainContainer } from '../container/MainContainer';
-import { NatureJuridique } from '../domain/bootstrap-data';
-import { NatureJuridiqueId } from '../domain/ids';
-import { ItemStatus } from '../domain/organisme';
-import { state } from '../state/state';
-import { compareByString } from '../utils';
 
 export const EditNatureJuridiquesView = () => {
   const [natureJuridiques, setNatureJuridiques] = useRecoilState(
@@ -18,7 +19,8 @@ export const EditNatureJuridiquesView = () => {
   const addNatureJuridique = (libelle: string) =>
     appContext
       .commandService()
-      .createNatureJuridiqueCommand({
+      .send<CreateNatureJuridiqueCommandResponse>({
+        objectType: 'CreateNatureJuridiqueCommand',
         libelle
       })
       .then(r => {
@@ -39,7 +41,8 @@ export const EditNatureJuridiquesView = () => {
   ) =>
     appContext
       .commandService()
-      .updateNatureJuridiqueLibelleCommand({
+      .send({
+        objectType: 'UpdateNatureJuridiqueLibelleCommand',
         id: natureJuridiqueId,
         libelle
       })
@@ -53,10 +56,7 @@ export const EditNatureJuridiquesView = () => {
   const onUpdateStatus = (id: NatureJuridiqueId, status: ItemStatus) =>
     appContext
       .commandService()
-      .updateNatureJuridiqueStatusCommand({
-        id,
-        status
-      })
+      .send({ objectType: 'UpdateNatureJuridiqueStatusCommand', id, status })
       .then(() => {
         setNatureJuridiques(
           natureJuridiques.map(s => (s.id === id ? { ...s, status } : s))

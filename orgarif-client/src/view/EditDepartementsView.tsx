@@ -1,24 +1,26 @@
 /** @jsxImportSource @emotion/react */
-import { css } from '@emotion/react';
-import * as React from 'react';
-import { useRecoilState } from 'recoil';
-import { appContext } from '../ApplicationContext';
-import { EditCategoriesComponent } from '../component/category/EditCategoriesComponent';
-import { MainContainer } from '../container/MainContainer';
-import { Departement } from '../domain/bootstrap-data';
-import { DepartementId } from '../domain/ids';
-import { ItemStatus } from '../domain/organisme';
+import { MainContainer } from '../components/containers/MainContainer';
+import { EditCategoriesComponent } from '../components/root/category/EditCategoriesComponent';
 import { Errors } from '../errors';
+import { CreateDepartementCommandResponse } from '../generated/command/commands';
+import { Departement } from '../generated/domain/bootstrap-data';
+import { DepartementId } from '../generated/domain/ids';
+import { ItemStatus } from '../generated/domain/organisme';
+import { appContext } from '../services/ApplicationContext';
 import { state } from '../state/state';
 import { compareByString } from '../utils';
 import { NominalString } from '../utils/nominal-class';
+import { css } from '@emotion/react';
+import * as React from 'react';
+import { useRecoilState } from 'recoil';
 
 export const EditDepartementsView = () => {
   const [departements, setDepartements] = useRecoilState(state.departements);
   const addDepartement = (libelle: string, code: string) =>
     appContext
       .commandService()
-      .createDepartementCommand({
+      .send<CreateDepartementCommandResponse>({
+        objectType: 'CreateDepartementCommand',
         libelle,
         code
       })
@@ -42,7 +44,8 @@ export const EditDepartementsView = () => {
   ) =>
     appContext
       .commandService()
-      .updateDepartementCommand({
+      .send({
+        objectType: 'UpdateDepartementCommand',
         id: departementId,
         libelle,
         code
@@ -57,10 +60,7 @@ export const EditDepartementsView = () => {
   const onUpdateStatus = (id: DepartementId, status: ItemStatus) =>
     appContext
       .commandService()
-      .updateDepartementStatusCommand({
-        id,
-        status
-      })
+      .send({ objectType: 'UpdateDepartementStatusCommand', id, status })
       .then(() => {
         setDepartements(
           departements.map(s => (s.id === id ? { ...s, status } : s))

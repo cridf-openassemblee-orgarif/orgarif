@@ -17,11 +17,7 @@ import org.jooq.Field;
 import org.jooq.ForeignKey;
 import org.jooq.Name;
 import org.jooq.Record;
-<<<<<<< HEAD
-import org.jooq.Row12;
-=======
 import org.jooq.Row13;
->>>>>>> template
 import org.jooq.Schema;
 import org.jooq.Table;
 import org.jooq.TableField;
@@ -69,14 +65,11 @@ public class CommandLogTable extends TableImpl<CommandLogRecord> {
     public final TableField<CommandLogRecord, UUID> USER_ID = createField(DSL.name("user_id"), SQLDataType.UUID, this, "");
 
     /**
-<<<<<<< HEAD
-=======
      * The column <code>public.command_log.affected_user_id</code>.
      */
     public final TableField<CommandLogRecord, UUID> AFFECTED_USER_ID = createField(DSL.name("affected_user_id"), SQLDataType.UUID, this, "");
 
     /**
->>>>>>> template
      * The column <code>public.command_log.deployment_log_id</code>.
      */
     public final TableField<CommandLogRecord, UUID> DEPLOYMENT_LOG_ID = createField(DSL.name("deployment_log_id"), SQLDataType.UUID.nullable(false), this, "");
@@ -102,15 +95,9 @@ public class CommandLogTable extends TableImpl<CommandLogRecord> {
     public final TableField<CommandLogRecord, UUID> USER_SESSION_ID = createField(DSL.name("user_session_id"), SQLDataType.UUID, this, "");
 
     /**
-<<<<<<< HEAD
-     * The column <code>public.command_log.resulting_ids</code>.
-     */
-    public final TableField<CommandLogRecord, String> RESULTING_IDS = createField(DSL.name("resulting_ids"), SQLDataType.CLOB, this, "");
-=======
      * The column <code>public.command_log.ids_log</code>.
      */
     public final TableField<CommandLogRecord, String> IDS_LOG = createField(DSL.name("ids_log"), SQLDataType.CLOB.nullable(false), this, "");
->>>>>>> template
 
     /**
      * The column <code>public.command_log.json_result</code>.
@@ -130,11 +117,7 @@ public class CommandLogTable extends TableImpl<CommandLogRecord> {
     /**
      * The column <code>public.command_log.end_date</code>.
      */
-<<<<<<< HEAD
-    public final TableField<CommandLogRecord, Instant> END_DATE = createField(DSL.name("end_date"), SQLDataType.TIMESTAMPWITHTIMEZONE(6), this, "", new TimestampWithTimeZoneToInstantConverter());
-=======
     public final TableField<CommandLogRecord, Instant> END_DATE = createField(DSL.name("end_date"), SQLDataType.TIMESTAMPWITHTIMEZONE(6).nullable(false), this, "", new TimestampWithTimeZoneToInstantConverter());
->>>>>>> template
 
     private CommandLogTable(Name alias, Table<CommandLogRecord> aliased) {
         this(alias, aliased, null);
@@ -190,26 +173,10 @@ public class CommandLogTable extends TableImpl<CommandLogRecord> {
     @Override
     @Nonnull
     public List<ForeignKey<CommandLogRecord, ?>> getReferences() {
-<<<<<<< HEAD
-        return Arrays.<ForeignKey<CommandLogRecord, ?>>asList(Keys.COMMAND_LOG__COMMAND_LOG_USER_ID_FKEY, Keys.COMMAND_LOG__COMMAND_LOG_DEPLOYMENT_LOG_ID_FKEY, Keys.COMMAND_LOG__COMMAND_LOG_USER_SESSION_ID_FKEY);
-    }
-
-    private transient AppUserTable _appUser;
-    private transient DeploymentLogTable _deploymentLog;
-    private transient UserSessionLogTable _userSessionLog;
-
-    public AppUserTable appUser() {
-        if (_appUser == null)
-            _appUser = new AppUserTable(this, Keys.COMMAND_LOG__COMMAND_LOG_USER_ID_FKEY);
-
-        return _appUser;
-    }
-=======
         return Arrays.<ForeignKey<CommandLogRecord, ?>>asList(Keys.COMMAND_LOG__COMMAND_LOG_DEPLOYMENT_LOG_ID_FKEY);
     }
 
     private transient DeploymentLogTable _deploymentLog;
->>>>>>> template
 
     public DeploymentLogTable deploymentLog() {
         if (_deploymentLog == null)
@@ -218,16 +185,6 @@ public class CommandLogTable extends TableImpl<CommandLogRecord> {
         return _deploymentLog;
     }
 
-<<<<<<< HEAD
-    public UserSessionLogTable userSessionLog() {
-        if (_userSessionLog == null)
-            _userSessionLog = new UserSessionLogTable(this, Keys.COMMAND_LOG__COMMAND_LOG_USER_SESSION_ID_FKEY);
-
-        return _userSessionLog;
-    }
-
-=======
->>>>>>> template
     @Override
     @Nonnull
     public CommandLogTable as(String alias) {
@@ -259,21 +216,12 @@ public class CommandLogTable extends TableImpl<CommandLogRecord> {
     }
 
     // -------------------------------------------------------------------------
-<<<<<<< HEAD
-    // Row12 type methods
-=======
     // Row13 type methods
->>>>>>> template
     // -------------------------------------------------------------------------
 
     @Override
     @Nonnull
-<<<<<<< HEAD
-    public Row12<UUID, UUID, UUID, String, String, String, UUID, String, String, String, Instant, Instant> fieldsRow() {
-        return (Row12) super.fieldsRow();
-=======
     public Row13<UUID, UUID, UUID, UUID, String, String, String, UUID, String, String, String, Instant, Instant> fieldsRow() {
         return (Row13) super.fieldsRow();
->>>>>>> template
     }
 }

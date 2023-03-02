@@ -1,8 +1,8 @@
 /** @jsxImportSource @emotion/react */
+import * as breakpoint from '../styles/breakpoints';
 import { css } from '@emotion/react';
 import { Slide, Typography } from '@mui/material';
 import * as React from 'react';
-import * as breakpoint from '../styles/breakpoints';
 
 interface HeaderProps {
   shrinked: boolean;

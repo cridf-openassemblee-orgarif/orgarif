@@ -7,17 +7,11 @@ import { asNominalString } from '../../utils/nominal-class';
 import { LoadingStateButton } from '../common/LoadingButton';
 import { ControlledPasswordInput } from '../common/form/ControlledPasswordInput';
 import { ControlledTextInput } from '../common/form/ControlledTextInput';
-import { colors } from '../styles/vars';
+import { colors } from '../styles/colors';
 import { css } from '@emotion/react';
 import * as React from 'react';
 import { ChangeEvent, useState } from 'react';
 import { useForm } from 'react-hook-form';
-<<<<<<< HEAD:orgarif-client/src/form/RegisterForm.tsx
-import { ControlledTextInput } from '../component/base-component/ControlledTextInput';
-import { colors } from '../styles/colors';
-import { ControlledPasswordInput } from '../component/base-component/ControlledPasswordInput';
-=======
->>>>>>> template:orgarif-client/src/components/register/RegisterForm.tsx
 
 export interface RegisterFormInput {
   mail: string;
@@ -118,13 +112,9 @@ export const RegisterForm = (props: {
           errors={errors}
         />
       </div>
-<<<<<<< HEAD:orgarif-client/src/form/RegisterForm.tsx
-      <Button type="submit">Créer le compte</Button>
-=======
       <LoadingStateButton loadingState={loading} type="submit">
-        Register
+        Créer le compte
       </LoadingStateButton>
->>>>>>> template:orgarif-client/src/components/register/RegisterForm.tsx
     </form>
   );
 };

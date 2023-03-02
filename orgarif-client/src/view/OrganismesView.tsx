@@ -1,9 +1,9 @@
 /** @jsxImportSource @emotion/react */
+import { FiltersContainer } from '../components/containers/FiltersContainer';
+import { MainContainer } from '../components/containers/MainContainer';
+import { TableContainer } from '../components/containers/TableContainer';
 import { Fade } from '@mui/material';
 import * as React from 'react';
-import { FiltersContainer } from '../container/FiltersContainer';
-import { MainContainer } from '../container/MainContainer';
-import { TableContainer } from '../container/TableContainer';
 
 export const OrganismesView = () => {
   return (

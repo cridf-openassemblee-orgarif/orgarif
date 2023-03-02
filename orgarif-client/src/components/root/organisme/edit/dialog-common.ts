@@ -1,5 +1,5 @@
-import { css } from '@emotion/react';
 import { colors } from '../../../styles/colors';
+import { css } from '@emotion/react';
 
 export const dialogClasses = {
   // TODO remove !

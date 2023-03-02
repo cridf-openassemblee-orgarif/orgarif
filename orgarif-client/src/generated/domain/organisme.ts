@@ -1,3 +1,4 @@
+import { LocalDate } from '../../domain/datetime';
 import {
   DeliberationId,
   DepartementId,
@@ -10,7 +11,6 @@ import {
   SecteurId,
   TypeStructureId
 } from './ids';
-import { LocalDate } from './time';
 
 export type ItemStatus = 'live' | 'archive' | 'trash';
 
@@ -52,9 +52,8 @@ export interface InstanceDto {
   nom: string;
   nombreRepresentants: number;
   presenceSuppleants: boolean;
-  // DesignationDto | null & not undefined because of serialization
-  designationRepresentants: (DesignationDto | null)[];
-  designationSuppleants: (DesignationDto | null)[];
+  designationRepresentants: DesignationDto[];
+  designationSuppleants: DesignationDto[];
   lienDeliberations: LienDeliberationDto[];
   status: ItemStatus;
 }
@@ -77,9 +76,8 @@ export interface OrganismeDto {
   typeStructureId?: TypeStructureId;
   nombreRepresentants: number;
   presenceSuppleants: boolean;
-  // DesignationDto | null & not undefined because of serialization
-  designationRepresentants: (DesignationDto | null)[];
-  designationSuppleants: (DesignationDto | null)[];
+  designationRepresentants: DesignationDto[];
+  designationSuppleants: DesignationDto[];
   lienDeliberations: LienDeliberationDto[];
   instances: InstanceDto[];
   status: ItemStatus;

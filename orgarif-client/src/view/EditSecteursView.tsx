@@ -1,22 +1,24 @@
 /** @jsxImportSource @emotion/react */
+import { MainContainer } from '../components/containers/MainContainer';
+import { EditCategoriesComponent } from '../components/root/category/EditCategoriesComponent';
+import { CreateSecteurCommandResponse } from '../generated/command/commands';
+import { Secteur } from '../generated/domain/bootstrap-data';
+import { SecteurId } from '../generated/domain/ids';
+import { ItemStatus } from '../generated/domain/organisme';
+import { appContext } from '../services/ApplicationContext';
+import { state } from '../state/state';
+import { compareByString } from '../utils';
 import { css } from '@emotion/react';
 import * as React from 'react';
 import { useRecoilState } from 'recoil';
-import { appContext } from '../ApplicationContext';
-import { EditCategoriesComponent } from '../component/category/EditCategoriesComponent';
-import { MainContainer } from '../container/MainContainer';
-import { Secteur } from '../domain/bootstrap-data';
-import { SecteurId } from '../domain/ids';
-import { ItemStatus } from '../domain/organisme';
-import { state } from '../state/state';
-import { compareByString } from '../utils';
 
 export const EditSecteursView = () => {
   const [secteurs, setSecteurs] = useRecoilState(state.secteurs);
   const addSecteur = (libelle: string) =>
     appContext
       .commandService()
-      .createSecteurCommand({
+      .send<CreateSecteurCommandResponse>({
+        objectType: 'CreateSecteurCommand',
         libelle
       })
       .then(r => {
@@ -28,7 +30,8 @@ export const EditSecteursView = () => {
   const updateSecteur = (secteurId: SecteurId, libelle: string) =>
     appContext
       .commandService()
-      .updateSecteurLibelleCommand({
+      .send({
+        objectType: 'UpdateSecteurLibelleCommand',
         id: secteurId,
         libelle
       })
@@ -42,7 +45,8 @@ export const EditSecteursView = () => {
   const onUpdateStatus = (id: SecteurId, status: ItemStatus) =>
     appContext
       .commandService()
-      .updateSecteurStatusCommand({
+      .send({
+        objectType: 'UpdateSecteurStatusCommand',
         id,
         status
       })

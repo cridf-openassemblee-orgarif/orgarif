@@ -1,18 +1,18 @@
 /** @jsxImportSource @emotion/react */
+import { LeftPanel } from '../components/containers/LeftPanel';
+import { MainContainer } from '../components/containers/MainContainer';
+import { RightPanel } from '../components/containers/RightPanel';
+import { EditOrganismeRoute } from '../components/routing/routes';
+import { OrganismeDto } from '../generated/domain/organisme';
+import { GetOrganismeQueryResponse } from '../generated/query/queries';
+import { appContext } from '../services/ApplicationContext';
+import { state } from '../state/state';
 import { css } from '@emotion/react';
 import { LinearProgress, Link, Slide, Typography } from '@mui/material';
 import Box from '@mui/material/Box';
 import * as React from 'react';
-import { useLocation, useNavigate } from 'react-router-dom';
+import { useNavigate } from 'react-router-dom';
 import { useRecoilValue } from 'recoil';
-import { appContext } from '../ApplicationContext';
-import { LeftPanel } from '../container/LeftPanel';
-import { MainContainer } from '../container/MainContainer';
-import { RightPanel } from '../container/RightPanel';
-import { OrganismeId } from '../domain/ids';
-import { OrganismeDto } from '../domain/organisme';
-import { state } from '../state/state';
-import { EditOrganismeRoute } from '../routing/routes';
 
 export const SingleOrganismeView = (props: { route: EditOrganismeRoute }) => {
   const [organisme, setOrganisme] = React.useState<OrganismeDto>();
@@ -23,7 +23,10 @@ export const SingleOrganismeView = (props: { route: EditOrganismeRoute }) => {
   React.useEffect(() => {
     appContext
       .queryService()
-      .getOrganismeQuery({ id: props.route.id })
+      .send<GetOrganismeQueryResponse>({
+        objectType: 'GetOrganismeQuery',
+        id: props.route.id
+      })
       .then(r => {
         setOrganisme(r.organisme);
       })

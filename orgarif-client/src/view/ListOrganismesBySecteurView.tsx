@@ -1,16 +1,17 @@
 /** @jsxImportSource @emotion/react */
+import { MainContainer } from '../components/containers/MainContainer';
+import { RouteLink } from '../components/routing/RouteLink';
+import { ListOrganismesBySecteurRoute } from '../components/routing/routes';
+import { colors } from '../components/styles/colors';
+import { OrganismeListDto } from '../generated/domain/organisme';
+import { ListOrganismesQueryResponse } from '../generated/query/queries';
+import { appContext } from '../services/ApplicationContext';
+import { state } from '../state/state';
+import { getValue } from '../utils/nominal-class';
 import { css } from '@emotion/react';
 import * as React from 'react';
 import { useEffect, useState } from 'react';
 import { useRecoilValue } from 'recoil';
-import { appContext } from '../ApplicationContext';
-import { MainContainer } from '../container/MainContainer';
-import { OrganismeListDto } from '../domain/organisme';
-import { RouteLink } from '../routing/RouteLink';
-import { ListOrganismesBySecteurRoute } from '../routing/routes';
-import { state } from '../state/state';
-import { colors } from '../styles/colors';
-import { asString, getValue } from '../utils/nominal-class';
 
 export const ListOrganismesBySecteurView = ({
   route
@@ -23,7 +24,8 @@ export const ListOrganismesBySecteurView = ({
   useEffect(() => {
     appContext
       .queryService()
-      .listOrganismesQuery({
+      .send<ListOrganismesQueryResponse>({
+        objectType: 'ListOrganismesQuery',
         departementIds: [],
         natureJuridiqueIds: [],
         secteurIds: [route.secteurId],
@@ -50,7 +52,7 @@ export const ListOrganismesBySecteurView = ({
         {organismes &&
           organismes.map(o => (
             <div
-              key={asString(o.id)}
+              key={o.id}
               css={css`
                 background: ${colors.clearGrey};
                 margin: 2px 0;

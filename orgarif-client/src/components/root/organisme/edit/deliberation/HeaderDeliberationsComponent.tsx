@@ -1,14 +1,14 @@
 /** @jsxImportSource @emotion/react */
+import { DeliberationId } from '../../../../../generated/domain/ids';
+import { LienDeliberationDto } from '../../../../../generated/domain/organisme';
+import { colors } from '../../../../styles/colors';
+import { editCommonClasses } from '../EditOrganismeComponent';
+import { AddLienDeliberationDialog } from './AddLienDeliberationDialog';
 import { css } from '@emotion/react';
 import { Add } from '@mui/icons-material';
 import { Button } from '@mui/material';
 import * as React from 'react';
 import { useState } from 'react';
-import { DeliberationId } from '../../../../domain/ids';
-import { LienDeliberationDto } from '../../../../domain/organisme';
-import { colors } from '../../../../styles/colors';
-import { editCommonClasses } from '../EditOrganismeComponent';
-import { AddLienDeliberationDialog } from './AddLienDeliberationDialog';
 
 export const HeaderDeliberationsComponent = (props: {
   lienDeliberations: LienDeliberationDto[];

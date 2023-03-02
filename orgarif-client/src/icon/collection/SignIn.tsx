@@ -1,5 +1,5 @@
-import styled from '@emotion/styled';
 import * as icon from '../Icon';
+import styled from '@emotion/styled';
 
 export const SignIn = styled(function SignIn(
   props: icon.SpecificIconProps

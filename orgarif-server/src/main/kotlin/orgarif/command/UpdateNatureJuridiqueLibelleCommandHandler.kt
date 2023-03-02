@@ -2,7 +2,7 @@ package orgarif.command
 
 import org.springframework.stereotype.Service
 import orgarif.repository.NatureJuridiqueDao
-import orgarif.service.DateService
+import orgarif.service.utils.DateService
 
 @Service
 class UpdateNatureJuridiqueLibelleCommandHandler(

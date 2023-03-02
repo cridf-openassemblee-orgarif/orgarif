@@ -1,12 +1,12 @@
 /** @jsxImportSource @emotion/react */
+import { clientUid } from '../../../utils';
+import { NominalString } from '../../../utils/nominal-class';
 import { css } from '@emotion/react';
 import { FormControl, MenuItem, Select, Theme } from '@mui/material';
 import { SelectChangeEvent } from '@mui/material/Select/SelectInput';
 import { makeStyles } from '@mui/styles';
 import * as React from 'react';
 import { useState } from 'react';
-import { clientUid } from '../../utils';
-import { asString, NominalString } from '../../utils/nominal-class';
 
 const useStyles = makeStyles((theme: Theme) => ({
   formControl: {
@@ -62,7 +62,7 @@ export const SelectInput = <Id extends NominalString<string>>(props: {
         `}
       >
         <Select
-          labelId={asString(inputId)}
+          labelId={inputId}
           value={textValue}
           onChange={onChange}
           displayEmpty={true}
@@ -72,7 +72,7 @@ export const SelectInput = <Id extends NominalString<string>>(props: {
         >
           {props.options.map((o, i) => {
             return (
-              <MenuItem key={i} value={o.value ? asString(o.value) : ''}>
+              <MenuItem key={i} value={o.value ?? ''}>
                 {o.label}
               </MenuItem>
             );

@@ -1,11 +1,11 @@
 /** @jsxImportSource @emotion/react */
+import * as breakpoint from '../../styles/breakpoints';
+import { colors } from '../../styles/colors';
 import { css } from '@emotion/react';
 import { Chip, Paper, Typography } from '@mui/material';
 import Avatar from '@mui/material/Avatar';
 import Box from '@mui/material/Box';
 import { experimentalStyled as styled } from '@mui/material/styles';
-import * as breakpoint from '../../styles/breakpoints';
-import { colors } from '../../styles/colors';
 
 export const SingleEmptyRepresentant = (props: { hasSuppleance?: boolean }) => {
   return (
