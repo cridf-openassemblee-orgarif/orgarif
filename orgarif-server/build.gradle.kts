@@ -75,7 +75,7 @@ dependencies {
     implementation(project(":kt-to-ts-annotations"))
 
     // kotlin
-    implementation(kotlin("stdlib-jdk8"))
+    implementation("org.jetbrains.kotlin:kotlin-stdlib-jdk8:1.7.10")
     implementation("org.jetbrains.kotlin:kotlin-reflect:$kotlinVersion")
     implementation(project(":tooling"))
     ksp(project(":tooling"))
@@ -87,16 +87,16 @@ dependencies {
     implementation("org.springframework.boot:spring-boot-starter-security")
     implementation("org.springframework.session:spring-session-jdbc")
 
-    implementation("org.postgresql:postgresql:42.3.6")
+    implementation("org.postgresql:postgresql:42.5.0")
 
     // logs
-    implementation("io.github.microutils:kotlin-logging:2.1.23")
+    implementation("io.github.microutils:kotlin-logging:3.0.0")
 
     // utils
     implementation("org.apache.commons:commons-lang3:3.12.0")
     implementation("org.apache.commons:commons-text:1.9")
     implementation("commons-codec:commons-codec:1.15")
-    implementation("com.fasterxml.jackson.module:jackson-module-kotlin:2.13.3")
+    implementation("com.fasterxml.jackson.module:jackson-module-kotlin:2.13.4")
     implementation("org.reflections:reflections") {
         // [doc] BEWARE reflections version 0.10.2 breaks id deserialization when deployed
         version { strictly("0.9.12") }

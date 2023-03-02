@@ -41,9 +41,9 @@ dependencies {
 
     api("jooq-utils:jooq-utils:0.0.6-SNAPSHOT")
 
-    implementation("io.github.microutils:kotlin-logging:2.1.21")
-    implementation("ch.qos.logback:logback-classic:1.2.11")
-    implementation("org.yaml:snakeyaml:1.30")
+    implementation("io.github.microutils:kotlin-logging:3.0.0")
+    implementation("ch.qos.logback:logback-classic:1.4.1")
+    implementation("org.yaml:snakeyaml:1.32")
 
-    implementation("org.postgresql:postgresql:42.3.4")
+    implementation("org.postgresql:postgresql:42.5.0")
 }
