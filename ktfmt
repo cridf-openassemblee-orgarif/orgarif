@@ -1,0 +1,11 @@
+KTFMT_VERSION=0.42
+##################
+FILENAME=ktfmt-$KTFMT_VERSION-jar-with-dependencies.jar
+DIR=.ktfmt
+FILE=$DIR/$FILENAME
+if ! test -f "$FILE"; then
+    mkdir $DIR
+    LINK=https://search.maven.org/remotecontent?filepath=com/facebook/ktfmt/$KTFMT_VERSION/$FILENAME
+    curl -L $LINK -o $FILE
+fi
+java -jar $FILE --dropbox-style .

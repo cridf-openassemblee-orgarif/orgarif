@@ -9,7 +9,7 @@ class SerializeAsStringKeyDeserializer<T : SerializeAsString>(val orgarifStringI
     KeyDeserializer() {
 
     override fun deserializeKey(key: String?, ctxt: DeserializationContext?): Any =
-        // FIXME check about != null
+        // FIXME[tmpl] check about != null
         key?.let { SerializeAsStringDeserializer.deserialize(orgarifStringId, it) }
             ?: throw IllegalArgumentException()
 }

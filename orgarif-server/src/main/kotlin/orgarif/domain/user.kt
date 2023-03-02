@@ -5,18 +5,18 @@ import com.fasterxml.jackson.annotation.JsonTypeName
 import orgarif.repository.user.UserDao
 
 enum class Language {
-    en,
-    test
+    En,
+    Test
 }
 
 enum class Role {
-    user,
-    admin
+    User,
+    Admin
 }
 
 enum class AuthLogType {
-    dirtyMail,
-    formerMail
+    DirtyMail,
+    FormerMail
 }
 
 data class UserInfos(
@@ -41,15 +41,14 @@ data class UserInfos(
     use = JsonTypeInfo.Id.NAME, include = JsonTypeInfo.As.PROPERTY, property = "objectType")
 sealed class Session
 
-// TODO[doc] to update :
-// UserSessionHelper.authenticateUser
-// UserSessionHelper.getUserSession (should fail)
-// TODO[fmk] check this method
+// TODO[tmpl] check this
 /**
- * To update UserSession :
- * @JsonTypeName("UserSession-vX") data class FormerUserSession(..)
- * @JsonTypeName("UserSession-vX+1") data class UserSession(..) Convert former into new session in
- * [UserSessionHelper]
+ * To update UserSession:
+ * * rename former class to @JsonTypeName("UserSession-vX") data class FormerUserSession(..)
+ * * new class @JsonTypeName("UserSession-vX+1") data class UserSession(..)
+ * * Convert former into new session:
+ * * update UserSessionHelper.authenticateUser
+ * * update UserSessionHelper.getUserSession (should fail)
  */
 @JsonTypeName("UserSession-v0")
 data class UserSession(val sessionId: UserSessionId, val userId: UserId, val roles: Set<Role>) :
@@ -59,22 +58,22 @@ data class UserSession(val sessionId: UserSessionId, val userId: UserId, val rol
 }
 
 enum class LoginResult {
-    loggedIn,
-    mailNotFound,
-    badPassword
+    LoggedIn,
+    MailNotFound,
+    BadPassword
 }
 
 enum class RegisterResult {
-    registered,
-    mailAlreadyExists
+    Registered,
+    MailAlreadyExists
 }
 
 enum class UpdateIdentityResult {
-    updated,
-    mailAlreadyExists
+    Updated,
+    MailAlreadyExists
 }
 
 enum class SendLostPasswordMailResponse {
-    unknownLogin,
-    ok
+    UnknownLogin,
+    Ok
 }

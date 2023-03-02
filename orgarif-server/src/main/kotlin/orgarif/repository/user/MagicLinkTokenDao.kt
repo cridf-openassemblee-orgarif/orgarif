@@ -9,7 +9,7 @@ import orgarif.jooq.generated.tables.records.MagicLinkTokenRecord
 import orgarif.utils.toTypeId
 
 @Repository
-class MagicLinkTokenDao(val jooq: DSLContext) {
+class MagicLinkTokenDao(private val jooq: DSLContext) {
 
     data class Record(
         val token: String,

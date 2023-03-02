@@ -3,17 +3,16 @@ package orgarif.config
 import java.time.ZoneId
 
 object ApplicationConstants {
-    // FIXME remove !
+    // FIXME[tmpl] remove !
     const val springMvcModelKeyStackTrace = "stackTrace"
 
-    // TODO /res vs /static
+    // TODO[tmpl] /res vs /static
     const val resourcesPath = "/static"
 
-    // TODO naming... Monitoring ?
+    // TODO[tmpl] naming... Monitoring ?
     const val applicationMailSenderName = "Automatic email Orgarif"
 
-    // TODO[orgarif]
-    // FIXME mail !
+    // FIXME[tmpl] mail !
     const val applicationMail = ""
 
     val parisZoneId = ZoneId.of("Europe/Paris")

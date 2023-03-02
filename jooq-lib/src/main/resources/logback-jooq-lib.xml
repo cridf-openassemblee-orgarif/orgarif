@@ -1,0 +1,16 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE configuration>
+<configuration>
+    <appender name="stdout" class="ch.qos.logback.core.ConsoleAppender">
+        <encoder>
+            <pattern>%highlight(%-5level) %cyan(%-36logger{36}) - %m%n%throwable</pattern>
+        </encoder>
+    </appender>
+
+    <root level="WARN">
+        <appender-ref ref="stdout"/>
+    </root>
+
+    <logger name="orgarif" level="INFO"/>
+    <logger name="jooqutils" level="INFO"/>
+</configuration>

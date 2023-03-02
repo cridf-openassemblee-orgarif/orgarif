@@ -5,7 +5,8 @@ import org.apache.commons.lang3.exception.ExceptionUtils
 import orgarif.domain.OrgarifId
 import orgarif.domain.RequestErrorId
 
-// FIXME can remove ? ReadableStackTrace ? and ReadableStackTraceSerializer ?
+// FIXME[tmpl] can remove ? ReadableStackTrace ? and ReadableStackTraceSerializer ?
+// @Shared
 data class RequestError(
     val id: RequestErrorId,
     val status: Int,
@@ -20,7 +21,7 @@ data class ReadableStackTrace(val exception: Throwable?) {
         if (exception != null) ExceptionUtils.getStackTrace(exception) else null
 }
 
-// TODO[error] display ? silent ? mute ?
+// TODO[tmpl][error] display ? silent ? mute ?
 // class DisplayMessageException(displayMessage: String, logMessage: String) : Exception(message)
 // user message exception
 data class DisplayMessageException(
@@ -33,19 +34,19 @@ data class DisplayMessageException(
 // ?
 data class MailAlreadyRegisteredException(val mail: String) : Exception()
 
-// TODO this message ?
-data class ItemIdNotFoundException(val id: OrgarifId<*>) : Exception("Not found : $id")
+// TODO[tmpl] this message ?
+data class ItemIdNotFoundException(val id: OrgarifId<*>) : Exception("Not found: $id")
 
-// TODO a message
+// TODO[tmpl] a message
 data class ItemNotFoundException(val itemClass: Class<*>, val reference: String) : Exception()
 
-// TODO ItemIdNotFoundException + ItemNotFoundException + OrgarifNotFoundException... it's a lot of
-// "not found"
+// TODO[tmpl] ItemIdNotFoundException + ItemNotFoundException + OrgarifNotFoundException...
+// it's a lot of "not found"
 class OrgarifNotFoundException : Exception()
 
 class OrgarifSerializationLocalDateException(val date: String) : Exception()
 
-// TODO[error] always use runtime ? because of kt
+// TODO[tmpl][error] always use runtime ? because of kt
 class MessageNotSentException(message: String) : RuntimeException(message)
 
 class OrgarifSecurityException(message: String) : Exception(message)

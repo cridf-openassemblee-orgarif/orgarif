@@ -12,9 +12,9 @@ import orgarif.service.user.UserSessionService
 
 @Service
 class LoginCommandHandler(
-    val userDao: UserDao,
-    val userService: UserService,
-    val userSessionService: UserSessionService
+    private val userDao: UserDao,
+    private val userService: UserService,
+    private val userSessionService: UserSessionService
 ) : CommandHandler<LoginCommand, LoginCommandResponse> {
 
     override fun handle(
@@ -24,20 +24,20 @@ class LoginCommandHandler(
         response: HttpServletResponse
     ): LoginCommandResponse {
         if (userSession != null) {
-            // FIXME can't find the wooord
+            // FIXME[tmpl] can't find the wooord
             // OrgarifCommonException
             // OrgarifStandardException
             throw RuntimeException()
         }
-        val cleanLogin = UserService.cleanMail(command.mail)
+        val cleanMail = UserService.cleanMail(command.mail)
         val user =
-            userDao.fetchOrNullByMail(cleanLogin)
-                ?: return LoginCommandResponse(LoginResult.mailNotFound, null)
+            userDao.fetchOrNullByMail(cleanMail)
+                ?: return LoginCommandResponse(LoginResult.MailNotFound, null)
         val userPassword = userDao.fetchPassword(user.id)
         if (!userService.passwordMatches(command.password, userPassword)) {
-            return LoginCommandResponse(LoginResult.badPassword, null)
+            return LoginCommandResponse(LoginResult.BadPassword, null)
         }
         userSessionService.authenticateUser(user, request, response)
-        return LoginCommandResponse(LoginResult.loggedIn, UserInfos.fromUser(user))
+        return LoginCommandResponse(LoginResult.LoggedIn, UserInfos.fromUser(user))
     }
 }

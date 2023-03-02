@@ -1,8 +1,8 @@
 package orgarif.jooqlib
 
-import java.io.FileInputStream
-import java.io.InputStream
 import jooqutils.DatabaseConfiguration
+import kotlin.io.path.exists
+import kotlin.io.path.inputStream
 import orgarif.jooqlib.utils.SpringLikeYamlConfigUtils
 
 object Configuration {
@@ -13,12 +13,21 @@ object Configuration {
         configuration("application-dev.yaml", "application-$additionalConfig.yaml")
     }
 
-    fun configuration(vararg configurationFiles: String): DatabaseConfiguration {
+    private fun configuration(vararg configurationFiles: String): DatabaseConfiguration {
         val config =
             SpringLikeYamlConfigUtils.yamlFilesToMap(
-                *configurationFiles.map { streamConfigurationFile(it) }.toTypedArray())
+                *configurationFiles
+                    .mapNotNull {
+                        GenerateJooqAndDiff.webServerResourcesDir.resolve(it).let {
+                            if (it.exists()) it.inputStream() else null
+                        }
+                    }
+                    .toTypedArray())
         val host = config.getValue("database.host")
-        if (host.endsWith(".com")) {
+        val allowRemoteHost =
+            System.getenv("ORGARIF_DB_TOOLING_ALLOW_REMOTE_HOST")?.let { it == "true" } ?: false
+        // TODO[tmpl] test ip not extension !
+        if (host.endsWith(".com") && !allowRemoteHost) {
             throw RuntimeException("Warning run database operations on $host")
         }
         return DatabaseConfiguration(
@@ -31,14 +40,5 @@ object Configuration {
             setOf("public"),
             "/usr/local/bin",
             config["pgquarrel"])
-    }
-
-    private fun streamConfigurationFile(file: String): InputStream {
-        val resourceResolve = GenerateJooqAndDiff.webServerResourcesDir.resolve(file).toFile()
-        return if (resourceResolve.exists()) {
-            FileInputStream(resourceResolve)
-        } else {
-            Configuration.javaClass.classLoader.getResourceAsStream(file)
-        }
     }
 }

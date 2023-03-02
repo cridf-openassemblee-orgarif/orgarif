@@ -12,7 +12,7 @@ import orgarif.jooq.generated.tables.records.MailLogRecord
 import orgarif.utils.toTypeId
 
 @Repository
-class MailLogDao(val jooq: DSLContext) {
+class MailLogDao(private val jooq: DSLContext) {
 
     data class Record(
         val id: MailLogId,
@@ -58,14 +58,17 @@ class MailLogDao(val jooq: DSLContext) {
 
     fun fetchAll(): List<Record> = jooq.selectFrom(MAIL_LOG).fetch().map(this::map)
 
+<<<<<<< HEAD
     fun fetchOrNullContent(id: MailLogId): ContentPartialRecord? =
+=======
+    fun fetchContentOrNull(id: MailLogId): ContentPartialRecord? =
+>>>>>>> template
         jooq
             .select(*contentPartialRecordFields)
             .from(MAIL_LOG)
             .where(MAIL_LOG.ID.equal(id.rawId))
             .fetchOne()
             ?.let(this::mapContentPartialRecord)
-            ?: throw IllegalArgumentException("$id")
 
     fun fetchByUserIdAndReferences(
         userId: UserId,
@@ -89,12 +92,6 @@ class MailLogDao(val jooq: DSLContext) {
             .and(MAIL_LOG.REFERENCE.`in`(mailReferences.map { it.name }))
             .fetch()
             .map(this::mapHistoryPartialRecord)
-
-    //     fun fetchByRecipientMail(mail: String): List<Record> =
-    //            jooq.selectFrom(MAIL_LOG)
-    //                    .where(MAIL_LOG.RECIPIENT_MAIL.equal(mail))
-    //                    .fetch()
-    //                    .map(this::map)
 
     fun map(r: MailLogRecord) =
         Record(

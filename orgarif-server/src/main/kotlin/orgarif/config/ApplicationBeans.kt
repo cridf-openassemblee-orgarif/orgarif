@@ -7,9 +7,9 @@ import org.springframework.context.annotation.Primary
 import org.springframework.core.task.TaskExecutor
 import org.springframework.scheduling.concurrent.ThreadPoolTaskExecutor
 import orgarif.serialization.Serializer
-import orgarif.service.IdLogService
-import orgarif.service.RandomService
 import orgarif.service.utils.ApplicationTaskExecutor
+import orgarif.service.utils.random.IdLogService
+import orgarif.service.utils.random.RandomService
 
 @Configuration
 class ApplicationBeans {
@@ -23,15 +23,14 @@ class ApplicationBeans {
     @Bean fun randomService(idLogService: IdLogService) = RandomService(idLogService)
 
     @Bean
-    fun taskExecutor(): TaskExecutor {
-        val executor = ThreadPoolTaskExecutor()
-        executor.corePoolSize = 20
-        executor.maxPoolSize = 20
-        executor.setQueueCapacity(500)
-        executor.threadNamePrefix = "TaskExecutor-"
-        executor.initialize()
-        return executor
-    }
+    fun taskExecutor(): TaskExecutor =
+        ThreadPoolTaskExecutor().apply {
+            corePoolSize = 20
+            maxPoolSize = 20
+            queueCapacity = 500
+            threadNamePrefix = "TaskExecutor-"
+            initialize()
+        }
 
     @Bean
     fun applicationTaskExecutor(@Suppress("DEPRECATION") taskExecutor: TaskExecutor) =

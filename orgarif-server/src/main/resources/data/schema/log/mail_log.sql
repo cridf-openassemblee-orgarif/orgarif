@@ -1,7 +1,6 @@
 CREATE TABLE mail_log
 (
     id UUID PRIMARY KEY,
-    application VARCHAR(255) NOT NULL,
     deployment_log_id UUID NOT NULL,
     recipient_type VARCHAR(255) NOT NULL,
     user_id UUID NOT NULL,

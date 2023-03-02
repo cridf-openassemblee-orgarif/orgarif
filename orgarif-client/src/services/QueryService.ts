@@ -1,3 +1,4 @@
+<<<<<<< HEAD
 import { appContext } from '../ApplicationContext';
 import {
   GetOrganismeQuery,
@@ -39,11 +40,15 @@ export class QueryService {
     this.query('SearchRepresentantsQuery', query);
 
   private query = <R>(queryName: string, query?: object): Promise<R> =>
+=======
+import { Query, QueryResponse } from '../generated/query/queries';
+import { appContext } from './ApplicationContext';
+
+export class QueryService {
+  public send = <R extends QueryResponse>(query: Query): Promise<R> =>
+>>>>>>> template
     appContext
       .httpService()
-      .get('/query', {
-        ...query,
-        objectType: queryName
-      })
+      .get('/query', query)
       .then(r => r.body);
 }

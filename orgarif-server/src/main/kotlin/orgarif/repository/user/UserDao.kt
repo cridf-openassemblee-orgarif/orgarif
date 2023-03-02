@@ -16,12 +16,11 @@ import orgarif.jooq.generated.tables.records.AppUserRecord
 import orgarif.utils.toTypeId
 
 @Repository
-class UserDao(val jooq: DSLContext) {
+class UserDao(private val jooq: DSLContext) {
 
     data class Record(
         val id: UserId,
         val mail: String,
-        val username: String?,
         val displayName: String,
         val language: Language,
         val roles: Set<Role>,
@@ -36,7 +35,6 @@ class UserDao(val jooq: DSLContext) {
             AppUserRecord().apply {
                 id = r.id.rawId
                 mail = r.mail
-                username = r.username
                 password = hashedPassword.hash
                 displayName = r.displayName
                 language = r.language.name
@@ -99,16 +97,15 @@ class UserDao(val jooq: DSLContext) {
             it.value1() > 0
         }
 
+    fun fetch(id: UserId): Record = requireNotNull(fetchOrNull(id)) { "$id" }
+
     fun fetchOrNull(id: UserId): Record? =
         jooq.selectFrom(APP_USER).where(APP_USER.ID.equal(id.rawId)).fetchOne()?.let(this::map)
 
-    fun fetch(id: UserId): Record = fetchOrNull(id).let { requireNotNull(it) { "$id" } }
+    fun fetchByMail(mail: String): Record = requireNotNull(fetchOrNullByMail(mail)) { mail }
 
     fun fetchOrNullByMail(mail: String): Record? =
         jooq.selectFrom(APP_USER).where(APP_USER.MAIL.equal(mail)).fetchOne()?.let(this::map)
-
-    fun fetchByMail(mail: String): Record =
-        fetchOrNullByMail(mail).let { requireNotNull(it) { mail } }
 
     fun fetchPassword(id: UserId): HashedPassword =
         jooq
@@ -135,7 +132,6 @@ class UserDao(val jooq: DSLContext) {
         Record(
             id = r.id.toTypeId(),
             mail = r.mail,
-            username = r.username,
             displayName = r.displayName,
             language = Language.valueOf(r.language),
             roles = r.roles.map { Role.valueOf(it) }.toSet(),

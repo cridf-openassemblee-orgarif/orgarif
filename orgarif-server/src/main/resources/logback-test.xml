@@ -3,8 +3,10 @@
 <configuration>
     <appender name="stdout" class="ch.qos.logback.core.ConsoleAppender">
         <encoder name="enc" class="ch.qos.logback.core.encoder.LayoutWrappingEncoder">
-            <layout class="orgarif.utils.LogbackPatternLayout">
+            <layout class="orgarif.utils.logback.LogbackPatternLayout">
+                <!-- @formatter:off -->
                 <pattern>%d{MM-dd HH:mm:ss} %highlight(%-5level) %cyan(%-36logger{36}) %m %magenta(%userSession){}%blue(%ip){}%n</pattern>
+                <!-- @formatter:on -->
             </layout>
         </encoder>
     </appender>

@@ -11,19 +11,19 @@ import org.springframework.stereotype.Service
 import orgarif.domain.UserId
 import orgarif.repository.user.MagicLinkTokenDao
 import orgarif.repository.user.UserDao
-import orgarif.service.DateService
+import orgarif.service.utils.DateService
 
 @Service
 class MagicLinkTokenService(
-    val magicLinkTokenDao: MagicLinkTokenDao,
-    val userSessionService: UserSessionService,
-    val userDao: UserDao,
-    val dateService: DateService
+    private val magicLinkTokenDao: MagicLinkTokenDao,
+    private val userSessionService: UserSessionService,
+    private val userDao: UserDao,
+    private val dateService: DateService
 ) {
 
     private val logger = KotlinLogging.logger {}
 
-    // TODO[magictoken] is going in database too
+    // TODO[tmpl][magictoken] is going in database too
     // use a shorter validity + display a clear message on the front when it became invalid
     //    val validityDuration = Duration.of(15, ChronoUnit.MINUTES)
     val validityDuration = Duration.of(24, ChronoUnit.HOURS)
@@ -56,7 +56,7 @@ class MagicLinkTokenService(
         }
         val user = userDao.fetch(token.userId)
         userSessionService.authenticateUser(user, request, response)
-        // TODO[magictoken] update to invalidate ?? if not, doc
+        // TODO[tmpl][magictoken] update to invalidate ?? if not, doc
     }
 
     fun invalidate(magicToken: String) {

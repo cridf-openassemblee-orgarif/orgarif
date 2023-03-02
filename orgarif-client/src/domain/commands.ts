@@ -1,3 +1,4 @@
+// conflict : deleted in template
 import {
   DeliberationId,
   DepartementId,

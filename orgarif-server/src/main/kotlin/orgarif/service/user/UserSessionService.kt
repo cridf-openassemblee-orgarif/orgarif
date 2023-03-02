@@ -17,28 +17,27 @@ import orgarif.error.AppErrors
 import orgarif.error.OrgarifSecurityException
 import orgarif.repository.user.UserDao
 import orgarif.repository.user.UserSessionLogDao
-import orgarif.service.ApplicationInstance
-import orgarif.service.DateService
-import orgarif.service.RandomService
+import orgarif.service.utils.ApplicationInstance
+import orgarif.service.utils.DateService
+import orgarif.service.utils.random.RandomService
 
 @Service
 class UserSessionService(
-    val cookieCsrfTokenRepository: CookieCsrfTokenRepository,
-    val userDao: UserDao,
-    val userSessionLogDao: UserSessionLogDao,
-    val applicationInstance: ApplicationInstance,
-    val dateService: DateService,
-    val randomService: RandomService
+    private val cookieCsrfTokenRepository: CookieCsrfTokenRepository,
+    private val userDao: UserDao,
+    private val userSessionLogDao: UserSessionLogDao,
+    private val dateService: DateService,
+    private val randomService: RandomService
 ) {
 
     val logger = KotlinLogging.logger {}
 
     data class SessionConvertion(val needsUpdate: Boolean, val session: UserSession)
 
-    // TODO[secu] ?
+    // TODO[tmpl][secu] ?
     val sessionDuration = Duration.ofDays(100)
 
-    // TODO[secu] change cookie ?
+    // TODO[tmpl][secu] change cookie ?
     fun authenticateUser(
         user: UserDao.Record,
         request: HttpServletRequest,
@@ -54,7 +53,7 @@ class UserSessionService(
         val ip = request.remoteAddr
         userSessionLogDao.insert(
             UserSessionLogDao.Record(
-                sessionId, session.id, user.id, applicationInstance.deploymentId, now, ip))
+                sessionId, session.id, user.id, ApplicationInstance.deploymentLogId, now, ip))
 
         val userSession = UserSession(sessionId, user.id, user.roles)
         val springAuthentication = UsernamePasswordAuthenticationToken(userSession, null, null)
@@ -69,13 +68,12 @@ class UserSessionService(
             it != null && it !is AnonymousAuthenticationToken && it.isAuthenticated
         }
 
-    fun hasRole(role: Role): Boolean {
+    fun hasRole(role: Role): Boolean =
         if (!isAuthenticated()) {
-            return false
+            false
+        } else {
+            role in getUserSession().roles
         }
-        val userSession = getUserSession()
-        return role in userSession.roles
-    }
 
     fun verifyRoleOrFail(role: Role?, logIp: String, logClass: Class<Any>) {
         if (role != null) {
@@ -94,9 +92,9 @@ class UserSessionService(
             when (it) {
                 // [doc] allows UserSession object evolution without breaking existing sessions
                 is Session -> convert(it).session
-                // TODO[secu] do 403 if anonymousUser
+                // TODO[tmpl][secu] do 403 if anonymousUser
                 is AnonymousAuthenticationToken -> throw AppErrors.NotConnectedUser()
-                // TODO[secu] log ?
+                // TODO[tmpl][secu] log ?
                 else -> throw IllegalStateException("Unexpected principal type ${it.javaClass} $it")
             }
         }
@@ -104,7 +102,7 @@ class UserSessionService(
     fun convert(s: Session): SessionConvertion =
         when (s) {
             is UserSession -> SessionConvertion(false, s)
-        // [doc] to update a session :
+        // [doc] to update a session:
         // is FormerUserSession -> {
         //    logger.info { "Converting session $s" }
         //    val user = userDao.fetch(s.userId) ?: throw IllegalStateException("$s")

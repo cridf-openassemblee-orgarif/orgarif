@@ -3,8 +3,8 @@ package orgarif.serialization
 import com.fasterxml.jackson.annotation.JsonInclude
 import com.fasterxml.jackson.databind.ObjectMapper
 import com.fasterxml.jackson.databind.module.SimpleModule
-import com.fasterxml.jackson.module.kotlin.KotlinModule
 import com.fasterxml.jackson.module.kotlin.readValue
+import com.fasterxml.jackson.module.kotlin.registerKotlinModule
 import java.time.Instant
 import java.time.LocalDate
 import java.time.ZoneId
@@ -46,7 +46,7 @@ object Serializer {
                 addSerializer(PlainStringPasswordSerializer())
                 addDeserializer(PlainStringPassword::class.java, PlainStringPasswordDeserializer())
 
-                // TODO[serialization] handle all the null
+                // TODO[tmpl][serialization] handle all the null
                 addSerializer(UuidSerializer())
                 addDeserializer(UUID::class.java, UuidDeserializer())
                 addKeySerializer(UUID::class.java, UuidKeySerializer())
@@ -60,7 +60,7 @@ object Serializer {
                     OrgarifSecurityString::class.java, OrgarifSecurityStringKeySerializer())
                 addAllOrgarifSecurityStringDeserializers(this)
 
-                // TODO[serialization] about data class
+                // TODO[tmpl][serialization] about data class
                 addSerializer(OrgarifUuidIdSerializer())
                 addKeySerializer(OrgarifUuidId::class.java, OrgarifUuidIdKeySerializer())
                 addAllOrgarifUuidIdsDeserializers(this)
@@ -75,7 +75,7 @@ object Serializer {
             }
 
         objectMapper.registerModule(module)
-        objectMapper.registerModule(KotlinModule())
+        objectMapper.registerKotlinModule()
         objectMapper.setSerializationInclusion(JsonInclude.Include.NON_NULL)
     }
 

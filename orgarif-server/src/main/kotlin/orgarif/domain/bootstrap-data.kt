@@ -1,5 +1,6 @@
 package orgarif.domain
 
+<<<<<<< HEAD
 import orgarif.repository.DepartementDao
 import orgarif.repository.NatureJuridiqueDao
 import orgarif.repository.SecteurDao
@@ -27,3 +28,11 @@ data class ApplicationBootstrapData(
     val userInfos: UserInfos?,
     val categories: OrganismeCategories
 )
+=======
+import kttots.Shared
+
+// TODO[tmpl][user] naming start / initial / boot / launch / base Infos ?
+// ConnectedUserInfos (logged is bad wording btw)
+@Shared
+data class ApplicationBootstrapData(val env: ApplicationEnvironment, val userInfos: UserInfos?)
+>>>>>>> template

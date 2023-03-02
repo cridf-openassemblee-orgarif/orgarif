@@ -2,25 +2,33 @@ package orgarif.domain
 
 import java.time.Instant
 
-// TODO merge MimeType / FileExtension ?
+// TODO[tmpl] merge MimeType / FileExtension ?
 enum class FileExtension(val postfix: String) {
-    png("png")
+    PNG("png")
 }
 
-// FIXME find elsewhere ? or we want a list of supported stuff
+// FIXME[tmpl] find elsewhere ? or we want a list of supported stuff
 // in that case do type UserFileData
 enum class MimeType(val fullType: String) {
-    javascript("application/javascript"),
-    json("application/json"),
-    pdf("application/pdf")
+    JAVASCRIPT("application/javascript"),
+    JSON("application/json"),
+    PDF("application/pdf");
+
+    companion object {
+        val map by lazy { values().associateBy { it.fullType } }
+
+        fun of(fullType: String): MimeType = requireNotNull(ofOrNull(fullType)) { fullType }
+
+        fun ofOrNull(fullType: String): MimeType? = map.get(fullType)
+    }
 }
 
-data class UserFileData(val contentType: String, val file: ByteArray, val originalFilename: String)
+class UserFileData(val contentType: String, val file: ByteArray)
 
 data class UserFileReference(
     val id: UserFileId,
     val userId: UserId,
-    val contentType: String,
+    val contentType: MimeType,
     val originalFilename: String,
     val uploadDate: Instant
 )

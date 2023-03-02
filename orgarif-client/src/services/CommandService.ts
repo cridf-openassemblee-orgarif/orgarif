@@ -1,3 +1,4 @@
+<<<<<<< HEAD
 import { appContext } from '../ApplicationContext';
 import {
   AddDesignationCommand,
@@ -226,11 +227,15 @@ export class CommandService {
   ): Promise<void> => this.command('UpdateTypeStructureStatusCommand', command);
 
   private command = <R>(commandName: string, command?: object): Promise<R> =>
+=======
+import { Command, CommandResponse } from '../generated/command/commands';
+import { appContext } from './ApplicationContext';
+
+export class CommandService {
+  public send = <R extends CommandResponse>(command: Command): Promise<R> =>
+>>>>>>> template
     appContext
       .httpService()
-      .post('/command', {
-        ...command,
-        objectType: commandName
-      })
+      .post('/command', command)
       .then(r => r.body);
 }

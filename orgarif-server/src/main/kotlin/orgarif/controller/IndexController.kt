@@ -9,7 +9,6 @@ import javax.servlet.http.HttpServletRequest
 import javax.servlet.http.HttpServletResponse
 import org.json.JSONObject
 import org.springframework.beans.factory.annotation.Value
-import org.springframework.context.annotation.DependsOn
 import org.springframework.stereotype.Controller
 import org.springframework.web.bind.annotation.GetMapping
 import org.springframework.web.servlet.ModelAndView
@@ -24,23 +23,14 @@ import orgarif.repository.SecteurDao
 import orgarif.repository.TypeStructureDao
 import orgarif.repository.user.UserDao
 import orgarif.serialization.Serializer.serialize
-import orgarif.service.ApplicationInstance
-import orgarif.service.LocaleService
 import orgarif.service.user.MagicLinkTokenService
-import orgarif.service.user.UserService
 import orgarif.service.user.UserSessionService
+import orgarif.service.utils.ApplicationInstance
+import orgarif.utils.OrgarifStringUtils
 
 @Controller
-@DependsOn(
-    "commandController",
-    "invalidateMagicLinkTokenController",
-    "queryController",
-    // TODO[doc] breaks when app is deployed because reactHotLoaderController is optional
-    //    "reactHotLoaderController",
-    "remoteController",
-    "userFileController",
-)
 class IndexController(
+<<<<<<< HEAD
     @Value("\${assets.webpackDevPort}") val assetsWebpackDevPort: String,
     @Value("\${assets.useBuildFiles}") val assetsUseBuildFiles: Boolean,
     val userDao: UserDao,
@@ -54,6 +44,13 @@ class IndexController(
     val applicationInstance: ApplicationInstance,
     val magicLinkTokenService: MagicLinkTokenService,
     val userSessionService: UserSessionService
+=======
+    @Value("\${assets.webpackDevPort}") private val assetsWebpackDevPort: String,
+    @Value("\${assets.useBuildFiles}") private val assetsUseBuildFiles: Boolean,
+    private val userDao: UserDao,
+    private val magicLinkTokenService: MagicLinkTokenService,
+    private val userSessionService: UserSessionService
+>>>>>>> template
 ) {
 
     companion object {
@@ -64,18 +61,15 @@ class IndexController(
                 .build()
                 .staticModels
 
-        fun extractDomain(url: String): String {
-            fun minPositive(vararg values: Int) = values.filter { it >= 0 }.sorted().first()
-            return (if (url.startsWith("http://")) "http://" to url.substring("http://".length)
-                else if (url.startsWith("https://")) "https://" to url.substring("https://".length)
-                else throw RuntimeException(url))
-                .let {
-                    val cut =
-                        minPositive(
-                            it.second.indexOf("/"), it.second.indexOf(":"), it.second.length)
-                    it.first + it.second.substring(0, cut)
-                }
-        }
+        fun extractDomain(url: String) =
+            url.substring(url.indexOf("://") + 3).let {
+                val domainLength =
+                    listOf(it.indexOf("/"), it.indexOf(":"), it.length)
+                        .filter { it >= 0 }
+                        .minOrNull()
+                        ?: throw IllegalArgumentException()
+                it.substring(0, domainLength)
+            }
     }
 
     val buildAssets by lazy {
@@ -127,9 +121,16 @@ class IndexController(
                 typeStructureDao.fetchAll())
         val elus = eluDao.fetchAll()
         mav.model["bootstrapData"] =
+<<<<<<< HEAD
             serialize(ApplicationBootstrapData(ApplicationInstance.env, userInfos, categories))
         mav.model["deploymentId"] = applicationInstance.deploymentId.rawId
         mav.model["gitRevisionLabel"] = applicationInstance.gitRevisionLabel
+=======
+            serialize(ApplicationBootstrapData(ApplicationInstance.env, userInfos))
+        mav.model["deploymentId"] =
+            OrgarifStringUtils.serializeUuid(ApplicationInstance.deploymentLogId.rawId)
+        mav.model["gitRevisionLabel"] = ApplicationInstance.gitRevisionLabel
+>>>>>>> template
         mav.model["jsAssets"] = jsAssets(request)
         mav.model["cssAssets"] = cssAssets
         mav.model["statics"] = statics
@@ -141,7 +142,7 @@ class IndexController(
         if (assetsUseBuildFiles) {
             builtJsAssets
         } else {
-            val domain = extractDomain(request.requestURL.toString())
+            val domain = request.scheme + "://" + extractDomain(request.requestURL.toString())
             listOf("bundle.js", "vendors~main.chunk.js", "main.chunk.js").map {
                 "$domain:$assetsWebpackDevPort/static/js/$it"
             }
@@ -154,7 +155,7 @@ class IndexController(
         } else {
             params
                 .flatMap { paramName ->
-                    // TODO[fmk] works correctly ? is needed ?
+                    // TODO[tmpl] works correctly ? is needed ?
                     // srsly test & compare with UriEncoder
                     // + test smthg= (with emtpy string)
                     val paramValues = parameterMap.getValue(paramName)

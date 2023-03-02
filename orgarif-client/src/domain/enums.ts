@@ -1,6 +1,6 @@
-// from https://stackoverflow.com/questions/55265679/enforce-that-an-array-is-exhaustive-over-a-union-type
-import { ApplicationEnvironment } from './application';
+import { ApplicationEnvironment } from '../generated/domain/application';
 
+// from https://stackoverflow.com/questions/55265679/enforce-that-an-array-is-exhaustive-over-a-union-type
 export const enumValues =
   <T extends string>() =>
   <L extends T[]>(
@@ -12,7 +12,8 @@ export const enumValues =
     x;
 
 export const applicationEnvironments = enumValues<ApplicationEnvironment>()(
-  'dev',
-  'staging',
-  'prod'
+  'Dev',
+  'Staging',
+  'Prod',
+  'Test'
 );

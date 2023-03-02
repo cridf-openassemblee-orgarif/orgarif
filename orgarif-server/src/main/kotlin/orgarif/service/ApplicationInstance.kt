@@ -1,3 +1,4 @@
+// conflict : deleted in template
 package orgarif.service
 
 import com.google.common.base.Charsets

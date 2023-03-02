@@ -1,3 +1,4 @@
+// conflict : deleted in template
 import { NominalString } from '../utils/nominal-class';
 
 export type OrgarifId =

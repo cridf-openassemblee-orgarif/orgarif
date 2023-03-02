@@ -6,6 +6,7 @@ database:
   name: ${POSTGRESQL_ADDON_DB}
   user: ${POSTGRESQL_ADDON_USER}
   password: ${POSTGRESQL_ADDON_PASSWORD}
+<<<<<<< HEAD
 spring:
   datasource:
     tomcat:
@@ -13,6 +14,8 @@ spring:
       minIdle: 5
       maxIdle: 10
       maxActive: 10
+=======
+>>>>>>> template
 server.forward-headers-strategy: framework
 #---------------------------------------------------------------------------
 assets:
@@ -25,7 +28,12 @@ mailjet:
   api-key:
   secret-key:
 #---------------------------------------------------------------------------
+<<<<<<< HEAD
 elusSynchronizationUrl: https://siger.mlorber.net/api/publicdata/v2/elus
 remote-endpoint:
   expected-secu: ${REMOTE_ENDPOINT_EXCEPTED_SECU}
+=======
+remote-controller:
+  expected-secu: ${REMOTE_CONTROLLER_EXPECTED_SECU}
+>>>>>>> template
 #---------------------------------------------------------------------------

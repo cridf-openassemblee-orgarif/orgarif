@@ -4,8 +4,15 @@ import java.net.URLDecoder
 import javax.servlet.http.HttpServletRequest
 import org.springframework.web.bind.annotation.GetMapping
 import org.springframework.web.bind.annotation.RestController
+<<<<<<< HEAD
 import orgarif.query.GetOrganismeQuery
 import orgarif.query.GetOrganismeQueryHandler
+=======
+import orgarif.query.GetUserInfosQuery
+import orgarif.query.GetUserInfosQueryHandler
+import orgarif.query.GetUsersQuery
+import orgarif.query.GetUsersQueryHandler
+>>>>>>> template
 import orgarif.query.IsMailAlreadyTakenQuery
 import orgarif.query.IsMailAlreadyTakenQueryHandler
 import orgarif.query.ListOrganismesQuery
@@ -21,9 +28,11 @@ import orgarif.query.SearchRepresentantsQueryHandler
 import orgarif.repository.user.UserDao
 import orgarif.serialization.Serializer
 import orgarif.service.user.UserSessionService
+import orgarif.service.utils.TransactionIsolationService
 
 @RestController
 class QueryController(
+<<<<<<< HEAD
     val userDao: UserDao,
     val userSessionService: UserSessionService,
     val getOrganismeQueryHandler: GetOrganismeQueryHandler,
@@ -31,6 +40,14 @@ class QueryController(
     val listOrganismesQueryHandler: ListOrganismesQueryHandler,
     val searchDeliberationQueryHandler: SearchDeliberationQueryHandler,
     val searchRepresentantsQueryHandler: SearchRepresentantsQueryHandler,
+=======
+    private val userDao: UserDao,
+    private val userSessionService: UserSessionService,
+    private val getUserInfosQueryHandler: GetUserInfosQueryHandler,
+    private val getUsersQueryHandler: GetUsersQueryHandler,
+    private val isMailAlreadyTakenQueryHandler: IsMailAlreadyTakenQueryHandler,
+    private val transactionIsolationService: TransactionIsolationService,
+>>>>>>> template
 ) {
 
     @GetMapping("/query")
@@ -42,12 +59,12 @@ class QueryController(
         val handler = handler(query)
         val userSession =
             if (userSessionService.isAuthenticated()) userSessionService.getUserSession() else null
-        return handler.doHandle(query, userSession)
+        return transactionIsolationService.executeReadOnly { handler.doHandle(query, userSession) }
     }
 
-    @Suppress("UNCHECKED_CAST")
     private fun handler(query: Query) =
         when (query) {
+<<<<<<< HEAD
             is GetOrganismeQuery -> getOrganismeQueryHandler
             is IsMailAlreadyTakenQuery -> isMailAlreadyTakenQueryHandler
             is ListOrganismesQuery -> listOrganismesQueryHandler
@@ -55,4 +72,10 @@ class QueryController(
             is SearchRepresentantsQuery -> searchRepresentantsQueryHandler
         }
             as QueryHandler<Query, QueryResponse>
+=======
+            is GetUserInfosQuery -> getUserInfosQueryHandler
+            is GetUsersQuery -> getUsersQueryHandler
+            is IsMailAlreadyTakenQuery -> isMailAlreadyTakenQueryHandler
+        }.let { @Suppress("UNCHECKED_CAST") (it as QueryHandler<Query, QueryResponse>) }
+>>>>>>> template
 }

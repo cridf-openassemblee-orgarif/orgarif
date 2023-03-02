@@ -9,8 +9,9 @@ import orgarif.jooq.generated.Tables.DEPLOYMENT_LOG
 import orgarif.jooq.generated.tables.records.DeploymentLogRecord
 
 @Repository
-class DeploymentLogDao(val jooq: DSLContext) {
+class DeploymentLogDao(private val jooq: DSLContext) {
 
+    // is better than a simple log in a distributed environment
     data class Record(
         val id: DeploymentLogId,
         val buildVersion: String,

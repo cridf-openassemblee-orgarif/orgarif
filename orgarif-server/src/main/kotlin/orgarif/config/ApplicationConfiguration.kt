@@ -8,7 +8,7 @@ import org.springframework.boot.autoconfigure.web.servlet.WebMvcRegistrations
 import org.springframework.boot.web.embedded.tomcat.TomcatServletWebServerFactory
 import org.springframework.context.annotation.Bean
 import org.springframework.context.annotation.Configuration
-import org.springframework.core.convert.support.GenericConversionService
+import org.springframework.context.support.ConversionServiceFactoryBean
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder
 import org.springframework.security.web.csrf.CookieCsrfTokenRepository
 import org.springframework.web.servlet.mvc.method.annotation.ExceptionHandlerExceptionResolver
@@ -22,9 +22,8 @@ class ApplicationConfiguration {
     @Bean
     fun webMvcRegistrations() =
         object : WebMvcRegistrations {
-            override fun getExceptionHandlerExceptionResolver(): ExceptionHandlerExceptionResolver {
-                return ApplicationExceptionHandlerExceptionResolver()
-            }
+            override fun getExceptionHandlerExceptionResolver(): ExceptionHandlerExceptionResolver =
+                ApplicationExceptionHandlerExceptionResolver()
         }
 
     @Bean fun passwordEncoder() = BCryptPasswordEncoder()
@@ -38,7 +37,7 @@ class ApplicationConfiguration {
             object : ValveBase() {
                 override fun invoke(request: Request, response: Response) {
                     // because the application is deployed behind a proxy
-                    // TODO why Spring seems not to handle it with
+                    // TODO[tmpl] why Spring seems not to handle it with
                     // server.forward-headers-strategy=framework ?
                     val forwardedProto = request.getHeader("X-Forwarded-Proto")
                     if (forwardedProto != null) {
@@ -46,7 +45,7 @@ class ApplicationConfiguration {
                     }
                     if ("//" in request.request.requestURI) {
                         logger.error {
-                            "Request contains double slash and will fail : \"${request.request.requestURI}\""
+                            "Request contains double slash and will fail: \"${request.request.requestURI}\""
                         }
                     }
                     getNext().invoke(request, response)
@@ -55,13 +54,10 @@ class ApplicationConfiguration {
         return factory
     }
 
-    @Bean(name = ["springSessionConversionService"])
-    fun sessionConversionService(): GenericConversionService {
-        val conversionService = GenericConversionService()
-        conversionService.addConverter(
-            Any::class.java, ByteArray::class.java, JsonSerializingService())
-        conversionService.addConverter(
-            ByteArray::class.java, Any::class.java, JsonDeserializingService())
-        return conversionService
+    @Bean
+    fun conversionService(): ConversionServiceFactoryBean {
+        val bean = ConversionServiceFactoryBean()
+        bean.setConverters(setOf(JsonSerializingService(), JsonDeserializingService()))
+        return bean
     }
 }

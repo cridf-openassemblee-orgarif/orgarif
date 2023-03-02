@@ -9,6 +9,8 @@ import orgarif.domain.TestPrefixUuidId
 import orgarif.domain.TestSecurityString
 import orgarif.domain.TestStringId
 import orgarif.domain.TestUuidId
+import orgarif.service.utils.random.DummyRandomService
+import orgarif.service.utils.random.IdLogService
 
 internal class IdLogServiceTest {
 
@@ -30,7 +32,8 @@ TestUuidId f89ac98cacc54eea98561cc9658a6663
 TestPrefixUuidId bf23ea927f8a4e14a9a11b6604f979eb
 TestStringId 03LOeGFj5ZibyaqdISrO
 TestPrefixStringId rSSPouSEbuXmda1rHUFC
-        """.trimIndent(),
+        """
+                .trimIndent(),
             service.getIdsString())
     }
 

@@ -12,6 +12,7 @@ import org.jooq.impl.Internal;
 
 import orgarif.jooq.generated.tables.AppUserTable;
 import orgarif.jooq.generated.tables.CommandLogTable;
+<<<<<<< HEAD
 import orgarif.jooq.generated.tables.DeliberationTable;
 import orgarif.jooq.generated.tables.DepartementTable;
 import orgarif.jooq.generated.tables.DeploymentLogTable;
@@ -26,11 +27,17 @@ import orgarif.jooq.generated.tables.OrganismeTable;
 import orgarif.jooq.generated.tables.RepresentantTable;
 import orgarif.jooq.generated.tables.SecteurTable;
 import orgarif.jooq.generated.tables.TypeStructureTable;
+=======
+import orgarif.jooq.generated.tables.DeploymentLogTable;
+import orgarif.jooq.generated.tables.MagicLinkTokenTable;
+import orgarif.jooq.generated.tables.MailLogTable;
+>>>>>>> template
 import orgarif.jooq.generated.tables.UserFileTable;
 import orgarif.jooq.generated.tables.UserMailLogTable;
 import orgarif.jooq.generated.tables.UserSessionLogTable;
 import orgarif.jooq.generated.tables.records.AppUserRecord;
 import orgarif.jooq.generated.tables.records.CommandLogRecord;
+<<<<<<< HEAD
 import orgarif.jooq.generated.tables.records.DeliberationRecord;
 import orgarif.jooq.generated.tables.records.DepartementRecord;
 import orgarif.jooq.generated.tables.records.DeploymentLogRecord;
@@ -45,6 +52,11 @@ import orgarif.jooq.generated.tables.records.OrganismeRecord;
 import orgarif.jooq.generated.tables.records.RepresentantRecord;
 import orgarif.jooq.generated.tables.records.SecteurRecord;
 import orgarif.jooq.generated.tables.records.TypeStructureRecord;
+=======
+import orgarif.jooq.generated.tables.records.DeploymentLogRecord;
+import orgarif.jooq.generated.tables.records.MagicLinkTokenRecord;
+import orgarif.jooq.generated.tables.records.MailLogRecord;
+>>>>>>> template
 import orgarif.jooq.generated.tables.records.UserFileRecord;
 import orgarif.jooq.generated.tables.records.UserMailLogRecord;
 import orgarif.jooq.generated.tables.records.UserSessionLogRecord;
@@ -63,6 +75,7 @@ public class Keys {
 
     public static final UniqueKey<AppUserRecord> APP_USER_MAIL_KEY = Internal.createUniqueKey(AppUserTable.APP_USER, DSL.name("app_user_mail_key"), new TableField[] { AppUserTable.APP_USER.MAIL }, true);
     public static final UniqueKey<AppUserRecord> APP_USER_PKEY = Internal.createUniqueKey(AppUserTable.APP_USER, DSL.name("app_user_pkey"), new TableField[] { AppUserTable.APP_USER.ID }, true);
+<<<<<<< HEAD
     public static final UniqueKey<AppUserRecord> APP_USER_USERNAME_KEY = Internal.createUniqueKey(AppUserTable.APP_USER, DSL.name("app_user_username_key"), new TableField[] { AppUserTable.APP_USER.USERNAME }, true);
     public static final UniqueKey<CommandLogRecord> COMMAND_LOG_PKEY = Internal.createUniqueKey(CommandLogTable.COMMAND_LOG, DSL.name("command_log_pkey"), new TableField[] { CommandLogTable.COMMAND_LOG.ID }, true);
     public static final UniqueKey<DeliberationRecord> DELIBERATION_PKEY = Internal.createUniqueKey(DeliberationTable.DELIBERATION, DSL.name("deliberation_pkey"), new TableField[] { DeliberationTable.DELIBERATION.ID }, true);
@@ -79,6 +92,12 @@ public class Keys {
     public static final UniqueKey<RepresentantRecord> REPRESENTANT_PKEY = Internal.createUniqueKey(RepresentantTable.REPRESENTANT, DSL.name("representant_pkey"), new TableField[] { RepresentantTable.REPRESENTANT.ID }, true);
     public static final UniqueKey<SecteurRecord> SECTEUR_PKEY = Internal.createUniqueKey(SecteurTable.SECTEUR, DSL.name("secteur_pkey"), new TableField[] { SecteurTable.SECTEUR.ID }, true);
     public static final UniqueKey<TypeStructureRecord> TYPE_STRUCTURE_PKEY = Internal.createUniqueKey(TypeStructureTable.TYPE_STRUCTURE, DSL.name("type_structure_pkey"), new TableField[] { TypeStructureTable.TYPE_STRUCTURE.ID }, true);
+=======
+    public static final UniqueKey<CommandLogRecord> COMMAND_LOG_PKEY = Internal.createUniqueKey(CommandLogTable.COMMAND_LOG, DSL.name("command_log_pkey"), new TableField[] { CommandLogTable.COMMAND_LOG.ID }, true);
+    public static final UniqueKey<DeploymentLogRecord> DEPLOYMENT_LOG_PKEY = Internal.createUniqueKey(DeploymentLogTable.DEPLOYMENT_LOG, DSL.name("deployment_log_pkey"), new TableField[] { DeploymentLogTable.DEPLOYMENT_LOG.ID }, true);
+    public static final UniqueKey<MagicLinkTokenRecord> MAGIC_LINK_TOKEN_PKEY = Internal.createUniqueKey(MagicLinkTokenTable.MAGIC_LINK_TOKEN, DSL.name("magic_link_token_pkey"), new TableField[] { MagicLinkTokenTable.MAGIC_LINK_TOKEN.TOKEN }, true);
+    public static final UniqueKey<MailLogRecord> MAIL_LOG_PKEY = Internal.createUniqueKey(MailLogTable.MAIL_LOG, DSL.name("mail_log_pkey"), new TableField[] { MailLogTable.MAIL_LOG.ID }, true);
+>>>>>>> template
     public static final UniqueKey<UserFileRecord> USER_FILE_PKEY = Internal.createUniqueKey(UserFileTable.USER_FILE, DSL.name("user_file_pkey"), new TableField[] { UserFileTable.USER_FILE.ID }, true);
     public static final UniqueKey<UserMailLogRecord> USER_MAIL_LOG_PKEY = Internal.createUniqueKey(UserMailLogTable.USER_MAIL_LOG, DSL.name("user_mail_log_pkey"), new TableField[] { UserMailLogTable.USER_MAIL_LOG.ID }, true);
     public static final UniqueKey<UserSessionLogRecord> USER_SESSION_LOG_PKEY = Internal.createUniqueKey(UserSessionLogTable.USER_SESSION_LOG, DSL.name("user_session_log_pkey"), new TableField[] { UserSessionLogTable.USER_SESSION_LOG.ID }, true);
@@ -88,6 +107,7 @@ public class Keys {
     // -------------------------------------------------------------------------
 
     public static final ForeignKey<CommandLogRecord, DeploymentLogRecord> COMMAND_LOG__COMMAND_LOG_DEPLOYMENT_LOG_ID_FKEY = Internal.createForeignKey(CommandLogTable.COMMAND_LOG, DSL.name("command_log_deployment_log_id_fkey"), new TableField[] { CommandLogTable.COMMAND_LOG.DEPLOYMENT_LOG_ID }, Keys.DEPLOYMENT_LOG_PKEY, new TableField[] { DeploymentLogTable.DEPLOYMENT_LOG.ID }, true);
+<<<<<<< HEAD
     public static final ForeignKey<CommandLogRecord, AppUserRecord> COMMAND_LOG__COMMAND_LOG_USER_ID_FKEY = Internal.createForeignKey(CommandLogTable.COMMAND_LOG, DSL.name("command_log_user_id_fkey"), new TableField[] { CommandLogTable.COMMAND_LOG.USER_ID }, Keys.APP_USER_PKEY, new TableField[] { AppUserTable.APP_USER.ID }, true);
     public static final ForeignKey<CommandLogRecord, UserSessionLogRecord> COMMAND_LOG__COMMAND_LOG_USER_SESSION_ID_FKEY = Internal.createForeignKey(CommandLogTable.COMMAND_LOG, DSL.name("command_log_user_session_id_fkey"), new TableField[] { CommandLogTable.COMMAND_LOG.USER_SESSION_ID }, Keys.USER_SESSION_LOG_PKEY, new TableField[] { UserSessionLogTable.USER_SESSION_LOG.ID }, true);
     public static final ForeignKey<DesignationRecord, InstanceRecord> DESIGNATION__DESIGNATION_INSTANCE_ID_FKEY = Internal.createForeignKey(DesignationTable.DESIGNATION, DSL.name("designation_instance_id_fkey"), new TableField[] { DesignationTable.DESIGNATION.INSTANCE_ID }, Keys.INSTANCE_PKEY, new TableField[] { InstanceTable.INSTANCE.ID }, true);
@@ -103,6 +123,10 @@ public class Keys {
     public static final ForeignKey<OrganismeRecord, SecteurRecord> ORGANISME__ORGANISME_SECTEUR_ID_FKEY = Internal.createForeignKey(OrganismeTable.ORGANISME, DSL.name("organisme_secteur_id_fkey"), new TableField[] { OrganismeTable.ORGANISME.SECTEUR_ID }, Keys.SECTEUR_PKEY, new TableField[] { SecteurTable.SECTEUR.ID }, true);
     public static final ForeignKey<OrganismeRecord, TypeStructureRecord> ORGANISME__ORGANISME_TYPE_STRUCTURE_ID_FKEY = Internal.createForeignKey(OrganismeTable.ORGANISME, DSL.name("organisme_type_structure_id_fkey"), new TableField[] { OrganismeTable.ORGANISME.TYPE_STRUCTURE_ID }, Keys.TYPE_STRUCTURE_PKEY, new TableField[] { TypeStructureTable.TYPE_STRUCTURE.ID }, true);
     public static final ForeignKey<RepresentantRecord, EluRecord> REPRESENTANT__REPRESENTANT_ELU_ID_FKEY = Internal.createForeignKey(RepresentantTable.REPRESENTANT, DSL.name("representant_elu_id_fkey"), new TableField[] { RepresentantTable.REPRESENTANT.ELU_ID }, Keys.ELU_PKEY, new TableField[] { EluTable.ELU.ID }, true);
+=======
+    public static final ForeignKey<MagicLinkTokenRecord, AppUserRecord> MAGIC_LINK_TOKEN__MAGIC_LINK_TOKEN_USER_ID_FKEY = Internal.createForeignKey(MagicLinkTokenTable.MAGIC_LINK_TOKEN, DSL.name("magic_link_token_user_id_fkey"), new TableField[] { MagicLinkTokenTable.MAGIC_LINK_TOKEN.USER_ID }, Keys.APP_USER_PKEY, new TableField[] { AppUserTable.APP_USER.ID }, true);
+    public static final ForeignKey<MailLogRecord, DeploymentLogRecord> MAIL_LOG__MAIL_LOG_DEPLOYMENT_LOG_ID_FKEY = Internal.createForeignKey(MailLogTable.MAIL_LOG, DSL.name("mail_log_deployment_log_id_fkey"), new TableField[] { MailLogTable.MAIL_LOG.DEPLOYMENT_LOG_ID }, Keys.DEPLOYMENT_LOG_PKEY, new TableField[] { DeploymentLogTable.DEPLOYMENT_LOG.ID }, true);
+>>>>>>> template
     public static final ForeignKey<UserFileRecord, AppUserRecord> USER_FILE__USER_FILE_USER_ID_FKEY = Internal.createForeignKey(UserFileTable.USER_FILE, DSL.name("user_file_user_id_fkey"), new TableField[] { UserFileTable.USER_FILE.USER_ID }, Keys.APP_USER_PKEY, new TableField[] { AppUserTable.APP_USER.ID }, true);
     public static final ForeignKey<UserMailLogRecord, AppUserRecord> USER_MAIL_LOG__USER_MAIL_LOG_USER_ID_FKEY = Internal.createForeignKey(UserMailLogTable.USER_MAIL_LOG, DSL.name("user_mail_log_user_id_fkey"), new TableField[] { UserMailLogTable.USER_MAIL_LOG.USER_ID }, Keys.APP_USER_PKEY, new TableField[] { AppUserTable.APP_USER.ID }, true);
     public static final ForeignKey<UserSessionLogRecord, AppUserRecord> USER_SESSION_LOG__USER_SESSION_LOG_USER_ID_FKEY = Internal.createForeignKey(UserSessionLogTable.USER_SESSION_LOG, DSL.name("user_session_log_user_id_fkey"), new TableField[] { UserSessionLogTable.USER_SESSION_LOG.USER_ID }, Keys.APP_USER_PKEY, new TableField[] { AppUserTable.APP_USER.ID }, true);

@@ -1,6 +1,7 @@
 package orgarif.query
 
 import com.fasterxml.jackson.annotation.JsonTypeInfo
+<<<<<<< HEAD
 import orgarif.domain.DeliberationDto
 import orgarif.domain.DepartementId
 import orgarif.domain.NatureJuridiqueId
@@ -11,12 +12,26 @@ import orgarif.domain.OrganismeOrderColumn
 import orgarif.domain.RepresentantDto
 import orgarif.domain.SecteurId
 import orgarif.domain.TypeStructureId
+=======
+import kttots.Shared
+import orgarif.domain.UserId
+import orgarif.domain.UserInfos
+>>>>>>> template
 
+@Shared
 @JsonTypeInfo(
     use = JsonTypeInfo.Id.NAME, include = JsonTypeInfo.As.PROPERTY, property = "objectType")
 sealed class Query
 
-sealed class QueryResponse
+@Shared sealed class QueryResponse
+
+data class GetUserInfosQuery(val userId: UserId) : Query()
+
+data class GetUserInfosQueryResponse(val userInfos: UserInfos?) : QueryResponse()
+
+class GetUsersQuery : Query()
+
+data class GetUsersQueryResponse(val users: List<UserInfos>) : QueryResponse()
 
 data class GetOrganismeQuery(val id: OrganismeId) : Query()
 

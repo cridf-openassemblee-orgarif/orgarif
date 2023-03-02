@@ -1,17 +1,21 @@
 import { ClientUid } from './domain/client-ids';
+<<<<<<< HEAD
 import { LocalDate } from './domain/time';
 import { asString, instanciateNominalString } from './utils/nominal-class';
+=======
+import { asNominalString } from './utils/nominal-class';
+>>>>>>> template
 
 export const extractEmotionCss = (props: any) =>
   'className' in props ? { className: props['className'] } : {};
 
 export function assertUnreachable(x: never): never {
-  throw new Error(`Expected unreachable code ! Value : "${JSON.stringify(x)}"`);
+  throw new Error(`Expected unreachable code ! Value: "${JSON.stringify(x)}"`);
 }
 
 let uniqueIdIndex = 0;
 export const clientUid = () =>
-  instanciateNominalString<ClientUid>('ClientUid_' + uniqueIdIndex++);
+  asNominalString<ClientUid>('ClientUid_' + uniqueIdIndex++);
 
 export const getCookie = (cookieName: string) => {
   const name = cookieName + '=';
@@ -24,6 +28,7 @@ export const getCookie = (cookieName: string) => {
   return undefined;
 };
 
+<<<<<<< HEAD
 export const compareByLocalDate =
   <T>(l: (o: T) => LocalDate) =>
   (o1: T, o2: T) =>
@@ -39,6 +44,10 @@ export const compareByNumber =
 
 // TODO[naming] sort in name
 // usage : item.sort(compareByString(item => item.sortLabel))
+=======
+// TODO[tmpl][naming] sort in name
+// usage : items.sort(compareByString(item => item.sortLabel))
+>>>>>>> template
 export const compareByString =
   <T>(l: (o: T) => string) =>
   (o1: T, o2: T) =>

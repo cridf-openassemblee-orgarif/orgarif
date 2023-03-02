@@ -1,0 +1,168 @@
+/** @jsxImportSource @emotion/react */
+import { Errors } from '../../errors';
+import {
+  DevLoginCommandResponse,
+  LoginCommandResponse
+} from '../../generated/command/commands';
+import { LoginResult, UserInfos } from '../../generated/domain/user';
+import { appContext } from '../../services/ApplicationContext';
+import { state } from '../../state/state';
+import { assertUnreachable } from '../../utils';
+import { space } from '../common/component-utils';
+import { MainContainer } from '../containers/MainContainer';
+import { useGoTo } from '../routing/routing-utils';
+import { LoginForm, LoginFormInput } from './LoginForm';
+import { css } from '@emotion/react';
+import Button from '@mui/material/Button';
+import * as React from 'react';
+import { useState } from 'react';
+import { useRecoilState } from 'recoil';
+<<<<<<< HEAD:orgarif-client/src/view/LoginView.tsx
+import { appContext } from '../ApplicationContext';
+import { LoginResult, UserInfos } from '../domain/user';
+import { Errors } from '../errors';
+import { LoginForm, LoginFormDto } from '../form/LoginForm';
+import { RouteLink } from '../routing/RouteLink';
+import { useGoTo } from '../routing/useGoTo';
+import { state } from '../state/state';
+import { assertUnreachable } from '../utils';
+=======
+>>>>>>> template:orgarif-client/src/components/login/LoginView.tsx
+
+export const LoginView = () => {
+  const [userInfos, setUserInfos] = useRecoilState(state.userInfos);
+  const [loginResult, setLoginResult] = useState<LoginResult>();
+  const goTo = useGoTo();
+  const connect = (userInfos: UserInfos) => {
+    appContext.csrfTokenService().refreshToken();
+    setUserInfos(userInfos);
+    goTo(
+      { name: 'RootRoute' },
+      {
+        useTargetPath: true
+      }
+    );
+  };
+  const login = (input: LoginFormInput) =>
+    appContext
+      .commandService()
+      .send<LoginCommandResponse>({
+        objectType: 'LoginCommand',
+        ...input
+      })
+      .then(r => {
+        setLoginResult(r.result);
+        switch (r.result) {
+          case 'LoggedIn':
+            if (!r.userinfos) {
+              throw Errors._198c103e();
+            }
+            connect(r.userinfos);
+            break;
+          case 'MailNotFound':
+          case 'BadPassword':
+            break;
+          default:
+            assertUnreachable(r.result);
+        }
+      });
+  const devLogin = (username: string) =>
+    appContext
+      .commandService()
+      .send<DevLoginCommandResponse>({
+        objectType: 'DevLoginCommand',
+        username
+      })
+      .then(r => connect(r.userinfos));
+  return (
+    <>
+      <div
+        css={css`
+          display: flex;
+          justify-content: center;
+          padding: 2em;
+        `}
+      >
+        <div>
+          <h1
+            css={css`
+              text-align: center;
+            `}
+          >
+            Identification
+          </h1>
+          <div
+            css={css`
+              min-width: 90vw;
+              max-width: 90vw;
+              @media (min-width: 768px) {
+                min-width: 400px;
+                max-width: 400px;
+              }
+            `}
+          >
+            {loginResult !== 'LoggedIn' && !userInfos && (
+              <LoginForm onSubmit={login} />
+            )}
+            {!userInfos && bootstrapData.env === 'Dev' && (
+              <div
+                css={css`
+                  margin-top: 20px;
+                `}
+              >
+                dev user authent :{space}
+                <Button onClick={() => devLogin('user')}>user</Button>
+                <Button onClick={() => devLogin('admin')}>admin</Button>
+              </div>
+            )}
+            {userInfos && (
+              <div
+                css={css`
+                  text-align: center;
+                `}
+              >
+                Vous êtes connecté
+                <br />
+                <RouteLink
+                  route={{
+                    name: 'EditListOrganismesRoute'
+                  }}
+                >
+                  Liste des organismes
+                </RouteLink>
+              </div>
+            )}
+            {loginResult && (
+              <div
+                css={css`
+                  text-align: center;
+                  margin-top: 20px;
+                `}
+              >
+                {(() => {
+                  switch (loginResult) {
+                    case 'LoggedIn':
+                      return null;
+<<<<<<< HEAD:orgarif-client/src/view/LoginView.tsx
+                    case 'mailNotFound':
+                      return <div>Utilisateur non trouvé</div>;
+                    case 'badPassword':
+                      return <div>Mauvais mot de passe</div>;
+=======
+                    case 'MailNotFound':
+                      return <div>User not found</div>;
+                    case 'BadPassword':
+                      return <div>Bad password</div>;
+>>>>>>> template:orgarif-client/src/components/login/LoginView.tsx
+                    default:
+                      assertUnreachable(loginResult);
+                  }
+                })()}
+              </div>
+            )}
+          </div>
+        </div>
+      </div>
+    </>
+  );
+};

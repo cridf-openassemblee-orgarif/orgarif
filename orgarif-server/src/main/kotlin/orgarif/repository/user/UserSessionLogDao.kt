@@ -10,9 +10,9 @@ import orgarif.jooq.generated.Tables.USER_SESSION_LOG
 import orgarif.jooq.generated.tables.records.UserSessionLogRecord
 import orgarif.utils.toTypeId
 
-// TODO[user] : try to keep Spring id
+// TODO[tmpl][user]: try to keep Spring id
 @Repository
-class UserSessionLogDao(val jooq: DSLContext) {
+class UserSessionLogDao(private val jooq: DSLContext) {
 
     data class Record(
         val id: UserSessionId,

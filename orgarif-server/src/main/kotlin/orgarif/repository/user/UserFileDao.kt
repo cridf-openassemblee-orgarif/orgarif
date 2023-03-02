@@ -2,8 +2,8 @@ package orgarif.repository.user
 
 import org.jooq.DSLContext
 import org.jooq.Record
-import org.jooq.TableField
 import org.springframework.stereotype.Repository
+import orgarif.domain.MimeType
 import orgarif.domain.UserFileData
 import orgarif.domain.UserFileId
 import orgarif.domain.UserFileReference
@@ -13,29 +13,27 @@ import orgarif.jooq.generated.tables.records.UserFileRecord
 import orgarif.utils.toTypeId
 
 @Repository
-class UserFileDao(val jooq: DSLContext) {
+class UserFileDao(private val jooq: DSLContext) {
 
-    enum class UserFileField(val field: TableField<UserFileRecord, *>, val isDataField: Boolean) {
-        id(USER_FILE.ID, false),
-        userId(USER_FILE.USER_ID, false),
-        file(USER_FILE.FILE, true),
-        contentType(USER_FILE.CONTENT_TYPE, false),
-        originalFilename(USER_FILE.ORIGINAL_FILENAME, false),
-        uploadDate(USER_FILE.UPLOAD_DATE, false)
+    companion object {
+        val nonDataFields by lazy {
+            setOf(
+                USER_FILE.ID,
+                USER_FILE.USER_ID,
+                USER_FILE.CONTENT_TYPE,
+                USER_FILE.ORIGINAL_FILENAME,
+                USER_FILE.UPLOAD_DATE)
+        }
     }
 
-    val nonDataFields by lazy {
-        UserFileField.values().toList().filter { !it.isDataField }.map { it.field }
-    }
-
-    fun insert(r: UserFileReference, fileData: ByteArray) {
+    fun insert(r: UserFileReference, bytes: ByteArray) {
         // FIMENOW refactor proposition
         val jr =
             UserFileRecord().apply {
                 id = r.id.rawId
                 userId = r.userId.rawId
-                contentType = r.contentType
-                file = fileData
+                fileContent = bytes
+                contentType = r.contentType.fullType
                 originalFilename = r.originalFilename
                 uploadDate = r.uploadDate
             }
@@ -43,9 +41,12 @@ class UserFileDao(val jooq: DSLContext) {
     }
 
     fun fetchDataOrNull(id: UserFileId): UserFileData? =
-        jooq.selectFrom(USER_FILE).where(USER_FILE.ID.equal(id.rawId)).fetchOne()?.let {
-            mapData(it.into(USER_FILE))
-        }
+        jooq
+            .select(USER_FILE.CONTENT_TYPE, USER_FILE.FILE_CONTENT)
+            .from(USER_FILE)
+            .where(USER_FILE.ID.equal(id.rawId))
+            .fetchOne()
+            ?.let { mapData(it.into(USER_FILE)) }
 
     fun fetchReferenceOrNull(id: UserFileId): UserFileReference? =
         jooq
@@ -55,25 +56,32 @@ class UserFileDao(val jooq: DSLContext) {
             .fetchOne()
             ?.let { mapReference(it) }
 
+<<<<<<< HEAD
     fun fetchReferencesByUserId(userId: UserId): List<UserFileReference> {
         return jooq
+=======
+    fun fetchReferencesByUserId(userId: UserId): List<UserFileReference> =
+        jooq
+>>>>>>> template
             .select(nonDataFields)
             .from(USER_FILE)
             .where(USER_FILE.USER_ID.equal(userId.rawId))
             .toList()
             .map { mapReference(it) }
-    }
 
     fun count(): Int = jooq.selectCount().from(USER_FILE).fetchSingle().let { it.value1() }
 
-    fun mapData(r: UserFileRecord) = UserFileData(r.contentType, r.file, r.originalFilename)
+    fun mapData(record: Record): UserFileData {
+        val r = record.into(UserFileRecord::class.java)
+        return UserFileData(r.contentType, r.fileContent)
+    }
 
     fun mapReference(record: Record): UserFileReference {
         val r = record.into(UserFileRecord::class.java)
         return UserFileReference(
             id = r.id.toTypeId(),
             userId = r.userId.toTypeId(),
-            contentType = r.contentType,
+            contentType = MimeType.of(r.contentType),
             originalFilename = r.originalFilename,
             uploadDate = r.uploadDate)
     }

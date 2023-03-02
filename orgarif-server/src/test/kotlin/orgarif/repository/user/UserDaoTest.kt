@@ -10,8 +10,8 @@ import orgarif.ResetTestDatabase
 import orgarif.TestData
 import orgarif.domain.HashedPassword
 import orgarif.error.MailAlreadyRegisteredException
-import orgarif.service.DateService
-import orgarif.service.RandomService
+import orgarif.service.utils.DateService
+import orgarif.service.utils.random.RandomService
 
 @SpringBootTest
 @ActiveProfiles("test")
@@ -40,7 +40,7 @@ internal class UserDaoTest(
         userDao.insert(u1, HashedPassword("sdv"))
         val u2 =
             TestData.dummyUser(randomService.id())
-                .copy(mail = "another mail", username = "another", displayName = "another")
+                .copy(mail = "another mail", displayName = "another")
         userDao.insert(u2, HashedPassword("sdv"))
         Assertions.assertThrows(MailAlreadyRegisteredException::class.java) {
             userDao.updateMail(u2.id, u1.mail, dateService.now())

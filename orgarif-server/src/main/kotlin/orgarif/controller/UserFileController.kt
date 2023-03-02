@@ -13,11 +13,11 @@ import orgarif.utils.OrgarifStringUtils
 import orgarif.utils.toTypeId
 
 @Controller
-class UserFileController(val userFileDao: UserFileDao) {
+class UserFileController(private val userFileDao: UserFileDao) {
 
     @GetMapping("/user-file/{id}")
     fun getUserFile(@PathVariable id: String): ResponseEntity<ByteArray> {
-        // TODO[secu] todo secu
+        // TODO[tmpl][secu]
         val userFileId = OrgarifStringUtils.deserializeUuid(id).toTypeId<UserFileId>()
         val userFile =
             userFileDao.fetchDataOrNull(userFileId) ?: return ResponseEntity(HttpStatus.NOT_FOUND)

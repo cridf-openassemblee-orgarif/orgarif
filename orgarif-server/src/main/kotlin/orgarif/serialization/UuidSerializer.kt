@@ -8,7 +8,7 @@ import orgarif.utils.OrgarifStringUtils
 
 class UuidSerializer : StdSerializer<UUID>(UUID::class.java) {
 
-    // TODO[serialization] handle all the null cases ?
+    // TODO[tmpl][serialization] handle all the null cases ?
     override fun serialize(value: UUID?, gen: JsonGenerator, provider: SerializerProvider) =
         gen.writeString(value?.let { OrgarifStringUtils.serializeUuid(it) } ?: "null")
 }

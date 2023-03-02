@@ -1,3 +1,4 @@
+// conflict : deleted in template
 import { FunctionComponent } from 'react';
 import { OrganismeId, SecteurId, UserId } from '../domain/ids';
 import { Role } from '../domain/user';

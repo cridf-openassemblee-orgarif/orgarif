@@ -17,7 +17,7 @@ object SpringLikeYamlConfigUtils {
             .mapNotNull { pair -> pair.second?.let { pair.first to it } }
             .toMap()
 
-    // FIXMENOW we can debug with this one
+    // [doc] we can debug with this one
     fun yamlFilesToMapComplete(vararg files: InputStream): Map<String, String?> =
         yamlFilesToPairs(*files).toMap()
 
@@ -36,18 +36,24 @@ object SpringLikeYamlConfigUtils {
             // replace system env vars
             .map {
                 it.first to
-                    // TODO write test (with 2 vars in string)
-                    it.second?.replace("\\$\\{[^}]*}".toRegex()) {
-                        System.getenv(it.value.drop(2).dropLast(1))
-                    }
+                    // TODO[tmpl] write tests (with 2 vars in string, with missing var...)
+                    it.second
+                        ?.replace("\\$\\{[^}]*}".toRegex()) {
+                            System.getenv(it.value.drop(2).dropLast(1)) ?: ""
+                        }
+                        ?.let { it.ifEmpty { null } }
             }
 
     private fun flattenConf(map: Map<String, Any>): List<Pair<String, String?>> =
         map.keys.flatMap { key ->
             val value = map.getValue(key)
             when (value) {
+                // TODO[tmpl] null or not here ?? (if use getValue is useless)
                 null -> listOf(key to null)
-                is Boolean, is Int, is Long, is String -> listOf(key to "$value")
+                is Boolean,
+                is Int,
+                is Long,
+                is String -> listOf(key to "$value")
                 is Map<*, *> ->
                     flattenConf(value as Map<String, Any>).map {
                         (key + "." + it.first) to it.second

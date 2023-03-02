@@ -1,14 +1,13 @@
 package orgarif.jooqlib
 
+import java.nio.file.Paths
 import jooqutils.DatabaseInitializer
 import jooqutils.JooqGeneration
-import kotlin.io.path.name
 import mu.KotlinLogging
 import orgarif.jooqlib.Configuration.configuration
-import orgarif.jooqlib.utils.FileUtils
 
 fun main() {
-    System.setProperty("logback.configurationFile", "logback-jooq-tooling.xml")
+    System.setProperty("logback.configurationFile", "logback-jooq-lib.xml")
     GenerateJooqAndDiff.generate()
     GenerateJooqAndDiff.logger.info { "[OK] Jooq generation" }
 }
@@ -18,13 +17,22 @@ object GenerateJooqAndDiff {
     internal val logger = KotlinLogging.logger {}
 
     val projectDir by lazy {
-        val projectBasePath = FileUtils.projectBasePath()
-        if (projectBasePath.name == "jooq-lib") {
-            // happens when running 'gradle resetDatabase'
-            projectBasePath.parent
-        } else {
-            projectBasePath
+        // contexts: run in intellij, gradle (with different root dirs), tests
+        val userDir = System.getProperty("user.dir")
+        val rootDir = let {
+            listOf(
+                    "/jooq-lib",
+                    // (in tests)
+                    "/orgarif-server",
+                )
+                .forEach {
+                    if (userDir.endsWith(it)) {
+                        return@let userDir.dropLast(it.length)
+                    }
+                }
+            userDir
         }
+        Paths.get(rootDir).also { logger.info { "Project dir is $it" } }
     }
 
     val webServerResourcesDir by lazy { projectDir.resolve("orgarif-server/src/main/resources") }
@@ -51,12 +59,12 @@ object GenerateJooqAndDiff {
                 generationDatabaseConfiguration, sqlSchemaFilesDir, sqlCleanResultFile)
             logger.info { "Generate Jooq code" }
             JooqGeneration.generateJooq(
-                generationDatabaseConfiguration,
-                setOf("spring_session", "spring_session_attributes"),
-                "orgarif.jooq",
-                "jooq-lib/src/generated/java")
-            // TODO [doc] diff will fail if Config.runDatabase does not exist (not very problematic
-            // but can be better)
+                conf = generationDatabaseConfiguration,
+                excludeTables = setOf("spring_session", "spring_session_attributes"),
+                generatedPackageName = "orgarif.jooq",
+                generatedCodePath = projectDir.resolve("jooq-lib/src/generated/java"))
+            // TODO[tmpl][doc] diff will fail if Config.runDatabase does not exist
+            // (not very problematic but can be better)
             JooqGeneration.generateDiff(configuration, generationDatabaseConfiguration, buildDir)
             ResetDatabase.resetDatabaseSchema(configuration)
             ResetDatabase.insertInitialData(configuration)

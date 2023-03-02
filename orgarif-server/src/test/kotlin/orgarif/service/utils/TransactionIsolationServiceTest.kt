@@ -11,7 +11,7 @@ import org.springframework.transaction.support.TransactionTemplate
 import orgarif.TestData
 import orgarif.domain.HashedPassword
 import orgarif.repository.user.UserDao
-import orgarif.service.RandomService
+import orgarif.service.utils.random.RandomService
 
 @SpringBootTest
 @ActiveProfiles("test")
@@ -24,7 +24,7 @@ internal class TransactionIsolationServiceTest(
 
     @Test
     fun `test isolated transaction`() {
-        /* Execution :
+        /* Execution:
             start transaction 1
                 insert
                 start transaction 2
@@ -36,11 +36,8 @@ internal class TransactionIsolationServiceTest(
         PROPAGATION_REQUIRES_NEW or PROPAGATION_NESTED
          */
 
-        val recordNotIsolated =
-            TestData.dummyUser(randomService.id())
-                .copy(mail = "not isolated", username = "not isolated")
-        val recordIsolated =
-            TestData.dummyUser(randomService.id()).copy(mail = "isolated", username = "isolated")
+        val recordNotIsolated = TestData.dummyUser(randomService.id()).copy(mail = "not isolated")
+        val recordIsolated = TestData.dummyUser(randomService.id()).copy(mail = "isolated")
         val transactionTemplate = TransactionTemplate(transactionManager)
         try {
             transactionTemplate.execute {

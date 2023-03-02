@@ -20,14 +20,19 @@ import orgarif.repository.EluDao
 import orgarif.repository.RepresentantDao
 import orgarif.repository.user.UserDao
 import orgarif.repository.user.UserSessionLogDao
+<<<<<<< HEAD
 import orgarif.service.DateService
 import orgarif.service.RandomService
+=======
+>>>>>>> template
 import orgarif.service.user.UserSessionService
+import orgarif.service.utils.DateService
 import orgarif.service.utils.TransactionIsolationService
 
 @RestController
 @RequestMapping(remoteRoute)
 class RemoteController(
+<<<<<<< HEAD
     @Value("\${remote-endpoint.expected-secu}") val expectedSecu: String,
     val jooq: DSLContext,
     val userDao: UserDao,
@@ -40,6 +45,16 @@ class RemoteController(
     val randomService: RandomService,
     val transactionIsolationService: TransactionIsolationService,
     val dateService: DateService
+=======
+    @Value("\${remote-controller.expected-secu}") private val expectedSecu: String,
+    private val jooq: DSLContext,
+    private val userDao: UserDao,
+    private val userSessionLogDao: UserSessionLogDao,
+    private val sessionRepository: SafeSessionRepository,
+    private val userSessionService: UserSessionService,
+    private val transactionIsolationService: TransactionIsolationService,
+    private val dateService: DateService
+>>>>>>> template
 ) {
 
     val logger = KotlinLogging.logger {}

@@ -17,17 +17,17 @@ import orgarif.domain.MimeType
 import orgarif.domain.RequestErrorId
 import orgarif.domain.Role
 import orgarif.serialization.Serializer
-import orgarif.service.ApplicationInstance
-import orgarif.service.DateService
-import orgarif.service.RandomService
 import orgarif.service.user.UserSessionService
+import orgarif.service.utils.ApplicationInstance
+import orgarif.service.utils.DateService
+import orgarif.service.utils.random.RandomService
 import orgarif.utils.OrgarifStringUtils
 
 @ControllerAdvice
 class ApplicationExceptionHandler(
-    val dateService: DateService,
-    val randomService: RandomService,
-    val userSessionService: UserSessionService
+    private val dateService: DateService,
+    private val randomService: RandomService,
+    private val userSessionService: UserSessionService
 ) {
 
     private val logger = KotlinLogging.logger {}
@@ -41,12 +41,12 @@ class ApplicationExceptionHandler(
         response: HttpServletResponse,
         exception: Exception
     ): ModelAndView {
-        // TODO[secu] handle exceptions
+        // TODO[tmpl][secu] handle exceptions
         // log userid, mail, ip
         val id = randomService.id<RequestErrorId>()
         val readableStackTrace =
-            if (ApplicationInstance.env == ApplicationEnvironment.dev ||
-                userSessionService.hasRole(Role.admin)) {
+            if (ApplicationInstance.env == ApplicationEnvironment.Dev ||
+                userSessionService.hasRole(Role.Admin)) {
                 ReadableStackTrace(exception)
             } else {
                 null
@@ -55,12 +55,12 @@ class ApplicationExceptionHandler(
         val subCause = cause?.cause
         when {
             subCause is SizeLimitExceededException -> {
-                // TODO[secu] in practice what happens with user null ?
+                // TODO[tmpl][secu] in practice what happens with user null ?
                 logger.info {
-                    // TODO[secu] which means user must be connected...
-                    "User ${userSessionService.getUserSession()} tried to upload a file to big : ${subCause.message}"
+                    // TODO[tmpl][secu] which means user must be connected...
+                    "User ${userSessionService.getUserSession()} tried to upload a file to big: ${subCause.message}"
                 }
-                // TODO[secu] error codes for the front !
+                // TODO[tmpl][secu] error codes for the front !
                 return render(
                     request,
                     response,
@@ -73,7 +73,7 @@ class ApplicationExceptionHandler(
                         readableStackTrace))
             }
             exception is DisplayMessageException -> {
-                // TODO[secu] this "DisplayError" is used on front
+                // TODO[tmpl][secu] this "DisplayError" is used on front
                 logger.info { "[user message exception] ${exception.logMessage}" }
                 return render(
                     request,
@@ -125,7 +125,7 @@ class ApplicationExceptionHandler(
                 } else {
                     logger.warn(exception) { "Unhandled exception [$id]" }
                 }
-                // TODO[secu] i18n, & i18n from spring
+                // TODO[tmpl][secu] i18n, & i18n from spring
                 // all strings should come from a central place
                 return render(
                     request,
@@ -144,9 +144,9 @@ class ApplicationExceptionHandler(
         val mav = ModelAndView()
         response.status = requestError.status
         val stackTrace = requestError.stackTrace
-        // TODO[secu] reliable ?
-        if (request.getHeader("Content-Type") == MimeType.json.fullType) {
-            response.contentType = MimeType.json.fullType
+        // TODO[tmpl][secu] reliable ?
+        if (request.getHeader("Content-Type") == MimeType.JSON.fullType) {
+            response.contentType = MimeType.JSON.fullType
             // write in the buffer with
             // objectMapper.writeValue(response.outputStream, requestErrorNode)
             // is buggy...
@@ -163,7 +163,7 @@ class ApplicationExceptionHandler(
             mav.model["requestErrorIdAsString"] =
                 OrgarifStringUtils.serializeUuid(requestError.id.rawId)
             mav.model["requestError"] = requestError
-            if (ApplicationInstance.env == ApplicationEnvironment.dev && stackTrace != null) {
+            if (ApplicationInstance.env == ApplicationEnvironment.Dev && stackTrace != null) {
                 mav.model[ApplicationConstants.springMvcModelKeyStackTrace] =
                     stackTrace.toReadableString()
             }
