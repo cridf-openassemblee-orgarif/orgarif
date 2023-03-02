@@ -7,6 +7,7 @@ import { UsersManagementView } from '../view/UsersManagementView';
 import { UserId } from '../domain/ids';
 import { UserManagementView } from '../view/UserManagementView';
 
+// TODO[tmpl] secure that "name" can't be a route parameter
 export type ApplicationRoute =
   | LoginRoute
   | RegisterRoute
