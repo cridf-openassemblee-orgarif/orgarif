@@ -18,7 +18,7 @@ class OrgarifApplication {
         @JvmStatic
         fun main(args: Array<String>) {
             ApplicationInstance.env =
-                System.getenv("env")?.let { ApplicationEnvironment.valueOf(it) }
+                System.getenv("ENV")?.let { ApplicationEnvironment.valueOf(it) }
                     ?: ApplicationEnvironment.dev
             logger.info { "Environment is [${ApplicationInstance.env}]" }
             System.setProperty(

@@ -56,7 +56,7 @@ class CommandController(
         val command = Serializer.deserialize<Command>(jsonCommand)
         val handler = handler(command)
 
-        // [doc] is filtered from sensitive data (passwords) because of serializers
+        // [doc] is filtered from sensitive data (passwords) thanks to serialization
         val filteredJsonCommand = Serializer.serialize(command)
         // TODO[tmpl][test] make an only insert at the end, with no update ?
         // or make an insert first to protect from some errors (? isolate its transactionl)
