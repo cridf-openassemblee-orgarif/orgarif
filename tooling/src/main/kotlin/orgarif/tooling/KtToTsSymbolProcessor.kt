@@ -171,8 +171,11 @@ class KtToTsSymbolProcessor(
         }
         val unableToProcess = symbols.filterNot { it.validate() }.toList()
         resultFiles.forEach {
+            // TODO[fmk] format before writing file to avoid triggering webpack hot reload
             ShellRunner.run(
                 configuration.clientDirectory,
+                // FIXME[fmk] makes this macos only
+                "/usr/local/bin/node",
                 "node_modules/prettier/bin-prettier.js",
                 "--config",
                 "package.json",
