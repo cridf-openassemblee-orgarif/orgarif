@@ -1,13 +1,13 @@
 package orgarif.service.user
 
+import orgarif.domain.AuthLogType
 import orgarif.domain.HashedPassword
 import orgarif.domain.Language
 import orgarif.domain.PlainStringPassword
 import orgarif.domain.Role
 import orgarif.domain.UserId
-import orgarif.domain.UserMailLogType
+import orgarif.repository.user.AuthLogDao
 import orgarif.repository.user.UserDao
-import orgarif.repository.user.UserMailLogDao
 import orgarif.service.DateService
 import orgarif.service.NotificationService
 import orgarif.service.RandomService
@@ -19,7 +19,7 @@ import org.springframework.stereotype.Service
 @Service
 class UserService(
     val userDao: UserDao,
-    val userMailLogDao: UserMailLogDao,
+    val authLogDao: AuthLogDao,
     val dateService: DateService,
     val randomService: RandomService,
     val notificationService: NotificationService,
@@ -65,9 +65,9 @@ class UserService(
                 lastUpdate = now)
         userDao.insert(user, hashedPassword)
         if (dirtyMail != null) {
-            userMailLogDao.insert(
-                UserMailLogDao.Record(
-                    randomService.id(), user.id, dirtyMail, UserMailLogType.dirtyMail, now))
+            authLogDao.insert(
+                AuthLogDao.Record(
+                    randomService.id(), user.id, dirtyMail, AuthLogType.dirtyMail, now))
         }
         notificationService.notify(
             "${user.mail} just suscribed.", NotificationService.Channel.newUser)
@@ -82,9 +82,9 @@ class UserService(
         // to e@gmail.com, if he retries we should re-log
         // TODO[tmpl] need integration tests !
         if (newDirtyMail != null) {
-            userMailLogDao.insert(
-                UserMailLogDao.Record(
-                    randomService.id(), userId, newDirtyMail, UserMailLogType.dirtyMail, now))
+            authLogDao.insert(
+                AuthLogDao.Record(
+                    randomService.id(), userId, newDirtyMail, AuthLogType.dirtyMail, now))
         }
         if (newMail == formerMail) {
             // TODO[tmpl] user should be warned (maybe he tried a cleaned email)
@@ -93,9 +93,8 @@ class UserService(
         }
         logger.info { "Update mail $userId $formerMail => $newMail" }
         userDao.updateMail(userId, newMail, now)
-        userMailLogDao.insert(
-            UserMailLogDao.Record(
-                randomService.id(), userId, formerMail, UserMailLogType.formerMail, now))
+        authLogDao.insert(
+            AuthLogDao.Record(randomService.id(), userId, formerMail, AuthLogType.formerMail, now))
     }
 
     fun hashPassword(password: PlainStringPassword): HashedPassword {
