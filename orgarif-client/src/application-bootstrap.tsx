@@ -20,7 +20,7 @@ const muiTheme = createTheme({
     // htmlFontSize: fonts.baseSize
   }
 });
-// TODO ok to use ! ?
+// TODO[tmpl] ok to use ! ?
 const root = createRoot(document.getElementById('root')!);
 root.render(
   <RecoilRoot>

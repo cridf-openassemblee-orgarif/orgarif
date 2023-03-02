@@ -3,7 +3,7 @@
 /build
 /jooq-lib/build
 /orgarif-client/.gradle
-# TODO clean when build tool chosen
+# TODO[tmpl] clean when build tool chosen
 /orgarif-client/.yarn
 /orgarif-client/build
 /orgarif-server/build

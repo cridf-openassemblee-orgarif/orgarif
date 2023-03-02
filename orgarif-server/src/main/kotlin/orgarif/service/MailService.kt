@@ -70,8 +70,7 @@ class MailService(
 
     private data class MailJetMessages(val Messages: List<MailJetMessage>)
 
-    // TODO[tmpl][mail] [doc] this informations is here to display the environnement which sent the
-    // mail in mailjet ui
+    // TODO[tmpl][mail][doc] this informations is here to display the environnement which sent the mail in mailjet ui
     private data class MailJetEventPayload(val env: String)
 
     // TODO[tmpl][mail] check this... + uppercase first letter handled here ?
