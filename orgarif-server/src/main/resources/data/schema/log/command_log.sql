@@ -3,6 +3,7 @@ CREATE TABLE command_log
     id UUID PRIMARY KEY,
 -- [doc] no foreign key because can be absent from app_user if a register command failed
     user_id UUID,
+    affected_user_id UUID,
     deployment_log_id UUID NOT NULL,
     command_class VARCHAR(255) NOT NULL,
     json_command TEXT NOT NULL,
