@@ -8,8 +8,9 @@ import org.json.JSONObject
 
 // TODO[tmpl] final command for prettier
 data class KtToTsConfiguration(
-    val destinationSrc: Path,
-    val generatedDirectory: String,
+    val clientDirectory: Path,
+    val srcDirectory: Path,
+    val generatedDirectory: Path,
     // for classes from the jdk that will be "emulated" in js
     // => Duration, LocalDate, etc...
     // if missing, print a warning
@@ -27,11 +28,17 @@ data class KtToTsConfiguration(
     val debugFile: File?
 ) {
     companion object {
-        fun init(options: Map<String, String>): KtToTsConfiguration =
-            KtToTsConfiguration(
-                destinationSrc = options["ktToTs:destinationSrc"]?.let { Paths.get(it) }
-                        ?: throw IllegalArgumentException(),
-                generatedDirectory = options["ktToTs:generatedDirectory"] ?: "generated",
+        fun init(options: Map<String, String>): KtToTsConfiguration {
+            val destination =
+                options["ktToTs:clientDirectory"]?.let { Paths.get(it) }
+                    ?: throw IllegalArgumentException()
+            val srcDirectory = destination.resolve(options["ktToTs:srcDirectory"] ?: "src")
+            val generatedDirectory =
+                destination.resolve(options["ktToTs:generatedDirectory"] ?: "src/generated")
+            return KtToTsConfiguration(
+                destination,
+                srcDirectory,
+                generatedDirectory,
                 mappings =
                     options["ktToTs:mappings"]?.let {
                         Paths.get(it).readText().let {
@@ -46,5 +53,6 @@ data class KtToTsConfiguration(
                 // TODO[tmpl]
                 interfaceAsTypes = emptySet(),
                 debugFile = options["ktToTs:debugFile"]?.let { Paths.get(it).toFile() })
+        }
     }
 }

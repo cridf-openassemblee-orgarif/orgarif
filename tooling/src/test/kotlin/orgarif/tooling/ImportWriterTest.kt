@@ -10,7 +10,14 @@ internal class ImportWriterTest {
 
     val testConfiguration =
         KtToTsConfiguration(
-            Paths.get("/root"), "generated", emptyMap(), emptySet(), null, emptySet(), null)
+            Paths.get("/client"),
+            Paths.get("/client/src"),
+            Paths.get("/client/generated"),
+            emptyMap(),
+            emptySet(),
+            null,
+            emptySet(),
+            null)
 
     @Test
     fun `check relative path in same path`() {

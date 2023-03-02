@@ -6,11 +6,11 @@ import kotlin.io.path.pathString
 object ImportWriter {
 
     fun fileToPath(ksFile: KSFile, conf: KtToTsConfiguration) =
-        conf.generatedDirectory +
-            "/" +
-            ksFile.packageName.asString().split(".").drop(1).joinToString(separator = "/") +
-            "/" +
-            ksFile.fileName
+        conf.srcDirectory
+            .resolve(ksFile.packageName.asString().split(".").drop(1).joinToString(separator = "/"))
+            .resolve(ksFile.fileName)
+            .toFile()
+            .absolutePath
 
     fun relativePath(filePath: String, originPath: String, conf: KtToTsConfiguration): String {
         val f = cleanPath(filePath, conf)
@@ -56,8 +56,8 @@ object ImportWriter {
     fun cleanPath(path: String, conf: KtToTsConfiguration) =
         path
             .let {
-                if (it.startsWith(conf.destinationSrc.pathString))
-                    it.substring(conf.destinationSrc.pathString.length)
+                if (it.startsWith(conf.clientDirectory.pathString))
+                    it.substring(conf.clientDirectory.pathString.length)
                 else it
             }
             .let {
