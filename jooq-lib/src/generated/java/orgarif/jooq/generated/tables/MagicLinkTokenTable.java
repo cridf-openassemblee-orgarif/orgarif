@@ -75,9 +75,9 @@ public class MagicLinkTokenTable extends TableImpl<MagicLinkTokenRecord> {
     public final TableField<MagicLinkTokenRecord, Instant> CREATION_DATE = createField(DSL.name("creation_date"), SQLDataType.TIMESTAMPWITHTIMEZONE(6).nullable(false), this, "", new TimestampWithTimeZoneToInstantConverter());
 
     /**
-     * The column <code>public.magic_link_token.last_update_date</code>.
+     * The column <code>public.magic_link_token.last_update</code>.
      */
-    public final TableField<MagicLinkTokenRecord, Instant> LAST_UPDATE_DATE = createField(DSL.name("last_update_date"), SQLDataType.TIMESTAMPWITHTIMEZONE(6).nullable(false), this, "", new TimestampWithTimeZoneToInstantConverter());
+    public final TableField<MagicLinkTokenRecord, Instant> LAST_UPDATE = createField(DSL.name("last_update"), SQLDataType.TIMESTAMPWITHTIMEZONE(6).nullable(false), this, "", new TimestampWithTimeZoneToInstantConverter());
 
     private MagicLinkTokenTable(Name alias, Table<MagicLinkTokenRecord> aliased) {
         this(alias, aliased, null);

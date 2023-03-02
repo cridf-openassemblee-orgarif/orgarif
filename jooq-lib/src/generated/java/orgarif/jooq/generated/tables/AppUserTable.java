@@ -97,9 +97,9 @@ public class AppUserTable extends TableImpl<AppUserRecord> {
     public final TableField<AppUserRecord, Instant> SIGNUP_DATE = createField(DSL.name("signup_date"), SQLDataType.TIMESTAMPWITHTIMEZONE(6).nullable(false), this, "", new TimestampWithTimeZoneToInstantConverter());
 
     /**
-     * The column <code>public.app_user.last_update_date</code>.
+     * The column <code>public.app_user.last_update</code>.
      */
-    public final TableField<AppUserRecord, Instant> LAST_UPDATE_DATE = createField(DSL.name("last_update_date"), SQLDataType.TIMESTAMPWITHTIMEZONE(6).nullable(false), this, "", new TimestampWithTimeZoneToInstantConverter());
+    public final TableField<AppUserRecord, Instant> LAST_UPDATE = createField(DSL.name("last_update"), SQLDataType.TIMESTAMPWITHTIMEZONE(6).nullable(false), this, "", new TimestampWithTimeZoneToInstantConverter());
 
     private AppUserTable(Name alias, Table<AppUserRecord> aliased) {
         this(alias, aliased, null);

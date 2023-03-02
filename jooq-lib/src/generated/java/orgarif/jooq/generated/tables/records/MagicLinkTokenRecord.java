@@ -87,17 +87,17 @@ public class MagicLinkTokenRecord extends UpdatableRecordImpl<MagicLinkTokenReco
     }
 
     /**
-     * Setter for <code>public.magic_link_token.last_update_date</code>.
+     * Setter for <code>public.magic_link_token.last_update</code>.
      */
-    public void setLastUpdateDate(@Nonnull Instant value) {
+    public void setLastUpdate(@Nonnull Instant value) {
         set(4, value);
     }
 
     /**
-     * Getter for <code>public.magic_link_token.last_update_date</code>.
+     * Getter for <code>public.magic_link_token.last_update</code>.
      */
     @Nonnull
-    public Instant getLastUpdateDate() {
+    public Instant getLastUpdate() {
         return (Instant) get(4);
     }
 
@@ -154,7 +154,7 @@ public class MagicLinkTokenRecord extends UpdatableRecordImpl<MagicLinkTokenReco
     @Override
     @Nonnull
     public Field<Instant> field5() {
-        return MagicLinkTokenTable.MAGIC_LINK_TOKEN.LAST_UPDATE_DATE;
+        return MagicLinkTokenTable.MAGIC_LINK_TOKEN.LAST_UPDATE;
     }
 
     @Override
@@ -184,7 +184,7 @@ public class MagicLinkTokenRecord extends UpdatableRecordImpl<MagicLinkTokenReco
     @Override
     @Nonnull
     public Instant component5() {
-        return getLastUpdateDate();
+        return getLastUpdate();
     }
 
     @Override
@@ -214,7 +214,7 @@ public class MagicLinkTokenRecord extends UpdatableRecordImpl<MagicLinkTokenReco
     @Override
     @Nonnull
     public Instant value5() {
-        return getLastUpdateDate();
+        return getLastUpdate();
     }
 
     @Override
@@ -248,7 +248,7 @@ public class MagicLinkTokenRecord extends UpdatableRecordImpl<MagicLinkTokenReco
     @Override
     @Nonnull
     public MagicLinkTokenRecord value5(@Nonnull Instant value) {
-        setLastUpdateDate(value);
+        setLastUpdate(value);
         return this;
     }
 
@@ -277,13 +277,13 @@ public class MagicLinkTokenRecord extends UpdatableRecordImpl<MagicLinkTokenReco
     /**
      * Create a detached, initialised MagicLinkTokenRecord
      */
-    public MagicLinkTokenRecord(@Nonnull String token, @Nonnull UUID userId, @Nonnull Boolean validity, @Nonnull Instant creationDate, @Nonnull Instant lastUpdateDate) {
+    public MagicLinkTokenRecord(@Nonnull String token, @Nonnull UUID userId, @Nonnull Boolean validity, @Nonnull Instant creationDate, @Nonnull Instant lastUpdate) {
         super(MagicLinkTokenTable.MAGIC_LINK_TOKEN);
 
         setToken(token);
         setUserId(userId);
         setValidity(validity);
         setCreationDate(creationDate);
-        setLastUpdateDate(lastUpdateDate);
+        setLastUpdate(lastUpdate);
     }
 }

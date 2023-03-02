@@ -148,17 +148,17 @@ public class AppUserRecord extends UpdatableRecordImpl<AppUserRecord> implements
     }
 
     /**
-     * Setter for <code>public.app_user.last_update_date</code>.
+     * Setter for <code>public.app_user.last_update</code>.
      */
-    public void setLastUpdateDate(@Nonnull Instant value) {
+    public void setLastUpdate(@Nonnull Instant value) {
         set(8, value);
     }
 
     /**
-     * Getter for <code>public.app_user.last_update_date</code>.
+     * Getter for <code>public.app_user.last_update</code>.
      */
     @Nonnull
-    public Instant getLastUpdateDate() {
+    public Instant getLastUpdate() {
         return (Instant) get(8);
     }
 
@@ -239,7 +239,7 @@ public class AppUserRecord extends UpdatableRecordImpl<AppUserRecord> implements
     @Override
     @Nonnull
     public Field<Instant> field9() {
-        return AppUserTable.APP_USER.LAST_UPDATE_DATE;
+        return AppUserTable.APP_USER.LAST_UPDATE;
     }
 
     @Override
@@ -293,7 +293,7 @@ public class AppUserRecord extends UpdatableRecordImpl<AppUserRecord> implements
     @Override
     @Nonnull
     public Instant component9() {
-        return getLastUpdateDate();
+        return getLastUpdate();
     }
 
     @Override
@@ -347,7 +347,7 @@ public class AppUserRecord extends UpdatableRecordImpl<AppUserRecord> implements
     @Override
     @Nonnull
     public Instant value9() {
-        return getLastUpdateDate();
+        return getLastUpdate();
     }
 
     @Override
@@ -409,7 +409,7 @@ public class AppUserRecord extends UpdatableRecordImpl<AppUserRecord> implements
     @Override
     @Nonnull
     public AppUserRecord value9(@Nonnull Instant value) {
-        setLastUpdateDate(value);
+        setLastUpdate(value);
         return this;
     }
 
@@ -442,7 +442,7 @@ public class AppUserRecord extends UpdatableRecordImpl<AppUserRecord> implements
     /**
      * Create a detached, initialised AppUserRecord
      */
-    public AppUserRecord(@Nonnull UUID id, @Nonnull String mail, @Nonnull String password, @Nullable String username, @Nonnull String displayName, @Nonnull String language, @Nonnull String[] roles, @Nonnull Instant signupDate, @Nonnull Instant lastUpdateDate) {
+    public AppUserRecord(@Nonnull UUID id, @Nonnull String mail, @Nonnull String password, @Nullable String username, @Nonnull String displayName, @Nonnull String language, @Nonnull String[] roles, @Nonnull Instant signupDate, @Nonnull Instant lastUpdate) {
         super(AppUserTable.APP_USER);
 
         setId(id);
@@ -453,6 +453,6 @@ public class AppUserRecord extends UpdatableRecordImpl<AppUserRecord> implements
         setLanguage(language);
         setRoles(roles);
         setSignupDate(signupDate);
-        setLastUpdateDate(lastUpdateDate);
+        setLastUpdate(lastUpdate);
     }
 }
