@@ -9,8 +9,8 @@ import org.springframework.stereotype.Service
 
 @Service
 class PreDestroySchedulerService(
-    val deploymentLogDao: DeploymentLogDao,
-    val dateService: DateService
+    private val deploymentLogDao: DeploymentLogDao,
+    private val dateService: DateService
 ) {
 
     private val logger = KotlinLogging.logger {}

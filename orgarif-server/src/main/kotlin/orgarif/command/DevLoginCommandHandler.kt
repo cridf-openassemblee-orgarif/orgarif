@@ -9,8 +9,8 @@ import org.springframework.stereotype.Service
 
 @Service
 class DevLoginCommandHandler(
-    val devInitialDataInjectorService: DevInitialDataInjectorService,
-    val loginCommandHandler: LoginCommandHandler,
+    private val devInitialDataInjectorService: DevInitialDataInjectorService,
+    private val loginCommandHandler: LoginCommandHandler,
 ) : CommandHandler<DevLoginCommand, DevLoginCommandResponse> {
 
     override fun handle(

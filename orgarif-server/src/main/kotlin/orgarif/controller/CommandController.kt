@@ -31,16 +31,16 @@ import org.springframework.web.bind.annotation.RestController
 
 @RestController
 class CommandController(
-    val commandLogDao: CommandLogDao,
-    val userDao: UserDao,
-    val dateService: DateService,
-    val randomService: RandomService,
-    val idLogService: IdLogService,
-    val userSessionService: UserSessionService,
-    val devLoginCommandHandler: DevLoginCommandHandler,
-    val loginCommandHandler: LoginCommandHandler,
-    val registerCommandHandler: RegisterCommandHandler,
-    val transactionIsolationService: TransactionIsolationService,
+    private val commandLogDao: CommandLogDao,
+    private val userDao: UserDao,
+    private val dateService: DateService,
+    private val randomService: RandomService,
+    private val idLogService: IdLogService,
+    private val userSessionService: UserSessionService,
+    private val devLoginCommandHandler: DevLoginCommandHandler,
+    private val loginCommandHandler: LoginCommandHandler,
+    private val registerCommandHandler: RegisterCommandHandler,
+    private val transactionIsolationService: TransactionIsolationService,
 ) {
 
     private val logger = KotlinLogging.logger {}

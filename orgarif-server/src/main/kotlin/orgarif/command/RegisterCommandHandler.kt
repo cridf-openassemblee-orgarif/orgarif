@@ -13,9 +13,9 @@ import org.springframework.stereotype.Service
 
 @Service
 class RegisterCommandHandler(
-    val userService: UserService,
-    val userSessionService: UserSessionService,
-    val localeService: LocaleService
+    private val userService: UserService,
+    private val userSessionService: UserSessionService,
+    private val localeService: LocaleService
 ) : CommandHandler<RegisterCommand, RegisterCommandResponse> {
 
     companion object {

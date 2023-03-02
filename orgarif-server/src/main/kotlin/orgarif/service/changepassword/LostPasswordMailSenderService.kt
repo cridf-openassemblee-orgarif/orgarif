@@ -17,10 +17,10 @@ import org.springframework.stereotype.Service
 
 @Service
 class LostPasswordMailSenderService(
-    @Value("\${app.url}") val appUrl: String,
-    val httpService: HttpService,
-    val magicLinkTokenService: MagicLinkTokenService,
-    val mailService: MailService,
+    @Value("\${app.url}") private val appUrl: String,
+    private val httpService: HttpService,
+    private val magicLinkTokenService: MagicLinkTokenService,
+    private val mailService: MailService,
 ) {
 
     private val logger = KotlinLogging.logger {}

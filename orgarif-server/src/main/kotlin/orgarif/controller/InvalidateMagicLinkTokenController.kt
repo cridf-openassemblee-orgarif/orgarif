@@ -9,7 +9,7 @@ import org.springframework.web.bind.annotation.GetMapping
 import org.springframework.web.servlet.ModelAndView
 
 @Controller
-class InvalidateMagicLinkTokenController(val magicLinkTokenService: MagicLinkTokenService) {
+class InvalidateMagicLinkTokenController(private val magicLinkTokenService: MagicLinkTokenService) {
 
     private val logger = KotlinLogging.logger {}
 

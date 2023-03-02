@@ -5,7 +5,7 @@ import orgarif.repository.user.UserDao
 import org.springframework.stereotype.Service
 
 @Service
-class GetUsersListQueryHandler(val userDao: UserDao) :
+class GetUsersListQueryHandler(private val userDao: UserDao) :
     QueryHandler.Handler<GetUsersListQuery, GetUsersListQueryResponse>() {
 
     override fun handle(query: GetUsersListQuery) =

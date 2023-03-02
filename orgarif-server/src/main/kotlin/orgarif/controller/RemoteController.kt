@@ -24,14 +24,14 @@ import org.springframework.web.bind.annotation.RestController
 @RestController
 @RequestMapping(remoteRoute)
 class RemoteController(
-    @Value("\${remote-controller.expected-secu}") val expectedSecu: String,
-    val jooq: DSLContext,
-    val userDao: UserDao,
-    val userSessionLogDao: UserSessionLogDao,
-    val sessionRepository: SafeSessionRepository,
-    val userSessionService: UserSessionService,
-    val transactionIsolationService: TransactionIsolationService,
-    val dateService: DateService
+    @Value("\${remote-controller.expected-secu}") private val expectedSecu: String,
+    private val jooq: DSLContext,
+    private val userDao: UserDao,
+    private val userSessionLogDao: UserSessionLogDao,
+    private val sessionRepository: SafeSessionRepository,
+    private val userSessionService: UserSessionService,
+    private val transactionIsolationService: TransactionIsolationService,
+    private val dateService: DateService
 ) {
 
     val logger = KotlinLogging.logger {}

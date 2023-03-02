@@ -9,7 +9,7 @@ import org.jooq.DSLContext
 import org.springframework.stereotype.Repository
 
 @Repository
-class MagicLinkTokenDao(val jooq: DSLContext) {
+class MagicLinkTokenDao(private val jooq: DSLContext) {
 
     data class Record(
         val token: String,

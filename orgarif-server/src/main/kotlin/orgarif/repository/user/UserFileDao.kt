@@ -13,7 +13,7 @@ import org.jooq.TableField
 import org.springframework.stereotype.Repository
 
 @Repository
-class UserFileDao(val jooq: DSLContext) {
+class UserFileDao(private val jooq: DSLContext) {
 
     enum class UserFileField(val field: TableField<UserFileRecord, *>, val isDataField: Boolean) {
         Id(USER_FILE.ID, false),

@@ -6,7 +6,7 @@ import java.util.Locale
 import org.springframework.stereotype.Service
 
 @Service
-class LocaleService(val notificationService: NotificationService) {
+class LocaleService(private val notificationService: NotificationService) {
 
     fun selectLanguage(locales: Enumeration<Locale>?): Language {
         if (locales == null) {

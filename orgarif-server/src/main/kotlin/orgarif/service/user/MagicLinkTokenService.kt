@@ -15,10 +15,10 @@ import org.springframework.stereotype.Service
 
 @Service
 class MagicLinkTokenService(
-    val magicLinkTokenDao: MagicLinkTokenDao,
-    val userSessionService: UserSessionService,
-    val userDao: UserDao,
-    val dateService: DateService
+    private val magicLinkTokenDao: MagicLinkTokenDao,
+    private val userSessionService: UserSessionService,
+    private val userDao: UserDao,
+    private val dateService: DateService
 ) {
 
     private val logger = KotlinLogging.logger {}

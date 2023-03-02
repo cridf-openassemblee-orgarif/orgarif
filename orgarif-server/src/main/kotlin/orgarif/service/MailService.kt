@@ -24,14 +24,14 @@ import org.springframework.stereotype.Service
 
 @Service
 class MailService(
-    @Value("\${mailjet.url}") val url: String,
-    @Value("\${mailjet.api-key}") val apiKey: String,
-    @Value("\${mailjet.secret-key}") val secretKey: String,
-    @Value("\${mail.devLogSender}") val devLogSenderMail: String,
-    val httpService: HttpService,
-    val mailLogDao: MailLogDao,
-    val dateService: DateService,
-    val randomService: RandomService
+    @Value("\${mailjet.url}") private val url: String,
+    @Value("\${mailjet.api-key}") private val apiKey: String,
+    @Value("\${mailjet.secret-key}") private val secretKey: String,
+    @Value("\${mail.devLogSender}") private val devLogSenderMail: String,
+    private val httpService: HttpService,
+    private val mailLogDao: MailLogDao,
+    private val dateService: DateService,
+    private val randomService: RandomService
 ) {
 
     private val logger = KotlinLogging.logger {}

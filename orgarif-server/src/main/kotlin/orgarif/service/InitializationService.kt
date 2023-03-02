@@ -14,18 +14,17 @@ import org.springframework.stereotype.Service
 
 @Service
 class InitializationService(
-    @Value("\${database.host}") val databaseHost: String,
-    @Value("\${database.port}") val databasePort: Int,
-    @Value("\${database.name}") val databaseName: String,
-    @Value("\${database.user}") val databaseUser: String,
-    @Value("\${database.password}") val databasePassword: String,
-    @Value("\${insertInitialData}") val insertInitialData: Boolean,
     dataSource: DataSource,
     devInitialDataInjectorService: DevInitialDataInjectorService,
     deploymentLogDao: DeploymentLogDao,
-    val randomService: RandomService,
-    val dateService: DateService,
-    val environment: Environment,
+    @Value("\${database.host}") private val databaseHost: String,
+    @Value("\${database.port}") private val databasePort: Int,
+    @Value("\${database.name}") private val databaseName: String,
+    @Value("\${database.user}") private val databaseUser: String,
+    @Value("\${database.password}") private val databasePassword: String,
+    @Value("\${insertInitialData}") private val insertInitialData: Boolean,
+    private val dateService: DateService,
+    private val environment: Environment,
 ) {
 
     private val logger = KotlinLogging.logger {}

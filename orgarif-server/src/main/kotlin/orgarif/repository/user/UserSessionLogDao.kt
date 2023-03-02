@@ -12,7 +12,7 @@ import org.springframework.stereotype.Repository
 
 // TODO[tmpl][user] : try to keep Spring id
 @Repository
-class UserSessionLogDao(val jooq: DSLContext) {
+class UserSessionLogDao(private val jooq: DSLContext) {
 
     data class Record(
         val id: UserSessionId,

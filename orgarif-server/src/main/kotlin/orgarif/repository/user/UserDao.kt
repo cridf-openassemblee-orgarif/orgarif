@@ -16,7 +16,7 @@ import org.springframework.dao.DuplicateKeyException
 import org.springframework.stereotype.Repository
 
 @Repository
-class UserDao(val jooq: DSLContext) {
+class UserDao(private val jooq: DSLContext) {
 
     data class Record(
         val id: UserId,

@@ -24,11 +24,11 @@ import org.springframework.web.servlet.ModelAndView
 
 @Controller
 class IndexController(
-    @Value("\${assets.webpackDevPort}") val assetsWebpackDevPort: String,
-    @Value("\${assets.useBuildFiles}") val assetsUseBuildFiles: Boolean,
-    val userDao: UserDao,
-    val magicLinkTokenService: MagicLinkTokenService,
-    val userSessionService: UserSessionService
+    @Value("\${assets.webpackDevPort}") private val assetsWebpackDevPort: String,
+    @Value("\${assets.useBuildFiles}") private val assetsUseBuildFiles: Boolean,
+    private val userDao: UserDao,
+    private val magicLinkTokenService: MagicLinkTokenService,
+    private val userSessionService: UserSessionService
 ) {
 
     companion object {

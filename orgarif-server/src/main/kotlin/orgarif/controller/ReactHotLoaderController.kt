@@ -19,9 +19,9 @@ import org.springframework.web.bind.annotation.RestController
 // [doc] so it won't run on prod
 @ConditionalOnExpression("!\${assets.useBuildFiles}")
 class ReactHotLoaderController(
-    @Value("\${assets.webpackDevPort}") val assetsWebpackDevPort: String,
-    @Value("\${assets.webpackDevHost}") val assetsWebpackDevHost: String,
-    val httpService: HttpService
+    @Value("\${assets.webpackDevPort}") private val assetsWebpackDevPort: String,
+    @Value("\${assets.webpackDevHost}") private val assetsWebpackDevHost: String,
+    private val httpService: HttpService
 ) {
 
     val logger = KotlinLogging.logger {}

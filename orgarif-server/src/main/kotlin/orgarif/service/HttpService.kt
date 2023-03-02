@@ -13,7 +13,7 @@ import org.springframework.http.HttpStatus
 import org.springframework.stereotype.Service
 
 @Service
-class HttpService(val okHttpClient: OkHttpClient) {
+class HttpService(private val okHttpClient: OkHttpClient) {
 
     companion object {
         val jsonMediaType = "application/json; charset=utf-8".toMediaType()

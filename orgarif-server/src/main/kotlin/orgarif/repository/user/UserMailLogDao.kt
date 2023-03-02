@@ -10,7 +10,7 @@ import org.jooq.DSLContext
 import org.springframework.stereotype.Repository
 
 @Repository
-class UserMailLogDao(val jooq: DSLContext) {
+class UserMailLogDao(private val jooq: DSLContext) {
 
     data class Record(
         val id: UserMailLogId,

@@ -23,11 +23,11 @@ import org.springframework.stereotype.Service
 
 @Service
 class UserSessionService(
-    val cookieCsrfTokenRepository: CookieCsrfTokenRepository,
-    val userDao: UserDao,
-    val userSessionLogDao: UserSessionLogDao,
-    val dateService: DateService,
-    val randomService: RandomService
+    private val cookieCsrfTokenRepository: CookieCsrfTokenRepository,
+    private val userDao: UserDao,
+    private val userSessionLogDao: UserSessionLogDao,
+    private val dateService: DateService,
+    private val randomService: RandomService
 ) {
 
     val logger = KotlinLogging.logger {}

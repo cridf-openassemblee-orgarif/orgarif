@@ -18,12 +18,12 @@ import org.springframework.stereotype.Service
 
 @Service
 class UserService(
-    val userDao: UserDao,
-    val userMailLogDao: UserMailLogDao,
-    val dateService: DateService,
-    val randomService: RandomService,
-    val notificationService: NotificationService,
-    val passwordEncoder: PasswordEncoder
+    private val userDao: UserDao,
+    private val userMailLogDao: UserMailLogDao,
+    private val dateService: DateService,
+    private val randomService: RandomService,
+    private val notificationService: NotificationService,
+    private val passwordEncoder: PasswordEncoder
 ) {
 
     private val logger = KotlinLogging.logger {}

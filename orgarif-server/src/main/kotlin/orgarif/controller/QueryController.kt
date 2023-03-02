@@ -12,12 +12,12 @@ import org.springframework.web.bind.annotation.RestController
 
 @RestController
 class QueryController(
-    val userDao: UserDao,
-    val userSessionService: UserSessionService,
-    val getUserInfosQueryHandler: GetUserInfosQueryHandler,
-    val getUsersListQueryHandler: GetUsersListQueryHandler,
-    val isMailAlreadyTakenQueryHandler: IsMailAlreadyTakenQueryHandler,
-    val transactionIsolationService: TransactionIsolationService,
+    private val userDao: UserDao,
+    private val userSessionService: UserSessionService,
+    private val getUserInfosQueryHandler: GetUserInfosQueryHandler,
+    private val getUsersListQueryHandler: GetUsersListQueryHandler,
+    private val isMailAlreadyTakenQueryHandler: IsMailAlreadyTakenQueryHandler,
+    private val transactionIsolationService: TransactionIsolationService,
 ) {
 
     @GetMapping("/query")

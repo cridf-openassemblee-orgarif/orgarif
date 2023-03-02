@@ -12,9 +12,9 @@ import org.springframework.stereotype.Service
 
 @Service
 class LoginCommandHandler(
-    val userDao: UserDao,
-    val userService: UserService,
-    val userSessionService: UserSessionService
+    private val userDao: UserDao,
+    private val userService: UserService,
+    private val userSessionService: UserSessionService
 ) : CommandHandler<LoginCommand, LoginCommandResponse> {
 
     override fun handle(

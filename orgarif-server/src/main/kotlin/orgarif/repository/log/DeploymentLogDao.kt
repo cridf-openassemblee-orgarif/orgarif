@@ -9,7 +9,7 @@ import org.jooq.DSLContext
 import org.springframework.stereotype.Repository
 
 @Repository
-class DeploymentLogDao(val jooq: DSLContext) {
+class DeploymentLogDao(private val jooq: DSLContext) {
 
     // is better than a simple log in a distributed environment
     data class Record(

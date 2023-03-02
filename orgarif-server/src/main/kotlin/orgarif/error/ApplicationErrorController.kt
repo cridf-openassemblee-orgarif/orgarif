@@ -16,9 +16,9 @@ import org.springframework.web.servlet.ModelAndView
 
 @RestController
 class ApplicationErrorController(
-    val errorAttributes: ErrorAttributes,
-    val randomService: RandomService,
-    val applicationExceptionHandler: ApplicationExceptionHandler
+    private val errorAttributes: ErrorAttributes,
+    private val randomService: RandomService,
+    private val applicationExceptionHandler: ApplicationExceptionHandler
 ) : ErrorController {
 
     private val logger = KotlinLogging.logger {}

@@ -13,8 +13,8 @@ import org.springframework.security.web.csrf.CookieCsrfTokenRepository
 
 @Configuration
 class SecurityConfiguration(
-    @Value("\${app.url}") val appUrl: String,
-    val cookieCsrfTokenRepository: CookieCsrfTokenRepository
+    @Value("\${app.url}") private val appUrl: String,
+    private val cookieCsrfTokenRepository: CookieCsrfTokenRepository
 ) {
 
     val logger = KotlinLogging.logger {}

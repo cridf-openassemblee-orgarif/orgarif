@@ -13,7 +13,7 @@ import org.springframework.web.bind.annotation.GetMapping
 import org.springframework.web.bind.annotation.PathVariable
 
 @Controller
-class UserFileController(val userFileDao: UserFileDao) {
+class UserFileController(private val userFileDao: UserFileDao) {
 
     @GetMapping("/user-file/{id}")
     fun getUserFile(@PathVariable id: String): ResponseEntity<ByteArray> {

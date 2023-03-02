@@ -24,9 +24,9 @@ import org.springframework.web.servlet.view.json.MappingJackson2JsonView
 
 @ControllerAdvice
 class ApplicationExceptionHandler(
-    val dateService: DateService,
-    val randomService: RandomService,
-    val userSessionService: UserSessionService
+    private val dateService: DateService,
+    private val randomService: RandomService,
+    private val userSessionService: UserSessionService
 ) {
 
     private val logger = KotlinLogging.logger {}
