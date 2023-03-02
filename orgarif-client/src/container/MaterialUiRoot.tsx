@@ -1,15 +1,15 @@
 /** @jsxImportSource @emotion/react */
-import { Global } from '@emotion/react';
-import * as React from 'react';
-import { PropsWithChildren } from 'react';
 import { globalStyles } from '../styles/common-styles';
-import StylesProvider from '@mui/styles/StylesProvider';
+import { Global } from '@emotion/react';
 import {
   createTheme,
   StyledEngineProvider,
   ThemeProvider
 } from '@mui/material';
+import StylesProvider from '@mui/styles/StylesProvider';
 import { SnackbarProvider } from 'notistack';
+import * as React from 'react';
+import { PropsWithChildren } from 'react';
 
 const muiTheme = createTheme({
   typography: {

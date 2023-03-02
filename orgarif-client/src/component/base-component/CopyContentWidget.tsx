@@ -1,10 +1,10 @@
 /** @jsxImportSource @emotion/react */
-import { useRef, useState } from 'react';
-import { css } from '@emotion/react';
-import { FileCopy } from '@mui/icons-material';
 import { clientUid } from '../../utils';
 import { pipe } from '../../utils/Pipe';
 import { NominalString } from '../../utils/nominal-class';
+import { css } from '@emotion/react';
+import { FileCopy } from '@mui/icons-material';
+import { useRef, useState } from 'react';
 
 const uuidClass = 'uuidClass-' + clientUid();
 const copyContainerClass = 'copyContainer-' + clientUid();

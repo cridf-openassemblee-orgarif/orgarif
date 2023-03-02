@@ -1,17 +1,17 @@
 /** @jsxImportSource @emotion/react */
+import { appContext } from '../ApplicationContext';
+import { ControlledPasswordInput } from '../component/base-component/ControlledPasswordInput';
+import { ControlledTextInput } from '../component/base-component/ControlledTextInput';
+import { LoadingStateButton } from '../component/base-component/LoadingButton';
+import { PlainStringPassword } from '../generated/domain/security';
+import { IsMailAlreadyTakenQueryResponse } from '../generated/query/queries';
+import { LoadingState } from '../interfaces';
+import { colors } from '../styles/vars';
+import { asNominalString } from '../utils/nominal-class';
 import { css } from '@emotion/react';
 import * as React from 'react';
 import { ChangeEvent, useState } from 'react';
-import { appContext } from '../ApplicationContext';
 import { useForm } from 'react-hook-form';
-import { ControlledTextInput } from '../component/base-component/ControlledTextInput';
-import { colors } from '../styles/vars';
-import { ControlledPasswordInput } from '../component/base-component/ControlledPasswordInput';
-import { PlainStringPassword } from '../generated/domain/security';
-import { asNominalString } from '../utils/nominal-class';
-import { LoadingState } from '../interfaces';
-import { LoadingStateButton } from '../component/base-component/LoadingButton';
-import { IsMailAlreadyTakenQueryResponse } from '../generated/query/queries';
 
 export interface RegisterFormInput {
   mail: string;

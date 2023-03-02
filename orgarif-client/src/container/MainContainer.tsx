@@ -1,8 +1,8 @@
 /** @jsxImportSource @emotion/react */
+import { Menu } from './Menu';
 import { css } from '@emotion/react';
 import * as React from 'react';
 import { PropsWithChildren } from 'react';
-import { Menu } from './Menu';
 
 export const MainContainer = (props: PropsWithChildren<{}>) => (
   <div

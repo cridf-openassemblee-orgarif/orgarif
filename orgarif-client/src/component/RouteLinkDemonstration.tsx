@@ -1,8 +1,8 @@
 /** @jsxImportSource @emotion/react */
+import { MatchRouteLink, RouteLink } from '../routing/RouteLink';
+import { colors } from '../styles/vars';
 import { css } from '@emotion/react';
 import * as React from 'react';
-import { colors } from '../styles/vars';
-import { MatchRouteLink, RouteLink } from '../routing/RouteLink';
 
 const styles = {
   link: css`

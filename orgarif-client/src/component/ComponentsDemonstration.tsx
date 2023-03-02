@@ -1,13 +1,13 @@
 /** @jsxImportSource @emotion/react */
-import { css } from '@emotion/react';
-import * as React from 'react';
-import { useState } from 'react';
-import { Add } from '@mui/icons-material';
+import { LoadingState } from '../interfaces';
 import {
   LoadingButton,
   LoadingStateButton
 } from './base-component/LoadingButton';
-import { LoadingState } from '../interfaces';
+import { css } from '@emotion/react';
+import { Add } from '@mui/icons-material';
+import * as React from 'react';
+import { useState } from 'react';
 
 export const ComponentsDemonstration = () => {
   const [loading, setLoading] = useState<LoadingState>('Idle');

@@ -1,6 +1,6 @@
 /** @jsxImportSource @emotion/react */
-import { css } from '@emotion/react';
 import { fonts } from './vars';
+import { css } from '@emotion/react';
 
 export const globalStyles = css`
   *,

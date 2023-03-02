@@ -1,16 +1,16 @@
 /** @jsxImportSource @emotion/react */
-import { css } from '@emotion/react';
-import * as React from 'react';
-import { useState } from 'react';
-import { useRecoilState } from 'recoil';
 import { appContext } from '../ApplicationContext';
 import { MainContainer } from '../container/MainContainer';
 import { Errors } from '../errors';
 import { RegisterForm, RegisterFormInput } from '../form/RegisterForm';
-import { state } from '../state/state';
-import { assertUnreachable } from '../utils';
 import { RegisterCommandResponse } from '../generated/command/commands';
 import { RegisterResult } from '../generated/domain/user';
+import { state } from '../state/state';
+import { assertUnreachable } from '../utils';
+import { css } from '@emotion/react';
+import * as React from 'react';
+import { useState } from 'react';
+import { useRecoilState } from 'recoil';
 
 export const RegisterView = () => {
   const [userInfos, setUserInfos] = useRecoilState(state.userInfos);

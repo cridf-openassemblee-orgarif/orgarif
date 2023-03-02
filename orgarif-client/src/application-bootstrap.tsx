@@ -1,9 +1,9 @@
-import * as React from 'react';
-import { RecoilRoot } from 'recoil';
+import { MaterialUiRoot } from './container/MaterialUiRoot';
 import { Root } from './container/Root';
 import { ApplicationRouter } from './routing/ApplicationRouter';
+import * as React from 'react';
 import { createRoot } from 'react-dom/client';
-import { MaterialUiRoot } from './container/MaterialUiRoot';
+import { RecoilRoot } from 'recoil';
 
 global.log = (logged: any) => console.log(logged);
 

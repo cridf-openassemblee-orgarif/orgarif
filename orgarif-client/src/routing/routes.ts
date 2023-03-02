@@ -1,11 +1,11 @@
-import { FunctionComponent } from 'react';
+import { UserId } from '../generated/domain/fmk-ids';
+import { Role } from '../generated/domain/user';
+import { Dict, dict, flatMap } from '../utils/nominal-class';
 import { LoginView } from '../view/LoginView';
 import { RegisterView } from '../view/RegisterView';
 import { RootView } from '../view/RootView';
 import { UsersManagementView } from '../view/UsersManagementView';
-import { Dict, dict, flatMap } from '../utils/nominal-class';
-import { Role } from '../generated/domain/user';
-import { UserId } from '../generated/domain/fmk-ids';
+import { FunctionComponent } from 'react';
 
 // TODO[tmpl] secure that "name" can't be a route parameter
 export type ApplicationRoute =

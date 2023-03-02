@@ -1,6 +1,10 @@
 /** @jsxImportSource @emotion/react */
-import * as React from 'react';
-import { useEffect, useState } from 'react';
+import { appContext } from '../../ApplicationContext';
+import { UserId } from '../../generated/domain/fmk-ids';
+import { UserInfos } from '../../generated/domain/user';
+import { GetUserInfosQueryResponse } from '../../generated/query/queries';
+import { LoadingState } from '../../interfaces';
+import { css } from '@emotion/react';
 import {
   Button,
   CircularProgress,
@@ -10,12 +14,8 @@ import {
   DialogContentText,
   DialogTitle
 } from '@mui/material';
-import { css } from '@emotion/react';
-import { UserId } from '../../generated/domain/fmk-ids';
-import { UserInfos } from '../../generated/domain/user';
-import { GetUserInfosQueryResponse } from '../../generated/query/queries';
-import { LoadingState } from '../../interfaces';
-import { appContext } from '../../ApplicationContext';
+import * as React from 'react';
+import { useEffect, useState } from 'react';
 
 export const EditUserDialog = (props: {
   close: () => void;

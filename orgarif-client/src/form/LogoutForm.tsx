@@ -1,11 +1,11 @@
 /** @jsxImportSource @emotion/react */
-import * as React from 'react';
-import { useState } from 'react';
 import { appContext } from '../ApplicationContext';
 import { LoadingStateButton } from '../component/base-component/LoadingButton';
 import { LoadingState } from '../interfaces';
-import { css } from '@emotion/react';
 import { colors } from '../styles/vars';
+import { css } from '@emotion/react';
+import * as React from 'react';
+import { useState } from 'react';
 
 const logoutPath = '/logout';
 

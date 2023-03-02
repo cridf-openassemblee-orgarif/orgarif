@@ -1,20 +1,20 @@
 /** @jsxImportSource @emotion/react */
-import * as React from 'react';
-import { useEffect, useState } from 'react';
-import { MainContainer } from '../container/MainContainer';
-import { css } from '@emotion/react';
-import { UserInfos } from '../generated/domain/user';
-import { LoadingState } from '../interfaces';
 import { appContext } from '../ApplicationContext';
+import { MainContainer } from '../container/MainContainer';
+import { UserInfos } from '../generated/domain/user';
 import { GetUsersQueryResponse } from '../generated/query/queries';
-import { UsersManagementTable } from './users-management/UsersManagementTable';
-import { useSnackbar } from 'notistack';
-import { EditUserDialog } from './users-management/EditUserDialog';
+import { LoadingState } from '../interfaces';
 import {
   UsersManagementRoute,
   UsersManagementUserRoute
 } from '../routing/routes';
 import { useGoTo } from '../routing/routing-utils';
+import { EditUserDialog } from './users-management/EditUserDialog';
+import { UsersManagementTable } from './users-management/UsersManagementTable';
+import { css } from '@emotion/react';
+import { useSnackbar } from 'notistack';
+import * as React from 'react';
+import { useEffect, useState } from 'react';
 
 export const UsersManagementView = (props: {
   route: UsersManagementRoute | UsersManagementUserRoute;

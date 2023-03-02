@@ -1,11 +1,10 @@
 /** @jsxImportSource @emotion/react */
-import * as React from 'react';
-import { FunctionComponent, useEffect } from 'react';
-import { useRecoilState } from 'recoil';
 import { state } from '../state/state';
 import { NotFoundView } from '../view/NotFoundView';
 import { ApplicationRoute, ApplicationRouteProps, routes } from './routes';
 import { useGoTo } from './routing-utils';
+import * as React from 'react';
+import { FunctionComponent, useEffect } from 'react';
 import {
   BrowserRouter,
   Route,
@@ -13,6 +12,7 @@ import {
   useLocation,
   useParams
 } from 'react-router-dom';
+import { useRecoilState } from 'recoil';
 
 const RouteComponent = (props: ApplicationRouteProps<any>) => {
   const [userInfos] = useRecoilState(state.userInfos);

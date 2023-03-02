@@ -1,6 +1,6 @@
+import { getValue } from '../utils/nominal-class';
 import { ApplicationRoute, routePathMap } from './routes';
 import { useLocation, useNavigate } from 'react-router-dom';
-import { getValue } from '../utils/nominal-class';
 
 export const buildPath = (route: ApplicationRoute) => {
   let path = getValue(routePathMap, route.name);

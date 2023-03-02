@@ -1,13 +1,13 @@
 /** @jsxImportSource @emotion/react */
+import { CopyContentWidget } from '../../component/base-component/CopyContentWidget';
+import { adminIdDisplayChars } from '../../domain/admin';
+import { UserInfos } from '../../generated/domain/user';
+import { LoadingState } from '../../interfaces';
+import { RouteLink } from '../../routing/RouteLink';
+import { colors } from '../../styles/vars';
+import { css } from '@emotion/react';
 import { DataGrid, GridColDef, GridRenderCellParams } from '@mui/x-data-grid';
 import * as React from 'react';
-import { css } from '@emotion/react';
-import { UserInfos } from '../../generated/domain/user';
-import { CopyContentWidget } from '../../component/base-component/CopyContentWidget';
-import { LoadingState } from '../../interfaces';
-import { colors } from '../../styles/vars';
-import { RouteLink } from '../../routing/RouteLink';
-import { adminIdDisplayChars } from '../../domain/admin';
 
 export const UsersManagementTable = (props: {
   users: UserInfos[];

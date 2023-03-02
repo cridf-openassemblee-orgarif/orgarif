@@ -1,11 +1,11 @@
 /** @jsxImportSource @emotion/react */
-import * as React from 'react';
-import { useRecoilState } from 'recoil';
+import { ComponentsDemonstration } from '../component/ComponentsDemonstration';
+import { RouteLinkDemonstration } from '../component/RouteLinkDemonstration';
 import { MainContainer } from '../container/MainContainer';
 import { RouteLink } from '../routing/RouteLink';
 import { state } from '../state/state';
-import { ComponentsDemonstration } from '../component/ComponentsDemonstration';
-import { RouteLinkDemonstration } from '../component/RouteLinkDemonstration';
+import * as React from 'react';
+import { useRecoilState } from 'recoil';
 
 export const RootView = () => {
   const [userInfos] = useRecoilState(state.userInfos);

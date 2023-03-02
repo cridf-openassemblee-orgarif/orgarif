@@ -1,8 +1,8 @@
 /** @jsxImportSource @emotion/react */
+import { cleanScrollBar } from '../common-classes';
 import { css } from '@emotion/react';
 import * as React from 'react';
 import { PropsWithChildren, useEffect, useState } from 'react';
-import { cleanScrollBar } from '../common-classes';
 
 // [doc] https://usehooks.com/useWindowSize/
 export const useWindowHeight = () => {
