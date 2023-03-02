@@ -100,6 +100,7 @@ export const UsersManagementTable = (props: {
       getRowId={(c: UserInfos) => c.id}
       columns={columns}
       loading={props.loading === 'loading'}
+      error={props.loading === 'error' ? true : undefined}
       autoPageSize={true}
       css={css`
         .MuiDataGrid-row {

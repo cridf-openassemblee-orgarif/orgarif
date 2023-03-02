@@ -11,6 +11,7 @@ import { Root } from './container/Root';
 import { ApplicationRouter } from './routing/ApplicationRouter';
 import { globalStyles } from './styles/common-styles';
 import { createRoot } from 'react-dom/client';
+import { SnackbarProvider } from 'notistack';
 
 global.log = (logged: any) => console.log(logged);
 
@@ -28,9 +29,11 @@ root.render(
     <StylesProvider injectFirst>
       <StyledEngineProvider injectFirst>
         <ThemeProvider theme={muiTheme}>
-          <Root>
-            <ApplicationRouter />
-          </Root>
+          <SnackbarProvider maxSnack={3}>
+            <Root>
+              <ApplicationRouter />
+            </Root>
+          </SnackbarProvider>
         </ThemeProvider>
       </StyledEngineProvider>
     </StylesProvider>

@@ -6,12 +6,12 @@ import { LoadingState } from '../../interfaces';
 import { UserInfos } from '../../generated/domain/user';
 import { appContext } from '../../ApplicationContext';
 import { GetUsersListQueryResponse } from '../../generated/query/queries';
-import { MainContainer } from '../../container/MainContainer';
-import { css } from '@emotion/react';
+import { useSnackbar } from 'notistack';
 
 export const UsersManagementIndexSubView = () => {
   const [users, setUsers] = useState<UserInfos[]>([]);
   const [loading, setLoading] = useState<LoadingState>('idle');
+  const { enqueueSnackbar } = useSnackbar();
   useEffect(() => {
     setLoading('loading');
     appContext
@@ -22,6 +22,12 @@ export const UsersManagementIndexSubView = () => {
       .then(r => {
         setUsers(r.users);
         setLoading('idle');
+      })
+      .catch(() => {
+        setLoading('error');
+        enqueueSnackbar('An error occured while retrieving data.', {
+          variant: 'error'
+        });
       });
   }, []);
   return <UsersManagementTable users={users} loading={loading} />;
