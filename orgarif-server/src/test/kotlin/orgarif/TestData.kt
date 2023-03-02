@@ -20,7 +20,6 @@ object TestData {
             displayName = "displayName",
             language = Language.en,
             roles = setOf(Role.user),
-            dirtyMail = "dirtyMail",
             signupDate = date,
             lastUpdateDate = date)
     }

@@ -38,7 +38,6 @@ class DevInitialDataInjectorService(
                     displayName = username,
                     language = Language.en,
                     roles = setOf(Role.user).let { if (admin) it + Role.admin else it },
-                    dirtyMail = null,
                     signupDate = now,
                     lastUpdateDate = now),
                 userService.hashPassword(PlainStringPassword(username)))

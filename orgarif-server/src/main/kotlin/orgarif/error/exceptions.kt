@@ -40,8 +40,8 @@ data class ItemIdNotFoundException(val id: OrgarifId<*>) : Exception("Not found 
 // TODO[tmpl] a message
 data class ItemNotFoundException(val itemClass: Class<*>, val reference: String) : Exception()
 
-// TODO[tmpl] ItemIdNotFoundException + ItemNotFoundException + OrgarifNotFoundException... it's a lot of
-// "not found"
+// TODO[tmpl] ItemIdNotFoundException + ItemNotFoundException + OrgarifNotFoundException...
+// it's a lot of "not found"
 class OrgarifNotFoundException : Exception()
 
 class OrgarifSerializationLocalDateException(val date: String) : Exception()

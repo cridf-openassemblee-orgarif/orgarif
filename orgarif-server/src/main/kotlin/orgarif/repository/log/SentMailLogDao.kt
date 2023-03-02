@@ -4,15 +4,15 @@ import orgarif.domain.DeploymentLogId
 import orgarif.domain.MailLogId
 import orgarif.domain.MailReference
 import orgarif.domain.UserId
-import orgarif.jooq.generated.Tables.MAIL_LOG
-import orgarif.jooq.generated.tables.records.MailLogRecord
+import orgarif.jooq.generated.Tables.SENT_MAIL_LOG
+import orgarif.jooq.generated.tables.records.SentMailLogRecord
 import orgarif.utils.toTypeId
 import java.time.Instant
 import org.jooq.DSLContext
 import org.springframework.stereotype.Repository
 
 @Repository
-class MailLogDao(val jooq: DSLContext) {
+class SentMailLogDao(val jooq: DSLContext) {
 
     data class Record(
         val id: MailLogId,
@@ -36,13 +36,14 @@ class MailLogDao(val jooq: DSLContext) {
     data class ContentPartialRecord(val userId: UserId, val content: String)
 
     val historyPartialRecordFields =
-        arrayOf(MAIL_LOG.ID, MAIL_LOG.REFERENCE, MAIL_LOG.SUBJECT, MAIL_LOG.DATE)
+        arrayOf(
+            SENT_MAIL_LOG.ID, SENT_MAIL_LOG.REFERENCE, SENT_MAIL_LOG.SUBJECT, SENT_MAIL_LOG.DATE)
 
-    val contentPartialRecordFields = arrayOf(MAIL_LOG.USER_ID, MAIL_LOG.CONTENT)
+    val contentPartialRecordFields = arrayOf(SENT_MAIL_LOG.USER_ID, SENT_MAIL_LOG.CONTENT)
 
     fun insert(r: Record) {
         val jr =
-            MailLogRecord().apply {
+            SentMailLogRecord().apply {
                 id = r.id.rawId
                 deploymentLogId = r.deploymentLogId.rawId
                 userId = r.userId.rawId
@@ -53,16 +54,16 @@ class MailLogDao(val jooq: DSLContext) {
                 content = r.content
                 date = r.date
             }
-        jooq.insertInto(MAIL_LOG).set(jr).execute()
+        jooq.insertInto(SENT_MAIL_LOG).set(jr).execute()
     }
 
-    fun fetchAll(): List<Record> = jooq.selectFrom(MAIL_LOG).fetch().map(this::map)
+    fun fetchAll(): List<Record> = jooq.selectFrom(SENT_MAIL_LOG).fetch().map(this::map)
 
     fun fetchOrNullContent(id: MailLogId): ContentPartialRecord? =
         jooq
             .select(*contentPartialRecordFields)
-            .from(MAIL_LOG)
-            .where(MAIL_LOG.ID.equal(id.rawId))
+            .from(SENT_MAIL_LOG)
+            .where(SENT_MAIL_LOG.ID.equal(id.rawId))
             .fetchOne()
             ?.let(this::mapContentPartialRecord)
             ?: throw IllegalArgumentException("$id")
@@ -72,9 +73,9 @@ class MailLogDao(val jooq: DSLContext) {
         mailReferences: List<MailReference>
     ): List<Record> =
         jooq
-            .selectFrom(MAIL_LOG)
-            .where(MAIL_LOG.USER_ID.equal(userId.rawId))
-            .and(MAIL_LOG.REFERENCE.`in`(mailReferences.map { it.name }))
+            .selectFrom(SENT_MAIL_LOG)
+            .where(SENT_MAIL_LOG.USER_ID.equal(userId.rawId))
+            .and(SENT_MAIL_LOG.REFERENCE.`in`(mailReferences.map { it.name }))
             .fetch()
             .map(this::map)
 
@@ -84,9 +85,9 @@ class MailLogDao(val jooq: DSLContext) {
     ): List<HistoryPartialRecord> =
         jooq
             .select(*historyPartialRecordFields)
-            .from(MAIL_LOG)
-            .where(MAIL_LOG.USER_ID.equal(userId.rawId))
-            .and(MAIL_LOG.REFERENCE.`in`(mailReferences.map { it.name }))
+            .from(SENT_MAIL_LOG)
+            .where(SENT_MAIL_LOG.USER_ID.equal(userId.rawId))
+            .and(SENT_MAIL_LOG.REFERENCE.`in`(mailReferences.map { it.name }))
             .fetch()
             .map(this::mapHistoryPartialRecord)
 
@@ -96,7 +97,7 @@ class MailLogDao(val jooq: DSLContext) {
     //                    .fetch()
     //                    .map(this::map)
 
-    fun map(r: MailLogRecord) =
+    fun map(r: SentMailLogRecord) =
         Record(
             id = r.id.toTypeId(),
             deploymentLogId = r.deploymentLogId.toTypeId(),
@@ -110,11 +111,11 @@ class MailLogDao(val jooq: DSLContext) {
 
     fun mapHistoryPartialRecord(r: org.jooq.Record) =
         HistoryPartialRecord(
-            r.get(MAIL_LOG.ID).toTypeId(),
-            MailReference.valueOf(r.get(MAIL_LOG.REFERENCE)),
-            r.get(MAIL_LOG.SUBJECT),
-            r.get(MAIL_LOG.DATE))
+            r.get(SENT_MAIL_LOG.ID).toTypeId(),
+            MailReference.valueOf(r.get(SENT_MAIL_LOG.REFERENCE)),
+            r.get(SENT_MAIL_LOG.SUBJECT),
+            r.get(SENT_MAIL_LOG.DATE))
 
     fun mapContentPartialRecord(r: org.jooq.Record) =
-        ContentPartialRecord(r.get(MAIL_LOG.USER_ID).toTypeId(), r.get(MAIL_LOG.CONTENT))
+        ContentPartialRecord(r.get(SENT_MAIL_LOG.USER_ID).toTypeId(), r.get(SENT_MAIL_LOG.CONTENT))
 }

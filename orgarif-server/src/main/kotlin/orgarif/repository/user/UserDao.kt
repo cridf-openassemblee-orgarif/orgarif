@@ -25,13 +25,8 @@ class UserDao(val jooq: DSLContext) {
         val displayName: String,
         val language: Language,
         val roles: Set<Role>,
-        // [doc] because some mail provider could choose to support character which usually aren't
-        // differentiated from another or usually just supported
-        // TODO[tmpl][user] or we don't care, trace is kept in command log ?
-        // + former mails won't keep both
-        val dirtyMail: String?,
         val signupDate: Instant,
-        val lastUpdateDate: Instant,
+        val lastUpdateDate: Instant
     ) {
         override fun toString() = "User($id|$mail)"
     }
@@ -46,7 +41,6 @@ class UserDao(val jooq: DSLContext) {
                 displayName = r.displayName
                 language = r.language.name
                 roles = r.roles.map { it.name }.toTypedArray()
-                dirtyMail = r.dirtyMail
                 signupDate = r.signupDate
                 lastUpdateDate = r.lastUpdateDate
             }
@@ -55,6 +49,19 @@ class UserDao(val jooq: DSLContext) {
             jooq.insertInto(APP_USER).set(jr).execute()
         } catch (e: DuplicateKeyException) {
             handleDuplicateKeyException(e, r.mail)
+        }
+    }
+
+    fun updateMail(id: UserId, mail: String, lastUpdateDate: Instant) {
+        try {
+            jooq
+                .update(APP_USER)
+                .set(APP_USER.MAIL, mail)
+                .set(APP_USER.LAST_UPDATE_DATE, lastUpdateDate)
+                .where(APP_USER.ID.equal(id.rawId))
+                .execute()
+        } catch (e: DuplicateKeyException) {
+            handleDuplicateKeyException(e, mail)
         }
     }
 
@@ -67,16 +74,6 @@ class UserDao(val jooq: DSLContext) {
         } else {
             throw e
         }
-    }
-
-    fun updateMail(id: UserId, mail: String, dirtyMail: String?, lastUpdateDate: Instant) {
-        jooq
-            .update(APP_USER)
-            .set(APP_USER.MAIL, mail)
-            .set(APP_USER.DIRTY_MAIL, dirtyMail)
-            .set(APP_USER.LAST_UPDATE_DATE, lastUpdateDate)
-            .where(APP_USER.ID.equal(id.rawId))
-            .execute()
     }
 
     fun updatePassword(id: UserId, password: HashedPassword, lastUpdateDate: Instant) {
@@ -123,13 +120,13 @@ class UserDao(val jooq: DSLContext) {
             ?.let { HashedPassword(it) }
             .let { requireNotNull(it) { "$id" } }
 
-    fun fetchMailAndDirtyMail(id: UserId): Pair<String, String?> =
+    fun fetchMail(id: UserId): String =
         jooq
-            .select(APP_USER.MAIL, APP_USER.DIRTY_MAIL)
+            .select(APP_USER.MAIL)
             .from(APP_USER)
             .where(APP_USER.ID.equal(id.rawId))
             .fetchOne()
-            ?.let { it.value1() to it.value2() }
+            ?.let { it.value1() }
             .let { requireNotNull(it) { "$id" } }
 
     fun streamAll(): Stream<Record> = jooq.selectFrom(APP_USER).stream().map(this::map)
@@ -142,7 +139,6 @@ class UserDao(val jooq: DSLContext) {
             displayName = r.displayName,
             language = Language.valueOf(r.language),
             roles = r.roles.map { Role.valueOf(it) }.toSet(),
-            dirtyMail = r.dirtyMail,
             signupDate = r.signupDate,
             lastUpdateDate = r.lastUpdateDate)
 }

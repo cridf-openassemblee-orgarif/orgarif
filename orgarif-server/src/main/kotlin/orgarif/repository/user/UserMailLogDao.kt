@@ -1,21 +1,22 @@
 package orgarif.repository.user
 
-import orgarif.domain.FormerMailId
 import orgarif.domain.UserId
-import orgarif.jooq.generated.Tables.FORMER_MAIL
-import orgarif.jooq.generated.tables.records.FormerMailRecord
+import orgarif.domain.UserMailLogId
+import orgarif.domain.UserMailLogType
+import orgarif.jooq.generated.Tables.USER_MAIL_LOG
+import orgarif.jooq.generated.tables.records.UserMailLogRecord
 import java.time.Instant
 import org.jooq.DSLContext
 import org.springframework.stereotype.Repository
 
 @Repository
-class FormerMailDao(val jooq: DSLContext) {
+class UserMailLogDao(val jooq: DSLContext) {
 
     data class Record(
-        val id: FormerMailId,
+        val id: UserMailLogId,
         val userId: UserId,
         val mail: String,
-        val dirtyMail: String?,
+        val type: UserMailLogType,
         val creationDate: Instant
     ) {
         override fun toString() = "User($id|$mail)"
@@ -23,15 +24,14 @@ class FormerMailDao(val jooq: DSLContext) {
 
     fun insert(r: Record) {
         val jr =
-            FormerMailRecord().apply {
+            UserMailLogRecord().apply {
                 id = r.id.rawId
                 userId = r.userId.rawId
                 mail = r.mail
-                mail = r.mail
-                dirtyMail = r.dirtyMail
+                type = r.type.name
                 creationDate = r.creationDate
             }
 
-        jooq.insertInto(FORMER_MAIL).set(jr).execute()
+        jooq.insertInto(USER_MAIL_LOG).set(jr).execute()
     }
 }

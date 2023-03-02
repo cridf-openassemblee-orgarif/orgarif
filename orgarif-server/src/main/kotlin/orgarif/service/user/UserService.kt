@@ -5,8 +5,9 @@ import orgarif.domain.Language
 import orgarif.domain.PlainStringPassword
 import orgarif.domain.Role
 import orgarif.domain.UserId
-import orgarif.repository.user.FormerMailDao
+import orgarif.domain.UserMailLogType
 import orgarif.repository.user.UserDao
+import orgarif.repository.user.UserMailLogDao
 import orgarif.service.DateService
 import orgarif.service.NotificationService
 import orgarif.service.RandomService
@@ -18,7 +19,7 @@ import org.springframework.stereotype.Service
 @Service
 class UserService(
     val userDao: UserDao,
-    val formerMailDao: FormerMailDao,
+    val userMailLogDao: UserMailLogDao,
     val dateService: DateService,
     val randomService: RandomService,
     val notificationService: NotificationService,
@@ -60,10 +61,14 @@ class UserService(
                 displayName = displayName.trim(),
                 language = language,
                 roles = setOf(Role.user),
-                dirtyMail = dirtyMail,
                 signupDate = now,
                 lastUpdateDate = now)
         userDao.insert(user, hashedPassword)
+        if (dirtyMail != null) {
+            userMailLogDao.insert(
+                UserMailLogDao.Record(
+                    randomService.id(), user.id, dirtyMail, UserMailLogType.dirtyMail, now))
+        }
         notificationService.notify(
             "${user.mail} just suscribed.", NotificationService.Channel.newUser)
         return user
@@ -71,17 +76,26 @@ class UserService(
 
     fun updateMail(userId: UserId, mail: String) {
         val (newMail, newDirtyMail) = cleanMailAndReturnDirty(mail)
-        val (currentMail, currentDirtyMail) = userDao.fetchMailAndDirtyMail(userId)
-        if (newMail == currentMail) {
-            // TODO[tmpl] no double click in UI
-            throw IllegalArgumentException("Email didn't change $userId")
-        }
-        // TODO[tmpl] make logs...
-        logger.info { "Update mail $userId $currentMail => $newMail" }
+        val formerMail = userDao.fetchMail(userId)
         val now = dateService.now()
-        formerMailDao.insert(
-            FormerMailDao.Record(randomService.id(), userId, currentMail, currentDirtyMail, now))
-        userDao.updateMail(userId, newMail, newDirtyMail, now)
+        // [doc] Is done first on purpose. If user has tried to use é@gmail.com, it has been change
+        // to e@gmail.com, if he retries we should re-log
+        // TODO[tmpl] need integration tests !
+        if (newDirtyMail != null) {
+            userMailLogDao.insert(
+                UserMailLogDao.Record(
+                    randomService.id(), userId, newDirtyMail, UserMailLogType.dirtyMail, now))
+        }
+        if (newMail == formerMail) {
+            // TODO[tmpl] user should be warned (maybe he tried a cleaned email)
+            // (can be an accidental double click too)
+            return
+        }
+        logger.info { "Update mail $userId $formerMail => $newMail" }
+        userDao.updateMail(userId, newMail, now)
+        userMailLogDao.insert(
+            UserMailLogDao.Record(
+                randomService.id(), userId, formerMail, UserMailLogType.formerMail, now))
     }
 
     fun hashPassword(password: PlainStringPassword): HashedPassword {

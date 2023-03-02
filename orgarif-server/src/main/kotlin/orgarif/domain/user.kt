@@ -14,6 +14,11 @@ enum class Role {
     admin
 }
 
+enum class UserMailLogType {
+    dirtyMail,
+    formerMail
+}
+
 data class UserInfos(
     val id: UserId,
     val mail: String,
