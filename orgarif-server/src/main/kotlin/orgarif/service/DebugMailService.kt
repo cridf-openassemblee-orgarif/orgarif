@@ -49,20 +49,19 @@ class DebugMailService(
                                 mailContent,
                                 monitoringCategory)))
                 val json = MailService.mailJetObjectMapper.writeValueAsString(body)
-                val r =
-                    try {
+                try {
+                    val r =
                         httpService.execute(
                             HttpMethod.POST,
                             url,
                             json,
                             HttpService.Header.Authorization to
                                 Credentials.basic(apiKey, secretKey))
-                    } catch (e: Exception) {
-                        logger.error { "Failed to send debug mail" }
-                        throw e
+                    if (r.code != HttpStatus.OK) {
+                        logger.error { "Couldn't send mail :\n${r.body}\n----\n$json" }
                     }
-                if (r.code != HttpStatus.OK) {
-                    logger.error { "Couldn't send mail :\n${r.body}\n----\n$json" }
+                } catch (e: Exception) {
+                    logger.error(e) { "Failed to send debug mail\n----\n$json" }
                 }
             }
         }
