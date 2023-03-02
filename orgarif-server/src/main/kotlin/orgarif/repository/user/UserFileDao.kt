@@ -10,23 +10,20 @@ import orgarif.jooq.generated.tables.records.UserFileRecord
 import orgarif.utils.toTypeId
 import org.jooq.DSLContext
 import org.jooq.Record
-import org.jooq.TableField
 import org.springframework.stereotype.Repository
 
 @Repository
 class UserFileDao(private val jooq: DSLContext) {
 
-    enum class UserFileField(val field: TableField<UserFileRecord, *>, val isDataField: Boolean) {
-        Id(USER_FILE.ID, false),
-        UserId(USER_FILE.USER_ID, false),
-        FileContent(USER_FILE.FILE_CONTENT, true),
-        ContentType(USER_FILE.CONTENT_TYPE, false),
-        OriginalFilename(USER_FILE.ORIGINAL_FILENAME, false),
-        UploadDate(USER_FILE.UPLOAD_DATE, false)
-    }
-
-    val nonDataFields by lazy {
-        UserFileField.values().toList().filter { !it.isDataField }.map { it.field }
+    companion object {
+        val nonDataFields by lazy {
+            setOf(
+                USER_FILE.ID,
+                USER_FILE.USER_ID,
+                USER_FILE.CONTENT_TYPE,
+                USER_FILE.ORIGINAL_FILENAME,
+                USER_FILE.UPLOAD_DATE)
+        }
     }
 
     fun insert(r: UserFileReference, bytes: ByteArray) {
@@ -44,9 +41,12 @@ class UserFileDao(private val jooq: DSLContext) {
     }
 
     fun fetchDataOrNull(id: UserFileId): UserFileData? =
-        jooq.selectFrom(USER_FILE).where(USER_FILE.ID.equal(id.rawId)).fetchOne()?.let {
-            mapData(it.into(USER_FILE))
-        }
+        jooq
+            .select(USER_FILE.CONTENT_TYPE, USER_FILE.FILE_CONTENT)
+            .from(USER_FILE)
+            .where(USER_FILE.ID.equal(id.rawId))
+            .fetchOne()
+            ?.let { mapData(it.into(USER_FILE)) }
 
     fun fetchReferenceOrNull(id: UserFileId): UserFileReference? =
         jooq
@@ -66,7 +66,10 @@ class UserFileDao(private val jooq: DSLContext) {
 
     fun count(): Int = jooq.selectCount().from(USER_FILE).fetchSingle().let { it.value1() }
 
-    fun mapData(r: UserFileRecord) = UserFileData(r.contentType, r.fileContent, r.originalFilename)
+    fun mapData(record: Record): UserFileData {
+        val r = record.into(UserFileRecord::class.java)
+        return UserFileData(r.contentType, r.fileContent)
+    }
 
     fun mapReference(record: Record): UserFileReference {
         val r = record.into(UserFileRecord::class.java)
