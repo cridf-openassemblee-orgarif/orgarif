@@ -48,7 +48,7 @@ object ClassParser {
 
     // TODO[tmpl] sealed support is very limited
     // will work if a field uses the sealed object and not directly a subclass
-    fun parse(t: KSType, data: Set<Parsed>): Set<Parsed> {
+    fun parse(t: KSType, data: Set<Parsed>, mappings: Map<String, String>): Set<Parsed> {
         let {
             val p = t.declaration.packageName.asString()
             val i = p.indexOf(".")
@@ -65,7 +65,7 @@ object ClassParser {
                 //                .mapNotNull { (it as?
                 // KSPropertyDeclaration)?.type?.resolve()?.declaration }
                 .mapNotNull { it as? KSPropertyDeclaration }
-                .flatMap { mapDependencies(it.type) }
+                .flatMap { mapDependencies(it.type, mappings) }
                 //                .map { it.resolve() }
                 //                .filterIsInstance<KSClassDeclaration>()
                 //                .mapNotNull { mapDependency(it) }
@@ -77,12 +77,12 @@ object ClassParser {
                     // [doc] infinite loop is possible without it
                     // TODO[tmpl] test works as expected !
                     .filter { it.resolve() !in alreadySet }
-                    .fold(it) { acc, d -> parse(d.resolve(), acc) }
+                    .fold(it) { acc, d -> parse(d.resolve(), acc, mappings) }
             }
             // TODO[tmpl] a priori we should use findActuals
             .let {
                 // TODO[tmpl] infinite loop is possible ?
-                d.getSealedSubclasses().fold(it) { acc, d -> parse(d.asStarProjectedType(), acc) }
+                d.getSealedSubclasses().fold(it) { acc, d -> parse(d.asStarProjectedType(), acc, mappings) }
             }
     }
 
@@ -110,7 +110,7 @@ object ClassParser {
     //    }
 
     // TODO[tmpl] test: generic with generic inside
-    fun mapDependencies(t: KSTypeReference): List<KSTypeReference> {
+    fun mapDependencies(t: KSTypeReference, mappings: Map<String, String>): List<KSTypeReference> {
         //        val d = t.resolve().declaration as? KSClassDeclaration
         //        val a = allAscendance(classDeclaration)
         // TODO[tmpl] this method to find ancestry is actually a very bad idea
@@ -134,11 +134,11 @@ object ClassParser {
                 ?.mapNotNull { it.type }
                 // TODO[tmpl] HERE we can fall in a infinite loop ?
                 // but DO NOT use data to filter, we need a contextual set()
-                ?.flatMap { mapDependencies(it) }
+                ?.flatMap { mapDependencies(it, mappings) }
                 ?: emptyList()
         // TODO[tmpl] actually not a good idea, take out the mapped to get them later
         val r =
-            if (mapProperty(t) == null) {
+            if (mapProperty(t, mappings) == null) {
                 listOf(t)
             } else {
                 emptyList()

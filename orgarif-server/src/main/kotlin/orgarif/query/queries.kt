@@ -3,6 +3,8 @@ package orgarif.query
 import com.fasterxml.jackson.annotation.JsonTypeInfo
 import orgarif.domain.UserId
 import orgarif.domain.UserInfos
+import java.time.Instant
+import java.time.ZoneId
 import kttots.Shared
 
 @Shared

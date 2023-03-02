@@ -10,7 +10,7 @@ import com.google.devtools.ksp.symbol.Nullability
 object ClassWriter {
 
     // TODO[tmpl] about support of Jackson annotations ? field @Ignore
-    fun toTs(parsed: ClassParser.Parsed): StringBuilder {
+    fun toTs(parsed: ClassParser.Parsed, mappings: Map<String, String>): StringBuilder {
         val d = parsed.type.declaration as? KSClassDeclaration ?: throw IllegalArgumentException()
         val mapping = ClassMapper.mapClass(d)
         val sb = StringBuilder()
@@ -46,7 +46,7 @@ object ClassWriter {
                                         Nullability.PLATFORM -> ""
                                     }
                                 sb.appendLine(
-                                    "  ${it.simpleName.asString()}$nullableMark: ${propertyClassName(it.type).name};")
+                                    "  ${it.simpleName.asString()}$nullableMark: ${propertyClassName(it.type, mappings).name};")
                             }
                         sb.appendLine("}")
                         sb.appendLine("")
@@ -110,6 +110,6 @@ object ClassWriter {
         return prefix + d.simpleName.asString()
     }
 
-    fun propertyClassName(t: KSTypeReference) =
-        ClassMapper.mapProperty(t) ?: ClassMapper.ClassMapping(className(t.resolve().declaration))
+    fun propertyClassName(t: KSTypeReference, mappings: Map<String, String>) =
+        ClassMapper.mapProperty(t, mappings) ?: ClassMapper.ClassMapping(className(t.resolve().declaration))
 }

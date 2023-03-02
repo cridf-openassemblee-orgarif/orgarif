@@ -20,6 +20,7 @@ data class KtToTsConfiguration(
     // create a @KtToTsConfiguration ?
     // => not simple, project code can't be run here
     // try to extend from gradle ?
+    // TODO naming
     val mappings: Map<String, String>,
     // config, or an annotation
     val nominalStringMappings: Set<String>,

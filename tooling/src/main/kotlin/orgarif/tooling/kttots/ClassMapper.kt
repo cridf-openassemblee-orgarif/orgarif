@@ -3,19 +3,19 @@ package orgarif.tooling.kttots
 import com.google.devtools.ksp.symbol.KSClassDeclaration
 import com.google.devtools.ksp.symbol.KSTypeReference
 import orgarif.tooling.kttots.ClassWriter.propertyClassName
-import java.time.Duration
-import java.time.Instant
-import java.time.LocalDate
-import java.time.LocalTime
 
 object ClassMapper {
 
     // TODO[tmpl] an example if there isn't in default generated code
     data class ClassMapping(val name: String, val tsFile: String? = null)
 
-    fun mapProperty(t: KSTypeReference): ClassMapping? {
+    fun mapProperty(t: KSTypeReference, mappings: Map<String, String>): ClassMapping? {
         val d = t.resolve().declaration as? KSClassDeclaration ?: return null
-        return when (d.qualifiedName?.asString()) {
+        val qualifiedName = d.qualifiedName?.asString()
+        if (qualifiedName != null && qualifiedName in mappings.keys) {
+            return ClassMapping(d.simpleName.asString(), mappings.getValue(qualifiedName))
+        }
+        return when (qualifiedName) {
             Boolean::class.qualifiedName -> ClassMapping("boolean")
             Int::class.qualifiedName -> ClassMapping("number")
             Long::class.qualifiedName -> ClassMapping("number")
@@ -25,23 +25,19 @@ object ClassMapper {
                 val t =
                     t.element?.typeArguments?.firstOrNull()?.type
                         ?: throw IllegalArgumentException()
-                ClassMapping("${propertyClassName(t).name}[]")
+                ClassMapping("${propertyClassName(t, mappings).name}[]")
             }
             Pair::class.qualifiedName -> {
                 val a = t.element?.typeArguments ?: throw IllegalArgumentException()
                 val t1 = a.firstOrNull()?.type ?: throw IllegalArgumentException()
                 val t2 = a.getOrNull(1)?.type ?: throw IllegalArgumentException()
-                ClassMapping("[${mapProperty(t1)},${mapProperty(t2)}]")
+                ClassMapping("[${mapProperty(t1, mappings)},${mapProperty(t2, mappings)}]")
             }
             // TODO[tmpl] Record vs Dict we have a problem
             // case by case
             // can specify an annotation ? which could be checked at serialization/deser
             // OR always loose, easier not to type it
             Map::class.qualifiedName -> ClassMapping("{}")
-            LocalDate::class.qualifiedName -> ClassMapping("LocalDate", "domain/date")
-            LocalTime::class.qualifiedName -> ClassMapping("LocalTime", "domain/date")
-            Duration::class.qualifiedName -> ClassMapping("Duration", "domain/date")
-            Instant::class.qualifiedName -> ClassMapping("Instant", "domain/date")
             else -> null
         }
     }

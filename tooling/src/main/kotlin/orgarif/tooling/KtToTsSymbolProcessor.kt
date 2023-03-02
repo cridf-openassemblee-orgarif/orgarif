@@ -62,7 +62,7 @@ class KtToTsSymbolProcessor(
         //            }
         val parsingResult =
             symbols.fold(emptySet<ClassParser.Parsed>()) { acc, declaration ->
-                ClassParser.parse(declaration.asStarProjectedType(), acc)
+                ClassParser.parse(declaration.asStarProjectedType(), acc, configuration.mappings)
             }
         debugReport?.apply {
             appendLine("<h1>Class list (${parsingResult.size} items)</h1>")
@@ -105,7 +105,7 @@ class KtToTsSymbolProcessor(
                                 (it.type.declaration as KSClassDeclaration)
                                     .declarations
                                     .filterIsInstance<KSPropertyDeclaration>()
-                                    .mapNotNull { ClassMapper.mapProperty(it.type) }
+                                    .mapNotNull { ClassMapper.mapProperty(it.type, configuration.mappings) }
                             }
                         val dependenciesImports =
                             parsed
@@ -154,7 +154,7 @@ class KtToTsSymbolProcessor(
                     //                val keepDeclarations = parsed.map { it.type.declaration }
                     // [doc] restarting from file here (instead of using directly parsed) permits
                     // order conservation
-                    parsed.forEach { sb.append(ClassWriter.toTs(it)) }
+                    parsed.forEach { sb.append(ClassWriter.toTs(it, configuration.mappings)) }
                     Files.write(file, sb.toString().toByteArray())
                     ksFile to file
                 }
