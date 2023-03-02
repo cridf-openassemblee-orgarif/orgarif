@@ -1,4 +1,4 @@
-import { Instant } from '../domain/date';
+import { Instant } from '../domain/datetime';
 import { NominalString } from '../utils/nominal-class';
 import { appContext } from './ApplicationContext';
 
