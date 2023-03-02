@@ -14,7 +14,6 @@
     "@types/node": "^18.0.1",
     "@types/react": "^18.0.14",
     "@types/react-dom": "^18.0.6",
-    "@types/react-router-dom": "^5.3.3",
     "es6-promise": "^4.2.8",
     "es6-shim": "^0.35.6",
     "es7-shim": "^6.0.0",

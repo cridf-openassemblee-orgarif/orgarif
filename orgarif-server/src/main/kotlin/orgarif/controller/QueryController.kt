@@ -1,13 +1,6 @@
 package orgarif.controller
 
-import orgarif.query.GetUsersListQuery
-import orgarif.query.GetUsersListQueryHandler
-import orgarif.query.IsMailAlreadyTakenQuery
-import orgarif.query.IsMailAlreadyTakenQueryHandler
-import orgarif.query.Query
-import orgarif.query.QueryConfiguration
-import orgarif.query.QueryHandler
-import orgarif.query.QueryResponse
+import orgarif.query.*
 import orgarif.repository.user.UserDao
 import orgarif.serialization.Serializer
 import orgarif.service.user.UserSessionService
@@ -21,6 +14,7 @@ import org.springframework.web.bind.annotation.RestController
 class QueryController(
     val userDao: UserDao,
     val userSessionService: UserSessionService,
+    val getUserInfosQueryHandler: GetUserInfosQueryHandler,
     val getUsersListQueryHandler: GetUsersListQueryHandler,
     val isMailAlreadyTakenQueryHandler: IsMailAlreadyTakenQueryHandler,
     val transactionIsolationService: TransactionIsolationService,
@@ -40,6 +34,7 @@ class QueryController(
 
     private fun handler(query: Query) =
         when (query) {
+            is GetUserInfosQuery -> getUserInfosQueryHandler
             is GetUsersListQuery -> getUsersListQueryHandler
             is IsMailAlreadyTakenQuery -> isMailAlreadyTakenQueryHandler
         }.let { @Suppress("UNCHECKED_CAST") (it as QueryHandler<Query, QueryResponse>) }

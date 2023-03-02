@@ -12,31 +12,20 @@ import { ApplicationRouter } from './routing/ApplicationRouter';
 import { globalStyles } from './styles/common-styles';
 import { createRoot } from 'react-dom/client';
 import { SnackbarProvider } from 'notistack';
+import { PropsWithChildren } from 'react';
+import { MaterialUiRoot } from './container/MaterialUiRoot';
 
 global.log = (logged: any) => console.log(logged);
 
-const muiTheme = createTheme({
-  typography: {
-    // fontSize: fonts.baseSize,
-    // htmlFontSize: fonts.baseSize
-  }
-});
 const root = document.getElementById('root');
 if (root) {
   createRoot(root).render(
     <RecoilRoot>
-      <Global styles={[globalStyles]} />
-      <StylesProvider injectFirst>
-        <StyledEngineProvider injectFirst>
-          <ThemeProvider theme={muiTheme}>
-            <SnackbarProvider maxSnack={3}>
-              <Root>
-                <ApplicationRouter />
-              </Root>
-            </SnackbarProvider>
-          </ThemeProvider>
-        </StyledEngineProvider>
-      </StylesProvider>
+      <MaterialUiRoot>
+        <Root>
+          <ApplicationRouter />
+        </Root>
+      </MaterialUiRoot>
     </RecoilRoot>
   );
 }

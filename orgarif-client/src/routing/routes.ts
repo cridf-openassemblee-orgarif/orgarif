@@ -3,8 +3,6 @@ import { LoginView } from '../view/LoginView';
 import { RegisterView } from '../view/RegisterView';
 import { RootView } from '../view/RootView';
 import { UsersManagementView } from '../view/UsersManagementView';
-import { UsersManagementIndexSubView } from '../view/users-management/UsersManagementIndexSubView';
-import { UsersManagementUserSubView } from '../view/users-management/UsersManagementUserSubView';
 import { Dict, dict, flatMap } from '../utils/nominal-class';
 import { Role } from '../generated/domain/user';
 import { UserId } from '../generated/domain/fmk-ids';
@@ -29,6 +27,7 @@ export interface ApplicationRouteProps<T extends ApplicationRoute> {
   subRoutes?: ApplicationRouteProps<any>[];
 }
 
+// TODO naming
 export const routes: ApplicationRouteProps<any>[] = [
   {
     name: 'LoginRoute',
@@ -64,16 +63,13 @@ export const routes: ApplicationRouteProps<any>[] = [
     name: 'UsersManagementRoute',
     path: '/users-management',
     component: UsersManagementView,
-    rootSubComponent: UsersManagementIndexSubView,
-    role: 'Admin',
-    subRoutes: [
-      {
-        name: 'UsersManagementUserRoute',
-        path: '/:userId',
-        component: UsersManagementUserSubView,
-        role: 'Admin'
-      }
-    ]
+    role: 'Admin'
+  },
+  {
+    name: 'UsersManagementUserRoute',
+    path: '/users-management/:userId',
+    component: UsersManagementView,
+    role: 'Admin'
   }
 ];
 
@@ -117,7 +113,7 @@ interface TestSubIdRoute {
   id: string;
 }
 
-interface UsersManagementRoute {
+export interface UsersManagementRoute {
   name: 'UsersManagementRoute';
 }
 

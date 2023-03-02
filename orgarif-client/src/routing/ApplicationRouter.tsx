@@ -1,6 +1,11 @@
 /** @jsxImportSource @emotion/react */
 import * as React from 'react';
 import { FunctionComponent, useEffect } from 'react';
+import { useRecoilState } from 'recoil';
+import { state } from '../state/state';
+import { NotFoundView } from '../view/NotFoundView';
+import { ApplicationRoute, ApplicationRouteProps, routes } from './routes';
+import { useGoTo } from './routing-utils';
 import {
   BrowserRouter,
   Route,
@@ -8,11 +13,6 @@ import {
   useLocation,
   useParams
 } from 'react-router-dom';
-import { useRecoilState } from 'recoil';
-import { state } from '../state/state';
-import { NotFoundView } from '../view/NotFoundView';
-import { ApplicationRoute, ApplicationRouteProps, routes } from './routes';
-import { useGoTo } from './routing-utils';
 
 const RouteComponent = (props: ApplicationRouteProps<any>) => {
   const [userInfos] = useRecoilState(state.userInfos);
@@ -58,9 +58,12 @@ const RootSubComponent = (props: {
   return React.createElement(props.component, { route });
 };
 
-const renderRoutes = (rootPath: string, routes: ApplicationRouteProps<any>[]) =>
+const renderRoutes = (
+  parentPath: string,
+  routes: ApplicationRouteProps<any>[]
+) =>
   routes.map(route => {
-    const path = rootPath + route.path;
+    const path = parentPath + route.path;
     return (
       <Route path={path} element={<RouteComponent {...route} />}>
         {route.rootSubComponent && (
