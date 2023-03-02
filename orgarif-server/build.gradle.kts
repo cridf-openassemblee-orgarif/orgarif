@@ -6,10 +6,10 @@ plugins {
     id("org.springframework.boot") version "2.7.1"
     // so we don't need to open Spring components classes
     id("org.jetbrains.kotlin.plugin.spring")
-    id("com.google.devtools.ksp") version "1.7.10-1.0.6"
+    id("com.google.devtools.ksp") version "1.7.20-1.0.7"
 }
 
-val kotlinVersion = "1.7.10"
+val kotlinVersion = "1.7.20"
 
 kotlin {
     sourceSets.all {
@@ -75,7 +75,7 @@ dependencies {
     implementation(project(":kt-to-ts-annotations"))
 
     // kotlin
-    implementation("org.jetbrains.kotlin:kotlin-stdlib-jdk8:1.7.10")
+    implementation("org.jetbrains.kotlin:kotlin-stdlib-jdk8:$kotlinVersion")
     implementation("org.jetbrains.kotlin:kotlin-reflect:$kotlinVersion")
     implementation(project(":tooling"))
     ksp(project(":tooling"))
