@@ -107,6 +107,7 @@ export const state = {
   })
 };
 
+// TODO check
 // Temp types
 export interface Filters {
   id?: string;
