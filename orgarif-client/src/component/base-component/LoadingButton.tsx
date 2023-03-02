@@ -5,6 +5,8 @@ import * as React from 'react';
 import { PropsWithChildren, ReactElement, useState } from 'react';
 import { assertUnreachable, extractEmotionCss } from '../../utils';
 import { EmotionStyles, LoadingState } from '../../interfaces';
+import { ClientUid } from '../../domain/client-ids';
+import { asString } from '../../utils/nominal-class';
 
 const ButtonContent = (
   props: PropsWithChildren<{
@@ -50,6 +52,7 @@ const LoadingButtonBase = (
     variant?: 'text' | 'outlined' | 'contained';
     startIcon?: ReactElement;
     css?: EmotionStyles;
+    formId?: ClientUid;
   }>
 ) => (
   <Button
@@ -67,6 +70,7 @@ const LoadingButtonBase = (
         : undefined
     }
     disabled={props.loadingState === 'loading'}
+    form={props.formId ? asString(props.formId) : undefined}
     {...extractEmotionCss(props)}
   >
     <ButtonContent loadingState={props.loadingState}>
@@ -113,6 +117,7 @@ export const LoadingStateButton = (
     variant?: 'text' | 'outlined' | 'contained';
     startIcon?: ReactElement;
     css?: EmotionStyles;
+    formId?: ClientUid;
   }>
 ) => (
   <LoadingButtonBase
@@ -121,6 +126,7 @@ export const LoadingStateButton = (
     type={props.type}
     variant={props.variant}
     startIcon={props.startIcon}
+    formId={props.formId}
     {...extractEmotionCss(props)}
   >
     {props.children}
