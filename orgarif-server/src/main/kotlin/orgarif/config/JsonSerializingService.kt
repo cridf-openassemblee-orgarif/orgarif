@@ -15,9 +15,9 @@ class JsonSerializingService : Converter<Any, ByteArray> {
                 serialize(source.authentication.principal).toByteArray()
             } else {
                 throw IllegalArgumentException(
-                    "Unexpected session : ${source.authentication.principal}")
+                    "Unexpected session: ${source.authentication.principal}")
             }
         } else {
-            throw IllegalArgumentException("Unexpected session : $source")
+            throw IllegalArgumentException("Unexpected session: $source")
         }
 }

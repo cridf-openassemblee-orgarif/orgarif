@@ -17,7 +17,7 @@ object GenerateJooqAndDiff {
     internal val logger = KotlinLogging.logger {}
 
     val projectDir by lazy {
-        // contexts : run in intellij, gradle (with different root dirs), tests
+        // contexts: run in intellij, gradle (with different root dirs), tests
         val userDir = System.getProperty("user.dir")
         val rootDir = let {
             listOf(

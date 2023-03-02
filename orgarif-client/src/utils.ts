@@ -5,7 +5,7 @@ export const extractEmotionCss = (props: any) =>
   'className' in props ? { className: props['className'] } : {};
 
 export function assertUnreachable(x: never): never {
-  throw new Error(`Expected unreachable code ! Value : "${JSON.stringify(x)}"`);
+  throw new Error(`Expected unreachable code ! Value: "${JSON.stringify(x)}"`);
 }
 
 let uniqueIdIndex = 0;

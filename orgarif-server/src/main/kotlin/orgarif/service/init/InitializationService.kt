@@ -113,7 +113,7 @@ class InitializationService(
             }
             if (profiles.size != 1) {
                 throw IllegalStateException(
-                    "Spring profiles list contains multiple environments : $profiles")
+                    "Spring profiles list contains multiple environments: $profiles")
             }
         }
     }

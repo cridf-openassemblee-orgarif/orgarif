@@ -21,10 +21,10 @@ export const useWindowHeight = () => {
   return height;
 };
 
-// [doc] Root element sizing is done with javascript... because of mobile Chrome : indow.innerHeight changes when the
+// [doc] Root element sizing is done with javascript... because of mobile Chrome: indow.innerHeight changes when the
 // url bar is hiding or displayed, which especially provokes complex bugs with popups
 // See https://css-tricks.com/the-trick-to-viewport-units-on-mobile/
-// Tried with CSS :
+// Tried with CSS:
 // height: 100%; (the starting point) => bug in popup below part when url bar hidden
 // height: 100vh; => fixes screen sizes without url bar, even if it's displayed... so scrolling is buggy
 // height: calc(100vh - 56px); => same behaviour than height 100%

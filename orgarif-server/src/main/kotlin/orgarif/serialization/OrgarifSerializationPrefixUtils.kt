@@ -23,7 +23,7 @@ object OrgarifSerializationPrefixUtils {
             ?.let { prefix ->
                 if (!value.startsWith(prefix)) {
                     throw IllegalArgumentException(
-                        "Missing id prefix $prefix on $itemClass : $value")
+                        "Missing id prefix $prefix on $itemClass: $value")
                 }
                 value.substring(prefix.length + 1)
             }

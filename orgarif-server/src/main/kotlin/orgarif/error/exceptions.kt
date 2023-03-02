@@ -36,7 +36,7 @@ data class DisplayMessageException(
 data class MailAlreadyRegisteredException(val mail: String) : Exception()
 
 // TODO[tmpl] this message ?
-data class ItemIdNotFoundException(val id: OrgarifId<*>) : Exception("Not found : $id")
+data class ItemIdNotFoundException(val id: OrgarifId<*>) : Exception("Not found: $id")
 
 // TODO[tmpl] a message
 data class ItemNotFoundException(val itemClass: Class<*>, val reference: String) : Exception()

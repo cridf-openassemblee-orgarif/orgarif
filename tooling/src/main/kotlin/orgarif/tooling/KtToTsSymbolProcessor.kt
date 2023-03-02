@@ -57,7 +57,7 @@ class KtToTsSymbolProcessor(
             symbols.forEach { appendLine("$it") }
         }
         //        val visitor = KtToTsVisitor()
-        // TODO[tmpl] add exceptions : mapped classes in configuration
+        // TODO[tmpl] add exceptions: mapped classes in configuration
         //        val parsingResult =
         //            symbols.fold(emptySet<ClassParser.Parsed>()) { acc, declaration ->
         //                declaration.accept(visitor, acc)

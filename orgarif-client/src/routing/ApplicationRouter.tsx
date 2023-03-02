@@ -82,9 +82,9 @@ const renderRoutes = (
     );
   });
 
-// TODO[tmpl] questions about routing :
+// TODO[tmpl] questions about routing:
 // * how roles work with subrouting
-// Checking to do :
+// Checking to do:
 // * path declaration consistency
 // * path parameters with interface consistency
 // * components parameters with interface consistency

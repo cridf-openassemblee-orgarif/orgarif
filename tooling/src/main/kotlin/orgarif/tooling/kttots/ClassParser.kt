@@ -109,7 +109,7 @@ object ClassParser {
     //        return kd
     //    }
 
-    // TODO[tmpl] test : generic with generic inside
+    // TODO[tmpl] test: generic with generic inside
     fun mapDependencies(t: KSTypeReference): List<KSTypeReference> {
         //        val d = t.resolve().declaration as? KSClassDeclaration
         //        val a = allAscendance(classDeclaration)

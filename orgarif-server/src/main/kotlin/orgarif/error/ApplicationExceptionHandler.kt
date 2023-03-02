@@ -56,7 +56,7 @@ class ApplicationExceptionHandler(
                 // TODO[tmpl][secu] in practice what happens with user null ?
                 logger.info {
                     // TODO[tmpl][secu] which means user must be connected...
-                    "User ${userSessionService.getUserSession()} tried to upload a file to big : ${subCause.message}"
+                    "User ${userSessionService.getUserSession()} tried to upload a file to big: ${subCause.message}"
                 }
                 // TODO[tmpl][secu] error codes for the front !
                 return render(

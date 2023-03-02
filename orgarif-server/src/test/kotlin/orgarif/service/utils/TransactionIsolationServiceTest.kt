@@ -24,7 +24,7 @@ internal class TransactionIsolationServiceTest(
 
     @Test
     fun `test isolated transaction`() {
-        /* Execution :
+        /* Execution:
             start transaction 1
                 insert
                 start transaction 2

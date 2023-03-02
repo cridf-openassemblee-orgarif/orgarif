@@ -49,7 +49,7 @@ class MailService(
         }
     }
 
-    // TODO[tmpl][mail] the uppercase on first letter : ask it to the serializer ?
+    // TODO[tmpl][mail] the uppercase on first letter: ask it to the serializer ?
     data class MailJetMail(val Email: String, val Name: String)
 
     // TODO[tmpl][mail] is it possible to limit the strings here ?

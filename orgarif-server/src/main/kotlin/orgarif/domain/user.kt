@@ -41,15 +41,14 @@ data class UserInfos(
     use = JsonTypeInfo.Id.NAME, include = JsonTypeInfo.As.PROPERTY, property = "objectType")
 sealed class Session
 
-// [doc] to update :
-// UserSessionHelper.authenticateUser
-// UserSessionHelper.getUserSession (should fail)
-// TODO[tmpl] check this method
+// TODO[tmpl] check this
 /**
- * To update UserSession :
- * @JsonTypeName("UserSession-vX") data class FormerUserSession(..)
- * @JsonTypeName("UserSession-vX+1") data class UserSession(..) Convert former into new session in
- * [UserSessionHelper]
+ * To update UserSession:
+ * * rename former class to @JsonTypeName("UserSession-vX") data class FormerUserSession(..)
+ * * new class @JsonTypeName("UserSession-vX+1") data class UserSession(..)
+ * * Convert former into new session:
+ * * update UserSessionHelper.authenticateUser
+ * * update UserSessionHelper.getUserSession (should fail)
  */
 @JsonTypeName("UserSession-v0")
 data class UserSession(val sessionId: UserSessionId, val userId: UserId, val roles: Set<Role>) :

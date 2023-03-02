@@ -10,7 +10,7 @@ import java.time.Instant
 import org.jooq.DSLContext
 import org.springframework.stereotype.Repository
 
-// TODO[tmpl][user] : try to keep Spring id
+// TODO[tmpl][user]: try to keep Spring id
 @Repository
 class UserSessionLogDao(private val jooq: DSLContext) {
 

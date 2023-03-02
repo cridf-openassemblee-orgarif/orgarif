@@ -102,7 +102,7 @@ class UserSessionService(
     fun convert(s: Session): SessionConvertion =
         when (s) {
             is UserSession -> SessionConvertion(false, s)
-        // [doc] to update a session :
+        // [doc] to update a session:
         // is FormerUserSession -> {
         //    logger.info { "Converting session $s" }
         //    val user = userDao.fetch(s.userId) ?: throw IllegalStateException("$s")

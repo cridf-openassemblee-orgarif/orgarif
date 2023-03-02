@@ -31,7 +31,7 @@ class SecurityConfiguration(
             // configuration
             // https://spring.io/blog/2022/02/21/spring-security-without-the-websecurityconfigureradapter
             // https://github.com/spring-projects/spring-security/issues/10938
-            // but i didn't manage to make work the suggestion in the issue :
+            // but i didn't manage to make work the suggestion in the issue:
             //    @Bean
             //    @Order(0)
             //    fun resources(http: HttpSecurity) =
@@ -46,13 +46,13 @@ class SecurityConfiguration(
             //                .disable()
             //            build()
             //        }
-            // and I couldn't manage to make remote endpoints with :
+            // and I couldn't manage to make remote endpoints with:
             // with(authorizeRequests()) {
             //     antMatchers(RemoteController.remoteRoute + "/**").permitAll()
             // }
             // We don't want Spring Security at all for some endpoints
             // => Spring WebSecurity logger boring warns can be disabled in logback
-            // BUT :
+            // BUT:
             // * verify about this configuration when Spring Security is updated
             // (see https://github.com/spring-projects/spring-security/issues/10913 among others...)
             // * verify no other important warn logs could be hidden by the logback conf

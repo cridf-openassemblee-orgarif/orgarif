@@ -9,9 +9,9 @@ internal class ObjectToPropertiesHelperTest {
             if (diff1.isNotEmpty() || diff2.isNotEmpty()) {
                 throw AssertionError(
                     """
-                    Found in expected and not in value :
+                    Found in expected and not in value:
                     ${diff1.map { "${it.first}: ${it.second}" }}
-                    Found in value and not in expected :
+                    Found in value and not in expected:
                     ${diff2.map { "${it.first}: ${it.second}" }}
                 """
                         .trimIndent())

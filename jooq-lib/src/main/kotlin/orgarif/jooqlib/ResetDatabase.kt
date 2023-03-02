@@ -24,7 +24,7 @@ object ResetDatabase {
 
     fun resetDatabaseSchema(configuration: DatabaseConfiguration) {
         logger.info {
-            "Reset database \"${configuration.databaseName}\", using directory : $sqlSchemaFilesDir"
+            "Reset database \"${configuration.databaseName}\", using directory: $sqlSchemaFilesDir"
         }
         logger.info { "Create database \"${configuration.databaseName}\"" }
         DatabaseInitializer.createDb(configuration)
@@ -36,7 +36,7 @@ object ResetDatabase {
     }
 
     fun insertInitialData(configuration: DatabaseConfiguration) {
-        logger.info { "Insert initial data, using directory : $sqlInsertFilesDir" }
+        logger.info { "Insert initial data, using directory: $sqlInsertFilesDir" }
         DatabaseInitializer.insert(configuration, sqlInsertFilesDir)
     }
 }

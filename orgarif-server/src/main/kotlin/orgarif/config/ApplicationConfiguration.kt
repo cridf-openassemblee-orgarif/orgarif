@@ -45,7 +45,7 @@ class ApplicationConfiguration {
                     }
                     if ("//" in request.request.requestURI) {
                         logger.error {
-                            "Request contains double slash and will fail : \"${request.request.requestURI}\""
+                            "Request contains double slash and will fail: \"${request.request.requestURI}\""
                         }
                     }
                     getNext().invoke(request, response)
