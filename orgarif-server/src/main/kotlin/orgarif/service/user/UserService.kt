@@ -32,6 +32,7 @@ class UserService(
         fun cleanMail(dirtyMail: String) =
             dirtyMail
                 .lowercase()
+                .replace("\t", "")
                 .replace(" ", "")
                 // [doc] accents are supposed to be supported by the RFC
                 // but in practice it's always a user input error
