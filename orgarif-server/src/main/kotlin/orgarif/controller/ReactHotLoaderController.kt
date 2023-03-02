@@ -34,9 +34,9 @@ class ReactHotLoaderController(
         val path = request.servletPath
         response.contentType =
             if (path.endsWith(".js")) {
-                MimeType.Javascript.fullType
+                MimeType.JAVASCRIPT.fullType
             } else {
-                MimeType.Json.fullType
+                MimeType.JSON.fullType
             }
         val r =
             httpService.execute(

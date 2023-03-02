@@ -112,8 +112,8 @@ class ApplicationExceptionHandler(
         response.status = requestError.status
         val stackTrace = requestError.stackTrace
         // TODO[tmpl][secu] reliable ?
-        if (request.getHeader("Content-Type") == MimeType.Json.fullType) {
-            response.contentType = MimeType.Json.fullType
+        if (request.getHeader("Content-Type") == MimeType.JSON.fullType) {
+            response.contentType = MimeType.JSON.fullType
             // write in the buffer with
             // objectMapper.writeValue(response.outputStream, requestErrorNode)
             // is buggy...
