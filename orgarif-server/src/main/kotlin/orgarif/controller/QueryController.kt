@@ -33,10 +33,8 @@ class QueryController(
         return handler.doHandle(query, userSession)
     }
 
-    @Suppress("UNCHECKED_CAST")
     private fun handler(query: Query) =
         when (query) {
             is IsMailAlreadyTakenQuery -> isMailAlreadyTakenQueryHandler
-        }
-            as QueryHandler<Query, QueryResponse>
+        }.let { @Suppress("UNCHECKED_CAST") (it as QueryHandler<Query, QueryResponse>) }
 }

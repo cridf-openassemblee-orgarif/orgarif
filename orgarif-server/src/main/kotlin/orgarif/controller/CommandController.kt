@@ -112,12 +112,10 @@ class CommandController(
     private fun getSession() =
         if (userSessionService.isAuthenticated()) userSessionService.getUserSession() else null
 
-    @Suppress("UNCHECKED_CAST")
     private fun handler(command: Command) =
         when (command) {
             is DevLoginCommand -> devLoginCommandHandler
             is LoginCommand -> loginCommandHandler
             is RegisterCommand -> registerCommandHandler
-        }
-            as CommandHandler<Command, CommandResponse>
+        }.let { @Suppress("UNCHECKED_CAST") (it as CommandHandler<Command, CommandResponse>) }
 }

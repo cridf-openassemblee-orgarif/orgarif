@@ -11,8 +11,9 @@ class SessionConfiguration {
 
     @Primary
     @Bean
-    @Suppress("UNCHECKED_CAST")
     fun <S : Session?> safeSessionRepository(
         sessionRepository: FindByIndexNameSessionRepository<S>
-    ) = SafeSessionRepository(sessionRepository as FindByIndexNameSessionRepository<Session>)
+    ) =
+        @Suppress("UNCHECKED_CAST")
+        SafeSessionRepository(sessionRepository as FindByIndexNameSessionRepository<Session>)
 }
