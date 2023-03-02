@@ -30,11 +30,11 @@
     "whatwg-fetch": "^3.6.2"
   },
   "scripts": {
-    "start": "react-scripts start",
     "build": "react-scripts build",
-    "test": "react-scripts test",
     "eject": "react-scripts eject",
-    "prettier": "prettier --config package.json --write \"src/**/*.ts{,x}\""
+    "format": "prettier --config package.json --write \"src/**/*.ts{,x}\"",
+    "start": "react-scripts start",
+    "test": "react-scripts test"
   },
   "prettier": {
     "parser": "typescript",
