@@ -4,7 +4,6 @@ import orgarif.controller.RemoteController
 import org.springframework.beans.factory.annotation.Value
 import org.springframework.context.annotation.Configuration
 import org.springframework.security.config.annotation.web.builders.HttpSecurity
-import org.springframework.security.config.annotation.web.builders.WebSecurity
 import org.springframework.security.config.annotation.web.configuration.EnableWebSecurity
 import org.springframework.security.config.annotation.web.configuration.WebSecurityConfigurerAdapter
 import org.springframework.security.web.csrf.CookieCsrfTokenRepository
@@ -15,17 +14,7 @@ class SecurityConfiguration(
     @Value("\${app.url}") val appUrl: String,
     val cookieCsrfTokenRepository: CookieCsrfTokenRepository
 ) : WebSecurityConfigurerAdapter() {
-
-    override fun configure(web: WebSecurity) {
-        // TODO[tmpl] is needed ?
-        // & does "/**/*" actually match "/*" ?
-        web.ignoring()
-            .antMatchers(ApplicationConstants.resourcesPath + "/*")
-            .antMatchers(ApplicationConstants.resourcesPath + "/**/*")
-            .antMatchers(RemoteController.remoteRoute + "/*")
-            .antMatchers(RemoteController.remoteRoute + "/**/*")
-    }
-
+    
     override fun configure(http: HttpSecurity) {
         with(http) {
             with(csrf()) { csrfTokenRepository(cookieCsrfTokenRepository) }
@@ -52,7 +41,14 @@ class SecurityConfiguration(
                     deny()
                 }
             }
-            authorizeRequests()
+            // TODO[fmk] is needed ?
+            // & does "/**/*" actually match "/*" ?
+            with(authorizeRequests()) {
+                antMatchers(ApplicationConstants.resourcesPath + "/*").permitAll()
+                antMatchers(ApplicationConstants.resourcesPath + "/**/*").permitAll()
+                antMatchers(RemoteController.remoteRoute + "/*").permitAll()
+                antMatchers(RemoteController.remoteRoute + "/**/*").permitAll()
+            }
         }
     }
 }
