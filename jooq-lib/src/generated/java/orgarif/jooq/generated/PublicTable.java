@@ -5,12 +5,12 @@ package orgarif.jooq.generated;
 
 
 import orgarif.jooq.generated.tables.AppUserTable;
+import orgarif.jooq.generated.tables.AuthLogTable;
 import orgarif.jooq.generated.tables.CommandLogTable;
 import orgarif.jooq.generated.tables.DeploymentLogTable;
 import orgarif.jooq.generated.tables.MagicLinkTokenTable;
-import orgarif.jooq.generated.tables.SentMailLogTable;
+import orgarif.jooq.generated.tables.MailLogTable;
 import orgarif.jooq.generated.tables.UserFileTable;
-import orgarif.jooq.generated.tables.UserMailLogTable;
 import orgarif.jooq.generated.tables.UserSessionLogTable;
 
 import java.util.Arrays;
@@ -42,6 +42,11 @@ public class PublicTable extends SchemaImpl {
     public final AppUserTable APP_USER = AppUserTable.APP_USER;
 
     /**
+     * The table <code>public.auth_log</code>.
+     */
+    public final AuthLogTable AUTH_LOG = AuthLogTable.AUTH_LOG;
+
+    /**
      * The table <code>public.command_log</code>.
      */
     public final CommandLogTable COMMAND_LOG = CommandLogTable.COMMAND_LOG;
@@ -57,19 +62,14 @@ public class PublicTable extends SchemaImpl {
     public final MagicLinkTokenTable MAGIC_LINK_TOKEN = MagicLinkTokenTable.MAGIC_LINK_TOKEN;
 
     /**
-     * The table <code>public.sent_mail_log</code>.
+     * The table <code>public.mail_log</code>.
      */
-    public final SentMailLogTable SENT_MAIL_LOG = SentMailLogTable.SENT_MAIL_LOG;
+    public final MailLogTable MAIL_LOG = MailLogTable.MAIL_LOG;
 
     /**
      * The table <code>public.user_file</code>.
      */
     public final UserFileTable USER_FILE = UserFileTable.USER_FILE;
-
-    /**
-     * The table <code>public.user_mail_log</code>.
-     */
-    public final UserMailLogTable USER_MAIL_LOG = UserMailLogTable.USER_MAIL_LOG;
 
     /**
      * The table <code>public.user_session_log</code>.
@@ -95,12 +95,12 @@ public class PublicTable extends SchemaImpl {
     public final List<Table<?>> getTables() {
         return Arrays.<Table<?>>asList(
             AppUserTable.APP_USER,
+            AuthLogTable.AUTH_LOG,
             CommandLogTable.COMMAND_LOG,
             DeploymentLogTable.DEPLOYMENT_LOG,
             MagicLinkTokenTable.MAGIC_LINK_TOKEN,
-            SentMailLogTable.SENT_MAIL_LOG,
+            MailLogTable.MAIL_LOG,
             UserFileTable.USER_FILE,
-            UserMailLogTable.USER_MAIL_LOG,
             UserSessionLogTable.USER_SESSION_LOG);
     }
 }
