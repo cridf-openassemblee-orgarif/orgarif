@@ -29,9 +29,9 @@ class LoginCommandHandler(
             // OrgarifStandardException
             throw RuntimeException()
         }
-        val cleanLogin = UserService.cleanMail(command.mail)
+        val cleanMail = UserService.cleanMail(command.mail)
         val user =
-            userDao.fetchOrNullByMail(cleanLogin)
+            userDao.fetchOrNullByMail(cleanMail)
                 ?: return LoginCommandResponse(LoginResult.mailNotFound, null)
         val userPassword = userDao.fetchPassword(user.id)
         if (!userService.passwordMatches(command.password, userPassword)) {

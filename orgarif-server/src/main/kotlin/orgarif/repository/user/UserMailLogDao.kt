@@ -1,8 +1,8 @@
 package orgarif.repository.user
 
-import orgarif.domain.AuthLogId
 import orgarif.domain.AuthLogType
 import orgarif.domain.UserId
+import orgarif.domain.UserMailLogId
 import orgarif.jooq.generated.Tables.USER_MAIL_LOG
 import orgarif.jooq.generated.tables.records.UserMailLogRecord
 import java.time.Instant
@@ -13,7 +13,7 @@ import org.springframework.stereotype.Repository
 class UserMailLogDao(val jooq: DSLContext) {
 
     data class Record(
-        val id: AuthLogId,
+        val id: UserMailLogId,
         val userId: UserId,
         val mail: String,
         val type: AuthLogType,
