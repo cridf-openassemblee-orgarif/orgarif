@@ -51,7 +51,6 @@ tasks {
         into("build")
         doLast {
             val buildPropertiesFile by extra("${rootProject.buildDir}/build.properties")
-            val buildGitDiffFile by extra("${rootProject.buildDir}/git.diff")
             File(buildPropertiesFile)
                 .writeText(
                     """
@@ -59,7 +58,6 @@ tasks {
                 gitRevision=$gitRevision
             """
                         .trimIndent())
-            File(buildGitDiffFile).writeText("git diff HEAD".runCommand())
             delete("build/kotlin")
         }
     }

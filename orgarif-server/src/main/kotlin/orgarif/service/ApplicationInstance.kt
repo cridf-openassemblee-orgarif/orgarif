@@ -1,8 +1,5 @@
 package orgarif.service
 
-import com.google.common.base.Charsets
-import com.google.common.base.Strings
-import com.google.common.io.Files
 import orgarif.domain.ApplicationEnvironment
 import orgarif.domain.DeploymentLogId
 import orgarif.repository.log.DeploymentLogDao
@@ -55,18 +52,13 @@ class ApplicationInstance(
     }
 
     val gitRevisionLabel: String by lazy {
-        val buildDiffFile = File(System.getProperty("user.dir") + "/git.diff")
-        val notNullGitRevisionProperties = gitRevisionProperties
-        if (notNullGitRevisionProperties != null && buildDiffFile.exists()) {
-            val buildDiff = Files.asCharSource(buildDiffFile, Charsets.UTF_8).readFirstLine()
-            notNullGitRevisionProperties.getProperty("shortGitRevision") +
-                (if (!Strings.isNullOrEmpty(buildDiff)) " + DIFF" else "")
-        } else {
-            if (env !in setOf(ApplicationEnvironment.dev, ApplicationEnvironment.test)) {
-                throw RuntimeException("No git revision label in $env")
+        gitRevisionProperties?.getProperty("shortGitRevision")
+            ?: let {
+                if (env !in setOf(ApplicationEnvironment.dev, ApplicationEnvironment.test)) {
+                    throw RuntimeException("No git revision label in $env")
+                }
+                "[dev]"
             }
-            "[dev]"
-        }
     }
 
     // [doc] deploymentId insertion is lazy in development, which permits a database cleaning during
