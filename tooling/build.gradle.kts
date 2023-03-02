@@ -5,6 +5,8 @@ repositories { mavenCentral() }
 dependencies {
     implementation(project(":kt-to-ts-annotations"))
 
+    implementation("io.github.microutils:kotlin-logging:3.0.0")
+
     implementation("com.google.devtools.ksp:symbol-processing-api:1.7.21-1.0.8")
     implementation("org.json:json:20220320")
 
