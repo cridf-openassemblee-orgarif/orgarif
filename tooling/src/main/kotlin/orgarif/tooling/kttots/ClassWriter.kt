@@ -84,7 +84,8 @@ object ClassWriter {
                         .isNotEmpty()) {
                         TODO()
                     } else {
-                        // TODO[tmpl] not good but the only way to handle EmptyCommandResponse for the moment
+                        // TODO[tmpl] not good but the only way to handle EmptyCommandResponse for
+                        // the moment
                         if (parentIsSealedClass) {
                             sb.appendLine("export interface ${className(d)} {")
                             sb.appendLine("  objectType: '${className(d)}';")

@@ -1,8 +1,8 @@
 package orgarif.tooling.kttots
 
+import orgarif.tooling.kttots.ClassWriter.propertyClassName
 import com.google.devtools.ksp.symbol.KSClassDeclaration
 import com.google.devtools.ksp.symbol.KSTypeReference
-import orgarif.tooling.kttots.ClassWriter.propertyClassName
 import java.time.Duration
 import java.time.Instant
 import java.time.LocalDate
