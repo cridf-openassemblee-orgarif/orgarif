@@ -6,13 +6,6 @@ database:
   name: ${POSTGRESQL_ADDON_DB}
   user: ${POSTGRESQL_ADDON_USER}
   password: ${POSTGRESQL_ADDON_PASSWORD}
-spring:
-  datasource:
-    tomcat:
-      initialSize: 5
-      minIdle: 5
-      maxIdle: 10
-      maxActive: 10
 server.forward-headers-strategy: framework
 #---------------------------------------------------------------------------
 assets:
