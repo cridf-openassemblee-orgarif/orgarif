@@ -50,6 +50,7 @@ export const ControlledTextInput = <
           label={props.label}
           error={!!props.errors[props.name]}
           size={'small'}
+          type={props.type}
           autoFocus={props.autoFocus}
           helperText={
             props.errors[props.name] && !props.hideErrorMessage
