@@ -40,7 +40,7 @@ class SecurityConfiguration(
                 logoutSuccessHandler { _, response, _ ->
                     response.status = 200
                     // [doc] appUrl is used, or else Spring redirects to http
-                    response.sendRedirect(appUrl + Routes.login)
+                    response.sendRedirect(appUrl)
                 }
                 permitAll()
             }
