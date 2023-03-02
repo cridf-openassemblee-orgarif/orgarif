@@ -14,7 +14,7 @@ class SecurityConfiguration(
     @Value("\${app.url}") val appUrl: String,
     val cookieCsrfTokenRepository: CookieCsrfTokenRepository
 ) : WebSecurityConfigurerAdapter() {
-    
+
     override fun configure(http: HttpSecurity) {
         with(http) {
             with(csrf()) { csrfTokenRepository(cookieCsrfTokenRepository) }

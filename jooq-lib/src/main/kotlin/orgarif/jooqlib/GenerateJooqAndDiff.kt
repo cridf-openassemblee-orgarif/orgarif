@@ -51,12 +51,12 @@ object GenerateJooqAndDiff {
                 generationDatabaseConfiguration, sqlSchemaFilesDir, sqlCleanResultFile)
             logger.info { "Generate Jooq code" }
             JooqGeneration.generateJooq(
-                generationDatabaseConfiguration,
-                setOf("spring_session", "spring_session_attributes"),
-                "orgarif.jooq",
-                "jooq-lib/src/generated/java")
-            // TODO[tmpl][doc] diff will fail if Config.runDatabase does not exist
-            // (not very problematic but can be better)
+                conf = generationDatabaseConfiguration,
+                excludeTables = setOf("spring_session", "spring_session_attributes"),
+                generatedPackageName = "orgarif.jooq",
+                generatedCodePath = projectDir.resolve("jooq-lib/src/generated/java"))
+            // TODO[tmpl][doc] diff will fail if Config.runDatabase does not exist (not very problematic
+            // but can be better)
             JooqGeneration.generateDiff(configuration, generationDatabaseConfiguration, buildDir)
             ResetDatabase.resetDatabaseSchema(configuration)
             ResetDatabase.insertInitialData(configuration)
