@@ -1,8 +1,9 @@
-import { ApplicationRoute, routes } from './routes';
+import { ApplicationRoute, routePathMap } from './routes';
 import { useLocation, useNavigate } from 'react-router-dom';
+import { getValue } from '../utils/nominal-class';
 
 export const buildPath = (route: ApplicationRoute) => {
-  let path = routes[route.name].path;
+  let path = getValue(routePathMap, route.name);
   Object.keys(route)
     .filter(k => k !== 'name')
     .forEach((k: string) => {

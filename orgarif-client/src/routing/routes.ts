@@ -5,49 +5,74 @@ import { RegisterView } from '../view/RegisterView';
 import { RootView } from '../view/RootView';
 import { UsersManagementView } from '../view/UsersManagementView';
 import { UserId } from '../domain/ids';
-import { UserManagementView } from '../view/UserManagementView';
+import { UsersManagementIndexSubView } from '../view/users-management/UsersManagementIndexSubView';
+import { UsersManagementUserSubView } from '../view/users-management/UsersManagementUserSubView';
+import { Dict, dict, flatMap } from '../utils/nominal-class';
 
 // TODO[tmpl] secure that "name" can't be a route parameter
 export type ApplicationRoute =
   | LoginRoute
   | RegisterRoute
   | RootRoute
-  | UserManagementRoute
-  | UsersManagementRoute;
+  | UsersManagementRoute
+  | UsersManagementUserRoute;
 
 export interface ApplicationRouteProps<T extends ApplicationRoute> {
+  name: ApplicationRoute['name'];
   path: string;
   component: FunctionComponent<{ route: T | undefined }>;
+  rootSubComponent?: FunctionComponent<{ route: T | undefined }>;
   role?: Role;
+  subRoutes?: ApplicationRouteProps<any>[];
 }
 
-export const routes: Record<
-  ApplicationRoute['name'],
-  ApplicationRouteProps<any>
-> = {
-  LoginRoute: {
+export const routes: ApplicationRouteProps<any>[] = [
+  {
+    name: 'LoginRoute',
     path: '/login',
     component: LoginView
   },
-  RegisterRoute: {
+  {
+    name: 'RegisterRoute',
     path: '/register',
     component: RegisterView
   },
-  RootRoute: {
+  {
+    name: 'RootRoute',
     path: '/',
     component: RootView
   },
-  UserManagementRoute: {
-    path: '/users-management/:userId',
-    component: UserManagementView,
-    role: 'admin'
-  },
-  UsersManagementRoute: {
+  {
+    name: 'UsersManagementRoute',
     path: '/users-management',
     component: UsersManagementView,
-    role: 'admin'
+    rootSubComponent: UsersManagementIndexSubView,
+    role: 'admin',
+    subRoutes: [
+      {
+        name: 'UsersManagementUserRoute',
+        path: '/:userId',
+        component: UsersManagementUserSubView,
+        role: 'user'
+      }
+    ]
   }
+];
+
+const flattenRoute = (
+  rootPath: string,
+  r: ApplicationRouteProps<any>
+): [string, string][] => {
+  const path = rootPath + r.path;
+  return [
+    [r.name, path],
+    ...(r.subRoutes ? flatMap(r.subRoutes, r => flattenRoute(path, r)) : [])
+  ];
 };
+
+export const routePathMap: Dict<ApplicationRoute['name'], string> = dict(
+  flatMap(routes, r => flattenRoute('', r))
+);
 
 interface LoginRoute {
   name: 'LoginRoute';
@@ -61,11 +86,11 @@ interface RootRoute {
   name: 'RootRoute';
 }
 
-export interface UserManagementRoute {
-  name: 'UserManagementRoute';
-  userId: UserId;
-}
-
 interface UsersManagementRoute {
   name: 'UsersManagementRoute';
+}
+
+export interface UsersManagementUserRoute {
+  name: 'UsersManagementUserRoute';
+  userId: UserId;
 }

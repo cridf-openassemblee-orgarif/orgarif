@@ -11,15 +11,10 @@ import {
 import { useRecoilState } from 'recoil';
 import { state } from '../state/state';
 import { NotFoundView } from '../view/NotFoundView';
-import { ApplicationRoute, routes } from './routes';
+import { ApplicationRoute, ApplicationRouteProps, routes } from './routes';
 import { useGoTo } from './useGoTo';
-import { Role } from '../domain/user';
 
-const RouteComponent = (props: {
-  component: FunctionComponent<{ route: ApplicationRoute | undefined }>;
-  routeName: ApplicationRoute['name'];
-  role?: Role;
-}) => {
+const RouteComponent = (props: ApplicationRouteProps<any>) => {
   const [userInfos] = useRecoilState(state.userInfos);
   const location = useLocation();
   const goTo = useGoTo();
@@ -46,34 +41,60 @@ const RouteComponent = (props: {
     }
   }, [props.role, userInfos, goTo, location.pathname]);
   const route = {
-    name: props.routeName,
+    name: props.name,
     ...useParams()
   } as ApplicationRoute;
   return React.createElement(props.component, { route });
 };
 
+const RootSubComponent = (props: {
+  name: ApplicationRoute['name'];
+  component: FunctionComponent<{ route: any | undefined }>;
+}) => {
+  const route = {
+    name: props.name,
+    ...useParams()
+  } as ApplicationRoute;
+  return React.createElement(props.component, { route });
+};
+
+const renderRoutes = (rootPath: string, routes: ApplicationRouteProps<any>[]) =>
+  routes.map(route => {
+    const path = rootPath + route.path;
+    return (
+      <Route path={path} element={<RouteComponent {...route} />}>
+        {route.rootSubComponent && (
+          <Route
+            index
+            element={
+              <RootSubComponent
+                name={route.name}
+                component={route.rootSubComponent}
+              />
+            }
+          />
+        )}
+        {route.subRoutes && renderRoutes(path, route.subRoutes)}
+      </Route>
+    );
+  });
+
+// TODO[tmpl] questions about routing :
+// * how roles work with subrouting
+// Checking to do :
+// * path declaration consistency
+// * path parameters with interface consistency
+// * components parameters with interface consistency
 // TODO[tmpl] see useRoutes
 export const ApplicationRouter = () => (
   <BrowserRouter>
     <Routes>
-      {Object.entries(routes).map(e => {
-        // [doc] DO NOT use a key here, because router Switch only displays once at one,
-        // and it's complicated to use a key which doesn't produce useless re-rendering
-        // TODO[tmpl] is NOT enough ! force key in MainContainer ? hierarchical views if same view for several paths ?
-        const route = e[1];
-        return (
-          <Route
-            path={route.path}
-            element={
-              <RouteComponent
-                component={route.component}
-                role={route.role}
-                routeName={e[0] as ApplicationRoute['name']}
-              />
-            }
-          />
-        );
-      })}
+      {/*
+      // [doc] DO NOT use a key here, because router Switch only displays once at one,
+      // and it's complicated to use a key which doesn't produce useless re-rendering
+      // TODO[tmpl] is NOT enough ! force key in MainContainer ? hierarchical views if same view for several paths ?
+      */}
+      {renderRoutes('', routes)}
       <Route element={<NotFoundView />} />
     </Routes>
   </BrowserRouter>
