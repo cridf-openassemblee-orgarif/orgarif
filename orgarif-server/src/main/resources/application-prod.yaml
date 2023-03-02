@@ -1,0 +1,22 @@
+app.url: https://orgarif.mlorber.net
+#---------------------------------------------------------------------------
+database:
+  host: ${POSTGRESQL_ADDON_HOST}
+  port: ${POSTGRESQL_ADDON_PORT}
+  name: ${POSTGRESQL_ADDON_DB}
+  user: ${POSTGRESQL_ADDON_USER}
+  password: ${POSTGRESQL_ADDON_PASSWORD}
+server.forward-headers-strategy: framework
+#---------------------------------------------------------------------------
+assets:
+  useBuildFiles: true
+  webpackDevPort:
+  webpackDevHost:
+#---------------------------------------------------------------------------
+mailjet:
+  api-key:
+  secret-key:
+#---------------------------------------------------------------------------
+remote-controller:
+  expected-secu: ${REMOTE_CONTROLLER_EXPECTED_SECU}
+#---------------------------------------------------------------------------

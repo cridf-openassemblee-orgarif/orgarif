@@ -1,0 +1,5 @@
+{
+  "java.time.Instant": "domain/datetime.ts",
+  "java.time.LocalDate": "domain/datetime.ts",
+  "java.time.ZoneId": "domain/datetime.ts"
+}
