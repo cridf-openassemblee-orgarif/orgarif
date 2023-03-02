@@ -16,9 +16,9 @@ data class GetUserInfosQuery(val userId: UserId) : Query()
 
 data class GetUserInfosQueryResponse(val userInfos: UserInfos?) : QueryResponse()
 
-class GetUsersListQuery : Query()
+class GetUsersQuery : Query()
 
-data class GetUsersListQueryResponse(val users: List<UserInfos>) : QueryResponse()
+data class GetUsersQueryResponse(val users: List<UserInfos>) : QueryResponse()
 
 data class IsMailAlreadyTakenQuery(val mail: String) : Query()
 

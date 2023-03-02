@@ -1,14 +1,11 @@
 import { UserId } from '../domain/fmk-ids';
 import { UserInfos } from '../domain/user';
 
-export type Query =
-  | GetUserInfosQuery
-  | GetUsersListQuery
-  | IsMailAlreadyTakenQuery;
+export type Query = GetUserInfosQuery | GetUsersQuery | IsMailAlreadyTakenQuery;
 
 export type QueryResponse =
   | GetUserInfosQueryResponse
-  | GetUsersListQueryResponse
+  | GetUsersQueryResponse
   | IsMailAlreadyTakenQueryResponse;
 
 export interface GetUserInfosQuery {
@@ -21,12 +18,12 @@ export interface GetUserInfosQueryResponse {
   userInfos?: UserInfos;
 }
 
-export interface GetUsersListQuery {
-  objectType: 'GetUsersListQuery';
+export interface GetUsersQuery {
+  objectType: 'GetUsersQuery';
 }
 
-export interface GetUsersListQueryResponse {
-  objectType: 'GetUsersListQueryResponse';
+export interface GetUsersQueryResponse {
+  objectType: 'GetUsersQueryResponse';
   users: UserInfos[];
 }
 

@@ -1,6 +1,15 @@
 package orgarif.controller
 
-import orgarif.query.*
+import orgarif.query.GetUserInfosQuery
+import orgarif.query.GetUserInfosQueryHandler
+import orgarif.query.GetUsersQuery
+import orgarif.query.GetUsersQueryHandler
+import orgarif.query.IsMailAlreadyTakenQuery
+import orgarif.query.IsMailAlreadyTakenQueryHandler
+import orgarif.query.Query
+import orgarif.query.QueryConfiguration
+import orgarif.query.QueryHandler
+import orgarif.query.QueryResponse
 import orgarif.repository.user.UserDao
 import orgarif.serialization.Serializer
 import orgarif.service.user.UserSessionService
@@ -15,7 +24,7 @@ class QueryController(
     private val userDao: UserDao,
     private val userSessionService: UserSessionService,
     private val getUserInfosQueryHandler: GetUserInfosQueryHandler,
-    private val getUsersListQueryHandler: GetUsersListQueryHandler,
+    private val getUsersQueryHandler: GetUsersQueryHandler,
     private val isMailAlreadyTakenQueryHandler: IsMailAlreadyTakenQueryHandler,
     private val transactionIsolationService: TransactionIsolationService,
 ) {
@@ -35,7 +44,7 @@ class QueryController(
     private fun handler(query: Query) =
         when (query) {
             is GetUserInfosQuery -> getUserInfosQueryHandler
-            is GetUsersListQuery -> getUsersListQueryHandler
+            is GetUsersQuery -> getUsersQueryHandler
             is IsMailAlreadyTakenQuery -> isMailAlreadyTakenQueryHandler
         }.let { @Suppress("UNCHECKED_CAST") (it as QueryHandler<Query, QueryResponse>) }
 }

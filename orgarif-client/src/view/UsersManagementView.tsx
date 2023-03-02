@@ -6,7 +6,7 @@ import { css } from '@emotion/react';
 import { UserInfos } from '../generated/domain/user';
 import { LoadingState } from '../interfaces';
 import { appContext } from '../ApplicationContext';
-import { GetUsersListQueryResponse } from '../generated/query/queries';
+import { GetUsersQueryResponse } from '../generated/query/queries';
 import { UsersManagementTable } from './users-management/UsersManagementTable';
 import { useSnackbar } from 'notistack';
 import { EditUserDialog } from './users-management/EditUserDialog';
@@ -27,8 +27,8 @@ export const UsersManagementView = (props: {
     setLoading('Loading');
     appContext
       .queryService()
-      .send<GetUsersListQueryResponse>({
-        objectType: 'GetUsersListQuery'
+      .send<GetUsersQueryResponse>({
+        objectType: 'GetUsersQuery'
       })
       .then(r => {
         setUsers(r.users);
