@@ -105,7 +105,9 @@ class KtToTsSymbolProcessor(
                                 (it.type.declaration as KSClassDeclaration)
                                     .declarations
                                     .filterIsInstance<KSPropertyDeclaration>()
-                                    .mapNotNull { ClassMapper.mapProperty(it.type, configuration.mappings) }
+                                    .mapNotNull {
+                                        ClassMapper.mapProperty(it.type, configuration.mappings)
+                                    }
                             }
                         val dependenciesImports =
                             parsed

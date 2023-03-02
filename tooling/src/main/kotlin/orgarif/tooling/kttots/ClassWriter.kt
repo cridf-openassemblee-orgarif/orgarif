@@ -111,5 +111,6 @@ object ClassWriter {
     }
 
     fun propertyClassName(t: KSTypeReference, mappings: Map<String, String>) =
-        ClassMapper.mapProperty(t, mappings) ?: ClassMapper.ClassMapping(className(t.resolve().declaration))
+        ClassMapper.mapProperty(t, mappings)
+            ?: ClassMapper.ClassMapping(className(t.resolve().declaration))
 }

@@ -12,15 +12,23 @@ enum class FileExtension(val postfix: String) {
 enum class MimeType(val fullType: String) {
     JAVASCRIPT("application/javascript"),
     JSON("application/json"),
-    PDF("application/pdf")
+    PDF("application/pdf");
+
+    companion object {
+        val map by lazy { values().associateBy { it.fullType } }
+
+        fun of(fullType: String): MimeType = requireNotNull(ofOrNull(fullType)) { fullType }
+
+        fun ofOrNull(fullType: String): MimeType? = map.get(fullType)
+    }
 }
 
-data class UserFileData(val contentType: String, val file: ByteArray, val originalFilename: String)
+class UserFileData(val contentType: String, val file: ByteArray)
 
 data class UserFileReference(
     val id: UserFileId,
     val userId: UserId,
-    val contentType: String,
+    val contentType: MimeType,
     val originalFilename: String,
     val uploadDate: Instant
 )

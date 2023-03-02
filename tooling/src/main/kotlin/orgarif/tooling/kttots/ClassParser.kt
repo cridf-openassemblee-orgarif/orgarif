@@ -82,7 +82,9 @@ object ClassParser {
             // TODO[tmpl] a priori we should use findActuals
             .let {
                 // TODO[tmpl] infinite loop is possible ?
-                d.getSealedSubclasses().fold(it) { acc, d -> parse(d.asStarProjectedType(), acc, mappings) }
+                d.getSealedSubclasses().fold(it) { acc, d ->
+                    parse(d.asStarProjectedType(), acc, mappings)
+                }
             }
     }
 
