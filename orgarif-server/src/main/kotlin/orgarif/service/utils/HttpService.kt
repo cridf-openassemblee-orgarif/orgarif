@@ -36,12 +36,15 @@ class HttpService(private val okHttpClient: OkHttpClient) {
             get() = buffer?.toString(Charsets.UTF_8)
     }
 
+    fun execute(method: HttpMethod, url: String, vararg headers: Pair<Header, String>) =
+        doExecute(method, url, null, *headers)
+
     fun execute(
         method: HttpMethod,
         url: String,
-        body: String? = null,
+        body: String,
         vararg headers: Pair<Header, String>
-    ) = doExecute(method, url, body?.toRequestBody(), *headers)
+    ) = doExecute(method, url, body.toRequestBody(), *headers)
 
     fun execute(
         method: HttpMethod,
@@ -55,19 +58,17 @@ class HttpService(private val okHttpClient: OkHttpClient) {
         url: String,
         body: RequestBody?,
         vararg headers: Pair<Header, String>
-    ): Response {
-        val request =
-            Request.Builder()
-                .apply {
-                    url(url)
-                    header(Header.Accept.header, jsonMediaType.toString())
-                    header(Header.ContentType.header, jsonMediaType.toString())
-                    headers.forEach { header(it.first.header, it.second) }
-                    method(method.name, body)
-                }
-                .build()
-        return okHttpClient.newCall(request).execute().use { r ->
-            Response(HttpStatus.valueOf(r.code), r.body)
-        }
-    }
+    ): Response =
+        Request.Builder()
+            .apply {
+                url(url)
+                header(Header.Accept.header, jsonMediaType.toString())
+                header(Header.ContentType.header, jsonMediaType.toString())
+                headers.forEach { header(it.first.header, it.second) }
+                method(method.name, body)
+            }
+            .build()
+            .let { okHttpClient.newCall(it) }
+            .execute()
+            .use { r -> Response(HttpStatus.valueOf(r.code), r.body) }
 }
