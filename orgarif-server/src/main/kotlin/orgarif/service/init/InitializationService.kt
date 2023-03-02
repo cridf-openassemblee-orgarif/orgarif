@@ -69,7 +69,8 @@ class InitializationService(
             ApplicationEnvironment.Staging,
             ApplicationEnvironment.Prod -> {
                 if (insertInitialData) {
-                    throw IllegalArgumentException("Inconsistent configuration")
+                    throw IllegalArgumentException(
+                        "Inconsistent configuration, insertInitialData should be false on ${ApplicationInstance.env}")
                 }
                 logger.info {
                     "Deployed build \"${ApplicationInstance.gitRevisionLabel}\", " +
