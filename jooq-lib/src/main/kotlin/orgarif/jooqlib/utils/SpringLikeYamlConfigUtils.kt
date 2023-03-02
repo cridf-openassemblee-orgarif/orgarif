@@ -36,10 +36,12 @@ object SpringLikeYamlConfigUtils {
             // replace system env vars
             .map {
                 it.first to
-                    // TODO[tmpl] write test (with 2 vars in string)
-                    it.second?.replace("\\$\\{[^}]*}".toRegex()) {
-                        System.getenv(it.value.drop(2).dropLast(1))
-                    }
+                    // TODO[tmpl] write tests (with 2 vars in string, with missing var...)
+                    it.second
+                        ?.replace("\\$\\{[^}]*}".toRegex()) {
+                            System.getenv().get(it.value.drop(2).dropLast(1)) ?: ""
+                        }
+                        ?.let { it.ifEmpty { null } }
             }
 
     private fun flattenConf(map: Map<String, Any>): List<Pair<String, String?>> =
