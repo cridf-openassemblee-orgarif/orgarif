@@ -22,26 +22,24 @@ class OrgarifApplication {
                     ApplicationEnvironment.valueOf(it.replaceFirstChar { it.uppercase() })
                 }
                     ?: ApplicationEnvironment.Dev
-            logger.info { "Environment is [${ApplicationInstance.env}]" }
-            System.setProperty(
-                "logging.config", "classpath:logback-webapp-${ApplicationInstance.env}.xml")
-            val app = SpringApplication(OrgarifApplication::class.java)
-            app.setDefaultProperties(mapOf("spring.profiles.default" to springProfile()))
-            app.run(*args)
-        }
-
-        fun springProfile(): String {
             if (ApplicationInstance.env == ApplicationEnvironment.Test) {
                 throw RuntimeException()
             }
-            return ApplicationInstance.env.name.lowercase().let { env ->
-                if (ApplicationInstance.env == ApplicationEnvironment.Dev) {
-                    val userProfile = env + "-" + System.getProperty("user.name")
-                    "$env,$userProfile"
-                } else {
-                    env
-                }
-            }
+            val lowercaseEnv = ApplicationInstance.env.name.lowercase()
+            logger.info { "Environment is [$lowercaseEnv]" }
+            System.setProperty("logging.config", "classpath:logback-webapp-$lowercaseEnv.xml")
+            val app = SpringApplication(OrgarifApplication::class.java)
+            app.setDefaultProperties(
+                mapOf("spring.profiles.default" to springProfile(lowercaseEnv)))
+            app.run(*args)
         }
+
+        fun springProfile(lowercaseEnv: String) =
+            if (ApplicationInstance.env == ApplicationEnvironment.Dev) {
+                val userProfile = lowercaseEnv + "-" + System.getProperty("user.name")
+                "$lowercaseEnv,$userProfile"
+            } else {
+                lowercaseEnv
+            }
     }
 }
