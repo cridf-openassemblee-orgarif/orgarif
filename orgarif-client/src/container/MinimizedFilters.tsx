@@ -30,27 +30,7 @@ export const MinimizedFilters = () => {
       `}
     >
       {activeFilters.map((filter: Category) => {
-        return filter.libelle.length > 20 ? (
-          <Tooltip title={filter.libelle} arrow key={asString(filter.id)}>
-            <Chip
-              key={asString(filter.id)}
-              label={filter.libelle.toUpperCase()}
-              size="small"
-              color="error"
-              deleteIcon={<ClearIcon />}
-              onDelete={() =>
-                setActiveFilters((prevList: Category[]) => [
-                  ...prevList.filter((f: Category) => f !== filter)
-                ])
-              }
-              css={css`
-                padding: 0.25em;
-                margin: 0.25em;
-                max-width: 200px;
-              `}
-            />
-          </Tooltip>
-        ) : (
+        const chip = (
           <Chip
             key={asString(filter.id)}
             label={filter.libelle.toUpperCase()}
@@ -68,6 +48,13 @@ export const MinimizedFilters = () => {
               max-width: 200px;
             `}
           />
+        );
+        return filter.libelle.length > 20 ? (
+          <Tooltip title={filter.libelle} arrow key={asString(filter.id)}>
+            {chip}
+          </Tooltip>
+        ) : (
+          chip
         );
       })}
     </Box>
