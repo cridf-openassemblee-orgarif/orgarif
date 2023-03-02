@@ -28,18 +28,18 @@ export const LoginForm = (props: {
     control,
     formState: { errors }
   } = useForm<LoginFormRawInput>();
-  const [loading, setLoading] = useState<LoadingState>('idle');
+  const [loading, setLoading] = useState<LoadingState>('Idle');
   return (
     <form
       onSubmit={handleSubmit(input => {
-        setLoading('loading');
+        setLoading('Loading');
         props
           .onSubmit({
             mail: input.mail,
             password: asNominalString(input.password)
           })
-          .then(() => setLoading('idle'))
-          .catch(() => setLoading('error'));
+          .then(() => setLoading('Idle'))
+          .catch(() => setLoading('Error'));
       })}
     >
       <div

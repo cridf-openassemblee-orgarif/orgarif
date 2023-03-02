@@ -41,7 +41,7 @@ class InitializationService(
     init {
         TimeZone.setDefault(TimeZone.getTimeZone("UTC"))
         when (ApplicationInstance.env) {
-            ApplicationEnvironment.dev -> {
+            ApplicationEnvironment.Dev -> {
                 if (databaseIfEmpty(dataSource)) {
                     ResetDatabase.resetDatabaseSchema(databaseConfiguration)
                     if (insertInitialData) {
@@ -52,14 +52,14 @@ class InitializationService(
                     devInitialDataInjectorService.initiateDevData()
                 }
             }
-            ApplicationEnvironment.test -> {
+            ApplicationEnvironment.Test -> {
                 ResetDatabase.resetDatabaseSchema(databaseConfiguration)
                 if (insertInitialData) {
                     ResetDatabase.insertInitialData(databaseConfiguration)
                 }
             }
-            ApplicationEnvironment.staging,
-            ApplicationEnvironment.prod -> {
+            ApplicationEnvironment.Staging,
+            ApplicationEnvironment.Prod -> {
                 if (insertInitialData) {
                     throw IllegalArgumentException("Inconsistent configuration")
                 }

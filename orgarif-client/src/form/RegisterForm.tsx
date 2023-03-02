@@ -49,19 +49,19 @@ export const RegisterForm = (props: {
     control,
     formState: { errors }
   } = useForm<RegisterFormRawInput>();
-  const [loading, setLoading] = useState<LoadingState>('idle');
+  const [loading, setLoading] = useState<LoadingState>('Idle');
   return (
     <form
       onSubmit={handleSubmit(input => {
-        setLoading('loading');
+        setLoading('Loading');
         props
           .onSubmit({
             mail: input.mail,
             password: asNominalString(input.password),
             displayName: input.displayName
           })
-          .then(() => setLoading('idle'))
-          .catch(() => setLoading('error'));
+          .then(() => setLoading('Idle'))
+          .catch(() => setLoading('Error'));
       })}
     >
       <div

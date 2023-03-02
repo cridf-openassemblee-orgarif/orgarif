@@ -97,8 +97,8 @@ class MailService(
     }
 
     enum class MailLog {
-        doLog,
-        doNotLog
+        DoLog,
+        DoNotLog
     }
 
     data class MailLogProperties(
@@ -121,7 +121,7 @@ class MailService(
         mailLogProperties: MailLogProperties? = null,
         attachments: List<Attachment>? = null
     ): MailLogId? {
-        if (ApplicationInstance.env == ApplicationEnvironment.dev &&
+        if (ApplicationInstance.env == ApplicationEnvironment.Dev &&
             recipientMail != devLogSenderMail) {
             throw IllegalArgumentException("Mail send canceled en env dev to ${recipientMail}")
         }
@@ -130,7 +130,7 @@ class MailService(
             mailJetObjectMapper.writeValueAsString(
                 MailJetEventPayload(ApplicationInstance.env.name))
         val subject =
-            if (ApplicationInstance.env == ApplicationEnvironment.prod) mailSubject
+            if (ApplicationInstance.env == ApplicationEnvironment.Prod) mailSubject
             else "[${ApplicationInstance.env}] $mailSubject"
         val mailJetAttachments =
             (attachments ?: emptyList()).map {
@@ -141,7 +141,7 @@ class MailService(
             }
         val campaignName =
             mailReference.name +
-                (if (ApplicationInstance.env != ApplicationEnvironment.prod)
+                (if (ApplicationInstance.env != ApplicationEnvironment.Prod)
                     "-${ApplicationInstance.env}"
                 else "")
         val body =
@@ -177,7 +177,7 @@ class MailService(
             throw MessageNotSentException("${response.code} $recipientMail $mailSubject")
         }
         return when (logMail) {
-            MailLog.doLog -> {
+            MailLog.DoLog -> {
                 mailLogProperties ?: throw IllegalArgumentException("$recipientMail $mailSubject")
                 try {
                     mailLogDao.insert(
@@ -203,7 +203,7 @@ class MailService(
                 }
                 mailLogId
             }
-            MailLog.doNotLog -> {
+            MailLog.DoNotLog -> {
                 logger.info { "Mail sent (no log) to $recipientMail" }
                 null
             }

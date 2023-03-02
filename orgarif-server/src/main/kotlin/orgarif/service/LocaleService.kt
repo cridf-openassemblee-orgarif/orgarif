@@ -10,7 +10,7 @@ class LocaleService(val notificationService: NotificationService) {
 
     fun selectLanguage(locales: Enumeration<Locale>?): Language {
         if (locales == null) {
-            return Language.en
+            return Language.En
         }
         for (locale in locales) {
             val language = Language.values().find { it.name == locale.language }
@@ -19,7 +19,7 @@ class LocaleService(val notificationService: NotificationService) {
             }
         }
         notificationService.notify(
-            "No locale found in user locales $locales", NotificationService.Channel.info)
-        return Language.en
+            "No locale found in user locales $locales", NotificationService.Channel.Info)
+        return Language.En
     }
 }

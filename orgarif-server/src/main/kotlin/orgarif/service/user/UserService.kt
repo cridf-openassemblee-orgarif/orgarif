@@ -61,17 +61,17 @@ class UserService(
                 username = null,
                 displayName = displayName.trim(),
                 language = language,
-                roles = setOf(Role.user),
+                roles = setOf(Role.User),
                 signupDate = now,
                 lastUpdate = now)
         userDao.insert(user, hashedPassword)
         if (dirtyMail != null) {
             userMailLogDao.insert(
                 UserMailLogDao.Record(
-                    randomService.id(), user.id, dirtyMail, AuthLogType.dirtyMail, now))
+                    randomService.id(), user.id, dirtyMail, AuthLogType.DirtyMail, now))
         }
         notificationService.notify(
-            "${user.mail} just suscribed.", NotificationService.Channel.newUser)
+            "${user.mail} just suscribed.", NotificationService.Channel.NewUser)
         return user
     }
 
@@ -85,7 +85,7 @@ class UserService(
         if (newDirtyMail != null) {
             userMailLogDao.insert(
                 UserMailLogDao.Record(
-                    randomService.id(), userId, newDirtyMail, AuthLogType.dirtyMail, now))
+                    randomService.id(), userId, newDirtyMail, AuthLogType.DirtyMail, now))
         }
         if (newMail == formerMail) {
             // TODO[tmpl] user should be warned (maybe he tried a cleaned email)
@@ -96,7 +96,7 @@ class UserService(
         userDao.updateMail(userId, newMail, now)
         userMailLogDao.insert(
             UserMailLogDao.Record(
-                randomService.id(), userId, formerMail, AuthLogType.formerMail, now))
+                randomService.id(), userId, formerMail, AuthLogType.FormerMail, now))
     }
 
     fun hashPassword(password: PlainStringPassword): HashedPassword {

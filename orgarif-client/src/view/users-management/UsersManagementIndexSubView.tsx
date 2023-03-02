@@ -10,10 +10,10 @@ import { useSnackbar } from 'notistack';
 
 export const UsersManagementIndexSubView = () => {
   const [users, setUsers] = useState<UserInfos[]>([]);
-  const [loading, setLoading] = useState<LoadingState>('idle');
+  const [loading, setLoading] = useState<LoadingState>('Idle');
   const { enqueueSnackbar } = useSnackbar();
   useEffect(() => {
-    setLoading('loading');
+    setLoading('Loading');
     appContext
       .queryService()
       .send<GetUsersListQueryResponse>({
@@ -21,10 +21,10 @@ export const UsersManagementIndexSubView = () => {
       })
       .then(r => {
         setUsers(r.users);
-        setLoading('idle');
+        setLoading('Idle');
       })
       .catch(() => {
-        setLoading('error');
+        setLoading('Error');
         enqueueSnackbar('An error occured while retrieving data.', {
           variant: 'error'
         });

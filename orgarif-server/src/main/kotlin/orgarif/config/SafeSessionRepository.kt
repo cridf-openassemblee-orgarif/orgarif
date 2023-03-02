@@ -19,7 +19,7 @@ class SafeSessionRepository(val repository: FindByIndexNameSessionRepository<Ses
         try {
             repository.findById(id)
         } catch (e: Exception) {
-            if (ApplicationInstance.env == ApplicationEnvironment.dev) {
+            if (ApplicationInstance.env == ApplicationEnvironment.Dev) {
                 // TODO[tmpl][user] better mess
                 throw IllegalArgumentException(
                     "WARNING session deserialization problem - please prevent it for production", e)
@@ -34,7 +34,7 @@ class SafeSessionRepository(val repository: FindByIndexNameSessionRepository<Ses
         try {
             repository.save(session)
         } catch (e: Exception) {
-            if (ApplicationInstance.env == ApplicationEnvironment.dev) {
+            if (ApplicationInstance.env == ApplicationEnvironment.Dev) {
                 // TODO[tmpl][user] better mess
                 throw IllegalArgumentException(
                     "WARNING session deserialization problem - please prevent it for production", e)

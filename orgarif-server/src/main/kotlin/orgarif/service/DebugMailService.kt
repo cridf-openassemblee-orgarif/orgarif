@@ -37,7 +37,7 @@ class DebugMailService(
     fun devMail(mailSubject: String, mailContent: String, monitoringCategory: String? = null) {
         // TODO[tmpl] in conf instead ?
         if (ApplicationInstance.env !in
-            setOf(ApplicationEnvironment.dev, ApplicationEnvironment.test)) {
+            setOf(ApplicationEnvironment.Dev, ApplicationEnvironment.Test)) {
             taskExecutor.execute {
                 val body =
                     DebugMailJetMessages(

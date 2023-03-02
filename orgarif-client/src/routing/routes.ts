@@ -47,13 +47,13 @@ export const routes: ApplicationRouteProps<any>[] = [
     path: '/users-management',
     component: UsersManagementView,
     rootSubComponent: UsersManagementIndexSubView,
-    role: 'admin',
+    role: 'Admin',
     subRoutes: [
       {
         name: 'UsersManagementUserRoute',
         path: '/:userId',
         component: UsersManagementUserSubView,
-        role: 'admin'
+        role: 'Admin'
       }
     ]
   }

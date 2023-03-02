@@ -28,15 +28,15 @@ class ReactHotLoaderController(
 
     @GetMapping("/*.hot-update.*")
     fun handle(request: HttpServletRequest, response: HttpServletResponse) {
-        if (ApplicationInstance.env != ApplicationEnvironment.dev) {
+        if (ApplicationInstance.env != ApplicationEnvironment.Dev) {
             throw OrgarifNotFoundException()
         }
         val path = request.servletPath
         response.contentType =
             if (path.endsWith(".js")) {
-                MimeType.javascript.fullType
+                MimeType.Javascript.fullType
             } else {
-                MimeType.json.fullType
+                MimeType.Json.fullType
             }
         val r =
             httpService.execute(

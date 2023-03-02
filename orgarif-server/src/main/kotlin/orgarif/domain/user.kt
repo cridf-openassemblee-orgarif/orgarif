@@ -5,18 +5,18 @@ import com.fasterxml.jackson.annotation.JsonTypeName
 import orgarif.repository.user.UserDao
 
 enum class Language {
-    en,
-    test
+    En,
+    Test
 }
 
 enum class Role {
-    user,
-    admin
+    User,
+    Admin
 }
 
 enum class AuthLogType {
-    dirtyMail,
-    formerMail
+    DirtyMail,
+    FormerMail
 }
 
 data class UserInfos(
@@ -59,22 +59,22 @@ data class UserSession(val sessionId: UserSessionId, val userId: UserId, val rol
 }
 
 enum class LoginResult {
-    loggedIn,
-    mailNotFound,
-    badPassword
+    LoggedIn,
+    MailNotFound,
+    BadPassword
 }
 
 enum class RegisterResult {
-    registered,
-    mailAlreadyExists
+    Registered,
+    MailAlreadyExists
 }
 
 enum class UpdateIdentityResult {
-    updated,
-    mailAlreadyExists
+    Updated,
+    MailAlreadyExists
 }
 
 enum class SendLostPasswordMailResponse {
-    unknownLogin,
-    ok
+    UnknownLogin,
+    Ok
 }

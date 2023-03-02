@@ -21,7 +21,7 @@ export const RootView = () => {
       )}
       {userInfos && <div>You're connected</div>}
       <ComponentsDemonstration />
-      {userInfos && userInfos.roles.includes('admin') && (
+      {userInfos && userInfos.roles.includes('Admin') && (
         <RouteLink
           route={{
             name: 'UsersManagementRoute'

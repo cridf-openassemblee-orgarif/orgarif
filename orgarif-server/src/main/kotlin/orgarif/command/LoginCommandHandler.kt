@@ -32,12 +32,12 @@ class LoginCommandHandler(
         val cleanMail = UserService.cleanMail(command.mail)
         val user =
             userDao.fetchOrNullByMail(cleanMail)
-                ?: return LoginCommandResponse(LoginResult.mailNotFound, null)
+                ?: return LoginCommandResponse(LoginResult.MailNotFound, null)
         val userPassword = userDao.fetchPassword(user.id)
         if (!userService.passwordMatches(command.password, userPassword)) {
-            return LoginCommandResponse(LoginResult.badPassword, null)
+            return LoginCommandResponse(LoginResult.BadPassword, null)
         }
         userSessionService.authenticateUser(user, request, response)
-        return LoginCommandResponse(LoginResult.loggedIn, UserInfos.fromUser(user))
+        return LoginCommandResponse(LoginResult.LoggedIn, UserInfos.fromUser(user))
     }
 }

@@ -11,12 +11,12 @@ class NotificationService(val taskExecutor: ApplicationTaskExecutor, val httpSer
     private val logger = KotlinLogging.logger {}
 
     enum class Channel {
-        newUser,
-        info,
+        NewUser,
+        Info,
     }
 
     fun notify(message: String, channel: Channel) {
-        if (ApplicationInstance.env == ApplicationEnvironment.prod) {
+        if (ApplicationInstance.env == ApplicationEnvironment.Prod) {
             taskExecutor.execute {}
         } else {
             logger.info { "[${channel.name}] $message" }

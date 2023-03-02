@@ -16,12 +16,12 @@ import org.springframework.stereotype.Repository
 class UserFileDao(val jooq: DSLContext) {
 
     enum class UserFileField(val field: TableField<UserFileRecord, *>, val isDataField: Boolean) {
-        id(USER_FILE.ID, false),
-        userId(USER_FILE.USER_ID, false),
-        file(USER_FILE.FILE, true),
-        contentType(USER_FILE.CONTENT_TYPE, false),
-        originalFilename(USER_FILE.ORIGINAL_FILENAME, false),
-        uploadDate(USER_FILE.UPLOAD_DATE, false)
+        Id(USER_FILE.ID, false),
+        UserId(USER_FILE.USER_ID, false),
+        File(USER_FILE.FILE, true),
+        ContentType(USER_FILE.CONTENT_TYPE, false),
+        OriginalFilename(USER_FILE.ORIGINAL_FILENAME, false),
+        UploadDate(USER_FILE.UPLOAD_DATE, false)
     }
 
     val nonDataFields by lazy {

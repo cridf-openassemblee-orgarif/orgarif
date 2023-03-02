@@ -41,14 +41,14 @@ export const LoginView = () => {
       .then(r => {
         setLoginResult(r.result);
         switch (r.result) {
-          case 'loggedIn':
+          case 'LoggedIn':
             if (!r.userinfos) {
               throw Errors._198c103e();
             }
             connect(r.userinfos);
             break;
-          case 'mailNotFound':
-          case 'badPassword':
+          case 'MailNotFound':
+          case 'BadPassword':
             break;
           default:
             assertUnreachable(r.result);
@@ -83,10 +83,10 @@ export const LoginView = () => {
               width: 400px;
             `}
           >
-            {loginResult !== 'loggedIn' && !userInfos && (
+            {loginResult !== 'LoggedIn' && !userInfos && (
               <LoginForm onSubmit={login} />
             )}
-            {!userInfos && bootstrapData.env === 'dev' && (
+            {!userInfos && bootstrapData.env === 'Dev' && (
               <div
                 css={css`
                   margin-top: 20px;
@@ -115,11 +115,11 @@ export const LoginView = () => {
               >
                 {(() => {
                   switch (loginResult) {
-                    case 'loggedIn':
+                    case 'LoggedIn':
                       return null;
-                    case 'mailNotFound':
+                    case 'MailNotFound':
                       return <div>User not found</div>;
-                    case 'badPassword':
+                    case 'BadPassword':
                       return <div>Bad password</div>;
                     default:
                       assertUnreachable(loginResult);

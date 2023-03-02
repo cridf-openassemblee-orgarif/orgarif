@@ -18,8 +18,10 @@ class OrgarifApplication {
         @JvmStatic
         fun main(args: Array<String>) {
             ApplicationInstance.env =
-                System.getenv("ENV")?.let { ApplicationEnvironment.valueOf(it) }
-                    ?: ApplicationEnvironment.dev
+                System.getenv("ENV")?.let {
+                    ApplicationEnvironment.valueOf(it.replaceFirstChar { it.uppercase() })
+                }
+                    ?: ApplicationEnvironment.Dev
             logger.info { "Environment is [${ApplicationInstance.env}]" }
             System.setProperty(
                 "logging.config", "classpath:logback-webapp-${ApplicationInstance.env}.xml")
@@ -29,11 +31,11 @@ class OrgarifApplication {
         }
 
         fun springProfile(): String {
-            if (ApplicationInstance.env == ApplicationEnvironment.test) {
+            if (ApplicationInstance.env == ApplicationEnvironment.Test) {
                 throw RuntimeException()
             }
-            return ApplicationInstance.env.name.let { env ->
-                if (ApplicationInstance.env == ApplicationEnvironment.dev) {
+            return ApplicationInstance.env.name.lowercase().let { env ->
+                if (ApplicationInstance.env == ApplicationEnvironment.Dev) {
                     val userProfile = env + "-" + System.getProperty("user.name")
                     "$env,$userProfile"
                 } else {

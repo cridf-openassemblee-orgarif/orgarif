@@ -50,9 +50,9 @@ class RegisterCommandHandler(
                     command.displayName,
                     localeService.selectLanguage(request.locales))
             } catch (e: MailAlreadyRegisteredException) {
-                return RegisterCommandResponse(RegisterResult.mailAlreadyExists, null)
+                return RegisterCommandResponse(RegisterResult.MailAlreadyExists, null)
             }
         userSessionService.authenticateUser(user, request, response)
-        return RegisterCommandResponse(RegisterResult.registered, UserInfos.fromUser(user))
+        return RegisterCommandResponse(RegisterResult.Registered, UserInfos.fromUser(user))
     }
 }

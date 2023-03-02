@@ -24,14 +24,14 @@ export const RegisterView = () => {
       })
       .then(r => {
         switch (r.result) {
-          case 'registered':
+          case 'Registered':
             if (!r.userinfos) {
               throw Errors._db434940();
             }
             appContext.csrfTokenService().refreshToken();
             setUserInfos(r.userinfos);
             break;
-          case 'mailAlreadyExists':
+          case 'MailAlreadyExists':
             break;
           default:
             assertUnreachable(r.result);
@@ -59,10 +59,10 @@ export const RegisterView = () => {
               width: 400px;
             `}
           >
-            {registerResult !== 'registered' && !userInfos && (
+            {registerResult !== 'Registered' && !userInfos && (
               <RegisterForm
                 onSubmit={register}
-                mailIsAlreadyTaken={registerResult === 'mailAlreadyExists'}
+                mailIsAlreadyTaken={registerResult === 'MailAlreadyExists'}
               />
             )}
             {userInfos && (

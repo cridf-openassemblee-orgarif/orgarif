@@ -19,19 +19,20 @@ class ApplicationInstance(
 
     companion object {
         // is reset by OrgarifApplication when env is different
-        var env = ApplicationEnvironment.test
+        // TODO not var but get / set
+        var env = ApplicationEnvironment.Test
     }
 
     init {
         // verify env is in profiles
         val profiles = let {
-            val e = ApplicationEnvironment.values().map { it.name }
+            val e = ApplicationEnvironment.values().map { it.name.lowercase() }
             environment.activeProfiles.filter { it in e }
         }
         // if not empty, let's check profiles are consistent with env
         // (if is empty, default profiles will be enabled)
         if (profiles.isNotEmpty()) {
-            if (profiles.first() != env.name) {
+            if (profiles.first() != env.name.lowercase()) {
                 throw IllegalStateException("Spring profiles should start by $env (is $profiles)")
             }
             if (profiles.size != 1) {
@@ -54,7 +55,7 @@ class ApplicationInstance(
     val gitRevisionLabel: String by lazy {
         gitRevisionProperties?.getProperty("shortGitRevision")
             ?: let {
-                if (env !in setOf(ApplicationEnvironment.dev, ApplicationEnvironment.test)) {
+                if (env !in setOf(ApplicationEnvironment.Dev, ApplicationEnvironment.Test)) {
                     throw RuntimeException("No git revision label in $env")
                 }
                 "[dev]"

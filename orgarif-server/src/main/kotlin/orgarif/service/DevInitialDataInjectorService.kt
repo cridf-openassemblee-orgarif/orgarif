@@ -40,8 +40,8 @@ class DevInitialDataInjectorService(
                     mail = mail,
                     username = username,
                     displayName = username,
-                    language = Language.en,
-                    roles = setOf(Role.user).let { if (admin) it + Role.admin else it },
+                    language = Language.En,
+                    roles = setOf(Role.User).let { if (admin) it + Role.Admin else it },
                     signupDate = now,
                     lastUpdate = now),
                 userService.hashPassword(PlainStringPassword(username)))

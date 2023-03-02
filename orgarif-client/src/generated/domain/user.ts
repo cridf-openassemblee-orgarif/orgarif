@@ -1,8 +1,6 @@
 import { UserId } from './fmk-ids';
 
-export type Role = 
- | 'user'
- | 'admin'
+export type Role = 'User' | 'Admin';
 
 export interface UserInfos {
   id: UserId;
@@ -11,12 +9,6 @@ export interface UserInfos {
   roles: Role[];
 }
 
-export type LoginResult = 
- | 'loggedIn'
- | 'mailNotFound'
- | 'badPassword'
+export type LoginResult = 'LoggedIn' | 'MailNotFound' | 'BadPassword';
 
-export type RegisterResult = 
- | 'registered'
- | 'mailAlreadyExists'
-
+export type RegisterResult = 'Registered' | 'MailAlreadyExists';

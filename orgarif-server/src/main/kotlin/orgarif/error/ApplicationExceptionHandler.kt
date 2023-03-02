@@ -44,8 +44,8 @@ class ApplicationExceptionHandler(
         // log userid, mail, ip
         val id = randomService.id<RequestErrorId>()
         val readableStackTrace =
-            if (ApplicationInstance.env == ApplicationEnvironment.dev ||
-                userSessionService.hasRole(Role.admin)) {
+            if (ApplicationInstance.env == ApplicationEnvironment.Dev ||
+                userSessionService.hasRole(Role.Admin)) {
                 ReadableStackTrace(exception)
             } else {
                 null
@@ -112,8 +112,8 @@ class ApplicationExceptionHandler(
         response.status = requestError.status
         val stackTrace = requestError.stackTrace
         // TODO[tmpl][secu] reliable ?
-        if (request.getHeader("Content-Type") == MimeType.json.fullType) {
-            response.contentType = MimeType.json.fullType
+        if (request.getHeader("Content-Type") == MimeType.Json.fullType) {
+            response.contentType = MimeType.Json.fullType
             // write in the buffer with
             // objectMapper.writeValue(response.outputStream, requestErrorNode)
             // is buggy...
@@ -130,7 +130,7 @@ class ApplicationExceptionHandler(
             mav.model["requestErrorIdAsString"] =
                 OrgarifStringUtils.serializeUuid(requestError.id.rawId)
             mav.model["requestError"] = requestError
-            if (ApplicationInstance.env == ApplicationEnvironment.dev && stackTrace != null) {
+            if (ApplicationInstance.env == ApplicationEnvironment.Dev && stackTrace != null) {
                 mav.model[ApplicationConstants.springMvcModelKeyStackTrace] =
                     stackTrace.toReadableString()
             }

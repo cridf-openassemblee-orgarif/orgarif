@@ -18,8 +18,8 @@ object TestData {
             mail = "mail",
             username = "username",
             displayName = "displayName",
-            language = Language.en,
-            roles = setOf(Role.user),
+            language = Language.En,
+            roles = setOf(Role.User),
             signupDate = date,
             lastUpdate = date)
     }

@@ -14,10 +14,10 @@ const ButtonContent = (
   }>
 ) => {
   switch (props.loadingState) {
-    case 'idle':
-    case 'error':
+    case 'Idle':
+    case 'Error':
       return <>{props.children}</>;
-    case 'loading':
+    case 'Loading':
       return (
         <>
           <div
@@ -64,12 +64,12 @@ const LoadingButtonBase = (
         ? React.cloneElement(props.startIcon, {
             style: {
               // so button sizing doesn't change
-              visibility: props.loadingState === 'idle' ? 'visible' : 'hidden'
+              visibility: props.loadingState === 'Idle' ? 'visible' : 'hidden'
             }
           })
         : undefined
     }
-    disabled={props.loadingState === 'loading'}
+    disabled={props.loadingState === 'Loading'}
     form={props.formId}
     {...extractEmotionCss(props)}
   >
@@ -88,15 +88,15 @@ export const LoadingButton = (
     css?: EmotionStyles;
   }>
 ) => {
-  const [loading, setLoading] = useState<LoadingState>('idle');
+  const [loading, setLoading] = useState<LoadingState>('Idle');
   return (
     <LoadingButtonBase
       onClick={() => {
-        setLoading('loading');
+        setLoading('Loading');
         props
           .onClick()
-          .then(() => setLoading('idle'))
-          .catch(() => setLoading('error'));
+          .then(() => setLoading('Idle'))
+          .catch(() => setLoading('Error'));
       }}
       loadingState={loading}
       type={props.type}

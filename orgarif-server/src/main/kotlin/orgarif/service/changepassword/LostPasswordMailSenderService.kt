@@ -44,8 +44,8 @@ class LostPasswordMailSenderService(
             user.mail,
             "Change your password",
             mailContent,
-            MailReference.lostPassword,
-            MailService.MailLog.doLog,
+            MailReference.LostPassword,
+            MailService.MailLog.DoLog,
             MailService.MailLogProperties(
                 applicationInstance.deploymentId, user.id, serialize(data)))
     }

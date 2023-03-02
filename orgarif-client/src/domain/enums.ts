@@ -12,8 +12,8 @@ export const enumValues =
     x;
 
 export const applicationEnvironments = enumValues<ApplicationEnvironment>()(
-  'dev',
-  'staging',
-  'prod',
-  'test'
+  'Dev',
+  'Staging',
+  'Prod',
+  'Test'
 );
