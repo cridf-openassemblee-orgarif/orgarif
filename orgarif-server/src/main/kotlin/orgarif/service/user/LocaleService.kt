@@ -1,6 +1,7 @@
-package orgarif.service
+package orgarif.service.user
 
 import orgarif.domain.Language
+import orgarif.service.utils.NotificationService
 import java.util.Enumeration
 import java.util.Locale
 import org.springframework.stereotype.Service

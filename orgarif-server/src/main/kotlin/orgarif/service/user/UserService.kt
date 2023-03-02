@@ -8,9 +8,9 @@ import orgarif.domain.Role
 import orgarif.domain.UserId
 import orgarif.repository.user.UserDao
 import orgarif.repository.user.UserMailLogDao
-import orgarif.service.DateService
-import orgarif.service.NotificationService
-import orgarif.service.RandomService
+import orgarif.service.utils.DateService
+import orgarif.service.utils.NotificationService
+import orgarif.service.utils.random.RandomService
 import orgarif.utils.OrgarifStringUtils
 import mu.KotlinLogging
 import org.springframework.security.crypto.password.PasswordEncoder

@@ -3,8 +3,8 @@ package orgarif.controller
 import orgarif.domain.ApplicationEnvironment
 import orgarif.domain.MimeType
 import orgarif.error.OrgarifNotFoundException
-import orgarif.service.ApplicationInstance
-import orgarif.service.HttpService
+import orgarif.service.utils.ApplicationInstance
+import orgarif.service.utils.HttpService
 import javax.servlet.http.HttpServletRequest
 import javax.servlet.http.HttpServletResponse
 import mu.KotlinLogging

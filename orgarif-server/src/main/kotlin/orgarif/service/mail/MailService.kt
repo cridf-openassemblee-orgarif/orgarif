@@ -1,4 +1,4 @@
-package orgarif.service
+package orgarif.service.mail
 
 import com.fasterxml.jackson.databind.ObjectMapper
 import com.fasterxml.jackson.databind.PropertyNamingStrategy
@@ -14,6 +14,10 @@ import orgarif.domain.MimeType
 import orgarif.domain.UserId
 import orgarif.error.MessageNotSentException
 import orgarif.repository.log.MailLogDao
+import orgarif.service.utils.ApplicationInstance
+import orgarif.service.utils.DateService
+import orgarif.service.utils.HttpService
+import orgarif.service.utils.random.RandomService
 import java.util.Base64
 import mu.KotlinLogging
 import okhttp3.Credentials
@@ -70,7 +74,8 @@ class MailService(
 
     private data class MailJetMessages(val Messages: List<MailJetMessage>)
 
-    // TODO[tmpl][mail][doc] this informations is here to display the environnement which sent the mail in mailjet ui
+    // TODO[tmpl][mail][doc] this informations is here to display the environnement which sent the
+    // mail in mailjet ui
     private data class MailJetEventPayload(val env: String)
 
     // TODO[tmpl][mail] check this... + uppercase first letter handled here ?

@@ -1,7 +1,7 @@
 package orgarif
 
 import orgarif.domain.ApplicationEnvironment
-import orgarif.service.ApplicationInstance
+import orgarif.service.utils.ApplicationInstance
 import mu.KotlinLogging
 import org.springframework.boot.SpringApplication
 import org.springframework.boot.autoconfigure.SpringBootApplication

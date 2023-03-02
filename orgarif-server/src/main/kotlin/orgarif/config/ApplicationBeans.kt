@@ -1,9 +1,9 @@
 package orgarif.config
 
 import orgarif.serialization.Serializer
-import orgarif.service.IdLogService
-import orgarif.service.RandomService
 import orgarif.service.utils.ApplicationTaskExecutor
+import orgarif.service.utils.random.IdLogService
+import orgarif.service.utils.random.RandomService
 import okhttp3.OkHttpClient
 import org.springframework.context.annotation.Bean
 import org.springframework.context.annotation.Configuration

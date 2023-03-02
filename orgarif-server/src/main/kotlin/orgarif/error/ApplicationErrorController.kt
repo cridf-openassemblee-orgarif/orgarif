@@ -2,7 +2,7 @@ package orgarif.error
 
 import orgarif.config.Routes
 import orgarif.domain.RequestErrorId
-import orgarif.service.RandomService
+import orgarif.service.utils.random.RandomService
 import java.util.Date
 import javax.servlet.http.HttpServletResponse
 import mu.KotlinLogging

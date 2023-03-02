@@ -8,9 +8,9 @@ import orgarif.error.AppErrors
 import orgarif.error.OrgarifSecurityException
 import orgarif.repository.user.UserDao
 import orgarif.repository.user.UserSessionLogDao
-import orgarif.service.ApplicationInstance
-import orgarif.service.DateService
-import orgarif.service.RandomService
+import orgarif.service.utils.ApplicationInstance
+import orgarif.service.utils.DateService
+import orgarif.service.utils.random.RandomService
 import java.time.Duration
 import javax.servlet.http.HttpServletRequest
 import javax.servlet.http.HttpServletResponse

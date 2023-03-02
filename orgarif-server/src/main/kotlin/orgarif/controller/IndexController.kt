@@ -5,9 +5,9 @@ import orgarif.domain.ApplicationBootstrapData
 import orgarif.domain.UserInfos
 import orgarif.repository.user.UserDao
 import orgarif.serialization.Serializer.serialize
-import orgarif.service.ApplicationInstance
 import orgarif.service.user.MagicLinkTokenService
 import orgarif.service.user.UserSessionService
+import orgarif.service.utils.ApplicationInstance
 import orgarif.utils.OrgarifStringUtils
 import freemarker.ext.beans.BeansWrapperBuilder
 import freemarker.template.Configuration

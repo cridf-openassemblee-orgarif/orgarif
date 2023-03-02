@@ -1,4 +1,4 @@
-package orgarif.service
+package orgarif.service.utils.random
 
 import orgarif.utils.OrgarifStringUtils
 import java.util.concurrent.atomic.AtomicInteger

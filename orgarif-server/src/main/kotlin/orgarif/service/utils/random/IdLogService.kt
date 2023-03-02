@@ -1,4 +1,4 @@
-package orgarif.service
+package orgarif.service.utils.random
 
 import orgarif.domain.OrgarifId
 import orgarif.utils.OrgarifStringUtils

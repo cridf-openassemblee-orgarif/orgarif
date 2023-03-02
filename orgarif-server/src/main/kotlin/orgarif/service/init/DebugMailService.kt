@@ -1,8 +1,11 @@
-package orgarif.service
+package orgarif.service.init
 
 import orgarif.domain.ApplicationEnvironment
-import orgarif.service.MailService.MailJetMail
+import orgarif.service.mail.MailService
+import orgarif.service.mail.MailService.MailJetMail
+import orgarif.service.utils.ApplicationInstance
 import orgarif.service.utils.ApplicationTaskExecutor
+import orgarif.service.utils.HttpService
 import mu.KotlinLogging
 import okhttp3.Credentials
 import org.springframework.beans.factory.annotation.Value

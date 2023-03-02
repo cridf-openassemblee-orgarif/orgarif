@@ -14,12 +14,12 @@ import orgarif.command.RegisterCommandHandler
 import orgarif.repository.log.CommandLogDao
 import orgarif.repository.user.UserDao
 import orgarif.serialization.Serializer
-import orgarif.service.ApplicationInstance
-import orgarif.service.DateService
-import orgarif.service.IdLogService
-import orgarif.service.RandomService
 import orgarif.service.user.UserSessionService
+import orgarif.service.utils.ApplicationInstance
+import orgarif.service.utils.DateService
 import orgarif.service.utils.TransactionIsolationService
+import orgarif.service.utils.random.IdLogService
+import orgarif.service.utils.random.RandomService
 import java.time.Instant
 import javax.servlet.http.HttpServletRequest
 import javax.servlet.http.HttpServletResponse

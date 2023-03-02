@@ -1,11 +1,10 @@
-package orgarif.service
+package orgarif.service.utils
 
 import okhttp3.MediaType.Companion.toMediaType
 import okhttp3.OkHttpClient
 import okhttp3.Request
 import okhttp3.RequestBody
 import okhttp3.RequestBody.Companion.toRequestBody
-import okhttp3.Response
 import okhttp3.ResponseBody
 import org.springframework.http.HttpHeaders
 import org.springframework.http.HttpMethod

@@ -1,4 +1,4 @@
-package orgarif.service
+package orgarif.service.utils
 
 import orgarif.OrgarifApplication
 import orgarif.domain.ApplicationEnvironment

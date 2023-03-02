@@ -1,7 +1,6 @@
-package orgarif.service
+package orgarif.service.utils
 
 import orgarif.domain.ApplicationEnvironment
-import orgarif.service.utils.ApplicationTaskExecutor
 import mu.KotlinLogging
 import org.springframework.stereotype.Service
 

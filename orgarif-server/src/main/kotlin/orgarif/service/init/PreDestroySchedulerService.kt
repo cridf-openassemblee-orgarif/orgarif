@@ -1,8 +1,8 @@
-package orgarif.service.utils
+package orgarif.service.init
 
 import orgarif.repository.log.DeploymentLogDao
-import orgarif.service.ApplicationInstance
-import orgarif.service.DateService
+import orgarif.service.utils.ApplicationInstance
+import orgarif.service.utils.DateService
 import javax.annotation.PreDestroy
 import mu.KotlinLogging
 import org.springframework.stereotype.Service

@@ -1,4 +1,4 @@
-package orgarif.utils
+package orgarif.utils.logback
 
 import ch.qos.logback.classic.PatternLayout
 

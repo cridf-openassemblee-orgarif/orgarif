@@ -3,7 +3,7 @@ package orgarif.service.user
 import orgarif.domain.UserId
 import orgarif.repository.user.MagicLinkTokenDao
 import orgarif.repository.user.UserDao
-import orgarif.service.DateService
+import orgarif.service.utils.DateService
 import java.math.BigInteger
 import java.security.SecureRandom
 import java.time.Duration

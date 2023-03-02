@@ -6,10 +6,10 @@ import orgarif.domain.MimeType
 import orgarif.domain.RequestErrorId
 import orgarif.domain.Role
 import orgarif.serialization.Serializer
-import orgarif.service.ApplicationInstance
-import orgarif.service.DateService
-import orgarif.service.RandomService
 import orgarif.service.user.UserSessionService
+import orgarif.service.utils.ApplicationInstance
+import orgarif.service.utils.DateService
+import orgarif.service.utils.random.RandomService
 import orgarif.utils.OrgarifStringUtils
 import freemarker.ext.beans.BeansWrapperBuilder
 import freemarker.template.Configuration

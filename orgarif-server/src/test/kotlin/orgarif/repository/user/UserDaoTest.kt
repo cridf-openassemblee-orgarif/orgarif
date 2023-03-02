@@ -4,8 +4,8 @@ import orgarif.ResetTestDatabase
 import orgarif.TestData
 import orgarif.domain.HashedPassword
 import orgarif.error.MailAlreadyRegisteredException
-import orgarif.service.DateService
-import orgarif.service.RandomService
+import orgarif.service.utils.DateService
+import orgarif.service.utils.random.RandomService
 import org.junit.jupiter.api.Assertions
 import org.junit.jupiter.api.BeforeEach
 import org.junit.jupiter.api.Test

@@ -3,7 +3,7 @@ package orgarif.service.utils
 import orgarif.TestData
 import orgarif.domain.HashedPassword
 import orgarif.repository.user.UserDao
-import orgarif.service.RandomService
+import orgarif.service.utils.random.RandomService
 import org.junit.jupiter.api.Assertions.assertNotNull
 import org.junit.jupiter.api.Assertions.assertNull
 import org.junit.jupiter.api.Test

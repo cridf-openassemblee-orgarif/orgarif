@@ -1,7 +1,7 @@
 package orgarif.config
 
 import orgarif.domain.ApplicationEnvironment
-import orgarif.service.ApplicationInstance
+import orgarif.service.utils.ApplicationInstance
 import mu.KotlinLogging
 import org.springframework.session.FindByIndexNameSessionRepository
 import org.springframework.session.Session

@@ -7,8 +7,8 @@ import orgarif.domain.Session as OrgarifSession
 import orgarif.domain.UserSession
 import orgarif.repository.user.UserDao
 import orgarif.repository.user.UserSessionLogDao
-import orgarif.service.DateService
 import orgarif.service.user.UserSessionService
+import orgarif.service.utils.DateService
 import orgarif.service.utils.TransactionIsolationService
 import mu.KotlinLogging
 import org.jooq.DSLContext

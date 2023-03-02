@@ -4,7 +4,7 @@ import orgarif.domain.RegisterResult
 import orgarif.domain.UserInfos
 import orgarif.domain.UserSession
 import orgarif.error.MailAlreadyRegisteredException
-import orgarif.service.LocaleService
+import orgarif.service.user.LocaleService
 import orgarif.service.user.UserService
 import orgarif.service.user.UserSessionService
 import javax.servlet.http.HttpServletRequest

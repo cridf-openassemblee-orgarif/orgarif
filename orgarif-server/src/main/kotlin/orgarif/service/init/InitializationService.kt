@@ -1,9 +1,11 @@
-package orgarif.service
+package orgarif.service.init
 
 import orgarif.domain.ApplicationEnvironment
 import orgarif.jooqlib.Configuration
 import orgarif.jooqlib.ResetDatabase
 import orgarif.repository.log.DeploymentLogDao
+import orgarif.service.utils.ApplicationInstance
+import orgarif.service.utils.DateService
 import java.util.TimeZone
 import javax.sql.DataSource
 import jooqutils.DatabaseConfiguration

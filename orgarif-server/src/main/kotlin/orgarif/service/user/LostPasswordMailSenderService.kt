@@ -1,4 +1,4 @@
-package orgarif.service.changepassword
+package orgarif.service.user
 
 import orgarif.config.ApplicationConstants
 import orgarif.config.Routes
@@ -7,10 +7,9 @@ import orgarif.controller.InvalidateMagicLinkTokenController
 import orgarif.domain.MailReference
 import orgarif.repository.user.UserDao
 import orgarif.serialization.Serializer.serialize
-import orgarif.service.ApplicationInstance
-import orgarif.service.HttpService
-import orgarif.service.MailService
-import orgarif.service.user.MagicLinkTokenService
+import orgarif.service.mail.MailService
+import orgarif.service.utils.ApplicationInstance
+import orgarif.service.utils.HttpService
 import mu.KotlinLogging
 import org.springframework.beans.factory.annotation.Value
 import org.springframework.stereotype.Service

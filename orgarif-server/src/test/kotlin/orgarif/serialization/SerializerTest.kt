@@ -8,7 +8,7 @@ import orgarif.domain.TestSecurityString
 import orgarif.domain.TestSerializeAsString
 import orgarif.domain.TestStringId
 import orgarif.domain.TestUuidId
-import orgarif.service.DummyRandomService
+import orgarif.service.utils.random.DummyRandomService
 import orgarif.utils.OrgarifStringUtils
 import orgarif.utils.OrgarifStringUtils.filteredPassword
 import java.time.Instant
