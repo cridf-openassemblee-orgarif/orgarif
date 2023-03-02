@@ -17,7 +17,7 @@ object SpringLikeYamlConfigUtils {
             .mapNotNull { pair -> pair.second?.let { pair.first to it } }
             .toMap()
 
-    // FIXME[tmpl] we can debug with this one
+    // [doc] we can debug with this one
     fun yamlFilesToMapComplete(vararg files: InputStream): Map<String, String?> =
         yamlFilesToPairs(*files).toMap()
 
