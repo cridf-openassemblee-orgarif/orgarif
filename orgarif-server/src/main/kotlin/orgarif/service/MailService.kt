@@ -140,6 +140,11 @@ class MailService(
                     it.filename,
                     Base64.getEncoder().encodeToString(it.content))
             }
+        val campaignName =
+            mailReference.name +
+                (if (ApplicationInstance.env != ApplicationEnvironment.prod)
+                    "-${ApplicationInstance.env}"
+                else "")
         val body =
             MailJetMessages(
                 listOf(
@@ -150,7 +155,7 @@ class MailService(
                         mailContent,
                         mailJetAttachments,
                         mailLogIdToString(mailLogId),
-                        mailReference.name,
+                        campaignName,
                         payload)))
         val json = mailJetObjectMapper.writeValueAsString(body)
         val response =
