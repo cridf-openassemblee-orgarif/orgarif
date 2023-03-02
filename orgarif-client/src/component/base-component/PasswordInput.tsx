@@ -8,7 +8,6 @@ import OutlinedInput from '@mui/material/OutlinedInput';
 import * as React from 'react';
 import { useState } from 'react';
 import { clientUid } from '../../utils';
-import { asString } from '../../utils/nominal-class';
 
 // [doc] material password input doesn't send its value in a classic form
 // submission... so we have to use a hook to get the value
@@ -27,9 +26,9 @@ export const PasswordInput = (props: {
   };
   return (
     <FormControl variant="outlined" size="small" fullWidth={true}>
-      <InputLabel htmlFor={asString(id)}>{props.label}</InputLabel>
+      <InputLabel htmlFor={id}>{props.label}</InputLabel>
       <OutlinedInput
-        id={asString(id)}
+        id={id}
         type={showPassword ? 'text' : 'password'}
         value={props.value}
         onChange={e => props.setValue(e.target.value)}

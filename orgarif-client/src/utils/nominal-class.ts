@@ -1,16 +1,18 @@
 export type NominalItem = NominalString<any> | NominalNumber<any>;
 
-export abstract class NominalString<T extends string> {
+export type NominalString<T extends string> = string &
+  TypeGuardedNominalString<T>;
+
+class TypeGuardedNominalString<T extends string> {
   private _typeGuard!: T;
 }
 
-export abstract class NominalNumber<T extends string> {
+export type NominalNumber<T extends string> = number &
+  TypeGuardedNominalNumber<T>;
+
+export abstract class TypeGuardedNominalNumber<T extends string> {
   private _typeGuard!: T;
 }
-
-export const asString = (v: NominalString<any>) => v as unknown as string;
-
-export const asNumber = (v: NominalNumber<any>) => v as unknown as number;
 
 export const instanciateNominalString = <T extends NominalString<any>>(
   value: string
