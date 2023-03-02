@@ -97,7 +97,7 @@ class KtToTsSymbolProcessor(
                                 } else emptyList()
                             listOf(d) + innerDeclarations
                         }
-                    ksFile to fileDeclarations.mapNotNull { parsingResultMap.get(it) }
+                    ksFile to fileDeclarations.mapNotNull { parsingResultMap[it] }
                 }
                 .map { (ksFile, parsed) ->
                     val file = tempDir.resolve(kotlinToTsFile(ksFile, configuration))
