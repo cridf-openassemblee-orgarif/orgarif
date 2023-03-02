@@ -8,7 +8,6 @@ CREATE TABLE app_user
     display_name VARCHAR(255) NOT NULL,
     language VARCHAR(2) NOT NULL,
     roles VARCHAR(255)[] NOT NULL,
-    dirty_mail VARCHAR(255),
     signup_date TIMESTAMPTZ NOT NULL,
     last_update_date TIMESTAMPTZ NOT NULL
 );

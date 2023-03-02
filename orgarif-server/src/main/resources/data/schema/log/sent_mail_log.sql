@@ -1,4 +1,4 @@
-CREATE TABLE mail_log
+CREATE TABLE sent_mail_log
 (
     id UUID PRIMARY KEY,
     application VARCHAR(255) NOT NULL,
@@ -15,4 +15,4 @@ CREATE TABLE mail_log
     FOREIGN KEY (deployment_log_id) REFERENCES deployment_log (id)
 );
 
-CREATE INDEX ON mail_log (user_id);
+CREATE INDEX ON sent_mail_log (user_id);
