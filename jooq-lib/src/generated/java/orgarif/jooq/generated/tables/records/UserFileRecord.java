@@ -57,17 +57,17 @@ public class UserFileRecord extends UpdatableRecordImpl<UserFileRecord> implemen
     }
 
     /**
-     * Setter for <code>public.user_file.file</code>.
+     * Setter for <code>public.user_file.file_content</code>.
      */
-    public void setFile(@Nonnull byte[] value) {
+    public void setFileContent(@Nonnull byte[] value) {
         set(2, value);
     }
 
     /**
-     * Getter for <code>public.user_file.file</code>.
+     * Getter for <code>public.user_file.file_content</code>.
      */
     @Nonnull
-    public byte[] getFile() {
+    public byte[] getFileContent() {
         return (byte[]) get(2);
     }
 
@@ -157,7 +157,7 @@ public class UserFileRecord extends UpdatableRecordImpl<UserFileRecord> implemen
     @Override
     @Nonnull
     public Field<byte[]> field3() {
-        return UserFileTable.USER_FILE.FILE;
+        return UserFileTable.USER_FILE.FILE_CONTENT;
     }
 
     @Override
@@ -193,7 +193,7 @@ public class UserFileRecord extends UpdatableRecordImpl<UserFileRecord> implemen
     @Override
     @Nonnull
     public byte[] component3() {
-        return getFile();
+        return getFileContent();
     }
 
     @Override
@@ -229,7 +229,7 @@ public class UserFileRecord extends UpdatableRecordImpl<UserFileRecord> implemen
     @Override
     @Nonnull
     public byte[] value3() {
-        return getFile();
+        return getFileContent();
     }
 
     @Override
@@ -267,7 +267,7 @@ public class UserFileRecord extends UpdatableRecordImpl<UserFileRecord> implemen
     @Override
     @Nonnull
     public UserFileRecord value3(@Nonnull byte[] value) {
-        setFile(value);
+        setFileContent(value);
         return this;
     }
 
@@ -318,12 +318,12 @@ public class UserFileRecord extends UpdatableRecordImpl<UserFileRecord> implemen
     /**
      * Create a detached, initialised UserFileRecord
      */
-    public UserFileRecord(@Nonnull UUID id, @Nonnull UUID userId, @Nonnull byte[] file, @Nonnull String contentType, @Nonnull String originalFilename, @Nonnull Instant uploadDate) {
+    public UserFileRecord(@Nonnull UUID id, @Nonnull UUID userId, @Nonnull byte[] fileContent, @Nonnull String contentType, @Nonnull String originalFilename, @Nonnull Instant uploadDate) {
         super(UserFileTable.USER_FILE);
 
         setId(id);
         setUserId(userId);
-        setFile(file);
+        setFileContent(fileContent);
         setContentType(contentType);
         setOriginalFilename(originalFilename);
         setUploadDate(uploadDate);

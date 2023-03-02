@@ -65,9 +65,9 @@ public class UserFileTable extends TableImpl<UserFileRecord> {
     public final TableField<UserFileRecord, UUID> USER_ID = createField(DSL.name("user_id"), SQLDataType.UUID.nullable(false), this, "");
 
     /**
-     * The column <code>public.user_file.file</code>.
+     * The column <code>public.user_file.file_content</code>.
      */
-    public final TableField<UserFileRecord, byte[]> FILE = createField(DSL.name("file"), SQLDataType.BLOB.nullable(false), this, "");
+    public final TableField<UserFileRecord, byte[]> FILE_CONTENT = createField(DSL.name("file_content"), SQLDataType.BLOB.nullable(false), this, "");
 
     /**
      * The column <code>public.user_file.content_type</code>.

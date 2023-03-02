@@ -18,7 +18,7 @@ class UserFileDao(private val jooq: DSLContext) {
     enum class UserFileField(val field: TableField<UserFileRecord, *>, val isDataField: Boolean) {
         Id(USER_FILE.ID, false),
         UserId(USER_FILE.USER_ID, false),
-        File(USER_FILE.FILE, true),
+        FileContent(USER_FILE.FILE_CONTENT, true),
         ContentType(USER_FILE.CONTENT_TYPE, false),
         OriginalFilename(USER_FILE.ORIGINAL_FILENAME, false),
         UploadDate(USER_FILE.UPLOAD_DATE, false)
@@ -28,14 +28,14 @@ class UserFileDao(private val jooq: DSLContext) {
         UserFileField.values().toList().filter { !it.isDataField }.map { it.field }
     }
 
-    fun insert(r: UserFileReference, fileData: ByteArray) {
+    fun insert(r: UserFileReference, bytes: ByteArray) {
         // FIMENOW refactor proposition
         val jr =
             UserFileRecord().apply {
                 id = r.id.rawId
                 userId = r.userId.rawId
+                fileContent = bytes
                 contentType = r.contentType
-                file = fileData
                 originalFilename = r.originalFilename
                 uploadDate = r.uploadDate
             }
@@ -65,7 +65,7 @@ class UserFileDao(private val jooq: DSLContext) {
 
     fun count(): Int = jooq.selectCount().from(USER_FILE).fetchSingle().let { it.value1() }
 
-    fun mapData(r: UserFileRecord) = UserFileData(r.contentType, r.file, r.originalFilename)
+    fun mapData(r: UserFileRecord) = UserFileData(r.contentType, r.fileContent, r.originalFilename)
 
     fun mapReference(record: Record): UserFileReference {
         val r = record.into(UserFileRecord::class.java)
