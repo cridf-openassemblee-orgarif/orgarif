@@ -4,7 +4,7 @@ import orgarif.tooling.kttots.ClassMapper
 import orgarif.tooling.kttots.ClassParser
 import orgarif.tooling.kttots.ClassWriter
 import orgarif.tooling.kttots.Debug
-import orgarif.tooling.kttots.ImportWriter.fileToPath
+import orgarif.tooling.kttots.ImportWriter.kotlinToTsFile
 import orgarif.tooling.kttots.ImportWriter.relativePath
 import orgarif.tooling.kttots.KtToTsConfiguration
 import orgarif.tooling.kttots.ShellRunner
@@ -15,7 +15,6 @@ import com.google.devtools.ksp.processing.Resolver
 import com.google.devtools.ksp.processing.SymbolProcessor
 import com.google.devtools.ksp.symbol.KSAnnotated
 import com.google.devtools.ksp.symbol.KSClassDeclaration
-import com.google.devtools.ksp.symbol.KSFile
 import com.google.devtools.ksp.symbol.KSPropertyDeclaration
 import com.google.devtools.ksp.validate
 import java.nio.file.Files
@@ -90,7 +89,8 @@ class KtToTsSymbolProcessor(
                     ksFile to fileDeclarations.mapNotNull { parsingResultMap.get(it) }
                 }
                 .map { (ksFile, parsed) ->
-                    val file = configuration.generatedDirectory.resolve(clientFile(ksFile))
+                    val file =
+                        configuration.srcDirectory.resolve(kotlinToTsFile(ksFile, configuration))
                     //                debugReport?.appendLine("$file")
                     file.parent.toFile().mkdirs()
                     // TODO un imports writer...
@@ -110,7 +110,8 @@ class KtToTsSymbolProcessor(
                                 .mapNotNull { d ->
                                     d.containingFile?.let {
                                         ClassMapper.ClassMapping(
-                                            ClassWriter.className(d), fileToPath(it, configuration))
+                                            ClassWriter.className(d),
+                                            kotlinToTsFile(it, configuration))
                                     }
                                 }
                         val classImports =
@@ -120,12 +121,12 @@ class KtToTsSymbolProcessor(
                         dependenciesImportsMapped + dependenciesImports + classImports
                     }
                     val sb = StringBuilder()
-                    val filePath = fileToPath(ksFile, configuration)
+                    val tsFile = kotlinToTsFile(ksFile, configuration)
                     imports
-                        .groupBy { it.packagePath }
+                        .groupBy { it.tsFile }
                         .toList()
                         .mapNotNull { p -> p.first?.let { it to p.second } }
-                        .filter { it.first != filePath }
+                        .filter { it.first != tsFile }
                         .sortedBy { it.first }
                         .forEach { (file, imports) ->
                             val i =
@@ -141,7 +142,7 @@ class KtToTsSymbolProcessor(
                                     .distinct()
                                     .sorted()
                                     .joinToString(separator = ", ")
-                            val from = relativePath(file, filePath, configuration)
+                            val from = relativePath(file, tsFile, configuration)
                             sb.appendLine("import { $i } from '$from';")
                         }
                     sb.appendLine("")
@@ -184,11 +185,4 @@ class KtToTsSymbolProcessor(
         }
         return unableToProcess
     }
-
-    fun clientFile(ksFile: KSFile) =
-        ksFile.filePath
-            .split("/")
-            .takeLast(ksFile.packageName.asString().split(".").size)
-            .fold("") { acc, s -> "$acc/$s" }
-            .let { it.substring(1, it.lastIndexOf(".")) + ".ts" }
 }

@@ -11,7 +11,7 @@ import java.time.LocalTime
 object ClassMapper {
 
     // TODO[tmpl] an example if there isn't in default generated code
-    data class ClassMapping(val name: String, val packagePath: String? = null)
+    data class ClassMapping(val name: String, val tsFile: String? = null)
 
     fun mapProperty(t: KSTypeReference): ClassMapping? {
         val d = t.resolve().declaration as? KSClassDeclaration ?: return null

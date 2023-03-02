@@ -10,7 +10,9 @@ import org.json.JSONObject
 data class KtToTsConfiguration(
     val clientDirectory: Path,
     val srcDirectory: Path,
-    val generatedDirectory: Path,
+    // TODO naming directory with isn't a Path
+    val generatedDirectory: String,
+    val dropPackage: String,
     // for classes from the jdk that will be "emulated" in js
     // => Duration, LocalDate, etc...
     // if missing, print a warning
@@ -32,13 +34,11 @@ data class KtToTsConfiguration(
             val destination =
                 options["ktToTs:clientDirectory"]?.let { Paths.get(it) }
                     ?: throw IllegalArgumentException()
-            val srcDirectory = destination.resolve(options["ktToTs:srcDirectory"] ?: "src")
-            val generatedDirectory =
-                destination.resolve(options["ktToTs:generatedDirectory"] ?: "src/generated")
             return KtToTsConfiguration(
-                destination,
-                srcDirectory,
-                generatedDirectory,
+                clientDirectory = destination,
+                srcDirectory = destination.resolve(options["ktToTs:srcDirectory"] ?: "src"),
+                generatedDirectory = options["ktToTs:generatedDirectory"] ?: "generated",
+                dropPackage = options["ktToTs:dropPackage"] ?: "",
                 mappings =
                     options["ktToTs:mappings"]?.let {
                         Paths.get(it).readText().let {

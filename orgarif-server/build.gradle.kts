@@ -58,7 +58,8 @@ configurations.all { exclude("junit") }
 ksp {
     arg("ktToTs:clientDirectory", "$rootDir/orgarif-client")
     // arg("ktToTs:srcDirectory", "src")
-    // arg("ktToTs:generatedDirectory", "src/generated")
+    // arg("ktToTs:generatedDirectory", "generated")
+    arg("ktToTs:dropPackage", "orgarif")
     arg("ktToTs:mappings", "$rootDir/orgarif-client/kt-to-ts-mappings.json")
     arg(
         "ktToTs:nominalStringMappings",

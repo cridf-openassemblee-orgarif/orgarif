@@ -12,7 +12,8 @@ internal class ImportWriterTest {
         KtToTsConfiguration(
             Paths.get("/client"),
             Paths.get("/client/src"),
-            Paths.get("/client/generated"),
+            "generated",
+            "orgarif",
             emptyMap(),
             emptySet(),
             null,

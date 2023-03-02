@@ -5,13 +5,19 @@ import kotlin.io.path.pathString
 
 object ImportWriter {
 
-    fun fileToPath(ksFile: KSFile, conf: KtToTsConfiguration) =
-        conf.srcDirectory
-            .resolve(ksFile.packageName.asString().split(".").drop(1).joinToString(separator = "/"))
-            .resolve(ksFile.fileName)
-            .toFile()
-            .absolutePath
+    fun kotlinToTsFile(ksFile: KSFile, conf: KtToTsConfiguration): String {
+        val dir =
+            ksFile.packageName
+                .asString()
+                .replace(conf.dropPackage, "")
+                .replace("..", ".")
+                .replace(".", "/")
+                .removePrefix("/")
+        val file = ksFile.fileName.removeSuffix(".kt")
+        return "${conf.generatedDirectory}/$dir/$file.ts"
+    }
 
+    // TODO this is hell, please refactor
     fun relativePath(filePath: String, originPath: String, conf: KtToTsConfiguration): String {
         val f = cleanPath(filePath, conf)
         val o = cleanPath(originPath, conf)
