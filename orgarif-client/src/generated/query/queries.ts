@@ -1,10 +1,12 @@
 import { UserInfos } from '../domain/user';
 
-export type Query = GetUsersListQuery | IsMailAlreadyTakenQuery;
+export type Query =
+  | GetUsersListQuery
+  | IsMailAlreadyTakenQuery
 
 export type QueryResponse =
   | GetUsersListQueryResponse
-  | IsMailAlreadyTakenQueryResponse;
+  | IsMailAlreadyTakenQueryResponse
 
 export interface GetUsersListQuery {
   objectType: 'GetUsersListQuery';
@@ -24,3 +26,4 @@ export interface IsMailAlreadyTakenQueryResponse {
   objectType: 'IsMailAlreadyTakenQueryResponse';
   alreadyTaken: boolean;
 }
+

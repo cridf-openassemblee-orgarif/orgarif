@@ -43,18 +43,15 @@ class IndexController(
                 .build()
                 .staticModels
 
-        fun extractDomain(url: String): String {
-            fun minPositive(vararg values: Int) = values.filter { it >= 0 }.sorted().first()
-            return (if (url.startsWith("http://")) "http://" to url.substring("http://".length)
-                else if (url.startsWith("https://")) "https://" to url.substring("https://".length)
-                else throw RuntimeException(url))
-                .let {
-                    val cut =
-                        minPositive(
-                            it.second.indexOf("/"), it.second.indexOf(":"), it.second.length)
-                    it.first + it.second.substring(0, cut)
-                }
-        }
+        fun extractDomain(url: String) =
+            url.substring(url.indexOf("://") + 3).let {
+                val domainLength =
+                    listOf(it.indexOf("/"), it.indexOf(":"), it.length)
+                        .filter { it >= 0 }
+                        .minOrNull()
+                        ?: throw IllegalArgumentException()
+                it.substring(0, domainLength)
+            }
     }
 
     val buildAssets by lazy {
@@ -113,7 +110,7 @@ class IndexController(
         if (assetsUseBuildFiles) {
             builtJsAssets
         } else {
-            val domain = extractDomain(request.requestURL.toString())
+            val domain = request.scheme + "://" + extractDomain(request.requestURL.toString())
             listOf("bundle.js", "vendors~main.chunk.js", "main.chunk.js").map {
                 "$domain:$assetsWebpackDevPort/static/js/$it"
             }

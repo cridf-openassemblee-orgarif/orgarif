@@ -1,13 +1,16 @@
 import { PlainStringPassword } from '../domain/security';
 import { LoginResult, RegisterResult, UserInfos } from '../domain/user';
 
-export type Command = DevLoginCommand | LoginCommand | RegisterCommand;
+export type Command =
+  | DevLoginCommand
+  | LoginCommand
+  | RegisterCommand
 
 export type CommandResponse =
   | DevLoginCommandResponse
   | EmptyCommandResponse
   | LoginCommandResponse
-  | RegisterCommandResponse;
+  | RegisterCommandResponse
 
 export interface EmptyCommandResponse {
   objectType: 'EmptyCommandResponse';
@@ -47,3 +50,4 @@ export interface RegisterCommandResponse {
   result: RegisterResult;
   userinfos?: UserInfos;
 }
+
