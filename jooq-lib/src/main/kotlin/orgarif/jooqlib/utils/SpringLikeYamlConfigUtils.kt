@@ -48,6 +48,7 @@ object SpringLikeYamlConfigUtils {
         map.keys.flatMap { key ->
             val value = map.getValue(key)
             when (value) {
+                // TODO[tmpl] null or not here ?? (if use getValue is useless)
                 null -> listOf(key to null)
                 is Boolean,
                 is Int,
