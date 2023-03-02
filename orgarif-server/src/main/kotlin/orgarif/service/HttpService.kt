@@ -3,6 +3,7 @@ package orgarif.service
 import okhttp3.MediaType.Companion.toMediaType
 import okhttp3.OkHttpClient
 import okhttp3.Request
+import okhttp3.RequestBody
 import okhttp3.RequestBody.Companion.toRequestBody
 import okhttp3.Response
 import okhttp3.ResponseBody
@@ -41,16 +42,32 @@ class HttpService(val okHttpClient: OkHttpClient) {
         url: String,
         body: String? = null,
         vararg headers: Pair<Header, String>
+    ) = doExecute(method, url, body?.toRequestBody(), *headers)
+
+    fun execute(
+        method: HttpMethod,
+        url: String,
+        body: RequestBody,
+        vararg headers: Pair<Header, String>
+    ) = doExecute(method, url, body, *headers)
+
+    private fun doExecute(
+        method: HttpMethod,
+        url: String,
+        body: RequestBody?,
+        vararg headers: Pair<Header, String>
     ): Response {
-        val requestBuilder =
-            Request.Builder().apply {
-                url(url)
-                header(Header.Accept.header, jsonMediaType.toString())
-                header(Header.ContentType.header, jsonMediaType.toString())
-                headers.forEach { header(it.first.header, it.second) }
-            }
-        requestBuilder.method(method.name, body?.toRequestBody())
-        return okHttpClient.newCall(requestBuilder.build()).execute().use { r ->
+        val request =
+            Request.Builder()
+                .apply {
+                    url(url)
+                    header(Header.Accept.header, jsonMediaType.toString())
+                    header(Header.ContentType.header, jsonMediaType.toString())
+                    headers.forEach { header(it.first.header, it.second) }
+                    method(method.name, body)
+                }
+                .build()
+        return okHttpClient.newCall(request).execute().use { r ->
             Response(HttpStatus.valueOf(r.code), r.body)
         }
     }
