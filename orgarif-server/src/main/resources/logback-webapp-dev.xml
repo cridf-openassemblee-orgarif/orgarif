@@ -4,7 +4,9 @@
     <appender name="stdout" class="ch.qos.logback.core.ConsoleAppender">
         <encoder name="enc" class="ch.qos.logback.core.encoder.LayoutWrappingEncoder">
             <layout class="orgarif.utils.LogbackPatternLayout">
+                <!-- @formatter:off -->
                 <pattern>%d{MM-dd HH:mm:ss} %highlight(%-5level) %cyan(%-36logger{36}) %m %magenta(%userSession){}%blue(%ip){}%n</pattern>
+                <!-- @formatter:on -->
             </layout>
         </encoder>
     </appender>
@@ -17,9 +19,12 @@
     <logger name="orgarif" level="INFO"/>
     <!--    <logger name="orgarif" level="TRACE"/>-->
 
-    <!-- Spring noise -->
     <logger name="orgarif.error.ApplicationExceptionHandlerExceptionResolver" level="WARN"/>
+    <logger name="orgarif.error.ApplicationExceptionHandlerExceptionResolver" level="WARN"/>
+    <!-- Spring noise -->
     <logger name="org.spring.aop.framework.CglibAopProxy" level="INFO"/>
+    <!-- Spring noise - check [d8bc54] -->
+    <logger name="org.springframework.security.config.annotation.web.builders.WebSecurity" level="ERROR"/>
     <!-- Hide starvation warn (happens a lot when the computer is in sleep mode) -->
     <logger name="com.zaxxer.hikari.pool.HikariPool" level="ERROR"/>
 </configuration>
