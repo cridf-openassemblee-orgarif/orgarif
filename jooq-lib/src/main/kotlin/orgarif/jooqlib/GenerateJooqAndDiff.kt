@@ -1,10 +1,9 @@
 package orgarif.jooqlib
 
 import orgarif.jooqlib.Configuration.configuration
-import orgarif.jooqlib.utils.FileUtils
+import java.nio.file.Paths
 import jooqutils.DatabaseInitializer
 import jooqutils.JooqGeneration
-import kotlin.io.path.name
 import mu.KotlinLogging
 
 fun main() {
@@ -18,13 +17,22 @@ object GenerateJooqAndDiff {
     internal val logger = KotlinLogging.logger {}
 
     val projectDir by lazy {
-        val projectBasePath = FileUtils.projectBasePath()
-        if (projectBasePath.name == "jooq-lib") {
-            // happens when running 'gradle resetDatabase'
-            projectBasePath.parent
-        } else {
-            projectBasePath
+        // contexts : run in intellij, gradle (with different root dirs), tests
+        val userDir = System.getProperty("user.dir")
+        val rootDir = let {
+            listOf(
+                    "/jooq-lib",
+                    // (in tests)
+                    "/orgarif-server",
+                )
+                .forEach {
+                    if (userDir.endsWith(it)) {
+                        return@let userDir.dropLast(it.length)
+                    }
+                }
+            userDir
         }
+        Paths.get(rootDir).also { logger.info { "Project dir is $it" } }
     }
 
     val webServerResourcesDir by lazy { projectDir.resolve("orgarif-server/src/main/resources") }
