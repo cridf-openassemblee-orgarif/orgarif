@@ -1,5 +1,7 @@
 package orgarif.controller
 
+import orgarif.query.GetUsersListQuery
+import orgarif.query.GetUsersListQueryHandler
 import orgarif.query.IsMailAlreadyTakenQuery
 import orgarif.query.IsMailAlreadyTakenQueryHandler
 import orgarif.query.Query
@@ -20,6 +22,7 @@ class QueryController(
     val userDao: UserDao,
     val userSessionService: UserSessionService,
     val isMailAlreadyTakenQueryHandler: IsMailAlreadyTakenQueryHandler,
+    val getUsersListQueryHandler: GetUsersListQueryHandler,
     val transactionIsolationService: TransactionIsolationService,
 ) {
 
@@ -38,5 +41,6 @@ class QueryController(
     private fun handler(query: Query) =
         when (query) {
             is IsMailAlreadyTakenQuery -> isMailAlreadyTakenQueryHandler
+            is GetUsersListQuery -> getUsersListQueryHandler
         }.let { @Suppress("UNCHECKED_CAST") (it as QueryHandler<Query, QueryResponse>) }
 }
