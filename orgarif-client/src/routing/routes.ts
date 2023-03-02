@@ -14,6 +14,9 @@ export type ApplicationRoute =
   | LoginRoute
   | RegisterRoute
   | RootRoute
+  | TestRoute
+  | TestSubRoute
+  | TestSubIdRoute
   | UsersManagementRoute
   | UsersManagementUserRoute;
 
@@ -40,6 +43,21 @@ export const routes: ApplicationRouteProps<any>[] = [
   {
     name: 'RootRoute',
     path: '/',
+    component: RootView
+  },
+  {
+    name: 'TestRoute',
+    path: '/test',
+    component: RootView
+  },
+  {
+    name: 'TestSubRoute',
+    path: '/test/sub-test',
+    component: RootView
+  },
+  {
+    name: 'TestSubIdRoute',
+    path: '/test/sub-test/:id',
     component: RootView
   },
   {
@@ -84,6 +102,19 @@ interface RegisterRoute {
 
 interface RootRoute {
   name: 'RootRoute';
+}
+
+interface TestRoute {
+  name: 'TestRoute';
+}
+
+interface TestSubRoute {
+  name: 'TestSubRoute';
+}
+
+interface TestSubIdRoute {
+  name: 'TestSubIdRoute';
+  id: string;
 }
 
 interface UsersManagementRoute {

@@ -10,7 +10,7 @@ import { LoginForm, LoginFormInput } from '../form/LoginForm';
 import { state } from '../state/state';
 import { assertUnreachable } from '../utils';
 import { Errors } from '../errors';
-import { useGoTo } from '../routing/useGoTo';
+import { useGoTo } from '../routing/routing-utils';
 import { LoginResult, UserInfos } from '../generated/domain/user';
 import {
   DevLoginCommandResponse,

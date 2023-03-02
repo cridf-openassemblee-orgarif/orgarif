@@ -12,7 +12,7 @@ import { useRecoilState } from 'recoil';
 import { state } from '../state/state';
 import { NotFoundView } from '../view/NotFoundView';
 import { ApplicationRoute, ApplicationRouteProps, routes } from './routes';
-import { useGoTo } from './useGoTo';
+import { useGoTo } from './routing-utils';
 
 const RouteComponent = (props: ApplicationRouteProps<any>) => {
   const [userInfos] = useRecoilState(state.userInfos);

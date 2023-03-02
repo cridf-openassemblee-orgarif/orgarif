@@ -7,7 +7,7 @@ import { CopyContentWidget } from '../../component/base-component/CopyContentWid
 import { adminIdDisplayChars } from '../../generated/domain/admin';
 import { LoadingState } from '../../interfaces';
 import { colors } from '../../styles/vars';
-import { RouteButton } from '../../routing/RouteButton';
+import { RouteLink } from '../../routing/RouteLink';
 
 export const UsersManagementTable = (props: {
   users: UserInfos[];
@@ -72,7 +72,8 @@ export const UsersManagementTable = (props: {
       field: 'edit',
       headerName: '',
       renderCell: (p: GridRenderCellParams<void, UserInfos>) => (
-        <RouteButton
+        <RouteLink
+          element="Button"
           variant="outlined"
           route={{
             name: 'UsersManagementUserRoute',
@@ -80,7 +81,7 @@ export const UsersManagementTable = (props: {
           }}
         >
           Edit
-        </RouteButton>
+        </RouteLink>
       ),
       flex: 1,
       maxWidth: 80,
