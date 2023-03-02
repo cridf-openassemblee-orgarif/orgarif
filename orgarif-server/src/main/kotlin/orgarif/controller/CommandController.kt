@@ -6,15 +6,11 @@ import orgarif.command.CommandHandler
 import orgarif.command.CommandResponse
 import orgarif.command.DevLoginCommand
 import orgarif.command.DevLoginCommandHandler
-import orgarif.command.DevLoginCommandResponse
 import orgarif.command.EmptyCommandResponse
 import orgarif.command.LoginCommand
 import orgarif.command.LoginCommandHandler
-import orgarif.command.LoginCommandResponse
 import orgarif.command.RegisterCommand
 import orgarif.command.RegisterCommandHandler
-import orgarif.command.RegisterCommandResponse
-import orgarif.domain.CommandLogId
 import orgarif.repository.log.CommandLogDao
 import orgarif.repository.user.UserDao
 import orgarif.serialization.Serializer
@@ -23,11 +19,12 @@ import orgarif.service.DateService
 import orgarif.service.IdLogService
 import orgarif.service.RandomService
 import orgarif.service.user.UserSessionService
+import orgarif.service.utils.TransactionIsolationService
+import java.time.Instant
 import javax.servlet.http.HttpServletRequest
 import javax.servlet.http.HttpServletResponse
 import mu.KotlinLogging
 import org.apache.commons.lang3.exception.ExceptionUtils
-import org.springframework.transaction.PlatformTransactionManager
 import org.springframework.web.bind.annotation.PostMapping
 import org.springframework.web.bind.annotation.RequestBody
 import org.springframework.web.bind.annotation.RestController
@@ -39,12 +36,12 @@ class CommandController(
     val applicationInstance: ApplicationInstance,
     val dateService: DateService,
     val randomService: RandomService,
-    val transactionManager: PlatformTransactionManager,
     val idLogService: IdLogService,
     val userSessionService: UserSessionService,
     val devLoginCommandHandler: DevLoginCommandHandler,
     val loginCommandHandler: LoginCommandHandler,
     val registerCommandHandler: RegisterCommandHandler,
+    val transactionIsolationService: TransactionIsolationService,
 ) {
 
     private val logger = KotlinLogging.logger {}
@@ -58,66 +55,61 @@ class CommandController(
     ): CommandResponse? {
         val command = Serializer.deserialize<Command>(jsonCommand)
         val handler = handler(command)
-        val userSession =
-            if (userSessionService.isAuthenticated()) userSessionService.getUserSession() else null
+
         // [doc] is filtered from sensitive data (passwords) because of serializers
         val filteredJsonCommand = Serializer.serialize(command)
         // TODO[tmpl][test] make an only insert at the end, with no update ?
         // or make an insert first to protect from some errors (? isolate its transactionl)
-        val commandLogId = randomService.id<CommandLogId>()
-        commandLogDao.insert(
+        val commandLog =
             CommandLogDao.Record(
-                id = commandLogId,
-                userId = userSession?.userId,
+                id = randomService.id(),
+                userId = null,
                 deploymentLogId = applicationInstance.deploymentId,
                 commandClass = command.javaClass,
                 jsonCommand = filteredJsonCommand,
                 // the ip can evolve within a session, it makes sense to save it here
                 ip = request.remoteAddr,
-                userSessionId = userSession?.sessionId,
-                resultingIds = null,
+                userSessionId = null,
+                idsLog = "",
                 jsonResult = null,
                 exceptionStackTrace = null,
                 startDate = dateService.now(),
-                endDate = null))
-        val transaction = transactionManager.getTransaction(null)
-
+                endDate = Instant.ofEpochMilli(0))
         try {
-            userSessionService.verifyRoleOrFail(
-                CommandConfiguration.role(command), request.remoteAddr, command.javaClass)
-            idLogService.enableLogging()
-            val result = handler.handle(command, userSession, request, response)
-            transactionManager.commit(transaction)
-            try {
-                commandLogDao.updateResult(
-                    commandLogId,
-                    // TODO[tmpl] verify
-                    when (result) {
-                        is DevLoginCommandResponse -> result.userinfos.id
-                        is LoginCommandResponse -> result.userinfos?.id
-                        is RegisterCommandResponse -> result.userinfos?.id
-                        else -> null
-                    }?.let { it to userSessionService.getUserSession().sessionId },
-                    idLogService.getIdsString(),
-                    if (result !is EmptyCommandResponse) Serializer.serialize(result) else null,
-                    dateService.now())
-            } catch (e: Exception) {
-                logger.error(e) { "Exception in command result log..." }
-            }
+            val result =
+                transactionIsolationService.execute {
+                    userSessionService.verifyRoleOrFail(
+                        CommandConfiguration.role(command), request.remoteAddr, command.javaClass)
+                    idLogService.enableLogging()
+                    handler.handle(command, getSession(), request, response)
+                }
+            val updatedSession = getSession()
+            commandLogDao.insert(
+                commandLog.copy(
+                    userId = updatedSession?.userId,
+                    userSessionId = updatedSession?.sessionId,
+                    idsLog = idLogService.getIdsString(),
+                    jsonResult =
+                        if (result !is EmptyCommandResponse) Serializer.serialize(result) else null,
+                    endDate = dateService.now()))
             return result
         } catch (e: Exception) {
-            transactionManager.rollback(transaction)
-            try {
-                commandLogDao.updateExceptionStackTrace(
-                    commandLogId, ExceptionUtils.getStackTrace(e), dateService.now())
-            } catch (e2: Exception) {
-                logger.error(e2) { "Exception in command exception log..." }
-            }
+            val updatedSession = getSession()
+            commandLogDao.insert(
+                commandLog.copy(
+                    userId = updatedSession?.userId,
+                    userSessionId = updatedSession?.sessionId,
+                    idsLog = idLogService.getIdsString(),
+                    exceptionStackTrace = ExceptionUtils.getStackTrace(e),
+                    endDate = dateService.now()))
             throw e
         } finally {
             idLogService.clean()
         }
     }
+
+    private fun getSession() =
+        if (userSessionService.isAuthenticated()) userSessionService.getUserSession() else null
 
     @Suppress("UNCHECKED_CAST")
     private fun handler(command: Command) =

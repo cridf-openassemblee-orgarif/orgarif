@@ -34,7 +34,7 @@ class IdLogService {
     }
 
     // TODO[tmpl] would be faster avec un StringBuffer
-    fun getIdsString() =
+    fun getIdsString(): String =
         (list.get().list ?: throw RuntimeException())
             .map {
                 val rawIdString =
