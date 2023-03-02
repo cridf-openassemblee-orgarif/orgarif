@@ -61,10 +61,10 @@ class DebugMailService(
                             HttpService.Header.Authorization to
                                 Credentials.basic(apiKey, secretKey))
                     if (r.code != HttpStatus.OK) {
-                        logger.error { "Couldn't send mail :\n${r.bodyString}\n----\n$json\n----" }
+                        logger.error { "Failed to send debug mail: ${r.code}\n${r.bodyString}\n$json" }
                     }
                 } catch (e: Exception) {
-                    logger.error(e) { "Failed to send debug mail\n----\n$json\n----" }
+                    logger.error(e) { "Failed to send debug mail\n$json" }
                 }
             }
         }
