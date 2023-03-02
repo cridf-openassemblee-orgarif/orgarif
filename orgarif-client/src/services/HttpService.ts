@@ -1,6 +1,6 @@
 import { appContext } from '../ApplicationContext';
 import { RequestErrorId } from '../domain/ids';
-import { Instant } from '../domain/time';
+import { Instant } from '../domain/date';
 
 type RequestType = 'get' | 'post';
 
