@@ -6,23 +6,13 @@ plugins {
     id("org.springframework.boot") version "2.7.1"
     // so we don't need to open Spring components classes
     id("org.jetbrains.kotlin.plugin.spring")
-    id("com.google.devtools.ksp") version "1.7.20-1.0.7"
+    id("com.google.devtools.ksp") version "1.7.21-1.0.8"
 }
 
-val kotlinVersion = "1.7.20"
-
-kotlin {
-    sourceSets.all {
-        languageSettings.apply {
-            languageVersion = "1.6"
-            apiVersion = "1.6"
-            progressiveMode = true
-        }
-    }
-}
+val kotlinVersion = "1.7.21"
 
 tasks {
-    withType<KotlinCompile> { kotlinOptions.jvmTarget = "15" }
+    withType<KotlinCompile> { kotlinOptions.jvmTarget = "17" }
     test {
         useJUnitPlatform()
         addTestListener(

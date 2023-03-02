@@ -4,20 +4,10 @@ group = "orgarif"
 
 plugins { kotlin("jvm") }
 
-val kotlinVersion = "1.7.20"
-
-kotlin {
-    sourceSets.all {
-        languageSettings.apply {
-            languageVersion = "1.6"
-            apiVersion = "1.6"
-            progressiveMode = true
-        }
-    }
-}
+val kotlinVersion = "1.7.21"
 
 tasks {
-    withType<KotlinCompile> { kotlinOptions.jvmTarget = "15" }
+    withType<KotlinCompile> { kotlinOptions.jvmTarget = "17" }
     register<JavaExec>("generateJooq") {
         main = "orgarif.jooqlib.GenerateJooqAndDiffKt"
         classpath = sourceSets["main"].runtimeClasspath

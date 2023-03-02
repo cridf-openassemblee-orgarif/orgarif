@@ -5,7 +5,7 @@ repositories { mavenCentral() }
 dependencies {
     implementation(project(":kt-to-ts-annotations"))
 
-    implementation("com.google.devtools.ksp:symbol-processing-api:1.7.20-1.0.7")
+    implementation("com.google.devtools.ksp:symbol-processing-api:1.7.21-1.0.8")
     implementation("org.json:json:20220320")
 
     testImplementation("org.junit.jupiter:junit-jupiter-api:5.9.0")
