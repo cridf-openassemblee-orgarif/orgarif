@@ -1,8 +1,8 @@
 package orgarif.tooling.kttots
 
-import java.io.BufferedReader
-import java.io.InputStreamReader
+import java.io.InputStream
 import java.nio.file.Path
+import java.util.Scanner
 import mu.KotlinLogging
 
 object ShellRunner {
@@ -32,21 +32,30 @@ object ShellRunner {
                 }
             }
         val fullCommand = command + params.fold("") { acc, s -> "$acc $s" }
-        logger.debug { "Run '$fullCommand'" }
+        logger.debug { "Run '$fullCommand' ${if(directory != null) "in $directory" else ""}" }
         builder.command("sh", "-c", fullCommand)
         val process = builder.start()
-        val output =
-            BufferedReader(InputStreamReader(process.inputStream)).lines().map {
-                logger.debug { "Command output: $it" }
-                it
-            }
-        val errorOutput =
-            BufferedReader(InputStreamReader(process.errorStream)).lines().map {
-                logger.debug { "Command error: $it" }
-                it
-            }
+        val (output, outputThread) = outputThread(process.inputStream, "Command output:")
+        val (error, errorThread) = outputThread(process.errorStream, "Command error:")
         val result = process.waitFor()
+        outputThread.join()
+        errorThread.join()
         logger.debug { "Command result: $result" }
-        return CommandResult(result, output.toList(), errorOutput.toList())
+        return CommandResult(result, output, error)
+    }
+
+    fun outputThread(inputStream: InputStream, logPrefix: String): Pair<List<String>, Thread> {
+        val result = mutableListOf<String>()
+        val t =
+            Thread {
+                    val s = Scanner(inputStream)
+                    while (s.hasNextLine()) {
+                        val l = s.nextLine()
+                        logger.debug { "$logPrefix $l" }
+                        result.add(l)
+                    }
+                }
+                .apply { start() }
+        return result to t
     }
 }
