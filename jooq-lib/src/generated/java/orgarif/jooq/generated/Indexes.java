@@ -5,8 +5,8 @@ package orgarif.jooq.generated;
 
 
 import orgarif.jooq.generated.tables.AppUserTable;
-import orgarif.jooq.generated.tables.AuthLogTable;
 import orgarif.jooq.generated.tables.MailLogTable;
+import orgarif.jooq.generated.tables.UserMailLogTable;
 import orgarif.jooq.generated.tables.UserSessionLogTable;
 
 import org.jooq.Index;
@@ -27,7 +27,7 @@ public class Indexes {
 
     public static final Index APP_USER_MAIL_IDX = Internal.createIndex(DSL.name("app_user_mail_idx"), AppUserTable.APP_USER, new OrderField[] { AppUserTable.APP_USER.MAIL }, false);
     public static final Index APP_USER_USERNAME_IDX = Internal.createIndex(DSL.name("app_user_username_idx"), AppUserTable.APP_USER, new OrderField[] { AppUserTable.APP_USER.USERNAME }, false);
-    public static final Index AUTH_LOG_USER_ID_IDX = Internal.createIndex(DSL.name("auth_log_user_id_idx"), AuthLogTable.AUTH_LOG, new OrderField[] { AuthLogTable.AUTH_LOG.USER_ID }, false);
     public static final Index MAIL_LOG_USER_ID_IDX = Internal.createIndex(DSL.name("mail_log_user_id_idx"), MailLogTable.MAIL_LOG, new OrderField[] { MailLogTable.MAIL_LOG.USER_ID }, false);
+    public static final Index USER_MAIL_LOG_USER_ID_IDX = Internal.createIndex(DSL.name("user_mail_log_user_id_idx"), UserMailLogTable.USER_MAIL_LOG, new OrderField[] { UserMailLogTable.USER_MAIL_LOG.USER_ID }, false);
     public static final Index USER_SESSION_LOG_USER_ID_IDX = Internal.createIndex(DSL.name("user_session_log_user_id_idx"), UserSessionLogTable.USER_SESSION_LOG, new OrderField[] { UserSessionLogTable.USER_SESSION_LOG.USER_ID }, false);
 }
