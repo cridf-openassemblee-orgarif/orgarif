@@ -39,7 +39,7 @@ object SpringLikeYamlConfigUtils {
                     // TODO[tmpl] write tests (with 2 vars in string, with missing var...)
                     it.second
                         ?.replace("\\$\\{[^}]*}".toRegex()) {
-                            System.getenv().get(it.value.drop(2).dropLast(1)) ?: ""
+                            System.getenv(it.value.drop(2).dropLast(1)) ?: ""
                         }
                         ?.let { it.ifEmpty { null } }
             }
