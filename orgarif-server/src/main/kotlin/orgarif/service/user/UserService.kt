@@ -6,8 +6,8 @@ import orgarif.domain.Language
 import orgarif.domain.PlainStringPassword
 import orgarif.domain.Role
 import orgarif.domain.UserId
-import orgarif.repository.user.AuthLogDao
 import orgarif.repository.user.UserDao
+import orgarif.repository.user.UserMailLogDao
 import orgarif.service.DateService
 import orgarif.service.NotificationService
 import orgarif.service.RandomService
@@ -19,7 +19,7 @@ import org.springframework.stereotype.Service
 @Service
 class UserService(
     val userDao: UserDao,
-    val authLogDao: AuthLogDao,
+    val userMailLogDao: UserMailLogDao,
     val dateService: DateService,
     val randomService: RandomService,
     val notificationService: NotificationService,
@@ -65,8 +65,8 @@ class UserService(
                 lastUpdate = now)
         userDao.insert(user, hashedPassword)
         if (dirtyMail != null) {
-            authLogDao.insert(
-                AuthLogDao.Record(
+            userMailLogDao.insert(
+                UserMailLogDao.Record(
                     randomService.id(), user.id, dirtyMail, AuthLogType.dirtyMail, now))
         }
         notificationService.notify(
@@ -82,8 +82,8 @@ class UserService(
         // to e@gmail.com, if he retries we should re-log
         // TODO[tmpl] need integration tests !
         if (newDirtyMail != null) {
-            authLogDao.insert(
-                AuthLogDao.Record(
+            userMailLogDao.insert(
+                UserMailLogDao.Record(
                     randomService.id(), userId, newDirtyMail, AuthLogType.dirtyMail, now))
         }
         if (newMail == formerMail) {
@@ -93,8 +93,9 @@ class UserService(
         }
         logger.info { "Update mail $userId $formerMail => $newMail" }
         userDao.updateMail(userId, newMail, now)
-        authLogDao.insert(
-            AuthLogDao.Record(randomService.id(), userId, formerMail, AuthLogType.formerMail, now))
+        userMailLogDao.insert(
+            UserMailLogDao.Record(
+                randomService.id(), userId, formerMail, AuthLogType.formerMail, now))
     }
 
     fun hashPassword(password: PlainStringPassword): HashedPassword {
