@@ -2,6 +2,7 @@ package orgarif.tooling.kttots
 
 import com.google.devtools.ksp.symbol.KSClassDeclaration
 import com.google.devtools.ksp.symbol.KSTypeReference
+import com.google.devtools.ksp.symbol.Nullability
 import orgarif.tooling.kttots.ClassWriter.propertyClassName
 
 object ClassMapper {
@@ -25,7 +26,15 @@ object ClassMapper {
                 val t =
                     t.element?.typeArguments?.firstOrNull()?.type
                         ?: throw IllegalArgumentException()
-                ClassMapping("${propertyClassName(t, mappings).name}[]")
+                val name =
+                    propertyClassName(t, mappings).name.let {
+                        when (t.resolve().nullability) {
+                            Nullability.NULLABLE -> "($it | null)"
+                            Nullability.NOT_NULL,
+                            Nullability.PLATFORM -> it
+                        }
+                    }
+                ClassMapping("$name[]")
             }
             Pair::class.qualifiedName -> {
                 val a = t.element?.typeArguments ?: throw IllegalArgumentException()
