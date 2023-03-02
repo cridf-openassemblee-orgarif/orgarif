@@ -21,8 +21,8 @@ import org.springframework.web.bind.annotation.RestController
 class QueryController(
     val userDao: UserDao,
     val userSessionService: UserSessionService,
-    val isMailAlreadyTakenQueryHandler: IsMailAlreadyTakenQueryHandler,
     val getUsersListQueryHandler: GetUsersListQueryHandler,
+    val isMailAlreadyTakenQueryHandler: IsMailAlreadyTakenQueryHandler,
     val transactionIsolationService: TransactionIsolationService,
 ) {
 
@@ -40,7 +40,7 @@ class QueryController(
 
     private fun handler(query: Query) =
         when (query) {
-            is IsMailAlreadyTakenQuery -> isMailAlreadyTakenQueryHandler
             is GetUsersListQuery -> getUsersListQueryHandler
+            is IsMailAlreadyTakenQuery -> isMailAlreadyTakenQueryHandler
         }.let { @Suppress("UNCHECKED_CAST") (it as QueryHandler<Query, QueryResponse>) }
 }

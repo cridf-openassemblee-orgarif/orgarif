@@ -7,7 +7,7 @@ object QueryConfiguration {
 
     fun role(query: Query): Role? =
         when (query) {
-            is IsMailAlreadyTakenQuery -> null
             is GetUsersListQuery -> Admin
+            is IsMailAlreadyTakenQuery -> null
         }
 }
