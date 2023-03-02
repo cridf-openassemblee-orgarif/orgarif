@@ -6,6 +6,7 @@ import { PropsWithChildren, ReactElement, useState } from 'react';
 import { assertUnreachable, extractEmotionCss } from '../../utils';
 import { EmotionStyles, LoadingState } from '../../interfaces';
 import { ClientUid } from '../../domain/client-ids';
+import { ButtonTypeMap } from '@mui/material/Button/Button';
 
 const ButtonContent = (
   props: PropsWithChildren<{
@@ -48,7 +49,7 @@ const LoadingButtonBase = (
     onClick?: () => void;
     loadingState: LoadingState;
     type?: 'submit';
-    variant?: 'text' | 'outlined' | 'contained';
+    variant?: ButtonTypeMap['props']['variant'];
     startIcon?: ReactElement;
     css?: EmotionStyles;
     formId?: ClientUid;
@@ -82,7 +83,7 @@ export const LoadingButton = (
   props: PropsWithChildren<{
     onClick: () => Promise<void>;
     type?: 'submit';
-    variant?: 'text' | 'outlined' | 'contained';
+    variant?: ButtonTypeMap['props']['variant'];
     startIcon?: ReactElement;
     css?: EmotionStyles;
   }>
@@ -113,7 +114,7 @@ export const LoadingStateButton = (
     onClick?: () => void;
     loadingState: LoadingState;
     type?: 'submit';
-    variant?: 'text' | 'outlined' | 'contained';
+    variant?: ButtonTypeMap['props']['variant'];
     startIcon?: ReactElement;
     css?: EmotionStyles;
     formId?: ClientUid;

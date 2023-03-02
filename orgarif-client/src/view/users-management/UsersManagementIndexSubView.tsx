@@ -29,6 +29,6 @@ export const UsersManagementIndexSubView = () => {
           variant: 'error'
         });
       });
-  }, []);
+  }, [enqueueSnackbar]);
   return <UsersManagementTable users={users} loading={loading} />;
 };

@@ -7,14 +7,12 @@ import { CopyContentWidget } from '../../component/base-component/CopyContentWid
 import { adminIdDisplayChars } from '../../generated/domain/admin';
 import { LoadingState } from '../../interfaces';
 import { colors } from '../../styles/vars';
-import Button from '@mui/material/Button';
-import { useGoTo } from '../../routing/useGoTo';
+import { RouteButton } from '../../routing/RouteButton';
 
 export const UsersManagementTable = (props: {
   users: UserInfos[];
   loading: LoadingState;
 }) => {
-  const goTo = useGoTo();
   const columns: GridColDef[] = [
     {
       field: 'id',
@@ -74,19 +72,15 @@ export const UsersManagementTable = (props: {
       field: 'edit',
       headerName: '',
       renderCell: (p: GridRenderCellParams<void, UserInfos>) => (
-        <div>
-          <Button
-            variant="outlined"
-            onClick={() =>
-              goTo({
-                name: 'UsersManagementUserRoute',
-                userId: p.row.id
-              })
-            }
-          >
-            Edit
-          </Button>
-        </div>
+        <RouteButton
+          variant="outlined"
+          route={{
+            name: 'UsersManagementUserRoute',
+            userId: p.row.id
+          }}
+        >
+          Edit
+        </RouteButton>
       ),
       flex: 1,
       maxWidth: 80,
