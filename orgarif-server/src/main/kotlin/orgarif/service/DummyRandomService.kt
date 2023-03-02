@@ -19,13 +19,13 @@ class DummyRandomService(idLogService: IdLogService? = null) : RandomService(idL
     val uuidsCursor = AtomicInteger(0)
     val stringIdCursor = AtomicInteger(0)
 
-    override fun internalUuid() =
+    override fun uuid() =
         uuids.getOrNull(uuidsCursor.getAndIncrement())
         // TODO[tmpl] test
         ?: throw RuntimeException(
                 "${DummyRandomService::class.java.simpleName} has no more uuids (cursor: ${uuidsCursor.get()})")
 
-    override fun internalRandomString(length: Int): String {
+    override fun randomString(length: Int): String {
         val id =
             stringIds.getOrNull(stringIdCursor.getAndIncrement())
             // TODO[tmpl] test
