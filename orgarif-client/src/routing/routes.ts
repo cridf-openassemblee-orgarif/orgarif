@@ -5,26 +5,25 @@ import { RegisterView } from '../view/RegisterView';
 import { RootView } from '../view/RootView';
 import { UsersManagementView } from '../view/UsersManagementView';
 import { UserId } from '../domain/ids';
-import { useParams } from 'react-router-dom';
 import { UserManagementView } from '../view/UserManagementView';
 
-export type Route =
+export type ApplicationRoute =
   | LoginRoute
   | RegisterRoute
   | RootRoute
   | UserManagementRoute
   | UsersManagementRoute;
 
-export const useRouteParams = <T extends Route>() =>
-  useParams() as unknown as Omit<T, 'name'>;
-
-export interface ApplicationRouteProps {
+export interface ApplicationRouteProps<T extends ApplicationRoute> {
   path: string;
-  component: FunctionComponent;
+  component: FunctionComponent<{ route: T | undefined }>;
   role?: Role;
 }
 
-export const routes: Record<Route['name'], ApplicationRouteProps> = {
+export const routes: Record<
+  ApplicationRoute['name'],
+  ApplicationRouteProps<any>
+> = {
   LoginRoute: {
     path: '/login',
     component: LoginView
