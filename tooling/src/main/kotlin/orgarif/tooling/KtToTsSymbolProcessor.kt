@@ -20,6 +20,9 @@ import orgarif.tooling.kttots.prettyPrint
 import java.nio.file.Files
 import java.time.LocalDateTime
 import kotlin.io.path.absolutePathString
+import kotlin.io.path.deleteExisting
+import kotlin.io.path.deleteIfExists
+import kotlin.io.path.moveTo
 import kttots.Shared
 
 // TODO[tmpl] use exceptions and catch them for debug report ?
@@ -75,6 +78,11 @@ class KtToTsSymbolProcessor(
         //        val typesSelection = parsingResult.map { it.declaration }
         //        val importsMap = parsingResult.associateBy { it.declaration }
         val parsingResultMap = parsingResult.associateBy { it.type.declaration }
+        val tempDir = Files.createTempDirectory("kttots-")
+        debugReport?.apply {
+            appendLine("<h1>Temp dir </h1>")
+            appendLine("${tempDir.absolutePathString()}")
+        }
         val resultFiles =
             filesSelection
                 .map { ksFile ->
@@ -89,8 +97,7 @@ class KtToTsSymbolProcessor(
                     ksFile to fileDeclarations.mapNotNull { parsingResultMap.get(it) }
                 }
                 .map { (ksFile, parsed) ->
-                    val file =
-                        configuration.srcDirectory.resolve(kotlinToTsFile(ksFile, configuration))
+                    val file = tempDir.resolve(kotlinToTsFile(ksFile, configuration))
                     //                debugReport?.appendLine("$file")
                     file.parent.toFile().mkdirs()
                     // TODO un imports writer...
@@ -151,7 +158,7 @@ class KtToTsSymbolProcessor(
                     // order conservation
                     parsed.forEach { sb.append(ClassWriter.toTs(it)) }
                     Files.write(file, sb.toString().toByteArray())
-                    file
+                    ksFile to file
                 }
         //        debugReport?.let {
         //            typesSelection.map { debugReport.appendLine("${it.qualifiedName?.asString()}")
@@ -181,8 +188,11 @@ class KtToTsSymbolProcessor(
                 "--config",
                 "package.json",
                 "--write",
-                it.absolutePathString())
+                it.second.absolutePathString())
+            it.second.moveTo(
+                configuration.srcDirectory.resolve(kotlinToTsFile(it.first, configuration)), overwrite = true)
         }
+        tempDir.toFile().deleteRecursively()
         return unableToProcess
     }
 }

@@ -52,6 +52,7 @@ data class KtToTsConfiguration(
                 nominalStringImport = options["ktToTs:nominalStringImport"],
                 // TODO[tmpl]
                 interfaceAsTypes = emptySet(),
+                // TODO use instead of temp dir ?
                 debugFile = options["ktToTs:debugFile"]?.let { Paths.get(it).toFile() })
         }
     }
