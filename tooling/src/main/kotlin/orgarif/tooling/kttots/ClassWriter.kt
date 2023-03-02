@@ -2,6 +2,7 @@ package orgarif.tooling.kttots
 
 import com.google.devtools.ksp.symbol.ClassKind
 import com.google.devtools.ksp.symbol.KSClassDeclaration
+import com.google.devtools.ksp.symbol.KSDeclaration
 import com.google.devtools.ksp.symbol.KSPropertyDeclaration
 import com.google.devtools.ksp.symbol.KSTypeReference
 import com.google.devtools.ksp.symbol.Nullability
@@ -12,7 +13,7 @@ object ClassWriter {
     fun toTs(parsed: ClassParser.Parsed): StringBuilder {
         val d = parsed.type.declaration as? KSClassDeclaration ?: throw IllegalArgumentException()
         val mapping = ClassMapper.mapClass(d)
-        val sb = java.lang.StringBuilder()
+        val sb = StringBuilder()
         val parentIsSealedClass = let {
             val parentSealedSubClasses =
                 (parsed.type.declaration as KSClassDeclaration)
@@ -31,9 +32,9 @@ object ClassWriter {
                         d.declarations.mapNotNull { it as? KSPropertyDeclaration }.toList()
                     if (properties.isNotEmpty() || parentIsSealedClass) {
                         // TODO[tmpl] about class which are not data classes
-                        sb.appendLine("export interface ${d.simpleName.asString()} {")
+                        sb.appendLine("export interface ${className(d)} {")
                         if (parentIsSealedClass) {
-                            sb.appendLine("  objectType: '${d.simpleName.asString()}';")
+                            sb.appendLine("  objectType: '${className(d)}';")
                         }
                         d.declarations
                             .mapNotNull { it as? KSPropertyDeclaration }
@@ -45,7 +46,7 @@ object ClassWriter {
                                         Nullability.PLATFORM -> ""
                                     }
                                 sb.appendLine(
-                                    "  ${it.simpleName.asString()}$nullableMark: ${className(it.type).name};")
+                                    "  ${it.simpleName.asString()}$nullableMark: ${propertyClassName(it.type).name};")
                             }
                         sb.appendLine("}")
                         sb.appendLine("")
@@ -59,14 +60,14 @@ object ClassWriter {
                         //                                    .isNotEmpty()
                         //                            }
                         if (subTypes.isNotEmpty()) {
-                            sb.appendLine("export type ${d.simpleName.asString()} =")
-                            subTypes.forEach { sb.appendLine("  | ${it.simpleName.asString()}") }
+                            sb.appendLine("export type ${className(d)} =")
+                            subTypes.forEach { sb.appendLine("  | ${className(it)}") }
                             sb.appendLine("")
                         }
                     }
                 }
                 ClassKind.ENUM_CLASS -> {
-                    sb.appendLine("export type ${d.simpleName.asString()} = ")
+                    sb.appendLine("export type ${className(d)} = ")
                     d.declarations
                         .filterIsInstance<KSClassDeclaration>()
                         .filter { it.classKind == ClassKind.ENUM_ENTRY }
@@ -85,8 +86,8 @@ object ClassWriter {
                     } else {
                         // TODO[tmpl] not good but the only way to handle EmptyCommandResponse for the moment
                         if (parentIsSealedClass) {
-                            sb.appendLine("export interface ${d.simpleName.asString()} {")
-                            sb.appendLine("  objectType: '${d.simpleName.asString()}';")
+                            sb.appendLine("export interface ${className(d)} {")
+                            sb.appendLine("  objectType: '${className(d)}';")
                             sb.appendLine("}")
                             sb.appendLine("")
                         }
@@ -95,13 +96,19 @@ object ClassWriter {
                 ClassKind.ANNOTATION_CLASS -> TODO()
             }
         } else {
-            sb.appendLine("export type ${d.simpleName.asString()} = ${mapping.name};")
+            sb.appendLine("export type ${className(d)} = ${mapping.name};")
             sb.appendLine("")
         }
         return sb
     }
 
-    fun className(t: KSTypeReference) =
-        ClassMapper.mapProperty(t)
-            ?: ClassMapper.ClassMapping(t.resolve().declaration.simpleName.asString())
+    fun className(d: KSDeclaration): String {
+        // TODO is enough ? only KSClassDeclaration can contain inner classes ?
+        val parent = d.parentDeclaration as? KSClassDeclaration
+        val prefix = parent?.let { className(it) + "$" } ?: ""
+        return prefix + d.simpleName.asString()
+    }
+
+    fun propertyClassName(t: KSTypeReference) =
+        ClassMapper.mapProperty(t) ?: ClassMapper.ClassMapping(className(t.resolve().declaration))
 }

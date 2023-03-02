@@ -2,6 +2,7 @@ package orgarif.tooling.kttots
 
 import com.google.devtools.ksp.symbol.KSClassDeclaration
 import com.google.devtools.ksp.symbol.KSTypeReference
+import orgarif.tooling.kttots.ClassWriter.propertyClassName
 import java.time.Duration
 import java.time.Instant
 import java.time.LocalDate
@@ -24,8 +25,7 @@ object ClassMapper {
                 val t =
                     t.element?.typeArguments?.firstOrNull()?.type
                         ?: throw IllegalArgumentException()
-                val mapped = mapProperty(t)?.name ?: t.resolve().declaration.simpleName.asString()
-                ClassMapping("${mapped}[]")
+                ClassMapping("${propertyClassName(t).name}[]")
             }
             Pair::class.qualifiedName -> {
                 val a = t.element?.typeArguments ?: throw IllegalArgumentException()

@@ -75,10 +75,19 @@ class KtToTsSymbolProcessor(
         }
         //        val typesSelection = parsingResult.map { it.declaration }
         //        val importsMap = parsingResult.associateBy { it.declaration }
+        val parsingResultMap = parsingResult.associateBy { it.type.declaration }
         val resultFiles =
             filesSelection
                 .map { ksFile ->
-                    ksFile to parsingResult.filter { it.type.declaration in ksFile.declarations }
+                    val fileDeclarations =
+                        ksFile.declarations.toList().flatMap { d ->
+                            val innerDeclarations =
+                                if (d is KSClassDeclaration) {
+                                    d.declarations.toList()
+                                } else emptyList()
+                            listOf(d) + innerDeclarations
+                        }
+                    ksFile to fileDeclarations.mapNotNull { parsingResultMap.get(it) }
                 }
                 .map { (ksFile, parsed) ->
                     val file = configuration.generatedDirectory.resolve(clientFile(ksFile))
@@ -101,7 +110,7 @@ class KtToTsSymbolProcessor(
                                 .mapNotNull { d ->
                                     d.containingFile?.let {
                                         ClassMapper.ClassMapping(
-                                            d.simpleName.asString(), fileToPath(it, configuration))
+                                            ClassWriter.className(d), fileToPath(it, configuration))
                                     }
                                 }
                         val classImports =
@@ -139,13 +148,7 @@ class KtToTsSymbolProcessor(
                     //                val keepDeclarations = parsed.map { it.type.declaration }
                     // [doc] restarting from file here (instead of using directly parsed) permits
                     // order conservation
-                    ksFile.declarations
-                        .filterIsInstance<KSClassDeclaration>()
-                        .toList()
-                        .mapNotNull {
-                            parsed.firstOrNull { p -> p.type == it.asStarProjectedType() }
-                        }
-                        .forEach { sb.append(ClassWriter.toTs(it)) }
+                    parsed.forEach { sb.append(ClassWriter.toTs(it)) }
                     Files.write(file, sb.toString().toByteArray())
                     file
                 }

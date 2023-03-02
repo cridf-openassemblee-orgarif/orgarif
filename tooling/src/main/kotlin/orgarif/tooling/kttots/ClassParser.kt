@@ -34,7 +34,17 @@ object ClassParser {
         //        val fields: List<ParsedField>,
         //        val addObjectType: Boolean,
         val debug: Any? = null
-    )
+    ) {
+        // without it we have duplicates (KS* comparison doesn't work as expected)
+        override fun equals(other: Any?) =
+            if (other is Parsed) {
+                type.declaration.qualifiedName == other.type.declaration.qualifiedName
+            } else {
+                false
+            }
+
+        override fun hashCode() = type.declaration.qualifiedName.hashCode()
+    }
 
     // TODO[tmpl] sealed support is very limited
     // will work if a field uses the sealed object and not directly a subclass
