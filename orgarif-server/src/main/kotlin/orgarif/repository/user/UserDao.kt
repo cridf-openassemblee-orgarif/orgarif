@@ -26,7 +26,7 @@ class UserDao(val jooq: DSLContext) {
         val language: Language,
         val roles: Set<Role>,
         val signupDate: Instant,
-        val lastUpdateDate: Instant
+        val lastUpdate: Instant
     ) {
         override fun toString() = "User($id|$mail)"
     }
@@ -42,7 +42,7 @@ class UserDao(val jooq: DSLContext) {
                 language = r.language.name
                 roles = r.roles.map { it.name }.toTypedArray()
                 signupDate = r.signupDate
-                lastUpdateDate = r.lastUpdateDate
+                lastUpdate = r.lastUpdate
             }
 
         try {
@@ -57,7 +57,7 @@ class UserDao(val jooq: DSLContext) {
             jooq
                 .update(APP_USER)
                 .set(APP_USER.MAIL, mail)
-                .set(APP_USER.LAST_UPDATE_DATE, lastUpdateDate)
+                .set(APP_USER.LAST_UPDATE, lastUpdateDate)
                 .where(APP_USER.ID.equal(id.rawId))
                 .execute()
         } catch (e: DuplicateKeyException) {
@@ -80,7 +80,7 @@ class UserDao(val jooq: DSLContext) {
         jooq
             .update(APP_USER)
             .set(APP_USER.PASSWORD, password.hash)
-            .set(APP_USER.LAST_UPDATE_DATE, lastUpdateDate)
+            .set(APP_USER.LAST_UPDATE, lastUpdateDate)
             .where(APP_USER.ID.equal(id.rawId))
             .execute()
     }
@@ -89,7 +89,7 @@ class UserDao(val jooq: DSLContext) {
         jooq
             .update(APP_USER)
             .set(APP_USER.ROLES, roles.map { it.name }.toTypedArray())
-            .set(APP_USER.LAST_UPDATE_DATE, lastUpdateDate)
+            .set(APP_USER.LAST_UPDATE, lastUpdateDate)
             .where(APP_USER.ID.equal(id.rawId))
             .execute()
     }
@@ -140,5 +140,5 @@ class UserDao(val jooq: DSLContext) {
             language = Language.valueOf(r.language),
             roles = r.roles.map { Role.valueOf(it) }.toSet(),
             signupDate = r.signupDate,
-            lastUpdateDate = r.lastUpdateDate)
+            lastUpdate = r.lastUpdate)
 }

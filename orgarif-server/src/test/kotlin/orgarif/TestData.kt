@@ -21,6 +21,6 @@ object TestData {
             language = Language.en,
             roles = setOf(Role.user),
             signupDate = date,
-            lastUpdateDate = date)
+            lastUpdate = date)
     }
 }

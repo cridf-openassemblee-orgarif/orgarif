@@ -62,7 +62,7 @@ class UserService(
                 language = language,
                 roles = setOf(Role.user),
                 signupDate = now,
-                lastUpdateDate = now)
+                lastUpdate = now)
         userDao.insert(user, hashedPassword)
         if (dirtyMail != null) {
             userMailLogDao.insert(
