@@ -62,6 +62,9 @@ class ApplicationInstance(
             notNullGitRevisionProperties.getProperty("shortGitRevision") +
                 (if (!Strings.isNullOrEmpty(buildDiff)) " + DIFF" else "")
         } else {
+            if (env !in setOf(ApplicationEnvironment.dev, ApplicationEnvironment.test)) {
+                throw RuntimeException("No git revision label in $env")
+            }
             "[dev]"
         }
     }
