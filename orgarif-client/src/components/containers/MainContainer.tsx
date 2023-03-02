@@ -4,10 +4,9 @@ import { css } from '@emotion/react';
 import * as React from 'react';
 import { PropsWithChildren } from 'react';
 
-export const MainContainer = (props: PropsWithChildren<{}>) => (
+export const MainContainer = (props: PropsWithChildren) => (
   <div
     css={css`
-      position: absolute;
       display: flex;
       flex-direction: column;
       height: 100%;

@@ -31,12 +31,11 @@ export const useWindowHeight = () => {
 // height: calc(100% - 56px); => problematic too
 // min-height: -webkit-fill-available; => popup completely cut when bar hidden
 // cf onetab "100vh"
-export const Root = (props: PropsWithChildren<{}>) => {
+export const Root = (props: PropsWithChildren) => {
   const height = useWindowHeight();
   return (
     <div
       css={css`
-        position: absolute;
         width: 100%;
         height: ${height}px;
         overflow: hidden;
@@ -44,7 +43,6 @@ export const Root = (props: PropsWithChildren<{}>) => {
     >
       <div
         css={css`
-          position: absolute;
           width: 100%;
           height: 100%;
           overflow-y: scroll;

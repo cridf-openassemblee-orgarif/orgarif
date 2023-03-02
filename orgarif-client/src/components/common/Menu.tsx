@@ -2,7 +2,7 @@
 import { state } from '../../state/state';
 import { RouteLink } from '../routing/RouteLink';
 import { colors } from '../styles/vars';
-import { LogoutForm } from './form/LogoutForm';
+import { LogoutButton } from './form/LogoutButton';
 import { css } from '@emotion/react';
 import * as React from 'react';
 import { useRecoilState } from 'recoil';
@@ -47,7 +47,7 @@ export const Menu = () => {
             {userInfos.mail}
           </div>
         )}
-        {userInfos && <LogoutForm />}
+        {userInfos && <LogoutButton />}
         {!userInfos && (
           <React.Fragment>
             <RouteLink
