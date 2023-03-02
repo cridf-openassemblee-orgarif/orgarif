@@ -26,5 +26,5 @@ mailjet:
   secret-key:
 #---------------------------------------------------------------------------
 remote-endpoint:
-  expected-secu: ${REMOTE_ENDPOINT_EXCEPTED_SECU}
+  expected-secu: ${REMOTE_ENDPOINT_EXPECTED_SECU}
 #---------------------------------------------------------------------------
