@@ -1,4 +1,14 @@
 /** @jsxImportSource @emotion/react */
+import { DeliberationId } from '../../generated/domain/ids';
+import {
+  DeliberationDto,
+  OrganismeDto
+} from '../../generated/domain/organisme';
+import useEventListener from '../../hooks/useEventListener';
+import { isMobile } from '../../utils/viewport-utils';
+import { HystoryItem } from '../root/singleOrganisme/HystoryItem';
+import * as breakpoint from '../styles/breakpoints';
+import { colors } from '../styles/colors';
 import { css } from '@emotion/react';
 import styled from '@emotion/styled';
 import { Chip, Typography } from '@mui/material';
@@ -8,14 +18,6 @@ import Tab from '@mui/material/Tab';
 import Tabs from '@mui/material/Tabs';
 import * as React from 'react';
 import { InView } from 'react-intersection-observer';
-import { HystoryItem } from '../component/singleOrganisme/HystoryItem';
-import { DeliberationId } from '../domain/ids';
-import { DeliberationDto, OrganismeDto } from '../domain/organisme';
-import useEventListener from '../hooks/useEventListener';
-import * as breakpoint from '../styles/breakpoints';
-import { colors } from '../styles/colors';
-import { asString } from '../utils/nominal-class';
-import { isMobile } from '../utils/viewport-utils';
 
 // TODO: complete dynamization once last updated date is available
 export const RightPanel = (props: { organisme: OrganismeDto }) => {
@@ -221,7 +223,7 @@ export const RightPanel = (props: { organisme: OrganismeDto }) => {
                       color?: string;
                     }) => (
                       <div
-                        key={asString(d.id)}
+                        key={d.id}
                         css={css`
                           width: 0.5em;
                           height: 0.5em;

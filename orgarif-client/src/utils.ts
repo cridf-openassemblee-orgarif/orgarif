@@ -1,10 +1,6 @@
 import { ClientUid } from './domain/client-ids';
-<<<<<<< HEAD
-import { LocalDate } from './domain/time';
-import { asString, instanciateNominalString } from './utils/nominal-class';
-=======
+import { LocalDate } from './domain/datetime';
 import { asNominalString } from './utils/nominal-class';
->>>>>>> template
 
 export const extractEmotionCss = (props: any) =>
   'className' in props ? { className: props['className'] } : {};
@@ -28,11 +24,10 @@ export const getCookie = (cookieName: string) => {
   return undefined;
 };
 
-<<<<<<< HEAD
 export const compareByLocalDate =
   <T>(l: (o: T) => LocalDate) =>
   (o1: T, o2: T) =>
-    asString(l(o1)).localeCompare(asString(l(o2)));
+    l(o1).localeCompare(l(o2));
 
 export const compareByNumber =
   <T>(l: (o: T) => number) =>
@@ -42,12 +37,8 @@ export const compareByNumber =
     else return 0;
   };
 
-// TODO[naming] sort in name
-// usage : item.sort(compareByString(item => item.sortLabel))
-=======
 // TODO[tmpl][naming] sort in name
 // usage : items.sort(compareByString(item => item.sortLabel))
->>>>>>> template
 export const compareByString =
   <T>(l: (o: T) => string) =>
   (o1: T, o2: T) =>
@@ -59,7 +50,7 @@ export const stringToLocalDate = (value: string): LocalDate | undefined => {
   if (value === '') {
     return undefined;
   }
-  return instanciateNominalString(value);
+  return asNominalString(value);
 };
 
 export const capitalizeFirstLetter = (value: string) =>

@@ -6,7 +6,6 @@ package orgarif.jooq.generated;
 
 import orgarif.jooq.generated.tables.AppUserTable;
 import orgarif.jooq.generated.tables.CommandLogTable;
-<<<<<<< HEAD
 import orgarif.jooq.generated.tables.DeliberationTable;
 import orgarif.jooq.generated.tables.DepartementTable;
 import orgarif.jooq.generated.tables.DeploymentLogTable;
@@ -21,11 +20,6 @@ import orgarif.jooq.generated.tables.OrganismeTable;
 import orgarif.jooq.generated.tables.RepresentantTable;
 import orgarif.jooq.generated.tables.SecteurTable;
 import orgarif.jooq.generated.tables.TypeStructureTable;
-=======
-import orgarif.jooq.generated.tables.DeploymentLogTable;
-import orgarif.jooq.generated.tables.MagicLinkTokenTable;
-import orgarif.jooq.generated.tables.MailLogTable;
->>>>>>> template
 import orgarif.jooq.generated.tables.UserFileTable;
 import orgarif.jooq.generated.tables.UserMailLogTable;
 import orgarif.jooq.generated.tables.UserSessionLogTable;
@@ -48,7 +42,6 @@ public class Tables {
     public static final CommandLogTable COMMAND_LOG = CommandLogTable.COMMAND_LOG;
 
     /**
-<<<<<<< HEAD
      * The table <code>public.deliberation</code>.
      */
     public static final DeliberationTable DELIBERATION = DeliberationTable.DELIBERATION;
@@ -59,14 +52,11 @@ public class Tables {
     public static final DepartementTable DEPARTEMENT = DepartementTable.DEPARTEMENT;
 
     /**
-=======
->>>>>>> template
      * The table <code>public.deployment_log</code>.
      */
     public static final DeploymentLogTable DEPLOYMENT_LOG = DeploymentLogTable.DEPLOYMENT_LOG;
 
     /**
-<<<<<<< HEAD
      * The table <code>public.designation</code>.
      */
     public static final DesignationTable DESIGNATION = DesignationTable.DESIGNATION;
@@ -87,8 +77,6 @@ public class Tables {
     public static final LienDeliberationTable LIEN_DELIBERATION = LienDeliberationTable.LIEN_DELIBERATION;
 
     /**
-=======
->>>>>>> template
      * The table <code>public.magic_link_token</code>.
      */
     public static final MagicLinkTokenTable MAGIC_LINK_TOKEN = MagicLinkTokenTable.MAGIC_LINK_TOKEN;
@@ -99,7 +87,6 @@ public class Tables {
     public static final MailLogTable MAIL_LOG = MailLogTable.MAIL_LOG;
 
     /**
-<<<<<<< HEAD
      * The table <code>public.nature_juridique</code>.
      */
     public static final NatureJuridiqueTable NATURE_JURIDIQUE = NatureJuridiqueTable.NATURE_JURIDIQUE;
@@ -125,8 +112,6 @@ public class Tables {
     public static final TypeStructureTable TYPE_STRUCTURE = TypeStructureTable.TYPE_STRUCTURE;
 
     /**
-=======
->>>>>>> template
      * The table <code>public.user_file</code>.
      */
     public static final UserFileTable USER_FILE = UserFileTable.USER_FILE;

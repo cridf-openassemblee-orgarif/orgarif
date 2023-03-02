@@ -1,5 +1,5 @@
-import styled from '@emotion/styled';
 import { SizedSvg } from './SizedSvg';
+import styled from '@emotion/styled';
 
 export type IconProps = React.SVGAttributes<SVGElement> & {
   children: React.ReactNode;

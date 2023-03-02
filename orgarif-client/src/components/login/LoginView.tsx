@@ -9,7 +9,7 @@ import { appContext } from '../../services/ApplicationContext';
 import { state } from '../../state/state';
 import { assertUnreachable } from '../../utils';
 import { space } from '../common/component-utils';
-import { MainContainer } from '../containers/MainContainer';
+import { RouteLink } from '../routing/RouteLink';
 import { useGoTo } from '../routing/routing-utils';
 import { LoginForm, LoginFormInput } from './LoginForm';
 import { css } from '@emotion/react';
@@ -17,17 +17,6 @@ import Button from '@mui/material/Button';
 import * as React from 'react';
 import { useState } from 'react';
 import { useRecoilState } from 'recoil';
-<<<<<<< HEAD:orgarif-client/src/view/LoginView.tsx
-import { appContext } from '../ApplicationContext';
-import { LoginResult, UserInfos } from '../domain/user';
-import { Errors } from '../errors';
-import { LoginForm, LoginFormDto } from '../form/LoginForm';
-import { RouteLink } from '../routing/RouteLink';
-import { useGoTo } from '../routing/useGoTo';
-import { state } from '../state/state';
-import { assertUnreachable } from '../utils';
-=======
->>>>>>> template:orgarif-client/src/components/login/LoginView.tsx
 
 export const LoginView = () => {
   const [userInfos, setUserInfos] = useRecoilState(state.userInfos);
@@ -143,17 +132,10 @@ export const LoginView = () => {
                   switch (loginResult) {
                     case 'LoggedIn':
                       return null;
-<<<<<<< HEAD:orgarif-client/src/view/LoginView.tsx
-                    case 'mailNotFound':
-                      return <div>Utilisateur non trouvé</div>;
-                    case 'badPassword':
-                      return <div>Mauvais mot de passe</div>;
-=======
                     case 'MailNotFound':
-                      return <div>User not found</div>;
+                      return <div>Utilisateur non trouvé</div>;
                     case 'BadPassword':
-                      return <div>Bad password</div>;
->>>>>>> template:orgarif-client/src/components/login/LoginView.tsx
+                      return <div>Mauvais mot de passe</div>;
                     default:
                       assertUnreachable(loginResult);
                   }

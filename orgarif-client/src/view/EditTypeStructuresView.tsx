@@ -1,15 +1,16 @@
 /** @jsxImportSource @emotion/react */
+import { MainContainer } from '../components/containers/MainContainer';
+import { EditCategoriesComponent } from '../components/root/category/EditCategoriesComponent';
+import { CreateTypeStructureCommandResponse } from '../generated/command/commands';
+import { TypeStructure } from '../generated/domain/bootstrap-data';
+import { TypeStructureId } from '../generated/domain/ids';
+import { ItemStatus } from '../generated/domain/organisme';
+import { appContext } from '../services/ApplicationContext';
+import { state } from '../state/state';
+import { compareByString } from '../utils';
 import { css } from '@emotion/react';
 import * as React from 'react';
 import { useRecoilState } from 'recoil';
-import { appContext } from '../ApplicationContext';
-import { EditCategoriesComponent } from '../component/category/EditCategoriesComponent';
-import { MainContainer } from '../container/MainContainer';
-import { TypeStructure } from '../domain/bootstrap-data';
-import { TypeStructureId } from '../domain/ids';
-import { ItemStatus } from '../domain/organisme';
-import { state } from '../state/state';
-import { compareByString } from '../utils';
 
 export const EditTypeStructuresView = () => {
   const [typeStructures, setTypeStructures] = useRecoilState(
@@ -18,7 +19,8 @@ export const EditTypeStructuresView = () => {
   const addTypeStructure = (libelle: string) =>
     appContext
       .commandService()
-      .createTypeStructureCommand({
+      .send<CreateTypeStructureCommandResponse>({
+        objectType: 'CreateTypeStructureCommand',
         libelle
       })
       .then(r => {
@@ -39,7 +41,8 @@ export const EditTypeStructuresView = () => {
   ) =>
     appContext
       .commandService()
-      .updateTypeStructureLibelleCommand({
+      .send({
+        objectType: 'UpdateTypeStructureLibelleCommand',
         id: typeStructureId,
         libelle
       })
@@ -53,10 +56,7 @@ export const EditTypeStructuresView = () => {
   const onUpdateStatus = (id: TypeStructureId, status: ItemStatus) =>
     appContext
       .commandService()
-      .updateTypeStructureStatusCommand({
-        id,
-        status
-      })
+      .send({ objectType: 'UpdateTypeStructureStatusCommand', id, status })
       .then(() => {
         setTypeStructures(
           typeStructures.map(s => (s.id === id ? { ...s, status } : s))

@@ -1,4 +1,7 @@
 /** @jsxImportSource @emotion/react */
+import { Category, CategoryId } from '../../domain/category';
+import { state } from '../../state/state';
+import { colors } from '../styles/colors';
 import { css } from '@emotion/react';
 import styled from '@emotion/styled';
 import Box from '@mui/material/Box';
@@ -10,23 +13,6 @@ import OutlinedInput from '@mui/material/OutlinedInput';
 import Select, { SelectChangeEvent } from '@mui/material/Select';
 import * as React from 'react';
 import { useRecoilState } from 'recoil';
-import {
-  Category,
-  CategoryId,
-  Departement,
-  NatureJuridique,
-  Secteur,
-  TypeStructure
-} from '../domain/bootstrap-data';
-import {
-  DepartementId,
-  NatureJuridiqueId,
-  SecteurId,
-  TypeStructureId
-} from '../domain/ids';
-import { state } from '../state/state';
-import { colors } from '../styles/colors';
-import { asString } from '../utils/nominal-class';
 
 interface MobileFilterSectionProps {
   data: Category[];
@@ -127,11 +113,7 @@ export const MobileSelectFilters = ({
         `}
       >
         {data.map((el: Category) => (
-          <MenuItem
-            key={asString(el.id)}
-            value={el.libelle}
-            id={asString(el.id)}
-          >
+          <MenuItem key={el.id} value={el.libelle} id={el.id}>
             {el.libelle}
           </MenuItem>
         ))}

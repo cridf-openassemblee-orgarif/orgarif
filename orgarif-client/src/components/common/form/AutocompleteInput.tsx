@@ -1,12 +1,12 @@
 /** @jsxImportSource @emotion/react */
+import { LoadingState } from '../../../interfaces';
+import { colors } from '../../styles/colors';
 import { css } from '@emotion/react';
 import { Autocomplete } from '@mui/material';
 import CircularProgress from '@mui/material/CircularProgress';
 import TextField from '@mui/material/TextField';
 import * as React from 'react';
 import { ChangeEvent, useEffect, useState } from 'react';
-import { colors } from '../../styles/colors';
-import { LoadingState } from '../../interfaces';
 
 export type AlreadySet = boolean;
 
@@ -29,11 +29,11 @@ export const AutocompleteInput = <Suggestion extends object>(props: {
   useEffect(() => setValue(props.selection ?? null), [props.selection]);
   const [suggestions, setSuggestions] = useState<(Suggestion | string)[]>([]);
   const [alreadySet, setAlreadySet] = useState(false);
-  const [loading, setLoading] = useState<LoadingState>('idle');
+  const [loading, setLoading] = useState<LoadingState>('Idle');
   const onInputChange = (event: React.ChangeEvent<{}>, value: string) => {
-    setLoading('loading');
+    setLoading('Loading');
     props.onInputChange(value).then(([suggestions, alreadySet]) => {
-      setLoading('idle');
+      setLoading('Idle');
       setSuggestions(suggestions);
       setAlreadySet(alreadySet);
     });
@@ -76,7 +76,7 @@ export const AutocompleteInput = <Suggestion extends object>(props: {
               background: ${colors.white};
             `}
           />
-          {loading === 'loading' && (
+          {loading === 'Loading' && (
             <div
               css={css`
                 position: absolute;

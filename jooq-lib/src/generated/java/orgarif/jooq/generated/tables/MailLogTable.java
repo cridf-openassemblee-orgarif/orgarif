@@ -18,11 +18,7 @@ import org.jooq.ForeignKey;
 import org.jooq.Index;
 import org.jooq.Name;
 import org.jooq.Record;
-<<<<<<< HEAD
-import org.jooq.Row11;
-=======
 import org.jooq.Row10;
->>>>>>> template
 import org.jooq.Schema;
 import org.jooq.Table;
 import org.jooq.TableField;
@@ -66,14 +62,6 @@ public class MailLogTable extends TableImpl<MailLogRecord> {
     public final TableField<MailLogRecord, UUID> ID = createField(DSL.name("id"), SQLDataType.UUID.nullable(false), this, "");
 
     /**
-<<<<<<< HEAD
-     * The column <code>public.mail_log.application</code>.
-     */
-    public final TableField<MailLogRecord, String> APPLICATION = createField(DSL.name("application"), SQLDataType.VARCHAR(255).nullable(false), this, "");
-
-    /**
-=======
->>>>>>> template
      * The column <code>public.mail_log.deployment_log_id</code>.
      */
     public final TableField<MailLogRecord, UUID> DEPLOYMENT_LOG_ID = createField(DSL.name("deployment_log_id"), SQLDataType.UUID.nullable(false), this, "");
@@ -221,21 +209,12 @@ public class MailLogTable extends TableImpl<MailLogRecord> {
     }
 
     // -------------------------------------------------------------------------
-<<<<<<< HEAD
-    // Row11 type methods
-=======
     // Row10 type methods
->>>>>>> template
     // -------------------------------------------------------------------------
 
     @Override
     @Nonnull
-<<<<<<< HEAD
-    public Row11<UUID, String, UUID, String, UUID, String, String, String, String, String, Instant> fieldsRow() {
-        return (Row11) super.fieldsRow();
-=======
     public Row10<UUID, UUID, String, UUID, String, String, String, String, String, Instant> fieldsRow() {
         return (Row10) super.fieldsRow();
->>>>>>> template
     }
 }

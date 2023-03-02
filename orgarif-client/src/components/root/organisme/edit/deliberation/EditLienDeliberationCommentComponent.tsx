@@ -1,16 +1,16 @@
 /** @jsxImportSource @emotion/react */
+import { LienDeliberationDto } from '../../../../../generated/domain/organisme';
+import { appContext } from '../../../../../services/ApplicationContext';
+import { LoadingButton } from '../../../../common/LoadingButton';
+import { ConfirmButton } from '../../../../common/form/ConfirmButton';
+import { TabPanel, TabsContainer } from '../../../../common/form/TabsContainer';
+import { TextInput } from '../../../../common/form/TextInput';
+import { classes } from '../../../category/EditCategoriesComponent';
 import { css } from '@emotion/react';
 import { Edit } from '@mui/icons-material';
 import { Button, Dialog, DialogContent, DialogTitle } from '@mui/material';
 import * as React from 'react';
 import { useEffect, useState } from 'react';
-import { LienDeliberationDto } from '../../../../domain/organisme';
-import { TabPanel, TabsContainer } from '../../../base-component/TabsContainer';
-import { ConfirmButton } from '../../../base-component/ConfirmButton';
-import { TextInput } from '../../../base-component/TextInput';
-import { classes } from '../../../category/EditCategoriesComponent';
-import { appContext } from '../../../../ApplicationContext';
-import { LoadingButton } from '../../../base-component/LoadingButton';
 
 export const EditLienDeliberationCommentComponent = (props: {
   lienDeliberation: LienDeliberationDto;
@@ -64,7 +64,8 @@ export const EditLienDeliberationCommentComponent = (props: {
                   onClick={() =>
                     appContext
                       .commandService()
-                      .updateLienDeliberationCommentCommand({
+                      .send({
+                        objectType: 'UpdateLienDeliberationCommentCommand',
                         id: props.lienDeliberation.id,
                         comment
                       })
@@ -91,7 +92,8 @@ export const EditLienDeliberationCommentComponent = (props: {
                   onConfirm={() =>
                     appContext
                       .commandService()
-                      .updateLienDeliberationStatusCommand({
+                      .send({
+                        objectType: 'UpdateLienDeliberationStatusCommand',
                         id: props.lienDeliberation.id,
                         status: 'trash'
                       })

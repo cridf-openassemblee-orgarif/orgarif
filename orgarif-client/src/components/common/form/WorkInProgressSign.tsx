@@ -1,8 +1,8 @@
 /** @jsxImportSource @emotion/react */
+import { colors } from '../../styles/colors';
 import { css } from '@emotion/react';
 import { WarningRounded } from '@mui/icons-material';
 import * as React from 'react';
-import { colors } from '../../styles/colors';
 
 export const WorkInProgressSign = () => (
   <div

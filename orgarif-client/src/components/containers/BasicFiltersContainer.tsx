@@ -1,4 +1,9 @@
 /** @jsxImportSource @emotion/react */
+import { Departement } from '../../generated/domain/bootstrap-data';
+import { state } from '../../state/state';
+import { FilterSection } from '../root/filters/FilterSection';
+import * as breakpoint from '../styles/breakpoints';
+import { colors } from '../styles/colors';
 import { css } from '@emotion/react';
 import UnfoldLessIcon from '@mui/icons-material/UnfoldLess';
 import UnfoldMoreIcon from '@mui/icons-material/UnfoldMore';
@@ -7,11 +12,6 @@ import Collapse from '@mui/material/Collapse';
 import * as React from 'react';
 import { useNavigate } from 'react-router-dom';
 import { useRecoilState, useSetRecoilState } from 'recoil';
-import { FilterSection } from '../component/filters/FilterSection';
-import { state } from '../state/state';
-import * as breakpoint from '../styles/breakpoints';
-import { colors } from '../styles/colors';
-import { Departement } from '../domain/bootstrap-data';
 
 export const extractLabelAndTooltip = (label: string): [string, string?] => {
   // Regex to check if libelle contains parentheses and if yes,
@@ -45,8 +45,6 @@ export const BasicFiltersContainer = () => {
         <FilterSection
           filters={departements}
           categoryLabel={'départements'}
-          // TODO as unknown as Departement should not be necessary...
-          // les tracker partout, sans répis
           filterLabelAndTooltip={f => [
             `${f.libelle} - ${(f as unknown as Departement).code}`
           ]}

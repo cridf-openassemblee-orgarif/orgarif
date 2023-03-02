@@ -1,17 +1,20 @@
 /** @jsxImportSource @emotion/react */
-import * as React from 'react';
+import { LocalDate } from '../../../../../domain/datetime';
 import {
   InstanceId,
   OrganismeId,
   RepresentantId
-} from '../../../../domain/ids';
-import { DesignationDto, DesignationType } from '../../../../domain/organisme';
-import { editCommonClasses } from '../EditOrganismeComponent';
-import { HeaderDesignationsComponent } from './HeaderDesignationsComponent';
-import { LocalDate } from '../../../../domain/time';
-import { css } from '@emotion/react';
+} from '../../../../../generated/domain/ids';
+import {
+  DesignationDto,
+  DesignationType
+} from '../../../../../generated/domain/organisme';
 import { colors } from '../../../../styles/colors';
+import { editCommonClasses } from '../EditOrganismeComponent';
 import { EditDesignationListItem } from './EditDesignationListItem';
+import { HeaderDesignationsComponent } from './HeaderDesignationsComponent';
+import { css } from '@emotion/react';
+import * as React from 'react';
 
 export const EditDesignationListComponent = (props: {
   organismeOrInstanceId: OrganismeId | InstanceId;

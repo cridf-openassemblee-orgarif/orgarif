@@ -1,15 +1,14 @@
 /** @jsxImportSource @emotion/react */
-import { css } from '@emotion/react';
-import * as React from 'react';
-import { LienDeliberationDto } from '../../../../domain/organisme';
-import { formatLocaleDate } from '../../../../simple-fr';
+import { LienDeliberationDto } from '../../../../../generated/domain/organisme';
+import { formatLocaleDate } from '../../../../../simple-fr';
+import { clientUid } from '../../../../../utils';
 import { colors } from '../../../../styles/colors';
-import { clientUid } from '../../../../utils';
-import { asString } from '../../../../utils/nominal-class';
 import { editCommonClasses } from '../EditOrganismeComponent';
 import { EditLienDeliberationCommentComponent } from './EditLienDeliberationCommentComponent';
+import { css } from '@emotion/react';
+import * as React from 'react';
 
-const actionsClass = asString(clientUid());
+const actionsClass = clientUid();
 
 export const EditDeliberationListItem = (props: {
   lienDeliberation: LienDeliberationDto;
@@ -17,7 +16,7 @@ export const EditDeliberationListItem = (props: {
 }) => {
   return (
     <div
-      key={asString(props.lienDeliberation.id)}
+      key={props.lienDeliberation.id}
       css={css`
         user-select: none;
         padding: 10px 20px;

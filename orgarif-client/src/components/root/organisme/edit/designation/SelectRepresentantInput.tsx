@@ -1,13 +1,14 @@
 /** @jsxImportSource @emotion/react */
-import { css } from '@emotion/react';
-import * as React from 'react';
-import { appContext } from '../../../../ApplicationContext';
-import { SharedConstants } from '../../../../constants';
-import { RepresentantDto } from '../../../../domain/organisme';
+import { SharedConstants } from '../../../../../constants';
+import { RepresentantDto } from '../../../../../generated/domain/organisme';
+import { SearchRepresentantsQueryResponse } from '../../../../../generated/query/queries';
+import { appContext } from '../../../../../services/ApplicationContext';
 import {
   AlreadySet,
   AutocompleteInput
-} from '../../../base-component/AutocompleteInput';
+} from '../../../../common/form/AutocompleteInput';
+import { css } from '@emotion/react';
+import * as React from 'react';
 
 export const SelectRepresentantInput = (props: {
   label: string;
@@ -21,7 +22,8 @@ export const SelectRepresentantInput = (props: {
     if (input.length >= SharedConstants.searchLengthLimit) {
       return appContext
         .queryService()
-        .searchRepresentantsQuery({
+        .send<SearchRepresentantsQueryResponse>({
+          objectType: 'SearchRepresentantsQuery',
           searchToken: input
         })
         .then(r => [[...r.representants, input], false]);

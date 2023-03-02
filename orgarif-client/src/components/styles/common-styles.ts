@@ -1,12 +1,7 @@
 /** @jsxImportSource @emotion/react */
-<<<<<<< HEAD:orgarif-client/src/styles/common-styles.ts
-import { css } from '@emotion/react';
 import { colors } from './colors';
 import { fonts } from './fonts';
-=======
-import { fonts } from './vars';
 import { css } from '@emotion/react';
->>>>>>> template:orgarif-client/src/components/styles/common-styles.ts
 
 export const globalStyles = css`
   *,

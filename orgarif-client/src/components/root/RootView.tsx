@@ -1,26 +1,15 @@
 /** @jsxImportSource @emotion/react */
-<<<<<<< HEAD:orgarif-client/src/view/RootView.tsx
+import { state } from '../../state/state';
+import { isMobile } from '../../utils/viewport-utils';
+import { BasicFiltersContainer } from '../containers/BasicFiltersContainer';
+import { FiltersContainer } from '../containers/FiltersContainer';
+import { MainContainer } from '../containers/MainContainer';
+import { TableContainer } from '../containers/TableContainer';
+import { RouteLink } from '../routing/RouteLink';
 import { css } from '@emotion/react';
 import { Slide } from '@mui/material';
 import * as React from 'react';
 import { useRecoilState } from 'recoil';
-import { BasicFiltersContainer } from '../container/BasicFiltersContainer';
-import { FiltersContainer } from '../container/FiltersContainer';
-import { MainContainer } from '../container/MainContainer';
-import { TableContainer } from '../container/TableContainer';
-import { RouteLink } from '../routing/RouteLink';
-import { state } from '../state/state';
-import { asString } from '../utils/nominal-class';
-import { isMobile } from '../utils/viewport-utils';
-=======
-import { state } from '../../state/state';
-import { MainContainer } from '../containers/MainContainer';
-import { RouteLink } from '../routing/RouteLink';
-import { ComponentsDemonstration } from './ComponentsDemonstration';
-import { RouteLinkDemonstration } from './RouteLinkDemonstration';
-import * as React from 'react';
-import { useRecoilState } from 'recoil';
->>>>>>> template:orgarif-client/src/components/root/RootView.tsx
 
 export const RootView = () => {
   const [userInfos] = useRecoilState(state.userInfos);
@@ -78,7 +67,7 @@ export const RootView = () => {
           >
             <h3>Par secteur</h3>
             {secteurs.map(s => (
-              <div key={asString(s.id)}>
+              <div key={s.id}>
                 <RouteLink
                   route={{
                     name: 'ListOrganismesBySecteurRoute',
@@ -124,21 +113,6 @@ export const RootView = () => {
           </RouteLink>
         </div>
       )}
-<<<<<<< HEAD:orgarif-client/src/view/RootView.tsx
-=======
-      {userInfos && <div>You're connected</div>}
-      <ComponentsDemonstration />
-      <RouteLinkDemonstration />
-      {userInfos && userInfos.roles.includes('Admin') && (
-        <RouteLink
-          route={{
-            name: 'UsersManagementRoute'
-          }}
-        >
-          Users management
-        </RouteLink>
-      )}
->>>>>>> template:orgarif-client/src/components/root/RootView.tsx
     </MainContainer>
   );
 };

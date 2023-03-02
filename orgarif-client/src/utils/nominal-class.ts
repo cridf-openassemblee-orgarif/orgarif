@@ -65,23 +65,7 @@ export const set = <K extends NominalItem | string, T>(
   return newDict;
 };
 
-<<<<<<< HEAD
-export const setAll = <K extends NominalItem, T>(
-  dict: Dict<K, T>,
-  pairs: [K, T][]
-): Dict<K, T> => {
-  const newDict = { ...dict } as Dict<K, T>;
-  pairs.forEach(pair => {
-    // @ts-ignore
-    d[pair[0]] = pair[1];
-  });
-  return newDict;
-};
-
-export const setMutable = <K extends NominalItem, T>(
-=======
 export const setMutable = <K extends NominalItem | string, T>(
->>>>>>> template
   dict: Dict<K, T>,
   key: K,
   value: T
@@ -101,9 +85,6 @@ export const dictEntries = <K extends NominalItem | string, T>(
   dict: Dict<K, T>
 ) => Object.entries(dict) as unknown as [K, T][];
 
-<<<<<<< HEAD
-export const remove = <K extends NominalItem, T>(
-=======
 // FIXME[tmpl] remove usage for an immutable deleteItem
 export const deleteItemOld = <K extends NominalItem | string, T>(
   dict: Dict<K, T>,
@@ -114,7 +95,6 @@ export const deleteItemOld = <K extends NominalItem | string, T>(
 };
 
 export const deleteFromDict = <K extends NominalItem | string, T>(
->>>>>>> template
   dict: Dict<K, T>,
   ...keys: K[]
 ): Dict<K, T> => {

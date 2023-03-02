@@ -1,4 +1,11 @@
 /** @jsxImportSource @emotion/react */
+import { OrganismeDto } from '../../../generated/domain/organisme';
+import { Departement } from '../../../icon/collection/Departement';
+import { Localite } from '../../../icon/collection/Localite';
+import { NatureJuridique } from '../../../icon/collection/NatureJuridique';
+import { Secteur } from '../../../icon/collection/Secteur';
+import { state } from '../../../state/state';
+import { isMobile } from '../../../utils/viewport-utils';
 import { css } from '@emotion/react';
 import { Chip, Typography } from '@mui/material';
 import Box from '@mui/material/Box';
@@ -6,13 +13,6 @@ import Grid from '@mui/material/Grid';
 import Paper from '@mui/material/Paper';
 import { experimentalStyled as styled } from '@mui/material/styles';
 import { useRecoilState } from 'recoil';
-import { OrganismeDto } from '../../domain/organisme';
-import { Departement } from '../../icon/collection/Departement';
-import { Localite } from '../../icon/collection/Localite';
-import { NatureJuridique } from '../../icon/collection/NatureJuridique';
-import { Secteur } from '../../icon/collection/Secteur';
-import { state } from '../../state/state';
-import { isMobile } from '../../utils/viewport-utils';
 
 // TODO: add missing props localité once available in state
 export const Informations = (props: { data: OrganismeDto }) => {

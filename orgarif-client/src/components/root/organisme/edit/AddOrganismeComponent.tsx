@@ -1,4 +1,9 @@
 /** @jsxImportSource @emotion/react */
+import { CreateOrganismeCommandResponse } from '../../../../generated/command/commands';
+import { appContext } from '../../../../services/ApplicationContext';
+import { TextInput } from '../../../common/form/TextInput';
+import { useGoTo } from '../../../routing/routing-utils';
+import { colors } from '../../../styles/colors';
 import { css } from '@emotion/react';
 import { Add } from '@mui/icons-material';
 import {
@@ -10,10 +15,6 @@ import {
 } from '@mui/material';
 import * as React from 'react';
 import { useEffect, useState } from 'react';
-import { colors } from '../../../styles/colors';
-import { appContext } from '../../../ApplicationContext';
-import { TextInput } from '../../base-component/TextInput';
-import { useGoTo } from '../../../routing/useGoTo';
 
 export const AddOrganismeComponent = () => {
   const [displayDialog, setDisplayDialog] = useState(false);
@@ -82,7 +83,10 @@ export const AddOrganismeComponent = () => {
               }
               appContext
                 .commandService()
-                .createOrganismeCommand({ nom })
+                .send<CreateOrganismeCommandResponse>({
+                  objectType: 'CreateOrganismeCommand',
+                  nom
+                })
                 .then(r => {
                   goTo({
                     name: 'EditOrganismeRoute',

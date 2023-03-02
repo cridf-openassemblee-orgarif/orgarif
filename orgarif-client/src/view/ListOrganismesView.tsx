@@ -1,21 +1,22 @@
 /** @jsxImportSource @emotion/react */
+import { MainContainer } from '../components/containers/MainContainer';
+import { AddOrganismeComponent } from '../components/root/organisme/edit/AddOrganismeComponent';
+import { RouteLink } from '../components/routing/RouteLink';
+import { colors } from '../components/styles/colors';
+import { OrganismeListDto } from '../generated/domain/organisme';
+import { ListOrganismesQueryResponse } from '../generated/query/queries';
+import { appContext } from '../services/ApplicationContext';
 import { css } from '@emotion/react';
 import * as React from 'react';
 import { useEffect, useState } from 'react';
-import { appContext } from '../ApplicationContext';
-import { AddOrganismeComponent } from '../component/organisme/edit/AddOrganismeComponent';
-import { MainContainer } from '../container/MainContainer';
-import { OrganismeListDto } from '../domain/organisme';
-import { RouteLink } from '../routing/RouteLink';
-import { colors } from '../styles/colors';
-import { asString } from '../utils/nominal-class';
 
 export const ListOrganismesView = () => {
   const [organismes, setOrganismes] = useState<OrganismeListDto[]>();
   useEffect(() => {
     appContext
       .queryService()
-      .listOrganismesQuery({
+      .send<ListOrganismesQueryResponse>({
+        objectType: 'ListOrganismesQuery',
         departementIds: [],
         natureJuridiqueIds: [],
         secteurIds: [],
@@ -43,7 +44,7 @@ export const ListOrganismesView = () => {
         {organismes &&
           organismes.map(o => (
             <div
-              key={asString(o.id)}
+              key={o.id}
               css={css`
                 background: ${colors.clearGrey};
                 margin: 2px 0;

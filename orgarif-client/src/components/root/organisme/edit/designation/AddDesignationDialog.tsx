@@ -1,4 +1,13 @@
 /** @jsxImportSource @emotion/react */
+import { LocalDate } from '../../../../../domain/datetime';
+import { RepresentantId } from '../../../../../generated/domain/ids';
+import { RepresentantDto } from '../../../../../generated/domain/organisme';
+import { capitalizeFirstLetter, stringToLocalDate } from '../../../../../utils';
+import { LoadingButton } from '../../../../common/LoadingButton';
+import { TextInput } from '../../../../common/form/TextInput';
+import { colors } from '../../../../styles/colors';
+import { CreateRepresentantDialog } from '../representant/CreateRepresentantDialog';
+import { SelectRepresentantInput } from './SelectRepresentantInput';
 import { css } from '@emotion/react';
 import {
   Button,
@@ -9,16 +18,6 @@ import {
 } from '@mui/material';
 import * as React from 'react';
 import { useState } from 'react';
-import { RepresentantId } from '../../../../domain/ids';
-import { RepresentantDto } from '../../../../domain/organisme';
-import { colors } from '../../../../styles/colors';
-import { TextInput } from '../../../base-component/TextInput';
-import { SelectRepresentantInput } from './SelectRepresentantInput';
-import { LocalDate } from '../../../../domain/time';
-import { capitalizeFirstLetter, stringToLocalDate } from '../../../../utils';
-import { asString } from '../../../../utils/nominal-class';
-import { LoadingButton } from '../../../base-component/LoadingButton';
-import { CreateRepresentantDialog } from '../representant/CreateRepresentantDialog';
 
 export const AddDesignationDialog = (props: {
   display: boolean;
@@ -86,7 +85,7 @@ export const AddDesignationDialog = (props: {
               name={'dateDebutRepresentant'}
               label="Date de début"
               type="date"
-              initialValue={startDate ? asString(startDate) : ''}
+              initialValue={startDate ?? ''}
               onChange={e =>
                 setStartDate(stringToLocalDate(e.currentTarget.value))
               }

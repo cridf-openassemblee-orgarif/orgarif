@@ -1,4 +1,5 @@
 /** @jsxImportSource @emotion/react */
+import { LoadingButton } from '../LoadingButton';
 import { css } from '@emotion/react';
 import {
   Button,
@@ -10,7 +11,6 @@ import {
 } from '@mui/material';
 import * as React from 'react';
 import { PropsWithChildren, ReactNode, useState } from 'react';
-import { LoadingButton } from './LoadingButton';
 
 export const ConfirmButton = (
   props: PropsWithChildren<{

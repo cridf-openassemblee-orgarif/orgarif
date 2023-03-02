@@ -1,8 +1,8 @@
+import { colors } from '../../styles/colors';
 import SearchIcon from '@mui/icons-material/Search';
 import InputBase from '@mui/material/InputBase';
 import { alpha, styled } from '@mui/material/styles';
 import * as React from 'react';
-import { colors } from '../../styles/colors';
 
 interface SearchBarProps {
   handleChange: (

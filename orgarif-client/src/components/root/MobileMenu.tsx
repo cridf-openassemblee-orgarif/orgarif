@@ -1,4 +1,9 @@
 /** @jsxImportSource @emotion/react */
+import { SignIn } from '../../icon/collection/SignIn';
+import { state } from '../../state/state';
+import { LogoutButton } from '../common/form/LogoutButton';
+import { RouteLink } from '../routing/RouteLink';
+import { colors } from '../styles/colors';
 import { css } from '@emotion/react';
 import MenuIcon from '@mui/icons-material/Menu';
 import { Box, Link } from '@mui/material';
@@ -7,11 +12,6 @@ import Menu from '@mui/material/Menu';
 import MenuItem from '@mui/material/MenuItem';
 import * as React from 'react';
 import { useRecoilState } from 'recoil';
-import { LogoutForm } from '../form/LogoutForm';
-import { SignIn } from '../icon/collection/SignIn';
-import { RouteLink } from '../routing/RouteLink';
-import { state } from '../state/state';
-import { colors } from '../styles/colors';
 
 export const MobileMenu = () => {
   const [anchorEl, setAnchorEl] = React.useState<null | HTMLElement>(null);
@@ -87,7 +87,7 @@ export const MobileMenu = () => {
                 padding-right: 1em;
               `}
             >
-              <LogoutForm />
+              <LogoutButton />
             </Box>
           )}
         </MenuItem>

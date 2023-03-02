@@ -4,7 +4,7 @@ import { UserInfos } from '../../generated/domain/user';
 import { LoadingState } from '../../interfaces';
 import { CopyContentWidget } from '../common/CopyContentWidget';
 import { RouteLink } from '../routing/RouteLink';
-import { colors } from '../styles/vars';
+import { colors } from '../styles/colors';
 import { css } from '@emotion/react';
 import { DataGrid, GridColDef, GridRenderCellParams } from '@mui/x-data-grid';
 import * as React from 'react';

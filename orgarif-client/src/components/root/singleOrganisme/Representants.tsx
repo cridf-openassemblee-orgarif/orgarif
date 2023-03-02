@@ -1,14 +1,13 @@
 /** @jsxImportSource @emotion/react */
+import { DesignationDto } from '../../../generated/domain/organisme';
+import { isMobile } from '../../../utils/viewport-utils';
+import * as breakpoint from '../../styles/breakpoints';
+import { SingleEmptyRepresentant } from './SingleEmptyRepresentant';
+import { SingleRepresentant } from './SingleRepresentant';
 import { css } from '@emotion/react';
 import { Divider } from '@mui/material';
 import Box from '@mui/material/Box';
 import Grid from '@mui/material/Grid';
-import { DesignationDto } from '../../domain/organisme';
-import * as breakpoint from '../../styles/breakpoints';
-import { asString } from '../../utils/nominal-class';
-import { isMobile } from '../../utils/viewport-utils';
-import { SingleEmptyRepresentant } from './SingleEmptyRepresentant';
-import { SingleRepresentant } from './SingleRepresentant';
 
 export const Representants = (props: {
   reps: (DesignationDto | undefined)[];
@@ -50,7 +49,7 @@ export const Representants = (props: {
             <Grid direction="column" container>
               {designations.map((rep, index) =>
                 rep.representant !== undefined ? (
-                  <Grid item key={asString(rep.representant.id)}>
+                  <Grid item key={rep.representant.id}>
                     <SingleRepresentant
                       representation={rep.representant}
                       isTitulaire
@@ -95,7 +94,7 @@ export const Representants = (props: {
             <Grid direction="column" container>
               {designations.map((rep, index) =>
                 props.hasSuppleance && rep.suppleant !== undefined ? (
-                  <Grid item key={asString(rep.suppleant.id)}>
+                  <Grid item key={rep.suppleant.id}>
                     <SingleRepresentant
                       representation={rep.suppleant}
                       hasSuppleance={props.hasSuppleance}
@@ -139,7 +138,7 @@ export const Representants = (props: {
           <Grid direction="column" container>
             {designations.map((rep, index) =>
               rep.representant !== undefined ? (
-                <Grid item key={asString(rep.representant.id)}>
+                <Grid item key={rep.representant.id}>
                   <SingleRepresentant
                     representation={rep.representant}
                     isTitulaire

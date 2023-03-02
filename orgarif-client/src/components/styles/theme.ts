@@ -1,5 +1,5 @@
-import { createTheme } from '@mui/material';
 import { colors } from './colors';
+import { createTheme } from '@mui/material';
 
 const orgarifTheme = {
   /* Theming */
@@ -153,7 +153,7 @@ const orgarifTheme = {
 } as const;
 
 type CustomTheme = {
-  [Key in keyof typeof orgarifTheme]: typeof orgarifTheme[Key];
+  [Key in keyof typeof orgarifTheme]: (typeof orgarifTheme)[Key];
 };
 
 declare module '@mui/material/styles/createTheme' {

@@ -1,4 +1,20 @@
 /** @jsxImportSource @emotion/react */
+import {
+  DepartementId,
+  NatureJuridiqueId,
+  SecteurId,
+  TypeStructureId
+} from '../../generated/domain/ids';
+import { OrganismeListDto } from '../../generated/domain/organisme';
+import { ListOrganismesQueryResponse } from '../../generated/query/queries';
+import { Edit } from '../../icon/collection/Edit';
+import { Share } from '../../icon/collection/Share';
+import { appContext } from '../../services/ApplicationContext';
+import { state } from '../../state/state';
+import { isMobile } from '../../utils/viewport-utils';
+import { TableHeader } from '../root/table/TableHeader';
+import * as breakpoint from '../styles/breakpoints';
+import { colors } from '../styles/colors';
 import { css } from '@emotion/react';
 import { DeleteForever } from '@mui/icons-material';
 import StarIcon from '@mui/icons-material/Star';
@@ -16,25 +32,9 @@ import {
   GridRowId,
   GridRowsProp
 } from '@mui/x-data-grid';
-import type {} from '@mui/x-data-grid/themeAugmentation';
 import * as React from 'react';
 import { useNavigate } from 'react-router-dom';
 import { useRecoilState, useRecoilValue, useSetRecoilState } from 'recoil';
-import { appContext } from '../ApplicationContext';
-import { TableHeader } from '../component/table/TableHeader';
-import {
-  DepartementId,
-  NatureJuridiqueId,
-  SecteurId,
-  TypeStructureId
-} from '../domain/ids';
-import { OrganismeListDto } from '../domain/organisme';
-import { Edit } from '../icon/collection/Edit';
-import { Share } from '../icon/collection/Share';
-import { state } from '../state/state';
-import * as breakpoint from '../styles/breakpoints';
-import { colors } from '../styles/colors';
-import { isMobile } from '../utils/viewport-utils';
 
 export const TableContainer = () => {
   const [rows, setRows] = React.useState<GridRowsProp>([]);
@@ -100,7 +100,8 @@ export const TableContainer = () => {
     setLoading(true);
     appContext
       .queryService()
-      .listOrganismesQuery({
+      .send<ListOrganismesQueryResponse>({
+        objectType: 'ListOrganismesQuery',
         // TODO pas comme ça
         departementIds: activeFilters
           .map((f: any) => departements.find(el => el.id === f.id)?.id)

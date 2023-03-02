@@ -1,4 +1,5 @@
-import { appContext } from '../ApplicationContext';
+import { LocalDate } from '../domain/datetime';
+import { AddInstanceCommandResponse } from '../generated/command/commands';
 import {
   DeliberationId,
   DepartementId,
@@ -7,14 +8,15 @@ import {
   RepresentantId,
   SecteurId,
   TypeStructureId
-} from '../domain/ids';
+} from '../generated/domain/ids';
 import {
   DesignationType,
   InstanceDto,
   ItemStatus,
   OrganismeDto
-} from '../domain/organisme';
-import { LocalDate } from '../domain/time';
+} from '../generated/domain/organisme';
+import { GetOrganismeQueryResponse } from '../generated/query/queries';
+import { appContext } from '../services/ApplicationContext';
 
 // TODO naming utils, actions...
 
@@ -25,7 +27,8 @@ const onOrganismeNomChange = (
 ) =>
   appContext
     .commandService()
-    .updateOrganismeNomCommand({
+    .send({
+      objectType: 'UpdateOrganismeNomCommand',
       id: organisme.id,
       nom
     })
@@ -40,7 +43,8 @@ const onOrganismeStatusUpdate = (
 ) =>
   appContext
     .commandService()
-    .updateOrganismeStatusCommand({
+    .send({
+      objectType: 'UpdateOrganismeStatusCommand',
       id: organisme.id,
       status
     })
@@ -56,10 +60,7 @@ const onInstanceNomChange = (
 ): Promise<void> =>
   appContext
     .commandService()
-    .updateInstanceNomCommand({
-      id: instanceId,
-      nom
-    })
+    .send({ objectType: 'UpdateInstanceNomCommand', id: instanceId, nom })
     .then(() => {
       const instances = organisme.instances.map(i => {
         if (i.id === instanceId) {
@@ -79,10 +80,7 @@ const onInstanceStatusChange = (
 ) =>
   appContext
     .commandService()
-    .updateInstanceStatusCommand({
-      id: instanceId,
-      status
-    })
+    .send({ objectType: 'UpdateInstanceStatusCommand', id: instanceId, status })
     .then(() => {
       const instances = organisme.instances.map(i => {
         if (i.id === instanceId) {
@@ -100,7 +98,8 @@ const onDepartementChange = (
   departementId: DepartementId | undefined
 ) => {
   setOrganisme({ ...organisme, departementId });
-  appContext.commandService().updateOrganismeDepartementCommand({
+  appContext.commandService().send({
+    objectType: 'UpdateOrganismeDepartementCommand',
     id: organisme.id,
     departementId
   });
@@ -112,7 +111,8 @@ const onNatureJuridiqueChange = (
   natureJuridiqueId: NatureJuridiqueId | undefined
 ) => {
   setOrganisme({ ...organisme, natureJuridiqueId });
-  appContext.commandService().updateOrganismeNatureJuridiqueCommand({
+  appContext.commandService().send({
+    objectType: 'UpdateOrganismeNatureJuridiqueCommand',
     id: organisme.id,
     natureJuridiqueId
   });
@@ -124,10 +124,13 @@ const onSecteurChange = (
   secteurId: SecteurId | undefined
 ) => {
   setOrganisme({ ...organisme, secteurId });
-  appContext.commandService().updateOrganismeSecteurCommand({
-    id: organisme.id,
-    secteurId: secteurId
-  });
+  appContext
+    .commandService()
+    .send({
+      objectType: 'UpdateOrganismeSecteurCommand',
+      id: organisme.id,
+      secteurId: secteurId
+    });
 };
 
 const onTypeStructureChange = (
@@ -136,10 +139,13 @@ const onTypeStructureChange = (
   typeStructureId: TypeStructureId | undefined
 ) => {
   setOrganisme({ ...organisme, typeStructureId });
-  appContext.commandService().updateOrganismeTypeStructureCommand({
-    id: organisme.id,
-    typeStructureId: typeStructureId
-  });
+  appContext
+    .commandService()
+    .send({
+      objectType: 'UpdateOrganismeTypeStructureCommand',
+      id: organisme.id,
+      typeStructureId: typeStructureId
+    });
 };
 
 const onNombreRepresentantsChange = (
@@ -150,7 +156,8 @@ const onNombreRepresentantsChange = (
 ) => {
   if (!instanceId) {
     setOrganisme({ ...organisme, nombreRepresentants: nombre });
-    appContext.commandService().updateOrganismeNombreRepresentantsCommand({
+    appContext.commandService().send({
+      objectType: 'UpdateOrganismeNombreRepresentantsCommand',
       id: organisme.id,
       nombre
     });
@@ -163,7 +170,8 @@ const onNombreRepresentantsChange = (
       }
     });
     setOrganisme({ ...organisme, instances });
-    appContext.commandService().updateInstanceNombreRepresentantsCommand({
+    appContext.commandService().send({
+      objectType: 'UpdateInstanceNombreRepresentantsCommand',
       instanceId,
       nombre
     });
@@ -179,14 +187,17 @@ const addDesignation = async (
   startDate: LocalDate | undefined,
   instanceId: InstanceId | undefined
 ) => {
-  await appContext.commandService().addDesignationCommand({
-    representantId,
-    type,
-    position,
-    startDate,
-    organismeId: organisme.id,
-    instanceId
-  });
+  await appContext
+    .commandService()
+    .send({
+      objectType: 'AddDesignationCommand',
+      representantId,
+      type,
+      position,
+      startDate,
+      organismeId: organisme.id,
+      instanceId
+    });
   // TODO faire mieux ? (penser virer le async)
   // recup de juste repr tire la question des repr d'instance, c'est pas bcp mieux
   return updateOrganisme(organisme, setOrganisme);
@@ -199,7 +210,11 @@ const addInstance = (
 ) => {
   appContext
     .commandService()
-    .addInstanceCommand({ nomInstance, organismeId: organisme.id })
+    .send<AddInstanceCommandResponse>({
+      objectType: 'AddInstanceCommand',
+      nomInstance,
+      organismeId: organisme.id
+    })
     .then(r => {
       const instance: InstanceDto = {
         id: r.id,
@@ -225,17 +240,21 @@ const onNewLienDeliberation = async (
   deliberationId: DeliberationId,
   comment: string | undefined
 ): Promise<void> => {
-  await appContext.commandService().addLienDeliberationCommand({
-    organismeId: organisme.id,
-    instanceId,
-    deliberationId,
-    comment
-  });
+  await appContext
+    .commandService()
+    .send({
+      objectType: 'AddLienDeliberationCommand',
+      organismeId: organisme.id,
+      instanceId,
+      deliberationId,
+      comment
+    });
   // plus simple parce qu'on a pas le DeliberationDto pour reconstituer le LienDeliberationDto
   // TODO faire mieux ? (penser virer le async)
   return appContext
     .queryService()
-    .getOrganismeQuery({
+    .send<GetOrganismeQueryResponse>({
+      objectType: 'GetOrganismeQuery',
       id: organisme.id
     })
     .then(r => setOrganisme(r.organisme));
@@ -249,7 +268,9 @@ const onPresenceSuppleantsChange = async (
 ): Promise<void> => {
   if (!instanceId) {
     setOrganisme({ ...organisme, presenceSuppleants });
-    appContext.commandService().updateOrganismePresenceSuppleantsCommand({
+    // TODO return ?
+    appContext.commandService().send({
+      objectType: 'UpdateOrganismePresenceSuppleantsCommand',
       organismeId: organisme.id,
       presenceSuppleants
     });
@@ -262,10 +283,14 @@ const onPresenceSuppleantsChange = async (
       }
     });
     setOrganisme({ ...organisme, instances });
-    appContext.commandService().updateInstancePresenceSuppleantsCommand({
-      instanceId,
-      presenceSuppleants
-    });
+    // TODO return ?
+    appContext
+      .commandService()
+      .send({
+        objectType: 'UpdateInstancePresenceSuppleantsCommand',
+        instanceId,
+        presenceSuppleants
+      });
   }
 };
 
@@ -275,7 +300,8 @@ const updateOrganisme = (
 ): Promise<void> =>
   appContext
     .queryService()
-    .getOrganismeQuery({
+    .send<GetOrganismeQueryResponse>({
+      objectType: 'GetOrganismeQuery',
       id: organisme.id
     })
     .then(r => setOrganisme(r.organisme));

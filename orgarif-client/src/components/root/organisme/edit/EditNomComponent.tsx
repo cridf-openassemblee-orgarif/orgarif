@@ -1,4 +1,13 @@
 /** @jsxImportSource @emotion/react */
+import { ItemStatus } from '../../../../generated/domain/organisme';
+import { assertUnreachable, clientUid } from '../../../../utils';
+import { ConfirmButton } from '../../../common/form/ConfirmButton';
+import { TabPanel, TabsContainer } from '../../../common/form/TabsContainer';
+import { TextInput } from '../../../common/form/TextInput';
+import { ApplicationRoute } from '../../../routing/routes';
+import { useGoTo } from '../../../routing/routing-utils';
+import { classes } from '../../category/EditCategoriesComponent';
+import { dialogClasses } from './dialog-common';
 import { css } from '@emotion/react';
 import { Edit } from '@mui/icons-material';
 import { DialogContent, DialogTitle } from '@mui/material';
@@ -6,18 +15,8 @@ import Button from '@mui/material/Button';
 import Dialog from '@mui/material/Dialog';
 import * as React from 'react';
 import { PropsWithChildren, ReactElement, useState } from 'react';
-import { ItemStatus } from '../../../domain/organisme';
-import { assertUnreachable, clientUid } from '../../../utils';
-import { asString } from '../../../utils/nominal-class';
-import { TextInput } from '../../base-component/TextInput';
-import { classes } from '../../category/EditCategoriesComponent';
-import { dialogClasses } from './dialog-common';
-import { TabPanel, TabsContainer } from '../../base-component/TabsContainer';
-import { ApplicationRoute } from '../../../routing/routes';
-import { useGoTo } from '../../../routing/useGoTo';
-import { ConfirmButton } from '../../base-component/ConfirmButton';
 
-const editClass = asString(clientUid());
+const editClass = clientUid();
 
 // TODO naming pas fou vu que ça fait d'autre truc
 export const EditNomComponent = (

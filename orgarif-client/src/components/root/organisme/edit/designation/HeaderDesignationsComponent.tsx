@@ -1,13 +1,13 @@
 /** @jsxImportSource @emotion/react */
+import { BooleanAsNominalString } from '../../../../../domain/boolean';
+import { Errors } from '../../../../../errors';
+import { asNominalString } from '../../../../../utils/nominal-class';
+import { NumberInput } from '../../../../common/form/NumberInput';
+import { SelectInput } from '../../../../common/form/SelectInput';
+import { colors } from '../../../../styles/colors';
+import { editCommonClasses } from '../EditOrganismeComponent';
 import { css } from '@emotion/react';
 import * as React from 'react';
-import { BooleanAsNominalString } from '../../../../domain/ids';
-import { Errors } from '../../../../errors';
-import { colors } from '../../../../styles/colors';
-import { instanciateNominalString } from '../../../../utils/nominal-class';
-import { NumberInput } from '../../../base-component/NumberInput';
-import { SelectInput } from '../../../base-component/SelectInput';
-import { editCommonClasses } from '../EditOrganismeComponent';
 
 const classes = {
   numberBlock: css`
@@ -57,18 +57,17 @@ export const HeaderDesignationsComponent = (props: {
         </div>
         <div css={classes.suppleantsBlock}>
           <SelectInput
-            initialValue={instanciateNominalString<BooleanAsNominalString>(
+            initialValue={asNominalString<BooleanAsNominalString>(
               props.presenceSuppleants ? 'true' : 'false'
             )}
             label="Suppléants"
             options={[
               {
-                value: instanciateNominalString<BooleanAsNominalString>('true'),
+                value: asNominalString<BooleanAsNominalString>('true'),
                 label: 'avec'
               },
               {
-                value:
-                  instanciateNominalString<BooleanAsNominalString>('false'),
+                value: asNominalString<BooleanAsNominalString>('false'),
                 label: 'sans'
               }
             ]}
@@ -78,7 +77,7 @@ export const HeaderDesignationsComponent = (props: {
               }
               props.onPresenceSuppleantsChange(
                 presenceSuppleants ===
-                  instanciateNominalString<BooleanAsNominalString>('true')
+                  asNominalString<BooleanAsNominalString>('true')
               );
             }}
           />

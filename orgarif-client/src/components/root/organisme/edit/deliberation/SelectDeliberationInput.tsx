@@ -1,16 +1,16 @@
 /** @jsxImportSource @emotion/react */
-import { css } from '@emotion/react';
-import * as React from 'react';
-import { appContext } from '../../../../ApplicationContext';
-import { SharedConstants } from '../../../../constants';
-import { DeliberationId } from '../../../../domain/ids';
-import { DeliberationDto } from '../../../../domain/organisme';
-import { formatLocaleDate } from '../../../../simple-fr';
-import { asString } from '../../../../utils/nominal-class';
+import { SharedConstants } from '../../../../../constants';
+import { DeliberationId } from '../../../../../generated/domain/ids';
+import { DeliberationDto } from '../../../../../generated/domain/organisme';
+import { SearchDeliberationQueryResponse } from '../../../../../generated/query/queries';
+import { appContext } from '../../../../../services/ApplicationContext';
+import { formatLocaleDate } from '../../../../../simple-fr';
 import {
   AlreadySet,
   AutocompleteInput
-} from '../../../base-component/AutocompleteInput';
+} from '../../../../common/form/AutocompleteInput';
+import { css } from '@emotion/react';
+import * as React from 'react';
 
 export const SelectDeliberationInput = (props: {
   selection: DeliberationDto | undefined;
@@ -24,7 +24,8 @@ export const SelectDeliberationInput = (props: {
     if (input.length >= SharedConstants.searchLengthLimit) {
       return appContext
         .queryService()
-        .searchDeliberationQuery({
+        .send<SearchDeliberationQueryResponse>({
+          objectType: 'SearchDeliberationQuery',
           searchToken: input
         })
         .then(r => {
@@ -81,7 +82,7 @@ export const SelectDeliberationInput = (props: {
                   padding-left: 10px;
                 `}
               >
-                (du {asString(d.deliberationDate)})
+                (du {d.deliberationDate})
               </span>
             )}
           </li>

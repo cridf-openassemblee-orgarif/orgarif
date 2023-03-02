@@ -1,24 +1,20 @@
 /** @jsxImportSource @emotion/react */
-import { css } from '@emotion/react';
-import * as React from 'react';
+import { LocalDate } from '../../../../domain/datetime';
 import {
   DeliberationId,
   InstanceId,
   OrganismeId,
   RepresentantId
-} from '../../../domain/ids';
+} from '../../../../generated/domain/ids';
 import {
   DesignationDto,
   DesignationType,
   LienDeliberationDto,
   OrganismeDto
-} from '../../../domain/organisme';
-import { LocalDate } from '../../../domain/time';
+} from '../../../../generated/domain/organisme';
+import { organismeActions } from '../../../../utils/organisme-utils';
 import { TABLET } from '../../../styles/breakpoints';
 import { colors } from '../../../styles/colors';
-import { organismeActions } from '../../../utils/organisme-utils';
-import { EditDeliberationListComponent } from './deliberation/EditDeliberationListComponent';
-import { EditDesignationListComponent } from './designation/EditDesignationListComponent';
 import { EditNomComponent } from './EditNomComponent';
 import {
   EditOrganismeDepartementComponent,
@@ -26,8 +22,12 @@ import {
   EditOrganismeSecteurComponent,
   EditOrganismeTypeStructureComponent
 } from './EditOrganismeCategoryComponent';
+import { EditDeliberationListComponent } from './deliberation/EditDeliberationListComponent';
+import { EditDesignationListComponent } from './designation/EditDesignationListComponent';
 import { AddInstanceComponent } from './instance/AddInstanceComponent';
 import { EditInstancesComponent } from './instance/EditInstancesComponent';
+import { css } from '@emotion/react';
+import * as React from 'react';
 
 export const editCommonClasses = {
   columnPadding: css`

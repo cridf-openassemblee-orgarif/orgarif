@@ -57,30 +57,17 @@ public class UserFileRecord extends UpdatableRecordImpl<UserFileRecord> implemen
     }
 
     /**
-<<<<<<< HEAD
-     * Setter for <code>public.user_file.file</code>.
-     */
-    public void setFile(@Nonnull byte[] value) {
-=======
      * Setter for <code>public.user_file.file_content</code>.
      */
     public void setFileContent(@Nonnull byte[] value) {
->>>>>>> template
         set(2, value);
     }
 
     /**
-<<<<<<< HEAD
-     * Getter for <code>public.user_file.file</code>.
-     */
-    @Nonnull
-    public byte[] getFile() {
-=======
      * Getter for <code>public.user_file.file_content</code>.
      */
     @Nonnull
     public byte[] getFileContent() {
->>>>>>> template
         return (byte[]) get(2);
     }
 
@@ -170,11 +157,7 @@ public class UserFileRecord extends UpdatableRecordImpl<UserFileRecord> implemen
     @Override
     @Nonnull
     public Field<byte[]> field3() {
-<<<<<<< HEAD
-        return UserFileTable.USER_FILE.FILE;
-=======
         return UserFileTable.USER_FILE.FILE_CONTENT;
->>>>>>> template
     }
 
     @Override
@@ -210,11 +193,7 @@ public class UserFileRecord extends UpdatableRecordImpl<UserFileRecord> implemen
     @Override
     @Nonnull
     public byte[] component3() {
-<<<<<<< HEAD
-        return getFile();
-=======
         return getFileContent();
->>>>>>> template
     }
 
     @Override
@@ -250,11 +229,7 @@ public class UserFileRecord extends UpdatableRecordImpl<UserFileRecord> implemen
     @Override
     @Nonnull
     public byte[] value3() {
-<<<<<<< HEAD
-        return getFile();
-=======
         return getFileContent();
->>>>>>> template
     }
 
     @Override
@@ -292,11 +267,7 @@ public class UserFileRecord extends UpdatableRecordImpl<UserFileRecord> implemen
     @Override
     @Nonnull
     public UserFileRecord value3(@Nonnull byte[] value) {
-<<<<<<< HEAD
-        setFile(value);
-=======
         setFileContent(value);
->>>>>>> template
         return this;
     }
 
@@ -347,20 +318,12 @@ public class UserFileRecord extends UpdatableRecordImpl<UserFileRecord> implemen
     /**
      * Create a detached, initialised UserFileRecord
      */
-<<<<<<< HEAD
-    public UserFileRecord(@Nonnull UUID id, @Nonnull UUID userId, @Nonnull byte[] file, @Nonnull String contentType, @Nonnull String originalFilename, @Nonnull Instant uploadDate) {
-=======
     public UserFileRecord(@Nonnull UUID id, @Nonnull UUID userId, @Nonnull byte[] fileContent, @Nonnull String contentType, @Nonnull String originalFilename, @Nonnull Instant uploadDate) {
->>>>>>> template
         super(UserFileTable.USER_FILE);
 
         setId(id);
         setUserId(userId);
-<<<<<<< HEAD
-        setFile(file);
-=======
         setFileContent(fileContent);
->>>>>>> template
         setContentType(contentType);
         setOriginalFilename(originalFilename);
         setUploadDate(uploadDate);

@@ -1,4 +1,4 @@
-import * as breakpoint from '../styles/breakpoints';
+import * as breakpoint from '../components/styles/breakpoints';
 
 export const isTabletAndMore = (): boolean => {
   if (typeof window === 'undefined' /* SSR */) {

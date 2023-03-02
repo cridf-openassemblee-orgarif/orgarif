@@ -1,5 +1,5 @@
-import styled from '@emotion/styled';
 import * as icon from '../Icon';
+import styled from '@emotion/styled';
 
 export const Organigram = styled(function Organigram(
   props: icon.SpecificIconProps

@@ -1,21 +1,18 @@
 /** @jsxImportSource @emotion/react */
+import { LocalDate } from '../../../../../domain/datetime';
+import { DesignationDto } from '../../../../../generated/domain/organisme';
+import { appContext } from '../../../../../services/ApplicationContext';
+import { asNominalString } from '../../../../../utils/nominal-class';
+import { LoadingButton } from '../../../../common/LoadingButton';
+import { ConfirmButton } from '../../../../common/form/ConfirmButton';
+import { TabPanel, TabsContainer } from '../../../../common/form/TabsContainer';
+import { TextInput } from '../../../../common/form/TextInput';
+import { classes } from '../../../category/EditCategoriesComponent';
+import { dialogClasses } from '../dialog-common';
 import { css } from '@emotion/react';
 import { Button, Dialog, DialogContent, DialogTitle } from '@mui/material';
 import * as React from 'react';
 import { useState } from 'react';
-import { DesignationDto } from '../../../../domain/organisme';
-import { TabPanel, TabsContainer } from '../../../base-component/TabsContainer';
-import { TextInput } from '../../../base-component/TextInput';
-import { classes } from '../../../category/EditCategoriesComponent';
-import { dialogClasses } from '../dialog-common';
-import { LocalDate } from '../../../../domain/time';
-import {
-  asString,
-  instanciateNominalString
-} from '../../../../utils/nominal-class';
-import { LoadingButton } from '../../../base-component/LoadingButton';
-import { appContext } from '../../../../ApplicationContext';
-import { ConfirmButton } from '../../../base-component/ConfirmButton';
 
 const DesignationPanel = (props: {
   designation: DesignationDto;
@@ -32,7 +29,8 @@ const DesignationPanel = (props: {
   const submit = () => {
     return appContext
       .commandService()
-      .updateDesignationDatesCommand({
+      .send({
+        objectType: 'UpdateDesignationDatesCommand',
         designationId: props.designation.id,
         startDate,
         endDate
@@ -49,15 +47,11 @@ const DesignationPanel = (props: {
           name={'startDate'}
           type={'date'}
           label={'Date de début'}
-          initialValue={
-            props.designation.startDate
-              ? asString(props.designation.startDate)
-              : ''
-          }
+          initialValue={props.designation.startDate ?? ''}
           onChange={e =>
             setStartDate(
               e.currentTarget.value
-                ? instanciateNominalString<LocalDate>(e.currentTarget.value)
+                ? asNominalString<LocalDate>(e.currentTarget.value)
                 : undefined
             )
           }
@@ -68,13 +62,11 @@ const DesignationPanel = (props: {
           name={'endDate'}
           type={'date'}
           label={'Date de fin'}
-          initialValue={
-            props.designation.endDate ? asString(props.designation.endDate) : ''
-          }
+          initialValue={props.designation.endDate ?? ''}
           onChange={e =>
             setEndDate(
               e.currentTarget.value
-                ? instanciateNominalString<LocalDate>(e.currentTarget.value)
+                ? asNominalString<LocalDate>(e.currentTarget.value)
                 : undefined
             )
           }
@@ -118,7 +110,8 @@ const SuppressionPanel = (props: {
           onConfirm={() =>
             appContext
               .commandService()
-              .updateDesignationStatusCommand({
+              .send({
+                objectType: 'UpdateDesignationStatusCommand',
                 id: props.designation.id,
                 status: 'trash'
               })
