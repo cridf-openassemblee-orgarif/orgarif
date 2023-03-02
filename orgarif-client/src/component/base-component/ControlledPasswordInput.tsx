@@ -39,7 +39,7 @@ export const ControlledPasswordInput = <
           {...field}
           label={props.label}
           error={!!props.errors[props.name]}
-          size={'small'}
+          size="small"
           type={showPassword ? 'text' : 'password'}
           helperText={
             props.errors[props.name] && !props.hideErrorMessage

@@ -49,7 +49,7 @@ export const ControlledTextInput = <
           }}
           label={props.label}
           error={!!props.errors[props.name]}
-          size={'small'}
+          size="small"
           type={props.type}
           autoFocus={props.autoFocus}
           helperText={

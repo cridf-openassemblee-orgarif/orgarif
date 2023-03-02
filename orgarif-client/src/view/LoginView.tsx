@@ -16,6 +16,7 @@ import {
   DevLoginCommandResponse,
   LoginCommandResponse
 } from '../generated/command/commands';
+import { space } from '../component/component-utils';
 
 export const LoginView = () => {
   const [userInfos, setUserInfos] = useRecoilState(state.userInfos);
@@ -92,7 +93,7 @@ export const LoginView = () => {
                   margin-top: 20px;
                 `}
               >
-                dev user authent :{' '}
+                dev user authent :{space}
                 <Button onClick={() => devLogin('user')}>user</Button>
                 <Button onClick={() => devLogin('admin')}>admin</Button>
               </div>
