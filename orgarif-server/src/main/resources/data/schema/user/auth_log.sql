@@ -1,4 +1,4 @@
-CREATE TABLE user_mail_log
+CREATE TABLE auth_log
 (
     id UUID PRIMARY KEY,
     user_id UUID NOT NULL,
@@ -8,4 +8,4 @@ CREATE TABLE user_mail_log
     FOREIGN KEY (user_id) REFERENCES app_user (id)
 );
 
-CREATE INDEX ON user_mail_log (user_id);
+CREATE INDEX ON auth_log (user_id);
