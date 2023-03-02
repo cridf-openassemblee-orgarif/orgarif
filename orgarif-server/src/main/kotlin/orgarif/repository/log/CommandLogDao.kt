@@ -17,6 +17,7 @@ class CommandLogDao(private val jooq: DSLContext) {
     data class Record(
         val id: CommandLogId,
         val userId: UserId?,
+        val affectedUserId: UserId?,
         val deploymentLogId: DeploymentLogId,
         val commandClass: Class<*>,
         val jsonCommand: String,
@@ -34,6 +35,7 @@ class CommandLogDao(private val jooq: DSLContext) {
             CommandLogRecord().apply {
                 id = r.id.rawId
                 userId = r.userId?.rawId
+                affectedUserId = r.affectedUserId?.rawId
                 deploymentLogId = r.deploymentLogId.rawId
                 commandClass = r.commandClass.name
                 jsonCommand = r.jsonCommand
@@ -52,6 +54,7 @@ class CommandLogDao(private val jooq: DSLContext) {
         Record(
             id = r.id.toTypeId(),
             userId = r.userId?.toTypeId(),
+            affectedUserId = r.affectedUserId?.toTypeId(),
             deploymentLogId = r.deploymentLogId.toTypeId(),
             commandClass = Class.forName(r.commandClass),
             jsonCommand = r.jsonCommand,
