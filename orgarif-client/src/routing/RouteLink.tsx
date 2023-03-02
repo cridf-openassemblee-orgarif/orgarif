@@ -12,13 +12,11 @@ export const RouteLink = (
     route: Route;
     css?: EmotionStyles;
   }>
-) => {
-  return (
-    <Link
-      to={appContext.applicationHistory().buildPath(props.route)}
-      {...extractEmotionCss(props)}
-    >
-      {props.children}
-    </Link>
-  );
-};
+) => (
+  <Link
+    to={appContext.applicationHistory().buildPath(props.route)}
+    {...extractEmotionCss(props)}
+  >
+    {props.children}
+  </Link>
+);
