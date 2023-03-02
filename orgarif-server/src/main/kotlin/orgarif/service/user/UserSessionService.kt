@@ -69,13 +69,12 @@ class UserSessionService(
             it != null && it !is AnonymousAuthenticationToken && it.isAuthenticated
         }
 
-    fun hasRole(role: Role): Boolean {
+    fun hasRole(role: Role): Boolean =
         if (!isAuthenticated()) {
-            return false
+            false
+        } else {
+            role in getUserSession().roles
         }
-        val userSession = getUserSession()
-        return role in userSession.roles
-    }
 
     fun verifyRoleOrFail(role: Role?, logIp: String, logClass: Class<Any>) {
         if (role != null) {

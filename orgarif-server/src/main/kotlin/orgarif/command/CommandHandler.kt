@@ -18,9 +18,7 @@ interface CommandHandler<C : Command, R : CommandResponse> {
             userSession: UserSession?,
             request: HttpServletRequest,
             response: HttpServletResponse
-        ): R {
-            return handle(command)
-        }
+        ): R = handle(command)
 
         abstract fun handle(command: C): R
     }

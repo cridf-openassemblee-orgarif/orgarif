@@ -15,9 +15,9 @@ class SafeSessionRepository(val repository: FindByIndexNameSessionRepository<Ses
 
     private val logger = KotlinLogging.logger {}
 
-    override fun findById(id: String): Session? {
+    override fun findById(id: String): Session? =
         try {
-            return repository.findById(id)
+            repository.findById(id)
         } catch (e: Exception) {
             if (ApplicationInstance.env == ApplicationEnvironment.dev) {
                 // TODO[tmpl][user] better mess
@@ -27,9 +27,8 @@ class SafeSessionRepository(val repository: FindByIndexNameSessionRepository<Ses
                 logger.error { "Deleting session $id" }
                 deleteById(id)
             }
-            return null
+            null
         }
-    }
 
     override fun save(session: Session) {
         try {

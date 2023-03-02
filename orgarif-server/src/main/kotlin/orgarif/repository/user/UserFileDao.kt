@@ -55,14 +55,13 @@ class UserFileDao(val jooq: DSLContext) {
             .fetchOne()
             ?.let { mapReference(it) }
 
-    fun fetchReferencesByUserId(userId: UserId): List<UserFileReference> {
-        return jooq
+    fun fetchReferencesByUserId(userId: UserId): List<UserFileReference> =
+        jooq
             .select(nonDataFields)
             .from(USER_FILE)
             .where(USER_FILE.USER_ID.equal(userId.rawId))
             .toList()
             .map { mapReference(it) }
-    }
 
     fun count(): Int = jooq.selectCount().from(USER_FILE).fetchSingle().let { it.value1() }
 

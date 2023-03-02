@@ -22,9 +22,8 @@ class ApplicationConfiguration {
     @Bean
     fun webMvcRegistrations() =
         object : WebMvcRegistrations {
-            override fun getExceptionHandlerExceptionResolver(): ExceptionHandlerExceptionResolver {
-                return ApplicationExceptionHandlerExceptionResolver()
-            }
+            override fun getExceptionHandlerExceptionResolver(): ExceptionHandlerExceptionResolver =
+                ApplicationExceptionHandlerExceptionResolver()
         }
 
     @Bean fun passwordEncoder() = BCryptPasswordEncoder()

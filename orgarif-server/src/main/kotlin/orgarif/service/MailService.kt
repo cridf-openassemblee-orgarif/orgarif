@@ -78,29 +78,21 @@ class MailService(
             config: MapperConfig<*>?,
             field: AnnotatedField,
             defaultName: String
-        ): String {
-            return convert(field.name)
-        }
+        ) = convert(field.name)
 
         override fun nameForGetterMethod(
             config: MapperConfig<*>?,
             method: AnnotatedMethod,
             defaultName: String
-        ): String {
-            return convert(method.name.toString())
-        }
+        ) = convert(method.name.toString())
 
         override fun nameForSetterMethod(
             config: MapperConfig<*>?,
             method: AnnotatedMethod,
             defaultName: String
-        ): String {
-            return convert(method.name.toString())
-        }
+        ) = convert(method.name.toString())
 
-        private fun convert(input: String): String {
-            return input.substring(3)
-        }
+        private fun convert(input: String) = input.substring(3)
     }
 
     enum class MailLog {
