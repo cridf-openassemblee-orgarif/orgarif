@@ -1,45 +1,24 @@
 package orgarif.service
 
+import orgarif.OrgarifApplication
 import orgarif.domain.ApplicationEnvironment
 import orgarif.domain.DeploymentLogId
-import orgarif.repository.log.DeploymentLogDao
+import orgarif.utils.toTypeId
 import java.io.File
 import java.io.FileInputStream
 import java.util.Properties
-import org.springframework.core.env.Environment
-import org.springframework.stereotype.Service
+import java.util.UUID
 
-@Service
-class ApplicationInstance(
-    val environment: Environment,
-    val deploymentLogDao: DeploymentLogDao,
-    val randomService: RandomService,
-    val dateService: DateService
-) {
-
-    companion object {
-        // is reset by OrgarifApplication when env is different
-        // TODO not var but get / set
-        var env = ApplicationEnvironment.Test
-    }
-
-    init {
-        // verify env is in profiles
-        val profiles = let {
-            val e = ApplicationEnvironment.values().map { it.name.lowercase() }
-            environment.activeProfiles.filter { it in e }
+object ApplicationInstance {
+    val env by lazy {
+        System.getenv("ENV")?.let {
+            ApplicationEnvironment.valueOf(it.replaceFirstChar { it.uppercase() })
         }
-        // if not empty, let's check profiles are consistent with env
-        // (if is empty, default profiles will be enabled)
-        if (profiles.isNotEmpty()) {
-            if (profiles.first() != env.name.lowercase()) {
-                throw IllegalStateException("Spring profiles should start by $env (is $profiles)")
+            ?: if (OrgarifApplication.runningApplication) {
+                ApplicationEnvironment.Dev
+            } else {
+                ApplicationEnvironment.Test
             }
-            if (profiles.size != 1) {
-                throw IllegalStateException(
-                    "Spring profiles list contains multiple environments : $profiles")
-            }
-        }
     }
 
     val gitRevisionProperties by lazy {
@@ -62,17 +41,6 @@ class ApplicationInstance(
             }
     }
 
-    // [doc] deploymentId insertion is lazy in development, which permits a database cleaning during
-    // the application launch
-    val deploymentId by lazy {
-        val id = randomService.id<DeploymentLogId>()
-        deploymentLogDao.insert(
-            DeploymentLogDao.Record(
-                id,
-                gitRevisionLabel,
-                dateService.serverZoneId(),
-                dateService.now(),
-                shutdownDate = null))
-        id
-    }
+    // TODO set UUID when env == dev, is simpler than using RandomService here
+    val deploymentLogId = UUID.randomUUID().toTypeId<DeploymentLogId>()
 }

@@ -26,7 +26,6 @@ class UserSessionService(
     val cookieCsrfTokenRepository: CookieCsrfTokenRepository,
     val userDao: UserDao,
     val userSessionLogDao: UserSessionLogDao,
-    val applicationInstance: ApplicationInstance,
     val dateService: DateService,
     val randomService: RandomService
 ) {
@@ -54,7 +53,7 @@ class UserSessionService(
         val ip = request.remoteAddr
         userSessionLogDao.insert(
             UserSessionLogDao.Record(
-                sessionId, session.id, user.id, applicationInstance.deploymentId, now, ip))
+                sessionId, session.id, user.id, ApplicationInstance.deploymentLogId, now, ip))
 
         val userSession = UserSession(sessionId, user.id, user.roles)
         val springAuthentication = UsernamePasswordAuthenticationToken(userSession, null, null)

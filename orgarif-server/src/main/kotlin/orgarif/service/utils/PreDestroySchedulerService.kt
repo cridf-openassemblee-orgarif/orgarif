@@ -10,7 +10,6 @@ import org.springframework.stereotype.Service
 @Service
 class PreDestroySchedulerService(
     val deploymentLogDao: DeploymentLogDao,
-    val applicationInstance: ApplicationInstance,
     val dateService: DateService
 ) {
 
@@ -19,7 +18,7 @@ class PreDestroySchedulerService(
     @PreDestroy
     fun preDestroy() {
         logger.info { "Process predestroy tasks" }
-        deploymentLogDao.updateShutdownTime(applicationInstance.deploymentId, dateService.now())
+        deploymentLogDao.updateShutdownTime(ApplicationInstance.deploymentLogId, dateService.now())
         logger.info { "Predestroy OK" }
     }
 }

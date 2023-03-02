@@ -6,9 +6,7 @@ import orgarif.domain.UserInfos
 import orgarif.repository.user.UserDao
 import orgarif.serialization.Serializer.serialize
 import orgarif.service.ApplicationInstance
-import orgarif.service.LocaleService
 import orgarif.service.user.MagicLinkTokenService
-import orgarif.service.user.UserService
 import orgarif.service.user.UserSessionService
 import orgarif.utils.OrgarifStringUtils
 import freemarker.ext.beans.BeansWrapperBuilder
@@ -29,9 +27,6 @@ class IndexController(
     @Value("\${assets.webpackDevPort}") val assetsWebpackDevPort: String,
     @Value("\${assets.useBuildFiles}") val assetsUseBuildFiles: Boolean,
     val userDao: UserDao,
-    val localeService: LocaleService,
-    val userService: UserService,
-    val applicationInstance: ApplicationInstance,
     val magicLinkTokenService: MagicLinkTokenService,
     val userSessionService: UserSessionService
 ) {
@@ -99,8 +94,8 @@ class IndexController(
         mav.model["bootstrapData"] =
             serialize(ApplicationBootstrapData(ApplicationInstance.env, userInfos))
         mav.model["deploymentId"] =
-            OrgarifStringUtils.serializeUuid(applicationInstance.deploymentId.rawId)
-        mav.model["gitRevisionLabel"] = applicationInstance.gitRevisionLabel
+            OrgarifStringUtils.serializeUuid(ApplicationInstance.deploymentLogId.rawId)
+        mav.model["gitRevisionLabel"] = ApplicationInstance.gitRevisionLabel
         mav.model["jsAssets"] = jsAssets(request)
         mav.model["cssAssets"] = cssAssets
         mav.model["statics"] = statics

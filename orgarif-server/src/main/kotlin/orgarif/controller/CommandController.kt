@@ -33,7 +33,6 @@ import org.springframework.web.bind.annotation.RestController
 class CommandController(
     val commandLogDao: CommandLogDao,
     val userDao: UserDao,
-    val applicationInstance: ApplicationInstance,
     val dateService: DateService,
     val randomService: RandomService,
     val idLogService: IdLogService,
@@ -64,7 +63,7 @@ class CommandController(
             CommandLogDao.Record(
                 id = randomService.id(),
                 userId = null,
-                deploymentLogId = applicationInstance.deploymentId,
+                deploymentLogId = ApplicationInstance.deploymentLogId,
                 commandClass = command.javaClass,
                 jsonCommand = filteredJsonCommand,
                 // the ip can evolve within a session, it makes sense to save it here

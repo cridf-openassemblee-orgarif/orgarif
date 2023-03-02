@@ -11,6 +11,7 @@ import org.springframework.stereotype.Repository
 @Repository
 class DeploymentLogDao(val jooq: DSLContext) {
 
+    // is better than a simple log in a distributed environment
     data class Record(
         val id: DeploymentLogId,
         val buildVersion: String,

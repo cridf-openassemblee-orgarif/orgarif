@@ -18,10 +18,9 @@ import org.springframework.stereotype.Service
 @Service
 class LostPasswordMailSenderService(
     @Value("\${app.url}") val appUrl: String,
-    val applicationInstance: ApplicationInstance,
     val httpService: HttpService,
     val magicLinkTokenService: MagicLinkTokenService,
-    val mailService: MailService
+    val mailService: MailService,
 ) {
 
     private val logger = KotlinLogging.logger {}
@@ -47,7 +46,7 @@ class LostPasswordMailSenderService(
             MailReference.LostPassword,
             MailService.MailLog.DoLog,
             MailService.MailLogProperties(
-                applicationInstance.deploymentId, user.id, serialize(data)))
+                ApplicationInstance.deploymentLogId, user.id, serialize(data)))
     }
 
     fun fetchMailContent(data: LostPasswordMailPayload): String {

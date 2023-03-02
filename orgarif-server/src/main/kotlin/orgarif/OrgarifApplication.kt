@@ -15,16 +15,15 @@ class OrgarifApplication {
     companion object {
         val logger = KotlinLogging.logger {}
 
+        var runningApplication = false
+            get() = field
+            private set(value) {
+                field = value
+            }
+
         @JvmStatic
         fun main(args: Array<String>) {
-            ApplicationInstance.env =
-                System.getenv("ENV")?.let {
-                    ApplicationEnvironment.valueOf(it.replaceFirstChar { it.uppercase() })
-                }
-                    ?: ApplicationEnvironment.Dev
-            if (ApplicationInstance.env == ApplicationEnvironment.Test) {
-                throw RuntimeException()
-            }
+            runningApplication = true
             val lowercaseEnv = ApplicationInstance.env.name.lowercase()
             logger.info { "Environment is [$lowercaseEnv]" }
             System.setProperty("logging.config", "classpath:logback-webapp-$lowercaseEnv.xml")
