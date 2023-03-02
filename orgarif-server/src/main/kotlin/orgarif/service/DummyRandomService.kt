@@ -1,19 +1,25 @@
 package orgarif.service
 
+import com.google.common.io.CharStreams
 import orgarif.utils.OrgarifStringUtils
+import java.io.InputStreamReader
 import java.util.concurrent.atomic.AtomicInteger
-import org.apache.tomcat.util.http.fileupload.util.Streams
 
 class DummyRandomService(idLogService: IdLogService? = null) : RandomService(idLogService) {
 
     val uuids by lazy {
-        Streams.asString(javaClass.classLoader.getResourceAsStream("test-uuids")).split("\n").map {
-            OrgarifStringUtils.deserializeUuid(it)
-        }
+        CharStreams.toString(
+                InputStreamReader(
+                    javaClass.classLoader.getResourceAsStream("test-uuids"), Charsets.UTF_8))
+            .split("\n")
+            .map { OrgarifStringUtils.deserializeUuid(it) }
     }
 
     val stringIds by lazy {
-        Streams.asString(javaClass.classLoader.getResourceAsStream("test-string-ids")).split("\n")
+        CharStreams.toString(
+                InputStreamReader(
+                    javaClass.classLoader.getResourceAsStream("test-string-ids"), Charsets.UTF_8))
+            .split("\n")
     }
 
     val uuidsCursor = AtomicInteger(0)
