@@ -12,29 +12,25 @@ import { RightPanel } from '../container/RightPanel';
 import { OrganismeId } from '../domain/ids';
 import { OrganismeDto } from '../domain/organisme';
 import { state } from '../state/state';
+import { EditOrganismeRoute } from '../routing/routes';
 
-export const SingleOrganismeView = () => {
+export const SingleOrganismeView = (props: { route: EditOrganismeRoute }) => {
   const [organisme, setOrganisme] = React.useState<OrganismeDto>();
   const [error, setError] = React.useState(false);
   const isOpened = useRecoilValue(state.openedDrawer);
-  let location = useLocation();
   const navigate = useNavigate();
-
-  // extract id from url
-  const regex = RegExp('([^/]+[^/]|[^/]+[/])$', 'g');
-  const id = regex.exec(location.pathname)![0] as unknown as OrganismeId;
 
   React.useEffect(() => {
     appContext
       .queryService()
-      .getOrganismeQuery({ id })
+      .getOrganismeQuery({ id: props.route.id })
       .then(r => {
         setOrganisme(r.organisme);
       })
       .catch(e => {
         setError(true);
       });
-  }, [id]);
+  }, [props.route.id]);
 
   return (
     <MainContainer>
