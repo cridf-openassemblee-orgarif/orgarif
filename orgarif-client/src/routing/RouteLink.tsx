@@ -2,10 +2,10 @@
 import * as React from 'react';
 import { PropsWithChildren } from 'react';
 import { Link } from 'react-router-dom';
-import { appContext } from '../ApplicationContext';
 import { EmotionStyles } from '../interfaces';
 import { Route } from './routes';
 import { extractEmotionCss } from '../utils';
+import { buildPath } from './useGoTo';
 
 export const RouteLink = (
   props: PropsWithChildren<{
@@ -13,10 +13,7 @@ export const RouteLink = (
     css?: EmotionStyles;
   }>
 ) => (
-  <Link
-    to={appContext.applicationHistory().buildPath(props.route)}
-    {...extractEmotionCss(props)}
-  >
+  <Link to={buildPath(props.route)} {...extractEmotionCss(props)}>
     {props.children}
   </Link>
 );

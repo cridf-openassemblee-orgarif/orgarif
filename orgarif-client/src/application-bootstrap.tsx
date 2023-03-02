@@ -7,9 +7,7 @@ import {
 import StylesProvider from '@mui/styles/StylesProvider';
 import * as React from 'react';
 import * as ReactDOM from 'react-dom';
-import { Router as ReactRouter } from 'react-router-dom';
 import { RecoilRoot } from 'recoil';
-import { appContext } from './ApplicationContext';
 import { Root } from './container/Root';
 import { ApplicationRouter } from './routing/ApplicationRouter';
 import { globalStyles } from './styles/common-styles';
@@ -25,17 +23,15 @@ const muiTheme = createTheme({
 ReactDOM.render(
   <RecoilRoot>
     <Global styles={[globalStyles]} />
-    <ReactRouter history={appContext.applicationHistory().browserHistory}>
-      <StylesProvider injectFirst>
-        <StyledEngineProvider injectFirst>
-          <ThemeProvider theme={muiTheme}>
-            <Root>
-              <ApplicationRouter />
-            </Root>
-          </ThemeProvider>
-        </StyledEngineProvider>
-      </StylesProvider>
-    </ReactRouter>
+    <StylesProvider injectFirst>
+      <StyledEngineProvider injectFirst>
+        <ThemeProvider theme={muiTheme}>
+          <Root>
+            <ApplicationRouter />
+          </Root>
+        </ThemeProvider>
+      </StyledEngineProvider>
+    </StylesProvider>
   </RecoilRoot>,
   document.getElementById('root')
 );
