@@ -6,6 +6,8 @@ import orgarif.service.utils.ApplicationTaskExecutor
 import mu.KotlinLogging
 import okhttp3.Credentials
 import org.springframework.beans.factory.annotation.Value
+import org.springframework.http.HttpMethod
+import org.springframework.http.HttpStatus
 import org.springframework.stereotype.Service
 
 @Service
@@ -49,7 +51,8 @@ class DebugMailService(
                 val json = MailService.mailJetObjectMapper.writeValueAsString(body)
                 val r =
                     try {
-                        httpService.postAndReturnString(
+                        httpService.execute(
+                            HttpMethod.POST,
                             url,
                             json,
                             HttpService.Header.Authorization to
@@ -58,13 +61,8 @@ class DebugMailService(
                         logger.error { "Failed to send debug mail" }
                         throw e
                     }
-                if (r.code != 200) {
-                    val body =
-                        when (r) {
-                            is HttpService.MaybeStringResponse.EmptyResponse -> "[no response body]"
-                            is HttpService.MaybeStringResponse.StringResponse -> r.body
-                        }
-                    logger.error { "Couldn't send mail :\n$body\n----\n$json" }
+                if (r.code != HttpStatus.OK) {
+                    logger.error { "Couldn't send mail :\n${r.body}\n----\n$json" }
                 }
             }
         }

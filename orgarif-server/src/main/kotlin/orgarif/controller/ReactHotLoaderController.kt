@@ -10,6 +10,7 @@ import javax.servlet.http.HttpServletResponse
 import mu.KotlinLogging
 import org.springframework.beans.factory.annotation.Value
 import org.springframework.boot.autoconfigure.condition.ConditionalOnExpression
+import org.springframework.http.HttpMethod
 import org.springframework.http.HttpStatus
 import org.springframework.web.bind.annotation.GetMapping
 import org.springframework.web.bind.annotation.RestController
@@ -37,17 +38,13 @@ class ReactHotLoaderController(
             } else {
                 MimeType.json.fullType
             }
-        val r = httpService.getString("http://$assetsWebpackDevHost:$assetsWebpackDevPort$path")
-        when (r) {
-            is HttpService.MaybeStringResponse.EmptyResponse ->
-                logger.error { "Empty webpack hot update $r" }
-            is HttpService.MaybeStringResponse.StringResponse -> {
-                if (r.code == HttpStatus.OK.value()) {
-                    response.writer.print(r.body)
-                } else {
-                    logger.error { "Error webpack hot update $r" }
-                }
-            }
+        val r =
+            httpService.execute(
+                HttpMethod.GET, "http://$assetsWebpackDevHost:$assetsWebpackDevPort$path")
+        if (r.code == HttpStatus.OK) {
+            response.writer.print(r.body)
+        } else {
+            logger.error { "Error webpack hot update $r" }
         }
     }
 }

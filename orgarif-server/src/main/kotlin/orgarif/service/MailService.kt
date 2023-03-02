@@ -18,6 +18,8 @@ import java.util.Base64
 import mu.KotlinLogging
 import okhttp3.Credentials
 import org.springframework.beans.factory.annotation.Value
+import org.springframework.http.HttpMethod
+import org.springframework.http.HttpStatus
 import org.springframework.stereotype.Service
 
 @Service
@@ -153,7 +155,8 @@ class MailService(
         val json = mailJetObjectMapper.writeValueAsString(body)
         val response =
             try {
-                httpService.postAndReturnString(
+                httpService.execute(
+                    HttpMethod.POST,
                     url,
                     json,
                     HttpService.Header.Authorization to Credentials.basic(apiKey, secretKey))
@@ -165,12 +168,9 @@ class MailService(
                 logger.info { mailContent }
                 throw e
             }
-        when (response.code) {
-            200 -> {}
-            else -> {
-                logger.trace { response }
-                throw MessageNotSentException("${response.code} $recipientMail $mailSubject")
-            }
+        if (response.code != HttpStatus.OK) {
+            logger.trace { response }
+            throw MessageNotSentException("${response.code} $recipientMail $mailSubject")
         }
         return when (logMail) {
             MailLog.doLog -> {

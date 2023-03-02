@@ -5,4 +5,4 @@ package orgarif.domain
 @Retention(AnnotationRetention.RUNTIME)
 internal annotation class Prefix(val value: String)
 
-open class SerializeAsString(open val value: String)
+class SerializeAsString(open val value: String)
