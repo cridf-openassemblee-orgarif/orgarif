@@ -20,7 +20,7 @@ class DevInitialDataInjectorService(
     val transactionIsolationService: TransactionIsolationService
 ) {
 
-    fun initiateDevUsers() {
+    fun initiateDevData() {
         transactionIsolationService.execute {
             insertUser("user", false)
             insertUser("admin", true)

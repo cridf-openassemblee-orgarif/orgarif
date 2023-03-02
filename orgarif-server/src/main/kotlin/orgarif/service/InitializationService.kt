@@ -49,7 +49,7 @@ class InitializationService(
                     }
                 }
                 if (insertInitialData) {
-                    devInitialDataInjectorService.initiateDevUsers()
+                    devInitialDataInjectorService.initiateDevData()
                 }
             }
             ApplicationEnvironment.test -> {
