@@ -8,7 +8,7 @@ CREATE TABLE app_user
     language VARCHAR(2) NOT NULL,
     roles VARCHAR(255)[] NOT NULL,
     signup_date TIMESTAMPTZ NOT NULL,
-    last_update_date TIMESTAMPTZ NOT NULL
+    last_update TIMESTAMPTZ NOT NULL
 );
 
 CREATE INDEX ON app_user (mail);
