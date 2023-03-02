@@ -9,7 +9,7 @@ import org.junit.jupiter.api.Test
 internal class OrgarifStringIdSerializerTest {
 
     @Test
-    fun `test DeviceId serialization`() {
+    fun `test OrgarifStringId serialization`() {
         val id = sampleStringId.toTypeId<TestStringId>()
         assertEquals("\"$sampleStringId\"", Serializer.serialize(id))
     }

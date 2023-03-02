@@ -8,7 +8,7 @@ import org.junit.jupiter.api.Test
 internal class OrgarifStringIdDeserializerTest {
 
     @Test
-    fun `test DeviceId deserialization`() {
+    fun `test OrgarifStringId deserialization`() {
         assertEquals(
             TestStringId(sampleStringId),
             Serializer.deserialize<TestStringId>("\"$sampleStringId\""))

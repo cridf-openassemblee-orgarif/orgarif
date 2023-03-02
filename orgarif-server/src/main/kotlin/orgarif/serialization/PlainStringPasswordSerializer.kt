@@ -13,7 +13,5 @@ class PlainStringPasswordSerializer :
         value: PlainStringPassword,
         gen: JsonGenerator,
         provider: SerializerProvider
-    ) {
-        gen.writeString(filteredPassword)
-    }
+    ) = gen.writeString(filteredPassword)
 }

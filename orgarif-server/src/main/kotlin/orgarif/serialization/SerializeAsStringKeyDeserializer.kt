@@ -8,9 +8,8 @@ import kotlin.reflect.KClass
 class SerializeAsStringKeyDeserializer<T : SerializeAsString>(val orgarifStringId: KClass<T>) :
     KeyDeserializer() {
 
-    override fun deserializeKey(key: String?, ctxt: DeserializationContext?): Any {
+    override fun deserializeKey(key: String?, ctxt: DeserializationContext?): Any =
         // FIXME[tmpl] check about != null
-        return key?.let { SerializeAsStringDeserializer.deserialize(orgarifStringId, it) }
+        key?.let { SerializeAsStringDeserializer.deserialize(orgarifStringId, it) }
             ?: throw IllegalArgumentException()
-    }
 }

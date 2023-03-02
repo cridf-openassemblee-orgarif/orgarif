@@ -9,7 +9,7 @@ import org.skyscreamer.jsonassert.JSONAssert
 internal class OrgarifUuidIdSerializerTest {
 
     @Test
-    fun `test DeviceId serialization`() {
+    fun `test OrgarifUuidId serialization`() {
         JSONAssert.assertEquals(
             "\"00000000000000000000000000000000\"",
             Serializer.serialize(emptyUuid0.toTypeId<TestUuidId>()),
