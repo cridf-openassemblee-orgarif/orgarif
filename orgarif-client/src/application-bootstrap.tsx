@@ -1,6 +1,6 @@
-import { MaterialUiRoot } from './container/MaterialUiRoot';
-import { Root } from './container/Root';
-import { ApplicationRouter } from './routing/ApplicationRouter';
+import { MaterialUiRoot } from './components/containers/MaterialUiRoot';
+import { Root } from './components/containers/Root';
+import { ApplicationRouter } from './components/routing/ApplicationRouter';
 import * as React from 'react';
 import { createRoot } from 'react-dom/client';
 import { RecoilRoot } from 'recoil';

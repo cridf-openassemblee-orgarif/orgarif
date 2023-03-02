@@ -1,8 +1,8 @@
 /** @jsxImportSource @emotion/react */
-import { LogoutForm } from '../form/LogoutForm';
+import { state } from '../../state/state';
 import { RouteLink } from '../routing/RouteLink';
-import { state } from '../state/state';
 import { colors } from '../styles/vars';
+import { LogoutForm } from './form/LogoutForm';
 import { css } from '@emotion/react';
 import * as React from 'react';
 import { useRecoilState } from 'recoil';

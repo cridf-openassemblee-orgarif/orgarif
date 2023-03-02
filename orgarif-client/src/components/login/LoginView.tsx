@@ -1,17 +1,17 @@
 /** @jsxImportSource @emotion/react */
-import { appContext } from '../ApplicationContext';
-import { space } from '../component/component-utils';
-import { MainContainer } from '../container/MainContainer';
-import { Errors } from '../errors';
-import { LoginForm, LoginFormInput } from '../form/LoginForm';
+import { Errors } from '../../errors';
 import {
   DevLoginCommandResponse,
   LoginCommandResponse
-} from '../generated/command/commands';
-import { LoginResult, UserInfos } from '../generated/domain/user';
+} from '../../generated/command/commands';
+import { LoginResult, UserInfos } from '../../generated/domain/user';
+import { appContext } from '../../services/ApplicationContext';
+import { state } from '../../state/state';
+import { assertUnreachable } from '../../utils';
+import { space } from '../common/component-utils';
+import { MainContainer } from '../containers/MainContainer';
 import { useGoTo } from '../routing/routing-utils';
-import { state } from '../state/state';
-import { assertUnreachable } from '../utils';
+import { LoginForm, LoginFormInput } from './LoginForm';
 import { css } from '@emotion/react';
 import Button from '@mui/material/Button';
 import * as React from 'react';

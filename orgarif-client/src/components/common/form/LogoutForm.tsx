@@ -1,8 +1,8 @@
 /** @jsxImportSource @emotion/react */
-import { appContext } from '../ApplicationContext';
-import { LoadingStateButton } from '../component/base-component/LoadingButton';
-import { LoadingState } from '../interfaces';
-import { colors } from '../styles/vars';
+import { LoadingState } from '../../../interfaces';
+import { appContext } from '../../../services/ApplicationContext';
+import { colors } from '../../styles/vars';
+import { LoadingStateButton } from '../LoadingButton';
 import { css } from '@emotion/react';
 import * as React from 'react';
 import { useState } from 'react';

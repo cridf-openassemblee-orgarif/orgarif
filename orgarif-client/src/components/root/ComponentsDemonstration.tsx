@@ -1,9 +1,6 @@
 /** @jsxImportSource @emotion/react */
-import { LoadingState } from '../interfaces';
-import {
-  LoadingButton,
-  LoadingStateButton
-} from './base-component/LoadingButton';
+import { LoadingState } from '../../interfaces';
+import { LoadingButton, LoadingStateButton } from '../common/LoadingButton';
 import { css } from '@emotion/react';
 import { Add } from '@mui/icons-material';
 import * as React from 'react';

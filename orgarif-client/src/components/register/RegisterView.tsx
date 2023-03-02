@@ -1,12 +1,12 @@
 /** @jsxImportSource @emotion/react */
-import { appContext } from '../ApplicationContext';
-import { MainContainer } from '../container/MainContainer';
-import { Errors } from '../errors';
-import { RegisterForm, RegisterFormInput } from '../form/RegisterForm';
-import { RegisterCommandResponse } from '../generated/command/commands';
-import { RegisterResult } from '../generated/domain/user';
-import { state } from '../state/state';
-import { assertUnreachable } from '../utils';
+import { Errors } from '../../errors';
+import { RegisterCommandResponse } from '../../generated/command/commands';
+import { RegisterResult } from '../../generated/domain/user';
+import { appContext } from '../../services/ApplicationContext';
+import { state } from '../../state/state';
+import { assertUnreachable } from '../../utils';
+import { MainContainer } from '../containers/MainContainer';
+import { RegisterForm, RegisterFormInput } from './RegisterForm';
 import { css } from '@emotion/react';
 import * as React from 'react';
 import { useState } from 'react';

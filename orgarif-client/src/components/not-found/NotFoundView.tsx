@@ -1,5 +1,5 @@
 /** @jsxImportSource @emotion/react */
-import { MainContainer } from '../container/MainContainer';
+import { MainContainer } from '../containers/MainContainer';
 import * as React from 'react';
 
 export const NotFoundView = () => (

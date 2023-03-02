@@ -1,9 +1,9 @@
 /** @jsxImportSource @emotion/react */
-import { appContext } from '../../ApplicationContext';
 import { UserId } from '../../generated/domain/fmk-ids';
 import { UserInfos } from '../../generated/domain/user';
 import { GetUserInfosQueryResponse } from '../../generated/query/queries';
 import { LoadingState } from '../../interfaces';
+import { appContext } from '../../services/ApplicationContext';
 import { css } from '@emotion/react';
 import {
   Button,

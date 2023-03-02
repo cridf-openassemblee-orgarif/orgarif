@@ -1,6 +1,6 @@
 /** @jsxImportSource @emotion/react */
-import { state } from '../state/state';
-import { NotFoundView } from '../view/NotFoundView';
+import { state } from '../../state/state';
+import { NotFoundView } from '../not-found/NotFoundView';
 import { ApplicationRoute, ApplicationRouteProps, routes } from './routes';
 import { useGoTo } from './routing-utils';
 import * as React from 'react';

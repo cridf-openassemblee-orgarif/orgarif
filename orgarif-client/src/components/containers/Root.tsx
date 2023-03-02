@@ -1,5 +1,5 @@
 /** @jsxImportSource @emotion/react */
-import { cleanScrollBar } from '../common-classes';
+import { cleanScrollBar } from '../styles/common-classes';
 import { css } from '@emotion/react';
 import * as React from 'react';
 import { PropsWithChildren, useEffect, useState } from 'react';

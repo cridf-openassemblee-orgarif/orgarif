@@ -1,10 +1,10 @@
 /** @jsxImportSource @emotion/react */
-import { ControlledPasswordInput } from '../component/base-component/ControlledPasswordInput';
-import { ControlledTextInput } from '../component/base-component/ControlledTextInput';
-import { LoadingStateButton } from '../component/base-component/LoadingButton';
-import { PlainStringPassword } from '../generated/domain/security';
-import { LoadingState } from '../interfaces';
-import { asNominalString } from '../utils/nominal-class';
+import { PlainStringPassword } from '../../generated/domain/security';
+import { LoadingState } from '../../interfaces';
+import { asNominalString } from '../../utils/nominal-class';
+import { LoadingStateButton } from '../common/LoadingButton';
+import { ControlledPasswordInput } from '../common/form/ControlledPasswordInput';
+import { ControlledTextInput } from '../common/form/ControlledTextInput';
 import { css } from '@emotion/react';
 import * as React from 'react';
 import { useState } from 'react';

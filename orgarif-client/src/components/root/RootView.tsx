@@ -1,9 +1,9 @@
 /** @jsxImportSource @emotion/react */
-import { ComponentsDemonstration } from '../component/ComponentsDemonstration';
-import { RouteLinkDemonstration } from '../component/RouteLinkDemonstration';
-import { MainContainer } from '../container/MainContainer';
+import { state } from '../../state/state';
+import { MainContainer } from '../containers/MainContainer';
 import { RouteLink } from '../routing/RouteLink';
-import { state } from '../state/state';
+import { ComponentsDemonstration } from './ComponentsDemonstration';
+import { RouteLinkDemonstration } from './RouteLinkDemonstration';
 import * as React from 'react';
 import { useRecoilState } from 'recoil';
 

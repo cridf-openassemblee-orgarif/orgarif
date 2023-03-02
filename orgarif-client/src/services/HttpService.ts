@@ -1,6 +1,6 @@
-import { appContext } from '../ApplicationContext';
 import { Instant } from '../domain/date';
 import { NominalString } from '../utils/nominal-class';
+import { appContext } from './ApplicationContext';
 
 type RequestType = 'Get' | 'Post';
 

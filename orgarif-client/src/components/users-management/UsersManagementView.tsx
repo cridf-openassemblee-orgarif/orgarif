@@ -1,16 +1,16 @@
 /** @jsxImportSource @emotion/react */
-import { appContext } from '../ApplicationContext';
-import { MainContainer } from '../container/MainContainer';
-import { UserInfos } from '../generated/domain/user';
-import { GetUsersQueryResponse } from '../generated/query/queries';
-import { LoadingState } from '../interfaces';
+import { UserInfos } from '../../generated/domain/user';
+import { GetUsersQueryResponse } from '../../generated/query/queries';
+import { LoadingState } from '../../interfaces';
+import { appContext } from '../../services/ApplicationContext';
+import { MainContainer } from '../containers/MainContainer';
 import {
   UsersManagementRoute,
   UsersManagementUserRoute
 } from '../routing/routes';
 import { useGoTo } from '../routing/routing-utils';
-import { EditUserDialog } from './users-management/EditUserDialog';
-import { UsersManagementTable } from './users-management/UsersManagementTable';
+import { EditUserDialog } from './EditUserDialog';
+import { UsersManagementTable } from './UsersManagementTable';
 import { css } from '@emotion/react';
 import { useSnackbar } from 'notistack';
 import * as React from 'react';

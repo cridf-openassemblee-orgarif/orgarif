@@ -1,10 +1,10 @@
-import { UserId } from '../generated/domain/fmk-ids';
-import { Role } from '../generated/domain/user';
-import { Dict, dict, flatMap } from '../utils/nominal-class';
-import { LoginView } from '../view/LoginView';
-import { RegisterView } from '../view/RegisterView';
-import { RootView } from '../view/RootView';
-import { UsersManagementView } from '../view/UsersManagementView';
+import { UserId } from '../../generated/domain/fmk-ids';
+import { Role } from '../../generated/domain/user';
+import { dict, Dict, flatMap } from '../../utils/nominal-class';
+import { LoginView } from '../login/LoginView';
+import { RegisterView } from '../register/RegisterView';
+import { RootView } from '../root/RootView';
+import { UsersManagementView } from '../users-management/UsersManagementView';
 import { FunctionComponent } from 'react';
 
 // TODO[tmpl] secure that "name" can't be a route parameter
