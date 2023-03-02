@@ -24,7 +24,7 @@ import org.springframework.web.bind.annotation.RestController
 @RestController
 @RequestMapping(remoteRoute)
 class RemoteController(
-    @Value("\${remote-endpoint.expected-secu}") val expectedSecu: String,
+    @Value("\${remote-controller.expected-secu}") val expectedSecu: String,
     val jooq: DSLContext,
     val userDao: UserDao,
     val userSessionLogDao: UserSessionLogDao,
