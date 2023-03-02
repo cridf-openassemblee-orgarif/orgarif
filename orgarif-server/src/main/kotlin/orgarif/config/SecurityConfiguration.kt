@@ -56,8 +56,10 @@ class SecurityConfiguration(
             // * verify about this configuration when Spring Security is updated
             // (see https://github.com/spring-projects/spring-security/issues/10913 among others...)
             // * verify no other important warn logs could be hidden by the logback conf
-            logger.error {
-                "Spring and/or Spring Security have been updated => check configuration !"
+            logger.warn {
+                "Spring and/or Spring Security have been updated => check configuration ! (actual: " +
+                    "${SpringVersion.getVersion()} / ${SpringSecurityCoreVersion.getVersion()}, expected: " +
+                    "$expectedSpringVersion / $expectedSpringSecurityVersion)"
             }
         }
     }
