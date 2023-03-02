@@ -9,7 +9,7 @@ import { Avatar, Chip, Typography } from '@mui/material';
 import Box from '@mui/material/Box';
 import * as React from 'react';
 
-interface HystoryItemProps {
+interface HistoryItemProps {
   delib: {
     id: DeliberationId;
     deliberation: DeliberationDto;
@@ -20,11 +20,11 @@ interface HystoryItemProps {
   lastItem: boolean;
 }
 
-export const HystoryItem = ({
+export const HistoryItem = ({
   delib,
   yearlyDelib,
   lastItem
-}: HystoryItemProps) => {
+}: HistoryItemProps) => {
   const TextContentRef = React.useRef<HTMLDivElement>(null);
 
   return (

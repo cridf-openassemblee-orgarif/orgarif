@@ -6,7 +6,7 @@ import {
 } from '../../generated/domain/organisme';
 import useEventListener from '../../hooks/useEventListener';
 import { isMobile } from '../../utils/viewport-utils';
-import { HystoryItem } from '../root/singleOrganisme/HystoryItem';
+import { HistoryItem } from '../root/singleOrganisme/HistoryItem';
 import * as breakpoint from '../styles/breakpoints';
 import { colors } from '../styles/colors';
 import { css } from '@emotion/react';
@@ -166,7 +166,7 @@ export const RightPanel = (props: { organisme: OrganismeDto }) => {
                     );
                 }}
               >
-                <HystoryItem
+                <HistoryItem
                   delib={d}
                   yearlyDelib={yearlyDelib}
                   lastItem={
