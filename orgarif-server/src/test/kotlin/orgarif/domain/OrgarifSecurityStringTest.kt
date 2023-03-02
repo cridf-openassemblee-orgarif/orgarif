@@ -1,9 +1,9 @@
 package orgarif.domain
 
-import orgarif.utils.toSecurityString
 import org.junit.jupiter.api.Assertions
 import org.junit.jupiter.api.Assertions.assertEquals
 import org.junit.jupiter.api.Test
+import orgarif.utils.toSecurityString
 
 class OrgarifSecurityStringTest {
 

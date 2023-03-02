@@ -1,9 +1,9 @@
 package orgarif.query
 
 import com.fasterxml.jackson.annotation.JsonTypeInfo
+import kttots.Shared
 import orgarif.domain.UserId
 import orgarif.domain.UserInfos
-import kttots.Shared
 
 @Shared
 @JsonTypeInfo(

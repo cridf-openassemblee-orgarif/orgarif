@@ -1,14 +1,14 @@
 package orgarif.command
 
+import javax.servlet.http.HttpServletRequest
+import javax.servlet.http.HttpServletResponse
+import org.springframework.stereotype.Service
 import orgarif.domain.LoginResult
 import orgarif.domain.UserInfos
 import orgarif.domain.UserSession
 import orgarif.repository.user.UserDao
 import orgarif.service.user.UserService
 import orgarif.service.user.UserSessionService
-import javax.servlet.http.HttpServletRequest
-import javax.servlet.http.HttpServletResponse
-import org.springframework.stereotype.Service
 
 @Service
 class LoginCommandHandler(

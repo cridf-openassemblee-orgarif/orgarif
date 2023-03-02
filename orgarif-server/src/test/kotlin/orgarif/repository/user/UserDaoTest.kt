@@ -1,17 +1,17 @@
 package orgarif.repository.user
 
-import orgarif.ResetTestDatabase
-import orgarif.TestData
-import orgarif.domain.HashedPassword
-import orgarif.error.MailAlreadyRegisteredException
-import orgarif.service.utils.DateService
-import orgarif.service.utils.random.RandomService
 import org.junit.jupiter.api.Assertions
 import org.junit.jupiter.api.BeforeEach
 import org.junit.jupiter.api.Test
 import org.springframework.beans.factory.annotation.Autowired
 import org.springframework.boot.test.context.SpringBootTest
 import org.springframework.test.context.ActiveProfiles
+import orgarif.ResetTestDatabase
+import orgarif.TestData
+import orgarif.domain.HashedPassword
+import orgarif.error.MailAlreadyRegisteredException
+import orgarif.service.utils.DateService
+import orgarif.service.utils.random.RandomService
 
 @SpringBootTest
 @ActiveProfiles("test")

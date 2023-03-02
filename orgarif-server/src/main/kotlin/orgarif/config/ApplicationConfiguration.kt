@@ -1,6 +1,5 @@
 package orgarif.config
 
-import orgarif.error.ApplicationExceptionHandlerExceptionResolver
 import mu.KotlinLogging
 import org.apache.catalina.connector.Request
 import org.apache.catalina.connector.Response
@@ -13,6 +12,7 @@ import org.springframework.context.support.ConversionServiceFactoryBean
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder
 import org.springframework.security.web.csrf.CookieCsrfTokenRepository
 import org.springframework.web.servlet.mvc.method.annotation.ExceptionHandlerExceptionResolver
+import orgarif.error.ApplicationExceptionHandlerExceptionResolver
 
 @Configuration
 class ApplicationConfiguration {

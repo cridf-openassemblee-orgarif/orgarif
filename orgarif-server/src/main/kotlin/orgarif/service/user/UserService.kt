@@ -1,5 +1,8 @@
 package orgarif.service.user
 
+import mu.KotlinLogging
+import org.springframework.security.crypto.password.PasswordEncoder
+import org.springframework.stereotype.Service
 import orgarif.domain.AuthLogType
 import orgarif.domain.HashedPassword
 import orgarif.domain.Language
@@ -12,9 +15,6 @@ import orgarif.service.utils.DateService
 import orgarif.service.utils.NotificationService
 import orgarif.service.utils.random.RandomService
 import orgarif.utils.OrgarifStringUtils
-import mu.KotlinLogging
-import org.springframework.security.crypto.password.PasswordEncoder
-import org.springframework.stereotype.Service
 
 @Service
 class UserService(

@@ -10,8 +10,7 @@ object TestIds {
 
 data class TestUuidId(override val rawId: UUID) : OrgarifUuidId()
 
-@Prefix("test_prefix")
-data class TestPrefixUuidId(override val rawId: UUID) : OrgarifUuidId()
+@Prefix("test_prefix") data class TestPrefixUuidId(override val rawId: UUID) : OrgarifUuidId()
 
 data class TestStringId(override val rawId: String) : OrgarifStringId(rawId) {
     companion object {

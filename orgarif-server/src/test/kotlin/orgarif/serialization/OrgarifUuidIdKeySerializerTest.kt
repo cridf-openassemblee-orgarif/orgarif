@@ -1,10 +1,10 @@
 package orgarif.serialization
 
+import org.junit.jupiter.api.Test
+import org.skyscreamer.jsonassert.JSONAssert
 import orgarif.domain.TestIds.emptyUuid0
 import orgarif.domain.TestUuidId
 import orgarif.utils.toTypeId
-import org.junit.jupiter.api.Test
-import org.skyscreamer.jsonassert.JSONAssert
 
 internal class OrgarifUuidIdKeySerializerTest {
 

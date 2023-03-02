@@ -1,7 +1,7 @@
 package orgarif.service.utils.random
 
-import orgarif.utils.OrgarifStringUtils
 import java.util.concurrent.atomic.AtomicInteger
+import orgarif.utils.OrgarifStringUtils
 
 class DummyRandomService(idLogService: IdLogService? = null) : RandomService(idLogService) {
 

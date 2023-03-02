@@ -1,5 +1,14 @@
 package orgarif.service.user
 
+import java.time.Duration
+import javax.servlet.http.HttpServletRequest
+import javax.servlet.http.HttpServletResponse
+import mu.KotlinLogging
+import org.springframework.security.authentication.AnonymousAuthenticationToken
+import org.springframework.security.authentication.UsernamePasswordAuthenticationToken
+import org.springframework.security.core.context.SecurityContextHolder
+import org.springframework.security.web.csrf.CookieCsrfTokenRepository
+import org.springframework.stereotype.Service
 import orgarif.domain.Role
 import orgarif.domain.Session
 import orgarif.domain.UserSession
@@ -11,15 +20,6 @@ import orgarif.repository.user.UserSessionLogDao
 import orgarif.service.utils.ApplicationInstance
 import orgarif.service.utils.DateService
 import orgarif.service.utils.random.RandomService
-import java.time.Duration
-import javax.servlet.http.HttpServletRequest
-import javax.servlet.http.HttpServletResponse
-import mu.KotlinLogging
-import org.springframework.security.authentication.AnonymousAuthenticationToken
-import org.springframework.security.authentication.UsernamePasswordAuthenticationToken
-import org.springframework.security.core.context.SecurityContextHolder
-import org.springframework.security.web.csrf.CookieCsrfTokenRepository
-import org.springframework.stereotype.Service
 
 @Service
 class UserSessionService(

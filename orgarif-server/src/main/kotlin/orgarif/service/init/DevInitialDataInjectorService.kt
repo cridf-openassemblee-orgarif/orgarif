@@ -1,5 +1,7 @@
 package orgarif.service.init
 
+import org.springframework.beans.factory.annotation.Value
+import org.springframework.stereotype.Service
 import orgarif.domain.Language
 import orgarif.domain.PlainStringPassword
 import orgarif.domain.Role
@@ -8,8 +10,6 @@ import orgarif.service.user.UserService
 import orgarif.service.utils.DateService
 import orgarif.service.utils.TransactionIsolationService
 import orgarif.service.utils.random.RandomService
-import org.springframework.beans.factory.annotation.Value
-import org.springframework.stereotype.Service
 
 @Service
 // TODO[tmpl] naming fake / sample

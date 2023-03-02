@@ -5,12 +5,8 @@ import com.fasterxml.jackson.databind.SerializerProvider
 import com.fasterxml.jackson.databind.ser.std.StdSerializer
 import orgarif.domain.OrgarifUuidId
 
-class OrgarifUuidIdKeySerializer :
-    StdSerializer<OrgarifUuidId>(OrgarifUuidId::class.java) {
+class OrgarifUuidIdKeySerializer : StdSerializer<OrgarifUuidId>(OrgarifUuidId::class.java) {
 
-    override fun serialize(
-        value: OrgarifUuidId,
-        gen: JsonGenerator,
-        provider: SerializerProvider
-    ) = gen.writeFieldName(OrgarifUuidIdSerializer.serialize(value))
+    override fun serialize(value: OrgarifUuidId, gen: JsonGenerator, provider: SerializerProvider) =
+        gen.writeFieldName(OrgarifUuidIdSerializer.serialize(value))
 }

@@ -1,11 +1,11 @@
 package orgarif.service.utils.random
 
-import orgarif.domain.OrgarifSecurityString
-import orgarif.domain.OrgarifStringId
-import orgarif.domain.OrgarifUuidId
 import java.util.UUID
 import org.apache.commons.text.CharacterPredicates
 import org.apache.commons.text.RandomStringGenerator
+import orgarif.domain.OrgarifSecurityString
+import orgarif.domain.OrgarifStringId
+import orgarif.domain.OrgarifUuidId
 
 open class RandomService(val idLogService: IdLogService? = null) {
 

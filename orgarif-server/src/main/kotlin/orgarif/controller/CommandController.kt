@@ -1,5 +1,13 @@
 package orgarif.controller
 
+import java.time.Instant
+import javax.servlet.http.HttpServletRequest
+import javax.servlet.http.HttpServletResponse
+import mu.KotlinLogging
+import org.apache.commons.lang3.exception.ExceptionUtils
+import org.springframework.web.bind.annotation.PostMapping
+import org.springframework.web.bind.annotation.RequestBody
+import org.springframework.web.bind.annotation.RestController
 import orgarif.command.Command
 import orgarif.command.CommandConfiguration
 import orgarif.command.CommandHandler
@@ -21,14 +29,6 @@ import orgarif.service.utils.DateService
 import orgarif.service.utils.TransactionIsolationService
 import orgarif.service.utils.random.IdLogService
 import orgarif.service.utils.random.RandomService
-import java.time.Instant
-import javax.servlet.http.HttpServletRequest
-import javax.servlet.http.HttpServletResponse
-import mu.KotlinLogging
-import org.apache.commons.lang3.exception.ExceptionUtils
-import org.springframework.web.bind.annotation.PostMapping
-import org.springframework.web.bind.annotation.RequestBody
-import org.springframework.web.bind.annotation.RestController
 
 @RestController
 class CommandController(

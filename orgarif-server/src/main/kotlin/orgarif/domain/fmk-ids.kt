@@ -1,7 +1,7 @@
 package orgarif.domain
 
-import orgarif.utils.OrgarifStringUtils
 import java.util.UUID
+import orgarif.utils.OrgarifStringUtils
 
 interface OrgarifId<T> {
     val rawId: T

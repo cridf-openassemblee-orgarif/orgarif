@@ -1,10 +1,10 @@
 package orgarif.command
 
-import orgarif.domain.PlainStringPassword
 import org.hamcrest.MatcherAssert
 import org.hamcrest.Matchers
 import org.junit.jupiter.api.Assertions
 import org.junit.jupiter.api.Test
+import orgarif.domain.PlainStringPassword
 
 internal class RegisterCommandHandlerCompanionTest {
 

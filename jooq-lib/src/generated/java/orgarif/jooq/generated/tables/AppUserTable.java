@@ -4,11 +4,6 @@
 package orgarif.jooq.generated.tables;
 
 
-import orgarif.jooq.generated.Indexes;
-import orgarif.jooq.generated.Keys;
-import orgarif.jooq.generated.PublicTable;
-import orgarif.jooq.generated.tables.records.AppUserRecord;
-
 import java.time.Instant;
 import java.util.Arrays;
 import java.util.List;
@@ -32,6 +27,11 @@ import org.jooq.UniqueKey;
 import org.jooq.impl.DSL;
 import org.jooq.impl.SQLDataType;
 import org.jooq.impl.TableImpl;
+
+import orgarif.jooq.generated.Indexes;
+import orgarif.jooq.generated.Keys;
+import orgarif.jooq.generated.PublicTable;
+import orgarif.jooq.generated.tables.records.AppUserRecord;
 
 
 /**

@@ -1,8 +1,8 @@
 package orgarif.service.utils.random
 
+import java.util.UUID
 import orgarif.domain.OrgarifId
 import orgarif.utils.OrgarifStringUtils
-import java.util.UUID
 
 class IdLogService {
 

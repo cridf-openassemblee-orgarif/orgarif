@@ -1,5 +1,15 @@
 package orgarif.error
 
+import freemarker.ext.beans.BeansWrapperBuilder
+import freemarker.template.Configuration
+import javax.servlet.http.HttpServletResponse
+import mu.KotlinLogging
+import org.apache.tomcat.util.http.fileupload.impl.SizeLimitExceededException
+import org.springframework.web.bind.annotation.ControllerAdvice
+import org.springframework.web.bind.annotation.ExceptionHandler
+import org.springframework.web.context.request.WebRequest
+import org.springframework.web.servlet.ModelAndView
+import org.springframework.web.servlet.view.json.MappingJackson2JsonView
 import orgarif.config.ApplicationConstants
 import orgarif.domain.ApplicationEnvironment
 import orgarif.domain.MimeType
@@ -11,16 +21,6 @@ import orgarif.service.utils.ApplicationInstance
 import orgarif.service.utils.DateService
 import orgarif.service.utils.random.RandomService
 import orgarif.utils.OrgarifStringUtils
-import freemarker.ext.beans.BeansWrapperBuilder
-import freemarker.template.Configuration
-import javax.servlet.http.HttpServletResponse
-import mu.KotlinLogging
-import org.apache.tomcat.util.http.fileupload.impl.SizeLimitExceededException
-import org.springframework.web.bind.annotation.ControllerAdvice
-import org.springframework.web.bind.annotation.ExceptionHandler
-import org.springframework.web.context.request.WebRequest
-import org.springframework.web.servlet.ModelAndView
-import org.springframework.web.servlet.view.json.MappingJackson2JsonView
 
 @ControllerAdvice
 class ApplicationExceptionHandler(

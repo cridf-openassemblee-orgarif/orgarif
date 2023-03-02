@@ -1,14 +1,14 @@
 package orgarif.repository.user
 
+import java.time.Instant
+import org.jooq.DSLContext
+import org.springframework.stereotype.Repository
 import orgarif.domain.DeploymentLogId
 import orgarif.domain.UserId
 import orgarif.domain.UserSessionId
 import orgarif.jooq.generated.Tables.USER_SESSION_LOG
 import orgarif.jooq.generated.tables.records.UserSessionLogRecord
 import orgarif.utils.toTypeId
-import java.time.Instant
-import org.jooq.DSLContext
-import org.springframework.stereotype.Repository
 
 // TODO[tmpl][user]: try to keep Spring id
 @Repository

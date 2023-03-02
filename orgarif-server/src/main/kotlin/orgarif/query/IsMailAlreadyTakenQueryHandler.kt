@@ -1,7 +1,7 @@
 package orgarif.query
 
-import orgarif.repository.user.UserDao
 import org.springframework.stereotype.Service
+import orgarif.repository.user.UserDao
 
 @Service
 class IsMailAlreadyTakenQueryHandler(private val userDao: UserDao) :

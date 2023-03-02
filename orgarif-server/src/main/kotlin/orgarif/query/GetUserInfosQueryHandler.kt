@@ -1,8 +1,8 @@
 package orgarif.query
 
+import org.springframework.stereotype.Service
 import orgarif.domain.UserInfos
 import orgarif.repository.user.UserDao
-import org.springframework.stereotype.Service
 
 @Service
 class GetUserInfosQueryHandler(private val userDao: UserDao) :

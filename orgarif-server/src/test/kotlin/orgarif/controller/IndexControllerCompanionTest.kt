@@ -1,8 +1,8 @@
 package orgarif.controller
 
-import orgarif.controller.IndexController.Companion.extractDomain
 import org.junit.jupiter.api.Assertions.assertEquals
 import org.junit.jupiter.api.Test
+import orgarif.controller.IndexController.Companion.extractDomain
 
 internal class IndexControllerCompanionTest() {
 

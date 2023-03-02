@@ -4,15 +4,6 @@
 package orgarif.jooq.generated;
 
 
-import orgarif.jooq.generated.tables.AppUserTable;
-import orgarif.jooq.generated.tables.CommandLogTable;
-import orgarif.jooq.generated.tables.DeploymentLogTable;
-import orgarif.jooq.generated.tables.MagicLinkTokenTable;
-import orgarif.jooq.generated.tables.MailLogTable;
-import orgarif.jooq.generated.tables.UserFileTable;
-import orgarif.jooq.generated.tables.UserMailLogTable;
-import orgarif.jooq.generated.tables.UserSessionLogTable;
-
 import java.util.Arrays;
 import java.util.List;
 
@@ -21,6 +12,15 @@ import javax.annotation.Nonnull;
 import org.jooq.Catalog;
 import org.jooq.Table;
 import org.jooq.impl.SchemaImpl;
+
+import orgarif.jooq.generated.tables.AppUserTable;
+import orgarif.jooq.generated.tables.CommandLogTable;
+import orgarif.jooq.generated.tables.DeploymentLogTable;
+import orgarif.jooq.generated.tables.MagicLinkTokenTable;
+import orgarif.jooq.generated.tables.MailLogTable;
+import orgarif.jooq.generated.tables.UserFileTable;
+import orgarif.jooq.generated.tables.UserMailLogTable;
+import orgarif.jooq.generated.tables.UserSessionLogTable;
 
 
 /**

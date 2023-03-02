@@ -1,5 +1,8 @@
 package orgarif.repository.user
 
+import org.jooq.DSLContext
+import org.jooq.Record
+import org.springframework.stereotype.Repository
 import orgarif.domain.MimeType
 import orgarif.domain.UserFileData
 import orgarif.domain.UserFileId
@@ -8,9 +11,6 @@ import orgarif.domain.UserId
 import orgarif.jooq.generated.Tables.USER_FILE
 import orgarif.jooq.generated.tables.records.UserFileRecord
 import orgarif.utils.toTypeId
-import org.jooq.DSLContext
-import org.jooq.Record
-import org.springframework.stereotype.Repository
 
 @Repository
 class UserFileDao(private val jooq: DSLContext) {

@@ -1,13 +1,13 @@
 package orgarif.jooqlib
 
-import orgarif.jooqlib.GenerateJooqAndDiff.sqlCleanResultFile
-import orgarif.jooqlib.GenerateJooqAndDiff.sqlInitiateSchemaResultFile
-import orgarif.jooqlib.GenerateJooqAndDiff.sqlInsertFilesDir
-import orgarif.jooqlib.GenerateJooqAndDiff.sqlSchemaFilesDir
 import jooqutils.DatabaseCleaner
 import jooqutils.DatabaseConfiguration
 import jooqutils.DatabaseInitializer
 import mu.KotlinLogging
+import orgarif.jooqlib.GenerateJooqAndDiff.sqlCleanResultFile
+import orgarif.jooqlib.GenerateJooqAndDiff.sqlInitiateSchemaResultFile
+import orgarif.jooqlib.GenerateJooqAndDiff.sqlInsertFilesDir
+import orgarif.jooqlib.GenerateJooqAndDiff.sqlSchemaFilesDir
 
 fun main() {
     System.setProperty("logback.configurationFile", "logback-jooq-lib.xml")

@@ -8,6 +8,10 @@ import com.google.devtools.ksp.symbol.KSAnnotated
 import com.google.devtools.ksp.symbol.KSClassDeclaration
 import com.google.devtools.ksp.symbol.KSPropertyDeclaration
 import com.google.devtools.ksp.validate
+import java.nio.file.Files
+import java.time.LocalDateTime
+import kotlin.io.path.absolutePathString
+import kttots.Shared
 import orgarif.tooling.kttots.ClassMapper
 import orgarif.tooling.kttots.ClassParser
 import orgarif.tooling.kttots.ClassWriter
@@ -17,10 +21,6 @@ import orgarif.tooling.kttots.ImportWriter.relativePath
 import orgarif.tooling.kttots.KtToTsConfiguration
 import orgarif.tooling.kttots.ShellRunner
 import orgarif.tooling.kttots.prettyPrint
-import java.nio.file.Files
-import java.time.LocalDateTime
-import kotlin.io.path.absolutePathString
-import kttots.Shared
 
 // TODO[tmpl] use exceptions and catch them for debug report ?
 // TODO[tmpl] clean !!

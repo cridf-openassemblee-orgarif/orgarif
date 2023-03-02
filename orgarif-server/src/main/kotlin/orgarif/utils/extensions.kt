@@ -1,10 +1,10 @@
 package orgarif.utils
 
+import java.lang.reflect.InvocationTargetException
+import java.util.UUID
 import orgarif.domain.OrgarifSecurityString
 import orgarif.domain.OrgarifStringId
 import orgarif.domain.OrgarifUuidId
-import java.lang.reflect.InvocationTargetException
-import java.util.UUID
 
 operator fun StringBuilder.plusAssign(adding: Any) {
     append(adding)

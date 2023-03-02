@@ -1,15 +1,15 @@
 package orgarif.config
 
-import orgarif.serialization.Serializer
-import orgarif.service.utils.ApplicationTaskExecutor
-import orgarif.service.utils.random.IdLogService
-import orgarif.service.utils.random.RandomService
 import okhttp3.OkHttpClient
 import org.springframework.context.annotation.Bean
 import org.springframework.context.annotation.Configuration
 import org.springframework.context.annotation.Primary
 import org.springframework.core.task.TaskExecutor
 import org.springframework.scheduling.concurrent.ThreadPoolTaskExecutor
+import orgarif.serialization.Serializer
+import orgarif.service.utils.ApplicationTaskExecutor
+import orgarif.service.utils.random.IdLogService
+import orgarif.service.utils.random.RandomService
 
 @Configuration
 class ApplicationBeans {

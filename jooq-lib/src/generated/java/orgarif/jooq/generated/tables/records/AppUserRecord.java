@@ -4,8 +4,6 @@
 package orgarif.jooq.generated.tables.records;
 
 
-import orgarif.jooq.generated.tables.AppUserTable;
-
 import java.time.Instant;
 import java.util.UUID;
 
@@ -16,6 +14,8 @@ import org.jooq.Record1;
 import org.jooq.Record8;
 import org.jooq.Row8;
 import org.jooq.impl.UpdatableRecordImpl;
+
+import orgarif.jooq.generated.tables.AppUserTable;
 
 
 /**

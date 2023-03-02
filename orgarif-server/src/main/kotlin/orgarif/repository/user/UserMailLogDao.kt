@@ -1,13 +1,13 @@
 package orgarif.repository.user
 
+import java.time.Instant
+import org.jooq.DSLContext
+import org.springframework.stereotype.Repository
 import orgarif.domain.AuthLogType
 import orgarif.domain.UserId
 import orgarif.domain.UserMailLogId
 import orgarif.jooq.generated.Tables.USER_MAIL_LOG
 import orgarif.jooq.generated.tables.records.UserMailLogRecord
-import java.time.Instant
-import org.jooq.DSLContext
-import org.springframework.stereotype.Repository
 
 @Repository
 class UserMailLogDao(private val jooq: DSLContext) {

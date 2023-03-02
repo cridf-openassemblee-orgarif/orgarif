@@ -1,5 +1,8 @@
 package orgarif.service.user
 
+import mu.KotlinLogging
+import org.springframework.beans.factory.annotation.Value
+import org.springframework.stereotype.Service
 import orgarif.config.ApplicationConstants
 import orgarif.config.Routes
 import orgarif.controller.IndexController
@@ -10,9 +13,6 @@ import orgarif.serialization.Serializer.serialize
 import orgarif.service.mail.MailService
 import orgarif.service.utils.ApplicationInstance
 import orgarif.service.utils.HttpService
-import mu.KotlinLogging
-import org.springframework.beans.factory.annotation.Value
-import org.springframework.stereotype.Service
 
 @Service
 class LostPasswordMailSenderService(

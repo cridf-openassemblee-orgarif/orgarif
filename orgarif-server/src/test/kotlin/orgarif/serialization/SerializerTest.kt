@@ -1,5 +1,13 @@
 package orgarif.serialization
 
+import java.time.Instant
+import java.time.LocalDate
+import java.time.ZoneId
+import java.util.UUID
+import org.json.JSONObject
+import org.junit.jupiter.api.Assertions.assertEquals
+import org.junit.jupiter.api.Test
+import org.skyscreamer.jsonassert.JSONAssert
 import orgarif.domain.PlainStringPassword
 import orgarif.domain.TestPrefixSecurityString
 import orgarif.domain.TestPrefixStringId
@@ -11,14 +19,6 @@ import orgarif.domain.TestUuidId
 import orgarif.service.utils.random.DummyRandomService
 import orgarif.utils.OrgarifStringUtils
 import orgarif.utils.OrgarifStringUtils.filteredPassword
-import java.time.Instant
-import java.time.LocalDate
-import java.time.ZoneId
-import java.util.UUID
-import org.json.JSONObject
-import org.junit.jupiter.api.Assertions.assertEquals
-import org.junit.jupiter.api.Test
-import org.skyscreamer.jsonassert.JSONAssert
 
 // TODO[tmpl] test maps keys
 internal class SerializerTest {

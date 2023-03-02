@@ -1,17 +1,17 @@
 package orgarif.service.init
 
-import orgarif.domain.ApplicationEnvironment
-import orgarif.service.mail.MailService
-import orgarif.service.mail.MailService.MailJetMail
-import orgarif.service.utils.ApplicationInstance
-import orgarif.service.utils.ApplicationTaskExecutor
-import orgarif.service.utils.HttpService
 import mu.KotlinLogging
 import okhttp3.Credentials
 import org.springframework.beans.factory.annotation.Value
 import org.springframework.http.HttpMethod
 import org.springframework.http.HttpStatus
 import org.springframework.stereotype.Service
+import orgarif.domain.ApplicationEnvironment
+import orgarif.service.mail.MailService
+import orgarif.service.mail.MailService.MailJetMail
+import orgarif.service.utils.ApplicationInstance
+import orgarif.service.utils.ApplicationTaskExecutor
+import orgarif.service.utils.HttpService
 
 @Service
 class DebugMailService(

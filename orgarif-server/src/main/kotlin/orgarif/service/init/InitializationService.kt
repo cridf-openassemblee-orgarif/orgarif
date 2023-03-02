@@ -1,11 +1,5 @@
 package orgarif.service.init
 
-import orgarif.domain.ApplicationEnvironment
-import orgarif.jooqlib.Configuration
-import orgarif.jooqlib.ResetDatabase
-import orgarif.repository.log.DeploymentLogDao
-import orgarif.service.utils.ApplicationInstance
-import orgarif.service.utils.DateService
 import java.util.Locale
 import java.util.TimeZone
 import javax.sql.DataSource
@@ -14,6 +8,12 @@ import mu.KotlinLogging
 import org.springframework.beans.factory.annotation.Value
 import org.springframework.core.env.Environment
 import org.springframework.stereotype.Service
+import orgarif.domain.ApplicationEnvironment
+import orgarif.jooqlib.Configuration
+import orgarif.jooqlib.ResetDatabase
+import orgarif.repository.log.DeploymentLogDao
+import orgarif.service.utils.ApplicationInstance
+import orgarif.service.utils.DateService
 
 @Service
 class InitializationService(

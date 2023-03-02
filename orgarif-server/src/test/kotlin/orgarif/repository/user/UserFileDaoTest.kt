@@ -1,11 +1,11 @@
 package orgarif.repository.user
 
-import orgarif.jooq.generated.Tables.USER_FILE
 import org.jooq.Field
 import org.jooq.TableField
 import org.junit.jupiter.api.Assertions.assertEquals
 import org.junit.jupiter.api.Test
 import org.reflections.ReflectionUtils
+import orgarif.jooq.generated.Tables.USER_FILE
 
 internal class UserFileDaoTest {
 

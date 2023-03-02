@@ -1,10 +1,10 @@
 package orgarif.error
 
-import orgarif.domain.RequestErrorId
-import orgarif.domain.OrgarifId
 import java.time.Instant
 import org.apache.commons.lang3.exception.ExceptionUtils
 import org.slf4j.event.Level
+import orgarif.domain.OrgarifId
+import orgarif.domain.RequestErrorId
 
 // FIXME[tmpl] can remove ? ReadableStackTrace ? and ReadableStackTraceSerializer ?
 // @Shared

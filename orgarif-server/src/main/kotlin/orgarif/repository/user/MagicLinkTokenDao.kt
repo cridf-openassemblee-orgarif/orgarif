@@ -1,12 +1,12 @@
 package orgarif.repository.user
 
+import java.time.Instant
+import org.jooq.DSLContext
+import org.springframework.stereotype.Repository
 import orgarif.domain.UserId
 import orgarif.jooq.generated.Tables.MAGIC_LINK_TOKEN
 import orgarif.jooq.generated.tables.records.MagicLinkTokenRecord
 import orgarif.utils.toTypeId
-import java.time.Instant
-import org.jooq.DSLContext
-import org.springframework.stereotype.Repository
 
 @Repository
 class MagicLinkTokenDao(private val jooq: DSLContext) {

@@ -4,8 +4,6 @@
 package orgarif.jooq.generated.tables.records;
 
 
-import orgarif.jooq.generated.tables.MailLogTable;
-
 import java.time.Instant;
 import java.util.UUID;
 
@@ -16,6 +14,8 @@ import org.jooq.Record1;
 import org.jooq.Record10;
 import org.jooq.Row10;
 import org.jooq.impl.UpdatableRecordImpl;
+
+import orgarif.jooq.generated.tables.MailLogTable;
 
 
 /**

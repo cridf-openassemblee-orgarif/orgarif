@@ -1,8 +1,5 @@
 package orgarif.error
 
-import orgarif.config.Routes
-import orgarif.domain.RequestErrorId
-import orgarif.service.utils.random.RandomService
 import java.util.Date
 import javax.servlet.http.HttpServletResponse
 import mu.KotlinLogging
@@ -13,6 +10,9 @@ import org.springframework.web.bind.annotation.RequestMapping
 import org.springframework.web.bind.annotation.RestController
 import org.springframework.web.context.request.WebRequest
 import org.springframework.web.servlet.ModelAndView
+import orgarif.config.Routes
+import orgarif.domain.RequestErrorId
+import orgarif.service.utils.random.RandomService
 
 @RestController
 class ApplicationErrorController(

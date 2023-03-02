@@ -1,8 +1,8 @@
 package orgarif.service.user
 
-import orgarif.service.user.UserService.Companion.cleanMailAndReturnDirty
 import org.junit.jupiter.api.Assertions
 import org.junit.jupiter.api.Test
+import orgarif.service.user.UserService.Companion.cleanMailAndReturnDirty
 
 class UserServiceCompanionTest {
     @Test

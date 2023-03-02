@@ -1,9 +1,5 @@
 package orgarif.service.user
 
-import orgarif.domain.UserId
-import orgarif.repository.user.MagicLinkTokenDao
-import orgarif.repository.user.UserDao
-import orgarif.service.utils.DateService
 import java.math.BigInteger
 import java.security.SecureRandom
 import java.time.Duration
@@ -12,6 +8,10 @@ import javax.servlet.http.HttpServletRequest
 import javax.servlet.http.HttpServletResponse
 import mu.KotlinLogging
 import org.springframework.stereotype.Service
+import orgarif.domain.UserId
+import orgarif.repository.user.MagicLinkTokenDao
+import orgarif.repository.user.UserDao
+import orgarif.service.utils.DateService
 
 @Service
 class MagicLinkTokenService(

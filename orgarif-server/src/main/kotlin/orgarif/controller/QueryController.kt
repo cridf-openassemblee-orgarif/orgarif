@@ -1,5 +1,9 @@
 package orgarif.controller
 
+import java.net.URLDecoder
+import javax.servlet.http.HttpServletRequest
+import org.springframework.web.bind.annotation.GetMapping
+import org.springframework.web.bind.annotation.RestController
 import orgarif.query.GetUserInfosQuery
 import orgarif.query.GetUserInfosQueryHandler
 import orgarif.query.GetUsersQuery
@@ -14,10 +18,6 @@ import orgarif.repository.user.UserDao
 import orgarif.serialization.Serializer
 import orgarif.service.user.UserSessionService
 import orgarif.service.utils.TransactionIsolationService
-import java.net.URLDecoder
-import javax.servlet.http.HttpServletRequest
-import org.springframework.web.bind.annotation.GetMapping
-import org.springframework.web.bind.annotation.RestController
 
 @RestController
 class QueryController(

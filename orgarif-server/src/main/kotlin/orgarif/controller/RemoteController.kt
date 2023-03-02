@@ -1,15 +1,5 @@
 package orgarif.controller
 
-import orgarif.config.SafeSessionRepository
-import orgarif.controller.RemoteController.Companion.remoteRoute
-import orgarif.domain.Role
-import orgarif.domain.Session as OrgarifSession
-import orgarif.domain.UserSession
-import orgarif.repository.user.UserDao
-import orgarif.repository.user.UserSessionLogDao
-import orgarif.service.user.UserSessionService
-import orgarif.service.utils.DateService
-import orgarif.service.utils.TransactionIsolationService
 import mu.KotlinLogging
 import org.jooq.DSLContext
 import org.springframework.beans.factory.annotation.Value
@@ -20,6 +10,16 @@ import org.springframework.web.bind.annotation.PostMapping
 import org.springframework.web.bind.annotation.RequestMapping
 import org.springframework.web.bind.annotation.RequestParam
 import org.springframework.web.bind.annotation.RestController
+import orgarif.config.SafeSessionRepository
+import orgarif.controller.RemoteController.Companion.remoteRoute
+import orgarif.domain.Role
+import orgarif.domain.Session as OrgarifSession
+import orgarif.domain.UserSession
+import orgarif.repository.user.UserDao
+import orgarif.repository.user.UserSessionLogDao
+import orgarif.service.user.UserSessionService
+import orgarif.service.utils.DateService
+import orgarif.service.utils.TransactionIsolationService
 
 @RestController
 @RequestMapping(remoteRoute)

@@ -1,14 +1,5 @@
 package orgarif.controller
 
-import orgarif.config.Routes
-import orgarif.domain.ApplicationBootstrapData
-import orgarif.domain.UserInfos
-import orgarif.repository.user.UserDao
-import orgarif.serialization.Serializer.serialize
-import orgarif.service.user.MagicLinkTokenService
-import orgarif.service.user.UserSessionService
-import orgarif.service.utils.ApplicationInstance
-import orgarif.utils.OrgarifStringUtils
 import freemarker.ext.beans.BeansWrapperBuilder
 import freemarker.template.Configuration
 import java.io.File
@@ -21,6 +12,15 @@ import org.springframework.beans.factory.annotation.Value
 import org.springframework.stereotype.Controller
 import org.springframework.web.bind.annotation.GetMapping
 import org.springframework.web.servlet.ModelAndView
+import orgarif.config.Routes
+import orgarif.domain.ApplicationBootstrapData
+import orgarif.domain.UserInfos
+import orgarif.repository.user.UserDao
+import orgarif.serialization.Serializer.serialize
+import orgarif.service.user.MagicLinkTokenService
+import orgarif.service.user.UserSessionService
+import orgarif.service.utils.ApplicationInstance
+import orgarif.utils.OrgarifStringUtils
 
 @Controller
 class IndexController(

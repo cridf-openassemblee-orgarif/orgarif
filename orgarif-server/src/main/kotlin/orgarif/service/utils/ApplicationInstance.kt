@@ -1,13 +1,13 @@
 package orgarif.service.utils
 
-import orgarif.OrgarifApplication
-import orgarif.domain.ApplicationEnvironment
-import orgarif.domain.DeploymentLogId
-import orgarif.utils.toTypeId
 import java.io.File
 import java.io.FileInputStream
 import java.util.Properties
 import java.util.UUID
+import orgarif.OrgarifApplication
+import orgarif.domain.ApplicationEnvironment
+import orgarif.domain.DeploymentLogId
+import orgarif.utils.toTypeId
 
 object ApplicationInstance {
     val env by lazy {

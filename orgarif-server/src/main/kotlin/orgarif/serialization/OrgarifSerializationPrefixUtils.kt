@@ -1,9 +1,9 @@
 package orgarif.serialization
 
-import orgarif.domain.Prefix
+import kotlin.reflect.KClass
 import orgarif.domain.OrgarifId
 import orgarif.domain.OrgarifSecurityString
-import kotlin.reflect.KClass
+import orgarif.domain.Prefix
 
 object OrgarifSerializationPrefixUtils {
 

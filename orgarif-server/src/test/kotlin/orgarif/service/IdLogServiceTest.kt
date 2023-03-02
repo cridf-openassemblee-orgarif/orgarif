@@ -1,5 +1,8 @@
 package orgarif.service
 
+import org.junit.jupiter.api.Assertions
+import org.junit.jupiter.api.Assertions.assertEquals
+import org.junit.jupiter.api.Test
 import orgarif.domain.TestPrefixSecurityString
 import orgarif.domain.TestPrefixStringId
 import orgarif.domain.TestPrefixUuidId
@@ -8,9 +11,6 @@ import orgarif.domain.TestStringId
 import orgarif.domain.TestUuidId
 import orgarif.service.utils.random.DummyRandomService
 import orgarif.service.utils.random.IdLogService
-import org.junit.jupiter.api.Assertions
-import org.junit.jupiter.api.Assertions.assertEquals
-import org.junit.jupiter.api.Test
 
 internal class IdLogServiceTest {
 

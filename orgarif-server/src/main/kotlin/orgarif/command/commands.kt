@@ -1,11 +1,11 @@
 package orgarif.command
 
 import com.fasterxml.jackson.annotation.JsonTypeInfo
+import kttots.Shared
 import orgarif.domain.LoginResult
 import orgarif.domain.PlainStringPassword
 import orgarif.domain.RegisterResult
 import orgarif.domain.UserInfos
-import kttots.Shared
 
 @Shared
 @JsonTypeInfo(

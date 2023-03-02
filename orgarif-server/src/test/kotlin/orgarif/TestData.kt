@@ -1,11 +1,11 @@
 package orgarif
 
+import java.time.LocalDateTime
 import orgarif.config.ApplicationConstants
 import orgarif.domain.Language
 import orgarif.domain.Role
 import orgarif.domain.UserId
 import orgarif.repository.user.UserDao
-import java.time.LocalDateTime
 
 object TestData {
 

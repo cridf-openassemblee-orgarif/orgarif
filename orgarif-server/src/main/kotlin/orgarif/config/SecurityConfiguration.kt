@@ -1,6 +1,5 @@
 package orgarif.config
 
-import orgarif.controller.RemoteController
 import mu.KotlinLogging
 import org.springframework.beans.factory.annotation.Value
 import org.springframework.context.annotation.Bean
@@ -10,6 +9,7 @@ import org.springframework.security.config.annotation.web.builders.HttpSecurity
 import org.springframework.security.config.annotation.web.configuration.WebSecurityCustomizer
 import org.springframework.security.core.SpringSecurityCoreVersion
 import org.springframework.security.web.csrf.CookieCsrfTokenRepository
+import orgarif.controller.RemoteController
 
 @Configuration
 class SecurityConfiguration(

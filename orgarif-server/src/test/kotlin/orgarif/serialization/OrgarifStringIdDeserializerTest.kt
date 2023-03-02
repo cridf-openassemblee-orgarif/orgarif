@@ -1,9 +1,9 @@
 package orgarif.serialization
 
-import orgarif.domain.TestIds.sampleStringId
-import orgarif.domain.TestStringId
 import org.junit.jupiter.api.Assertions.assertEquals
 import org.junit.jupiter.api.Test
+import orgarif.domain.TestIds.sampleStringId
+import orgarif.domain.TestStringId
 
 internal class OrgarifStringIdDeserializerTest {
 

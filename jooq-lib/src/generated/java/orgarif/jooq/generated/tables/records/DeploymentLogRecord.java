@@ -4,8 +4,6 @@
 package orgarif.jooq.generated.tables.records;
 
 
-import orgarif.jooq.generated.tables.DeploymentLogTable;
-
 import java.time.Instant;
 import java.util.UUID;
 
@@ -17,6 +15,8 @@ import org.jooq.Record1;
 import org.jooq.Record5;
 import org.jooq.Row5;
 import org.jooq.impl.UpdatableRecordImpl;
+
+import orgarif.jooq.generated.tables.DeploymentLogTable;
 
 
 /**

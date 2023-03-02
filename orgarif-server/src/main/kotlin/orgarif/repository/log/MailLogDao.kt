@@ -1,5 +1,8 @@
 package orgarif.repository.log
 
+import java.time.Instant
+import org.jooq.DSLContext
+import org.springframework.stereotype.Repository
 import orgarif.domain.DeploymentLogId
 import orgarif.domain.MailLogId
 import orgarif.domain.MailReference
@@ -7,9 +10,6 @@ import orgarif.domain.UserId
 import orgarif.jooq.generated.Tables.MAIL_LOG
 import orgarif.jooq.generated.tables.records.MailLogRecord
 import orgarif.utils.toTypeId
-import java.time.Instant
-import org.jooq.DSLContext
-import org.springframework.stereotype.Repository
 
 @Repository
 class MailLogDao(private val jooq: DSLContext) {

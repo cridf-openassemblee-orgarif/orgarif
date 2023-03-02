@@ -6,6 +6,13 @@ import com.fasterxml.jackson.databind.SerializationFeature
 import com.fasterxml.jackson.databind.cfg.MapperConfig
 import com.fasterxml.jackson.databind.introspect.AnnotatedField
 import com.fasterxml.jackson.databind.introspect.AnnotatedMethod
+import java.util.Base64
+import mu.KotlinLogging
+import okhttp3.Credentials
+import org.springframework.beans.factory.annotation.Value
+import org.springframework.http.HttpMethod
+import org.springframework.http.HttpStatus
+import org.springframework.stereotype.Service
 import orgarif.domain.ApplicationEnvironment
 import orgarif.domain.DeploymentLogId
 import orgarif.domain.MailLogId
@@ -18,13 +25,6 @@ import orgarif.service.utils.ApplicationInstance
 import orgarif.service.utils.DateService
 import orgarif.service.utils.HttpService
 import orgarif.service.utils.random.RandomService
-import java.util.Base64
-import mu.KotlinLogging
-import okhttp3.Credentials
-import org.springframework.beans.factory.annotation.Value
-import org.springframework.http.HttpMethod
-import org.springframework.http.HttpStatus
-import org.springframework.stereotype.Service
 
 @Service
 class MailService(

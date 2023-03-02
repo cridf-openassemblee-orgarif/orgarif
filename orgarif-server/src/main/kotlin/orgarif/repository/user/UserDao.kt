@@ -1,5 +1,10 @@
 package orgarif.repository.user
 
+import java.time.Instant
+import java.util.stream.Stream
+import org.jooq.DSLContext
+import org.springframework.dao.DuplicateKeyException
+import org.springframework.stereotype.Repository
 import orgarif.domain.HashedPassword
 import orgarif.domain.Language
 import orgarif.domain.Role
@@ -9,11 +14,6 @@ import orgarif.jooq.generated.Keys.APP_USER_MAIL_KEY
 import orgarif.jooq.generated.Tables.APP_USER
 import orgarif.jooq.generated.tables.records.AppUserRecord
 import orgarif.utils.toTypeId
-import java.time.Instant
-import java.util.stream.Stream
-import org.jooq.DSLContext
-import org.springframework.dao.DuplicateKeyException
-import org.springframework.stereotype.Repository
 
 @Repository
 class UserDao(private val jooq: DSLContext) {

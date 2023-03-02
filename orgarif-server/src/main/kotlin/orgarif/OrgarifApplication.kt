@@ -1,12 +1,12 @@
 package orgarif
 
-import orgarif.domain.ApplicationEnvironment
-import orgarif.service.utils.ApplicationInstance
 import mu.KotlinLogging
 import org.springframework.boot.SpringApplication
 import org.springframework.boot.autoconfigure.SpringBootApplication
 import org.springframework.boot.autoconfigure.security.servlet.UserDetailsServiceAutoConfiguration
 import org.springframework.session.jdbc.config.annotation.web.http.EnableJdbcHttpSession
+import orgarif.domain.ApplicationEnvironment
+import orgarif.service.utils.ApplicationInstance
 
 @SpringBootApplication(exclude = [UserDetailsServiceAutoConfiguration::class])
 @EnableJdbcHttpSession

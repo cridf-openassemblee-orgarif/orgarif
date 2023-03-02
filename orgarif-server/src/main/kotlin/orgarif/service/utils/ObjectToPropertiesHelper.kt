@@ -1,11 +1,11 @@
 package orgarif.service.utils
 
-import orgarif.utils.OrgarifStringUtils
 import java.time.LocalDate
 import java.time.LocalTime
 import java.time.ZoneId
 import java.util.UUID
 import org.jetbrains.annotations.TestOnly
+import orgarif.utils.OrgarifStringUtils
 
 object ObjectToPropertiesHelper {
 
