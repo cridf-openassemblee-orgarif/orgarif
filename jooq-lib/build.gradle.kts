@@ -2,9 +2,9 @@ import org.jetbrains.kotlin.gradle.tasks.KotlinCompile
 
 group = "orgarif"
 
-plugins { kotlin("jvm") version "1.6.20" }
+plugins { kotlin("jvm") version "1.6.21" }
 
-val kotlinVersion = "1.6.20"
+val kotlinVersion = "1.6.21"
 
 kotlin {
     sourceSets.all {
@@ -41,9 +41,9 @@ dependencies {
 
     api("jooq-utils:jooq-utils:0.0.6-SNAPSHOT")
 
-    implementation("io.github.microutils:kotlin-logging:1.4.6")
-    implementation("ch.qos.logback:logback-classic:1.2.3")
-    implementation("org.yaml:snakeyaml:1.27")
+    implementation("io.github.microutils:kotlin-logging:2.1.21")
+    implementation("ch.qos.logback:logback-classic:1.2.11")
+    implementation("org.yaml:snakeyaml:1.30")
 
-    implementation("org.postgresql:postgresql:42.2.18")
+    implementation("org.postgresql:postgresql:42.3.4")
 }
