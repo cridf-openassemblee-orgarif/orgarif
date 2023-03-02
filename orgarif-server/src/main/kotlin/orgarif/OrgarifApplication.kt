@@ -2,6 +2,7 @@ package orgarif
 
 import orgarif.domain.ApplicationEnvironment
 import orgarif.service.ApplicationInstance
+import mu.KotlinLogging
 import org.springframework.boot.SpringApplication
 import org.springframework.boot.autoconfigure.SpringBootApplication
 import org.springframework.boot.autoconfigure.security.servlet.UserDetailsServiceAutoConfiguration
@@ -12,9 +13,14 @@ import org.springframework.session.jdbc.config.annotation.web.http.EnableJdbcHtt
 class OrgarifApplication {
 
     companion object {
+        val logger = KotlinLogging.logger {}
+
         @JvmStatic
         fun main(args: Array<String>) {
-            System.setProperty("dev-env", ApplicationEnvironment.dev.name)
+            ApplicationInstance.env =
+                System.getenv("env")?.let { ApplicationEnvironment.valueOf(it) }
+                    ?: ApplicationEnvironment.dev
+            logger.info { "Environment is [${ApplicationInstance.env}]" }
             System.setProperty(
                 "logging.config", "classpath:logback-webapp-${ApplicationInstance.env}.xml")
             val app = SpringApplication(OrgarifApplication::class.java)

@@ -21,14 +21,8 @@ class ApplicationInstance(
 ) {
 
     companion object {
-        val env =
-        // for deployed environments
-        (System.getenv("env")
-                // for dev env environment, is set by OrgarifApplication
-                ?: System.getProperty("dev-env"))
-                ?.let { ApplicationEnvironment.valueOf(it) }
-            // for test environment
-            ?: ApplicationEnvironment.test
+        // is reset by OrgarifApplication when env is different
+        var env = ApplicationEnvironment.test
     }
 
     init {
