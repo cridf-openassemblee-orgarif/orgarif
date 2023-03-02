@@ -21,7 +21,7 @@ import org.jooq.Field;
 import org.jooq.ForeignKey;
 import org.jooq.Name;
 import org.jooq.Record;
-import org.jooq.Row12;
+import org.jooq.Row13;
 import org.jooq.Schema;
 import org.jooq.Table;
 import org.jooq.TableField;
@@ -63,6 +63,11 @@ public class CommandLogTable extends TableImpl<CommandLogRecord> {
      * The column <code>public.command_log.user_id</code>.
      */
     public final TableField<CommandLogRecord, UUID> USER_ID = createField(DSL.name("user_id"), SQLDataType.UUID, this, "");
+
+    /**
+     * The column <code>public.command_log.affected_user_id</code>.
+     */
+    public final TableField<CommandLogRecord, UUID> AFFECTED_USER_ID = createField(DSL.name("affected_user_id"), SQLDataType.UUID, this, "");
 
     /**
      * The column <code>public.command_log.deployment_log_id</code>.
@@ -211,12 +216,12 @@ public class CommandLogTable extends TableImpl<CommandLogRecord> {
     }
 
     // -------------------------------------------------------------------------
-    // Row12 type methods
+    // Row13 type methods
     // -------------------------------------------------------------------------
 
     @Override
     @Nonnull
-    public Row12<UUID, UUID, UUID, String, String, String, UUID, String, String, String, Instant, Instant> fieldsRow() {
-        return (Row12) super.fieldsRow();
+    public Row13<UUID, UUID, UUID, UUID, String, String, String, UUID, String, String, String, Instant, Instant> fieldsRow() {
+        return (Row13) super.fieldsRow();
     }
 }
