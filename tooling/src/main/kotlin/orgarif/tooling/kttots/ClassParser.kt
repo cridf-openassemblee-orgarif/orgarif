@@ -57,7 +57,9 @@ object ClassParser {
                 return data
             }
         }
-        val d = t.declaration as? KSClassDeclaration ?: throw IllegalArgumentException()
+        val d =
+            t.declaration as? KSClassDeclaration
+                ?: throw IllegalArgumentException("${t.declaration}")
         val dependencies =
             d.declarations
                 //                .mapNotNull { (it as?
