@@ -23,7 +23,7 @@ import org.jooq.ForeignKey;
 import org.jooq.Index;
 import org.jooq.Name;
 import org.jooq.Record;
-import org.jooq.Row9;
+import org.jooq.Row8;
 import org.jooq.Schema;
 import org.jooq.Table;
 import org.jooq.TableField;
@@ -70,11 +70,6 @@ public class AppUserTable extends TableImpl<AppUserRecord> {
      * The column <code>public.app_user.password</code>.
      */
     public final TableField<AppUserRecord, String> PASSWORD = createField(DSL.name("password"), SQLDataType.VARCHAR(60).nullable(false), this, "");
-
-    /**
-     * The column <code>public.app_user.username</code>.
-     */
-    public final TableField<AppUserRecord, String> USERNAME = createField(DSL.name("username"), SQLDataType.VARCHAR(255), this, "");
 
     /**
      * The column <code>public.app_user.display_name</code>.
@@ -143,7 +138,7 @@ public class AppUserTable extends TableImpl<AppUserRecord> {
     @Override
     @Nonnull
     public List<Index> getIndexes() {
-        return Arrays.<Index>asList(Indexes.APP_USER_MAIL_IDX, Indexes.APP_USER_USERNAME_IDX);
+        return Arrays.<Index>asList(Indexes.APP_USER_MAIL_IDX);
     }
 
     @Override
@@ -155,7 +150,7 @@ public class AppUserTable extends TableImpl<AppUserRecord> {
     @Override
     @Nonnull
     public List<UniqueKey<AppUserRecord>> getKeys() {
-        return Arrays.<UniqueKey<AppUserRecord>>asList(Keys.APP_USER_PKEY, Keys.APP_USER_MAIL_KEY, Keys.APP_USER_USERNAME_KEY);
+        return Arrays.<UniqueKey<AppUserRecord>>asList(Keys.APP_USER_PKEY, Keys.APP_USER_MAIL_KEY);
     }
 
     @Override
@@ -189,12 +184,12 @@ public class AppUserTable extends TableImpl<AppUserRecord> {
     }
 
     // -------------------------------------------------------------------------
-    // Row9 type methods
+    // Row8 type methods
     // -------------------------------------------------------------------------
 
     @Override
     @Nonnull
-    public Row9<UUID, String, String, String, String, String, String[], Instant, Instant> fieldsRow() {
-        return (Row9) super.fieldsRow();
+    public Row8<UUID, String, String, String, String, String[], Instant, Instant> fieldsRow() {
+        return (Row8) super.fieldsRow();
     }
 }

@@ -41,7 +41,6 @@ public class Keys {
 
     public static final UniqueKey<AppUserRecord> APP_USER_MAIL_KEY = Internal.createUniqueKey(AppUserTable.APP_USER, DSL.name("app_user_mail_key"), new TableField[] { AppUserTable.APP_USER.MAIL }, true);
     public static final UniqueKey<AppUserRecord> APP_USER_PKEY = Internal.createUniqueKey(AppUserTable.APP_USER, DSL.name("app_user_pkey"), new TableField[] { AppUserTable.APP_USER.ID }, true);
-    public static final UniqueKey<AppUserRecord> APP_USER_USERNAME_KEY = Internal.createUniqueKey(AppUserTable.APP_USER, DSL.name("app_user_username_key"), new TableField[] { AppUserTable.APP_USER.USERNAME }, true);
     public static final UniqueKey<CommandLogRecord> COMMAND_LOG_PKEY = Internal.createUniqueKey(CommandLogTable.COMMAND_LOG, DSL.name("command_log_pkey"), new TableField[] { CommandLogTable.COMMAND_LOG.ID }, true);
     public static final UniqueKey<DeploymentLogRecord> DEPLOYMENT_LOG_PKEY = Internal.createUniqueKey(DeploymentLogTable.DEPLOYMENT_LOG, DSL.name("deployment_log_pkey"), new TableField[] { DeploymentLogTable.DEPLOYMENT_LOG.ID }, true);
     public static final UniqueKey<MagicLinkTokenRecord> MAGIC_LINK_TOKEN_PKEY = Internal.createUniqueKey(MagicLinkTokenTable.MAGIC_LINK_TOKEN, DSL.name("magic_link_token_pkey"), new TableField[] { MagicLinkTokenTable.MAGIC_LINK_TOKEN.TOKEN }, true);
