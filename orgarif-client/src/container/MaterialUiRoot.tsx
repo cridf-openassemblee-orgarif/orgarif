@@ -1,8 +1,7 @@
 /** @jsxImportSource @emotion/react */
-import { css, Global } from '@emotion/react';
+import { Global } from '@emotion/react';
 import * as React from 'react';
-import { PropsWithChildren, useEffect, useState } from 'react';
-import { cleanScrollBar } from '../common-classes';
+import { PropsWithChildren } from 'react';
 import { globalStyles } from '../styles/common-styles';
 import StylesProvider from '@mui/styles/StylesProvider';
 import {

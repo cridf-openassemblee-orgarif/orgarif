@@ -4,10 +4,10 @@ import * as React from 'react';
 import { css } from '@emotion/react';
 import { UserInfos } from '../../generated/domain/user';
 import { CopyContentWidget } from '../../component/base-component/CopyContentWidget';
-import { adminIdDisplayChars } from '../../generated/domain/admin';
 import { LoadingState } from '../../interfaces';
 import { colors } from '../../styles/vars';
 import { RouteLink } from '../../routing/RouteLink';
+import { adminIdDisplayChars } from '../../domain/admin';
 
 export const UsersManagementTable = (props: {
   users: UserInfos[];
