@@ -1,0 +1,26 @@
+# TODO[tmpl][config] no / in urls end ?
+# configuration validation
+app.url: http://devorgarif:8200
+#---------------------------------------------------------------------------
+insertInitialData: true
+#---------------------------------------------------------------------------
+server.port: 8200
+database:
+  host: localhost
+  port: 5432
+  name: orgarif
+  user: ${USER}
+  password:
+#---------------------------------------------------------------------------
+assets:
+  useBuildFiles: false
+  webpackDevPort: 3200
+  webpackDevHost: localhost
+#---------------------------------------------------------------------------
+mailjet:
+  api-key:
+  secret-key:
+#---------------------------------------------------------------------------
+remote-endpoint:
+  expected-secu: remote-secu
+#---------------------------------------------------------------------------
