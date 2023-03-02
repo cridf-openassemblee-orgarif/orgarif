@@ -133,17 +133,17 @@ public class CommandLogRecord extends UpdatableRecordImpl<CommandLogRecord> impl
     }
 
     /**
-     * Setter for <code>public.command_log.resulting_ids</code>.
+     * Setter for <code>public.command_log.ids_log</code>.
      */
-    public void setResultingIds(@Nullable String value) {
+    public void setIdsLog(@Nonnull String value) {
         set(7, value);
     }
 
     /**
-     * Getter for <code>public.command_log.resulting_ids</code>.
+     * Getter for <code>public.command_log.ids_log</code>.
      */
-    @Nullable
-    public String getResultingIds() {
+    @Nonnull
+    public String getIdsLog() {
         return (String) get(7);
     }
 
@@ -195,14 +195,14 @@ public class CommandLogRecord extends UpdatableRecordImpl<CommandLogRecord> impl
     /**
      * Setter for <code>public.command_log.end_date</code>.
      */
-    public void setEndDate(@Nullable Instant value) {
+    public void setEndDate(@Nonnull Instant value) {
         set(11, value);
     }
 
     /**
      * Getter for <code>public.command_log.end_date</code>.
      */
-    @Nullable
+    @Nonnull
     public Instant getEndDate() {
         return (Instant) get(11);
     }
@@ -278,7 +278,7 @@ public class CommandLogRecord extends UpdatableRecordImpl<CommandLogRecord> impl
     @Override
     @Nonnull
     public Field<String> field8() {
-        return CommandLogTable.COMMAND_LOG.RESULTING_IDS;
+        return CommandLogTable.COMMAND_LOG.IDS_LOG;
     }
 
     @Override
@@ -348,9 +348,9 @@ public class CommandLogRecord extends UpdatableRecordImpl<CommandLogRecord> impl
     }
 
     @Override
-    @Nullable
+    @Nonnull
     public String component8() {
-        return getResultingIds();
+        return getIdsLog();
     }
 
     @Override
@@ -372,7 +372,7 @@ public class CommandLogRecord extends UpdatableRecordImpl<CommandLogRecord> impl
     }
 
     @Override
-    @Nullable
+    @Nonnull
     public Instant component12() {
         return getEndDate();
     }
@@ -420,9 +420,9 @@ public class CommandLogRecord extends UpdatableRecordImpl<CommandLogRecord> impl
     }
 
     @Override
-    @Nullable
+    @Nonnull
     public String value8() {
-        return getResultingIds();
+        return getIdsLog();
     }
 
     @Override
@@ -444,7 +444,7 @@ public class CommandLogRecord extends UpdatableRecordImpl<CommandLogRecord> impl
     }
 
     @Override
-    @Nullable
+    @Nonnull
     public Instant value12() {
         return getEndDate();
     }
@@ -500,8 +500,8 @@ public class CommandLogRecord extends UpdatableRecordImpl<CommandLogRecord> impl
 
     @Override
     @Nonnull
-    public CommandLogRecord value8(@Nullable String value) {
-        setResultingIds(value);
+    public CommandLogRecord value8(@Nonnull String value) {
+        setIdsLog(value);
         return this;
     }
 
@@ -528,14 +528,14 @@ public class CommandLogRecord extends UpdatableRecordImpl<CommandLogRecord> impl
 
     @Override
     @Nonnull
-    public CommandLogRecord value12(@Nullable Instant value) {
+    public CommandLogRecord value12(@Nonnull Instant value) {
         setEndDate(value);
         return this;
     }
 
     @Override
     @Nonnull
-    public CommandLogRecord values(@Nonnull UUID value1, @Nullable UUID value2, @Nonnull UUID value3, @Nonnull String value4, @Nonnull String value5, @Nonnull String value6, @Nullable UUID value7, @Nullable String value8, @Nullable String value9, @Nullable String value10, @Nonnull Instant value11, @Nullable Instant value12) {
+    public CommandLogRecord values(@Nonnull UUID value1, @Nullable UUID value2, @Nonnull UUID value3, @Nonnull String value4, @Nonnull String value5, @Nonnull String value6, @Nullable UUID value7, @Nonnull String value8, @Nullable String value9, @Nullable String value10, @Nonnull Instant value11, @Nonnull Instant value12) {
         value1(value1);
         value2(value2);
         value3(value3);
@@ -565,7 +565,7 @@ public class CommandLogRecord extends UpdatableRecordImpl<CommandLogRecord> impl
     /**
      * Create a detached, initialised CommandLogRecord
      */
-    public CommandLogRecord(@Nonnull UUID id, @Nullable UUID userId, @Nonnull UUID deploymentLogId, @Nonnull String commandClass, @Nonnull String jsonCommand, @Nonnull String ip, @Nullable UUID userSessionId, @Nullable String resultingIds, @Nullable String jsonResult, @Nullable String exceptionStackTrace, @Nonnull Instant startDate, @Nullable Instant endDate) {
+    public CommandLogRecord(@Nonnull UUID id, @Nullable UUID userId, @Nonnull UUID deploymentLogId, @Nonnull String commandClass, @Nonnull String jsonCommand, @Nonnull String ip, @Nullable UUID userSessionId, @Nonnull String idsLog, @Nullable String jsonResult, @Nullable String exceptionStackTrace, @Nonnull Instant startDate, @Nonnull Instant endDate) {
         super(CommandLogTable.COMMAND_LOG);
 
         setId(id);
@@ -575,7 +575,7 @@ public class CommandLogRecord extends UpdatableRecordImpl<CommandLogRecord> impl
         setJsonCommand(jsonCommand);
         setIp(ip);
         setUserSessionId(userSessionId);
-        setResultingIds(resultingIds);
+        setIdsLog(idsLog);
         setJsonResult(jsonResult);
         setExceptionStackTrace(exceptionStackTrace);
         setStartDate(startDate);

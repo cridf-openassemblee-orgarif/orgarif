@@ -90,9 +90,9 @@ public class CommandLogTable extends TableImpl<CommandLogRecord> {
     public final TableField<CommandLogRecord, UUID> USER_SESSION_ID = createField(DSL.name("user_session_id"), SQLDataType.UUID, this, "");
 
     /**
-     * The column <code>public.command_log.resulting_ids</code>.
+     * The column <code>public.command_log.ids_log</code>.
      */
-    public final TableField<CommandLogRecord, String> RESULTING_IDS = createField(DSL.name("resulting_ids"), SQLDataType.CLOB, this, "");
+    public final TableField<CommandLogRecord, String> IDS_LOG = createField(DSL.name("ids_log"), SQLDataType.CLOB.nullable(false), this, "");
 
     /**
      * The column <code>public.command_log.json_result</code>.
@@ -112,7 +112,7 @@ public class CommandLogTable extends TableImpl<CommandLogRecord> {
     /**
      * The column <code>public.command_log.end_date</code>.
      */
-    public final TableField<CommandLogRecord, Instant> END_DATE = createField(DSL.name("end_date"), SQLDataType.TIMESTAMPWITHTIMEZONE(6), this, "", new TimestampWithTimeZoneToInstantConverter());
+    public final TableField<CommandLogRecord, Instant> END_DATE = createField(DSL.name("end_date"), SQLDataType.TIMESTAMPWITHTIMEZONE(6).nullable(false), this, "", new TimestampWithTimeZoneToInstantConverter());
 
     private CommandLogTable(Name alias, Table<CommandLogRecord> aliased) {
         this(alias, aliased, null);
@@ -168,32 +168,16 @@ public class CommandLogTable extends TableImpl<CommandLogRecord> {
     @Override
     @Nonnull
     public List<ForeignKey<CommandLogRecord, ?>> getReferences() {
-        return Arrays.<ForeignKey<CommandLogRecord, ?>>asList(Keys.COMMAND_LOG__COMMAND_LOG_USER_ID_FKEY, Keys.COMMAND_LOG__COMMAND_LOG_DEPLOYMENT_LOG_ID_FKEY, Keys.COMMAND_LOG__COMMAND_LOG_USER_SESSION_ID_FKEY);
+        return Arrays.<ForeignKey<CommandLogRecord, ?>>asList(Keys.COMMAND_LOG__COMMAND_LOG_DEPLOYMENT_LOG_ID_FKEY);
     }
 
-    private transient AppUserTable _appUser;
     private transient DeploymentLogTable _deploymentLog;
-    private transient UserSessionLogTable _userSessionLog;
-
-    public AppUserTable appUser() {
-        if (_appUser == null)
-            _appUser = new AppUserTable(this, Keys.COMMAND_LOG__COMMAND_LOG_USER_ID_FKEY);
-
-        return _appUser;
-    }
 
     public DeploymentLogTable deploymentLog() {
         if (_deploymentLog == null)
             _deploymentLog = new DeploymentLogTable(this, Keys.COMMAND_LOG__COMMAND_LOG_DEPLOYMENT_LOG_ID_FKEY);
 
         return _deploymentLog;
-    }
-
-    public UserSessionLogTable userSessionLog() {
-        if (_userSessionLog == null)
-            _userSessionLog = new UserSessionLogTable(this, Keys.COMMAND_LOG__COMMAND_LOG_USER_SESSION_ID_FKEY);
-
-        return _userSessionLog;
     }
 
     @Override
