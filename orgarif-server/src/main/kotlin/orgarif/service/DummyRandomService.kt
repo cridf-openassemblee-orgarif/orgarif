@@ -1,25 +1,18 @@
 package orgarif.service
 
-import com.google.common.io.CharStreams
 import orgarif.utils.OrgarifStringUtils
-import java.io.InputStreamReader
 import java.util.concurrent.atomic.AtomicInteger
 
 class DummyRandomService(idLogService: IdLogService? = null) : RandomService(idLogService) {
 
     val uuids by lazy {
-        CharStreams.toString(
-                InputStreamReader(
-                    javaClass.classLoader.getResourceAsStream("test-uuids"), Charsets.UTF_8))
-            .split("\n")
-            .map { OrgarifStringUtils.deserializeUuid(it) }
+        javaClass.classLoader.getResource("test-uuids").readText().split("\n").map {
+            OrgarifStringUtils.deserializeUuid(it)
+        }
     }
 
     val stringIds by lazy {
-        CharStreams.toString(
-                InputStreamReader(
-                    javaClass.classLoader.getResourceAsStream("test-string-ids"), Charsets.UTF_8))
-            .split("\n")
+        javaClass.classLoader.getResource("test-string-ids").readText().split("\n")
     }
 
     val uuidsCursor = AtomicInteger(0)
