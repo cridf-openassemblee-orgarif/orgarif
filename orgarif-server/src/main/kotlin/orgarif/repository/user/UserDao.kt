@@ -99,15 +99,15 @@ class UserDao(val jooq: DSLContext) {
             it.value1() > 0
         }
 
+    fun fetch(id: UserId): Record = requireNotNull(fetchOrNull(id)) { "$id" }
+
     fun fetchOrNull(id: UserId): Record? =
         jooq.selectFrom(APP_USER).where(APP_USER.ID.equal(id.rawId)).fetchOne()?.let(this::map)
 
-    fun fetch(id: UserId): Record = requireNotNull(fetchOrNull(id)) { "$id" }
+    fun fetchByMail(mail: String): Record = requireNotNull(fetchOrNullByMail(mail)) { mail }
 
     fun fetchOrNullByMail(mail: String): Record? =
         jooq.selectFrom(APP_USER).where(APP_USER.MAIL.equal(mail)).fetchOne()?.let(this::map)
-
-    fun fetchByMail(mail: String): Record = requireNotNull(fetchOrNullByMail(mail)) { mail }
 
     fun fetchPassword(id: UserId): HashedPassword =
         jooq
