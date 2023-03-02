@@ -20,6 +20,7 @@ import orgarif.tooling.kttots.ShellRunner
 import orgarif.tooling.kttots.prettyPrint
 import java.nio.file.Files
 import java.time.LocalDateTime
+import kotlin.io.path.absolutePathString
 import kttots.Shared
 
 // TODO[tmpl] use exceptions and catch them for debug report ?
@@ -74,76 +75,80 @@ class KtToTsSymbolProcessor(
         }
         //        val typesSelection = parsingResult.map { it.declaration }
         //        val importsMap = parsingResult.associateBy { it.declaration }
-        filesSelection
-            .map { ksFile ->
-                ksFile to parsingResult.filter { it.type.declaration in ksFile.declarations }
-            }
-            .forEach { (ksFile, parsed) ->
-                val file = configuration.generatedDirectory.resolve(clientFile(ksFile))
-                //                debugReport?.appendLine("$file")
-                file.parent.toFile().mkdirs()
-                // TODO[tmpl] an imports writer...
-                val imports = let {
-                    val dependenciesImportsMapped =
-                        parsed.flatMap {
-                            (it.type.declaration as KSClassDeclaration)
-                                .declarations
-                                .filterIsInstance<KSPropertyDeclaration>()
-                                .mapNotNull { ClassMapper.mapProperty(it.type) }
-                        }
-                    val dependenciesImports =
-                        parsed
-                            .flatMap { it.dependencies }
-                            .toSet()
-                            .mapNotNull { t -> t.resolve().declaration as? KSClassDeclaration }
-                            .mapNotNull { d ->
-                                d.containingFile?.let {
-                                    ClassMapper.ClassMapping(
-                                        d.simpleName.asString(), fileToPath(it, configuration))
-                                }
-                            }
-                    val classImports =
-                        parsed
-                            .mapNotNull { it.type.declaration as? KSClassDeclaration }
-                            .mapNotNull { ClassMapper.mapClass(it) }
-                    dependenciesImportsMapped + dependenciesImports + classImports
+        val resultFiles =
+            filesSelection
+                .map { ksFile ->
+                    ksFile to parsingResult.filter { it.type.declaration in ksFile.declarations }
                 }
-                val sb = StringBuilder()
-                val filePath = fileToPath(ksFile, configuration)
-                imports
-                    .groupBy { it.packagePath }
-                    .toList()
-                    .mapNotNull { p -> p.first?.let { it to p.second } }
-                    .filter { it.first != filePath }
-                    .sortedBy { it.first }
-                    .forEach { (file, imports) ->
-                        val i =
-                            imports
-                                .map {
-                                    val i = it.name.indexOf("<")
-                                    if (i != -1) {
-                                        it.name.substring(0, i)
-                                    } else {
-                                        it.name
+                .map { (ksFile, parsed) ->
+                    val file = configuration.generatedDirectory.resolve(clientFile(ksFile))
+                    //                debugReport?.appendLine("$file")
+                    file.parent.toFile().mkdirs()
+                    // TODO un imports writer...
+                    val imports = let {
+                        val dependenciesImportsMapped =
+                            parsed.flatMap {
+                                (it.type.declaration as KSClassDeclaration)
+                                    .declarations
+                                    .filterIsInstance<KSPropertyDeclaration>()
+                                    .mapNotNull { ClassMapper.mapProperty(it.type) }
+                            }
+                        val dependenciesImports =
+                            parsed
+                                .flatMap { it.dependencies }
+                                .toSet()
+                                .mapNotNull { t -> t.resolve().declaration as? KSClassDeclaration }
+                                .mapNotNull { d ->
+                                    d.containingFile?.let {
+                                        ClassMapper.ClassMapping(
+                                            d.simpleName.asString(), fileToPath(it, configuration))
                                     }
                                 }
-                                .distinct()
-                                .sorted()
-                                .joinToString(separator = ", ")
-                        val from = relativePath(file, filePath, configuration)
-                        sb.appendLine("import { $i } from '$from';")
+                        val classImports =
+                            parsed
+                                .mapNotNull { it.type.declaration as? KSClassDeclaration }
+                                .mapNotNull { ClassMapper.mapClass(it) }
+                        dependenciesImportsMapped + dependenciesImports + classImports
                     }
-                sb.appendLine("")
-                //                val keepDeclarations = parsed.map { it.type.declaration }
-                // [doc] restarting from file here (instead of using directly parsed) permits order
-                // conservation
-                ksFile.declarations
-                    .filterIsInstance<KSClassDeclaration>()
-                    .toList()
-                    .mapNotNull { parsed.firstOrNull { p -> p.type == it.asStarProjectedType() } }
-                    .forEach { sb.append(ClassWriter.toTs(it)) }
-                Files.write(file, sb.toString().toByteArray())
-            }
+                    val sb = StringBuilder()
+                    val filePath = fileToPath(ksFile, configuration)
+                    imports
+                        .groupBy { it.packagePath }
+                        .toList()
+                        .mapNotNull { p -> p.first?.let { it to p.second } }
+                        .filter { it.first != filePath }
+                        .sortedBy { it.first }
+                        .forEach { (file, imports) ->
+                            val i =
+                                imports
+                                    .map {
+                                        val i = it.name.indexOf("<")
+                                        if (i != -1) {
+                                            it.name.substring(0, i)
+                                        } else {
+                                            it.name
+                                        }
+                                    }
+                                    .distinct()
+                                    .sorted()
+                                    .joinToString(separator = ", ")
+                            val from = relativePath(file, filePath, configuration)
+                            sb.appendLine("import { $i } from '$from';")
+                        }
+                    sb.appendLine("")
+                    //                val keepDeclarations = parsed.map { it.type.declaration }
+                    // [doc] restarting from file here (instead of using directly parsed) permits
+                    // order conservation
+                    ksFile.declarations
+                        .filterIsInstance<KSClassDeclaration>()
+                        .toList()
+                        .mapNotNull {
+                            parsed.firstOrNull { p -> p.type == it.asStarProjectedType() }
+                        }
+                        .forEach { sb.append(ClassWriter.toTs(it)) }
+                    Files.write(file, sb.toString().toByteArray())
+                    file
+                }
         //        debugReport?.let {
         //            typesSelection.map { debugReport.appendLine("${it.qualifiedName?.asString()}")
         // }
@@ -162,7 +167,15 @@ class KtToTsSymbolProcessor(
             configuration.debugFile.writeText(debugReport.toString())
         }
         val unableToProcess = symbols.filterNot { it.validate() }.toList()
-        ShellRunner.run(configuration.clientDirectory, "yarn prettier")
+        resultFiles.forEach {
+            ShellRunner.run(
+                configuration.clientDirectory,
+                "node_modules/prettier/bin-prettier.js",
+                "--config",
+                "package.json",
+                "--write",
+                it.absolutePathString())
+        }
         return unableToProcess
     }
 
