@@ -3,8 +3,8 @@ package orgarif.serialization
 import com.fasterxml.jackson.annotation.JsonInclude
 import com.fasterxml.jackson.databind.ObjectMapper
 import com.fasterxml.jackson.databind.module.SimpleModule
-import com.fasterxml.jackson.module.kotlin.KotlinModule
 import com.fasterxml.jackson.module.kotlin.readValue
+import com.fasterxml.jackson.module.kotlin.registerKotlinModule
 import orgarif.domain.OrgarifId
 import orgarif.domain.OrgarifSecurityString
 import orgarif.domain.OrgarifStringId
@@ -75,7 +75,7 @@ object Serializer {
             }
 
         objectMapper.registerModule(module)
-        objectMapper.registerModule(KotlinModule())
+        objectMapper.registerKotlinModule()
         objectMapper.setSerializationInclusion(JsonInclude.Include.NON_NULL)
     }
 
