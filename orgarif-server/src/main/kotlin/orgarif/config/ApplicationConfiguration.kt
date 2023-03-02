@@ -9,7 +9,7 @@ import org.springframework.boot.autoconfigure.web.servlet.WebMvcRegistrations
 import org.springframework.boot.web.embedded.tomcat.TomcatServletWebServerFactory
 import org.springframework.context.annotation.Bean
 import org.springframework.context.annotation.Configuration
-import org.springframework.core.convert.support.GenericConversionService
+import org.springframework.context.support.ConversionServiceFactoryBean
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder
 import org.springframework.security.web.csrf.CookieCsrfTokenRepository
 import org.springframework.web.servlet.mvc.method.annotation.ExceptionHandlerExceptionResolver
@@ -54,13 +54,10 @@ class ApplicationConfiguration {
         return factory
     }
 
-    @Bean(name = ["springSessionConversionService"])
-    fun sessionConversionService(): GenericConversionService {
-        val conversionService = GenericConversionService()
-        conversionService.addConverter(
-            Any::class.java, ByteArray::class.java, JsonSerializingService())
-        conversionService.addConverter(
-            ByteArray::class.java, Any::class.java, JsonDeserializingService())
-        return conversionService
+    @Bean
+    fun conversionService(): ConversionServiceFactoryBean {
+        val bean = ConversionServiceFactoryBean()
+        bean.setConverters(setOf(JsonSerializingService(), JsonDeserializingService()))
+        return bean
     }
 }
