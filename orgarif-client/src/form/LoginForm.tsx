@@ -8,7 +8,7 @@ import { ControlledPasswordInput } from '../component/base-component/ControlledP
 import { LoadingStateButton } from '../component/base-component/LoadingButton';
 import { LoadingState } from '../interfaces';
 import { PlainStringPassword } from '../generated/domain/security';
-import { instanciateNominalString } from '../utils/nominal-class';
+import { asNominalString } from '../utils/nominal-class';
 
 export interface LoginFormInput {
   mail: string;
@@ -36,7 +36,7 @@ export const LoginForm = (props: {
         props
           .onSubmit({
             mail: input.mail,
-            password: instanciateNominalString(input.password)
+            password: asNominalString(input.password)
           })
           .then(() => setLoading('idle'))
           .catch(() => setLoading('error'));

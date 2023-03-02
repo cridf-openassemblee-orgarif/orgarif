@@ -8,7 +8,7 @@ import { ControlledTextInput } from '../component/base-component/ControlledTextI
 import { colors } from '../styles/vars';
 import { ControlledPasswordInput } from '../component/base-component/ControlledPasswordInput';
 import { PlainStringPassword } from '../generated/domain/security';
-import { instanciateNominalString } from '../utils/nominal-class';
+import { asNominalString } from '../utils/nominal-class';
 import { LoadingState } from '../interfaces';
 import { LoadingStateButton } from '../component/base-component/LoadingButton';
 import { IsMailAlreadyTakenQueryResponse } from '../generated/query/queries';
@@ -57,7 +57,7 @@ export const RegisterForm = (props: {
         props
           .onSubmit({
             mail: input.mail,
-            password: instanciateNominalString(input.password),
+            password: asNominalString(input.password),
             displayName: input.displayName
           })
           .then(() => setLoading('idle'))

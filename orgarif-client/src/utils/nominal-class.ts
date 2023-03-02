@@ -14,13 +14,11 @@ export abstract class TypeGuardedNominalNumber<T extends string> {
   private _typeGuard!: T;
 }
 
-export const instanciateNominalString = <T extends NominalString<any>>(
-  value: string
-) => value as unknown as T;
+export const asNominalString = <T extends NominalString<any>>(value: string) =>
+  value as unknown as T;
 
-export const instanciateNominalNumber = <T extends NominalNumber<any>>(
-  value: number
-) => value as unknown as T;
+export const asNominalNumber = <T extends NominalNumber<any>>(value: number) =>
+  value as unknown as T;
 
 export class Dict<K extends NominalItem | string, T> {
   private _typeGuardKey!: K;

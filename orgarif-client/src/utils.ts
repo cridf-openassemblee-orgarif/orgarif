@@ -1,5 +1,5 @@
 import { ClientUid } from './domain/client-ids';
-import { instanciateNominalString } from './utils/nominal-class';
+import { asNominalString } from './utils/nominal-class';
 
 export const extractEmotionCss = (props: any) =>
   'className' in props ? { className: props['className'] } : {};
@@ -10,7 +10,7 @@ export function assertUnreachable(x: never): never {
 
 let uniqueIdIndex = 0;
 export const clientUid = () =>
-  instanciateNominalString<ClientUid>('ClientUid_' + uniqueIdIndex++);
+  asNominalString<ClientUid>('ClientUid_' + uniqueIdIndex++);
 
 export const getCookie = (cookieName: string) => {
   const name = cookieName + '=';
