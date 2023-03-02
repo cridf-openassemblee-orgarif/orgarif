@@ -20,8 +20,8 @@ class SecurityConfiguration(
     val logger = KotlinLogging.logger {}
 
     companion object {
-        const val expectedSpringVersion = "5.3.18"
-        const val expectedSpringSecurityVersion = "5.6.2"
+        const val expectedSpringVersion = "5.3.21"
+        const val expectedSpringSecurityVersion = "5.7.2"
     }
 
     init {

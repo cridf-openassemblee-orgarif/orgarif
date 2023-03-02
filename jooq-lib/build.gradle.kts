@@ -2,9 +2,9 @@ import org.jetbrains.kotlin.gradle.tasks.KotlinCompile
 
 group = "orgarif"
 
-plugins { kotlin("jvm") version "1.6.21" }
+plugins { kotlin("jvm") version "1.7.0" }
 
-val kotlinVersion = "1.6.21"
+val kotlinVersion = "1.7.0"
 
 kotlin {
     sourceSets.all {
