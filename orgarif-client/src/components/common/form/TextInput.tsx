@@ -2,7 +2,7 @@
 import { TextField } from '@mui/material';
 import { makeStyles } from '@mui/styles';
 import * as React from 'react';
-import { ChangeEvent, FocusEvent, useState } from 'react';
+import { ChangeEvent, FocusEvent, useEffect, useState } from 'react';
 
 const useStyles = makeStyles(() => ({
   root: {
@@ -29,6 +29,9 @@ export const TextInput = (props: {
 }) => {
   const classes = useStyles();
   const [value, setValue] = useState(props.initialValue ?? ''); // ?? '' is needed for type=date
+  useEffect(() => {
+    setValue(props.initialValue ?? '');
+  }, [props.initialValue]);
   // label always on top (avec date sinon se superpose avec masque)
   const shrinkLabel = props.type === 'date';
   if (!props.multiline && props.multilineDefaultRows) {
