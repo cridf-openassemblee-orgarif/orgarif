@@ -31,6 +31,7 @@ export const EditDesignationListItem = (props: {
     <React.Fragment>
       <div
         css={css`
+          position: relative;
           min-height: 60px;
           height: 100%;
 
