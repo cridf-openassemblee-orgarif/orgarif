@@ -54,28 +54,6 @@ export const TableHeader = ({ onSearch }: TableHeaderProps) => {
       <SearchBar
         handleChange={searchedValue => onSearch(searchedValue.target.value)}
       />
-      <Box
-        css={css`
-          display: flex;
-          flex-direction: row;
-          margin: 0 auto;
-
-          @media (${breakpoint.TABLET}) {
-            margin: 0;
-            flex-direction: column;
-          }
-        `}
-      >
-        <Typography
-          variant="caption"
-          css={css`
-            margin-right: 5px;
-          `}
-        >
-          DERNIÈRE MISE À JOUR{' '}
-        </Typography>
-        <Typography variant="caption">25/01/2022</Typography>
-      </Box>
     </Box>
   );
 };
