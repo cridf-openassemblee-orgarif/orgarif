@@ -19,7 +19,7 @@ export const NavBar = () => {
   const location = useLocation();
 
   return (
-    <Box>
+    <>
       <AppBar>
         <Toolbar
           css={css`
@@ -43,6 +43,6 @@ export const NavBar = () => {
       <Header
         shrinked={!!userInfos || location.pathname !== '/' || isMobile()}
       />
-    </Box>
+    </>
   );
 };

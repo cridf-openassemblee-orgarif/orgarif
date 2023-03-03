@@ -124,13 +124,11 @@ const onSecteurChange = (
   secteurId: SecteurId | undefined
 ) => {
   setOrganisme({ ...organisme, secteurId });
-  appContext
-    .commandService()
-    .send({
-      objectType: 'UpdateOrganismeSecteurCommand',
-      id: organisme.id,
-      secteurId: secteurId
-    });
+  appContext.commandService().send({
+    objectType: 'UpdateOrganismeSecteurCommand',
+    id: organisme.id,
+    secteurId: secteurId
+  });
 };
 
 const onTypeStructureChange = (
@@ -139,13 +137,11 @@ const onTypeStructureChange = (
   typeStructureId: TypeStructureId | undefined
 ) => {
   setOrganisme({ ...organisme, typeStructureId });
-  appContext
-    .commandService()
-    .send({
-      objectType: 'UpdateOrganismeTypeStructureCommand',
-      id: organisme.id,
-      typeStructureId: typeStructureId
-    });
+  appContext.commandService().send({
+    objectType: 'UpdateOrganismeTypeStructureCommand',
+    id: organisme.id,
+    typeStructureId: typeStructureId
+  });
 };
 
 const onNombreRepresentantsChange = (
@@ -187,17 +183,15 @@ const addDesignation = async (
   startDate: LocalDate | undefined,
   instanceId: InstanceId | undefined
 ) => {
-  await appContext
-    .commandService()
-    .send({
-      objectType: 'AddDesignationCommand',
-      representantId,
-      type,
-      position,
-      startDate,
-      organismeId: organisme.id,
-      instanceId
-    });
+  await appContext.commandService().send({
+    objectType: 'AddDesignationCommand',
+    representantId,
+    type,
+    position,
+    startDate,
+    organismeId: organisme.id,
+    instanceId
+  });
   // TODO faire mieux ? (penser virer le async)
   // recup de juste repr tire la question des repr d'instance, c'est pas bcp mieux
   return updateOrganisme(organisme, setOrganisme);
@@ -240,15 +234,13 @@ const onNewLienDeliberation = async (
   deliberationId: DeliberationId,
   comment: string | undefined
 ): Promise<void> => {
-  await appContext
-    .commandService()
-    .send({
-      objectType: 'AddLienDeliberationCommand',
-      organismeId: organisme.id,
-      instanceId,
-      deliberationId,
-      comment
-    });
+  await appContext.commandService().send({
+    objectType: 'AddLienDeliberationCommand',
+    organismeId: organisme.id,
+    instanceId,
+    deliberationId,
+    comment
+  });
   // plus simple parce qu'on a pas le DeliberationDto pour reconstituer le LienDeliberationDto
   // TODO faire mieux ? (penser virer le async)
   return appContext
@@ -284,13 +276,11 @@ const onPresenceSuppleantsChange = async (
     });
     setOrganisme({ ...organisme, instances });
     // TODO return ?
-    appContext
-      .commandService()
-      .send({
-        objectType: 'UpdateInstancePresenceSuppleantsCommand',
-        instanceId,
-        presenceSuppleants
-      });
+    appContext.commandService().send({
+      objectType: 'UpdateInstancePresenceSuppleantsCommand',
+      instanceId,
+      presenceSuppleants
+    });
   }
 };
 
