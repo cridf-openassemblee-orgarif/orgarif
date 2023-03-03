@@ -29,16 +29,7 @@ export const BasicFiltersContainer = () => {
   const setShrinkSectionFilters = useSetRecoilState(
     state.filtersSectionShrinked
   );
-
   const [hideExtraFilters, setHideExtraFilters] = React.useState<boolean>(true);
-
-  const navigate = useNavigate();
-
-  const handleClick = () => {
-    setShrinkSectionFilters(true);
-    navigate('/organismes');
-  };
-
   return (
     <>
       <Box id="filters">
@@ -146,7 +137,7 @@ export const BasicFiltersContainer = () => {
           <Button
             variant="outlined"
             color="secondary"
-            onClick={handleClick}
+            onClick={() => setShrinkSectionFilters(true)}
             sx={{ borderRadius: '50px' }}
           >
             Afficher tous les organismes

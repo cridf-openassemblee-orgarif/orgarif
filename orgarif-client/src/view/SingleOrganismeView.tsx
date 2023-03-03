@@ -2,23 +2,22 @@
 import { LeftPanel } from '../components/containers/LeftPanel';
 import { MainContainer } from '../components/containers/MainContainer';
 import { RightPanel } from '../components/containers/RightPanel';
+import { RouteLink } from '../components/routing/RouteLink';
 import { EditOrganismeRoute } from '../components/routing/routes';
 import { OrganismeDto } from '../generated/domain/organisme';
 import { GetOrganismeQueryResponse } from '../generated/query/queries';
 import { appContext } from '../services/ApplicationContext';
 import { state } from '../state/state';
 import { css } from '@emotion/react';
-import { LinearProgress, Link, Slide, Typography } from '@mui/material';
+import { LinearProgress, Slide, Typography } from '@mui/material';
 import Box from '@mui/material/Box';
 import * as React from 'react';
-import { useNavigate } from 'react-router-dom';
 import { useRecoilValue } from 'recoil';
 
 export const SingleOrganismeView = (props: { route: EditOrganismeRoute }) => {
   const [organisme, setOrganisme] = React.useState<OrganismeDto>();
   const [error, setError] = React.useState(false);
   const isOpened = useRecoilValue(state.openedDrawer);
-  const navigate = useNavigate();
 
   React.useEffect(() => {
     appContext
@@ -92,14 +91,9 @@ export const SingleOrganismeView = (props: { route: EditOrganismeRoute }) => {
             Une erreur est survenue - Impossible de récupérer les informations
             de l'organisme
           </Typography>
-          <Link
-            onClick={() => navigate('/organismes')}
-            variant="body1"
-            component="button"
-            color="secondary"
-          >
+          <RouteLink route={{ name: 'OrganismesRoute' }}>
             Revenir à la liste des organismes
-          </Link>
+          </RouteLink>
         </Box>
       )}
     </MainContainer>

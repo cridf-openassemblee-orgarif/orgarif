@@ -5,7 +5,9 @@ import { Share } from '../../icon/collection/Share';
 import { state } from '../../state/state';
 import { Informations } from '../root/singleOrganisme/Informations';
 import { Representants } from '../root/singleOrganisme/Representants';
+import { RouteLink } from '../routing/RouteLink';
 import { colors } from '../styles/colors';
+import { EditOrganismeLink } from './TableContainer';
 import { css } from '@emotion/react';
 import ChevronLeftRoundedIcon from '@mui/icons-material/ChevronLeftRounded';
 import {
@@ -19,15 +21,37 @@ import {
   Typography
 } from '@mui/material';
 import Box from '@mui/material/Box';
-import { styled } from '@mui/material/styles';
 import { TransitionProps } from '@mui/material/transitions';
 import copy from 'copy-to-clipboard';
 import * as React from 'react';
-import { useNavigate } from 'react-router-dom';
-import { useRecoilValue, useSetRecoilState } from 'recoil';
+import { useRecoilValue } from 'recoil';
 
+
+const OrganismesLink = (props: any) => (
+  <RouteLink route={{ name: 'OrganismesRoute' }} {...props} />
+);
+
+const classes = {
+  chip: css`
+    background: ${colors.white};
+
+    &.MuiChip-outlined {
+      border: none;
+      padding: 0 0.5em;
+      box-shadow: 0px 0.5em 1em 0px rgba(191, 191, 191, 0.3);
+      cursor: pointer;
+
+      &:hover {
+        background-color: ${colors.white};
+        box-shadow: 0px 0.5em 1em 0px rgba(191, 191, 191, 0.6);
+        transition: all 0.3s ease-in-out;
+      }
+    }
+
+    color: ${colors.dark};
+  `
+};
 export const LeftPanel = (props: { organisme: OrganismeDto }) => {
-  const setIsOpened = useSetRecoilState(state.openedDrawer);
   const userInfos = useRecoilValue(state.userInfos);
   const [openSnackbar, setOpenSnackbar] = React.useState<{
     open: boolean;
@@ -41,14 +65,7 @@ export const LeftPanel = (props: { organisme: OrganismeDto }) => {
     Transition: Slide
   });
 
-  const navigate = useNavigate();
-
   const organisme = props.organisme;
-
-  const handleBackButtonClick = () => {
-    setIsOpened(isOpened => !isOpened);
-    navigate('/organismes');
-  };
 
   const handleClose = (
     event: React.SyntheticEvent | Event,
@@ -91,30 +108,32 @@ export const LeftPanel = (props: { organisme: OrganismeDto }) => {
           margin-bottom: 1em;
         `}
       >
-        <StyledChip
+        <Chip
           label="RETOUR"
           variant="outlined"
           icon={<ChevronLeftRoundedIcon />}
           size="small"
-          onClick={handleBackButtonClick}
+          component={OrganismesLink}
+          css={classes.chip}
         />
-        <StyledChip
+        <Chip
           label="ENVOYER LA FICHE"
           variant="outlined"
           icon={<Share size={20} />}
           size="small"
-          onClick={() => {
-            copyToClipboard();
-          }}
+          onClick={() => copyToClipboard()}
+          css={classes.chip}
         />
         {userInfos && (
           <Tooltip title="Éditer la fiche de l'organisme" arrow>
-            <StyledChip
+            <Chip
               variant="outlined"
               icon={<Edit size={20} />}
               size="small"
-              onClick={() => navigate(`/organisme/${organisme.id}/edit`)}
+              component={EditOrganismeLink}
+              {...{ organismeId: organisme.id }}
               css={css`
+                ${classes.chip};
                 padding-right: 0 !important;
                 padding-left: 0.8em !important;
               `}
@@ -273,18 +292,3 @@ export const LeftPanel = (props: { organisme: OrganismeDto }) => {
     </Box>
   );
 };
-
-const StyledChip = styled(Chip)(({ theme }) => ({
-  backgroundColor: colors.white,
-  '&.MuiChip-outlined': {
-    border: 'none',
-    padding: '0 0.5em',
-    boxShadow: '0px .5em 1em 0px rgba(191, 191, 191, 0.3)',
-    '&:hover': {
-      backgroundColor: colors.white,
-      boxShadow: '0px .5em 1em 0px rgba(191, 191, 191, 0.6)',
-      transition: 'all .3s ease-in-out'
-    }
-  },
-  color: colors.dark
-}));

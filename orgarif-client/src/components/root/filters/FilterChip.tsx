@@ -8,7 +8,6 @@ import styled from '@emotion/styled';
 import { Chip } from '@mui/material';
 import Tooltip from '@mui/material/Tooltip';
 import * as React from 'react';
-import { useNavigate } from 'react-router-dom';
 import { useRecoilState } from 'recoil';
 
 interface FilterChipProps {
@@ -25,7 +24,6 @@ export const FilterChip = ({
   isSticky
 }: FilterChipProps) => {
   const [activeFilters, setActiveFilters] = useRecoilState(state.activeFilters);
-  const navigate = useNavigate();
 
   const handleFilterClick = (id: CategoryId) => {
     const currentActiveFilters = [...activeFilters];
@@ -36,7 +34,6 @@ export const FilterChip = ({
       : setActiveFilters((prevList: Category[]) => [
           ...prevList.filter((f: Category) => f.id !== id)
         ]);
-    navigate('/organismes');
   };
 
   const chipColor = activeFilters.some((f: Category) => f.id === filter.id)

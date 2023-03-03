@@ -100,11 +100,6 @@ export const state = {
   userInfos: atom({
     key: 'userInfos',
     default: bootstrapData.userInfos
-  }),
-  userSelection: atom({
-    key: 'userOrganismesSelection',
-    default: [] as string[],
-    effects_UNSTABLE: [persistAtom]
   })
 };
 

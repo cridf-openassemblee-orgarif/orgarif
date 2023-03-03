@@ -2,24 +2,23 @@
 import {
   DepartementId,
   NatureJuridiqueId,
+  OrganismeId,
   SecteurId,
   TypeStructureId
 } from '../../generated/domain/ids';
 import { OrganismeListDto } from '../../generated/domain/organisme';
 import { ListOrganismesQueryResponse } from '../../generated/query/queries';
 import { Edit } from '../../icon/collection/Edit';
-import { Share } from '../../icon/collection/Share';
 import { appContext } from '../../services/ApplicationContext';
 import { state } from '../../state/state';
+import { asNominalString, getValue } from '../../utils/nominal-class';
 import { isMobile } from '../../utils/viewport-utils';
 import { TableHeader } from '../root/table/TableHeader';
+import { RouteLink } from '../routing/RouteLink';
 import * as breakpoint from '../styles/breakpoints';
 import { colors } from '../styles/colors';
 import { css } from '@emotion/react';
-import { DeleteForever } from '@mui/icons-material';
-import StarIcon from '@mui/icons-material/Star';
-import StarOutline from '@mui/icons-material/StarOutline';
-import { Checkbox, Chip, Tooltip } from '@mui/material';
+import { Chip, Tooltip } from '@mui/material';
 import LinearProgress from '@mui/material/LinearProgress';
 import { styled } from '@mui/material/styles';
 import { Box } from '@mui/system';
@@ -27,13 +26,11 @@ import {
   DataGrid,
   frFR,
   GridColDef,
-  GridColumnHeaderParams,
   GridRenderCellParams,
   GridRowId,
   GridRowsProp
 } from '@mui/x-data-grid';
 import * as React from 'react';
-import { useNavigate } from 'react-router-dom';
 import { useRecoilState, useRecoilValue, useSetRecoilState } from 'recoil';
 
 export const TableContainer = () => {
@@ -42,15 +39,12 @@ export const TableContainer = () => {
   const [loading, setLoading] = React.useState<boolean>(true);
   const [activeFilters] = useRecoilState(state.activeFilters);
   const enableScrollOnTable = useRecoilValue(state.enableScrollOnTable);
-  const userInfos = useRecoilValue(state.userInfos);
   const [organismes, setOrganismes] = React.useState<OrganismeListDto[]>();
   const [departements] = useRecoilState(state.departements);
   const [typeStructures] = useRecoilState(state.typeStructures);
   const [secteurs] = useRecoilState(state.secteurs);
   const [natureJuridiques] = useRecoilState(state.natureJuridiques);
   const setCountRows = useSetRecoilState(state.countRows);
-
-  const navigate = useNavigate();
 
   // TODO:  search feature request to server
   const requestSearch = (searchedValue: string) => {
@@ -89,11 +83,6 @@ export const TableContainer = () => {
       }
       setLoading(false);
     }
-  };
-
-  const handleRowClick = (id: GridRowId) => {
-    setIsOpened(true);
-    navigate(`../organisme/${id}`, { replace: false });
   };
 
   React.useEffect(() => {
@@ -172,13 +161,12 @@ export const TableContainer = () => {
         >
           <DataGrid
             rows={rows}
-            columns={userInfos ? columnsEdit : columns}
+            columns={columns}
             disableColumnMenu
             disableDensitySelector
             rowHeight={38}
             localeText={frFR.components.MuiDataGrid.defaultProps.localeText}
             onCellClick={details => {
-              handleRowClick(details.id);
               setIsOpened(!isOpened);
             }}
             initialState={{
@@ -205,66 +193,21 @@ export const TableContainer = () => {
   );
 };
 
+const CountChip = () => {
+  const count = useRecoilValue(state.countRows);
+  return <HeaderChip label={`${count} ORGANISMES`} />;
+};
 const columns: GridColDef[] = [
   {
     field: 'nom',
     headerName: `Organismes`,
     minWidth: 250,
     flex: 1,
-    renderHeader: (params: GridColumnHeaderParams) => (
-      <HeaderChip label={`${TotalOrganismes().props.children} ORGANISMES`} />
-    )
-  },
-  {
-    field: 'département',
-    headerName: 'Département',
-    minWidth: 180,
-    flex: 0.35,
-    renderHeader: (params: GridColumnHeaderParams) => (
-      <HeaderChip size="small" label="DÉPARTEMENT" />
-    ),
-    renderCell: (params: GridRenderCellParams) =>
-      DepartementRow(params.row.departementId)
-  },
-  {
-    field: 'typeStructureId',
-    headerName: 'Type de Structure',
-    minWidth: 160,
-    flex: 0.4,
-    renderHeader: (params: GridColumnHeaderParams) => (
-      <HeaderChip size="small" label="TYPE DE STRUCTURE" />
-    ),
+    renderHeader: () => <CountChip />,
     renderCell: (params: GridRenderCellParams) => (
-      <span style={{ overflow: 'hidden', textOverflow: 'ellipsis' }}>
-        {TypeStructureRow(params.formattedValue)}
-      </span>
-    )
-  },
-  {
-    field: 'selection',
-    headerName: 'Envoyer la sélection',
-    minWidth: 220,
-    maxWidth: 220,
-    flex: 0.4,
-    align: 'center',
-    sortable: false,
-    renderHeader: (params: GridColumnHeaderParams) => <HeaderChipWithState />,
-    renderCell: (params: GridRenderCellParams) => (
-      <>
-        <SelectRow id={params.id} />
-      </>
-    )
-  }
-];
-
-const columnsEdit: GridColDef[] = [
-  {
-    field: 'nom',
-    headerName: `Organismes`,
-    minWidth: 250,
-    flex: 1,
-    renderHeader: (params: GridColumnHeaderParams) => (
-      <HeaderChip label={`${TotalOrganismes().props.children} ORGANISMES`} />
+      <RouteLink route={{ name: 'SingleOrganismeRoute', id: params.row.id }}>
+        {params.formattedValue}
+      </RouteLink>
     )
   },
   {
@@ -272,107 +215,54 @@ const columnsEdit: GridColDef[] = [
     headerName: 'Département',
     minWidth: 150,
     flex: 0.3,
-    renderHeader: (params: GridColumnHeaderParams) => (
-      <HeaderChip size="small" label="DÉPARTEMENT" />
-    ),
-    renderCell: (params: GridRenderCellParams) =>
-      DepartementRow(params.row.departementId)
+    renderHeader: () => <HeaderChip size="small" label="DÉPARTEMENT" />,
+    renderCell: (params: GridRenderCellParams) => (
+      <DepartementRow id={params.row.departementId} />
+    )
   },
   {
     field: 'typeStructureId',
     headerName: 'Type de Structure',
     minWidth: 180,
     flex: 0.4,
-    renderHeader: (params: GridColumnHeaderParams) => (
-      <HeaderChip size="small" label="TYPE DE STRUCTURE" />
-    ),
+    renderHeader: () => <HeaderChip size="small" label="TYPE DE STRUCTURE" />,
     renderCell: (params: GridRenderCellParams) => (
-      <span style={{ overflow: 'hidden', textOverflow: 'ellipsis' }}>
-        {TypeStructureRow(params.formattedValue)}
-      </span>
+      <TypeStructureRow id={params.row.typeStructureId} />
     )
   },
   {
-    field: 'selection',
-    headerName: 'Envoyer la sélection',
-    minWidth: 220,
-    maxWidth: 220,
+    field: 'action',
+    headerName: '',
+    minWidth: 120,
+    maxWidth: 120,
     flex: 0.4,
     align: 'center',
     sortable: false,
-    renderHeader: (params: GridColumnHeaderParams) => <HeaderChipWithState />,
-    renderCell: (params: GridRenderCellParams) => (
-      <>
-        <SelectRow id={params.id} />
-        <EditRow id={params.id} />
-      </>
-    )
+    renderHeader: () => <></>,
+    renderCell: (params: GridRenderCellParams) => <EditRow id={params.id} />
   }
 ];
 
-const TotalOrganismes = () => {
-  const countRows = useRecoilValue(state.countRows);
-
-  return <>{countRows}</>;
-};
-
-const TypeStructureRow = (id: TypeStructureId) => {
-  const [typeStructures] = useRecoilState(state.typeStructures);
-  const typeStructureLibelle = typeStructures.find(
-    typeStructure => typeStructure.id === id
-  );
-
-  return <>{typeStructureLibelle?.libelle ?? '-'}</>;
-};
-
-const DepartementRow = (id: DepartementId) => {
-  const [departements] = useRecoilState(state.departements);
-  const departementLibelle = departements.find(
-    departement => departement.id === id
-  );
-
+const TypeStructureRow = (props: { id: TypeStructureId | undefined }) => {
+  const t = useRecoilValue(state.typeStructuresById);
+  if (!props.id) {
+    return <></>;
+  }
+  const typeStructure = getValue(t, props.id);
   return (
-    <>{`${departementLibelle?.libelle ?? ''} - ${
-      departementLibelle?.code ?? ''
-    }`}</>
+    <span style={{ overflow: 'hidden', textOverflow: 'ellipsis' }}>
+      {typeStructure?.libelle ?? '-'}
+    </span>
   );
 };
 
-const SelectRow = (props: { id: GridRowId }) => {
-  const [userSelection, setUserSelection] = useRecoilState(state.userSelection);
-
-  const handleClick = () => {
-    const currentSelection = [...userSelection];
-    const indexSelection = currentSelection.indexOf(props.id);
-
-    indexSelection === -1
-      ? setUserSelection((prevList: GridRowId[]) => [...prevList, props.id])
-      : setUserSelection((prevList: GridRowId[]) => [
-          ...prevList.filter((row: GridRowId) => row !== props.id)
-        ]);
-  };
-
-  return (
-    <Tooltip
-      title={
-        userSelection.includes(props.id)
-          ? 'Retirer de la sélection'
-          : 'Ajouter à la sélection'
-      }
-      arrow
-      placement="left-start"
-    >
-      <Checkbox
-        icon={<UnSelectedIcon />}
-        checkedIcon={<SelectedIcon />}
-        checked={userSelection.includes(props.id)}
-        onClick={event => {
-          event.stopPropagation();
-          handleClick();
-        }}
-      />
-    </Tooltip>
-  );
+const DepartementRow = (props: { id: DepartementId | undefined }) => {
+  const d = useRecoilValue(state.departementsById);
+  if (!props.id) {
+    return <></>;
+  }
+  const departement = getValue(d, props.id);
+  return <>{`${departement?.libelle ?? ''} - ${departement?.code ?? ''}`}</>;
 };
 
 const HeaderChip = styled(Chip)(({ theme }) => ({
@@ -383,77 +273,18 @@ const HeaderChip = styled(Chip)(({ theme }) => ({
   cursor: 'pointer'
 }));
 
-// TODO - missing logic to store/send to user selection
-const HeaderChipWithState = () => {
-  const [userSelection, setUserSelection] = useRecoilState(state.userSelection);
-
-  return (
-    <>
-      <HeaderChip
-        size="small"
-        label="ENVOYER LA SÉLECTION"
-        icon={<Share size={20} />}
-        onClick={() => console.log(userSelection)}
-        css={css`
-          justify-self: center;
-
-          :hover {
-            background-color: ${colors.errorRed};
-            color: ${colors.white};
-
-            svg {
-              fill: ${colors.white};
-            }
-          }
-        `}
-      />
-      {userSelection.length > 0 && (
-        <Tooltip title="Effacer la sélection">
-          <DeleteForever
-            fontSize="small"
-            css={css`
-              position: absolute;
-              right: -4px;
-            `}
-            onClick={() => setUserSelection([])}
-          />
-        </Tooltip>
-      )}
-    </>
-  );
-};
-
-const SelectedIcon = () => (
-  <Chip
-    label={<StarIcon />}
-    size="small"
-    css={css`
-      height: 2em;
-      padding-top: 5px;
-      padding-bottom: 1px;
-      background-color: ${colors.errorRed};
-      border: 1px solid white;
-
-      & svg {
-        fill: white;
-      }
-    `}
-  />
-);
-const UnSelectedIcon = () => (
-  <Chip
-    label={<StarOutline />}
-    size="small"
-    css={css`
-      height: 2em;
-      padding-top: 5px;
-      background-color: white;
-      border: 1px solid white;
-    `}
+export const EditOrganismeLink = (props: { organismeId: OrganismeId }) => (
+  <RouteLink
+    route={{ name: 'EditOrganismeRoute', id: props.organismeId }}
+    {...props}
   />
 );
 const EditRow = (props: { id: GridRowId }) => {
-  const navigate = useNavigate();
+  const userInfos = useRecoilValue(state.userInfos);
+  const organismeId = asNominalString<OrganismeId>(props.id as string);
+  if (!userInfos) {
+    return <></>;
+  }
   return (
     <Tooltip
       title="Éditer la fiche de l'organisme"
@@ -468,17 +299,10 @@ const EditRow = (props: { id: GridRowId }) => {
           background-color: white;
           margin-left: 4em;
           border: 1px solid white;
-
-          :hover {
-            background-color: ${colors.errorRed};
-            color: white;
-            border: 1px solid white;
-          }
+          cursor: pointer;
         `}
-        onClick={e => {
-          e.stopPropagation();
-          navigate(`/organisme/${props.id}/edit`);
-        }}
+        component={EditOrganismeLink}
+        {...{ organismeId }}
       />
     </Tooltip>
   );
@@ -600,8 +424,7 @@ const overrideStyleGrid = {
   },
   '& .MuiDataGrid-row:hover': {
     backgroundColor: `${colors.errorRed} !important`,
-    color: `${colors.white} !important`,
-    cursor: 'pointer'
+    color: `${colors.white} !important`
   },
   '& .MuiDataGrid-virtualScroller::-webkit-scrollbar': {
     display: 'none !important' /* hide scrollbar */
