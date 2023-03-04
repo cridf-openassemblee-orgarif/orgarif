@@ -37,12 +37,12 @@ const classes = {
     &.MuiChip-outlined {
       border: none;
       padding: 0 0.5em;
-      box-shadow: 0px 0.5em 1em 0px rgba(191, 191, 191, 0.3);
+      box-shadow: 0 0.5em 1em 0 rgba(191, 191, 191, 0.3);
       cursor: pointer;
 
       &:hover {
         background-color: ${colors.white};
-        box-shadow: 0px 0.5em 1em 0px rgba(191, 191, 191, 0.6);
+        box-shadow: 0 0.5em 1em 0 rgba(191, 191, 191, 0.6);
         transition: all 0.3s ease-in-out;
       }
     }

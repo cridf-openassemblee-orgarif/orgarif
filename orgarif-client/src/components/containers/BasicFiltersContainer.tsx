@@ -38,7 +38,7 @@ export const BasicFiltersContainer = () => {
                 margin-left: 2em;
                 padding: 0 2rem;
                 margin-top: 5px;
-                box-shadow: 0px 5px 10px 0px rgba(191, 191, 191, 0.4);
+                box-shadow: 0 5px 10px 0 rgba(191, 191, 191, 0.4);
               `}
               component="button"
               onClick={() => setHideExtraFilters(!hideExtraFilters)}

@@ -31,7 +31,7 @@ export const DeleteFiltersDialog = () => {
           align-self: center;
           margin-top: 12px;
           padding: 0 1rem;
-          box-shadow: 0px 5px 10px 0px rgba(191, 191, 191, 0.4);
+          box-shadow: 0 5px 10px 0 rgba(191, 191, 191, 0.4);
         `}
         component="button"
         onClick={() => setOpenDialog(true)}

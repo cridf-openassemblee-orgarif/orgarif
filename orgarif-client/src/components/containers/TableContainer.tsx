@@ -109,16 +109,16 @@ export const TableContainer = () => {
         css={css`
           height: calc(100vh - 72px);
           width: 100%;
-          padding: 0px 8px;
+          padding: 0 8px;
 
           @media (${breakpoint.TABLET}) {
-            padding: 0px 24px;
+            padding: 0 24px;
           }
 
           @media (${breakpoint.LAPTOP}) {
             // TODO ces nombres...
             height: calc(100vh - 209px);
-            padding: 0px 48px;
+            padding: 0 48px;
           }
         `}
       >

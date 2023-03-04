@@ -43,7 +43,7 @@ const Search = styled('div')(({ theme }) => ({
   },
   maxWidth: '80vw',
   display: 'flex',
-  margin: '5px 0px',
+  margin: '5px 0',
   justifyContent: 'space-between',
   ':hover': {
     backgroundColor: colors.mainBackground

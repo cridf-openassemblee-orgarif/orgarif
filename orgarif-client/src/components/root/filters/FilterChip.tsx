@@ -46,7 +46,7 @@ const StyledChip = styled(Chip)(({ theme }) => ({
   padding: '8px',
   fontSize: 'clamp(16px, 1vw, 2rem)',
   transition: 'font-size 0.4s ease-in-out',
-  boxShadow: '0px 5px 10px 0px rgba(191, 191, 191, 0.4)',
+  boxShadow: '0px 5px 10px 0 rgba(191, 191, 191, 0.4)',
   '&.MuiChip-colorPrimary': {
     backgroundColor: `${colors.white}`,
     '&:hover': {

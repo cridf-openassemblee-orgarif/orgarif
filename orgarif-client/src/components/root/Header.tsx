@@ -39,7 +39,7 @@ const baseHeaderStyle = css`
 
   @media (${breakpoint.LAPTOP}) {
     padding-top: 60px;
-    padding-bottom: 0px;
+    padding-bottom: 0;
   }
 `;
 
