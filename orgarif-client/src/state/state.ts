@@ -1,7 +1,7 @@
-import { CategoryId } from '../domain/category';
 import {
   Departement,
   NatureJuridique,
+  OrganismeCategories,
   Secteur,
   TypeStructure
 } from '../generated/domain/bootstrap-data';
@@ -11,41 +11,62 @@ import {
   SecteurId,
   TypeStructureId
 } from '../generated/domain/ids';
-import { compareByString } from '../utils';
+import {
+  extractFilters,
+  Filters,
+  sortCategory,
+  sortDepartements
+} from '../utils/filters';
 import { dict, Dict } from '../utils/nominal-class';
 import { atom, selector } from 'recoil';
-import { recoilPersist } from 'recoil-persist';
-
-const { persistAtom } = recoilPersist();
 
 // FIXME typer pour lisibilité du state partagé...
 export const state = {
-  activeFilters: atom({
-    key: 'activeFilters',
-    default: [] as Filters[],
-    effects_UNSTABLE: [persistAtom]
-  }),
-  countRows: atom({
+  countRows: atom<number>({
     key: 'count-number-of-rows',
     default: 0
   }),
-  departements: atom({
+  categories: atom<OrganismeCategories>({
     key: 'departements',
-    default: [...bootstrapData.categories.departements].sort(
-      compareByString(i => i.code)
-    )
+    default: {
+      departements: sortDepartements([
+        ...bootstrapData.categories.departements
+      ]),
+      natureJuridiques: sortCategory([
+        ...bootstrapData.categories.natureJuridiques
+      ]),
+      secteurs: sortCategory([...bootstrapData.categories.secteurs]),
+      typeStructures: sortCategory([...bootstrapData.categories.typeStructures])
+    }
   }),
   departementsById: selector({
     key: 'departementsById',
     get: ({ get }): Dict<DepartementId, Departement> =>
-      dict(get(state.departements).map(n => [n.id, n]))
+      dict(get(state.categories).departements.map(n => [n.id, n]))
   }),
-  enableScrollOnTable: atom({
+  enableScrollOnTable: atom<boolean>({
     key: 'enable-scroll-on-table',
     default: false
   }),
+  filters: atom<Filters>({
+    key: 'filters',
+    default: extractFilters(),
+    effects: [
+      e => {
+        e.onSet(newFilters => {
+          const params = new URLSearchParams();
+          Object.entries(newFilters)
+            .filter(e => e[1].length !== 0)
+            .forEach(e => params.set(e[0].replace('Id', ''), e[1]));
+          window.location.hash = params.toString();
+          // problem : provoques a refresh
+          // if (hash === '') { window.location.href = window.location.href.split('#')[0]; }
+        });
+      }
+    ]
+  }),
   filtersExpandedAccordion: atom({
-    key: 'filters-expanded-Accordion',
+    key: 'filters-expanded-accordion',
     default: true
   }),
   filtersSectionShrinked: atom({
@@ -56,16 +77,10 @@ export const state = {
     key: 'header-shrinked',
     default: false
   }),
-  natureJuridiques: atom({
-    key: 'natureJuridiques',
-    default: [...bootstrapData.categories.natureJuridiques].sort(
-      compareByString(i => i.libelle)
-    )
-  }),
   natureJuridiquesById: selector({
     key: 'natureJuridiquesById',
     get: ({ get }): Dict<NatureJuridiqueId, NatureJuridique> =>
-      dict(get(state.natureJuridiques).map(n => [n.id, n]))
+      dict(get(state.categories).natureJuridiques.map(n => [n.id, n]))
   }),
   openedDrawer: atom({
     key: 'drawer',
@@ -75,37 +90,18 @@ export const state = {
     key: 'organismeCategories',
     default: bootstrapData.categories
   }),
-  secteurs: atom({
-    key: 'secteurs',
-    default: [...bootstrapData.categories.secteurs].sort(
-      compareByString(i => i.libelle)
-    )
-  }),
   secteursById: selector({
     key: 'secteursById',
     get: ({ get }): Dict<SecteurId, Secteur> =>
-      dict(get(state.secteurs).map(s => [s.id, s]))
-  }),
-  typeStructures: atom({
-    key: 'typeStructures',
-    default: [...bootstrapData.categories.typeStructures].sort(
-      compareByString(i => i.libelle)
-    )
+      dict(get(state.categories).secteurs.map(s => [s.id, s]))
   }),
   typeStructuresById: selector({
     key: 'typeStructuresById',
     get: ({ get }): Dict<TypeStructureId, TypeStructure> =>
-      dict(get(state.typeStructures).map(t => [t.id, t]))
+      dict(get(state.categories).typeStructures.map(t => [t.id, t]))
   }),
   userInfos: atom({
     key: 'userInfos',
     default: bootstrapData.userInfos
   })
 };
-
-// TODO check
-// Temp types
-export interface Filters {
-  id: CategoryId;
-  libelle: string;
-}

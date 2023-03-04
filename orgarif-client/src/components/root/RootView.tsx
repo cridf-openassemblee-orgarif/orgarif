@@ -9,11 +9,11 @@ import { RouteLink } from '../routing/RouteLink';
 import { css } from '@emotion/react';
 import { Slide } from '@mui/material';
 import * as React from 'react';
-import { useRecoilState } from 'recoil';
+import { useRecoilState, useRecoilValue } from 'recoil';
 
 export const RootView = () => {
   const [userInfos] = useRecoilState(state.userInfos);
-  const [secteurs] = useRecoilState(state.secteurs);
+  const categories = useRecoilValue(state.categories);
 
   return (
     <MainContainer>
@@ -66,7 +66,7 @@ export const RootView = () => {
             `}
           >
             <h3>Par secteur</h3>
-            {secteurs.map(s => (
+            {categories.secteurs.map(s => (
               <div key={s.id}>
                 <RouteLink
                   route={{

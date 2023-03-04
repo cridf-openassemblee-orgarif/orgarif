@@ -1,5 +1,4 @@
 /** @jsxImportSource @emotion/react */
-import { Departement } from '../../generated/domain/bootstrap-data';
 import { state } from '../../state/state';
 import { FilterSection } from '../root/filters/FilterSection';
 import * as breakpoint from '../styles/breakpoints';
@@ -10,22 +9,9 @@ import UnfoldMoreIcon from '@mui/icons-material/UnfoldMore';
 import { Box, Button, Fade, Stack } from '@mui/material';
 import Collapse from '@mui/material/Collapse';
 import * as React from 'react';
-import { useNavigate } from 'react-router-dom';
-import { useRecoilState, useSetRecoilState } from 'recoil';
-
-export const extractLabelAndTooltip = (label: string): [string, string?] => {
-  // Regex to check if libelle contains parentheses and if yes,
-  // extract the value between parentheses to display the abbreviation.
-  const regExp = /\((.*?)\)/;
-  const r = regExp.exec(label);
-  return r && r.length > 1 ? [r[1], label] : [label, undefined];
-};
+import { useSetRecoilState } from 'recoil';
 
 export const BasicFiltersContainer = () => {
-  const [departements] = useRecoilState(state.departements);
-  const [secteurs] = useRecoilState(state.secteurs);
-  const [natureJuridiques] = useRecoilState(state.natureJuridiques);
-  const [typeStructures] = useRecoilState(state.typeStructures);
   const setShrinkSectionFilters = useSetRecoilState(
     state.filtersSectionShrinked
   );
@@ -33,32 +19,12 @@ export const BasicFiltersContainer = () => {
   return (
     <>
       <Box id="filters">
-        <FilterSection
-          filters={departements}
-          categoryLabel={'départements'}
-          filterLabelAndTooltip={f => [
-            `${f.libelle} - ${(f as unknown as Departement).code}`
-          ]}
-          sticky={false}
-        />
-        <FilterSection
-          filters={secteurs}
-          categoryLabel="secteurs"
-          filterLabelAndTooltip={c => extractLabelAndTooltip(c.libelle)}
-          sticky={false}
-        />
+        <FilterSection category={'departements'} sticky={false} />
+        <FilterSection category={'secteurs'} sticky={false} />
         <Collapse in={hideExtraFilters} timeout={{ enter: 1400, exit: 0 }}>
           <Stack direction="row">
-            <FilterSection
-              categoryLabel="nature juridique"
-              filterLabelAndTooltip={c => extractLabelAndTooltip(c.libelle)}
-              standalone={true}
-            />
-            <FilterSection
-              categoryLabel="type de structure"
-              filterLabelAndTooltip={c => extractLabelAndTooltip(c.libelle)}
-              standalone={true}
-            />
+            <FilterSection category={'natureJuridiques'} standalone={true} />
+            <FilterSection category={'typeStructures'} standalone={true} />
             <Button
               variant="contained"
               color="inherit"
@@ -94,18 +60,8 @@ export const BasicFiltersContainer = () => {
         </Collapse>
         {!hideExtraFilters && (
           <Collapse in={!hideExtraFilters}>
-            <FilterSection
-              filters={natureJuridiques}
-              categoryLabel="nature juridique"
-              filterLabelAndTooltip={c => extractLabelAndTooltip(c.libelle)}
-              sticky={false}
-            />
-            <FilterSection
-              filters={typeStructures}
-              categoryLabel="type structure"
-              filterLabelAndTooltip={c => extractLabelAndTooltip(c.libelle)}
-              sticky={false}
-            />
+            <FilterSection category={'natureJuridiques'} sticky={false} />
+            <FilterSection category={'typeStructures'} sticky={false} />
           </Collapse>
         )}
       </Box>

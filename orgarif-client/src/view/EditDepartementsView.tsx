@@ -8,14 +8,14 @@ import { DepartementId } from '../generated/domain/ids';
 import { ItemStatus } from '../generated/domain/organisme';
 import { appContext } from '../services/ApplicationContext';
 import { state } from '../state/state';
-import { compareByString } from '../utils';
+import { sortDepartements } from '../utils/filters';
 import { NominalString } from '../utils/nominal-class';
 import { css } from '@emotion/react';
 import * as React from 'react';
 import { useRecoilState } from 'recoil';
 
 export const EditDepartementsView = () => {
-  const [departements, setDepartements] = useRecoilState(state.departements);
+  const [categories, setCategories] = useRecoilState(state.categories);
   const addDepartement = (libelle: string, code: string) =>
     appContext
       .commandService()
@@ -31,11 +31,13 @@ export const EditDepartementsView = () => {
           code,
           status: 'live'
         };
-        setDepartements(
-          [...departements, newDepartement].sort(
-            compareByString(i => i.libelle)
-          )
-        );
+        setCategories({
+          ...categories,
+          departements: sortDepartements([
+            ...categories.departements,
+            newDepartement
+          ])
+        });
       });
   const updateDepartement = (
     departementId: DepartementId,
@@ -50,22 +52,28 @@ export const EditDepartementsView = () => {
         libelle,
         code
       })
-      .then(() => {
-        setDepartements(
-          departements
-            .map(s => (s.id === departementId ? { ...s, libelle, code } : s))
-            .sort(compareByString(i => i.code))
-        );
-      });
+      .then(() =>
+        setCategories({
+          ...categories,
+          departements: sortDepartements(
+            categories.departements.map(s =>
+              s.id === departementId ? { ...s, libelle, code } : s
+            )
+          )
+        })
+      );
   const onUpdateStatus = (id: DepartementId, status: ItemStatus) =>
     appContext
       .commandService()
       .send({ objectType: 'UpdateDepartementStatusCommand', id, status })
-      .then(() => {
-        setDepartements(
-          departements.map(s => (s.id === id ? { ...s, status } : s))
-        );
-      });
+      .then(() =>
+        setCategories({
+          ...categories,
+          departements: categories.departements.map(s =>
+            s.id === id ? { ...s, status } : s
+          )
+        })
+      );
   return (
     <MainContainer>
       <div
@@ -77,7 +85,7 @@ export const EditDepartementsView = () => {
         <h1>Édition des départements</h1>
         <EditCategoriesComponent
           kind={'departement'}
-          categories={departements}
+          categories={categories.departements}
           hasCode={true}
           onAdd={(libelle: string, code?: string) => {
             if (!code) {

@@ -7,13 +7,13 @@ import { SecteurId } from '../generated/domain/ids';
 import { ItemStatus } from '../generated/domain/organisme';
 import { appContext } from '../services/ApplicationContext';
 import { state } from '../state/state';
-import { compareByString } from '../utils';
+import { sortCategory } from '../utils/filters';
 import { css } from '@emotion/react';
 import * as React from 'react';
 import { useRecoilState } from 'recoil';
 
 export const EditSecteursView = () => {
-  const [secteurs, setSecteurs] = useRecoilState(state.secteurs);
+  const [categories, setCategories] = useRecoilState(state.categories);
   const addSecteur = (libelle: string) =>
     appContext
       .commandService()
@@ -23,9 +23,10 @@ export const EditSecteursView = () => {
       })
       .then(r => {
         const newSecteur: Secteur = { id: r.id, libelle, status: 'live' };
-        setSecteurs(
-          [...secteurs, newSecteur].sort(compareByString(i => i.libelle))
-        );
+        setCategories({
+          ...categories,
+          secteurs: sortCategory([...categories.secteurs, newSecteur])
+        });
       });
   const updateSecteur = (secteurId: SecteurId, libelle: string) =>
     appContext
@@ -35,13 +36,16 @@ export const EditSecteursView = () => {
         id: secteurId,
         libelle
       })
-      .then(() => {
-        setSecteurs(
-          secteurs
-            .map(s => (s.id === secteurId ? { ...s, libelle } : s))
-            .sort(compareByString(i => i.libelle))
-        );
-      });
+      .then(() =>
+        setCategories({
+          ...categories,
+          secteurs: sortCategory(
+            categories.secteurs.map(s =>
+              s.id === secteurId ? { ...s, libelle } : s
+            )
+          )
+        })
+      );
   const onUpdateStatus = (id: SecteurId, status: ItemStatus) =>
     appContext
       .commandService()
@@ -50,9 +54,14 @@ export const EditSecteursView = () => {
         id,
         status
       })
-      .then(() => {
-        setSecteurs(secteurs.map(s => (s.id === id ? { ...s, status } : s)));
-      });
+      .then(() =>
+        setCategories({
+          ...categories,
+          secteurs: categories.secteurs.map(s =>
+            s.id === id ? { ...s, status } : s
+          )
+        })
+      );
   return (
     <MainContainer>
       <div
@@ -64,7 +73,7 @@ export const EditSecteursView = () => {
         <h1>Édition des secteurs</h1>
         <EditCategoriesComponent
           kind={'secteur'}
-          categories={secteurs}
+          categories={categories.secteurs}
           hasCode={false}
           onAdd={addSecteur}
           onChange={updateSecteur}

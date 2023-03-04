@@ -7,15 +7,13 @@ import { TypeStructureId } from '../generated/domain/ids';
 import { ItemStatus } from '../generated/domain/organisme';
 import { appContext } from '../services/ApplicationContext';
 import { state } from '../state/state';
-import { compareByString } from '../utils';
+import { sortCategory } from '../utils/filters';
 import { css } from '@emotion/react';
 import * as React from 'react';
 import { useRecoilState } from 'recoil';
 
 export const EditTypeStructuresView = () => {
-  const [typeStructures, setTypeStructures] = useRecoilState(
-    state.typeStructures
-  );
+  const [categories, setCategories] = useRecoilState(state.categories);
   const addTypeStructure = (libelle: string) =>
     appContext
       .commandService()
@@ -29,11 +27,13 @@ export const EditTypeStructuresView = () => {
           libelle,
           status: 'live'
         };
-        setTypeStructures(
-          [...typeStructures, newTypeStructure].sort(
-            compareByString(i => i.libelle)
-          )
-        );
+        setCategories({
+          ...categories,
+          typeStructures: sortCategory([
+            ...categories.typeStructures,
+            newTypeStructure
+          ])
+        });
       });
   const updateTypeStructure = (
     typeStructureId: TypeStructureId,
@@ -46,22 +46,28 @@ export const EditTypeStructuresView = () => {
         id: typeStructureId,
         libelle
       })
-      .then(() => {
-        setTypeStructures(
-          typeStructures
-            .map(s => (s.id === typeStructureId ? { ...s, libelle } : s))
-            .sort(compareByString(i => i.libelle))
-        );
-      });
+      .then(() =>
+        setCategories({
+          ...categories,
+          typeStructures: sortCategory(
+            categories.typeStructures.map(s =>
+              s.id === typeStructureId ? { ...s, libelle } : s
+            )
+          )
+        })
+      );
   const onUpdateStatus = (id: TypeStructureId, status: ItemStatus) =>
     appContext
       .commandService()
       .send({ objectType: 'UpdateTypeStructureStatusCommand', id, status })
-      .then(() => {
-        setTypeStructures(
-          typeStructures.map(s => (s.id === id ? { ...s, status } : s))
-        );
-      });
+      .then(() =>
+        setCategories({
+          ...categories,
+          typeStructures: categories.typeStructures.map(s =>
+            s.id === id ? { ...s, status } : s
+          )
+        })
+      );
   return (
     <MainContainer>
       <div
@@ -73,7 +79,7 @@ export const EditTypeStructuresView = () => {
         <h1>Édition des type de structure</h1>
         <EditCategoriesComponent
           kind={'typeStructure'}
-          categories={typeStructures}
+          categories={categories.typeStructures}
           hasCode={false}
           onAdd={addTypeStructure}
           onChange={updateTypeStructure}

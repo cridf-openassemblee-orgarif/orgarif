@@ -9,10 +9,12 @@ interface HeaderFiltersChipProps {
 export const HeaderFiltersChip = ({ label }: HeaderFiltersChipProps) => {
   return (
     <Chip
-      label={label.toUpperCase()}
+      label={label}
       variant="outlined"
       size="small"
       css={css`
+        // TODO test remove
+        text-transform: uppercase;
         font-size: clamp(12px, 0.5vw, 1rem);
         margin-top: 8px;
         padding: 0.2em 0.4em;

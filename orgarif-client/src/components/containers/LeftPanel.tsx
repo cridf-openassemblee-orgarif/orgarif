@@ -26,7 +26,6 @@ import copy from 'copy-to-clipboard';
 import * as React from 'react';
 import { useRecoilValue } from 'recoil';
 
-
 const OrganismesLink = (props: any) => (
   <RouteLink route={{ name: 'OrganismesRoute' }} {...props} />
 );

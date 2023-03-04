@@ -7,15 +7,13 @@ import { NatureJuridiqueId } from '../generated/domain/ids';
 import { ItemStatus } from '../generated/domain/organisme';
 import { appContext } from '../services/ApplicationContext';
 import { state } from '../state/state';
-import { compareByString } from '../utils';
+import { sortCategory } from '../utils/filters';
 import { css } from '@emotion/react';
 import * as React from 'react';
 import { useRecoilState } from 'recoil';
 
 export const EditNatureJuridiquesView = () => {
-  const [natureJuridiques, setNatureJuridiques] = useRecoilState(
-    state.natureJuridiques
-  );
+  const [categories, setCategories] = useRecoilState(state.categories);
   const addNatureJuridique = (libelle: string) =>
     appContext
       .commandService()
@@ -29,11 +27,13 @@ export const EditNatureJuridiquesView = () => {
           libelle,
           status: 'live'
         };
-        setNatureJuridiques(
-          [...natureJuridiques, newNatureJuridique].sort(
-            compareByString(i => i.libelle)
-          )
-        );
+        setCategories({
+          ...categories,
+          natureJuridiques: sortCategory([
+            ...categories.natureJuridiques,
+            newNatureJuridique
+          ])
+        });
       });
   const updateNatureJuridique = (
     natureJuridiqueId: NatureJuridiqueId,
@@ -46,22 +46,28 @@ export const EditNatureJuridiquesView = () => {
         id: natureJuridiqueId,
         libelle
       })
-      .then(() => {
-        setNatureJuridiques(
-          natureJuridiques
-            .map(s => (s.id === natureJuridiqueId ? { ...s, libelle } : s))
-            .sort(compareByString(i => i.libelle))
-        );
-      });
+      .then(() =>
+        setCategories({
+          ...categories,
+          natureJuridiques: sortCategory(
+            categories.natureJuridiques.map(s =>
+              s.id === natureJuridiqueId ? { ...s, libelle } : s
+            )
+          )
+        })
+      );
   const onUpdateStatus = (id: NatureJuridiqueId, status: ItemStatus) =>
     appContext
       .commandService()
       .send({ objectType: 'UpdateNatureJuridiqueStatusCommand', id, status })
-      .then(() => {
-        setNatureJuridiques(
-          natureJuridiques.map(s => (s.id === id ? { ...s, status } : s))
-        );
-      });
+      .then(() =>
+        setCategories({
+          ...categories,
+          natureJuridiques: categories.natureJuridiques.map(s =>
+            s.id === id ? { ...s, status } : s
+          )
+        })
+      );
   return (
     <MainContainer>
       <div
@@ -73,7 +79,7 @@ export const EditNatureJuridiquesView = () => {
         <h1>Édition des natures juridiques</h1>
         <EditCategoriesComponent
           kind={'natureJuridique'}
-          categories={natureJuridiques}
+          categories={categories.natureJuridiques}
           hasCode={false}
           onAdd={addNatureJuridique}
           onChange={updateNatureJuridique}

@@ -5,6 +5,7 @@ import { Localite } from '../../../icon/collection/Localite';
 import { NatureJuridique } from '../../../icon/collection/NatureJuridique';
 import { Secteur } from '../../../icon/collection/Secteur';
 import { state } from '../../../state/state';
+import { get } from '../../../utils/nominal-class';
 import { isMobile } from '../../../utils/viewport-utils';
 import { css } from '@emotion/react';
 import { Chip, Typography } from '@mui/material';
@@ -12,17 +13,23 @@ import Box from '@mui/material/Box';
 import Grid from '@mui/material/Grid';
 import Paper from '@mui/material/Paper';
 import { experimentalStyled as styled } from '@mui/material/styles';
-import { useRecoilState } from 'recoil';
+import { useRecoilValue } from 'recoil';
 
 // TODO: add missing props localité once available in state
 export const Informations = (props: { data: OrganismeDto }) => {
-  const [departements] = useRecoilState(state.departements);
-  const [secteurs] = useRecoilState(state.secteurs);
-  const [natureJuridiques] = useRecoilState(state.natureJuridiques);
+  const departementsById = useRecoilValue(state.departementsById);
+  const secteursById = useRecoilValue(state.secteursById);
+  const natureJuridiquesById = useRecoilValue(state.natureJuridiquesById);
 
-  const dept = departements.find(d => d.id === props.data.departementId);
-  const sect = secteurs.find(s => s.id === props.data.secteurId);
-  const nJ = natureJuridiques.find(n => n.id === props.data.natureJuridiqueId);
+  const dept = props.data.departementId
+    ? get(departementsById, props.data.departementId)
+    : undefined;
+  const sect = props.data.secteurId
+    ? get(secteursById, props.data.secteurId)
+    : undefined;
+  const nJ = props.data.natureJuridiqueId
+    ? get(natureJuridiquesById, props.data.natureJuridiqueId)
+    : undefined;
 
   return (
     <Box

@@ -1,6 +1,5 @@
 /** @jsxImportSource @emotion/react */
 import { Category, CategoryId } from '../../../domain/category';
-import { state } from '../../../state/state';
 import * as breakpoints from '../../styles/breakpoints';
 import { colors } from '../../styles/colors';
 import { css } from '@emotion/react';
@@ -8,50 +7,28 @@ import styled from '@emotion/styled';
 import { Chip } from '@mui/material';
 import Tooltip from '@mui/material/Tooltip';
 import * as React from 'react';
-import { useRecoilState } from 'recoil';
 
-interface FilterChipProps {
+export const FilterChip = (props: {
   filter: Category;
   label: string;
   tooltipLabel?: string;
   isSticky: boolean | undefined;
-}
-
-export const FilterChip = ({
-  filter,
-  label,
-  tooltipLabel,
-  isSticky
-}: FilterChipProps) => {
-  const [activeFilters, setActiveFilters] = useRecoilState(state.activeFilters);
-
-  const handleFilterClick = (id: CategoryId) => {
-    const currentActiveFilters = [...activeFilters];
-    const indexFilter = currentActiveFilters.map(f => f.id).indexOf(id);
-
-    indexFilter === -1
-      ? setActiveFilters((prevList: Category[]) => [...prevList, filter])
-      : setActiveFilters((prevList: Category[]) => [
-          ...prevList.filter((f: Category) => f.id !== id)
-        ]);
-  };
-
-  const chipColor = activeFilters.some((f: Category) => f.id === filter.id)
-    ? 'error'
-    : 'primary';
-
+  active: boolean;
+  onClick: (id: CategoryId) => void;
+}) => {
+  const chipColor = props.active ? 'error' : 'primary';
   const chip = (
     <StyledChip
-      key={filter.libelle}
+      key={props.filter.libelle}
       color={chipColor}
-      label={label}
-      onClick={() => handleFilterClick(filter.id)}
-      css={isSticky ? skrinkedChips : ''}
+      label={props.label}
+      onClick={() => props.onClick(props.filter.id)}
+      css={props.isSticky ? skrinkedChips : ''}
     />
   );
-  if (tooltipLabel) {
+  if (props.tooltipLabel) {
     return (
-      <Tooltip title={tooltipLabel} arrow>
+      <Tooltip title={props.tooltipLabel} arrow>
         {chip}
       </Tooltip>
     );

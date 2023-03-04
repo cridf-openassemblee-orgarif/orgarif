@@ -1,9 +1,7 @@
 /** @jsxImportSource @emotion/react */
 import {
   DepartementId,
-  NatureJuridiqueId,
   OrganismeId,
-  SecteurId,
   TypeStructureId
 } from '../../generated/domain/ids';
 import { OrganismeListDto } from '../../generated/domain/organisme';
@@ -37,14 +35,10 @@ export const TableContainer = () => {
   const [rows, setRows] = React.useState<GridRowsProp>([]);
   const [isOpened, setIsOpened] = useRecoilState(state.openedDrawer);
   const [loading, setLoading] = React.useState<boolean>(true);
-  const [activeFilters] = useRecoilState(state.activeFilters);
   const enableScrollOnTable = useRecoilValue(state.enableScrollOnTable);
   const [organismes, setOrganismes] = React.useState<OrganismeListDto[]>();
-  const [departements] = useRecoilState(state.departements);
-  const [typeStructures] = useRecoilState(state.typeStructures);
-  const [secteurs] = useRecoilState(state.secteurs);
-  const [natureJuridiques] = useRecoilState(state.natureJuridiques);
   const setCountRows = useSetRecoilState(state.countRows);
+  const filters = useRecoilValue(state.filters);
 
   // TODO:  search feature request to server
   const requestSearch = (searchedValue: string) => {
@@ -91,19 +85,7 @@ export const TableContainer = () => {
       .queryService()
       .send<ListOrganismesQueryResponse>({
         objectType: 'ListOrganismesQuery',
-        // TODO pas comme ça
-        departementIds: activeFilters
-          .map((f: any) => departements.find(el => el.id === f.id)?.id)
-          .filter(Boolean) as DepartementId[],
-        natureJuridiqueIds: activeFilters
-          .map((f: any) => natureJuridiques.find(el => el.id === f.id)?.id)
-          .filter(Boolean) as NatureJuridiqueId[],
-        secteurIds: activeFilters
-          .map((f: any) => secteurs.find(el => el.id === f.id)?.id)
-          .filter(Boolean) as SecteurId[],
-        typeStructureIds: activeFilters
-          .map((f: any) => typeStructures.find(el => el.id === f.id)?.id)
-          .filter(Boolean) as TypeStructureId[],
+        ...filters,
         // TODO
         page: 0,
         // TODO
@@ -117,15 +99,7 @@ export const TableContainer = () => {
         setCountRows(r.organismes.length);
         setLoading(false);
       });
-  }, [
-    activeFilters,
-    departements,
-    natureJuridiques,
-    secteurs,
-    typeStructures,
-    setCountRows,
-    setLoading
-  ]);
+  }, [filters, setCountRows]);
 
   return (
     <>

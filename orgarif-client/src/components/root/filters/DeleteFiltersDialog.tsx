@@ -1,5 +1,6 @@
 /** @jsxImportSource @emotion/react */
 import { state } from '../../../state/state';
+import { emptyFilters } from '../../../utils/filters';
 import { colors } from '../../styles/colors';
 import { css } from '@emotion/react';
 import { DeleteOutlined } from '@mui/icons-material';
@@ -13,7 +14,7 @@ import * as React from 'react';
 import { useSetRecoilState } from 'recoil';
 
 export const DeleteFiltersDialog = () => {
-  const setActiveFilters = useSetRecoilState(state.activeFilters);
+  const setFilters = useSetRecoilState(state.filters);
   const [openDialog, setOpenDialog] = React.useState(false);
 
   return (
@@ -59,9 +60,10 @@ export const DeleteFiltersDialog = () => {
           id="alert-dialog-title"
           css={css`
             padding: 48px 12px 8px;
+            text-transform: uppercase;
           `}
         >
-          EFFACER LES FILTRES
+          Effacer les filtres
         </DialogTitle>
         <DialogContent
           css={css`
@@ -86,7 +88,7 @@ export const DeleteFiltersDialog = () => {
             variant="contained"
             color="secondary"
             onClick={() => {
-              setActiveFilters([]);
+              setFilters(emptyFilters);
               setOpenDialog(false);
             }}
           >

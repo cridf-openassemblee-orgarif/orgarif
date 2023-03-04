@@ -58,7 +58,7 @@ export const EditOrganismeDepartementComponent = (props: {
 }) => (
   <EditOrganismeCategoryComponent
     label="Département"
-    categoryList={useRecoilValue(state.departements)}
+    categoryList={useRecoilValue(state.categories).departements}
     categoryById={useRecoilValue(state.departementsById)}
     currentId={props.departementId}
     onChange={props.onChange}
@@ -71,7 +71,7 @@ export const EditOrganismeNatureJuridiqueComponent = (props: {
 }) => (
   <EditOrganismeCategoryComponent
     label="Nature juridique"
-    categoryList={useRecoilValue(state.natureJuridiques)}
+    categoryList={useRecoilValue(state.categories).natureJuridiques}
     categoryById={useRecoilValue(state.natureJuridiquesById)}
     currentId={props.natureJuridiqueId}
     onChange={props.onChange}
@@ -84,7 +84,7 @@ export const EditOrganismeSecteurComponent = (props: {
 }) => (
   <EditOrganismeCategoryComponent
     label="Secteur"
-    categoryList={useRecoilValue(state.secteurs)}
+    categoryList={useRecoilValue(state.categories).secteurs}
     categoryById={useRecoilValue(state.secteursById)}
     currentId={props.secteurId}
     onChange={props.onChange}
@@ -97,7 +97,7 @@ export const EditOrganismeTypeStructureComponent = (props: {
 }) => (
   <EditOrganismeCategoryComponent
     label="Type de structure"
-    categoryList={useRecoilValue(state.typeStructures)}
+    categoryList={useRecoilValue(state.categories).typeStructures}
     categoryById={useRecoilValue(state.typeStructuresById)}
     currentId={props.typeStructureId}
     onChange={props.onChange}

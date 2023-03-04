@@ -1,12 +1,11 @@
 /** @jsxImportSource @emotion/react */
-import { Departement } from '../../generated/domain/bootstrap-data';
 import useEventListener from '../../hooks/useEventListener';
 import { state } from '../../state/state';
+import { emptyFilters, filtersIsEmpty } from '../../utils/filters';
 import { isMobile, isTabletAndMore } from '../../utils/viewport-utils';
 import { DeleteFiltersDialog } from '../root/filters/DeleteFiltersDialog';
 import { FilterSection } from '../root/filters/FilterSection';
 import { colors } from '../styles/colors';
-import { extractLabelAndTooltip } from './BasicFiltersContainer';
 import { MinimizedFilters } from './MinimizedFilters';
 import { MobileSelectFilters } from './MobileSelectFilters';
 import { css } from '@emotion/react';
@@ -24,14 +23,13 @@ import Collapse from '@mui/material/Collapse';
 import Typography from '@mui/material/Typography';
 import { styled } from '@mui/material/styles';
 import * as React from 'react';
-import { useRecoilState, useSetRecoilState } from 'recoil';
+import { useRecoilState, useRecoilValue, useSetRecoilState } from 'recoil';
 
 export const FiltersContainer = () => {
-  const [departements] = useRecoilState(state.departements);
-  const [secteurs] = useRecoilState(state.secteurs);
-  const [natureJuridiques] = useRecoilState(state.natureJuridiques);
-  const [typeStructures] = useRecoilState(state.typeStructures);
-  const [activeFilters, setActiveFilters] = useRecoilState(state.activeFilters);
+  const departementsById = useRecoilValue(state.departementsById);
+  const secteursById = useRecoilValue(state.secteursById);
+  const natureJuridiquesById = useRecoilValue(state.natureJuridiquesById);
+  const typeStructuresById = useRecoilValue(state.typeStructuresById);
   const setIsShrink = useSetRecoilState(state.headerShrinked);
   const [shrinkSectionFilters, setShrinkSectionFilters] = useRecoilState(
     state.filtersSectionShrinked
@@ -42,11 +40,15 @@ export const FiltersContainer = () => {
   const setEnableScrollOnTable = useSetRecoilState(state.enableScrollOnTable);
   const [hideExtraFilters, setHideExtraFilters] = React.useState<boolean>(true);
   const [transitionValue, setTransitionValue] = React.useState<number>(1000);
+  const [filters, setFilters] = useRecoilState(state.filters);
 
   React.useEffect(() => {
-    expandedAccordion === false && setHideExtraFilters(true);
-    expandedAccordion === false && setEnableScrollOnTable(true);
-    expandedAccordion === true && setEnableScrollOnTable(false);
+    if (!expandedAccordion) {
+      setHideExtraFilters(true);
+      setEnableScrollOnTable(true);
+    } else {
+      setEnableScrollOnTable(false);
+    }
     setTransitionValue(1000);
   }, [expandedAccordion, setEnableScrollOnTable]);
 
@@ -104,11 +106,9 @@ export const FiltersContainer = () => {
           </Typography>
 
           {/* Display active filters when filter section is hidden */}
-          {isTabletAndMore() && !expandedAccordion && activeFilters && (
-            <MinimizedFilters />
-          )}
+          {isTabletAndMore() && !expandedAccordion && <MinimizedFilters />}
 
-          {isTabletAndMore() && activeFilters.length > 0 && (
+          {isTabletAndMore() && !filtersIsEmpty(filters) && (
             <Button
               variant="contained"
               color="inherit"
@@ -127,7 +127,7 @@ export const FiltersContainer = () => {
               component="button"
               onClick={(e: any) => {
                 e.stopPropagation();
-                setActiveFilters([]);
+                setFilters(emptyFilters);
               }}
             >
               Effacer les filtres
@@ -138,16 +138,22 @@ export const FiltersContainer = () => {
 
         {isMobile() && (
           <AccordionDetails>
-            <MobileSelectFilters data={departements} label="départements" />
-            <MobileSelectFilters data={secteurs} label="secteurs" />
+            <MobileSelectFilters
+              categoryMap={departementsById}
+              category="departements"
+            />
+            <MobileSelectFilters
+              categoryMap={secteursById}
+              category="secteurs"
+            />
             <Collapse in={!hideExtraFilters}>
               <MobileSelectFilters
-                data={natureJuridiques}
-                label="nature juridique"
+                categoryMap={natureJuridiquesById}
+                category="natureJuridiques"
               />
               <MobileSelectFilters
-                data={typeStructures}
-                label="type de structure"
+                categoryMap={typeStructuresById}
+                category="typeStructures"
               />
             </Collapse>
             <Button
@@ -190,37 +196,20 @@ export const FiltersContainer = () => {
                 />
               )}
             </Button>
-            {activeFilters.length > 0 && <DeleteFiltersDialog />}
+            {!filtersIsEmpty(filters) && <DeleteFiltersDialog />}
           </AccordionDetails>
         )}
         {!isMobile() && (
           <AccordionDetails>
             <FilterSection
-              filters={departements}
-              categoryLabel="départements"
-              filterLabelAndTooltip={f => [
-                `${f.libelle} - ${(f as unknown as Departement).code}`
-              ]}
+              category="departements"
               sticky={shrinkSectionFilters}
             />
-            <FilterSection
-              filters={secteurs}
-              categoryLabel="secteurs"
-              filterLabelAndTooltip={c => extractLabelAndTooltip(c.libelle)}
-              sticky={shrinkSectionFilters}
-            />
+            <FilterSection category="secteurs" sticky={shrinkSectionFilters} />
             <Collapse in={hideExtraFilters} timeout={{ enter: 1400, exit: 0 }}>
               <Stack direction="row">
-                <FilterSection
-                  categoryLabel="nature juridique"
-                  filterLabelAndTooltip={c => extractLabelAndTooltip(c.libelle)}
-                  standalone={true}
-                />
-                <FilterSection
-                  categoryLabel="type de structure"
-                  filterLabelAndTooltip={c => extractLabelAndTooltip(c.libelle)}
-                  standalone={true}
-                />
+                <FilterSection category="natureJuridiques" standalone={true} />
+                <FilterSection category="typeStructures" standalone={true} />
                 <Button
                   variant="contained"
                   color="inherit"
@@ -258,15 +247,11 @@ export const FiltersContainer = () => {
             {!hideExtraFilters && (
               <Collapse in={!hideExtraFilters}>
                 <FilterSection
-                  filters={natureJuridiques}
-                  categoryLabel="nature juridique"
-                  filterLabelAndTooltip={c => extractLabelAndTooltip(c.libelle)}
+                  category="natureJuridiques"
                   sticky={shrinkSectionFilters}
                 />
                 <FilterSection
-                  filters={typeStructures}
-                  categoryLabel="type structure"
-                  filterLabelAndTooltip={c => extractLabelAndTooltip(c.libelle)}
+                  category="typeStructures"
                   sticky={shrinkSectionFilters}
                 />
               </Collapse>
