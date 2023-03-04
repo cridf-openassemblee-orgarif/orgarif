@@ -9,13 +9,14 @@ import UnfoldMoreIcon from '@mui/icons-material/UnfoldMore';
 import { Box, Button, Fade, Stack } from '@mui/material';
 import Collapse from '@mui/material/Collapse';
 import * as React from 'react';
+import { useState } from 'react';
 import { useSetRecoilState } from 'recoil';
 
 export const BasicFiltersContainer = () => {
   const setShrinkSectionFilters = useSetRecoilState(
     state.filtersSectionShrinked
   );
-  const [hideExtraFilters, setHideExtraFilters] = React.useState<boolean>(true);
+  const [hideExtraFilters, setHideExtraFilters] = useState<boolean>(true);
   return (
     <>
       <Box id="filters">

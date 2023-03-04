@@ -11,10 +11,11 @@ import Button from '@mui/material/Button';
 import Menu from '@mui/material/Menu';
 import MenuItem from '@mui/material/MenuItem';
 import * as React from 'react';
+import { useState } from 'react';
 import { useRecoilState } from 'recoil';
 
 export const MobileMenu = () => {
-  const [anchorEl, setAnchorEl] = React.useState<null | HTMLElement>(null);
+  const [anchorEl, setAnchorEl] = useState<null | HTMLElement>(null);
   const [userInfos] = useRecoilState(state.userInfos);
 
   const open = Boolean(anchorEl);

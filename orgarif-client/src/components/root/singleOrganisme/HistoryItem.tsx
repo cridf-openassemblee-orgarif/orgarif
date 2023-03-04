@@ -8,6 +8,7 @@ import { css } from '@emotion/react';
 import { Avatar, Chip, Typography } from '@mui/material';
 import Box from '@mui/material/Box';
 import * as React from 'react';
+import { useRef } from 'react';
 
 interface HistoryItemProps {
   delib: {
@@ -25,7 +26,7 @@ export const HistoryItem = ({
   yearlyDelib,
   lastItem
 }: HistoryItemProps) => {
-  const TextContentRef = React.useRef<HTMLDivElement>(null);
+  const TextContentRef = useRef<HTMLDivElement>(null);
 
   return (
     <Box

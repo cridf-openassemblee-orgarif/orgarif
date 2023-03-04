@@ -29,14 +29,15 @@ import {
   GridRowsProp
 } from '@mui/x-data-grid';
 import * as React from 'react';
+import { useEffect, useState } from 'react';
 import { useRecoilState, useRecoilValue, useSetRecoilState } from 'recoil';
 
 export const TableContainer = () => {
-  const [rows, setRows] = React.useState<GridRowsProp>([]);
+  const [rows, setRows] = useState<GridRowsProp>([]);
   const [isOpened, setIsOpened] = useRecoilState(state.openedDrawer);
-  const [loading, setLoading] = React.useState<boolean>(true);
+  const [loading, setLoading] = useState<boolean>(true);
   const enableScrollOnTable = useRecoilValue(state.enableScrollOnTable);
-  const [organismes, setOrganismes] = React.useState<OrganismeListDto[]>();
+  const [organismes, setOrganismes] = useState<OrganismeListDto[]>();
   const setCountRows = useSetRecoilState(state.countRows);
   const filters = useRecoilValue(state.filters);
 
@@ -79,7 +80,7 @@ export const TableContainer = () => {
     }
   };
 
-  React.useEffect(() => {
+  useEffect(() => {
     setLoading(true);
     appContext
       .queryService()

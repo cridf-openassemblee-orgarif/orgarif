@@ -11,11 +11,12 @@ import DialogContent from '@mui/material/DialogContent';
 import DialogContentText from '@mui/material/DialogContentText';
 import DialogTitle from '@mui/material/DialogTitle';
 import * as React from 'react';
+import { useState } from 'react';
 import { useSetRecoilState } from 'recoil';
 
 export const DeleteFiltersDialog = () => {
   const setFilters = useSetRecoilState(state.filters);
-  const [openDialog, setOpenDialog] = React.useState(false);
+  const [openDialog, setOpenDialog] = useState(false);
 
   return (
     <>

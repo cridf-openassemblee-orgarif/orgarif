@@ -12,14 +12,15 @@ import { css } from '@emotion/react';
 import { LinearProgress, Slide, Typography } from '@mui/material';
 import Box from '@mui/material/Box';
 import * as React from 'react';
+import { useEffect, useState } from 'react';
 import { useRecoilValue } from 'recoil';
 
 export const SingleOrganismeView = (props: { route: EditOrganismeRoute }) => {
-  const [organisme, setOrganisme] = React.useState<OrganismeDto>();
-  const [error, setError] = React.useState(false);
+  const [organisme, setOrganisme] = useState<OrganismeDto>();
+  const [error, setError] = useState(false);
   const isOpened = useRecoilValue(state.openedDrawer);
 
-  React.useEffect(() => {
+  useEffect(() => {
     appContext
       .queryService()
       .send<GetOrganismeQueryResponse>({

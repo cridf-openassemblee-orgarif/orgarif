@@ -23,6 +23,7 @@ import Collapse from '@mui/material/Collapse';
 import Typography from '@mui/material/Typography';
 import { styled } from '@mui/material/styles';
 import * as React from 'react';
+import { useEffect, useState } from 'react';
 import { useRecoilState, useRecoilValue, useSetRecoilState } from 'recoil';
 
 export const FiltersContainer = () => {
@@ -38,11 +39,11 @@ export const FiltersContainer = () => {
     state.filtersExpandedAccordion
   );
   const setEnableScrollOnTable = useSetRecoilState(state.enableScrollOnTable);
-  const [hideExtraFilters, setHideExtraFilters] = React.useState<boolean>(true);
-  const [transitionValue, setTransitionValue] = React.useState<number>(1000);
+  const [hideExtraFilters, setHideExtraFilters] = useState<boolean>(true);
+  const [transitionValue, setTransitionValue] = useState<number>(1000);
   const [filters, setFilters] = useRecoilState(state.filters);
 
-  React.useEffect(() => {
+  useEffect(() => {
     if (!expandedAccordion) {
       setHideExtraFilters(true);
       setEnableScrollOnTable(true);

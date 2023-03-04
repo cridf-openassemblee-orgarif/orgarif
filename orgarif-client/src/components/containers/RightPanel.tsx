@@ -17,13 +17,14 @@ import Radio from '@mui/material/Radio';
 import Tab from '@mui/material/Tab';
 import Tabs from '@mui/material/Tabs';
 import * as React from 'react';
+import { useEffect, useState } from 'react';
 import { InView } from 'react-intersection-observer';
 
 // TODO: complete dynamization once last updated date is available
 export const RightPanel = (props: { organisme: OrganismeDto }) => {
-  const [value, setValue] = React.useState(0);
-  const [yearInView, setYearInview] = React.useState('');
-  const [scrolling, setScrolling] = React.useState(false);
+  const [value, setValue] = useState(0);
+  const [yearInView, setYearInview] = useState('');
+  const [scrolling, setScrolling] = useState(false);
 
   const handleTabChange = (event: React.SyntheticEvent, newValue: number) => {
     setValue(newValue);
@@ -53,7 +54,7 @@ export const RightPanel = (props: { organisme: OrganismeDto }) => {
   ).sort((a: any, b: any) => b[0] - a[0]);
 
   // basic logic to handle side chips displaying yearly delibs to update their background color when they enter the viewport
-  React.useEffect(() => {
+  useEffect(() => {
     setYearInview(
       Math.max
         .apply(0, deliberationsByYear.map((item: any) => item[0]).map(Number))

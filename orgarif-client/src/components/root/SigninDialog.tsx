@@ -8,6 +8,7 @@ import Dialog from '@mui/material/Dialog';
 import Slide from '@mui/material/Slide';
 import { TransitionProps } from '@mui/material/transitions';
 import * as React from 'react';
+import { useState } from 'react';
 
 const Transition = React.forwardRef(function Transition(
   props: TransitionProps & {
@@ -26,7 +27,7 @@ const Transition = React.forwardRef(function Transition(
 });
 
 export default function SigninDialog() {
-  const [open, setOpen] = React.useState(false);
+  const [open, setOpen] = useState(false);
 
   const handleClickOpen = () => {
     setOpen(true);

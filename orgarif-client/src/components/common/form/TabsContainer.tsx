@@ -1,7 +1,7 @@
 /** @jsxImportSource @emotion/react */
 import { Box, Tab, Tabs } from '@mui/material';
 import * as React from 'react';
-import { PropsWithChildren, ReactElement } from 'react';
+import { PropsWithChildren, ReactElement, useState } from 'react';
 
 interface TabPanelProps extends PropsWithChildren<{}> {
   label: string;
@@ -18,7 +18,7 @@ export const TabsContainer = (props: PropsWithChildren<{}>) => {
     // dans le cas d'une tab conditionnelle, on a un undefined dans les children
     .filter(t => !!t);
   const labels = tabs.map(n => n.props.label);
-  const [containerValue, setContainerValue] = React.useState(0);
+  const [containerValue, setContainerValue] = useState(0);
   return (
     <Box sx={{ width: '100%' }}>
       <Box sx={{ borderBottom: 1, borderColor: 'divider' }}>

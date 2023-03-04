@@ -24,6 +24,7 @@ import Box from '@mui/material/Box';
 import { TransitionProps } from '@mui/material/transitions';
 import copy from 'copy-to-clipboard';
 import * as React from 'react';
+import { useState } from 'react';
 import { useRecoilValue } from 'recoil';
 
 const OrganismesLink = (props: any) => (
@@ -52,7 +53,7 @@ const classes = {
 };
 export const LeftPanel = (props: { organisme: OrganismeDto }) => {
   const userInfos = useRecoilValue(state.userInfos);
-  const [openSnackbar, setOpenSnackbar] = React.useState<{
+  const [openSnackbar, setOpenSnackbar] = useState<{
     open: boolean;
     Transition: React.ComponentType<
       TransitionProps & {
