@@ -34,3 +34,12 @@ inline fun <reified R : OrgarifUuidId> UUID.toTypeId(): R =
     } catch (e: InvocationTargetException) {
         throw e.targetException
     }
+
+fun String.replaceRecurvice(oldValue: String, newValue: String): String {
+    val v = replace(oldValue, newValue)
+    if (v == this) {
+        return this
+    } else {
+        return v.replaceRecurvice(oldValue, newValue)
+    }
+}
