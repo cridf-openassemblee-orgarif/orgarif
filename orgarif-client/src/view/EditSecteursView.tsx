@@ -67,13 +67,12 @@ export const EditSecteursView = () => {
       <div
         css={css`
           padding: 0 20px;
-          padding-top: 70px;
         `}
       >
         <h1>Édition des secteurs</h1>
         <EditCategoriesComponent
           kind={'secteur'}
-          categories={categories.secteurs}
+          categoryList={categories.secteurs}
           hasCode={false}
           onAdd={addSecteur}
           onChange={updateSecteur}

@@ -1,7 +1,7 @@
 /** @jsxImportSource @emotion/react */
 import { DesignationDto } from '../../../generated/domain/organisme';
 import { Representant } from '../../../icon/collection/Representant';
-import * as breakpoint from '../../styles/breakpoints';
+import { breakpoints } from '../../styles/breakpoints';
 import { colors } from '../../styles/colors';
 import { css } from '@emotion/react';
 import { Chip, Paper, Stack, Typography } from '@mui/material';
@@ -44,7 +44,7 @@ export const SingleRepresentant = (props: {
           max-width: 300px;
           justify-content: flex-start;
 
-          @media (${breakpoint.LAPTOP}) {
+          @media (${breakpoints.LAPTOP}) {
             justify-content: flex-start;
           }
         `}

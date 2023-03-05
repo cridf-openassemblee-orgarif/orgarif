@@ -1,6 +1,6 @@
 /** @jsxImportSource @emotion/react */
 import { globalStyles } from '../styles/common-styles';
-import orgarifTheme from '../styles/theme';
+import { orgarifTheme } from '../styles/theme';
 import { Global } from '@emotion/react';
 import { StyledEngineProvider, ThemeProvider } from '@mui/material';
 import StylesProvider from '@mui/styles/StylesProvider';

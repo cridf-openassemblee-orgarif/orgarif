@@ -4,16 +4,15 @@ import {
   OrganismeId,
   TypeStructureId
 } from '../../generated/domain/ids';
-import { OrganismeListDto } from '../../generated/domain/organisme';
 import { ListOrganismesQueryResponse } from '../../generated/query/queries';
 import { Edit } from '../../icon/collection/Edit';
+import { LoadingState } from '../../interfaces';
 import { appContext } from '../../services/ApplicationContext';
 import { state } from '../../state/state';
 import { asNominalString, getValue } from '../../utils/nominal-class';
 import { isMobile } from '../../utils/viewport-utils';
-import { TableHeader } from '../root/table/TableHeader';
 import { RouteLink } from '../routing/RouteLink';
-import * as breakpoint from '../styles/breakpoints';
+import { breakpoints } from '../styles/breakpoints';
 import { colors } from '../styles/colors';
 import { css } from '@emotion/react';
 import { Chip, Tooltip } from '@mui/material';
@@ -25,63 +24,38 @@ import {
   frFR,
   GridColDef,
   GridRenderCellParams,
-  GridRowId,
-  GridRowsProp
+  GridRowId
 } from '@mui/x-data-grid';
 import * as React from 'react';
 import { useEffect, useState } from 'react';
-import { useRecoilState, useRecoilValue, useSetRecoilState } from 'recoil';
+import { useRecoilState, useRecoilValue } from 'recoil';
 
-export const TableContainer = () => {
-  const [rows, setRows] = useState<GridRowsProp>([]);
-  const [isOpened, setIsOpened] = useRecoilState(state.openedDrawer);
-  const [loading, setLoading] = useState<boolean>(true);
-  const enableScrollOnTable = useRecoilValue(state.enableScrollOnTable);
-  const [organismes, setOrganismes] = useState<OrganismeListDto[]>();
-  const setCountRows = useSetRecoilState(state.countRows);
+export const OrganismesTable = () => {
+  const [loading, setLoading] = useState<LoadingState>('Idle');
+  const [organismes, setOrganismes] = useRecoilState(state.organismes);
   const filters = useRecoilValue(state.filters);
 
-  // TODO:  search feature request to server
-  const requestSearch = (searchedValue: string) => {
-    // if (activeFilters.length > 0 && searchedValue.length >= 3) {
-    //   const filteredRows = organismes?.filter(row => {
-    //     setLoading(true);
-    //     return row.nom.toLowerCase().includes(searchedValue.toLowerCase());
-    //   });
-    //   if (filteredRows) {
-    //     setRows(filteredRows);
-    //   }
-    //   setLoading(false);
-    // } else if (activeFilters.length === 0 && searchedValue.length >= 3) {
-    //   // TODO - send request to server...
-    //   setLoading(true);
-    //   console.log('fetching results from server...');
-    //   setTimeout(() => setLoading(false), 1000);
-    // } else if (searchedValue.length === 0) {
-    //   if (organismes) setRows(organismes);
-    // }
-    // Temp search feature
-    setLoading(true);
-    if (searchedValue.length >= 3) {
-      const filteredRows = organismes?.filter(row => {
-        return row.nom.toLowerCase().includes(searchedValue.toLowerCase());
-      });
-      if (filteredRows) {
-        setRows(filteredRows);
-        setCountRows(filteredRows.length);
-        setLoading(false);
-      }
-    } else {
-      if (organismes) {
-        setRows(organismes);
-        setCountRows(organismes.length);
-      }
-      setLoading(false);
-    }
-  };
-
+  // const requestSearch = (searchedValue: string) => {
+  // if (activeFilters.length > 0 && searchedValue.length >= 3) {
+  //   const filteredRows = organismes?.filter(row => {
+  //     setLoading(true);
+  //     return row.nom.toLowerCase().includes(searchedValue.toLowerCase());
+  //   });
+  //   if (filteredRows) {
+  //     setRows(filteredRows);
+  //   }
+  //   setLoading(false);
+  // } else if (activeFilters.length === 0 && searchedValue.length >= 3) {
+  //   // TODO - send request to server...
+  //   setLoading(true);
+  //   console.log('fetching results from server...');
+  //   setTimeout(() => setLoading(false), 1000);
+  // } else if (searchedValue.length === 0) {
+  //   if (organismes) setRows(organismes);
+  // }
+  // Temp search feature
   useEffect(() => {
-    setLoading(true);
+    setLoading('Loading');
     appContext
       .queryService()
       .send<ListOrganismesQueryResponse>({
@@ -95,81 +69,60 @@ export const TableContainer = () => {
         orderBy: 'nom'
       })
       .then(r => {
-        setRows(r.organismes);
         setOrganismes(r.organismes);
-        setCountRows(r.organismes.length);
-        setLoading(false);
+        setLoading('Idle');
       });
-  }, [filters, setCountRows]);
+  }, [filters]);
 
   return (
-    <>
-      <TableHeader onSearch={requestSearch} />
-      <div
-        id="table"
-        css={css`
-          height: calc(100vh - 72px);
-          width: 100%;
-          padding: 0 8px;
+    <Box
+      sx={overrideStyleGrid}
+      css={css`
+        width: 100%;
+        padding: 0 8px;
 
-          @media (${breakpoint.TABLET}) {
-            padding: 0 24px;
-          }
+        @media (${breakpoints.TABLET}) {
+          padding: 0 24px;
+        }
 
-          @media (${breakpoint.LAPTOP}) {
-            // TODO ces nombres...
-            height: calc(100vh - 209px);
-            padding: 0 48px;
-          }
-        `}
-      >
-        <Box
-          sx={overrideStyleGrid}
-          css={css`
-            .MuiDataGrid-virtualScroller {
-              // disable scroll on table until filters section hides completely
-              @media (${breakpoint.LAPTOP}) {
-                overflow-y: ${enableScrollOnTable ? 'auto' : 'hidden'};
-              }
+        @media (${breakpoints.LAPTOP}) {
+          padding: 0 48px;
+        }
+      `}
+    >
+      <DataGrid
+        rows={organismes}
+        columns={columns}
+        disableColumnMenu
+        disableDensitySelector
+        rowHeight={38}
+        localeText={frFR.components.MuiDataGrid.defaultProps.localeText}
+        initialState={{
+          columns: {
+            // TODO check
+            columnVisibilityModel: {
+              departement: isMobile() ? false : true,
+              typeStructureId: isMobile() ? false : true,
+              selection: isMobile() ? false : true
             }
-          `}
-        >
-          <DataGrid
-            rows={rows}
-            columns={columns}
-            disableColumnMenu
-            disableDensitySelector
-            rowHeight={38}
-            localeText={frFR.components.MuiDataGrid.defaultProps.localeText}
-            onCellClick={details => {
-              setIsOpened(!isOpened);
-            }}
-            initialState={{
-              columns: {
-                columnVisibilityModel: {
-                  département: isMobile() ? false : true,
-                  typeStructureId: isMobile() ? false : true,
-                  selection: isMobile() ? false : true
-                }
-              }
-            }}
-            rowBuffer={25}
-            hideFooterSelectedRowCount
-            rowsPerPageOptions={[50, 100, 200]}
-            components={{
-              LoadingOverlay: LinearProgress,
-              NoRowsOverlay: CustomNoRowsOverlay
-            }}
-            loading={loading}
-          />
-        </Box>
-      </div>
-    </>
+          }
+        }}
+        // rowBuffer={50}
+        hideFooterSelectedRowCount
+        // rowsPerPageOptions={[50, 100, 200]}
+        autoHeight={true}
+        components={{
+          LoadingOverlay: LinearProgress,
+          NoRowsOverlay: CustomNoRowsOverlay
+        }}
+        loading={loading === 'Loading'}
+      />
+    </Box>
   );
 };
 
 const CountChip = () => {
-  const count = useRecoilValue(state.countRows);
+  const count = useRecoilValue(state.organismes).length;
   return <HeaderChip label={`${count} ORGANISMES`} />;
 };
 const columns: GridColDef[] = [
@@ -180,13 +133,13 @@ const columns: GridColDef[] = [
     flex: 1,
     renderHeader: () => <CountChip />,
     renderCell: (params: GridRenderCellParams) => (
-      <RouteLink route={{ name: 'SingleOrganismeRoute', id: params.row.id }}>
+      <RouteLink route={{ name: 'OrganismeRoute', id: params.row.id }}>
         {params.formattedValue}
       </RouteLink>
     )
   },
   {
-    field: 'département',
+    field: 'departement',
     headerName: 'Département',
     minWidth: 150,
     flex: 0.3,
@@ -398,6 +351,10 @@ const overrideStyleGrid = {
     backgroundColor: `transparent !important`
   },
   '& .MuiDataGrid-row:hover': {
+    backgroundColor: `${colors.errorRed} !important`,
+    color: `${colors.white} !important`
+  },
+  '& .MuiDataGrid-row:hover a': {
     backgroundColor: `${colors.errorRed} !important`,
     color: `${colors.white} !important`
   },

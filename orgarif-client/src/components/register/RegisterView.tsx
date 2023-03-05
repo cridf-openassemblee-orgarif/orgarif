@@ -45,7 +45,6 @@ export const RegisterView = () => {
         css={css`
           display: flex;
           justify-content: center;
-          padding-top: 70px;
         `}
       >
         <div>
@@ -77,7 +76,7 @@ export const RegisterView = () => {
                 <br />
                 <RouteLink
                   route={{
-                    name: 'EditListOrganismesRoute'
+                    name: 'RootRoute'
                   }}
                 >
                   Liste des organismes

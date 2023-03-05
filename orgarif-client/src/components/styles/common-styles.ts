@@ -1,6 +1,7 @@
 /** @jsxImportSource @emotion/react */
 import { colors } from './colors';
 import { fonts } from './fonts';
+import { orgarifTheme } from './theme';
 import { css } from '@emotion/react';
 
 export const globalStyles = css`
@@ -27,13 +28,6 @@ export const globalStyles = css`
 
   html {
     height: -webkit-fill-available;
-
-    /* hide scrollbar */
-    scrollbar-width: none;
-    ::-webkit-scrollbar {
-      width: 0;
-      background: transparent;
-    }
   }
 
   a {
@@ -62,5 +56,8 @@ export const globalStyles = css`
     font-weight: normal;
     text-align: center;
     margin: 8px 0;
+  }
+  a {
+    color: ${orgarifTheme.palette.secondary.main};
   }
 `;

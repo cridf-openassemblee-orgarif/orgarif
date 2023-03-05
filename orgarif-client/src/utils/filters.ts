@@ -56,7 +56,7 @@ export const extractFilters = (): Filters => {
   };
 };
 
-export const filtersIsEmpty = (filters: Filters) =>
+export const filtersIsEmpty = (filters: Filters): boolean =>
   filters.departementIds.length === 0 &&
   filters.natureJuridiqueIds.length === 0 &&
   filters.secteurIds.length === 0 &&

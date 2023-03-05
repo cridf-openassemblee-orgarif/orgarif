@@ -73,13 +73,12 @@ export const EditNatureJuridiquesView = () => {
       <div
         css={css`
           padding: 0 20px;
-          padding-top: 70px;
         `}
       >
         <h1>Édition des natures juridiques</h1>
         <EditCategoriesComponent
           kind={'natureJuridique'}
-          categories={categories.natureJuridiques}
+          categoryList={categories.natureJuridiques}
           hasCode={false}
           onAdd={addNatureJuridique}
           onChange={updateNatureJuridique}

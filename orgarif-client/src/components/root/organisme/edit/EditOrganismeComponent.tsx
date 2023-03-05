@@ -13,7 +13,7 @@ import {
   OrganismeDto
 } from '../../../../generated/domain/organisme';
 import { organismeActions } from '../../../../utils/organisme-utils';
-import { TABLET } from '../../../styles/breakpoints';
+import { breakpoints } from '../../../styles/breakpoints';
 import { colors } from '../../../styles/colors';
 import { EditNomComponent } from './EditNomComponent';
 import {
@@ -41,7 +41,7 @@ export const editCommonClasses = {
 const classes = {
   categories: css`
     margin: 4px;
-    @media (${TABLET}) {
+    @media (${breakpoints.TABLET}) {
       width: 50%;
     }
   `,
@@ -53,7 +53,7 @@ const classes = {
   `,
   column: css`
     padding: 0 10px 10px 10px;
-    @media (${TABLET}) {
+    @media (${breakpoints.TABLET}) {
       width: 50%;
     }
   `
@@ -84,7 +84,7 @@ export const RepresentantsDeliberationsBlock = (props: {
     css={css`
       display: flex;
       flex-direction: column;
-      @media (${TABLET}) {
+      @media (${breakpoints.TABLET}) {
         flex-direction: row;
       }
     `}
@@ -146,13 +146,13 @@ export const EditOrganismeComponent = (props: {
             {/* eslint-disable-line jsx-a11y/heading-has-content */}
           </h2>
         }
-        deletionReturnRoute={{ name: 'EditListOrganismesRoute' }}
+        deletionReturnRoute={{ name: 'RootRoute' }}
       />
       <div
         css={css`
           display: flex;
           flex-direction: column;
-          @media (${TABLET}) {
+          @media (${breakpoints.TABLET}) {
             flex-direction: row;
           }
         `}
@@ -174,7 +174,7 @@ export const EditOrganismeComponent = (props: {
         css={css`
           display: flex;
           flex-direction: column;
-          @media (${TABLET}) {
+          @media (${breakpoints.TABLET}) {
             flex-direction: row;
           }
         `}

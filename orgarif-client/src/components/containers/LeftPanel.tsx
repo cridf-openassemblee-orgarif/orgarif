@@ -7,7 +7,7 @@ import { Informations } from '../root/singleOrganisme/Informations';
 import { Representants } from '../root/singleOrganisme/Representants';
 import { RouteLink } from '../routing/RouteLink';
 import { colors } from '../styles/colors';
-import { EditOrganismeLink } from './TableContainer';
+import { EditOrganismeLink } from './OrganismesTable';
 import { css } from '@emotion/react';
 import ChevronLeftRoundedIcon from '@mui/icons-material/ChevronLeftRounded';
 import {
@@ -28,7 +28,7 @@ import { useState } from 'react';
 import { useRecoilValue } from 'recoil';
 
 const OrganismesLink = (props: any) => (
-  <RouteLink route={{ name: 'OrganismesRoute' }} {...props} />
+  <RouteLink route={{ name: 'RootRoute' }} {...props} />
 );
 
 const classes = {

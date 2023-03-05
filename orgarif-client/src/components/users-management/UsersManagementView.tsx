@@ -52,7 +52,7 @@ export const UsersManagementView = (props: {
           display: flex;
           flex-direction: column;
           height: 100vh;
-          padding: 72px 20px 20px 20px;
+          padding: 20px;
         `}
       >
         <h1>Users management</h1>

@@ -2,7 +2,7 @@
 import { DeliberationId } from '../../../generated/domain/ids';
 import { DeliberationDto } from '../../../generated/domain/organisme';
 import { formatLocaleDate } from '../../../simple-fr';
-import * as breakpoint from '../../styles/breakpoints';
+import { breakpoints } from '../../styles/breakpoints';
 import { colors } from '../../styles/colors';
 import { css } from '@emotion/react';
 import { Avatar, Chip, Typography } from '@mui/material';
@@ -38,7 +38,7 @@ export const HistoryItem = ({
         padding: 0 5vw 0 0;
         margin-bottom: 1em;
 
-        @media (${breakpoint.TABLET}) {
+        @media (${breakpoints.TABLET}) {
           padding: 0 5vw 0 1vw;
           gap: 1em;
         }
@@ -55,7 +55,7 @@ export const HistoryItem = ({
           margin-right: 0;
           position: relative;
 
-          @media (${breakpoint.LAPTOP_L}) {
+          @media (${breakpoints.LAPTOP_L}) {
             margin-right: clamp(1em, 1.4vw, 1.6rem);
           }
 
@@ -90,7 +90,7 @@ export const HistoryItem = ({
             font-size: 0.8em;
             padding: 1.75em;
 
-            @media (${breakpoint.TABLET}) {
+            @media (${breakpoints.TABLET}) {
               width: 4em;
               height: 4em;
               font-size: 1.2em;
@@ -108,7 +108,7 @@ export const HistoryItem = ({
           justify-content: center;
           grid-column: 2/5;
 
-          @media (${breakpoint.MOBILE_L}) {
+          @media (${breakpoints.MOBILE_L}) {
             flex-wrap: nowrap;
             justify-content: space-between;
           }
@@ -123,7 +123,7 @@ export const HistoryItem = ({
             width: fit-content;
             margin-bottom: 0.5em;
 
-            @media (${breakpoint.TABLET}) {
+            @media (${breakpoints.TABLET}) {
               margin-bottom: 0;
             }
           `}

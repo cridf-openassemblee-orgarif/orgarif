@@ -114,7 +114,7 @@ export const LoginView = () => {
                 <br />
                 <RouteLink
                   route={{
-                    name: 'EditListOrganismesRoute'
+                    name: 'RootRoute'
                   }}
                 >
                   Liste des organismes

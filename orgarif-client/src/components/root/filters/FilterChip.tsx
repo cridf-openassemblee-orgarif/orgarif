@@ -1,6 +1,6 @@
 /** @jsxImportSource @emotion/react */
 import { Category, CategoryId } from '../../../domain/category';
-import * as breakpoints from '../../styles/breakpoints';
+import { breakpoints } from '../../styles/breakpoints';
 import { colors } from '../../styles/colors';
 import { css } from '@emotion/react';
 import styled from '@emotion/styled';

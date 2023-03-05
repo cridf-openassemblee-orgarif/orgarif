@@ -22,6 +22,27 @@ export const DeleteFiltersDialog = () => {
     <>
       <Button
         variant="contained"
+        color="inherit"
+        size="small"
+        css={css`
+          background-color: ${colors.white};
+          color: ${colors.dark};
+          right: 0;
+          border-radius: 50px;
+          min-width: max-content;
+          align-self: center;
+          margin-left: auto;
+          padding: 0 1rem;
+          box-shadow: 0 5px 10px 0 rgba(191, 191, 191, 0.4);
+        `}
+        component="button"
+        onClick={() => setOpenDialog(true)}
+      >
+        Effacer les filtres
+        <DeleteOutlined sx={{ fontSize: 16, marginLeft: '5px' }} />
+      </Button>
+      {/*<Button
+        variant="contained"
         size="small"
         css={css`
           background-color: ${colors.white};
@@ -44,7 +65,7 @@ export const DeleteFiltersDialog = () => {
             marginLeft: '8px'
           }}
         />
-      </Button>
+      </Button>*/}
       <Dialog
         open={openDialog}
         onClose={() => setOpenDialog(false)}
@@ -60,7 +81,7 @@ export const DeleteFiltersDialog = () => {
         <DialogTitle
           id="alert-dialog-title"
           css={css`
-            padding: 48px 12px 8px;
+            padding: 24px 48px;
             text-transform: uppercase;
           `}
         >
@@ -68,11 +89,11 @@ export const DeleteFiltersDialog = () => {
         </DialogTitle>
         <DialogContent
           css={css`
-            padding: 0 12px 32px;
+            padding: 20px 48px;
           `}
         >
           <DialogContentText id="alert-dialog-description">
-            Êtes-vous sûr de vouloir effacer les filtres ?
+            Êtes-vous sûr de vouloir effacer tous les filtres ?
           </DialogContentText>
         </DialogContent>
         <DialogActions

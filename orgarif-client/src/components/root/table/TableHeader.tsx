@@ -1,5 +1,5 @@
 /** @jsxImportSource @emotion/react */
-import * as breakpoint from '../../styles/breakpoints';
+import { breakpoints } from '../../styles/breakpoints';
 import { colors } from '../../styles/colors';
 import { SearchBar } from './SearchBar';
 import { css } from '@emotion/react';
@@ -26,11 +26,11 @@ export const TableHeader = ({ onSearch }: TableHeaderProps) => {
         border-bottom: 1px solid ${colors.dark};
         margin-bottom: 0.5em;
 
-        @media (${breakpoint.TABLET}) {
+        @media (${breakpoints.TABLET}) {
           flex-direction: row;
         }
 
-        @media (${breakpoint.LAPTOP}) {
+        @media (${breakpoints.LAPTOP}) {
           padding: 12px 48px;
         }
       `}
@@ -42,14 +42,15 @@ export const TableHeader = ({ onSearch }: TableHeaderProps) => {
           font-size: 2rem;
           white-space: nowrap;
           min-width: 260px;
+          text-transform: uppercase;
 
-          @media (${breakpoint.LAPTOP}) {
+          @media (${breakpoints.LAPTOP}) {
             max-width: 140px;
             min-width: 100px;
           }
         `}
       >
-        LISTE DES ORGANISMES
+        Liste des organismes
       </Typography>
       <SearchBar
         handleChange={searchedValue => onSearch(searchedValue.target.value)}

@@ -73,13 +73,12 @@ export const EditTypeStructuresView = () => {
       <div
         css={css`
           padding: 0 20px;
-          padding-top: 70px;
         `}
       >
         <h1>Édition des type de structure</h1>
         <EditCategoriesComponent
           kind={'typeStructure'}
-          categories={categories.typeStructures}
+          categoryList={categories.typeStructures}
           hasCode={false}
           onAdd={addTypeStructure}
           onChange={updateTypeStructure}

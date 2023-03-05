@@ -1,117 +1,60 @@
 /** @jsxImportSource @emotion/react */
 import { state } from '../../state/state';
 import { isMobile } from '../../utils/viewport-utils';
-import { BasicFiltersContainer } from '../containers/BasicFiltersContainer';
-import { FiltersContainer } from '../containers/FiltersContainer';
+import { DesktopFiltersContainer } from '../containers/DesktopFiltersContainer';
+import { FiltersHeader } from '../containers/FiltersHeader';
+import { LandingFiltersContainer } from '../containers/LandingFiltersContainer';
 import { MainContainer } from '../containers/MainContainer';
-import { TableContainer } from '../containers/TableContainer';
-import { RouteLink } from '../routing/RouteLink';
+import { MobileFiltersContainer } from '../containers/MobileFiltersContainer';
+import { OrganismesTable } from '../containers/OrganismesTable';
+import { LandingTitle } from './LandingTitle';
+import { RootViewTitle } from './RootViewTitle';
 import { css } from '@emotion/react';
-import { Slide } from '@mui/material';
+import { Fade } from '@mui/material';
 import * as React from 'react';
-import { useRecoilState, useRecoilValue } from 'recoil';
+import { useState } from 'react';
+import { useRecoilValue } from 'recoil';
 
 export const RootView = () => {
-  const [userInfos] = useRecoilState(state.userInfos);
-  const categories = useRecoilValue(state.categories);
-
+  const displayLandingPage = useRecoilValue(state.displayLandingPage);
+  const [displayActiveFilters, setDisplayActiveFilters] =
+    useState<boolean>(false);
   return (
     <MainContainer>
-      {!userInfos && isMobile() && (
+      {displayLandingPage && (
         <>
-          <FiltersContainer />
-          <TableContainer />
+          <LandingTitle />
+          <LandingFiltersContainer />
         </>
       )}
-      {!userInfos && !isMobile() && (
-        <Slide
-          direction="up"
+      {!displayLandingPage && (
+        <Fade
           in={true}
-          timeout={400}
+          timeout={600}
           mountOnEnter
           unmountOnExit
+          appear={!isMobile()}
         >
-          <div>
-            <BasicFiltersContainer />
-          </div>
-        </Slide>
-      )}
-
-      {userInfos && (
-        <div
-          css={css`
-            margin: auto;
-            width: 80%;
-            padding-top: 70px;
-          `}
-        >
-          <RouteLink
-            route={{
-              name: 'OrganismesRoute'
-            }}
-          >
-            Afficher le tableau des organismes
-          </RouteLink>
-          <h2>Liste des organismes</h2>
-          <RouteLink
-            route={{
-              name: 'EditListOrganismesRoute'
-            }}
-          >
-            Tous les organismes
-          </RouteLink>
           <div
             css={css`
-              padding-left: 20px;
+              position: relative;
             `}
           >
-            <h3>Par secteur</h3>
-            {categories.secteurs.map(s => (
-              <div key={s.id}>
-                <RouteLink
-                  route={{
-                    name: 'ListOrganismesBySecteurRoute',
-                    secteurId: s.id
-                  }}
-                >
-                  {s.libelle}
-                </RouteLink>
-              </div>
-            ))}
+            <RootViewTitle label="Filtres" position={0}>
+              {/* Display active filters when filter section is hidden */}
+              {<FiltersHeader displayActiveFilters={displayActiveFilters} />}
+            </RootViewTitle>
+            {isMobile() && <MobileFiltersContainer />}
+            {!isMobile() && (
+              <DesktopFiltersContainer
+                setDisplayActiveFilters={setDisplayActiveFilters}
+              />
+            )}
+            <RootViewTitle label="Liste des organismes" position={1} />
+            {/*<TableHeader />*/}
+            <OrganismesTable />
           </div>
-          <h2>Édition des catégories</h2>
-          <RouteLink
-            route={{
-              name: 'EditDepartementsRoute'
-            }}
-          >
-            Édition des départements
-          </RouteLink>
-          <br />
-          <RouteLink
-            route={{
-              name: 'EditSecteursRoute'
-            }}
-          >
-            Édition des secteurs
-          </RouteLink>
-          <br />
-          <RouteLink
-            route={{
-              name: 'EditNatureJuridiquesRoute'
-            }}
-          >
-            Édition des natures juridiques
-          </RouteLink>
-          <br />
-          <RouteLink
-            route={{
-              name: 'EditTypeStructuresRoute'
-            }}
-          >
-            Édition des types de structure
-          </RouteLink>
-        </div>
+        </Fade>
       )}
     </MainContainer>
   );

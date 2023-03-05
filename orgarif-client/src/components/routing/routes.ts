@@ -1,5 +1,5 @@
 import { UserId } from '../../generated/domain/fmk-ids';
-import { OrganismeId, SecteurId } from '../../generated/domain/ids';
+import { OrganismeId } from '../../generated/domain/ids';
 import { Role } from '../../generated/domain/user';
 import { Dict, dict, flatMap } from '../../utils/nominal-class';
 import { EditDepartementsView } from '../../view/EditDepartementsView';
@@ -7,10 +7,7 @@ import { EditNatureJuridiquesView } from '../../view/EditNatureJuridiquesView';
 import { EditOrganismeView } from '../../view/EditOrganismeView';
 import { EditSecteursView } from '../../view/EditSecteursView';
 import { EditTypeStructuresView } from '../../view/EditTypeStructuresView';
-import { ListOrganismesBySecteurView } from '../../view/ListOrganismesBySecteurView';
-import { ListOrganismesView } from '../../view/ListOrganismesView';
-import { OrganismesView } from '../../view/OrganismesView';
-import { SingleOrganismeView } from '../../view/SingleOrganismeView';
+import { OrganismeView } from '../../view/OrganismeView';
 import { LoginView } from '../login/LoginView';
 import { RegisterView } from '../register/RegisterView';
 import { RootView } from '../root/RootView';
@@ -20,17 +17,14 @@ import { FunctionComponent } from 'react';
 // TODO[tmpl] secure that "name" can't be a route parameter
 export type ApplicationRoute =
   | EditDepartementsRoute
-  | EditListOrganismesRoute
   | EditNatureJuridiquesRoute
   | EditOrganismeRoute
   | EditSecteursRoute
   | EditTypeStructuresRoute
-  | ListOrganismesBySecteurRoute
   | LoginRoute
-  | OrganismesRoute
+  | OrganismeRoute
   | RegisterRoute
   | RootRoute
-  | SingleOrganismeRoute
   | UsersManagementRoute
   | UsersManagementUserRoute;
 
@@ -75,29 +69,14 @@ export const routes: ApplicationRouteProps<any>[] = [
     role: 'User'
   },
   {
-    name: 'EditListOrganismesRoute',
-    path: '/edition-list-organismes',
-    component: ListOrganismesView
-  },
-  {
-    name: 'ListOrganismesBySecteurRoute',
-    path: '/organismes-par-secteur/:secteurId',
-    component: ListOrganismesBySecteurView
-  },
-  {
     name: 'LoginRoute',
     path: '/login',
     component: LoginView
   },
   {
-    name: 'SingleOrganismeRoute',
+    name: 'OrganismeRoute',
     path: '/organisme/:id',
-    component: SingleOrganismeView
-  },
-  {
-    name: 'OrganismesRoute',
-    path: '/organismes',
-    component: OrganismesView
+    component: OrganismeView
   },
   {
     name: 'RegisterRoute',
@@ -159,21 +138,13 @@ export interface EditTypeStructuresRoute {
   name: 'EditTypeStructuresRoute';
 }
 
-export interface ListOrganismesBySecteurRoute {
-  name: 'ListOrganismesBySecteurRoute';
-  secteurId: SecteurId;
-}
-
-interface EditListOrganismesRoute {
-  name: 'EditListOrganismesRoute';
-}
-
 interface LoginRoute {
   name: 'LoginRoute';
 }
 
-interface OrganismesRoute {
-  name: 'OrganismesRoute';
+interface OrganismeRoute {
+  name: 'OrganismeRoute';
+  id: OrganismeId;
 }
 
 interface RegisterRoute {
@@ -182,11 +153,6 @@ interface RegisterRoute {
 
 interface RootRoute {
   name: 'RootRoute';
-}
-
-interface SingleOrganismeRoute {
-  name: 'SingleOrganismeRoute';
-  id: OrganismeId;
 }
 
 export interface UsersManagementRoute {

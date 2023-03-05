@@ -263,7 +263,7 @@ const EditCategoryComponent = (props: {
 
 export const EditCategoriesComponent = (props: {
   kind: 'departement' | 'natureJuridique' | 'secteur' | 'typeStructure';
-  categories: Category[];
+  categoryList: Category[];
   hasCode: boolean;
   onAdd: (libelle: string, code?: string) => Promise<void>;
   onChange: (
@@ -273,8 +273,8 @@ export const EditCategoriesComponent = (props: {
   ) => Promise<void>;
   onUpdateStatus: (id: NominalString<any>, status: ItemStatus) => Promise<void>;
 }) => {
-  const live = props.categories.filter(c => c.status === 'live');
-  const archive = props.categories.filter(c => c.status === 'archive');
+  const live = props.categoryList.filter(c => c.status === 'live');
+  const archive = props.categoryList.filter(c => c.status === 'archive');
   const [newCategoryLibelle, setNewCategoryLibelle] = useState('');
   const [newCategoryCode, setNewCategoryCode] = useState('');
   const [displayAddPopup, setDisplayAddPopup] = useState(false);

@@ -1,10 +1,10 @@
 import { colors } from './colors';
 import { createTheme } from '@mui/material';
 
-const orgarifTheme = {
+export const orgarifTheme = createTheme({
   /* Theming */
   palette: {
-    type: 'light',
+    // type: 'light',
     primary: {
       main: 'hsl(1, 100%, 51%)'
     },
@@ -22,7 +22,7 @@ const orgarifTheme = {
       secondary: 'rgba(15,15,15,0.54)',
       disabled: 'rgba(15,15,15,0.38)',
       hint: 'rgba(15,15,15,0.38)'
-    }
+    } as any
   },
   typography: {
     fontFamily: '"IBM Plex Sans", "Helvetica", "Arial", sans-serif'
@@ -137,7 +137,6 @@ const orgarifTheme = {
         }
       }
     },
-
     MuiButton: {
       styleOverrides: {
         contained: {
@@ -149,16 +148,5 @@ const orgarifTheme = {
         }
       }
     }
-  }
-} as const;
-
-type CustomTheme = {
-  [Key in keyof typeof orgarifTheme]: (typeof orgarifTheme)[Key];
-};
-
-declare module '@mui/material/styles/createTheme' {
-  interface Theme extends CustomTheme {}
-  interface ThemeOptions extends CustomTheme {}
-}
-
-export default createTheme(orgarifTheme);
+  } as any
+});

@@ -7,7 +7,7 @@ import {
 import useEventListener from '../../hooks/useEventListener';
 import { isMobile } from '../../utils/viewport-utils';
 import { HistoryItem } from '../root/singleOrganisme/HistoryItem';
-import * as breakpoint from '../styles/breakpoints';
+import { breakpoints } from '../styles/breakpoints';
 import { colors } from '../styles/colors';
 import { css } from '@emotion/react';
 import styled from '@emotion/styled';
@@ -108,7 +108,7 @@ export const RightPanel = (props: { organisme: OrganismeDto }) => {
         padding: 1em 1em 10em;
         overflow-y: hidden;
 
-        @media (${breakpoint.LAPTOP}) {
+        @media (${breakpoints.LAPTOP}) {
           height: 99vh;
           padding: 1em 2vw 3em;
           overflow-y: auto;

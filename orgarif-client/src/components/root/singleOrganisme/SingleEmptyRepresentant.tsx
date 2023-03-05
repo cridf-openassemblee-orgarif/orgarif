@@ -1,5 +1,5 @@
 /** @jsxImportSource @emotion/react */
-import * as breakpoint from '../../styles/breakpoints';
+import { breakpoints } from '../../styles/breakpoints';
 import { colors } from '../../styles/colors';
 import { css } from '@emotion/react';
 import { Chip, Paper, Typography } from '@mui/material';
@@ -33,7 +33,7 @@ export const SingleEmptyRepresentant = (props: { hasSuppleance?: boolean }) => {
           min-width: 285px;
           justify-content: flex-start;
 
-          @media (${breakpoint.LAPTOP}) {
+          @media (${breakpoints.LAPTOP}) {
             justify-content: center;
           }
         `}

@@ -1,7 +1,7 @@
 /** @jsxImportSource @emotion/react */
 import { DesignationDto } from '../../../generated/domain/organisme';
 import { isMobile } from '../../../utils/viewport-utils';
-import * as breakpoint from '../../styles/breakpoints';
+import { breakpoints } from '../../styles/breakpoints';
 import { SingleEmptyRepresentant } from './SingleEmptyRepresentant';
 import { SingleRepresentant } from './SingleRepresentant';
 import { css } from '@emotion/react';
@@ -34,7 +34,7 @@ export const Representants = (props: {
         margin-bottom: 1em;
         flex-direction: column;
 
-        @media (${breakpoint.TABLET}) {
+        @media (${breakpoints.TABLET}) {
           flex-direction: row;
         }
       `}
