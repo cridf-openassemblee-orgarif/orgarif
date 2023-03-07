@@ -56,16 +56,18 @@ export const EditOrganismeView = ({ route }: { route: EditOrganismeRoute }) => {
           margin: auto;
         `}
       >
-        <RouteLink route={{ name: 'RootRoute' }}>
+        <RouteLink route={{ name: 'OrganismeRoute', id: route.id }}>
           <span
             css={css`
-              top: 6px;
+              position: relative;
+              top: 4px;
               font-size: 10px;
+              margin-right: 10px;
             `}
           >
             <ArrowBackIos fontSize="small" />
-          </span>{' '}
-          Retour liste des organismes
+          </span>
+          Retour organisme
         </RouteLink>
         {displayLoading(loading)}
         {organisme && (

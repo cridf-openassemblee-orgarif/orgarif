@@ -247,36 +247,30 @@ export const EditOrganismeComponent = (props: {
         <AddInstanceComponent addInstance={actions.onAddInstance} />
       </div>
       {organisme.instances.length !== 0 && (
-        <div
-          css={css`
-            margin: 0 20px;
-          `}
-        >
-          <EditInstancesComponent
-            instances={organisme.instances}
-            onNomChange={actions.onInstanceNomChange}
-            onStatusChange={actions.onInstanceStatusChange}
-            onNombreRepresentantsChange={actions.onNombreRepresentantsChange}
-            onPresenceSuppleantsChange={actions.onPresenceSuppleantsChange}
-            onAddDesignation={(
-              representantId: RepresentantId,
-              type: DesignationType,
-              position: number,
-              startDate: LocalDate | undefined,
-              instanceId: InstanceId
-            ) =>
-              actions.onAddDesignation(
-                representantId,
-                type,
-                position,
-                startDate,
-                instanceId
-              )
-            }
-            onNewLienDeliberation={actions.onNewLienDeliberation}
-            onOtherUpdate={actions.updateOrganisme}
-          />
-        </div>
+        <EditInstancesComponent
+          instances={organisme.instances}
+          onNomChange={actions.onInstanceNomChange}
+          onStatusChange={actions.onInstanceStatusChange}
+          onNombreRepresentantsChange={actions.onNombreRepresentantsChange}
+          onPresenceSuppleantsChange={actions.onPresenceSuppleantsChange}
+          onAddDesignation={(
+            representantId: RepresentantId,
+            type: DesignationType,
+            position: number,
+            startDate: LocalDate | undefined,
+            instanceId: InstanceId
+          ) =>
+            actions.onAddDesignation(
+              representantId,
+              type,
+              position,
+              startDate,
+              instanceId
+            )
+          }
+          onNewLienDeliberation={actions.onNewLienDeliberation}
+          onOtherUpdate={actions.updateOrganisme}
+        />
       )}
     </div>
   );

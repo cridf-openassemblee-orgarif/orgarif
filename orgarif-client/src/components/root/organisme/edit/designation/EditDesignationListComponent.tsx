@@ -52,7 +52,13 @@ export const EditDesignationListComponent = (props: {
     props.presenceSuppleants || props.designationSuppleants.length !== 0;
   return (
     <React.Fragment>
-      <h3>Représentants</h3>
+      <h3
+        css={css`
+          padding-left: 40px;
+        `}
+      >
+        Représentants
+      </h3>
       <div css={editCommonClasses.columnPadding}>
         <HeaderDesignationsComponent
           nombreRepresentants={props.nombreRepresentants}

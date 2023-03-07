@@ -52,7 +52,6 @@ export const EditInstancesComponent = (props: {
             css={css`
               flex: 1;
               user-select: none;
-              margin: 10px;
             `}
           >
             <div
