@@ -19,7 +19,7 @@ export const FilterChip = (props: {
   const chipColor = props.active ? 'error' : 'primary';
   const chip = (
     <StyledChip
-      key={props.filter.libelle}
+      key={props.filter.id}
       color={chipColor}
       label={props.label}
       onClick={() => props.onClick(props.filter.id)}
