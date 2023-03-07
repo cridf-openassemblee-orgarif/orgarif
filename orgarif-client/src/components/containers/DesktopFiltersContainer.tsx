@@ -1,6 +1,7 @@
 /** @jsxImportSource @emotion/react */
 import { state } from '../../state/state';
 import { rootViewTitleHeight } from '../root/RootViewTitle';
+import { EmptyFiltersSection } from '../root/filters/EmptyFiltersSection';
 import { FilterSection } from '../root/filters/FilterSection';
 import { colors } from '../styles/colors';
 import { Dimensions } from '../styles/dimensions';
@@ -92,8 +93,8 @@ export const DesktopFiltersContainer = (props: {
         </Button>
         {hideExtraFilters && (
           <>
-            <FilterSection category="natureJuridiques" standalone={true} />
-            <FilterSection category="typeStructures" standalone={true} />
+            <EmptyFiltersSection category="natureJuridiques" />
+            <EmptyFiltersSection category="typeStructures" />
           </>
         )}
       </Stack>

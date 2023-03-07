@@ -12,7 +12,7 @@ export const FilterChip = (props: {
   filter: Category;
   label: string;
   tooltipLabel?: string;
-  isSticky: boolean | undefined;
+  sticky: boolean | undefined;
   active: boolean;
   onClick: (id: CategoryId) => void;
 }) => {
@@ -23,7 +23,7 @@ export const FilterChip = (props: {
       color={chipColor}
       label={props.label}
       onClick={() => props.onClick(props.filter.id)}
-      css={props.isSticky ? skrinkedChips : ''}
+      css={props.sticky ? skrinkedChips : undefined}
     />
   );
   if (props.tooltipLabel) {

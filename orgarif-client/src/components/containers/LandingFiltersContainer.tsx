@@ -1,5 +1,6 @@
 /** @jsxImportSource @emotion/react */
 import { state } from '../../state/state';
+import { EmptyFiltersSection } from '../root/filters/EmptyFiltersSection';
 import { FilterSection } from '../root/filters/FilterSection';
 import { breakpoints } from '../styles/breakpoints';
 import { colors } from '../styles/colors';
@@ -25,8 +26,8 @@ export const LandingFiltersContainer = () => {
           <FilterSection category={'secteurs'} sticky={false} />
           <Collapse in={hideExtraFilters} timeout={{ enter: 1400, exit: 0 }}>
             <Stack direction="row">
-              <FilterSection category={'natureJuridiques'} standalone={true} />
-              <FilterSection category={'typeStructures'} standalone={true} />
+              <EmptyFiltersSection category={'natureJuridiques'} />
+              <EmptyFiltersSection category={'typeStructures'} />
               <Button
                 variant="contained"
                 color="inherit"

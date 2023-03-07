@@ -15,10 +15,8 @@ import { assertUnreachable } from '../../../utils';
 import { distinct } from '../../../utils/collections';
 import { Filters } from '../../../utils/filters';
 import { asNominalString } from '../../../utils/nominal-class';
+import { EmptyFiltersSection } from './EmptyFiltersSection';
 import { FilterChip } from './FilterChip';
-import { HeaderFiltersChip } from './HeaderFiltersChip';
-import { css } from '@emotion/react';
-import { Box } from '@mui/material';
 import * as React from 'react';
 import { useRecoilState, useRecoilValue, useSetRecoilState } from 'recoil';
 
@@ -119,27 +117,13 @@ export const getCategoryLabelAndTooltip = (
   }
 };
 
-const classes = {
-  chipsContainer: css`
-    display: flex;
-    flex-wrap: wrap;
-    position: static;
-    transition: all 1s ease-in-out;
-    height: fit-content;
-  `
-};
-
 export const FilterSection = (props: {
   category: keyof OrganismeCategories;
-  // TODO meaning ?
   sticky?: boolean;
-  // TODO meaning ?
-  standalone?: boolean;
 }) => {
   const categories = useRecoilValue(state.categories);
   const [filters, setFilters] = useRecoilState(state.filters);
   const setForceListOrganisme = useSetRecoilState(state.forceListOrganisme);
-  const categoryLabel = getCategoryLabel(props.category);
   const categoryList = categories[props.category];
   const filterList = getFilterList(filters, props.category);
   const categoryLabelAndTooltip = getCategoryLabelAndTooltip(props.category);
@@ -152,17 +136,8 @@ export const FilterSection = (props: {
     setForceListOrganisme(true);
   };
   return (
-    <Box
-      css={classes.chipsContainer}
-      sx={{
-        top: props.sticky ? '80px' : '22vw',
-        py: props.sticky ? '0.4em' : '.8vw',
-        pl: '1em'
-      }}
-    >
-      <HeaderFiltersChip label={categoryLabel} />
+    <EmptyFiltersSection category={props.category} sticky={props.sticky}>
       {categoryList &&
-        !props.standalone &&
         categoryList.map(c => {
           const [label, tooltipLabel] = categoryLabelAndTooltip(c);
           const active = filterList.includes(asNominalString(c.id));
@@ -172,12 +147,12 @@ export const FilterSection = (props: {
               filter={c}
               label={label}
               tooltipLabel={tooltipLabel}
-              isSticky={props.sticky}
+              sticky={props.sticky}
               active={active}
               onClick={() => onFilterSelection(c.id, !active)}
             />
           );
         })}
-    </Box>
+    </EmptyFiltersSection>
   );
 };
