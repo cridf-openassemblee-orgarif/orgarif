@@ -14,7 +14,7 @@ import Button from '@mui/material/Button';
 import Dialog from '@mui/material/Dialog';
 import DialogActions from '@mui/material/DialogActions';
 import * as React from 'react';
-import { useState } from 'react';
+import { useEffect, useState } from 'react';
 
 const buttonClass = clientUid();
 
@@ -76,6 +76,10 @@ const EditCategoryComponent = (props: {
   const [updatedCode, setUpdatedCode] = useState(
     'code' in props.category ? props.category.code : undefined
   );
+  useEffect(() => {
+    setUpdatedLibelle(props.category.libelle);
+    setUpdatedCode('code' in props.category ? props.category.code : undefined);
+  }, [props.category]);
   const [error, setError] = useState(false);
   return (
     <React.Fragment>

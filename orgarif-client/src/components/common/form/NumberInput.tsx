@@ -2,7 +2,7 @@
 import { css } from '@emotion/react';
 import { TextField } from '@mui/material';
 import * as React from 'react';
-import { ChangeEvent, useState } from 'react';
+import { ChangeEvent, useEffect, useState } from 'react';
 
 // TODO pourrait reuse TextInput, pas vital...
 export const NumberInput = (props: {
@@ -12,6 +12,7 @@ export const NumberInput = (props: {
   onChange?: (value: number) => void;
 }) => {
   const [textValue, setTextValue] = useState(props.initialValue ?? '');
+  useEffect(() => setTextValue(props.initialValue ?? ''), [props.initialValue]);
   return (
     <TextField
       label={props.label}

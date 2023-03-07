@@ -14,7 +14,7 @@ import { DialogContent, DialogTitle } from '@mui/material';
 import Button from '@mui/material/Button';
 import Dialog from '@mui/material/Dialog';
 import * as React from 'react';
-import { PropsWithChildren, ReactElement, useState } from 'react';
+import { PropsWithChildren, ReactElement, useEffect, useState } from 'react';
 
 const editClass = clientUid();
 
@@ -31,6 +31,7 @@ export const EditNomComponent = (
 ) => {
   const [displayDialog, setDisplayDialog] = useState(false);
   const [nom, setNom] = useState(props.nom);
+  useEffect(() => setNom(props.nom), [props.nom]);
   const cancel = () => {
     setNom(props.nom);
     setDisplayDialog(false);
