@@ -20,7 +20,7 @@ import { HeaderFiltersChip } from './HeaderFiltersChip';
 import { css } from '@emotion/react';
 import { Box } from '@mui/material';
 import * as React from 'react';
-import { useRecoilState, useRecoilValue } from 'recoil';
+import { useRecoilState, useRecoilValue, useSetRecoilState } from 'recoil';
 
 export const getCategoryLabel = (category: keyof OrganismeCategories) => {
   switch (category) {
@@ -137,10 +137,11 @@ export const FilterSection = React.memo(
     // TODO meaning ?
     standalone?: boolean;
   }) => {
-    const categoryLabel = getCategoryLabel(props.category);
     const categories = useRecoilValue(state.categories);
-    const categoryList = categories[props.category];
     const [filters, setFilters] = useRecoilState(state.filters);
+    const setForceListOrganisme = useSetRecoilState(state.forceListOrganisme);
+    const categoryLabel = getCategoryLabel(props.category);
+    const categoryList = categories[props.category];
     const filterList = getFilterList(filters, props.category);
     const categoryLabelAndTooltip = getCategoryLabelAndTooltip(props.category);
     const onFilterSelection = (id: CategoryId, active: boolean) => {
@@ -148,6 +149,8 @@ export const FilterSection = React.memo(
         ? distinct([...filterList, id])
         : [...filterList].filter(i => i !== id);
       setNewFilterList(filters, setFilters, props.category, newFilterList);
+      // une fois qu'un premier filtre a été sélectionné on ne retourne plus sur la landing (sauf click logo)
+      setForceListOrganisme(true);
     };
     return (
       <Box
