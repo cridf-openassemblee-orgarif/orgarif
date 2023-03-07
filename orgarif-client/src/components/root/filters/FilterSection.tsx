@@ -129,57 +129,55 @@ const classes = {
   `
 };
 
-export const FilterSection = React.memo(
-  (props: {
-    category: keyof OrganismeCategories;
-    // TODO meaning ?
-    sticky?: boolean;
-    // TODO meaning ?
-    standalone?: boolean;
-  }) => {
-    const categories = useRecoilValue(state.categories);
-    const [filters, setFilters] = useRecoilState(state.filters);
-    const setForceListOrganisme = useSetRecoilState(state.forceListOrganisme);
-    const categoryLabel = getCategoryLabel(props.category);
-    const categoryList = categories[props.category];
-    const filterList = getFilterList(filters, props.category);
-    const categoryLabelAndTooltip = getCategoryLabelAndTooltip(props.category);
-    const onFilterSelection = (id: CategoryId, active: boolean) => {
-      const newFilterList = active
-        ? distinct([...filterList, id])
-        : [...filterList].filter(i => i !== id);
-      setNewFilterList(filters, setFilters, props.category, newFilterList);
-      // une fois qu'un premier filtre a été sélectionné on ne retourne plus sur la landing (sauf click logo)
-      setForceListOrganisme(true);
-    };
-    return (
-      <Box
-        css={classes.chipsContainer}
-        sx={{
-          top: props.sticky ? '80px' : '22vw',
-          py: props.sticky ? '0.4em' : '.8vw',
-          pl: '1em'
-        }}
-      >
-        <HeaderFiltersChip label={categoryLabel} />
-        {categoryList &&
-          !props.standalone &&
-          categoryList.map(c => {
-            const [label, tooltipLabel] = categoryLabelAndTooltip(c);
-            const active = filterList.includes(asNominalString(c.id));
-            return (
-              <FilterChip
-                key={c.id}
-                filter={c}
-                label={label}
-                tooltipLabel={tooltipLabel}
-                isSticky={props.sticky}
-                active={active}
-                onClick={() => onFilterSelection(c.id, !active)}
-              />
-            );
-          })}
-      </Box>
-    );
-  }
-);
+export const FilterSection = (props: {
+  category: keyof OrganismeCategories;
+  // TODO meaning ?
+  sticky?: boolean;
+  // TODO meaning ?
+  standalone?: boolean;
+}) => {
+  const categories = useRecoilValue(state.categories);
+  const [filters, setFilters] = useRecoilState(state.filters);
+  const setForceListOrganisme = useSetRecoilState(state.forceListOrganisme);
+  const categoryLabel = getCategoryLabel(props.category);
+  const categoryList = categories[props.category];
+  const filterList = getFilterList(filters, props.category);
+  const categoryLabelAndTooltip = getCategoryLabelAndTooltip(props.category);
+  const onFilterSelection = (id: CategoryId, active: boolean) => {
+    const newFilterList = active
+      ? distinct([...filterList, id])
+      : [...filterList].filter(i => i !== id);
+    setNewFilterList(filters, setFilters, props.category, newFilterList);
+    // une fois qu'un premier filtre a été sélectionné on ne retourne plus sur la landing (sauf click logo)
+    setForceListOrganisme(true);
+  };
+  return (
+    <Box
+      css={classes.chipsContainer}
+      sx={{
+        top: props.sticky ? '80px' : '22vw',
+        py: props.sticky ? '0.4em' : '.8vw',
+        pl: '1em'
+      }}
+    >
+      <HeaderFiltersChip label={categoryLabel} />
+      {categoryList &&
+        !props.standalone &&
+        categoryList.map(c => {
+          const [label, tooltipLabel] = categoryLabelAndTooltip(c);
+          const active = filterList.includes(asNominalString(c.id));
+          return (
+            <FilterChip
+              key={c.id}
+              filter={c}
+              label={label}
+              tooltipLabel={tooltipLabel}
+              isSticky={props.sticky}
+              active={active}
+              onClick={() => onFilterSelection(c.id, !active)}
+            />
+          );
+        })}
+    </Box>
+  );
+};
