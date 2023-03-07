@@ -12,11 +12,10 @@ import Collapse from '@mui/material/Collapse';
 import Slide from '@mui/material/Slide';
 import * as React from 'react';
 import { useState } from 'react';
-import { useRecoilValue, useSetRecoilState } from 'recoil';
+import { useSetRecoilState } from 'recoil';
 
 export const LandingFiltersContainer = () => {
   const setForceListOrganisme = useSetRecoilState(state.forceListOrganisme);
-  const displayLandingPage = useRecoilValue(state.displayLandingPage);
   const [hideExtraFilters, setHideExtraFilters] = useState<boolean>(true);
   return (
     <Slide direction="up" in={true} timeout={400} mountOnEnter unmountOnExit>

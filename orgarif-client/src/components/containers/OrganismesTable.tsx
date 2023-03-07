@@ -80,7 +80,7 @@ export const OrganismesTable = () => {
         setOrganismes(r.organismes);
         setLoading('Idle');
       });
-  }, [filters]);
+  }, [filters, setOrganismes]);
 
   return (
     <Box

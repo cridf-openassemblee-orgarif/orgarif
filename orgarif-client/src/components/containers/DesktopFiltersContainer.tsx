@@ -1,5 +1,4 @@
 /** @jsxImportSource @emotion/react */
-import { state } from '../../state/state';
 import { rootViewTitleHeight } from '../root/RootViewTitle';
 import { EmptyFiltersSection } from '../root/filters/EmptyFiltersSection';
 import { FilterSection } from '../root/filters/FilterSection';
@@ -13,17 +12,11 @@ import Collapse from '@mui/material/Collapse';
 import * as React from 'react';
 import { useState } from 'react';
 import { InView } from 'react-intersection-observer';
-import { useRecoilState, useRecoilValue } from 'recoil';
 
 export const DesktopFiltersContainer = (props: {
   setDisplayActiveFilters: (d: boolean) => void;
 }) => {
-  const departementsById = useRecoilValue(state.departementsById);
-  const secteursById = useRecoilValue(state.secteursById);
-  const natureJuridiquesById = useRecoilValue(state.natureJuridiquesById);
-  const typeStructuresById = useRecoilValue(state.typeStructuresById);
   const [hideExtraFilters, setHideExtraFilters] = useState<boolean>(true);
-  const [filters, setFilters] = useRecoilState(state.filters);
   return (
     <div
       css={css`
