@@ -11,7 +11,7 @@ import * as React from 'react';
 
 const classes = {
   numberBlock: css`
-    width: 60px;
+    width: 70px;
   `,
   label: css`
     position: relative;
