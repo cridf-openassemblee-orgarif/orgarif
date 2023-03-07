@@ -41,7 +41,6 @@ export const RootView = () => {
             `}
           >
             <RootViewTitle label="Filtres" position={0}>
-              {/* Display active filters when filter section is hidden */}
               {<FiltersHeader displayActiveFilters={displayActiveFilters} />}
             </RootViewTitle>
             {isMobile() && <MobileFiltersContainer />}
@@ -51,7 +50,6 @@ export const RootView = () => {
               />
             )}
             <RootViewTitle label="Liste des organismes" position={1} />
-            {/*<TableHeader />*/}
             <OrganismesTable />
           </div>
         </Fade>

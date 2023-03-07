@@ -30,10 +30,18 @@ import * as React from 'react';
 import { useEffect, useState } from 'react';
 import { useRecoilState, useRecoilValue } from 'recoil';
 
+const columnName = {
+  nom: 'nom',
+  departement: 'departement',
+  typeStructureId: 'typeStructureId',
+  actions: 'actions'
+};
+
 export const OrganismesTable = () => {
   const [loading, setLoading] = useState<LoadingState>('Idle');
   const [organismes, setOrganismes] = useRecoilState(state.organismes);
   const filters = useRecoilValue(state.filters);
+  const userInfos = useRecoilValue(state.userInfos);
 
   // const requestSearch = (searchedValue: string) => {
   // if (activeFilters.length > 0 && searchedValue.length >= 3) {
@@ -99,11 +107,10 @@ export const OrganismesTable = () => {
         localeText={frFR.components.MuiDataGrid.defaultProps.localeText}
         initialState={{
           columns: {
-            // TODO check
             columnVisibilityModel: {
-              departement: isMobile() ? false : true,
-              typeStructureId: isMobile() ? false : true,
-              selection: isMobile() ? false : true
+              [columnName.departement]: isMobile() ? false : true,
+              [columnName.typeStructureId]: isMobile() ? false : true,
+              [columnName.actions]: !!userInfos
             }
           }
         }}
@@ -127,7 +134,7 @@ const CountChip = () => {
 };
 const columns: GridColDef[] = [
   {
-    field: 'nom',
+    field: columnName.nom,
     headerName: `Organismes`,
     minWidth: 250,
     flex: 1,
@@ -139,7 +146,7 @@ const columns: GridColDef[] = [
     )
   },
   {
-    field: 'departement',
+    field: columnName.departement,
     headerName: 'Département',
     minWidth: 150,
     flex: 0.3,
@@ -149,7 +156,7 @@ const columns: GridColDef[] = [
     )
   },
   {
-    field: 'typeStructureId',
+    field: columnName.typeStructureId,
     headerName: 'Type de Structure',
     minWidth: 180,
     flex: 0.4,
@@ -159,11 +166,11 @@ const columns: GridColDef[] = [
     )
   },
   {
-    field: 'action',
+    field: columnName.actions,
     headerName: '',
-    minWidth: 120,
-    maxWidth: 120,
-    flex: 0.4,
+    minWidth: isMobile() ? 64 : 80,
+    maxWidth: isMobile() ? 64 : 80,
+    flex: 0.1,
     align: 'center',
     sortable: false,
     renderHeader: () => <></>,
@@ -225,7 +232,10 @@ const EditRow = (props: { id: GridRowId }) => {
         css={css`
           height: 2em;
           background-color: white;
-          margin-left: 4em;
+          margin-left: 1em;
+          @media (${breakpoints.LAPTOP}) {
+            margin-left: 2em;
+          }
           border: 1px solid white;
           cursor: pointer;
         `}

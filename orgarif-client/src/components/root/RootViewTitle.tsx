@@ -19,6 +19,7 @@ export const RootViewTitle = (
       top: -1px;
       display: flex;
       overflow: hidden;
+      padding: 2px 8px;
       @media (${breakpoints.LAPTOP}) {
         position: sticky;
         top: ${Dimensions.headerHeight +
@@ -38,7 +39,10 @@ export const RootViewTitle = (
       component="h5"
       variant="h4"
       css={css`
-        font-size: 2rem;
+        font-size: 1.5rem;
+        @media (${breakpoints.LAPTOP}) {
+          font-size: 2rem;
+        }
         white-space: nowrap;
         text-transform: uppercase;
       `}
