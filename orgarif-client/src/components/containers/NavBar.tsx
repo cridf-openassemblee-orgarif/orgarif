@@ -84,7 +84,10 @@ export const NavBar = () => {
             flex-grow: 1;
           `}
         >
-          <RouteLink route={{ name: 'RootRoute' }}>
+          <RouteLink
+            route={{ name: 'RootRoute' }}
+            removeFilters={window.location.pathname === '/'}
+          >
             <Logo
               width={isMobile() ? 120 : 200}
               height={Dimensions.headerHeight}

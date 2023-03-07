@@ -1,8 +1,11 @@
+import { state } from '../../state/state';
+import { buildHash, Filters } from '../../utils/filters';
 import { getValue } from '../../utils/nominal-class';
 import { ApplicationRoute, routePathMap } from './routes';
 import { useLocation, useNavigate } from 'react-router-dom';
+import { useRecoilValue } from 'recoil';
 
-export const buildPath = (route: ApplicationRoute) => {
+export const buildPath = (route: ApplicationRoute, filters: Filters) => {
   let path = getValue(routePathMap, route.name);
   Object.keys(route)
     .filter(k => k !== 'name')
@@ -14,12 +17,13 @@ export const buildPath = (route: ApplicationRoute) => {
       }
       path = path.replace(':' + k, param);
     });
-  return path;
+  return path + '#' + buildHash(filters);
 };
 
 export const useGoTo = () => {
   const navigate = useNavigate();
   const location = useLocation();
+  const filters = useRecoilValue(state.filters);
   return (
     route: ApplicationRoute,
     options?: {
@@ -33,13 +37,14 @@ export const useGoTo = () => {
     }
     if (options?.useTargetPath) {
       const targetPath =
-        (location.state as any | undefined)?.targetPath ?? buildPath(route);
+        (location.state as any | undefined)?.targetPath ??
+        buildPath(route, filters);
       navigate(targetPath, {
         replace: options.replace ?? false,
         state: undefined
       });
     } else {
-      navigate(buildPath(route), {
+      navigate(buildPath(route, filters), {
         replace: options?.replace ?? false,
         state: options?.targetPath
           ? { targetPath: options.targetPath }

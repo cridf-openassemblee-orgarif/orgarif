@@ -14,6 +14,7 @@ import {
 import { OrganismeListDto } from '../generated/domain/organisme';
 import { UserInfos } from '../generated/domain/user';
 import {
+  buildHash,
   extractFilters,
   Filters,
   filtersIsEmpty,
@@ -57,12 +58,7 @@ export const state = {
     effects: [
       e => {
         e.onSet(newFilters => {
-          const params = new URLSearchParams();
-          Object.entries(newFilters)
-            .filter(e => e[1].length !== 0)
-            .forEach(e => params.set(e[0].replace('Id', ''), e[1]));
-          window.location.hash = 'test';
-          window.location.hash = params.toString();
+          window.location.hash = buildHash(newFilters);
           // problem : provoques a refresh
           // if (hash === '') { window.location.href = window.location.href.split('#')[0]; }
         });

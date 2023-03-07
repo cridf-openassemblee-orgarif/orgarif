@@ -15,6 +15,14 @@ export const sortDepartements = (d: Departement[]) =>
 export const sortCategory = <T extends Category>(c: T[]): T[] =>
   c.sort(compareByString(i => i.libelle));
 
+export const buildHash = (filters: Filters): string => {
+  const params = new URLSearchParams();
+  Object.entries(filters)
+    .filter(e => e[1].length !== 0)
+    .forEach(e => params.set(e[0].replace('Id', ''), e[1]));
+  return params.toString();
+};
+
 export interface Filters {
   departementIds: DepartementId[];
   natureJuridiqueIds: NatureJuridiqueId[];

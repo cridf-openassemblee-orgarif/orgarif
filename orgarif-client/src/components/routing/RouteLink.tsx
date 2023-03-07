@@ -1,6 +1,8 @@
 /** @jsxImportSource @emotion/react */
 import { EmotionStyles } from '../../interfaces';
+import { state } from '../../state/state';
 import { assertUnreachable, extractEmotionCss } from '../../utils';
+import { emptyFilters } from '../../utils/filters';
 import { getValue } from '../../utils/nominal-class';
 import { ApplicationRoute, routePathMap } from './routes';
 import { buildPath } from './routing-utils';
@@ -9,6 +11,7 @@ import { Button, ButtonTypeMap } from '@mui/material';
 import * as React from 'react';
 import { PropsWithChildren } from 'react';
 import { Link, useMatch } from 'react-router-dom';
+import { useRecoilState, useSetRecoilState } from 'recoil';
 
 const linkDefaultElement = 'Link';
 
@@ -20,15 +23,19 @@ const RouteLinkBase = (
     activeCss?: EmotionStyles;
     element?: 'Link' | 'Button';
     className?: string;
+    removeFilters?: boolean;
   }>
 ) => {
+  const [filters, setFilters] = useRecoilState(state.filters);
+  const setForceListOrganisme = useSetRecoilState(state.forceListOrganisme);
   const properties = {
-    to: buildPath(props.route),
+    to: buildPath(props.route, props.removeFilters ? emptyFilters : filters),
     variant: props.variant ?? 'outlined',
     className: cx(
       css`
         font-weight: ${props.doesMatch ? 'bold' : 'normal'};
         text-decoration: ${props.doesMatch ? 'underline' : 'none'};
+
         &:hover {
           text-decoration: underline;
         }
@@ -37,7 +44,13 @@ const RouteLinkBase = (
       css`
         ${props.doesMatch ? props.activeCss : undefined}
       `
-    )
+    ),
+    onClick: props.removeFilters
+      ? () => {
+          setFilters(emptyFilters);
+          setForceListOrganisme(false);
+        }
+      : undefined
   };
   const element = props.element ?? linkDefaultElement;
   // FIXME pb active css passe avant css, pas bon !
@@ -63,6 +76,7 @@ export const RouteLink = (
     css?: EmotionStyles;
     activeCss?: EmotionStyles;
     element?: 'Link' | 'Button';
+    removeFilters?: boolean;
   }>
 ) => (
   <RouteLinkBase
@@ -71,6 +85,7 @@ export const RouteLink = (
     variant={props.variant}
     activeCss={props.activeCss}
     element={props.element}
+    removeFilters={props.removeFilters}
     {...extractEmotionCss(props)}
   >
     {props.children}
