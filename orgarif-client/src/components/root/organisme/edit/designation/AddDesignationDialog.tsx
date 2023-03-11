@@ -45,9 +45,14 @@ export const AddDesignationDialog = (props: {
       setStartDate(undefined);
     });
   };
+  const close = () => {
+      setRepresentant(undefined)
+      setStartDate(undefined)
+      props.onClose()
+  }
   return (
     <React.Fragment>
-      <Dialog open={props.display} onClose={props.onClose} fullWidth={true}>
+      <Dialog open={props.display} onClose={close} fullWidth={true}>
         <DialogTitle>Ajout désignation {props.representantLabel}</DialogTitle>
         <DialogContent>
           <div
@@ -104,7 +109,7 @@ export const AddDesignationDialog = (props: {
         </DialogContent>
         <DialogActions>
           <LoadingButton onClick={onSubmit}>Ajouter</LoadingButton>
-          <Button onClick={props.onClose} color="primary">
+          <Button onClick={close} color="primary">
             Annuler
           </Button>
         </DialogActions>

@@ -8,6 +8,7 @@ object QueryConfiguration {
 
     fun role(query: Query): Role? =
         when (query) {
+            is GetLastDeliberationsQuery -> User
             is GetOrganismeQuery -> null
             is GetUserInfosQuery -> Admin
             is GetUsersQuery -> Admin

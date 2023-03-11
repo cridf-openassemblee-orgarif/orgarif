@@ -16,6 +16,7 @@ import {
 import { UserInfos } from '../domain/user';
 
 export type Query =
+  | GetLastDeliberationsQuery
   | GetOrganismeQuery
   | GetUserInfosQuery
   | GetUsersQuery
@@ -25,6 +26,7 @@ export type Query =
   | SearchRepresentantsQuery;
 
 export type QueryResponse =
+  | GetLastDeliberationsQueryResponse
   | GetOrganismeQueryResponse
   | GetUserInfosQueryResponse
   | GetUsersQueryResponse
@@ -32,6 +34,25 @@ export type QueryResponse =
   | ListOrganismesQueryResponse
   | SearchDeliberationQueryResponse
   | SearchRepresentantsQueryResponse;
+
+export interface GetLastDeliberationsQuery {
+  objectType: 'GetLastDeliberationsQuery';
+}
+
+export interface GetLastDeliberationsQueryResponse {
+  objectType: 'GetLastDeliberationsQueryResponse';
+  results: DeliberationDto[];
+}
+
+export interface GetOrganismeQuery {
+  objectType: 'GetOrganismeQuery';
+  id: OrganismeId;
+}
+
+export interface GetOrganismeQueryResponse {
+  objectType: 'GetOrganismeQueryResponse';
+  organisme: OrganismeDto;
+}
 
 export interface GetUserInfosQuery {
   objectType: 'GetUserInfosQuery';
@@ -50,16 +71,6 @@ export interface GetUsersQuery {
 export interface GetUsersQueryResponse {
   objectType: 'GetUsersQueryResponse';
   users: UserInfos[];
-}
-
-export interface GetOrganismeQuery {
-  objectType: 'GetOrganismeQuery';
-  id: OrganismeId;
-}
-
-export interface GetOrganismeQueryResponse {
-  objectType: 'GetOrganismeQueryResponse';
-  organisme: OrganismeDto;
 }
 
 export interface IsMailAlreadyTakenQuery {

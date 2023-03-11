@@ -14,6 +14,7 @@ export const AutocompleteInput = <Suggestion extends object>(props: {
   selection: Suggestion | undefined;
   label: string;
   alreadySetLabel?: string;
+  initialSuggestions?: () => Promise<Suggestion[]>;
   onInputChange: (
     input: string
   ) => Promise<[(Suggestion | string)[], AlreadySet]>;
@@ -28,6 +29,11 @@ export const AutocompleteInput = <Suggestion extends object>(props: {
   );
   useEffect(() => setValue(props.selection ?? null), [props.selection]);
   const [suggestions, setSuggestions] = useState<(Suggestion | string)[]>([]);
+  useEffect(() => {
+    if (props.initialSuggestions && !value) {
+      props.initialSuggestions().then(r => setSuggestions(r));
+    }
+  }, [value]);
   const [alreadySet, setAlreadySet] = useState(false);
   const [loading, setLoading] = useState<LoadingState>('Idle');
   const onInputChange = (event: React.ChangeEvent<{}>, value: string) => {

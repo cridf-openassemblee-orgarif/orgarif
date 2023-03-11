@@ -45,6 +45,14 @@ class DeliberationDao(val jooq: DSLContext) {
             ?.let(this::map)
             ?: throw IllegalArgumentException("$id")
 
+    fun fetchLast() =
+        jooq
+            .selectFrom(DELIBERATION)
+            .orderBy(DELIBERATION.LAST_MODIFICATION_DATE.desc())
+            .limit(3)
+            .fetch()
+            .map(this::map)
+
     fun search(searchToken: String): List<Record> =
         jooq
             .selectFrom(DELIBERATION)

@@ -2,7 +2,10 @@
 import { SharedConstants } from '../../../../../constants';
 import { DeliberationId } from '../../../../../generated/domain/ids';
 import { DeliberationDto } from '../../../../../generated/domain/organisme';
-import { SearchDeliberationQueryResponse } from '../../../../../generated/query/queries';
+import {
+  GetLastDeliberationsQueryResponse,
+  SearchDeliberationQueryResponse
+} from '../../../../../generated/query/queries';
 import { appContext } from '../../../../../services/ApplicationContext';
 import { formatLocaleDate } from '../../../../../simple-fr';
 import {
@@ -11,6 +14,7 @@ import {
 } from '../../../../common/form/AutocompleteInput';
 import { css } from '@emotion/react';
 import * as React from 'react';
+import { useEffect } from 'react';
 
 export const SelectDeliberationInput = (props: {
   selection: DeliberationDto | undefined;
@@ -18,6 +22,15 @@ export const SelectDeliberationInput = (props: {
   onChange: (d: DeliberationDto) => void;
   onCreate: (libelle: string) => void;
 }) => {
+  const initialSuggestions = () =>
+    appContext
+      .queryService()
+      .send<GetLastDeliberationsQueryResponse>({
+        objectType: 'GetLastDeliberationsQuery'
+      })
+      .then(r => [
+        ...r.results.filter(r => !props.excludeDeliberations.includes(r.id))
+      ]);
   const onInputChange = (
     input: string
   ): Promise<[(DeliberationDto | string)[], AlreadySet]> => {
@@ -46,6 +59,7 @@ export const SelectDeliberationInput = (props: {
       selection={props.selection}
       label="Ajouter lien délibération"
       alreadySetLabel="La délibération est déjà liée"
+      initialSuggestions={initialSuggestions}
       onInputChange={onInputChange}
       suggestionLabel={(s: DeliberationDto) =>
         s.libelle +

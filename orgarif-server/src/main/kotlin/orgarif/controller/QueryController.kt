@@ -4,6 +4,8 @@ import java.net.URLDecoder
 import javax.servlet.http.HttpServletRequest
 import org.springframework.web.bind.annotation.GetMapping
 import org.springframework.web.bind.annotation.RestController
+import orgarif.query.GetLastDeliberationsQuery
+import orgarif.query.GetLastDeliberationsQueryHandler
 import orgarif.query.GetOrganismeQuery
 import orgarif.query.GetOrganismeQueryHandler
 import orgarif.query.GetUserInfosQuery
@@ -31,6 +33,7 @@ import orgarif.service.utils.TransactionIsolationService
 class QueryController(
     private val userDao: UserDao,
     private val userSessionService: UserSessionService,
+    private val getLastDeliberationsQueryHandler: GetLastDeliberationsQueryHandler,
     private val getOrganismeQueryHandler: GetOrganismeQueryHandler,
     private val getUserInfosQueryHandler: GetUserInfosQueryHandler,
     private val getUsersQueryHandler: GetUsersQueryHandler,
@@ -55,6 +58,7 @@ class QueryController(
 
     private fun handler(query: Query) =
         when (query) {
+            is GetLastDeliberationsQuery -> getLastDeliberationsQueryHandler
             is GetOrganismeQuery -> getOrganismeQueryHandler
             is GetUserInfosQuery -> getUserInfosQueryHandler
             is GetUsersQuery -> getUsersQueryHandler

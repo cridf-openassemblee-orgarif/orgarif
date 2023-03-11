@@ -48,6 +48,10 @@ export const AddLienDeliberationDialog = (props: {
       comment !== '' ? comment : undefined
     );
   };
+  const close = () => {
+      setSelectedDeliberation(undefined);
+      props.onClose()
+  }
   return (
     <React.Fragment>
       <Dialog
@@ -55,7 +59,7 @@ export const AddLienDeliberationDialog = (props: {
         // open={props.display && !displayCreateDeliberationDialog}
         // bcp plus simple de faire superposition dans le cas du AddSuppleant dans l'édition de représentantion...
         open={props.display}
-        onClose={props.onClose}
+        onClose={close}
         fullWidth={true}
       >
         <DialogTitle>Ajout délibération</DialogTitle>
@@ -101,7 +105,7 @@ export const AddLienDeliberationDialog = (props: {
         </DialogContent>
         <DialogActions>
           <LoadingButton onClick={onSubmit}>Ajouter</LoadingButton>
-          <Button onClick={props.onClose} color="primary">
+          <Button onClick={close} color="primary">
             Annuler
           </Button>
         </DialogActions>

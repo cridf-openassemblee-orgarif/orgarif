@@ -22,6 +22,14 @@ sealed class Query
 
 @Shared sealed class QueryResponse
 
+class GetLastDeliberationsQuery : Query()
+
+data class GetLastDeliberationsQueryResponse (val results: List<DeliberationDto>): QueryResponse()
+
+data class GetOrganismeQuery(val id: OrganismeId) : Query()
+
+data class GetOrganismeQueryResponse(val organisme: OrganismeDto) : QueryResponse()
+
 data class GetUserInfosQuery(val userId: UserId) : Query()
 
 data class GetUserInfosQueryResponse(val userInfos: UserInfos?) : QueryResponse()
@@ -29,10 +37,6 @@ data class GetUserInfosQueryResponse(val userInfos: UserInfos?) : QueryResponse(
 class GetUsersQuery : Query()
 
 data class GetUsersQueryResponse(val users: List<UserInfos>) : QueryResponse()
-
-data class GetOrganismeQuery(val id: OrganismeId) : Query()
-
-data class GetOrganismeQueryResponse(val organisme: OrganismeDto) : QueryResponse()
 
 data class IsMailAlreadyTakenQuery(val mail: String) : Query()
 
