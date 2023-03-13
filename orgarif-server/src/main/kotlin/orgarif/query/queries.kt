@@ -24,7 +24,7 @@ sealed class Query
 
 class GetLastDeliberationsQuery : Query()
 
-data class GetLastDeliberationsQueryResponse (val results: List<DeliberationDto>): QueryResponse()
+data class GetLastDeliberationsQueryResponse(val results: List<DeliberationDto>) : QueryResponse()
 
 data class GetOrganismeQuery(val id: OrganismeId) : Query()
 

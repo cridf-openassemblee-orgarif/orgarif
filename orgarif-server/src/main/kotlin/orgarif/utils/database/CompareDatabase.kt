@@ -2,11 +2,10 @@ package orgarif.utils.database
 
 import com.google.common.io.Files
 import orgarif.utils.ShellRunner
-import orgarif.utils.database.CloudDatabasesConfiguration
 import orgarif.utils.replaceRecurvice
 
 object CompareDatabase {
-    fun compare (env: String, database: CloudDatabasesConfiguration.Database) {
+    fun compare(env: String, database: CloudDatabasesConfiguration.Database) {
         val tempDb = "orgarif-$env-schema"
         // doesn't work as simply with psql -c ""
         val tempDir = Files.createTempDir()
@@ -16,12 +15,13 @@ object CompareDatabase {
             val schemaResult =
                 ShellRunner.run(
                     "pg_dump -h ${database.databaseHost}" +
-                            " -p ${database.databasePort}" +
-                            " -U ${database.databaseUser}" +
-                            " -d ${database.databaseName}" +
-                            " -n public --schema-only")
+                        " -p ${database.databasePort}" +
+                        " -U ${database.databaseUser}" +
+                        " -d ${database.databaseName}" +
+                        " -n public --schema-only")
             if (schemaResult.result != 0) {
-                throw IllegalStateException("Could not copy database schema => try to grant rights !")
+                throw IllegalStateException(
+                    "Could not copy database schema => try to grant rights !")
             }
             ShellRunner.run("createdb $tempDb")
             Files.write(
@@ -51,7 +51,7 @@ no-password = true
             r.output
                 .filter { !it.startsWith("DROP FUNCTION ") }
                 .filter { !it.startsWith("DROP TYPE ") }
-                .joinToString  (separator = "\n")
+                .joinToString(separator = "\n")
                 .replace(" ONLY public.", " ")
                 .let { it.replaceRecurvice("\n\n\n", "\n") }
                 .let { println(it) }

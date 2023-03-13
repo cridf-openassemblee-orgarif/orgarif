@@ -1,6 +1,5 @@
 package orgarif.utils
 
-
 import com.google.common.io.CharStreams
 import java.io.InputStream
 import java.io.InputStreamReader
@@ -35,11 +34,11 @@ object YamlParser {
             // replace system env vars
             .map {
                 it.first to
-                        it.second
-                            ?.replace("\\$\\{[^}]*}".toRegex()) {
-                                System.getenv(it.value.drop(2).dropLast(1)) ?: ""
-                            }
-                            ?.let { it.ifEmpty { null } }
+                    it.second
+                        ?.replace("\\$\\{[^}]*}".toRegex()) {
+                            System.getenv(it.value.drop(2).dropLast(1)) ?: ""
+                        }
+                        ?.let { it.ifEmpty { null } }
             }
 
     private fun flattenConf(map: Map<String, Any>): List<Pair<String, String?>> =
@@ -57,7 +56,9 @@ object YamlParser {
                         (key + "." + it.first) to it.second
                     }
                 is List<*> ->
-                    value.flatMapIndexed { index, v -> flattenConf(mapOf("$key[$index]" to v as Any)) }
+                    value.flatMapIndexed { index, v ->
+                        flattenConf(mapOf("$key[$index]" to v as Any))
+                    }
                 else -> listOf(key to "$value")
             }
         }

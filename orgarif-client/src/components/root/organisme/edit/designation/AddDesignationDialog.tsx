@@ -46,10 +46,10 @@ export const AddDesignationDialog = (props: {
     });
   };
   const close = () => {
-      setRepresentant(undefined)
-      setStartDate(undefined)
-      props.onClose()
-  }
+    setRepresentant(undefined);
+    setStartDate(undefined);
+    props.onClose();
+  };
   return (
     <React.Fragment>
       <Dialog open={props.display} onClose={close} fullWidth={true}>

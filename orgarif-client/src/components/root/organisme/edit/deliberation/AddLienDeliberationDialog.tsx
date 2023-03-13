@@ -49,9 +49,9 @@ export const AddLienDeliberationDialog = (props: {
     );
   };
   const close = () => {
-      setSelectedDeliberation(undefined);
-      props.onClose()
-  }
+    setSelectedDeliberation(undefined);
+    props.onClose();
+  };
   return (
     <React.Fragment>
       <Dialog

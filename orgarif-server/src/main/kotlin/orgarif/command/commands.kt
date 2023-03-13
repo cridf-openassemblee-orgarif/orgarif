@@ -16,9 +16,9 @@ import orgarif.domain.OrganismeId
 import orgarif.domain.PlainStringPassword
 import orgarif.domain.RegisterResult
 import orgarif.domain.RepresentantId
+import orgarif.domain.Role
 import orgarif.domain.SecteurId
 import orgarif.domain.TypeStructureId
-import orgarif.domain.Role
 import orgarif.domain.UserId
 import orgarif.domain.UserInfos
 

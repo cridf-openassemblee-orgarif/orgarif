@@ -1,6 +1,5 @@
 package orgarif.controller
 
-import orgarif.domain.Session as OrgarifSession
 import mu.KotlinLogging
 import org.jooq.DSLContext
 import org.springframework.beans.factory.annotation.Value
@@ -13,6 +12,7 @@ import org.springframework.web.bind.annotation.RequestParam
 import org.springframework.web.bind.annotation.RestController
 import orgarif.config.SafeSessionRepository
 import orgarif.controller.RemoteController.Companion.remoteRoute
+import orgarif.domain.Session as OrgarifSession
 import orgarif.repository.DesignationDao
 import orgarif.repository.EluDao
 import orgarif.repository.RepresentantDao
