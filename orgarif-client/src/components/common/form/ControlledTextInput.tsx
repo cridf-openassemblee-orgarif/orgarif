@@ -7,6 +7,7 @@ import { FieldErrors } from 'react-hook-form/dist/types/errors';
 
 // TODO[tmpl] from former "manual" inputs :
 // const [value, setValue] = useState(props.initialValue ?? ''); // ?? '' is needed for type=date
+// don't forget useEffect(setValue,[value])
 // what happends with react-hook-form ?
 export const ControlledTextInput = <
   TFieldValues extends FieldValues,
