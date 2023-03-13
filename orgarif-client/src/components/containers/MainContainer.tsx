@@ -7,10 +7,10 @@ import { PropsWithChildren } from 'react';
 export const MainContainer = (props: PropsWithChildren) => (
   <div
     css={css`
+      width: 100vw;
+      height: 100vh;
       display: flex;
       flex-direction: column;
-      height: 100%;
-      width: 100%;
     `}
   >
     <Menu />

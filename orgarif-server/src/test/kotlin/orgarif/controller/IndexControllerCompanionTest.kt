@@ -8,13 +8,13 @@ internal class IndexControllerCompanionTest() {
 
     @Test
     fun `test url domain extraction`() {
-        assertEquals("localhost", extractDomain("http://localhost:3200"))
-        assertEquals("localhost", extractDomain("http://localhost:3200/"))
-        assertEquals("localhost", extractDomain("http://localhost:3200/djvodsjv"))
-        assertEquals("localhost", extractDomain("http://localhost:3200/djvodsjv/dsvsdvds"))
-        assertEquals("localhost", extractDomain("https://localhost:3200"))
-        assertEquals("localhost", extractDomain("https://localhost:3200/"))
-        assertEquals("localhost", extractDomain("https://localhost:3200/djvodsjv"))
-        assertEquals("localhost", extractDomain("https://localhost:3200/djvodsjv/dsvsdvds"))
+        assertEquals("localhost", extractDomain("http://localhost:3300"))
+        assertEquals("localhost", extractDomain("http://localhost:3300/"))
+        assertEquals("localhost", extractDomain("http://localhost:3300/djvodsjv"))
+        assertEquals("localhost", extractDomain("http://localhost:3300/djvodsjv/dsvsdvds"))
+        assertEquals("localhost", extractDomain("https://localhost:3300"))
+        assertEquals("localhost", extractDomain("https://localhost:3300/"))
+        assertEquals("localhost", extractDomain("https://localhost:3300/djvodsjv"))
+        assertEquals("localhost", extractDomain("https://localhost:3300/djvodsjv/dsvsdvds"))
     }
 }

@@ -2,13 +2,13 @@ services:
   orgarif-client:
     build: orgarif-client
     ports:
-      - "3200:3200"
+      - "3300:3300"
     volumes:
       - ../:/repo
   orgarif-server:
     build: orgarif-server
     ports:
-      - "8200:8200"
+      - "8300:8300"
     depends_on:
       - orgarif-psql
     environment:
