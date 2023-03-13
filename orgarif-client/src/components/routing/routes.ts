@@ -26,6 +26,7 @@ export type ApplicationRoute =
   | RegisterRoute
   | RootRoute
   | UsersManagementRoute
+  | UsersManagementUserEditRolesRoute
   | UsersManagementUserRoute;
 
 export interface ApplicationRouteProps<T extends ApplicationRoute> {
@@ -95,6 +96,12 @@ export const routes: ApplicationRouteProps<any>[] = [
     role: 'Admin'
   },
   {
+    name: 'UsersManagementUserEditRolesRoute',
+    path: '/users-management/:userId/edit-roles',
+    component: UsersManagementView,
+    role: 'Admin'
+  },
+  {
     name: 'UsersManagementRoute',
     path: '/users-management',
     component: UsersManagementView,
@@ -157,6 +164,11 @@ interface RootRoute {
 
 export interface UsersManagementRoute {
   name: 'UsersManagementRoute';
+}
+
+export interface UsersManagementUserEditRolesRoute {
+  name: 'UsersManagementUserEditRolesRoute';
+  userId: UserId;
 }
 
 export interface UsersManagementUserRoute {

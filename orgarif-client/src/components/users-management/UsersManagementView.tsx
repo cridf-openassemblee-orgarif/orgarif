@@ -6,10 +6,11 @@ import { appContext } from '../../services/ApplicationContext';
 import { MainContainer } from '../containers/MainContainer';
 import {
   UsersManagementRoute,
+  UsersManagementUserEditRolesRoute,
   UsersManagementUserRoute
 } from '../routing/routes';
-import { useGoTo } from '../routing/routing-utils';
-import { EditUserDialog } from './EditUserDialog';
+import { UserDetailDialog } from './UserDetailDialog';
+import { UserEditRolesDialog } from './UserEditRolesDialog';
 import { UsersManagementTable } from './UsersManagementTable';
 import { css } from '@emotion/react';
 import { useSnackbar } from 'notistack';
@@ -17,12 +18,25 @@ import * as React from 'react';
 import { useEffect, useState } from 'react';
 
 export const UsersManagementView = (props: {
-  route: UsersManagementRoute | UsersManagementUserRoute;
+  route:
+    | UsersManagementRoute
+    | UsersManagementUserEditRolesRoute
+    | UsersManagementUserRoute;
 }) => {
   const [users, setUsers] = useState<UserInfos[]>([]);
   const [loading, setLoading] = useState<LoadingState>('Idle');
   const { enqueueSnackbar } = useSnackbar();
-  const goTo = useGoTo();
+  // TODO would probably be better to reload data
+  const updateUserInfos = (userInfos: UserInfos) =>
+    setUsers([
+      ...users.map(u => {
+        if (u.id === userInfos.id) {
+          return userInfos;
+        } else {
+          return u;
+        }
+      })
+    ]);
   useEffect(() => {
     setLoading('Loading');
     appContext
@@ -41,8 +55,12 @@ export const UsersManagementView = (props: {
         });
       });
   }, [enqueueSnackbar]);
-  const userId =
+  const displayDetailsUserId =
     props.route.name === 'UsersManagementUserRoute'
+      ? props.route.userId
+      : undefined;
+  const displayEditRolesUserId =
+    props.route.name === 'UsersManagementUserEditRolesRoute'
       ? props.route.userId
       : undefined;
   return (
@@ -57,10 +75,10 @@ export const UsersManagementView = (props: {
       >
         <h1>Users management</h1>
         <UsersManagementTable users={users} loading={loading} />
-        <EditUserDialog
-          userId={userId}
-          updateUserInfos={() => {}}
-          close={() => goTo({ name: 'UsersManagementRoute' })}
+        <UserDetailDialog userId={displayDetailsUserId} />
+        <UserEditRolesDialog
+          userId={displayEditRolesUserId}
+          updateUserInfos={updateUserInfos}
         />
       </div>
     </MainContainer>

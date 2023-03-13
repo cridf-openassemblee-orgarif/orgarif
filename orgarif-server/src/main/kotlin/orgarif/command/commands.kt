@@ -18,6 +18,8 @@ import orgarif.domain.RegisterResult
 import orgarif.domain.RepresentantId
 import orgarif.domain.SecteurId
 import orgarif.domain.TypeStructureId
+import orgarif.domain.Role
+import orgarif.domain.UserId
 import orgarif.domain.UserInfos
 
 @Shared
@@ -97,6 +99,8 @@ data class LoginCommand(val mail: String, val password: PlainStringPassword) : C
 
 data class LoginCommandResponse(val result: LoginResult, val userinfos: UserInfos?) :
     CommandResponse()
+
+data class UpdateRolesCommand(val userId: UserId, val roles: Set<Role>) : Command()
 
 data class RegisterCommand(
     val mail: String,

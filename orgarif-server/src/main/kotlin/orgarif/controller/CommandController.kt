@@ -80,6 +80,8 @@ import orgarif.command.UpdateOrganismeStatusCommand
 import orgarif.command.UpdateOrganismeStatusCommandHandler
 import orgarif.command.UpdateOrganismeTypeStructureCommand
 import orgarif.command.UpdateOrganismeTypeStructureCommandHandler
+import orgarif.command.UpdateRolesCommand
+import orgarif.command.UpdateRolesCommandHandler
 import orgarif.command.UpdateSecteurLibelleCommand
 import orgarif.command.UpdateSecteurLibelleCommandHandler
 import orgarif.command.UpdateSecteurStatusCommand
@@ -120,6 +122,7 @@ class CommandController(
     private val createTypeStructureCommandHandler: CreateTypeStructureCommandHandler,
     private val devLoginCommandHandler: DevLoginCommandHandler,
     private val loginCommandHandler: LoginCommandHandler,
+    private val updateRolesCommandHandler: UpdateRolesCommandHandler,
     private val registerCommandHandler: RegisterCommandHandler,
     private val updateDepartementCommandHandler: UpdateDepartementCommandHandler,
     private val updateDepartementStatusCommandHandler: UpdateDepartementStatusCommandHandler,
@@ -241,6 +244,7 @@ class CommandController(
             is CreateTypeStructureCommand -> createTypeStructureCommandHandler
             is DevLoginCommand -> devLoginCommandHandler
             is LoginCommand -> loginCommandHandler
+            is UpdateRolesCommand -> updateRolesCommandHandler
             is RegisterCommand -> registerCommandHandler
             is UpdateDepartementCommand -> updateDepartementCommandHandler
             is UpdateDepartementStatusCommand -> updateDepartementStatusCommandHandler
@@ -276,6 +280,7 @@ class CommandController(
     // for admin commands, should return the affected user when there's one
     private fun affectedUserId(command: Command): UserId? =
         when (command) {
+            is UpdateRolesCommand -> command.userId
             is AddDesignationCommand,
             is AddInstanceCommand,
             is AddLienDeliberationCommand,

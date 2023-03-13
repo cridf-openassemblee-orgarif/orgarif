@@ -1,4 +1,4 @@
-import { ApplicationEnvironment } from '../generated/domain/application';
+import { Role } from '../generated/domain/user';
 
 // from https://stackoverflow.com/questions/55265679/enforce-that-an-array-is-exhaustive-over-a-union-type
 export const enumValues =
@@ -11,9 +11,4 @@ export const enumValues =
   ) =>
     x;
 
-export const applicationEnvironments = enumValues<ApplicationEnvironment>()(
-  'Dev',
-  'Staging',
-  'Prod',
-  'Test'
-);
+export const roleEnumValues: Role[] = enumValues<Role>()('User', 'Admin');

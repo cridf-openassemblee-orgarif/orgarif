@@ -5,7 +5,7 @@ export const Errors = {
   _41dcf9d3: () => Error('41dcf9d3'),
   _d2070152: () => Error('d2070152'),
   _52b81c0f: () => Error('52b81c0f'),
-  _89de521f: () => Error('89de521f')
+  _89de521f: () => Error('89de521f'),
   // _952f03ee: () => Error('952f03ee'),
   // _82c7652b: () => Error('82c7652b'),
   // _6f643a2a: () => Error('6f643a2a'),
@@ -15,4 +15,7 @@ export const Errors = {
   // _2c740dc6: () => Error('2c740dc6'),
   // _bf153d36: () => Error('bf153d36'),
   // _51237480: () => Error('51237480'),
+  _fe2e1fc7: () => Error('fe2e1fc7'),
+  _8ab803a9: () => Error('8ab803a9'),
+  _d4c0ce89: () => Error('d4c0ce89')
 };

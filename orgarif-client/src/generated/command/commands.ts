@@ -1,4 +1,5 @@
 import { LocalDate } from '../../domain/datetime';
+import { UserId } from '../domain/fmk-ids';
 import {
   DeliberationId,
   DepartementId,
@@ -13,7 +14,7 @@ import {
 } from '../domain/ids';
 import { DesignationType, ItemStatus } from '../domain/organisme';
 import { PlainStringPassword } from '../domain/security';
-import { LoginResult, RegisterResult, UserInfos } from '../domain/user';
+import { LoginResult, RegisterResult, Role, UserInfos } from '../domain/user';
 
 export type Command =
   | AddDesignationCommand
@@ -49,6 +50,7 @@ export type Command =
   | UpdateOrganismeSecteurCommand
   | UpdateOrganismeStatusCommand
   | UpdateOrganismeTypeStructureCommand
+  | UpdateRolesCommand
   | UpdateSecteurLibelleCommand
   | UpdateSecteurStatusCommand
   | UpdateTypeStructureLibelleCommand
@@ -206,6 +208,12 @@ export interface LoginCommandResponse {
   objectType: 'LoginCommandResponse';
   result: LoginResult;
   userinfos?: UserInfos;
+}
+
+export interface UpdateRolesCommand {
+  objectType: 'UpdateRolesCommand';
+  userId: UserId;
+  roles: Role[];
 }
 
 export interface RegisterCommand {

@@ -1,17 +1,26 @@
 package orgarif.service.user
 
 import mu.KotlinLogging
+import org.springframework.security.authentication.UsernamePasswordAuthenticationToken
+import org.springframework.security.core.context.SecurityContextImpl
 import org.springframework.security.crypto.password.PasswordEncoder
+import org.springframework.security.web.context.HttpSessionSecurityContextRepository
+import org.springframework.session.Session as SpringSession
 import org.springframework.stereotype.Service
+import orgarif.config.SafeSessionRepository
 import orgarif.domain.AuthLogType
 import orgarif.domain.HashedPassword
 import orgarif.domain.Language
 import orgarif.domain.PlainStringPassword
+import orgarif.domain.Role
 import orgarif.domain.UserId
+import orgarif.domain.UserSession
 import orgarif.repository.user.UserDao
 import orgarif.repository.user.UserMailLogDao
+import orgarif.repository.user.UserSessionLogDao
 import orgarif.service.utils.DateService
 import orgarif.service.utils.NotificationService
+import orgarif.service.utils.TransactionIsolationService
 import orgarif.service.utils.random.RandomService
 import orgarif.utils.OrgarifStringUtils
 
@@ -19,9 +28,12 @@ import orgarif.utils.OrgarifStringUtils
 class UserService(
     private val userDao: UserDao,
     private val userMailLogDao: UserMailLogDao,
+    private val userSessionLogDao: UserSessionLogDao,
     private val dateService: DateService,
     private val randomService: RandomService,
     private val notificationService: NotificationService,
+    private val transactionIsolationService: TransactionIsolationService,
+    private val sessionRepository: SafeSessionRepository,
     private val passwordEncoder: PasswordEncoder
 ) {
 
@@ -95,6 +107,29 @@ class UserService(
         userMailLogDao.insert(
             UserMailLogDao.Record(
                 randomService.id(), userId, formerMail, AuthLogType.FormerMail, now))
+    }
+
+    fun updateRoles(userId: UserId, roles: Set<Role>) {
+        userDao.updateRoles(userId, roles, dateService.now())
+        userSessionLogDao.fetchIdsByUserId(userId).forEach { sessionId ->
+            val userSession = UserSession(sessionId, userId, roles)
+            val userSessionPrincipalName = userSession.toString()
+            sessionRepository.findByPrincipalName(userSessionPrincipalName).values.forEach {
+                updateSession(it, userSession)
+            }
+        }
+    }
+
+    fun updateSession(session: SpringSession, userSession: UserSession) {
+        logger.info { "Save up-to-date session ${session.id}" }
+        val springAuthentication = UsernamePasswordAuthenticationToken(userSession, null, null)
+        val context =
+            session.getAttribute<SecurityContextImpl>(
+                HttpSessionSecurityContextRepository.SPRING_SECURITY_CONTEXT_KEY)
+        context.authentication = springAuthentication
+        session.setAttribute(
+            HttpSessionSecurityContextRepository.SPRING_SECURITY_CONTEXT_KEY, context)
+        transactionIsolationService.execute { sessionRepository.save(session) }
     }
 
     fun hashPassword(password: PlainStringPassword): HashedPassword {

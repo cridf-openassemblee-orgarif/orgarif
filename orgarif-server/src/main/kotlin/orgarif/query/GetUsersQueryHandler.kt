@@ -13,5 +13,6 @@ class GetUsersQueryHandler(private val userDao: UserDao) :
             userDao
                 .streamAll()
                 .map { UserInfos(it.id, it.mail, it.displayName, it.roles) }
-                .toList())
+                .toList()
+                .sortedBy { it.mail })
 }

@@ -13,11 +13,12 @@ import orgarif.service.utils.DateService
 import orgarif.service.utils.HttpService
 import orgarif.service.utils.random.RandomService
 import orgarif.utils.OrgarifStringUtils.deserializeUuid
+import orgarif.utils.Uri
 import orgarif.utils.toTypeId
 
 @Service
 class ElusSynchronizationService(
-    @Value("\${elusSynchronizationUrl}") val elusSynchronizationUrl: String,
+    @Value("\${elusSynchronizationUrl}") val elusSynchronizationUrl: Uri,
     val eluDao: EluDao,
     val representantDao: RepresentantDao,
     val randomService: RandomService,
