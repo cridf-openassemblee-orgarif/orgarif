@@ -3,18 +3,20 @@ import { fonts } from './vars';
 import { css } from '@emotion/react';
 
 export const globalStyles = css`
-  *,
-  *:before,
-  *:after {
-    position: relative;
+  html {
+    margin: 0;
     box-sizing: border-box;
   }
 
-  html,
   body {
     margin: 0;
-    // font-size: {fonts.baseSize}px;
     font-family: ${fonts.font};
+  }
+
+  *,
+  *:before,
+  *:after {
+    box-sizing: inherit;
   }
 
   button {
