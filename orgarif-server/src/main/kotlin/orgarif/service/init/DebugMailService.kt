@@ -12,10 +12,11 @@ import orgarif.service.mail.MailService.MailJetMail
 import orgarif.service.utils.ApplicationInstance
 import orgarif.service.utils.ApplicationTaskExecutor
 import orgarif.service.utils.HttpService
+import orgarif.utils.Uri
 
 @Service
 class DebugMailService(
-    @Value("\${mailjet.url}") private val url: String,
+    @Value("\${mailjet.url}") private val url: Uri,
     @Value("\${mailjet.api-key}") private val apiKey: String,
     @Value("\${mailjet.secret-key}") private val secretKey: String,
     @Value("\${mail.devLogSender}") private val devLogSenderMail: String,

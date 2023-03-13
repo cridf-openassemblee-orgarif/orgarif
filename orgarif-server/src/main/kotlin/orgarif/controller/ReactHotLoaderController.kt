@@ -14,6 +14,7 @@ import orgarif.domain.MimeType
 import orgarif.error.OrgarifNotFoundException
 import orgarif.service.utils.ApplicationInstance
 import orgarif.service.utils.HttpService
+import orgarif.utils.Uri
 
 @RestController
 // [doc] so it won't run on prod
@@ -25,6 +26,8 @@ class ReactHotLoaderController(
 ) {
 
     val logger = KotlinLogging.logger {}
+
+    val baseUrl = Uri("http://$assetsWebpackDevHost:$assetsWebpackDevPort")
 
     @GetMapping("/*.hot-update.*")
     fun handle(request: HttpServletRequest, response: HttpServletResponse) {
@@ -38,9 +41,7 @@ class ReactHotLoaderController(
             } else {
                 MimeType.JSON.fullType
             }
-        val r =
-            httpService.execute(
-                HttpMethod.GET, "http://$assetsWebpackDevHost:$assetsWebpackDevPort$path")
+        val r = httpService.execute(HttpMethod.GET, baseUrl.resolve(path))
         if (r.code == HttpStatus.OK) {
             response.writer.print(r.bodyString)
         } else {
