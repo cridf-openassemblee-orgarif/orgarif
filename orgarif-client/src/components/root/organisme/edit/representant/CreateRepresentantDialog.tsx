@@ -49,7 +49,7 @@ export const CreateRepresentantDialog = (props: {
       .then(r => {
         const representant: RepresentantDto = {
           id: r.representantId,
-          isElu: false,
+          eluId: undefined,
           civilite: undefined,
           prenom,
           nom

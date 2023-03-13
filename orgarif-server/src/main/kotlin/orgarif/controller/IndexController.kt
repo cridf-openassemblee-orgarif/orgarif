@@ -33,11 +33,13 @@ import orgarif.service.user.UserService
 import orgarif.service.user.UserSessionService
 import orgarif.service.utils.ApplicationInstance
 import orgarif.utils.OrgarifStringUtils
+import orgarif.utils.Uri
 
 @Controller
 class IndexController(
     @Value("\${assets.webpackDevPort}") private val assetsWebpackDevPort: String,
     @Value("\${assets.useBuildFiles}") private val assetsUseBuildFiles: Boolean,
+    @Value("\${sigerUrl}") private val sigerUrl: Uri,
     private val userDao: UserDao,
     private val departementDao: DepartementDao,
     private val natureJuridiqueDao: NatureJuridiqueDao,
@@ -121,7 +123,8 @@ class IndexController(
             )
         val elus = eluDao.fetchAll()
         mav.model["bootstrapData"] =
-            serialize(ApplicationBootstrapData(ApplicationInstance.env, userInfos, categories))
+            serialize(
+                ApplicationBootstrapData(ApplicationInstance.env, sigerUrl, userInfos, categories))
         mav.model["deploymentId"] =
             OrgarifStringUtils.serializeUuid(ApplicationInstance.deploymentLogId.rawId)
         mav.model["gitRevisionLabel"] = ApplicationInstance.gitRevisionLabel

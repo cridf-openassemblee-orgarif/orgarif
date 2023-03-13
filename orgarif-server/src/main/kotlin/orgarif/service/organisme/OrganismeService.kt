@@ -109,7 +109,7 @@ class OrganismeService(
             val elu = it.eluId?.let { elus.getValue(it) }
             RepresentantDto(
                 it.id,
-                elu != null,
+                elu?.id,
                 elu?.civilite?.name,
                 it.prenom,
                 it.nom,

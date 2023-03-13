@@ -19,7 +19,7 @@ class EluDao(val jooq: DSLContext) {
         val nom: String,
         val groupePolitique: String,
         val groupePolitiqueCourt: String,
-        val imageUrl: String,
+        val imageUrl: String?,
         val actif: Boolean,
         val creationDate: Instant,
         val lastModificationDate: Instant
@@ -49,7 +49,7 @@ class EluDao(val jooq: DSLContext) {
         nom: String,
         groupePolitique: String,
         groupePolitiqueCourt: String,
-        imageUrl: String,
+        imageUrl: String?,
         actif: Boolean,
         lastModificationDate: Instant
     ) {

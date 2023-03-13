@@ -18,7 +18,7 @@ import orgarif.utils.toTypeId
 
 @Service
 class ElusSynchronizationService(
-    @Value("\${elusSynchronizationUrl}") val elusSynchronizationUrl: Uri,
+    @Value("\${sigerUrl}") val sigerUrl: Uri,
     val eluDao: EluDao,
     val representantDao: RepresentantDao,
     val randomService: RandomService,
@@ -27,6 +27,10 @@ class ElusSynchronizationService(
 ) {
 
     private val logger = KotlinLogging.logger {}
+
+    companion object {
+        val apiUrl = "api/publicdata/v2/elus"
+    }
 
     enum class OpenassembleeCivilite {
         M,
@@ -51,7 +55,7 @@ class ElusSynchronizationService(
         logger.info { "Synchronize elus avec SIGER" }
         val elusJons =
             try {
-                val r = httpService.execute(HttpMethod.GET, elusSynchronizationUrl)
+                val r = httpService.execute(HttpMethod.GET, sigerUrl.resolve(apiUrl))
                 if (r.code == HttpStatus.OK) {
                     r.bodyString ?: throw RuntimeException("$r")
                 } else {
@@ -90,7 +94,7 @@ class ElusSynchronizationService(
                     nom = r.nom?.trim() ?: "",
                     groupePolitique = r.groupePolitique?.trim() ?: "",
                     groupePolitiqueCourt = r.groupePolitiqueCourt?.trim() ?: "",
-                    imageUrl = r.image ?: "",
+                    imageUrl = r.image,
                     actif = r.actif,
                     creationDate = now,
                     lastModificationDate = now)

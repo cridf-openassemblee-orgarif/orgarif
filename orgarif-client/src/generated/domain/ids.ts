@@ -6,6 +6,8 @@ export type DepartementId = NominalString<'DepartementId'>;
 
 export type DesignationId = NominalString<'DesignationId'>;
 
+export type EluId = NominalString<'EluId'>;
+
 export type InstanceId = NominalString<'InstanceId'>;
 
 export type LienDeliberationId = NominalString<'LienDeliberationId'>;

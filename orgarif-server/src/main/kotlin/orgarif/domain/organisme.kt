@@ -23,7 +23,7 @@ data class DesignationDto(
 
 data class RepresentantDto(
     val id: RepresentantId,
-    val isElu: Boolean,
+    val eluId: EluId?,
     val civilite: String?,
     val prenom: String,
     val nom: String,

@@ -16,7 +16,7 @@ mailjet:
   api-key:
   secret-key:
 #---------------------------------------------------------------------------
-elusSynchronizationUrl:
+sigerUrl:
 remote-controller:
   expected-secu: remote-secu
 #---------------------------------------------------------------------------

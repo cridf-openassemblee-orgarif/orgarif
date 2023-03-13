@@ -21,7 +21,7 @@ mailjet:
   api-key:
   secret-key:
 #---------------------------------------------------------------------------
-elusSynchronizationUrl: http://127.0.0.1:8080/api/publicdata/v2/elus
+sigerUrl: http://127.0.0.1:8080/api/publicdata/v2/elus
 remote-controller:
   expected-secu: remote-secu
 #---------------------------------------------------------------------------

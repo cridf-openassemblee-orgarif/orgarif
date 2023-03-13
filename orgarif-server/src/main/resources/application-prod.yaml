@@ -17,7 +17,7 @@ mailjet:
   api-key:
   secret-key:
 #---------------------------------------------------------------------------
-elusSynchronizationUrl: https://siger.mlorber.net/api/publicdata/v2/elus
+sigerUrl: https://siger.mlorber.net
 remote-controller:
   expected-secu: ${REMOTE_CONTROLLER_EXPECTED_SECU}
 #---------------------------------------------------------------------------

@@ -36,7 +36,7 @@ export const SelectRepresentantInput = (props: {
       label={props.label}
       onInputChange={onInputChange}
       suggestionLabel={(s: RepresentantDto) =>
-        (s.isElu ? '[elu] ' : '') + s.prenom + ' ' + s.nom
+        (s.eluId ? '[elu] ' : '') + s.prenom + ' ' + s.nom
       }
       onSelect={props.onChange}
       onCreate={props.onCreate}
@@ -56,7 +56,7 @@ export const SelectRepresentantInput = (props: {
             </li>
           );
         }
-        return <li>{(s.isElu ? '[elu] ' : '') + s.prenom + ' ' + s.nom}</li>;
+        return <li>{(s.eluId ? '[elu] ' : '') + s.prenom + ' ' + s.nom}</li>;
       }}
     />
   );

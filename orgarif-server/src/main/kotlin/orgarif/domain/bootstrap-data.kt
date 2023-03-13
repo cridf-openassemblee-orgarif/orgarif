@@ -1,6 +1,7 @@
 package orgarif.domain
 
 import kttots.Shared
+import orgarif.utils.Uri
 
 data class Departement(
     val id: DepartementId,
@@ -27,6 +28,7 @@ data class OrganismeCategories(
 @Shared
 data class ApplicationBootstrapData(
     val env: ApplicationEnvironment,
+    val sigerUrl: Uri,
     val userInfos: UserInfos?,
     val categories: OrganismeCategories
 )

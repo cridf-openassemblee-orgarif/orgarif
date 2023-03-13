@@ -4,4 +4,4 @@ database:
 mail:
   devDestination: mp.lorber+log-orgarif@gmail.com
 pgquarrel:
-elusSynchronizationUrl: https://siger.mlorber.net/api/publicdata/v2/elus
+sigerUrl: https://siger.mlorber.net

@@ -9,13 +9,18 @@ import Avatar from '@mui/material/Avatar';
 import Box from '@mui/material/Box';
 import { experimentalStyled as styled } from '@mui/material/styles';
 
+
+const sigerBaseUrl = () =>
+  bootstrapData.sigerUrl.endsWith('/')
+    ? bootstrapData.sigerUrl.slice(0, -1)
+    : bootstrapData.sigerUrl;
+
 export const SingleRepresentant = (props: {
   representation: DesignationDto | undefined;
   hasSuppleance: boolean;
   isTitulaire?: boolean;
 }) => {
   const { representation, hasSuppleance, isTitulaire } = props;
-
   return (
     <Item
       elevation={0}
@@ -52,7 +57,7 @@ export const SingleRepresentant = (props: {
         {representation?.representant?.imageUrl ? (
           <Avatar
             alt={`${representation?.representant?.nom} ${representation?.representant?.prenom}`}
-            src={representation?.representant?.imageUrl}
+            src={sigerBaseUrl() + representation?.representant?.imageUrl}
             css={css`
               width: 90px;
               height: 90px;
@@ -84,10 +89,20 @@ export const SingleRepresentant = (props: {
               padding: 0.3em 0 0 1.6em;
             `}
           >
-            <Typography variant="body2">
-              {`${representation?.representant?.prenom} 
+            <a
+              href={
+                sigerBaseUrl() +
+                '/elu-uid/' +
+                representation?.representant.eluId
+              }
+              target="_blank"
+              rel="noreferrer"
+            >
+              <Typography variant="body2">
+                {`${representation?.representant?.prenom} 
                 ${representation?.representant?.nom}`}
-            </Typography>
+              </Typography>
+            </a>
             {/* TODO - information currently not available */}
             {/* <Typography variant="body2">{`DURÉE DU MANDAT : `}</Typography> */}
           </Stack>

@@ -3,6 +3,7 @@ import {
   DeliberationId,
   DepartementId,
   DesignationId,
+  EluId,
   InstanceId,
   LienDeliberationId,
   NatureJuridiqueId,
@@ -25,7 +26,7 @@ export interface DesignationDto {
 
 export interface RepresentantDto {
   id: RepresentantId;
-  isElu: boolean;
+  eluId?: EluId;
   civilite?: string;
   prenom: string;
   nom: string;

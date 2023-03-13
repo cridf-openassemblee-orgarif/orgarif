@@ -1,3 +1,4 @@
+import { Uri } from '../utils/Uri';
 import { ApplicationEnvironment } from './application';
 import {
   DepartementId,
@@ -42,6 +43,7 @@ export interface OrganismeCategories {
 
 export interface ApplicationBootstrapData {
   env: ApplicationEnvironment;
+  sigerUrl: Uri;
   userInfos?: UserInfos;
   categories: OrganismeCategories;
 }
