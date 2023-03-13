@@ -9,7 +9,6 @@ import { appContext } from '../../services/ApplicationContext';
 import { state } from '../../state/state';
 import { LoadingStateButton } from '../common/LoadingButton';
 import { useGoTo } from '../routing/routing-utils';
-import { colors } from '../styles/vars';
 import { css } from '@emotion/react';
 import { Warning as WarningIcon } from '@mui/icons-material';
 import {
@@ -27,6 +26,7 @@ import {
 import * as React from 'react';
 import { PropsWithChildren, useEffect, useState } from 'react';
 import { useRecoilValue } from 'recoil';
+import {colors} from "../styles/colors";
 
 // TODO find a dedicated name ? it's almost a DialogView
 export const UserEditRolesDialog = (props: {
