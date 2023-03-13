@@ -9,7 +9,7 @@ class SerializeAsStringSerializer :
     StdSerializer<SerializeAsString>(SerializeAsString::class.java) {
 
     companion object {
-        fun serialize(value: SerializeAsString) = value.value
+        fun serialize(value: SerializeAsString) = value.serialize()
     }
 
     override fun serialize(
