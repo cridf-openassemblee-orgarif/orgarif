@@ -8,6 +8,7 @@ import java.time.Instant;
 import java.util.UUID;
 
 import javax.annotation.Nonnull;
+import javax.annotation.Nullable;
 
 import org.jooq.Field;
 import org.jooq.Record1;
@@ -119,14 +120,14 @@ public class EluRecord extends UpdatableRecordImpl<EluRecord> implements Record1
     /**
      * Setter for <code>public.elu.image_url</code>.
      */
-    public void setImageUrl(@Nonnull String value) {
+    public void setImageUrl(@Nullable String value) {
         set(6, value);
     }
 
     /**
      * Getter for <code>public.elu.image_url</code>.
      */
-    @Nonnull
+    @Nullable
     public String getImageUrl() {
         return (String) get(6);
     }
@@ -299,7 +300,7 @@ public class EluRecord extends UpdatableRecordImpl<EluRecord> implements Record1
     }
 
     @Override
-    @Nonnull
+    @Nullable
     public String component7() {
         return getImageUrl();
     }
@@ -359,7 +360,7 @@ public class EluRecord extends UpdatableRecordImpl<EluRecord> implements Record1
     }
 
     @Override
-    @Nonnull
+    @Nullable
     public String value7() {
         return getImageUrl();
     }
@@ -426,7 +427,7 @@ public class EluRecord extends UpdatableRecordImpl<EluRecord> implements Record1
 
     @Override
     @Nonnull
-    public EluRecord value7(@Nonnull String value) {
+    public EluRecord value7(@Nullable String value) {
         setImageUrl(value);
         return this;
     }
@@ -454,7 +455,7 @@ public class EluRecord extends UpdatableRecordImpl<EluRecord> implements Record1
 
     @Override
     @Nonnull
-    public EluRecord values(@Nonnull UUID value1, @Nonnull String value2, @Nonnull String value3, @Nonnull String value4, @Nonnull String value5, @Nonnull String value6, @Nonnull String value7, @Nonnull Boolean value8, @Nonnull Instant value9, @Nonnull Instant value10) {
+    public EluRecord values(@Nonnull UUID value1, @Nonnull String value2, @Nonnull String value3, @Nonnull String value4, @Nonnull String value5, @Nonnull String value6, @Nullable String value7, @Nonnull Boolean value8, @Nonnull Instant value9, @Nonnull Instant value10) {
         value1(value1);
         value2(value2);
         value3(value3);
@@ -482,7 +483,7 @@ public class EluRecord extends UpdatableRecordImpl<EluRecord> implements Record1
     /**
      * Create a detached, initialised EluRecord
      */
-    public EluRecord(@Nonnull UUID id, @Nonnull String civilite, @Nonnull String prenom, @Nonnull String nom, @Nonnull String groupePolitique, @Nonnull String groupePolitiqueCourt, @Nonnull String imageUrl, @Nonnull Boolean actif, @Nonnull Instant creationDate, @Nonnull Instant lastModificationDate) {
+    public EluRecord(@Nonnull UUID id, @Nonnull String civilite, @Nonnull String prenom, @Nonnull String nom, @Nonnull String groupePolitique, @Nonnull String groupePolitiqueCourt, @Nullable String imageUrl, @Nonnull Boolean actif, @Nonnull Instant creationDate, @Nonnull Instant lastModificationDate) {
         super(EluTable.ELU);
 
         setId(id);

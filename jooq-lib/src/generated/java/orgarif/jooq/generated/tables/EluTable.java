@@ -87,7 +87,7 @@ public class EluTable extends TableImpl<EluRecord> {
     /**
      * The column <code>public.elu.image_url</code>.
      */
-    public final TableField<EluRecord, String> IMAGE_URL = createField(DSL.name("image_url"), SQLDataType.VARCHAR(255).nullable(false), this, "");
+    public final TableField<EluRecord, String> IMAGE_URL = createField(DSL.name("image_url"), SQLDataType.VARCHAR(255), this, "");
 
     /**
      * The column <code>public.elu.actif</code>.
