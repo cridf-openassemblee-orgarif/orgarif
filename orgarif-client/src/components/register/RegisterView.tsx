@@ -42,39 +42,37 @@ export const RegisterView = () => {
     <MainContainer>
       <div
         css={css`
-          display: flex;
-          justify-content: center;
+          margin: auto;
+          max-width: 400px;
         `}
       >
-        <div>
-          <h1
-            css={css`
-              text-align: center;
-            `}
-          >
-            Register
-          </h1>
-          <div
-            css={css`
-              width: 400px;
-            `}
-          >
-            {registerResult !== 'Registered' && !userInfos && (
-              <RegisterForm
-                onSubmit={register}
-                mailIsAlreadyTaken={registerResult === 'MailAlreadyExists'}
-              />
-            )}
-            {userInfos && (
-              <div
-                css={css`
-                  text-align: center;
-                `}
-              >
-                You're logged in
-              </div>
-            )}
-          </div>
+        <h1
+          css={css`
+            text-align: center;
+          `}
+        >
+          Register
+        </h1>
+        <div
+          css={css`
+            width: 400px;
+          `}
+        >
+          {registerResult !== 'Registered' && !userInfos && (
+            <RegisterForm
+              onSubmit={register}
+              mailIsAlreadyTaken={registerResult === 'MailAlreadyExists'}
+            />
+          )}
+          {userInfos && (
+            <div
+              css={css`
+                text-align: center;
+              `}
+            >
+              You're logged in
+            </div>
+          )}
         </div>
       </div>
     </MainContainer>

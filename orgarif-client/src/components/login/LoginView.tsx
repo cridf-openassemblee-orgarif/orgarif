@@ -67,68 +67,62 @@ export const LoginView = () => {
     <MainContainer>
       <div
         css={css`
-          display: flex;
-          justify-content: center;
+          margin: auto;
+          max-width: 400px;
         `}
       >
-        <div>
-          <h1
-            css={css`
-              text-align: center;
-            `}
-          >
-            Login
-          </h1>
-          <div
-            css={css`
-              width: 400px;
-            `}
-          >
-            {loginResult !== 'LoggedIn' && !userInfos && (
-              <LoginForm onSubmit={login} />
-            )}
-            {!userInfos && bootstrapData.env === 'Dev' && (
-              <div
-                css={css`
-                  margin-top: 20px;
-                `}
-              >
-                dev user authent :{space}
-                <Button onClick={() => devLogin('user')}>user</Button>
-                <Button onClick={() => devLogin('admin')}>admin</Button>
-              </div>
-            )}
-            {userInfos && (
-              <div
-                css={css`
-                  text-align: center;
-                `}
-              >
-                You're logged in
-              </div>
-            )}
-            {loginResult && (
-              <div
-                css={css`
-                  text-align: center;
-                  margin-top: 20px;
-                `}
-              >
-                {(() => {
-                  switch (loginResult) {
-                    case 'LoggedIn':
-                      return null;
-                    case 'MailNotFound':
-                      return <div>User not found</div>;
-                    case 'BadPassword':
-                      return <div>Bad password</div>;
-                    default:
-                      assertUnreachable(loginResult);
-                  }
-                })()}
-              </div>
-            )}
-          </div>
+        <h1
+          css={css`
+            text-align: center;
+          `}
+        >
+          Login
+        </h1>
+        <div css={css``}>
+          {loginResult !== 'LoggedIn' && !userInfos && (
+            <LoginForm onSubmit={login} />
+          )}
+          {!userInfos && bootstrapData.env === 'Dev' && (
+            <div
+              css={css`
+                margin-top: 20px;
+              `}
+            >
+              dev user authent :{space}
+              <Button onClick={() => devLogin('user')}>user</Button>
+              <Button onClick={() => devLogin('admin')}>admin</Button>
+            </div>
+          )}
+          {userInfos && (
+            <div
+              css={css`
+                text-align: center;
+              `}
+            >
+              You're logged in
+            </div>
+          )}
+          {loginResult && (
+            <div
+              css={css`
+                text-align: center;
+                margin-top: 20px;
+              `}
+            >
+              {(() => {
+                switch (loginResult) {
+                  case 'LoggedIn':
+                    return null;
+                  case 'MailNotFound':
+                    return <div>User not found</div>;
+                  case 'BadPassword':
+                    return <div>Bad password</div>;
+                  default:
+                    assertUnreachable(loginResult);
+                }
+              })()}
+            </div>
+          )}
         </div>
       </div>
     </MainContainer>
