@@ -54,6 +54,7 @@ export const CopyContentWidget = (props: {
         <input
           css={css`
             position: absolute;
+            width: 0;
           `}
           ref={inputElement}
           value={props.text}
