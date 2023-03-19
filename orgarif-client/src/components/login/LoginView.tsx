@@ -10,7 +10,6 @@ import { state } from '../../state/state';
 import { assertUnreachable } from '../../utils';
 import { space } from '../common/component-utils';
 import { RouteLink } from '../routing/RouteLink';
-import { useGoTo } from '../routing/routing-utils';
 import { LoginForm, LoginFormInput } from './LoginForm';
 import { css } from '@emotion/react';
 import Button from '@mui/material/Button';
@@ -21,16 +20,9 @@ import { useRecoilState } from 'recoil';
 export const LoginView = () => {
   const [userInfos, setUserInfos] = useRecoilState(state.userInfos);
   const [loginResult, setLoginResult] = useState<LoginResult>();
-  const goTo = useGoTo();
   const connect = (userInfos: UserInfos) => {
     appContext.csrfTokenService().refreshToken();
     setUserInfos(userInfos);
-    goTo(
-      { name: 'RootRoute' },
-      {
-        useTargetPath: true
-      }
-    );
   };
   const login = (input: LoginFormInput) =>
     appContext
