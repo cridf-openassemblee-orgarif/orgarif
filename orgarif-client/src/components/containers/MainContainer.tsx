@@ -1,5 +1,5 @@
 /** @jsxImportSource @emotion/react */
-import { Menu } from '../common/Menu';
+import { Navbar } from '../common/Navbar';
 import { css } from '@emotion/react';
 import * as React from 'react';
 import { PropsWithChildren } from 'react';
@@ -13,7 +13,7 @@ export const MainContainer = (props: PropsWithChildren) => (
       flex-direction: column;
     `}
   >
-    <Menu />
+    <Navbar />
     <div
       css={css`
         flex: 1;

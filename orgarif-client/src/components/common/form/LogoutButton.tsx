@@ -1,9 +1,7 @@
 /** @jsxImportSource @emotion/react */
 import { LoadingState } from '../../../interfaces';
 import { appContext } from '../../../services/ApplicationContext';
-import { colors } from '../../styles/vars';
 import { LoadingStateButton } from '../LoadingButton';
-import { css } from '@emotion/react';
 import * as React from 'react';
 import { useState } from 'react';
 
@@ -21,15 +19,7 @@ export const LogoutButton = () => {
         name={appContext.csrfTokenService().inputName}
         value={appContext.csrfTokenService().token}
       />
-      <LoadingStateButton
-        loadingState={loading}
-        type="submit"
-        css={css`
-          background: ${colors.clearGrey};
-          height: 24px;
-          top: -4px;
-        `}
-      >
+      <LoadingStateButton loadingState={loading} type="submit" variant="text">
         Logout
       </LoadingStateButton>
     </form>
