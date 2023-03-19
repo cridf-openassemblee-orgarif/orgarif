@@ -109,6 +109,10 @@ class UserService(
                 randomService.id(), userId, formerMail, AuthLogType.FormerMail, now))
     }
 
+    fun updatePassword(userId: UserId, password: PlainStringPassword) {
+        userDao.updatePassword(userId, hashPassword(password), dateService.now())
+    }
+
     fun updateRoles(userId: UserId, roles: Set<Role>) {
         userDao.updateRoles(userId, roles, dateService.now())
         userSessionLogDao.fetchIdsByUserId(userId).forEach { sessionId ->

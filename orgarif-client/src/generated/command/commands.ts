@@ -51,7 +51,7 @@ export type Command =
   | UpdateOrganismeSecteurCommand
   | UpdateOrganismeStatusCommand
   | UpdateOrganismeTypeStructureCommand
-  | UpdateRolesCommand
+  | UpdatePasswordCommand
   | UpdateSecteurLibelleCommand
   | UpdateSecteurStatusCommand
   | UpdateTypeStructureLibelleCommand
@@ -217,12 +217,6 @@ export interface LoginCommandResponse {
   userinfos?: UserInfos;
 }
 
-export interface UpdateRolesCommand {
-  objectType: 'UpdateRolesCommand';
-  userId: UserId;
-  roles: Role[];
-}
-
 export interface RegisterCommand {
   objectType: 'RegisterCommand';
   mail: string;
@@ -356,6 +350,11 @@ export interface UpdateOrganismeTypeStructureCommand {
   objectType: 'UpdateOrganismeTypeStructureCommand';
   id: OrganismeId;
   typeStructureId?: TypeStructureId;
+}
+
+export interface UpdatePasswordCommand {
+  objectType: 'UpdatePasswordCommand';
+  password: PlainStringPassword;
 }
 
 export interface UpdateSecteurLibelleCommand {

@@ -21,7 +21,6 @@ object CommandConfiguration {
             is CreateTypeStructureCommand -> User
             is DevLoginCommand -> null
             is LoginCommand -> null
-            is UpdateRolesCommand -> Admin
             is RegisterCommand -> null
             is UpdateDepartementCommand -> User
             is UpdateDepartementStatusCommand -> User
@@ -43,6 +42,7 @@ object CommandConfiguration {
             is UpdateOrganismeSecteurCommand -> User
             is UpdateOrganismeStatusCommand -> User
             is UpdateOrganismeTypeStructureCommand -> User
+            is UpdatePasswordCommand -> User
             is UpdateSecteurLibelleCommand -> User
             is UpdateSecteurStatusCommand -> User
             is UpdateTypeStructureLibelleCommand -> User

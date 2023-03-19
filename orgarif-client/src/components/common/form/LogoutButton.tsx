@@ -9,6 +9,7 @@ import * as React from 'react';
 import { useState } from 'react';
 
 const logoutPath = '/logout';
+
 export const LogoutButton = () => {
   const [loading, setLoading] = useState<LoadingState>('Idle');
   return (

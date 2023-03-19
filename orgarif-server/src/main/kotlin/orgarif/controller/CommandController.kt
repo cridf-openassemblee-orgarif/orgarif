@@ -82,8 +82,6 @@ import orgarif.command.UpdateOrganismeStatusCommand
 import orgarif.command.UpdateOrganismeStatusCommandHandler
 import orgarif.command.UpdateOrganismeTypeStructureCommand
 import orgarif.command.UpdateOrganismeTypeStructureCommandHandler
-import orgarif.command.UpdateRolesCommand
-import orgarif.command.UpdateRolesCommandHandler
 import orgarif.command.UpdateSecteurLibelleCommand
 import orgarif.command.UpdateSecteurLibelleCommandHandler
 import orgarif.command.UpdateSecteurStatusCommand
@@ -92,6 +90,8 @@ import orgarif.command.UpdateTypeStructureLibelleCommand
 import orgarif.command.UpdateTypeStructureLibelleCommandHandler
 import orgarif.command.UpdateTypeStructureStatusCommand
 import orgarif.command.UpdateTypeStructureStatusCommandHandler
+import orgarif.command.UpdatePasswordCommand
+import orgarif.command.UpdatePasswordCommandHandler
 import orgarif.domain.UserId
 import orgarif.repository.log.CommandLogDao
 import orgarif.serialization.Serializer
@@ -123,7 +123,6 @@ class CommandController(
     private val createTypeStructureCommandHandler: CreateTypeStructureCommandHandler,
     private val devLoginCommandHandler: DevLoginCommandHandler,
     private val loginCommandHandler: LoginCommandHandler,
-    private val updateRolesCommandHandler: UpdateRolesCommandHandler,
     private val registerCommandHandler: RegisterCommandHandler,
     private val updateDepartementCommandHandler: UpdateDepartementCommandHandler,
     private val updateDepartementStatusCommandHandler: UpdateDepartementStatusCommandHandler,
@@ -155,6 +154,7 @@ class CommandController(
     private val updateOrganismeStatusCommandHandler: UpdateOrganismeStatusCommandHandler,
     private val updateOrganismeTypeStructureCommandCommandHandler:
         UpdateOrganismeTypeStructureCommandHandler,
+    private val updatePasswordCommandHandler: UpdatePasswordCommandHandler,
     private val updateSecteurLibelleCommandHandler: UpdateSecteurLibelleCommandHandler,
     private val updateSecteurStatusCommandHandler: UpdateSecteurStatusCommandHandler,
     private val updateTypeStructureLibelleCommandHandler: UpdateTypeStructureLibelleCommandHandler,
@@ -246,8 +246,8 @@ class CommandController(
             is CreateTypeStructureCommand -> createTypeStructureCommandHandler
             is DevLoginCommand -> devLoginCommandHandler
             is LoginCommand -> loginCommandHandler
-            is UpdateRolesCommand -> updateRolesCommandHandler
             is RegisterCommand -> registerCommandHandler
+            is UpdatePasswordCommand -> updatePasswordCommandHandler
             is UpdateDepartementCommand -> updateDepartementCommandHandler
             is UpdateDepartementStatusCommand -> updateDepartementStatusCommandHandler
             is UpdateDesignationDatesCommand -> updateDesignationDatesCommandHandler
@@ -282,7 +282,6 @@ class CommandController(
     // for admin commands, should return the affected user when there's one
     private fun affectedUserId(command: Command): UserId? =
         when (command) {
-            is UpdateRolesCommand -> command.userId
             is AddDesignationCommand,
             is AddInstanceCommand,
             is AddLienDeliberationCommand,
@@ -316,6 +315,7 @@ class CommandController(
             is UpdateOrganismeSecteurCommand,
             is UpdateOrganismeStatusCommand,
             is UpdateOrganismeTypeStructureCommand,
+            is UpdatePasswordCommand,
             is UpdateSecteurLibelleCommand,
             is UpdateSecteurStatusCommand,
             is UpdateTypeStructureLibelleCommand,

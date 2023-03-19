@@ -102,8 +102,6 @@ data class LoginCommand(val mail: String, val password: PlainStringPassword) : C
 data class LoginCommandResponse(val result: LoginResult, val userinfos: UserInfos?) :
     CommandResponse()
 
-data class UpdateRolesCommand(val userId: UserId, val roles: Set<Role>) : Command()
-
 data class RegisterCommand(
     val mail: String,
     val password: PlainStringPassword,
@@ -181,6 +179,8 @@ data class UpdateOrganismeTypeStructureCommand(
     val id: OrganismeId,
     val typeStructureId: TypeStructureId?
 ) : Command()
+
+data class UpdatePasswordCommand(val password: PlainStringPassword) : Command()
 
 data class UpdateSecteurLibelleCommand(val id: SecteurId, val libelle: String) : Command()
 
