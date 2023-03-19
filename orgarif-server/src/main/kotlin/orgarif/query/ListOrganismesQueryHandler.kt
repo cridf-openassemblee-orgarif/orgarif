@@ -17,9 +17,7 @@ class ListOrganismesQueryHandler(val organismeDao: OrganismeDao) :
                     query.departementIds,
                     query.natureJuridiqueIds,
                     query.secteurIds,
-                    query.typeStructureIds)
-                // TODO make a real implenmentation
-                .take(query.itemsNumber)
+                    query.typeStructureIds,query.itemsNumber)
                 .map { OrganismeListDto(it) }
         val itemsNumber =
             organismeDao.count(

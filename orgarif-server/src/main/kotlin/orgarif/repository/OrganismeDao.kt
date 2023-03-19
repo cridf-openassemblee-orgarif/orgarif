@@ -59,6 +59,7 @@ class OrganismeDao(val jooq: DSLContext) {
         natureJuridiqueIds: List<NatureJuridiqueId>,
         secteurIds: List<SecteurId>,
         typeStructureIds: List<TypeStructureId>,
+        limit: Int
     ): List<Record> =
         jooq
             .selectFrom(ORGANISME)
@@ -91,6 +92,7 @@ class OrganismeDao(val jooq: DSLContext) {
                     it
                 }
             }
+            .limit(limit)
             .fetch()
             .map(this::map)
 
