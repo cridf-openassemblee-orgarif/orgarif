@@ -10,10 +10,11 @@ import org.springframework.security.config.annotation.web.configuration.WebSecur
 import org.springframework.security.core.SpringSecurityCoreVersion
 import org.springframework.security.web.csrf.CookieCsrfTokenRepository
 import orgarif.controller.RemoteController
+import orgarif.domain.Uri
 
 @Configuration
 class SecurityConfiguration(
-    @Value("\${app.url}") private val appUrl: String,
+    @Value("\${app.url}") private val appUrl: Uri,
     private val cookieCsrfTokenRepository: CookieCsrfTokenRepository
 ) {
 
@@ -79,7 +80,7 @@ class SecurityConfiguration(
                 logoutSuccessHandler { _, response, _ ->
                     response.status = 200
                     // [doc] appUrl is used, or else Spring redirects to http
-                    response.sendRedirect(appUrl)
+                    response.sendRedirect(appUrl.path)
                 }
                 permitAll()
             }

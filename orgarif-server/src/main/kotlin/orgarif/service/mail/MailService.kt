@@ -18,6 +18,7 @@ import orgarif.domain.DeploymentLogId
 import orgarif.domain.MailLogId
 import orgarif.domain.MailReference
 import orgarif.domain.MimeType
+import orgarif.domain.Uri
 import orgarif.domain.UserId
 import orgarif.error.MessageNotSentException
 import orgarif.repository.log.MailLogDao
@@ -28,7 +29,7 @@ import orgarif.service.utils.random.RandomService
 
 @Service
 class MailService(
-    @Value("\${mailjet.url}") private val url: String,
+    @Value("\${mailjet.url}") private val url: Uri,
     @Value("\${mailjet.api-key}") private val apiKey: String,
     @Value("\${mailjet.secret-key}") private val secretKey: String,
     @Value("\${mail.devLogSender}") private val devLogSenderMail: String,

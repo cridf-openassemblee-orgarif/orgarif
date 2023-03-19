@@ -7,6 +7,7 @@ import org.springframework.http.HttpMethod
 import org.springframework.http.HttpStatus
 import org.springframework.stereotype.Service
 import orgarif.domain.ApplicationEnvironment
+import orgarif.domain.Uri
 import orgarif.service.mail.MailService
 import orgarif.service.mail.MailService.MailJetMail
 import orgarif.service.utils.ApplicationInstance
@@ -15,7 +16,7 @@ import orgarif.service.utils.HttpService
 
 @Service
 class DebugMailService(
-    @Value("\${mailjet.url}") private val url: String,
+    @Value("\${mailjet.url}") private val url: Uri,
     @Value("\${mailjet.api-key}") private val apiKey: String,
     @Value("\${mailjet.secret-key}") private val secretKey: String,
     @Value("\${mail.devLogSender}") private val devLogSenderMail: String,

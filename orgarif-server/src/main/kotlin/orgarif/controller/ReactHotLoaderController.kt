@@ -11,6 +11,7 @@ import org.springframework.web.bind.annotation.GetMapping
 import org.springframework.web.bind.annotation.RestController
 import orgarif.domain.ApplicationEnvironment
 import orgarif.domain.MimeType
+import orgarif.domain.Uri
 import orgarif.error.OrgarifNotFoundException
 import orgarif.service.utils.ApplicationInstance
 import orgarif.service.utils.HttpService
@@ -26,6 +27,8 @@ class ReactHotLoaderController(
 
     val logger = KotlinLogging.logger {}
 
+    val baseUrl = Uri("http://$assetsWebpackDevHost:$assetsWebpackDevPort")
+
     @GetMapping("/*.hot-update.*")
     fun handle(request: HttpServletRequest, response: HttpServletResponse) {
         if (ApplicationInstance.env != ApplicationEnvironment.Dev) {
@@ -38,9 +41,7 @@ class ReactHotLoaderController(
             } else {
                 MimeType.JSON.fullType
             }
-        val r =
-            httpService.execute(
-                HttpMethod.GET, "http://$assetsWebpackDevHost:$assetsWebpackDevPort$path")
+        val r = httpService.execute(HttpMethod.GET, baseUrl.resolve(path))
         if (r.code == HttpStatus.OK) {
             response.writer.print(r.bodyString)
         } else {
