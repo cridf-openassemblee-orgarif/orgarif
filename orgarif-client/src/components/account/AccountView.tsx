@@ -3,8 +3,8 @@ import { appContext } from '../../services/ApplicationContext';
 import { MainContainer } from '../containers/MainContainer';
 import { PasswordFormInput } from './PasswordForm';
 import { UpdatePasswordDialogButton } from './UpdatePasswordDialogButton';
+import { css } from '@emotion/react';
 import * as React from 'react';
-import {css} from "@emotion/react";
 
 export const AccountView = () => {
   const onSubmit = (dto: PasswordFormInput) =>

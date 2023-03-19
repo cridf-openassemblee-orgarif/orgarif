@@ -2,6 +2,7 @@
 import { LienDeliberationDto } from '../../../../../generated/domain/organisme';
 import { formatLocaleDate } from '../../../../../simple-fr';
 import { clientUid } from '../../../../../utils';
+import { space } from '../../../../common/component-utils';
 import { colors } from '../../../../styles/colors';
 import { editCommonClasses } from '../EditOrganismeComponent';
 import { EditLienDeliberationCommentComponent } from './EditLienDeliberationCommentComponent';
@@ -44,7 +45,7 @@ export const EditDeliberationListItem = (props: {
         `}
       >
         <div>
-          {props.lienDeliberation.deliberation.libelle} du{' '}
+          {props.lienDeliberation.deliberation.libelle} du{space}
           {formatLocaleDate(
             props.lienDeliberation.deliberation.deliberationDate
           )}

@@ -37,7 +37,9 @@ export const UserEditPasswordDialogButton = (props: { userId: UserId }) => {
   const formId = clientUid();
   return (
     <>
-      <Button onClick={() => setOpen(true)} variant="outlined">edit</Button>
+      <Button onClick={() => setOpen(true)} variant="outlined">
+        edit
+      </Button>
       <Dialog
         open={open}
         onClose={close}

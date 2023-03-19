@@ -8,6 +8,7 @@ import {
 } from '../../../../../generated/query/queries';
 import { appContext } from '../../../../../services/ApplicationContext';
 import { formatLocaleDate } from '../../../../../simple-fr';
+import { space } from '../../../../common/component-utils';
 import {
   AlreadySet,
   AutocompleteInput
@@ -80,7 +81,8 @@ export const SelectDeliberationInput = (props: {
                 `}
               >
                 [créer délibération]
-              </span>{' '}
+              </span>
+              {space}
               {s}
             </li>
           );

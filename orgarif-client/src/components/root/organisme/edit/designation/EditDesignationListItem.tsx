@@ -4,6 +4,7 @@ import { RepresentantId } from '../../../../../generated/domain/ids';
 import { DesignationDto } from '../../../../../generated/domain/organisme';
 import { formatLocaleDate } from '../../../../../simple-fr';
 import { clientUid } from '../../../../../utils';
+import { space } from '../../../../common/component-utils';
 import { colors } from '../../../../styles/colors';
 import { AddDesignationDialog } from './AddDesignationDialog';
 import { EditDesignationDialog } from './EditDesignationDialog';
@@ -69,7 +70,8 @@ export const EditDesignationListItem = (props: {
             `}
           >
             <div>
-              {props.designation.representant.prenom}{' '}
+              {props.designation.representant.prenom}
+              {space}
               {props.designation.representant.nom}
               {props.designation.startDate && (
                 <div

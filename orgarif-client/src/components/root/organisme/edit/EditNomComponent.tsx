@@ -1,6 +1,7 @@
 /** @jsxImportSource @emotion/react */
 import { ItemStatus } from '../../../../generated/domain/organisme';
 import { assertUnreachable, clientUid } from '../../../../utils';
+import { space } from '../../../common/component-utils';
 import { ConfirmButton } from '../../../common/form/ConfirmButton';
 import { TabPanel, TabsContainer } from '../../../common/form/TabsContainer';
 import { TextInput } from '../../../common/form/TextInput';
@@ -121,7 +122,8 @@ export const EditNomComponent = (
                     default:
                       assertUnreachable(props.kind);
                   }
-                })()}{' '}
+                })()}
+                {space}
                 dans les archives.
                 <div css={classes.editButton}>
                   <Button

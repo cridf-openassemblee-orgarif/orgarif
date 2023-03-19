@@ -4,6 +4,7 @@ import { ItemStatus } from '../../../generated/domain/organisme';
 import { assertUnreachable, clientUid } from '../../../utils';
 import { NominalString } from '../../../utils/nominal-class';
 import { LoadingButton } from '../../common/LoadingButton';
+import { space } from '../../common/component-utils';
 import { TextInput } from '../../common/form/TextInput';
 import { colors } from '../../styles/colors';
 import { dialogClasses } from '../organisme/edit/dialog-common';
@@ -96,8 +97,8 @@ const EditCategoryComponent = (props: {
                 font-style: italic;
               `}
             >
-              {' '}
-              - {props.category.code}
+              {space}-{space}
+              {props.category.code}
             </span>
           )}
         </td>
@@ -180,8 +181,9 @@ const EditCategoryComponent = (props: {
                   default:
                     assertUnreachable(props.kind);
                 }
-              })()}{' '}
-              pourra être{' '}
+              })()}
+              {space}
+              pourra être{space}
               {(() => {
                 switch (props.kind) {
                   case 'departement':
@@ -193,9 +195,10 @@ const EditCategoryComponent = (props: {
                   default:
                     assertUnreachable(props.kind);
                 }
-              })()}{' '}
+              })()}
+              {space}
               dans les archives. Si un organisme non archivé est encore
-              référencé dans{' '}
+              référencé dans{space}
               {(() => {
                 switch (props.kind) {
                   case 'departement':
@@ -224,8 +227,9 @@ const EditCategoryComponent = (props: {
               </div>
             </div>
             <div css={dialogClasses.editBlock}>
-              <h3>Suppression</h3>À utiliser en cas d'<b>erreur de saisie</b>{' '}
-              uniquement. Si un organisme est encore référencé dans{' '}
+              <h3>Suppression</h3>À utiliser en cas d'<b>erreur de saisie</b>
+              {space}
+              uniquement. Si un organisme est encore référencé dans{space}
               {(() => {
                 switch (props.kind) {
                   case 'departement':
