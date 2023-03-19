@@ -1,12 +1,12 @@
 spring:
   main.banner-mode: off
   jooq.sql-dialect: Postgres
-  datasource.driver-class-name: org.postgresql.Driver
   servlet:
     multipart:
       max-file-size: 10MB
       max-request-size: 10MB
   datasource:
+    driver-class-name: org.postgresql.Driver
     url: jdbc:postgresql://${database.host}:${database.port}/${database.name}
     username: ${database.user}
     password: ${database.password}
