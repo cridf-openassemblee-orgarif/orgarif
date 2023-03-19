@@ -7,6 +7,7 @@ import { appContext } from '../../services/ApplicationContext';
 import { CopyContentWidget } from '../common/CopyContentWidget';
 import { RouteLink } from '../routing/RouteLink';
 import { useGoTo } from '../routing/routing-utils';
+import { UserEditPasswordDialogButton } from './UserEditPasswordDialogButton';
 import { RoleChip } from './UsersManagementTable';
 import { css } from '@emotion/react';
 import { ExpandMore as ExpandMoreIcon } from '@mui/icons-material';
@@ -162,6 +163,22 @@ export const UserDetailDialog = (props: { userId: UserId | undefined }) => {
                         >
                           Edit
                         </RouteLink>
+                      </TableCell>
+                    </TableRow>
+                    <TableRow
+                      css={css`
+                        &:last-child td,
+                        &:last-child th {
+                          border: 0;
+                        }
+                      `}
+                    >
+                      <TableCell component="th" scope="row">
+                        password
+                      </TableCell>
+                      <TableCell align="left">********</TableCell>
+                      <TableCell align="left">
+                        <UserEditPasswordDialogButton userId={userInfos.id} />
                       </TableCell>
                     </TableRow>
                   </TableBody>

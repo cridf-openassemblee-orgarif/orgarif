@@ -2,8 +2,7 @@
 import { Logo } from '../../icon/collection/Logo';
 import { state } from '../../state/state';
 import { isMobile } from '../../utils/viewport-utils';
-import { LogoutButton } from '../common/form/LogoutButton';
-import { MobileMenu } from '../root/MobileMenu';
+import { AppMenu } from '../root/AppMenu';
 import SigninDialog from '../root/SigninDialog';
 import { RouteLink } from '../routing/RouteLink';
 import { breakpoints } from '../styles/breakpoints';
@@ -94,9 +93,8 @@ export const NavBar = () => {
             />
           </RouteLink>
         </Box>
-        {isMobile() && <MobileMenu />}
+        {(isMobile() || userInfos) && <AppMenu />}
         {!isMobile() && !userInfos && <SigninDialog />}
-        {!isMobile() && userInfos && <LogoutButton />}
         {!displayLandingPage && (
           <Typography
             variant="h1"

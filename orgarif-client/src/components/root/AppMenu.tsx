@@ -6,7 +6,7 @@ import { RouteLink } from '../routing/RouteLink';
 import { colors } from '../styles/colors';
 import { css } from '@emotion/react';
 import MenuIcon from '@mui/icons-material/Menu';
-import { Box, Link } from '@mui/material';
+import { Link } from '@mui/material';
 import Button from '@mui/material/Button';
 import Menu from '@mui/material/Menu';
 import MenuItem from '@mui/material/MenuItem';
@@ -14,7 +14,7 @@ import * as React from 'react';
 import { useState } from 'react';
 import { useRecoilState } from 'recoil';
 
-export const MobileMenu = () => {
+export const AppMenu = () => {
   const [anchorEl, setAnchorEl] = useState<null | HTMLElement>(null);
   const [userInfos] = useRecoilState(state.userInfos);
 
@@ -46,15 +46,8 @@ export const MobileMenu = () => {
           'aria-labelledby': 'bouton-menu'
         }}
       >
-        <MenuItem
-          onClick={handleClose}
-          css={css`
-            @media (hover: none) {
-              background-color: ${colors.white} !important ;
-            }
-          `}
-        >
-          {!userInfos && (
+        {!userInfos && (
+          <MenuItem>
             <RouteLink
               css={css`
                 display: flex;
@@ -80,18 +73,35 @@ export const MobileMenu = () => {
                 Connexion
               </Link>
             </RouteLink>
-          )}
-          {userInfos && (
-            <Box
-              css={css`
-                display: flex;
-                padding-right: 1em;
-              `}
-            >
+          </MenuItem>
+        )}
+        {userInfos && (
+          <>
+            <MenuItem>
+              <RouteLink
+                route={{
+                  name: 'AccountRoute'
+                }}
+              >
+                Account
+              </RouteLink>
+            </MenuItem>
+            {userInfos.roles.includes('Admin') && (
+              <MenuItem>
+                <RouteLink
+                  route={{
+                    name: 'UsersManagementRoute'
+                  }}
+                >
+                  Users management
+                </RouteLink>
+              </MenuItem>
+            )}
+            <MenuItem>
               <LogoutButton />
-            </Box>
-          )}
-        </MenuItem>
+            </MenuItem>
+          </>
+        )}
       </Menu>
     </>
   );

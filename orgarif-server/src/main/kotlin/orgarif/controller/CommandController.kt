@@ -15,6 +15,7 @@ import orgarif.command.AddInstanceCommand
 import orgarif.command.AddInstanceCommandHandler
 import orgarif.command.AddLienDeliberationCommand
 import orgarif.command.AddLienDeliberationCommandHandler
+import orgarif.command.AdminUpdatePasswordCommand
 import orgarif.command.AdminUpdateRolesCommand
 import orgarif.command.AdminUpdateRolesCommandHandler
 import orgarif.command.Command
@@ -82,6 +83,9 @@ import orgarif.command.UpdateOrganismeStatusCommand
 import orgarif.command.UpdateOrganismeStatusCommandHandler
 import orgarif.command.UpdateOrganismeTypeStructureCommand
 import orgarif.command.UpdateOrganismeTypeStructureCommandHandler
+import orgarif.command.UpdatePasswordCommand
+import orgarif.command.AdminUpdatePasswordCommandHandler
+import orgarif.command.UpdatePasswordCommandHandler
 import orgarif.command.UpdateSecteurLibelleCommand
 import orgarif.command.UpdateSecteurLibelleCommandHandler
 import orgarif.command.UpdateSecteurStatusCommand
@@ -90,8 +94,6 @@ import orgarif.command.UpdateTypeStructureLibelleCommand
 import orgarif.command.UpdateTypeStructureLibelleCommandHandler
 import orgarif.command.UpdateTypeStructureStatusCommand
 import orgarif.command.UpdateTypeStructureStatusCommandHandler
-import orgarif.command.UpdatePasswordCommand
-import orgarif.command.UpdatePasswordCommandHandler
 import orgarif.domain.UserId
 import orgarif.repository.log.CommandLogDao
 import orgarif.serialization.Serializer
@@ -107,12 +109,12 @@ class CommandController(
     private val commandLogDao: CommandLogDao,
     private val dateService: DateService,
     private val randomService: RandomService,
-    private val transactionManager: PlatformTransactionManager,
     private val idLogService: IdLogService,
     private val userSessionService: UserSessionService,
     private val addDesignationCommandHandler: AddDesignationCommandHandler,
     private val addInstanceCommandHandler: AddInstanceCommandHandler,
     private val addLienDeliberationCommandHandler: AddLienDeliberationCommandHandler,
+    private val adminUpdatePasswordCommandHandler: AdminUpdatePasswordCommandHandler,
     private val adminUpdateRolesCommandHandler: AdminUpdateRolesCommandHandler,
     private val createDeliberationCommandHandler: CreateDeliberationCommandHandler,
     private val createDepartementCommandHandler: CreateDepartementCommandHandler,
@@ -237,6 +239,7 @@ class CommandController(
             is AddInstanceCommand -> addInstanceCommandHandler
             is AddLienDeliberationCommand -> addLienDeliberationCommandHandler
             is AdminUpdateRolesCommand -> adminUpdateRolesCommandHandler
+            is AdminUpdatePasswordCommand -> adminUpdatePasswordCommandHandler
             is CreateDeliberationCommand -> createDeliberationCommandHandler
             is CreateDepartementCommand -> createDepartementCommandHandler
             is CreateNatureJuridiqueCommand -> createNatureJuridiqueCommandHandler
@@ -247,7 +250,6 @@ class CommandController(
             is DevLoginCommand -> devLoginCommandHandler
             is LoginCommand -> loginCommandHandler
             is RegisterCommand -> registerCommandHandler
-            is UpdatePasswordCommand -> updatePasswordCommandHandler
             is UpdateDepartementCommand -> updateDepartementCommandHandler
             is UpdateDepartementStatusCommand -> updateDepartementStatusCommandHandler
             is UpdateDesignationDatesCommand -> updateDesignationDatesCommandHandler
@@ -273,6 +275,7 @@ class CommandController(
             is UpdateOrganismeStatusCommand -> updateOrganismeStatusCommandHandler
             is UpdateOrganismeTypeStructureCommand ->
                 updateOrganismeTypeStructureCommandCommandHandler
+            is UpdatePasswordCommand -> updatePasswordCommandHandler
             is UpdateSecteurLibelleCommand -> updateSecteurLibelleCommandHandler
             is UpdateSecteurStatusCommand -> updateSecteurStatusCommandHandler
             is UpdateTypeStructureLibelleCommand -> updateTypeStructureLibelleCommandHandler
@@ -321,5 +324,6 @@ class CommandController(
             is UpdateTypeStructureLibelleCommand,
             is UpdateTypeStructureStatusCommand -> null
             is AdminUpdateRolesCommand -> command.userId
+            is AdminUpdatePasswordCommand -> command.userId
         }
 }

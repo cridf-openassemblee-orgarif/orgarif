@@ -20,6 +20,7 @@ export type Command =
   | AddDesignationCommand
   | AddInstanceCommand
   | AddLienDeliberationCommand
+  | AdminUpdatePasswordCommand
   | AdminUpdateRolesCommand
   | CreateDeliberationCommand
   | CreateDepartementCommand
@@ -114,6 +115,12 @@ export interface AddLienDeliberationCommand {
 export interface AddLienDeliberationCommandResponse {
   objectType: 'AddLienDeliberationCommandResponse';
   lienDeliberationId: LienDeliberationId;
+}
+
+export interface AdminUpdatePasswordCommand {
+  objectType: 'AdminUpdatePasswordCommand';
+  userId: UserId;
+  password: PlainStringPassword;
 }
 
 export interface AdminUpdateRolesCommand {

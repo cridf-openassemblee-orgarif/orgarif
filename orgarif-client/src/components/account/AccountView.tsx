@@ -4,6 +4,7 @@ import { MainContainer } from '../containers/MainContainer';
 import { PasswordFormInput } from './PasswordForm';
 import { UpdatePasswordDialogButton } from './UpdatePasswordDialogButton';
 import * as React from 'react';
+import {css} from "@emotion/react";
 
 export const AccountView = () => {
   const onSubmit = (dto: PasswordFormInput) =>
@@ -16,7 +17,14 @@ export const AccountView = () => {
       .then(() => {});
   return (
     <MainContainer>
-      <UpdatePasswordDialogButton onSubmit={onSubmit} />
+      <div
+        css={css`
+          margin: 20px;
+          text-align: center;
+        `}
+      >
+        <UpdatePasswordDialogButton onSubmit={onSubmit} />
+      </div>
     </MainContainer>
   );
 };
