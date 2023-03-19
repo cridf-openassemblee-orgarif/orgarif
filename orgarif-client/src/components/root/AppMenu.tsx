@@ -83,7 +83,7 @@ export const AppMenu = () => {
                   name: 'AccountRoute'
                 }}
               >
-                Account
+                Gérer le compte
               </RouteLink>
             </MenuItem>
             {userInfos.roles.includes('Admin') && (
@@ -93,7 +93,7 @@ export const AppMenu = () => {
                     name: 'UsersManagementRoute'
                   }}
                 >
-                  Users management
+                  Gestion des utilisateurs
                 </RouteLink>
               </MenuItem>
             )}

@@ -40,7 +40,7 @@ export const PasswordForm = (props: {
       >
         <ControlledPasswordInput
           name="password"
-          label="New password"
+          label="Nouveau mot de passe"
           control={control}
           errors={errors}
         />

@@ -104,14 +104,6 @@ export const LoginView = () => {
                 `}
               >
                 Vous êtes connecté
-                <br />
-                <RouteLink
-                  route={{
-                    name: 'RootRoute'
-                  }}
-                >
-                  Liste des organismes
-                </RouteLink>
               </div>
             )}
             {loginResult && (

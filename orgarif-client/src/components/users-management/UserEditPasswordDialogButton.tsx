@@ -47,16 +47,16 @@ export const UserEditPasswordDialogButton = (props: { userId: UserId }) => {
         fullWidth={true}
         scroll="body"
       >
-        <DialogTitle>Edit password</DialogTitle>
+        <DialogTitle>Editer mot de passe</DialogTitle>
         <DialogContent>
           <DialogContentText>
             <PasswordForm formId={formId} onSubmit={save} />
           </DialogContentText>
         </DialogContent>
         <DialogActions>
-          <Button onClick={close}>close</Button>
+          <Button onClick={close}>fermer</Button>
           <LoadingStateButton loadingState={updateLoading} formId={formId}>
-            Save
+            Enregistrer
           </LoadingStateButton>
         </DialogActions>
       </Dialog>

@@ -50,7 +50,7 @@ export const UsersManagementTable = (props: {
     },
     {
       field: 'displayName',
-      headerName: 'Display name',
+      headerName: 'Nom affiché',
       renderCell: (p: GridRenderCellParams<void, UserInfos>) => (
         <div>{p.row.displayName}</div>
       ),

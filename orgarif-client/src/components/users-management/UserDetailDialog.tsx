@@ -203,7 +203,7 @@ export const UserDetailDialog = (props: { userId: UserId | undefined }) => {
         </DialogContentText>
       </DialogContent>
       <DialogActions>
-        <Button onClick={close}>close</Button>
+        <Button onClick={close}>fermer</Button>
       </DialogActions>
     </Dialog>
   );

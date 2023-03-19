@@ -73,7 +73,7 @@ export const UsersManagementView = (props: {
           padding: 20px;
         `}
       >
-        <h1>Users management</h1>
+        <h1>Gestion des utilisateurs</h1>
         <UsersManagementTable users={users} loading={loading} />
         <UserDetailDialog userId={displayDetailsUserId} />
         <UserEditRolesDialog

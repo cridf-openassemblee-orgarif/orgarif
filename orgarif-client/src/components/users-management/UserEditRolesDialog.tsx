@@ -122,9 +122,8 @@ export const UserEditRolesDialog = (props: {
               loggedInUserInfos.id === userInfos.id &&
               !roles.includes('Admin') && (
                 <WarningMessage>
-                  By removing your Admin role you instantly won't have admin
-                  rights anymore, and will not be able to get the Admin role
-                  back.
+                  En vous enlevant le rôle d'admin vous ne pourrez plus éditer
+                  les droits, et ne pourrez donc plus reprendre le rôle.
                 </WarningMessage>
               )}
             {userInfos &&
@@ -132,17 +131,16 @@ export const UserEditRolesDialog = (props: {
               !roles.includes('User') &&
               roles.includes('Admin') && (
                 <WarningMessage>
-                  Admin role is supposed to be paired with User role, you will
-                  encounter bugs otherwise.
+                  Le rôle d'admin doit être utilisé avec le rôle user.
                 </WarningMessage>
               )}
           </div>
         </DialogContentText>
       </DialogContent>
       <DialogActions>
-        <Button onClick={close}>close</Button>
+        <Button onClick={close}>fermer</Button>
         <LoadingStateButton loadingState={updateLoading} onClick={save}>
-          Save
+          Enregistrer
         </LoadingStateButton>
       </DialogActions>
     </Dialog>

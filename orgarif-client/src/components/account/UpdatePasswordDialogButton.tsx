@@ -30,7 +30,7 @@ export const UpdatePasswordDialogButton = (props: {
   const formId = clientUid();
   return (
     <>
-      <Button onClick={() => setOpen(true)}>Update password</Button>
+      <Button onClick={() => setOpen(true)}>Modifier le mot de passe</Button>
       <Dialog
         open={open}
         onClose={close}
@@ -38,16 +38,16 @@ export const UpdatePasswordDialogButton = (props: {
         fullWidth={true}
         scroll="body"
       >
-        <DialogTitle>Update password</DialogTitle>
+        <DialogTitle>Modifier le mot de passe</DialogTitle>
         <DialogContent>
           <DialogContentText>
             <PasswordForm formId={formId} onSubmit={onSubmit} />
           </DialogContentText>
         </DialogContent>
         <DialogActions>
-          <Button onClick={close}>close</Button>
+          <Button onClick={close}>fermer</Button>
           <LoadingStateButton formId={formId} loadingState={updateLoading}>
-            Save
+            Enregistrer
           </LoadingStateButton>
         </DialogActions>
       </Dialog>

@@ -73,14 +73,6 @@ export const RegisterView = () => {
                 `}
               >
                 Vous êtes connecté
-                <br />
-                <RouteLink
-                  route={{
-                    name: 'RootRoute'
-                  }}
-                >
-                  Liste des organismes
-                </RouteLink>
               </div>
             )}
           </div>
