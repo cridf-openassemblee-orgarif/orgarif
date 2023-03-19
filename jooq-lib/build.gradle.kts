@@ -1,7 +1,5 @@
 import org.jetbrains.kotlin.gradle.tasks.KotlinCompile
 
-group = "orgarif"
-
 plugins { kotlin("jvm") }
 
 val kotlinVersion = "1.7.21"

@@ -21,17 +21,15 @@ object ApplicationInstance {
             }
     }
 
-    val gitRevisionProperties by lazy {
-        File(System.getProperty("user.dir") + "/build.properties").let { file ->
-            if (file.exists()) {
-                Properties().apply { load(FileInputStream(file)) }
-            } else {
-                null
-            }
-        }
-    }
-
     val gitRevisionLabel: String by lazy {
+        val gitRevisionProperties =
+            File(System.getProperty("user.dir") + "/build.properties").let { file ->
+                if (file.exists()) {
+                    Properties().apply { load(FileInputStream(file)) }
+                } else {
+                    null
+                }
+            }
         gitRevisionProperties?.getProperty("shortGitRevision")
             ?: let {
                 if (env !in setOf(ApplicationEnvironment.Dev, ApplicationEnvironment.Test)) {
