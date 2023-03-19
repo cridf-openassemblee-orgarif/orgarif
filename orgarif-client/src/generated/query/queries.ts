@@ -1,4 +1,3 @@
-import { OrganismeOrderColumn } from '../domain/display';
 import { UserId } from '../domain/fmk-ids';
 import {
   DepartementId,
@@ -90,9 +89,8 @@ export interface ListOrganismesQuery {
   secteurIds: SecteurId[];
   typeStructureIds: TypeStructureId[];
   searchLabel?: string;
-  page: number;
   itemsNumber: number;
-  orderBy: OrganismeOrderColumn;
+  offset: number;
 }
 
 export interface ListOrganismesQueryResponse {

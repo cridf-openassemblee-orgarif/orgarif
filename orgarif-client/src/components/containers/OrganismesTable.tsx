@@ -37,31 +37,16 @@ const columnName = {
   actions: 'actions'
 };
 
+const itemsNumber = 25;
+
 export const OrganismesTable = () => {
   const [loading, setLoading] = useState<LoadingState>('Idle');
   const [organismes, setOrganismes] = useRecoilState(state.organismes);
+  const [page, setPage] = useState(0);
+  const [totalNumber, setTotalNumber] = useState(0);
   const filters = useRecoilValue(state.filters);
   const userInfos = useRecoilValue(state.userInfos);
 
-  // const requestSearch = (searchedValue: string) => {
-  // if (activeFilters.length > 0 && searchedValue.length >= 3) {
-  //   const filteredRows = organismes?.filter(row => {
-  //     setLoading(true);
-  //     return row.nom.toLowerCase().includes(searchedValue.toLowerCase());
-  //   });
-  //   if (filteredRows) {
-  //     setRows(filteredRows);
-  //   }
-  //   setLoading(false);
-  // } else if (activeFilters.length === 0 && searchedValue.length >= 3) {
-  //   // TODO - send request to server...
-  //   setLoading(true);
-  //   console.log('fetching results from server...');
-  //   setTimeout(() => setLoading(false), 1000);
-  // } else if (searchedValue.length === 0) {
-  //   if (organismes) setRows(organismes);
-  // }
-  // Temp search feature
   useEffect(() => {
     setLoading('Loading');
     appContext
@@ -69,18 +54,15 @@ export const OrganismesTable = () => {
       .send<ListOrganismesQueryResponse>({
         objectType: 'ListOrganismesQuery',
         ...filters,
-        // TODO
-        page: 0,
-        // TODO
-        itemsNumber: 25,
-        // TODO
-        orderBy: 'nom'
+        offset: page * itemsNumber,
+        itemsNumber
       })
       .then(r => {
         setOrganismes(r.organismes);
+        setTotalNumber(r.totalNumber);
         setLoading('Idle');
       });
-  }, [filters, setOrganismes]);
+  }, [filters, setOrganismes, page]);
 
   return (
     <Box
@@ -104,6 +86,9 @@ export const OrganismesTable = () => {
         disableColumnMenu
         disableDensitySelector
         rowHeight={38}
+        page={page}
+        onPageChange={setPage}
+        pageSize={itemsNumber}
         localeText={frFR.components.MuiDataGrid.defaultProps.localeText}
         initialState={{
           columns: {
@@ -114,15 +99,15 @@ export const OrganismesTable = () => {
             }
           }
         }}
-        // rowBuffer={50}
-        hideFooterSelectedRowCount
-        // rowsPerPageOptions={[50, 100, 200]}
+        rowsPerPageOptions={[]}
         autoHeight={true}
         components={{
           LoadingOverlay: LinearProgress,
           NoRowsOverlay: CustomNoRowsOverlay
         }}
+        paginationMode="server"
         loading={loading === 'Loading'}
+        rowCount={totalNumber}
       />
     </Box>
   );
@@ -138,6 +123,7 @@ const columns: GridColDef[] = [
     headerName: `Organismes`,
     minWidth: 250,
     flex: 1,
+    sortable: false,
     renderHeader: () => <CountChip />,
     renderCell: (params: GridRenderCellParams) => (
       <RouteLink route={{ name: 'OrganismeRoute', id: params.row.id }}>
@@ -150,6 +136,7 @@ const columns: GridColDef[] = [
     headerName: 'Département',
     minWidth: 150,
     flex: 0.3,
+    sortable: false,
     renderHeader: () => <HeaderChip size="small" label="DÉPARTEMENT" />,
     renderCell: (params: GridRenderCellParams) => (
       <DepartementRow id={params.row.departementId} />
@@ -160,6 +147,7 @@ const columns: GridColDef[] = [
     headerName: 'Type de Structure',
     minWidth: 180,
     flex: 0.4,
+    sortable: false,
     renderHeader: () => <HeaderChip size="small" label="TYPE DE STRUCTURE" />,
     renderCell: (params: GridRenderCellParams) => (
       <TypeStructureRow id={params.row.typeStructureId} />
@@ -204,8 +192,7 @@ const HeaderChip = styled(Chip)(({ theme }) => ({
   backgroundColor: colors.white,
   color: colors.dark,
   padding: '0em .5em',
-  height: '24px',
-  cursor: 'pointer'
+  height: '24px'
 }));
 
 export const EditOrganismeLink = (props: { organismeId: OrganismeId }) => (

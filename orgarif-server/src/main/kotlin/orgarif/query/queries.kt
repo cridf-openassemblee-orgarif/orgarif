@@ -8,7 +8,6 @@ import orgarif.domain.NatureJuridiqueId
 import orgarif.domain.OrganismeDto
 import orgarif.domain.OrganismeId
 import orgarif.domain.OrganismeListDto
-import orgarif.domain.OrganismeOrderColumn
 import orgarif.domain.RepresentantDto
 import orgarif.domain.SecteurId
 import orgarif.domain.TypeStructureId
@@ -48,9 +47,8 @@ data class ListOrganismesQuery(
     val secteurIds: List<SecteurId>,
     val typeStructureIds: List<TypeStructureId>,
     val searchLabel: String?,
-    val page: Int,
     val itemsNumber: Int,
-    val orderBy: OrganismeOrderColumn
+    val offset: Int,
 ) : Query()
 
 data class ListOrganismesQueryResponse(
