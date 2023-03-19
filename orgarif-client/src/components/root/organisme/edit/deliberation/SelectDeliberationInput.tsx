@@ -15,7 +15,6 @@ import {
 } from '../../../../common/form/AutocompleteInput';
 import { css } from '@emotion/react';
 import * as React from 'react';
-import { useEffect } from 'react';
 
 export const SelectDeliberationInput = (props: {
   selection: DeliberationDto | undefined;

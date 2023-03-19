@@ -96,14 +96,19 @@ export const NavBar = () => {
         {(isMobile() || userInfos) && <AppMenu />}
         {!isMobile() && !userInfos && <SigninDialog />}
         {!displayLandingPage && (
-          <Typography
-            variant="h1"
-            component="h1"
-            align="center"
-            css={classes.title}
+          <RouteLink
+            route={{ name: 'RootRoute' }}
+            removeFilters={window.location.pathname === '/'}
           >
-            ORGARIF
-          </Typography>
+            <Typography
+              variant="h1"
+              component="h1"
+              align="center"
+              css={classes.title}
+            >
+              ORGARIF
+            </Typography>
+          </RouteLink>
         )}
       </Toolbar>
     </AppBar>
