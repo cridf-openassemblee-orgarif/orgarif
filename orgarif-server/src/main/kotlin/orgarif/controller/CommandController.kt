@@ -15,6 +15,8 @@ import orgarif.command.AddInstanceCommand
 import orgarif.command.AddInstanceCommandHandler
 import orgarif.command.AddLienDeliberationCommand
 import orgarif.command.AddLienDeliberationCommandHandler
+import orgarif.command.AdminUpdateRolesCommand
+import orgarif.command.AdminUpdateRolesCommandHandler
 import orgarif.command.Command
 import orgarif.command.CommandConfiguration
 import orgarif.command.CommandHandler
@@ -92,7 +94,6 @@ import orgarif.command.UpdateTypeStructureStatusCommand
 import orgarif.command.UpdateTypeStructureStatusCommandHandler
 import orgarif.domain.UserId
 import orgarif.repository.log.CommandLogDao
-import orgarif.repository.user.UserDao
 import orgarif.serialization.Serializer
 import orgarif.service.user.UserSessionService
 import orgarif.service.utils.ApplicationInstance
@@ -104,7 +105,6 @@ import orgarif.service.utils.random.RandomService
 @RestController
 class CommandController(
     private val commandLogDao: CommandLogDao,
-    private val userDao: UserDao,
     private val dateService: DateService,
     private val randomService: RandomService,
     private val transactionManager: PlatformTransactionManager,
@@ -113,6 +113,7 @@ class CommandController(
     private val addDesignationCommandHandler: AddDesignationCommandHandler,
     private val addInstanceCommandHandler: AddInstanceCommandHandler,
     private val addLienDeliberationCommandHandler: AddLienDeliberationCommandHandler,
+    private val adminUpdateRolesCommandHandler: AdminUpdateRolesCommandHandler,
     private val createDeliberationCommandHandler: CreateDeliberationCommandHandler,
     private val createDepartementCommandHandler: CreateDepartementCommandHandler,
     private val createNatureJuridiqueCommandHandler: CreateNatureJuridiqueCommandHandler,
@@ -235,6 +236,7 @@ class CommandController(
             is AddDesignationCommand -> addDesignationCommandHandler
             is AddInstanceCommand -> addInstanceCommandHandler
             is AddLienDeliberationCommand -> addLienDeliberationCommandHandler
+            is AdminUpdateRolesCommand -> adminUpdateRolesCommandHandler
             is CreateDeliberationCommand -> createDeliberationCommandHandler
             is CreateDepartementCommand -> createDepartementCommandHandler
             is CreateNatureJuridiqueCommand -> createNatureJuridiqueCommandHandler
@@ -318,5 +320,6 @@ class CommandController(
             is UpdateSecteurStatusCommand,
             is UpdateTypeStructureLibelleCommand,
             is UpdateTypeStructureStatusCommand -> null
+            is AdminUpdateRolesCommand -> command.userId
         }
 }

@@ -20,6 +20,7 @@ export type Command =
   | AddDesignationCommand
   | AddInstanceCommand
   | AddLienDeliberationCommand
+  | AdminUpdateRolesCommand
   | CreateDeliberationCommand
   | CreateDepartementCommand
   | CreateNatureJuridiqueCommand
@@ -113,6 +114,12 @@ export interface AddLienDeliberationCommand {
 export interface AddLienDeliberationCommandResponse {
   objectType: 'AddLienDeliberationCommandResponse';
   lienDeliberationId: LienDeliberationId;
+}
+
+export interface AdminUpdateRolesCommand {
+  objectType: 'AdminUpdateRolesCommand';
+  userId: UserId;
+  roles: Role[];
 }
 
 export interface CreateDeliberationCommand {

@@ -1,5 +1,6 @@
 package orgarif.controller
 
+import orgarif.domain.Session as OrgarifSession
 import mu.KotlinLogging
 import org.jooq.DSLContext
 import org.springframework.beans.factory.annotation.Value
@@ -12,31 +13,14 @@ import org.springframework.web.bind.annotation.RequestParam
 import org.springframework.web.bind.annotation.RestController
 import orgarif.config.SafeSessionRepository
 import orgarif.controller.RemoteController.Companion.remoteRoute
-import orgarif.domain.Session as OrgarifSession
-import orgarif.repository.DesignationDao
-import orgarif.repository.EluDao
-import orgarif.repository.RepresentantDao
-import orgarif.repository.user.UserDao
-import orgarif.repository.user.UserSessionLogDao
 import orgarif.service.user.UserService
 import orgarif.service.user.UserSessionService
-import orgarif.service.utils.DateService
-import orgarif.service.utils.TransactionIsolationService
-import orgarif.service.utils.random.RandomService
 
 @RestController
 @RequestMapping(remoteRoute)
 class RemoteController(
     @Value("\${remote-controller.expected-secu}") private val expectedSecu: String,
     private val jooq: DSLContext,
-    private val userDao: UserDao,
-    private val userSessionLogDao: UserSessionLogDao,
-    private val eluDao: EluDao,
-    private val representantDao: RepresentantDao,
-    private val designationDao: DesignationDao,
-    private val randomService: RandomService,
-    private val transactionIsolationService: TransactionIsolationService,
-    private val dateService: DateService,
     private val sessionRepository: SafeSessionRepository,
     private val userSessionService: UserSessionService,
     private val userService: UserService,

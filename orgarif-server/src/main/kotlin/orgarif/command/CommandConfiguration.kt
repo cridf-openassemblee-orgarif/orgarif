@@ -11,6 +11,7 @@ object CommandConfiguration {
             is AddDesignationCommand -> User
             is AddInstanceCommand -> User
             is AddLienDeliberationCommand -> User
+            is AdminUpdateRolesCommand -> Admin
             is CreateDeliberationCommand -> User
             is CreateDepartementCommand -> User
             is CreateNatureJuridiqueCommand -> User

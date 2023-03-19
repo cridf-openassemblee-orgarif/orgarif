@@ -78,7 +78,7 @@ export const UserEditRolesDialog = (props: {
       appContext
         .commandService()
         .send({
-          objectType: 'UpdateRolesCommand',
+          objectType: 'AdminUpdateRolesCommand',
           userId: props.userId,
           roles
         })

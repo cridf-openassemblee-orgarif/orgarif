@@ -90,8 +90,8 @@ export const routes: ApplicationRouteProps<any>[] = [
     component: RootView
   },
   {
-    name: 'UsersManagementUserRoute',
-    path: '/users-management/:userId',
+    name: 'UsersManagementRoute',
+    path: '/users-management',
     component: UsersManagementView,
     role: 'Admin'
   },
@@ -102,8 +102,8 @@ export const routes: ApplicationRouteProps<any>[] = [
     role: 'Admin'
   },
   {
-    name: 'UsersManagementRoute',
-    path: '/users-management',
+    name: 'UsersManagementUserRoute',
+    path: '/users-management/:userId',
     component: UsersManagementView,
     role: 'Admin'
   }
