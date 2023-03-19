@@ -33,7 +33,7 @@ export const AutocompleteInput = <Suggestion extends object>(props: {
     if (props.initialSuggestions && !value) {
       props.initialSuggestions().then(r => setSuggestions(r));
     }
-  }, [value]);
+  }, [value, props, props.initialSuggestions]);
   const [alreadySet, setAlreadySet] = useState(false);
   const [loading, setLoading] = useState<LoadingState>('Idle');
   const onInputChange = (event: React.ChangeEvent<{}>, value: string) => {
