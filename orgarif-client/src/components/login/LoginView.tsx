@@ -80,6 +80,7 @@ export const LoginView = () => {
                 min-width: 400px;
                 max-width: 400px;
               }
+              padding: 0 20px;
             `}
           >
             {loginResult !== 'LoggedIn' && !userInfos && (
