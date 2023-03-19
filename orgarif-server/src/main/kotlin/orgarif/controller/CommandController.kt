@@ -8,6 +8,8 @@ import org.apache.commons.lang3.exception.ExceptionUtils
 import org.springframework.web.bind.annotation.PostMapping
 import org.springframework.web.bind.annotation.RequestBody
 import org.springframework.web.bind.annotation.RestController
+import orgarif.command.AdminUpdateRolesCommand
+import orgarif.command.AdminUpdateRolesCommandHandler
 import orgarif.command.Command
 import orgarif.command.CommandConfiguration
 import orgarif.command.CommandHandler
@@ -21,7 +23,6 @@ import orgarif.command.RegisterCommand
 import orgarif.command.RegisterCommandHandler
 import orgarif.domain.UserId
 import orgarif.repository.log.CommandLogDao
-import orgarif.repository.user.UserDao
 import orgarif.serialization.Serializer
 import orgarif.service.user.UserSessionService
 import orgarif.service.utils.ApplicationInstance
@@ -33,11 +34,11 @@ import orgarif.service.utils.random.RandomService
 @RestController
 class CommandController(
     private val commandLogDao: CommandLogDao,
-    private val userDao: UserDao,
     private val dateService: DateService,
     private val randomService: RandomService,
     private val idLogService: IdLogService,
     private val userSessionService: UserSessionService,
+    private val adminUpdateRolesCommandHandler: AdminUpdateRolesCommandHandler,
     private val devLoginCommandHandler: DevLoginCommandHandler,
     private val loginCommandHandler: LoginCommandHandler,
     private val registerCommandHandler: RegisterCommandHandler,
@@ -115,6 +116,7 @@ class CommandController(
 
     private fun handler(command: Command) =
         when (command) {
+            is AdminUpdateRolesCommand -> adminUpdateRolesCommandHandler
             is DevLoginCommand -> devLoginCommandHandler
             is LoginCommand -> loginCommandHandler
             is RegisterCommand -> registerCommandHandler
@@ -126,5 +128,6 @@ class CommandController(
             is DevLoginCommand,
             is LoginCommand,
             is RegisterCommand -> null
+            is AdminUpdateRolesCommand -> command.userId
         }
 }

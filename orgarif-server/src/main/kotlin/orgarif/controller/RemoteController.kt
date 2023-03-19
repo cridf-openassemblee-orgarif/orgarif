@@ -5,40 +5,31 @@ import org.jooq.DSLContext
 import org.springframework.beans.factory.annotation.Value
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken
 import org.springframework.security.core.context.SecurityContextImpl
-import org.springframework.session.Session as SpringSession
+import org.springframework.security.web.context.HttpSessionSecurityContextRepository
 import org.springframework.web.bind.annotation.PostMapping
 import org.springframework.web.bind.annotation.RequestMapping
 import org.springframework.web.bind.annotation.RequestParam
 import org.springframework.web.bind.annotation.RestController
 import orgarif.config.SafeSessionRepository
 import orgarif.controller.RemoteController.Companion.remoteRoute
-import orgarif.domain.Role
 import orgarif.domain.Session as OrgarifSession
-import orgarif.domain.UserSession
-import orgarif.repository.user.UserDao
-import orgarif.repository.user.UserSessionLogDao
+import orgarif.service.user.UserService
 import orgarif.service.user.UserSessionService
-import orgarif.service.utils.DateService
-import orgarif.service.utils.TransactionIsolationService
 
 @RestController
 @RequestMapping(remoteRoute)
 class RemoteController(
     @Value("\${remote-controller.expected-secu}") private val expectedSecu: String,
     private val jooq: DSLContext,
-    private val userDao: UserDao,
-    private val userSessionLogDao: UserSessionLogDao,
     private val sessionRepository: SafeSessionRepository,
     private val userSessionService: UserSessionService,
-    private val transactionIsolationService: TransactionIsolationService,
-    private val dateService: DateService
+    private val userService: UserService,
 ) {
 
     val logger = KotlinLogging.logger {}
 
     companion object {
         const val remoteRoute = "/remote"
-        private val SPRING_SECURITY_CONTEXT = "SPRING_SECURITY_CONTEXT"
     }
 
     private fun checkSecu(secu: String) {
@@ -61,44 +52,16 @@ class RemoteController(
                     .mapNotNull { sessionRepository.findById(it) }
                     .forEach { session ->
                         val context =
-                            session.getAttribute<SecurityContextImpl>(SPRING_SECURITY_CONTEXT)
+                            session.getAttribute<SecurityContextImpl>(
+                                HttpSessionSecurityContextRepository.SPRING_SECURITY_CONTEXT_KEY)
                         val conversion =
                             ((context.authentication as UsernamePasswordAuthenticationToken)
                                     .principal as OrgarifSession)
                                 .let { userSessionService.convert(it) }
                         if (conversion.needsUpdate) {
-                            updateSession(session, conversion.session)
+                            userService.updateSession(session, conversion.session)
                         }
                     }
             }
         }
-
-    @PostMapping("/add-role")
-    fun addUserRole(
-        @RequestParam secu: String,
-        @RequestParam email: String,
-        @RequestParam role: Role
-    ) =
-        synchronized(this) {
-            checkSecu(secu)
-            val user = userDao.fetchByMail(email)
-            val roles = user.roles + role
-            userDao.updateRoles(user.id, roles, dateService.now())
-            userSessionLogDao.fetchIdsByUserId(user.id).forEach { sessionId ->
-                val userSession = UserSession(sessionId, user.id, roles)
-                val userSessionPrincipalName = userSession.toString()
-                sessionRepository.findByPrincipalName(userSessionPrincipalName).values.forEach {
-                    updateSession(it, userSession)
-                }
-            }
-        }
-
-    private fun updateSession(session: SpringSession, userSession: UserSession) {
-        logger.info { "Save up-to-date session ${session.id}" }
-        val springAuthentication = UsernamePasswordAuthenticationToken(userSession, null, null)
-        val context = session.getAttribute<SecurityContextImpl>(SPRING_SECURITY_CONTEXT)
-        context.authentication = springAuthentication
-        session.setAttribute(SPRING_SECURITY_CONTEXT, context)
-        transactionIsolationService.execute { sessionRepository.save(session) }
-    }
 }

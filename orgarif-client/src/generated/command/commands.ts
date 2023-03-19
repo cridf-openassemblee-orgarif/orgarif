@@ -1,7 +1,12 @@
+import { UserId } from '../domain/fmk-ids';
 import { PlainStringPassword } from '../domain/security';
-import { LoginResult, RegisterResult, UserInfos } from '../domain/user';
+import { LoginResult, RegisterResult, Role, UserInfos } from '../domain/user';
 
-export type Command = DevLoginCommand | LoginCommand | RegisterCommand;
+export type Command =
+  | AdminUpdateRolesCommand
+  | DevLoginCommand
+  | LoginCommand
+  | RegisterCommand;
 
 export type CommandResponse =
   | DevLoginCommandResponse
@@ -11,6 +16,12 @@ export type CommandResponse =
 
 export interface EmptyCommandResponse {
   objectType: 'EmptyCommandResponse';
+}
+
+export interface AdminUpdateRolesCommand {
+  objectType: 'AdminUpdateRolesCommand';
+  userId: UserId;
+  roles: Role[];
 }
 
 export interface DevLoginCommand {

@@ -5,6 +5,8 @@ import kttots.Shared
 import orgarif.domain.LoginResult
 import orgarif.domain.PlainStringPassword
 import orgarif.domain.RegisterResult
+import orgarif.domain.Role
+import orgarif.domain.UserId
 import orgarif.domain.UserInfos
 
 @Shared
@@ -15,6 +17,8 @@ sealed class Command
 @Shared sealed class CommandResponse
 
 object EmptyCommandResponse : CommandResponse()
+
+data class AdminUpdateRolesCommand(val userId: UserId, val roles: Set<Role>) : Command()
 
 data class DevLoginCommand(val username: String) : Command()
 

@@ -1,6 +1,6 @@
 /** @jsxImportSource @emotion/react */
 import { adminIdDisplayChars } from '../../domain/admin';
-import { UserInfos } from '../../generated/domain/user';
+import { Role, UserInfos } from '../../generated/domain/user';
 import { LoadingState } from '../../interfaces';
 import { CopyContentWidget } from '../common/CopyContentWidget';
 import { RouteLink } from '../routing/RouteLink';
@@ -8,6 +8,19 @@ import { colors } from '../styles/vars';
 import { css } from '@emotion/react';
 import { DataGrid, GridColDef, GridRenderCellParams } from '@mui/x-data-grid';
 import * as React from 'react';
+
+export const RoleChip = (props: { role: Role }) => (
+  <span
+    css={css`
+      margin: 0 2px;
+      padding: 4px 10px;
+      background: ${colors.clearGrey};
+      border-radius: 4px;
+    `}
+  >
+    {props.role}
+  </span>
+);
 
 export const UsersManagementTable = (props: {
   users: UserInfos[];
@@ -51,16 +64,7 @@ export const UsersManagementTable = (props: {
       renderCell: (p: GridRenderCellParams<void, UserInfos>) => (
         <div>
           {p.row.roles.map(r => (
-            <span
-              css={css`
-                margin: 0 2px;
-                padding: 4px 10px;
-                background: ${colors.clearGrey};
-                border-radius: 4px;
-              `}
-            >
-              {r}
-            </span>
+            <RoleChip role={r} />
           ))}
         </div>
       ),
@@ -69,7 +73,7 @@ export const UsersManagementTable = (props: {
       filterable: false
     },
     {
-      field: 'edit',
+      field: 'details',
       headerName: '',
       renderCell: (p: GridRenderCellParams<void, UserInfos>) => (
         <RouteLink
@@ -80,11 +84,11 @@ export const UsersManagementTable = (props: {
             userId: p.row.id
           }}
         >
-          Edit
+          Details
         </RouteLink>
       ),
       flex: 1,
-      maxWidth: 80,
+      maxWidth: 120,
       sortable: false,
       filterable: false
     }

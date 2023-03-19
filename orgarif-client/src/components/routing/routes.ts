@@ -16,6 +16,7 @@ export type ApplicationRoute =
   | TestSubRoute
   | TestSubIdRoute
   | UsersManagementRoute
+  | UsersManagementUserEditRolesRoute
   | UsersManagementUserRoute;
 
 export interface ApplicationRouteProps<T extends ApplicationRoute> {
@@ -62,6 +63,12 @@ export const routes: ApplicationRouteProps<any>[] = [
   {
     name: 'UsersManagementRoute',
     path: '/users-management',
+    component: UsersManagementView,
+    role: 'Admin'
+  },
+  {
+    name: 'UsersManagementUserEditRolesRoute',
+    path: '/users-management/:userId/edit-roles',
     component: UsersManagementView,
     role: 'Admin'
   },
@@ -115,6 +122,11 @@ interface TestSubIdRoute {
 
 export interface UsersManagementRoute {
   name: 'UsersManagementRoute';
+}
+
+export interface UsersManagementUserEditRolesRoute {
+  name: 'UsersManagementUserEditRolesRoute';
+  userId: UserId;
 }
 
 export interface UsersManagementUserRoute {
