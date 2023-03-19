@@ -19,6 +19,7 @@ import orgarif.domain.NatureJuridique
 import orgarif.domain.OrganismeCategories
 import orgarif.domain.Secteur
 import orgarif.domain.TypeStructure
+import orgarif.domain.Uri
 import orgarif.domain.UserInfos
 import orgarif.repository.DepartementDao
 import orgarif.repository.EluDao
@@ -33,7 +34,6 @@ import orgarif.service.user.UserService
 import orgarif.service.user.UserSessionService
 import orgarif.service.utils.ApplicationInstance
 import orgarif.utils.OrgarifStringUtils
-import orgarif.utils.Uri
 
 @Controller
 class IndexController(

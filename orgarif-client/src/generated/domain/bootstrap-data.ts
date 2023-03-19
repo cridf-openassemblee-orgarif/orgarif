@@ -1,4 +1,4 @@
-import { Uri } from '../utils/Uri';
+import { Uri } from './Uri';
 import { ApplicationEnvironment } from './application';
 import {
   DepartementId,

@@ -1,6 +1,4 @@
-package orgarif.utils
-
-import orgarif.domain.SerializeAsString
+package orgarif.domain
 
 // [doc] This Uri exists because neither JDK URI or Path can :
 // * resolve with slashes handling (ko URI)

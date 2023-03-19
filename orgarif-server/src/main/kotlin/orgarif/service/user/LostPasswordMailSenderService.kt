@@ -8,12 +8,12 @@ import orgarif.config.Routes
 import orgarif.controller.IndexController
 import orgarif.controller.InvalidateMagicLinkTokenController
 import orgarif.domain.MailReference
+import orgarif.domain.Uri
 import orgarif.repository.user.UserDao
 import orgarif.serialization.Serializer.serialize
 import orgarif.service.mail.MailService
 import orgarif.service.utils.ApplicationInstance
 import orgarif.service.utils.HttpService
-import orgarif.utils.Uri
 
 @Service
 class LostPasswordMailSenderService(

@@ -6,6 +6,7 @@ import org.springframework.http.HttpMethod
 import org.springframework.http.HttpStatus
 import org.springframework.stereotype.Service
 import orgarif.domain.Civilite
+import orgarif.domain.Uri
 import orgarif.repository.EluDao
 import orgarif.repository.RepresentantDao
 import orgarif.serialization.Serializer
@@ -13,7 +14,6 @@ import orgarif.service.utils.DateService
 import orgarif.service.utils.HttpService
 import orgarif.service.utils.random.RandomService
 import orgarif.utils.OrgarifStringUtils.deserializeUuid
-import orgarif.utils.Uri
 import orgarif.utils.toTypeId
 
 @Service

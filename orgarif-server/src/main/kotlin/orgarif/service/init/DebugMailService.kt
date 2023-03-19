@@ -7,12 +7,12 @@ import org.springframework.http.HttpMethod
 import org.springframework.http.HttpStatus
 import org.springframework.stereotype.Service
 import orgarif.domain.ApplicationEnvironment
+import orgarif.domain.Uri
 import orgarif.service.mail.MailService
 import orgarif.service.mail.MailService.MailJetMail
 import orgarif.service.utils.ApplicationInstance
 import orgarif.service.utils.ApplicationTaskExecutor
 import orgarif.service.utils.HttpService
-import orgarif.utils.Uri
 
 @Service
 class DebugMailService(

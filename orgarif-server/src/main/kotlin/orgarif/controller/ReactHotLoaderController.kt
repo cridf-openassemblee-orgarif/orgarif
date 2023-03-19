@@ -11,10 +11,10 @@ import org.springframework.web.bind.annotation.GetMapping
 import org.springframework.web.bind.annotation.RestController
 import orgarif.domain.ApplicationEnvironment
 import orgarif.domain.MimeType
+import orgarif.domain.Uri
 import orgarif.error.OrgarifNotFoundException
 import orgarif.service.utils.ApplicationInstance
 import orgarif.service.utils.HttpService
-import orgarif.utils.Uri
 
 @RestController
 // [doc] so it won't run on prod

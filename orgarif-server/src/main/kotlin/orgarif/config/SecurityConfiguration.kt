@@ -10,7 +10,7 @@ import org.springframework.security.config.annotation.web.configuration.WebSecur
 import org.springframework.security.core.SpringSecurityCoreVersion
 import org.springframework.security.web.csrf.CookieCsrfTokenRepository
 import orgarif.controller.RemoteController
-import orgarif.utils.Uri
+import orgarif.domain.Uri
 
 @Configuration
 class SecurityConfiguration(

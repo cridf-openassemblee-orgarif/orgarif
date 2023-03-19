@@ -18,6 +18,7 @@ import orgarif.domain.DeploymentLogId
 import orgarif.domain.MailLogId
 import orgarif.domain.MailReference
 import orgarif.domain.MimeType
+import orgarif.domain.Uri
 import orgarif.domain.UserId
 import orgarif.error.MessageNotSentException
 import orgarif.repository.log.MailLogDao
@@ -25,7 +26,6 @@ import orgarif.service.utils.ApplicationInstance
 import orgarif.service.utils.DateService
 import orgarif.service.utils.HttpService
 import orgarif.service.utils.random.RandomService
-import orgarif.utils.Uri
 
 @Service
 class MailService(

@@ -10,7 +10,7 @@ import org.springframework.http.HttpHeaders
 import org.springframework.http.HttpMethod
 import org.springframework.http.HttpStatus
 import org.springframework.stereotype.Service
-import orgarif.utils.Uri
+import orgarif.domain.Uri
 
 @Service
 class HttpService(private val okHttpClient: OkHttpClient) {

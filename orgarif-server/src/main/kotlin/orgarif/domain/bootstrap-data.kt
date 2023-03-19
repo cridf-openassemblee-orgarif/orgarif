@@ -1,7 +1,6 @@
 package orgarif.domain
 
 import kttots.Shared
-import orgarif.utils.Uri
 
 data class Departement(
     val id: DepartementId,

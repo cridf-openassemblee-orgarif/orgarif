@@ -9,7 +9,6 @@ import Avatar from '@mui/material/Avatar';
 import Box from '@mui/material/Box';
 import { experimentalStyled as styled } from '@mui/material/styles';
 
-
 const sigerBaseUrl = () =>
   bootstrapData.sigerUrl.endsWith('/')
     ? bootstrapData.sigerUrl.slice(0, -1)
