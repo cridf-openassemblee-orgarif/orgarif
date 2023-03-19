@@ -78,6 +78,15 @@ export const Navbar = () => {
           )}
           {userInfos && (
             <>
+              <MenuItem onClick={close}>
+                <RouteLink
+                  route={{
+                    name: 'AccountRoute'
+                  }}
+                >
+                  Account
+                </RouteLink>
+              </MenuItem>
               {userInfos.roles.includes('Admin') && (
                 <MenuItem onClick={close}>
                   <RouteLink

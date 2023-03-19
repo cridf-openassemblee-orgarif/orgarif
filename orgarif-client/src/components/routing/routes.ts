@@ -1,6 +1,7 @@
 import { UserId } from '../../generated/domain/fmk-ids';
 import { Role } from '../../generated/domain/user';
 import { dict, Dict, flatMap } from '../../utils/nominal-class';
+import { AccountView } from '../account/AccountView';
 import { LoginView } from '../login/LoginView';
 import { RegisterView } from '../register/RegisterView';
 import { RootView } from '../root/RootView';
@@ -9,6 +10,7 @@ import { FunctionComponent } from 'react';
 
 // TODO[tmpl] secure that "name" can't be a route parameter
 export type ApplicationRoute =
+  | AccountRoute
   | LoginRoute
   | RegisterRoute
   | RootRoute
@@ -30,6 +32,12 @@ export interface ApplicationRouteProps<T extends ApplicationRoute> {
 
 // TODO naming
 export const routes: ApplicationRouteProps<any>[] = [
+  {
+    name: 'AccountRoute',
+    path: '/account',
+    component: AccountView,
+    role: 'User'
+  },
   {
     name: 'LoginRoute',
     path: '/login',
@@ -94,6 +102,10 @@ const flattenRoute = (
 export const routePathMap: Dict<ApplicationRoute['name'], string> = dict(
   flatMap(routes, r => flattenRoute('', r))
 );
+
+interface AccountRoute {
+  name: 'AccountRoute';
+}
 
 interface LoginRoute {
   name: 'LoginRoute';

@@ -29,6 +29,8 @@ data class LoginCommand(val mail: String, val password: PlainStringPassword) : C
 data class LoginCommandResponse(val result: LoginResult, val userinfos: UserInfos?) :
     CommandResponse()
 
+data class UpdatePasswordCommand(val password: PlainStringPassword) : Command()
+
 data class RegisterCommand(
     val mail: String,
     val password: PlainStringPassword,

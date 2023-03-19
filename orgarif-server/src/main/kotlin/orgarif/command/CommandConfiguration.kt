@@ -2,6 +2,7 @@ package orgarif.command
 
 import orgarif.domain.Role
 import orgarif.domain.Role.Admin
+import orgarif.domain.Role.User
 
 object CommandConfiguration {
 
@@ -11,5 +12,6 @@ object CommandConfiguration {
             is DevLoginCommand -> null
             is LoginCommand -> null
             is RegisterCommand -> null
+            is UpdatePasswordCommand -> User
         }
 }

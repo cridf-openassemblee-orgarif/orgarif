@@ -6,7 +6,8 @@ export type Command =
   | AdminUpdateRolesCommand
   | DevLoginCommand
   | LoginCommand
-  | RegisterCommand;
+  | RegisterCommand
+  | UpdatePasswordCommand;
 
 export type CommandResponse =
   | DevLoginCommandResponse
@@ -44,6 +45,11 @@ export interface LoginCommandResponse {
   objectType: 'LoginCommandResponse';
   result: LoginResult;
   userinfos?: UserInfos;
+}
+
+export interface UpdatePasswordCommand {
+  objectType: 'UpdatePasswordCommand';
+  password: PlainStringPassword;
 }
 
 export interface RegisterCommand {

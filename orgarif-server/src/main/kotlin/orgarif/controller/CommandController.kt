@@ -21,6 +21,8 @@ import orgarif.command.LoginCommand
 import orgarif.command.LoginCommandHandler
 import orgarif.command.RegisterCommand
 import orgarif.command.RegisterCommandHandler
+import orgarif.command.UpdatePasswordCommand
+import orgarif.command.UpdatePasswordCommandHandler
 import orgarif.domain.UserId
 import orgarif.repository.log.CommandLogDao
 import orgarif.serialization.Serializer
@@ -42,6 +44,7 @@ class CommandController(
     private val devLoginCommandHandler: DevLoginCommandHandler,
     private val loginCommandHandler: LoginCommandHandler,
     private val registerCommandHandler: RegisterCommandHandler,
+    private val updatePasswordCommandHandler: UpdatePasswordCommandHandler,
     private val transactionIsolationService: TransactionIsolationService,
 ) {
 
@@ -119,6 +122,7 @@ class CommandController(
             is AdminUpdateRolesCommand -> adminUpdateRolesCommandHandler
             is DevLoginCommand -> devLoginCommandHandler
             is LoginCommand -> loginCommandHandler
+            is UpdatePasswordCommand -> updatePasswordCommandHandler
             is RegisterCommand -> registerCommandHandler
         }.let { @Suppress("UNCHECKED_CAST") (it as CommandHandler<Command, CommandResponse>) }
 
@@ -127,6 +131,7 @@ class CommandController(
         when (command) {
             is DevLoginCommand,
             is LoginCommand,
+            is UpdatePasswordCommand,
             is RegisterCommand -> null
             is AdminUpdateRolesCommand -> command.userId
         }
