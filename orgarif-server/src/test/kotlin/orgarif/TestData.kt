@@ -17,7 +17,7 @@ object TestData {
             id = userId,
             mail = "mail",
             displayName = "displayName",
-            language = Language.En,
+            language = Language.Fr,
             roles = setOf(Role.User),
             signupDate = date,
             lastUpdate = date)

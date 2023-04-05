@@ -5,7 +5,7 @@ import com.fasterxml.jackson.annotation.JsonTypeName
 import orgarif.repository.user.UserDao
 
 enum class Language {
-    En,
+    Fr,
     Test
 }
 

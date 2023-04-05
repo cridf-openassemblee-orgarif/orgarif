@@ -10,7 +10,7 @@ class LocaleService(private val notificationService: NotificationService) {
 
     fun selectLanguage(locales: List<Locale>): Language {
         if (locales.isEmpty()) {
-            return Language.En
+            return Language.Fr
         }
         locales.forEach { locale ->
             val language = Language.values().find { it.name == locale.language }
@@ -20,6 +20,6 @@ class LocaleService(private val notificationService: NotificationService) {
         }
         notificationService.notify(
             "No locale found in user locales $locales", NotificationService.Channel.Info)
-        return Language.En
+        return Language.Fr
     }
 }

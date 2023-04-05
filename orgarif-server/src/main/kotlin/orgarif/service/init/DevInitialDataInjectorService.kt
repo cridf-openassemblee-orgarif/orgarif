@@ -81,7 +81,7 @@ class DevInitialDataInjectorService(
                     id = randomService.id(),
                     mail = mail,
                     displayName = username,
-                    language = Language.En,
+                    language = Language.Fr,
                     roles = setOf(Role.User).let { if (admin) it + Role.Admin else it },
                     signupDate = now,
                     lastUpdate = now),
