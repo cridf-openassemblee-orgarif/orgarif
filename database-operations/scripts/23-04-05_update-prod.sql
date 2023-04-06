@@ -1,0 +1,14 @@
+begin transaction;
+ALTER TABLE app_user DROP COLUMN username;
+ALTER TABLE command_log ADD COLUMN affected_user_id uuid;
+ALTER TABLE command_log rename COLUMN resulting_ids to ids_log;
+update command_log set ids_log = '' where ids_log is null;
+ALTER TABLE command_log ALTER COLUMN ids_log SET NOT NULL;
+ALTER TABLE command_log ALTER COLUMN end_date SET NOT NULL;
+ALTER TABLE command_log DROP CONSTRAINT command_log_user_id_fkey;
+ALTER TABLE command_log DROP CONSTRAINT command_log_user_session_id_fkey;
+ALTER TABLE mail_log DROP COLUMN application;
+ALTER TABLE user_file rename COLUMN file to file_content;
+update app_user set roles = '{User}';
+update app_user set language = 'Fr';
+commit;
