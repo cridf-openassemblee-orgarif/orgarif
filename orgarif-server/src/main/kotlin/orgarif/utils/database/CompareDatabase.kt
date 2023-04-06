@@ -6,22 +6,26 @@ import orgarif.utils.replaceRecurvice
 
 object CompareDatabase {
     fun compare(env: String, database: CloudDatabasesConfiguration.Database) {
-        val tempDb = "orgarif-$env-schema"
+        val tempDb = "orgarif-$env-schema-comparison"
         // doesn't work as simply with psql -c ""
         val tempDir = Files.createTempDir()
         val schemaFile = tempDir.resolve("schema.sql")
         val pgquarrelConf = tempDir.resolve("pgquarrel-config.properties")
         fun compare() {
-            val schemaResult =
-                ShellRunner.run(
-                    "pg_dump -h ${database.databaseHost}" +
-                        " -p ${database.databasePort}" +
-                        " -U ${database.databaseUser}" +
-                        " -d ${database.databaseName}" +
-                        " -n public --schema-only")
+            val command =
+                (database.databasePassword?.let { "PGPASSWORD=$it " }
+                    ?: "") +
+                    "pg_dump " +
+                    (database.databaseHost?.let { "-h $it " } ?: "") +
+                    (database.databasePort?.let { "-p $it " } ?: "") +
+                    (database.databaseUser?.let { "-U $it " } ?: "") +
+                    "-d ${database.databaseName} " +
+                    "-n public --schema-only"
+            val schemaResult = ShellRunner.run(command)
             if (schemaResult.result != 0) {
+                println(schemaResult.errorOutput)
                 throw IllegalStateException(
-                    "Could not copy database schema => try to grant rights !")
+                    "Could not copy database schema => try to grant rights ! Error ${schemaResult.result}")
             }
             ShellRunner.run("createdb $tempDb")
             Files.write(
