@@ -53,6 +53,14 @@ class OrganismeDao(val jooq: DSLContext) {
 
     fun fetch(id: OrganismeId) = fetchOrNull(id) ?: throw IllegalArgumentException("$id")
 
+    fun fetchAll(status: ItemStatus): List<Record> =
+        jooq
+            .selectFrom(ORGANISME)
+            .where(ORGANISME.STATUS.equal(status.name))
+            .orderBy(ORGANISME.NOM)
+            .fetch()
+            .map(this::map)
+
     fun fetchByCategories(
         status: ItemStatus,
         departementIds: List<DepartementId>,

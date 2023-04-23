@@ -41,6 +41,12 @@ data class IsMailAlreadyTakenQuery(val mail: String) : Query()
 
 data class IsMailAlreadyTakenQueryResponse(val alreadyTaken: Boolean) : QueryResponse()
 
+class ListAllOrganismesQuery : Query()
+
+data class ListAllOrganismesQueryResponse(
+    val organismes: List<OrganismeListDto>,
+) : QueryResponse()
+
 data class ListOrganismesQuery(
     val departementIds: List<DepartementId>,
     val natureJuridiqueIds: List<NatureJuridiqueId>,

@@ -13,6 +13,7 @@ object QueryConfiguration {
             is GetUserInfosQuery -> Admin
             is GetUsersQuery -> Admin
             is IsMailAlreadyTakenQuery -> null
+            is ListAllOrganismesQuery -> User
             is ListOrganismesQuery -> null
             is SearchDeliberationQuery -> User
             is SearchRepresentantsQuery -> User

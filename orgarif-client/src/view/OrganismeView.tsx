@@ -24,12 +24,8 @@ export const OrganismeView = (props: { route: EditOrganismeRoute }) => {
         objectType: 'GetOrganismeQuery',
         id: props.route.id
       })
-      .then(r => {
-        setOrganisme(r.organisme);
-      })
-      .catch(e => {
-        setError(true);
-      });
+      .then(r => setOrganisme(r.organisme))
+      .catch(e => setError(true));
   }, [props.route.id]);
 
   return (

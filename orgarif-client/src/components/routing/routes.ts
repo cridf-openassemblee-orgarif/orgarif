@@ -7,6 +7,7 @@ import { EditNatureJuridiquesView } from '../../view/EditNatureJuridiquesView';
 import { EditOrganismeView } from '../../view/EditOrganismeView';
 import { EditSecteursView } from '../../view/EditSecteursView';
 import { EditTypeStructuresView } from '../../view/EditTypeStructuresView';
+import { ListOrganismesView } from '../../view/ListOrganismesView';
 import { OrganismeView } from '../../view/OrganismeView';
 import { AccountView } from '../account/AccountView';
 import { LoginView } from '../login/LoginView';
@@ -23,6 +24,7 @@ export type ApplicationRoute =
   | EditOrganismeRoute
   | EditSecteursRoute
   | EditTypeStructuresRoute
+  | ListOrganismesRoute
   | LoginRoute
   | OrganismeRoute
   | RegisterRoute
@@ -71,6 +73,11 @@ export const routes: ApplicationRouteProps<any>[] = [
     path: '/edition-type-structures',
     component: EditTypeStructuresView,
     role: 'User'
+  },
+  {
+    name: 'ListOrganismesRoute',
+    path: '/dev-list',
+    component: ListOrganismesView
   },
   {
     name: 'LoginRoute',
@@ -150,6 +157,10 @@ export interface EditSecteursRoute {
 
 export interface EditTypeStructuresRoute {
   name: 'EditTypeStructuresRoute';
+}
+
+interface ListOrganismesRoute {
+  name: 'ListOrganismesRoute';
 }
 
 interface LoginRoute {

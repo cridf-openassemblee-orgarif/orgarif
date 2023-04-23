@@ -20,6 +20,7 @@ export type Query =
   | GetUserInfosQuery
   | GetUsersQuery
   | IsMailAlreadyTakenQuery
+  | ListAllOrganismesQuery
   | ListOrganismesQuery
   | SearchDeliberationQuery
   | SearchRepresentantsQuery;
@@ -30,6 +31,7 @@ export type QueryResponse =
   | GetUserInfosQueryResponse
   | GetUsersQueryResponse
   | IsMailAlreadyTakenQueryResponse
+  | ListAllOrganismesQueryResponse
   | ListOrganismesQueryResponse
   | SearchDeliberationQueryResponse
   | SearchRepresentantsQueryResponse;
@@ -80,6 +82,15 @@ export interface IsMailAlreadyTakenQuery {
 export interface IsMailAlreadyTakenQueryResponse {
   objectType: 'IsMailAlreadyTakenQueryResponse';
   alreadyTaken: boolean;
+}
+
+export interface ListAllOrganismesQuery {
+  objectType: 'ListAllOrganismesQuery';
+}
+
+export interface ListAllOrganismesQueryResponse {
+  objectType: 'ListAllOrganismesQueryResponse';
+  organismes: OrganismeListDto[];
 }
 
 export interface ListOrganismesQuery {
