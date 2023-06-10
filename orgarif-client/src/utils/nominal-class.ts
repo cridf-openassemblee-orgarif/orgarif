@@ -94,15 +94,15 @@ export const deleteFromDict = <K extends DictKey, T>(
   return newDict;
 };
 
-// TODO[tmpl][doc] last is prioritary
+// TODO[tmpl][doc] last item will replace
 export const mergeDicts = <K extends DictKey, T>(...dicts: Dict<K, T>[]) => {
-  const d = dict<K, T>();
-  dicts.forEach(d => {
-    dictEntries(d).forEach(p => {
-      setMutable(d, p[0], p[1]);
+  const result = dict<K, T>();
+  dicts.forEach(dict => {
+    dictEntries(dict).forEach(([key, value]) => {
+      setMutable(result, key, value);
     });
   });
-  return d;
+  return result;
 };
 
 export const associateBy = <K extends DictKey, T>(
