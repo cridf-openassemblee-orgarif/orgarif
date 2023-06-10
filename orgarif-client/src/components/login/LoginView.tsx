@@ -33,10 +33,10 @@ export const LoginView = () => {
         setLoginResult(r.result);
         switch (r.result) {
           case 'LoggedIn':
-            if (!r.userinfos) {
+            if (!r.userInfos) {
               throw Errors._198c103e();
             }
-            connect(r.userinfos);
+            connect(r.userInfos);
             break;
           case 'MailNotFound':
           case 'BadPassword':
@@ -51,7 +51,7 @@ export const LoginView = () => {
         objectType: 'DevLoginCommand',
         username
       })
-      .then(r => connect(r.userinfos));
+      .then(r => connect(r.userInfos));
   return (
     <>
       <div

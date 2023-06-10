@@ -98,11 +98,11 @@ data class CreateTypeStructureCommandResponse(val id: TypeStructureId) : Command
 
 data class DevLoginCommand(val username: String) : Command()
 
-data class DevLoginCommandResponse(val userinfos: UserInfos) : CommandResponse()
+data class DevLoginCommandResponse(val userInfos: UserInfos) : CommandResponse()
 
 data class LoginCommand(val mail: String, val password: PlainStringPassword) : Command()
 
-data class LoginCommandResponse(val result: LoginResult, val userinfos: UserInfos?) :
+data class LoginCommandResponse(val result: LoginResult, val userInfos: UserInfos?) :
     CommandResponse()
 
 data class RegisterCommand(
@@ -111,7 +111,7 @@ data class RegisterCommand(
     val displayName: String
 ) : Command()
 
-data class RegisterCommandResponse(val result: RegisterResult, val userinfos: UserInfos?) :
+data class RegisterCommandResponse(val result: RegisterResult, val userInfos: UserInfos?) :
     CommandResponse()
 
 data class UpdateDepartementCommand(val id: DepartementId, val libelle: String, val code: String) :

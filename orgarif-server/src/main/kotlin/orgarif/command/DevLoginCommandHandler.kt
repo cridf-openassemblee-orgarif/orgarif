@@ -28,7 +28,7 @@ class DevLoginCommandHandler(
                 response)
             .let {
                 DevLoginCommandResponse(
-                    it.userinfos ?: throw IllegalArgumentException(command.username))
+                    it.userInfos ?: throw IllegalArgumentException(command.username))
             }
     }
 }

@@ -25,10 +25,10 @@ export const RegisterView = () => {
       .then(r => {
         switch (r.result) {
           case 'Registered':
-            if (!r.userinfos) {
+            if (!r.userInfos) {
               throw Errors._db434940();
             }
-            setUserInfos(r.userinfos);
+            setUserInfos(r.userInfos);
             break;
           case 'MailAlreadyExists':
             break;
