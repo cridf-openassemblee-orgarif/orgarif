@@ -6,6 +6,7 @@ import com.google.devtools.ksp.processing.Resolver
 import com.google.devtools.ksp.processing.SymbolProcessor
 import com.google.devtools.ksp.symbol.KSAnnotated
 import com.google.devtools.ksp.symbol.KSClassDeclaration
+import com.google.devtools.ksp.symbol.KSFile
 import com.google.devtools.ksp.symbol.KSPropertyDeclaration
 import com.google.devtools.ksp.validate
 import java.nio.file.Files
@@ -42,14 +43,16 @@ class KtToTsSymbolProcessor(
             resolver
                 .getSymbolsWithAnnotation(Shared::class.java.name)
                 .filterIsInstance<KSClassDeclaration>()
-        // TODO[tmpl] what happens if no file ?
-        if (!symbols.iterator().hasNext()) return emptyList()
-        processFiles(symbols, startTime)
+        processSymbols(symbols.toList(), resolver.getAllFiles().toList(), startTime)
         val unableToProcess = symbols.filterNot { it.validate() }.toList()
         return unableToProcess
     }
 
-    fun processFiles(symbols: Sequence<KSClassDeclaration>, startTime: Long) {
+    fun processSymbols(
+        symbols: List<KSClassDeclaration>,
+        modifiedFiles: List<KSFile>,
+        startTime: Long
+    ) {
         val configuration = KtToTsConfiguration.init(options)
         val debugReport = if (configuration.debugFile != null) StringBuilder() else null
         debugReport?.appendLine("<html><body><pre>")
@@ -74,7 +77,11 @@ class KtToTsSymbolProcessor(
             appendLine("<h1>Class list (${parsingResult.size} items)</h1>")
             parsingResult.forEach { appendLine(it.type.declaration.simpleName.asString()) }
         }
-        val filesSelection = parsingResult.mapNotNull { it.type.declaration.containingFile }.toSet()
+        val filesSelection =
+            parsingResult
+                .mapNotNull { it.type.declaration.containingFile }
+                .toSet()
+                .intersect(modifiedFiles.toSet())
         debugReport?.apply {
             appendLine("<h1>Files list (${filesSelection.size} items)</h1>")
             filesSelection.forEach { appendLine(it.filePath) }
@@ -190,7 +197,6 @@ class KtToTsSymbolProcessor(
                 it.second.absolutePathString(),
                 destination.absolutePathString())
         }
-        //        tempDir.toFile().deleteRecursively()
         debugReport?.appendLine("<h1>Report</h1>")
         debugReport?.appendLine("Finished generation ${LocalDateTime.now()}")
         debugReport?.appendLine("Took ${System.currentTimeMillis() - startTime}ms")
