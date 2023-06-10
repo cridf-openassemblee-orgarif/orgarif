@@ -13,11 +13,12 @@ class JooqGeneratorStrategy(val namePrefix: String = "") : DefaultGeneratorStrat
             GeneratorStrategy.Mode.DEFAULT ->
                 namePrefix + super.getJavaClassName(definition, mode) + "Table"
             GeneratorStrategy.Mode.RECORD -> namePrefix + super.getJavaClassName(definition, mode)
-            GeneratorStrategy.Mode.POJO,
-            GeneratorStrategy.Mode.INTERFACE,
             GeneratorStrategy.Mode.DAO,
+            GeneratorStrategy.Mode.DOMAIN,
             GeneratorStrategy.Mode.ENUM,
-            GeneratorStrategy.Mode.DOMAIN -> super.getJavaClassName(definition, mode)
+            GeneratorStrategy.Mode.INTERFACE,
+            GeneratorStrategy.Mode.POJO,
+            GeneratorStrategy.Mode.SYNTHETIC_DAO -> super.getJavaClassName(definition, mode)
             null -> throw RuntimeException()
         }
 
