@@ -5,7 +5,6 @@ import org.springframework.beans.factory.annotation.Value
 import org.springframework.context.annotation.Bean
 import org.springframework.context.annotation.Configuration
 import org.springframework.security.config.annotation.web.builders.HttpSecurity
-import org.springframework.security.config.annotation.web.configuration.WebSecurityCustomizer
 import org.springframework.security.config.annotation.web.invoke
 import org.springframework.security.web.AuthenticationEntryPoint
 import org.springframework.security.web.DefaultSecurityFilterChain
@@ -25,7 +24,10 @@ class SecurityConfiguration(
     @Bean
     fun filterChain(http: HttpSecurity): DefaultSecurityFilterChain {
         http.invoke {
-            csrf { csrfTokenRepository = cookieCsrfTokenRepository }
+            csrf {
+                csrfTokenRepository = cookieCsrfTokenRepository
+                ignoringRequestMatchers(RemoteController.remoteRoute + "/**")
+            }
             exceptionHandling {
                 // [doc] disable Spring default login page
                 authenticationEntryPoint = AuthenticationEntryPoint { _, response, _ ->
@@ -53,13 +55,5 @@ class SecurityConfiguration(
             authorizeHttpRequests { authorize(anyRequest, permitAll) }
         }
         return http.build()
-    }
-
-    @Bean
-    fun ignoreEndpoints() = WebSecurityCustomizer {
-        it.ignoring()
-            .requestMatchers(
-                RemoteController.remoteRoute + "/**",
-            )
     }
 }
