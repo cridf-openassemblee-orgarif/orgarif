@@ -86,7 +86,6 @@ dependencies {
     // utils
     implementation("org.apache.commons:commons-lang3:3.12.0")
     implementation("org.apache.commons:commons-text:1.9")
-    implementation("commons-codec:commons-codec:1.15")
     implementation("com.fasterxml.jackson.module:jackson-module-kotlin:2.13.4")
     implementation("org.reflections:reflections") {
         // [doc] BEWARE reflections version 0.10.2 breaks id deserialization when deployed
