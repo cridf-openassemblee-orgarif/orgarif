@@ -1,6 +1,6 @@
 package orgarif.error
 
-import javax.servlet.http.HttpServletResponse
+import jakarta.servlet.http.HttpServletResponse
 import mu.KotlinLogging
 import org.apache.tomcat.util.http.fileupload.impl.SizeLimitExceededException
 import org.springframework.web.bind.annotation.ControllerAdvice

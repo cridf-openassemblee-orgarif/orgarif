@@ -1,7 +1,7 @@
 package orgarif.command
 
-import javax.servlet.http.HttpServletRequest
-import javax.servlet.http.HttpServletResponse
+import jakarta.servlet.http.HttpServletRequest
+import jakarta.servlet.http.HttpServletResponse
 import orgarif.domain.UserSession
 
 interface CommandHandler<C : Command, R : CommandResponse> {
