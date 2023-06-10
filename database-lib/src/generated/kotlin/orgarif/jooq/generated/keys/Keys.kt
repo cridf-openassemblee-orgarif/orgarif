@@ -3,12 +3,10 @@
  */
 package orgarif.jooq.generated.keys
 
-
 import org.jooq.ForeignKey
 import org.jooq.UniqueKey
 import org.jooq.impl.DSL
 import org.jooq.impl.Internal
-
 import orgarif.jooq.generated.tables.AppUserTable
 import orgarif.jooq.generated.tables.CommandLogTable
 import orgarif.jooq.generated.tables.DeliberationTable
@@ -48,51 +46,260 @@ import orgarif.jooq.generated.tables.records.UserFileRecord
 import orgarif.jooq.generated.tables.records.UserMailLogRecord
 import orgarif.jooq.generated.tables.records.UserSessionLogRecord
 
-
-
 // -------------------------------------------------------------------------
 // UNIQUE and PRIMARY KEY definitions
 // -------------------------------------------------------------------------
 
-val APP_USER_MAIL_KEY: UniqueKey<AppUserRecord> = Internal.createUniqueKey(AppUserTable.APP_USER, DSL.name("app_user_mail_key"), arrayOf(AppUserTable.APP_USER.MAIL), true)
-val APP_USER_PKEY: UniqueKey<AppUserRecord> = Internal.createUniqueKey(AppUserTable.APP_USER, DSL.name("app_user_pkey"), arrayOf(AppUserTable.APP_USER.ID), true)
-val COMMAND_LOG_PKEY: UniqueKey<CommandLogRecord> = Internal.createUniqueKey(CommandLogTable.COMMAND_LOG, DSL.name("command_log_pkey"), arrayOf(CommandLogTable.COMMAND_LOG.ID), true)
-val DELIBERATION_PKEY: UniqueKey<DeliberationRecord> = Internal.createUniqueKey(DeliberationTable.DELIBERATION, DSL.name("deliberation_pkey"), arrayOf(DeliberationTable.DELIBERATION.ID), true)
-val DEPARTEMENT_PKEY: UniqueKey<DepartementRecord> = Internal.createUniqueKey(DepartementTable.DEPARTEMENT, DSL.name("departement_pkey"), arrayOf(DepartementTable.DEPARTEMENT.ID), true)
-val DEPLOYMENT_LOG_PKEY: UniqueKey<DeploymentLogRecord> = Internal.createUniqueKey(DeploymentLogTable.DEPLOYMENT_LOG, DSL.name("deployment_log_pkey"), arrayOf(DeploymentLogTable.DEPLOYMENT_LOG.ID), true)
-val DESIGNATION_PKEY: UniqueKey<DesignationRecord> = Internal.createUniqueKey(DesignationTable.DESIGNATION, DSL.name("designation_pkey"), arrayOf(DesignationTable.DESIGNATION.ID), true)
-val ELU_PKEY: UniqueKey<EluRecord> = Internal.createUniqueKey(EluTable.ELU, DSL.name("elu_pkey"), arrayOf(EluTable.ELU.ID), true)
-val INSTANCE_PKEY: UniqueKey<InstanceRecord> = Internal.createUniqueKey(InstanceTable.INSTANCE, DSL.name("instance_pkey"), arrayOf(InstanceTable.INSTANCE.ID), true)
-val LIEN_DELIBERATION_PKEY: UniqueKey<LienDeliberationRecord> = Internal.createUniqueKey(LienDeliberationTable.LIEN_DELIBERATION, DSL.name("lien_deliberation_pkey"), arrayOf(LienDeliberationTable.LIEN_DELIBERATION.ID), true)
-val MAGIC_LINK_TOKEN_PKEY: UniqueKey<MagicLinkTokenRecord> = Internal.createUniqueKey(MagicLinkTokenTable.MAGIC_LINK_TOKEN, DSL.name("magic_link_token_pkey"), arrayOf(MagicLinkTokenTable.MAGIC_LINK_TOKEN.TOKEN), true)
-val MAIL_LOG_PKEY: UniqueKey<MailLogRecord> = Internal.createUniqueKey(MailLogTable.MAIL_LOG, DSL.name("mail_log_pkey"), arrayOf(MailLogTable.MAIL_LOG.ID), true)
-val NATURE_JURIDIQUE_PKEY: UniqueKey<NatureJuridiqueRecord> = Internal.createUniqueKey(NatureJuridiqueTable.NATURE_JURIDIQUE, DSL.name("nature_juridique_pkey"), arrayOf(NatureJuridiqueTable.NATURE_JURIDIQUE.ID), true)
-val ORGANISME_PKEY: UniqueKey<OrganismeRecord> = Internal.createUniqueKey(OrganismeTable.ORGANISME, DSL.name("organisme_pkey"), arrayOf(OrganismeTable.ORGANISME.ID), true)
-val REPRESENTANT_PKEY: UniqueKey<RepresentantRecord> = Internal.createUniqueKey(RepresentantTable.REPRESENTANT, DSL.name("representant_pkey"), arrayOf(RepresentantTable.REPRESENTANT.ID), true)
-val SECTEUR_PKEY: UniqueKey<SecteurRecord> = Internal.createUniqueKey(SecteurTable.SECTEUR, DSL.name("secteur_pkey"), arrayOf(SecteurTable.SECTEUR.ID), true)
-val TYPE_STRUCTURE_PKEY: UniqueKey<TypeStructureRecord> = Internal.createUniqueKey(TypeStructureTable.TYPE_STRUCTURE, DSL.name("type_structure_pkey"), arrayOf(TypeStructureTable.TYPE_STRUCTURE.ID), true)
-val USER_FILE_PKEY: UniqueKey<UserFileRecord> = Internal.createUniqueKey(UserFileTable.USER_FILE, DSL.name("user_file_pkey"), arrayOf(UserFileTable.USER_FILE.ID), true)
-val USER_MAIL_LOG_PKEY: UniqueKey<UserMailLogRecord> = Internal.createUniqueKey(UserMailLogTable.USER_MAIL_LOG, DSL.name("user_mail_log_pkey"), arrayOf(UserMailLogTable.USER_MAIL_LOG.ID), true)
-val USER_SESSION_LOG_PKEY: UniqueKey<UserSessionLogRecord> = Internal.createUniqueKey(UserSessionLogTable.USER_SESSION_LOG, DSL.name("user_session_log_pkey"), arrayOf(UserSessionLogTable.USER_SESSION_LOG.ID), true)
+val APP_USER_MAIL_KEY: UniqueKey<AppUserRecord> =
+    Internal.createUniqueKey(
+        AppUserTable.APP_USER,
+        DSL.name("app_user_mail_key"),
+        arrayOf(AppUserTable.APP_USER.MAIL),
+        true)
+val APP_USER_PKEY: UniqueKey<AppUserRecord> =
+    Internal.createUniqueKey(
+        AppUserTable.APP_USER, DSL.name("app_user_pkey"), arrayOf(AppUserTable.APP_USER.ID), true)
+val COMMAND_LOG_PKEY: UniqueKey<CommandLogRecord> =
+    Internal.createUniqueKey(
+        CommandLogTable.COMMAND_LOG,
+        DSL.name("command_log_pkey"),
+        arrayOf(CommandLogTable.COMMAND_LOG.ID),
+        true)
+val DELIBERATION_PKEY: UniqueKey<DeliberationRecord> =
+    Internal.createUniqueKey(
+        DeliberationTable.DELIBERATION,
+        DSL.name("deliberation_pkey"),
+        arrayOf(DeliberationTable.DELIBERATION.ID),
+        true)
+val DEPARTEMENT_PKEY: UniqueKey<DepartementRecord> =
+    Internal.createUniqueKey(
+        DepartementTable.DEPARTEMENT,
+        DSL.name("departement_pkey"),
+        arrayOf(DepartementTable.DEPARTEMENT.ID),
+        true)
+val DEPLOYMENT_LOG_PKEY: UniqueKey<DeploymentLogRecord> =
+    Internal.createUniqueKey(
+        DeploymentLogTable.DEPLOYMENT_LOG,
+        DSL.name("deployment_log_pkey"),
+        arrayOf(DeploymentLogTable.DEPLOYMENT_LOG.ID),
+        true)
+val DESIGNATION_PKEY: UniqueKey<DesignationRecord> =
+    Internal.createUniqueKey(
+        DesignationTable.DESIGNATION,
+        DSL.name("designation_pkey"),
+        arrayOf(DesignationTable.DESIGNATION.ID),
+        true)
+val ELU_PKEY: UniqueKey<EluRecord> =
+    Internal.createUniqueKey(EluTable.ELU, DSL.name("elu_pkey"), arrayOf(EluTable.ELU.ID), true)
+val INSTANCE_PKEY: UniqueKey<InstanceRecord> =
+    Internal.createUniqueKey(
+        InstanceTable.INSTANCE, DSL.name("instance_pkey"), arrayOf(InstanceTable.INSTANCE.ID), true)
+val LIEN_DELIBERATION_PKEY: UniqueKey<LienDeliberationRecord> =
+    Internal.createUniqueKey(
+        LienDeliberationTable.LIEN_DELIBERATION,
+        DSL.name("lien_deliberation_pkey"),
+        arrayOf(LienDeliberationTable.LIEN_DELIBERATION.ID),
+        true)
+val MAGIC_LINK_TOKEN_PKEY: UniqueKey<MagicLinkTokenRecord> =
+    Internal.createUniqueKey(
+        MagicLinkTokenTable.MAGIC_LINK_TOKEN,
+        DSL.name("magic_link_token_pkey"),
+        arrayOf(MagicLinkTokenTable.MAGIC_LINK_TOKEN.TOKEN),
+        true)
+val MAIL_LOG_PKEY: UniqueKey<MailLogRecord> =
+    Internal.createUniqueKey(
+        MailLogTable.MAIL_LOG, DSL.name("mail_log_pkey"), arrayOf(MailLogTable.MAIL_LOG.ID), true)
+val NATURE_JURIDIQUE_PKEY: UniqueKey<NatureJuridiqueRecord> =
+    Internal.createUniqueKey(
+        NatureJuridiqueTable.NATURE_JURIDIQUE,
+        DSL.name("nature_juridique_pkey"),
+        arrayOf(NatureJuridiqueTable.NATURE_JURIDIQUE.ID),
+        true)
+val ORGANISME_PKEY: UniqueKey<OrganismeRecord> =
+    Internal.createUniqueKey(
+        OrganismeTable.ORGANISME,
+        DSL.name("organisme_pkey"),
+        arrayOf(OrganismeTable.ORGANISME.ID),
+        true)
+val REPRESENTANT_PKEY: UniqueKey<RepresentantRecord> =
+    Internal.createUniqueKey(
+        RepresentantTable.REPRESENTANT,
+        DSL.name("representant_pkey"),
+        arrayOf(RepresentantTable.REPRESENTANT.ID),
+        true)
+val SECTEUR_PKEY: UniqueKey<SecteurRecord> =
+    Internal.createUniqueKey(
+        SecteurTable.SECTEUR, DSL.name("secteur_pkey"), arrayOf(SecteurTable.SECTEUR.ID), true)
+val TYPE_STRUCTURE_PKEY: UniqueKey<TypeStructureRecord> =
+    Internal.createUniqueKey(
+        TypeStructureTable.TYPE_STRUCTURE,
+        DSL.name("type_structure_pkey"),
+        arrayOf(TypeStructureTable.TYPE_STRUCTURE.ID),
+        true)
+val USER_FILE_PKEY: UniqueKey<UserFileRecord> =
+    Internal.createUniqueKey(
+        UserFileTable.USER_FILE,
+        DSL.name("user_file_pkey"),
+        arrayOf(UserFileTable.USER_FILE.ID),
+        true)
+val USER_MAIL_LOG_PKEY: UniqueKey<UserMailLogRecord> =
+    Internal.createUniqueKey(
+        UserMailLogTable.USER_MAIL_LOG,
+        DSL.name("user_mail_log_pkey"),
+        arrayOf(UserMailLogTable.USER_MAIL_LOG.ID),
+        true)
+val USER_SESSION_LOG_PKEY: UniqueKey<UserSessionLogRecord> =
+    Internal.createUniqueKey(
+        UserSessionLogTable.USER_SESSION_LOG,
+        DSL.name("user_session_log_pkey"),
+        arrayOf(UserSessionLogTable.USER_SESSION_LOG.ID),
+        true)
 
 // -------------------------------------------------------------------------
 // FOREIGN KEY definitions
 // -------------------------------------------------------------------------
 
-val COMMAND_LOG__COMMAND_LOG_DEPLOYMENT_LOG_ID_FKEY: ForeignKey<CommandLogRecord, DeploymentLogRecord> = Internal.createForeignKey(CommandLogTable.COMMAND_LOG, DSL.name("command_log_deployment_log_id_fkey"), arrayOf(CommandLogTable.COMMAND_LOG.DEPLOYMENT_LOG_ID), orgarif.jooq.generated.keys.DEPLOYMENT_LOG_PKEY, arrayOf(DeploymentLogTable.DEPLOYMENT_LOG.ID), true)
-val DESIGNATION__DESIGNATION_INSTANCE_ID_FKEY: ForeignKey<DesignationRecord, InstanceRecord> = Internal.createForeignKey(DesignationTable.DESIGNATION, DSL.name("designation_instance_id_fkey"), arrayOf(DesignationTable.DESIGNATION.INSTANCE_ID), orgarif.jooq.generated.keys.INSTANCE_PKEY, arrayOf(InstanceTable.INSTANCE.ID), true)
-val DESIGNATION__DESIGNATION_ORGANISME_ID_FKEY: ForeignKey<DesignationRecord, OrganismeRecord> = Internal.createForeignKey(DesignationTable.DESIGNATION, DSL.name("designation_organisme_id_fkey"), arrayOf(DesignationTable.DESIGNATION.ORGANISME_ID), orgarif.jooq.generated.keys.ORGANISME_PKEY, arrayOf(OrganismeTable.ORGANISME.ID), true)
-val DESIGNATION__DESIGNATION_REPRESENTANT_ID_FKEY: ForeignKey<DesignationRecord, RepresentantRecord> = Internal.createForeignKey(DesignationTable.DESIGNATION, DSL.name("designation_representant_id_fkey"), arrayOf(DesignationTable.DESIGNATION.REPRESENTANT_ID), orgarif.jooq.generated.keys.REPRESENTANT_PKEY, arrayOf(RepresentantTable.REPRESENTANT.ID), true)
-val INSTANCE__INSTANCE_ORGANISME_ID_FKEY: ForeignKey<InstanceRecord, OrganismeRecord> = Internal.createForeignKey(InstanceTable.INSTANCE, DSL.name("instance_organisme_id_fkey"), arrayOf(InstanceTable.INSTANCE.ORGANISME_ID), orgarif.jooq.generated.keys.ORGANISME_PKEY, arrayOf(OrganismeTable.ORGANISME.ID), true)
-val LIEN_DELIBERATION__LIEN_DELIBERATION_DELIBERATION_ID_FKEY: ForeignKey<LienDeliberationRecord, DeliberationRecord> = Internal.createForeignKey(LienDeliberationTable.LIEN_DELIBERATION, DSL.name("lien_deliberation_deliberation_id_fkey"), arrayOf(LienDeliberationTable.LIEN_DELIBERATION.DELIBERATION_ID), orgarif.jooq.generated.keys.DELIBERATION_PKEY, arrayOf(DeliberationTable.DELIBERATION.ID), true)
-val LIEN_DELIBERATION__LIEN_DELIBERATION_INSTANCE_ID_FKEY: ForeignKey<LienDeliberationRecord, InstanceRecord> = Internal.createForeignKey(LienDeliberationTable.LIEN_DELIBERATION, DSL.name("lien_deliberation_instance_id_fkey"), arrayOf(LienDeliberationTable.LIEN_DELIBERATION.INSTANCE_ID), orgarif.jooq.generated.keys.INSTANCE_PKEY, arrayOf(InstanceTable.INSTANCE.ID), true)
-val LIEN_DELIBERATION__LIEN_DELIBERATION_ORGANISME_ID_FKEY: ForeignKey<LienDeliberationRecord, OrganismeRecord> = Internal.createForeignKey(LienDeliberationTable.LIEN_DELIBERATION, DSL.name("lien_deliberation_organisme_id_fkey"), arrayOf(LienDeliberationTable.LIEN_DELIBERATION.ORGANISME_ID), orgarif.jooq.generated.keys.ORGANISME_PKEY, arrayOf(OrganismeTable.ORGANISME.ID), true)
-val MAGIC_LINK_TOKEN__MAGIC_LINK_TOKEN_USER_ID_FKEY: ForeignKey<MagicLinkTokenRecord, AppUserRecord> = Internal.createForeignKey(MagicLinkTokenTable.MAGIC_LINK_TOKEN, DSL.name("magic_link_token_user_id_fkey"), arrayOf(MagicLinkTokenTable.MAGIC_LINK_TOKEN.USER_ID), orgarif.jooq.generated.keys.APP_USER_PKEY, arrayOf(AppUserTable.APP_USER.ID), true)
-val MAIL_LOG__MAIL_LOG_DEPLOYMENT_LOG_ID_FKEY: ForeignKey<MailLogRecord, DeploymentLogRecord> = Internal.createForeignKey(MailLogTable.MAIL_LOG, DSL.name("mail_log_deployment_log_id_fkey"), arrayOf(MailLogTable.MAIL_LOG.DEPLOYMENT_LOG_ID), orgarif.jooq.generated.keys.DEPLOYMENT_LOG_PKEY, arrayOf(DeploymentLogTable.DEPLOYMENT_LOG.ID), true)
-val ORGANISME__ORGANISME_NATURE_JURIDIQUE_ID_FKEY: ForeignKey<OrganismeRecord, NatureJuridiqueRecord> = Internal.createForeignKey(OrganismeTable.ORGANISME, DSL.name("organisme_nature_juridique_id_fkey"), arrayOf(OrganismeTable.ORGANISME.NATURE_JURIDIQUE_ID), orgarif.jooq.generated.keys.NATURE_JURIDIQUE_PKEY, arrayOf(NatureJuridiqueTable.NATURE_JURIDIQUE.ID), true)
-val ORGANISME__ORGANISME_SECTEUR_ID_FKEY: ForeignKey<OrganismeRecord, SecteurRecord> = Internal.createForeignKey(OrganismeTable.ORGANISME, DSL.name("organisme_secteur_id_fkey"), arrayOf(OrganismeTable.ORGANISME.SECTEUR_ID), orgarif.jooq.generated.keys.SECTEUR_PKEY, arrayOf(SecteurTable.SECTEUR.ID), true)
-val ORGANISME__ORGANISME_TYPE_STRUCTURE_ID_FKEY: ForeignKey<OrganismeRecord, TypeStructureRecord> = Internal.createForeignKey(OrganismeTable.ORGANISME, DSL.name("organisme_type_structure_id_fkey"), arrayOf(OrganismeTable.ORGANISME.TYPE_STRUCTURE_ID), orgarif.jooq.generated.keys.TYPE_STRUCTURE_PKEY, arrayOf(TypeStructureTable.TYPE_STRUCTURE.ID), true)
-val REPRESENTANT__REPRESENTANT_ELU_ID_FKEY: ForeignKey<RepresentantRecord, EluRecord> = Internal.createForeignKey(RepresentantTable.REPRESENTANT, DSL.name("representant_elu_id_fkey"), arrayOf(RepresentantTable.REPRESENTANT.ELU_ID), orgarif.jooq.generated.keys.ELU_PKEY, arrayOf(EluTable.ELU.ID), true)
-val USER_FILE__USER_FILE_USER_ID_FKEY: ForeignKey<UserFileRecord, AppUserRecord> = Internal.createForeignKey(UserFileTable.USER_FILE, DSL.name("user_file_user_id_fkey"), arrayOf(UserFileTable.USER_FILE.USER_ID), orgarif.jooq.generated.keys.APP_USER_PKEY, arrayOf(AppUserTable.APP_USER.ID), true)
-val USER_MAIL_LOG__USER_MAIL_LOG_USER_ID_FKEY: ForeignKey<UserMailLogRecord, AppUserRecord> = Internal.createForeignKey(UserMailLogTable.USER_MAIL_LOG, DSL.name("user_mail_log_user_id_fkey"), arrayOf(UserMailLogTable.USER_MAIL_LOG.USER_ID), orgarif.jooq.generated.keys.APP_USER_PKEY, arrayOf(AppUserTable.APP_USER.ID), true)
-val USER_SESSION_LOG__USER_SESSION_LOG_USER_ID_FKEY: ForeignKey<UserSessionLogRecord, AppUserRecord> = Internal.createForeignKey(UserSessionLogTable.USER_SESSION_LOG, DSL.name("user_session_log_user_id_fkey"), arrayOf(UserSessionLogTable.USER_SESSION_LOG.USER_ID), orgarif.jooq.generated.keys.APP_USER_PKEY, arrayOf(AppUserTable.APP_USER.ID), true)
+val COMMAND_LOG__COMMAND_LOG_DEPLOYMENT_LOG_ID_FKEY:
+    ForeignKey<CommandLogRecord, DeploymentLogRecord> =
+    Internal.createForeignKey(
+        CommandLogTable.COMMAND_LOG,
+        DSL.name("command_log_deployment_log_id_fkey"),
+        arrayOf(CommandLogTable.COMMAND_LOG.DEPLOYMENT_LOG_ID),
+        orgarif.jooq.generated.keys.DEPLOYMENT_LOG_PKEY,
+        arrayOf(DeploymentLogTable.DEPLOYMENT_LOG.ID),
+        true)
+val DESIGNATION__DESIGNATION_INSTANCE_ID_FKEY: ForeignKey<DesignationRecord, InstanceRecord> =
+    Internal.createForeignKey(
+        DesignationTable.DESIGNATION,
+        DSL.name("designation_instance_id_fkey"),
+        arrayOf(DesignationTable.DESIGNATION.INSTANCE_ID),
+        orgarif.jooq.generated.keys.INSTANCE_PKEY,
+        arrayOf(InstanceTable.INSTANCE.ID),
+        true)
+val DESIGNATION__DESIGNATION_ORGANISME_ID_FKEY: ForeignKey<DesignationRecord, OrganismeRecord> =
+    Internal.createForeignKey(
+        DesignationTable.DESIGNATION,
+        DSL.name("designation_organisme_id_fkey"),
+        arrayOf(DesignationTable.DESIGNATION.ORGANISME_ID),
+        orgarif.jooq.generated.keys.ORGANISME_PKEY,
+        arrayOf(OrganismeTable.ORGANISME.ID),
+        true)
+val DESIGNATION__DESIGNATION_REPRESENTANT_ID_FKEY:
+    ForeignKey<DesignationRecord, RepresentantRecord> =
+    Internal.createForeignKey(
+        DesignationTable.DESIGNATION,
+        DSL.name("designation_representant_id_fkey"),
+        arrayOf(DesignationTable.DESIGNATION.REPRESENTANT_ID),
+        orgarif.jooq.generated.keys.REPRESENTANT_PKEY,
+        arrayOf(RepresentantTable.REPRESENTANT.ID),
+        true)
+val INSTANCE__INSTANCE_ORGANISME_ID_FKEY: ForeignKey<InstanceRecord, OrganismeRecord> =
+    Internal.createForeignKey(
+        InstanceTable.INSTANCE,
+        DSL.name("instance_organisme_id_fkey"),
+        arrayOf(InstanceTable.INSTANCE.ORGANISME_ID),
+        orgarif.jooq.generated.keys.ORGANISME_PKEY,
+        arrayOf(OrganismeTable.ORGANISME.ID),
+        true)
+val LIEN_DELIBERATION__LIEN_DELIBERATION_DELIBERATION_ID_FKEY:
+    ForeignKey<LienDeliberationRecord, DeliberationRecord> =
+    Internal.createForeignKey(
+        LienDeliberationTable.LIEN_DELIBERATION,
+        DSL.name("lien_deliberation_deliberation_id_fkey"),
+        arrayOf(LienDeliberationTable.LIEN_DELIBERATION.DELIBERATION_ID),
+        orgarif.jooq.generated.keys.DELIBERATION_PKEY,
+        arrayOf(DeliberationTable.DELIBERATION.ID),
+        true)
+val LIEN_DELIBERATION__LIEN_DELIBERATION_INSTANCE_ID_FKEY:
+    ForeignKey<LienDeliberationRecord, InstanceRecord> =
+    Internal.createForeignKey(
+        LienDeliberationTable.LIEN_DELIBERATION,
+        DSL.name("lien_deliberation_instance_id_fkey"),
+        arrayOf(LienDeliberationTable.LIEN_DELIBERATION.INSTANCE_ID),
+        orgarif.jooq.generated.keys.INSTANCE_PKEY,
+        arrayOf(InstanceTable.INSTANCE.ID),
+        true)
+val LIEN_DELIBERATION__LIEN_DELIBERATION_ORGANISME_ID_FKEY:
+    ForeignKey<LienDeliberationRecord, OrganismeRecord> =
+    Internal.createForeignKey(
+        LienDeliberationTable.LIEN_DELIBERATION,
+        DSL.name("lien_deliberation_organisme_id_fkey"),
+        arrayOf(LienDeliberationTable.LIEN_DELIBERATION.ORGANISME_ID),
+        orgarif.jooq.generated.keys.ORGANISME_PKEY,
+        arrayOf(OrganismeTable.ORGANISME.ID),
+        true)
+val MAGIC_LINK_TOKEN__MAGIC_LINK_TOKEN_USER_ID_FKEY:
+    ForeignKey<MagicLinkTokenRecord, AppUserRecord> =
+    Internal.createForeignKey(
+        MagicLinkTokenTable.MAGIC_LINK_TOKEN,
+        DSL.name("magic_link_token_user_id_fkey"),
+        arrayOf(MagicLinkTokenTable.MAGIC_LINK_TOKEN.USER_ID),
+        orgarif.jooq.generated.keys.APP_USER_PKEY,
+        arrayOf(AppUserTable.APP_USER.ID),
+        true)
+val MAIL_LOG__MAIL_LOG_DEPLOYMENT_LOG_ID_FKEY: ForeignKey<MailLogRecord, DeploymentLogRecord> =
+    Internal.createForeignKey(
+        MailLogTable.MAIL_LOG,
+        DSL.name("mail_log_deployment_log_id_fkey"),
+        arrayOf(MailLogTable.MAIL_LOG.DEPLOYMENT_LOG_ID),
+        orgarif.jooq.generated.keys.DEPLOYMENT_LOG_PKEY,
+        arrayOf(DeploymentLogTable.DEPLOYMENT_LOG.ID),
+        true)
+val ORGANISME__ORGANISME_NATURE_JURIDIQUE_ID_FKEY:
+    ForeignKey<OrganismeRecord, NatureJuridiqueRecord> =
+    Internal.createForeignKey(
+        OrganismeTable.ORGANISME,
+        DSL.name("organisme_nature_juridique_id_fkey"),
+        arrayOf(OrganismeTable.ORGANISME.NATURE_JURIDIQUE_ID),
+        orgarif.jooq.generated.keys.NATURE_JURIDIQUE_PKEY,
+        arrayOf(NatureJuridiqueTable.NATURE_JURIDIQUE.ID),
+        true)
+val ORGANISME__ORGANISME_SECTEUR_ID_FKEY: ForeignKey<OrganismeRecord, SecteurRecord> =
+    Internal.createForeignKey(
+        OrganismeTable.ORGANISME,
+        DSL.name("organisme_secteur_id_fkey"),
+        arrayOf(OrganismeTable.ORGANISME.SECTEUR_ID),
+        orgarif.jooq.generated.keys.SECTEUR_PKEY,
+        arrayOf(SecteurTable.SECTEUR.ID),
+        true)
+val ORGANISME__ORGANISME_TYPE_STRUCTURE_ID_FKEY: ForeignKey<OrganismeRecord, TypeStructureRecord> =
+    Internal.createForeignKey(
+        OrganismeTable.ORGANISME,
+        DSL.name("organisme_type_structure_id_fkey"),
+        arrayOf(OrganismeTable.ORGANISME.TYPE_STRUCTURE_ID),
+        orgarif.jooq.generated.keys.TYPE_STRUCTURE_PKEY,
+        arrayOf(TypeStructureTable.TYPE_STRUCTURE.ID),
+        true)
+val REPRESENTANT__REPRESENTANT_ELU_ID_FKEY: ForeignKey<RepresentantRecord, EluRecord> =
+    Internal.createForeignKey(
+        RepresentantTable.REPRESENTANT,
+        DSL.name("representant_elu_id_fkey"),
+        arrayOf(RepresentantTable.REPRESENTANT.ELU_ID),
+        orgarif.jooq.generated.keys.ELU_PKEY,
+        arrayOf(EluTable.ELU.ID),
+        true)
+val USER_FILE__USER_FILE_USER_ID_FKEY: ForeignKey<UserFileRecord, AppUserRecord> =
+    Internal.createForeignKey(
+        UserFileTable.USER_FILE,
+        DSL.name("user_file_user_id_fkey"),
+        arrayOf(UserFileTable.USER_FILE.USER_ID),
+        orgarif.jooq.generated.keys.APP_USER_PKEY,
+        arrayOf(AppUserTable.APP_USER.ID),
+        true)
+val USER_MAIL_LOG__USER_MAIL_LOG_USER_ID_FKEY: ForeignKey<UserMailLogRecord, AppUserRecord> =
+    Internal.createForeignKey(
+        UserMailLogTable.USER_MAIL_LOG,
+        DSL.name("user_mail_log_user_id_fkey"),
+        arrayOf(UserMailLogTable.USER_MAIL_LOG.USER_ID),
+        orgarif.jooq.generated.keys.APP_USER_PKEY,
+        arrayOf(AppUserTable.APP_USER.ID),
+        true)
+val USER_SESSION_LOG__USER_SESSION_LOG_USER_ID_FKEY:
+    ForeignKey<UserSessionLogRecord, AppUserRecord> =
+    Internal.createForeignKey(
+        UserSessionLogTable.USER_SESSION_LOG,
+        DSL.name("user_session_log_user_id_fkey"),
+        arrayOf(UserSessionLogTable.USER_SESSION_LOG.USER_ID),
+        orgarif.jooq.generated.keys.APP_USER_PKEY,
+        arrayOf(AppUserTable.APP_USER.ID),
+        true)
