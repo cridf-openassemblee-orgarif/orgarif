@@ -18,10 +18,10 @@ assets:
   webpackDevHost: localhost
 #---------------------------------------------------------------------------
 mailjet:
-  api-key:
-  secret-key:
+  apiKey:
+  secretKey:
 #---------------------------------------------------------------------------
 sigerUrl: http://127.0.0.1:8080
-remote-controller:
-  expected-secu: remote-secu
+remoteController:
+  expectedSecu: remote-secu
 #---------------------------------------------------------------------------
