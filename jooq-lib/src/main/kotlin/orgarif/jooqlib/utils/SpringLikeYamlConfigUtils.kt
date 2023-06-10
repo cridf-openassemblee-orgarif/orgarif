@@ -41,7 +41,7 @@ object SpringLikeYamlConfigUtils {
                         ?.replace("\\$\\{[^}]*}".toRegex()) {
                             System.getenv(it.value.drop(2).dropLast(1)) ?: ""
                         }
-                        ?.let { it.ifEmpty { null } }
+                        ?.ifEmpty { null }
             }
 
     private fun flattenConf(map: Map<String, Any>): List<Pair<String, String?>> =

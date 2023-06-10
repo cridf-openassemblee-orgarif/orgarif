@@ -123,7 +123,7 @@ class UserDao(private val jooq: DSLContext) {
             .from(APP_USER)
             .where(APP_USER.ID.equal(id.rawId))
             .fetchOne()
-            ?.let { it.value1() }
+            ?.value1()
             .let { requireNotNull(it) { "$id" } }
 
     fun streamAll(): Stream<Record> = jooq.selectFrom(APP_USER).stream().map(this::map)

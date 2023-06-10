@@ -24,8 +24,7 @@ object Configuration {
                     }
                     .toTypedArray())
         val host = config.getValue("database.host")
-        val allowRemoteHost =
-            System.getenv("ORGARIF_DB_TOOLING_ALLOW_REMOTE_HOST")?.let { it == "true" } ?: false
+        val allowRemoteHost = System.getenv("ORGARIF_DB_TOOLING_ALLOW_REMOTE_HOST") == "true"
         // TODO[tmpl] test ip not extension !
         if (host.endsWith(".com") && !allowRemoteHost) {
             throw RuntimeException("Warning run database operations on $host")
