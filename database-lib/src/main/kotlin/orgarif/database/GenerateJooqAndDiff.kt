@@ -3,6 +3,7 @@ package orgarif.database
 import java.nio.file.Paths
 import mu.KotlinLogging
 import orgarif.database.jooq.JooqGeneration
+import orgarif.database.utils.ShellRunner
 
 fun main() {
     System.setProperty("logback.configurationFile", "logback-database-lib.xml")
@@ -59,6 +60,8 @@ object GenerateJooqAndDiff {
             JooqGeneration.generateDiff(
                 psqlDatabaseConfiguration, generationDatabaseConfiguration, buildDir)
             ResetDatabase.resetDatabaseSchema(psqlDatabaseConfiguration, insertData = true)
+            logger.info { "Format codebase" }
+            ShellRunner.run(projectDir, "./ktfmt")
         } finally {
             ResetDatabase.dropDatabase(generationDatabaseConfiguration)
         }
