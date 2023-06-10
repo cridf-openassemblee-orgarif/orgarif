@@ -141,7 +141,7 @@ class MailService(
         val mailJetAttachments =
             (attachments ?: emptyList()).map {
                 MailJetAttachment(
-                    it.contentType.fullType,
+                    it.contentType.type,
                     it.filename,
                     Base64.getEncoder().encodeToString(it.content))
             }
