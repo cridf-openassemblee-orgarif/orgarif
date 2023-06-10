@@ -1,8 +1,7 @@
-package orgarif.utils
+package orgarif.domain
 
 import org.junit.jupiter.api.Assertions.assertEquals
 import org.junit.jupiter.api.Test
-import orgarif.domain.Uri
 
 internal class UriTest {
 

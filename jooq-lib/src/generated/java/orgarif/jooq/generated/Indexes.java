@@ -4,15 +4,15 @@
 package orgarif.jooq.generated;
 
 
-import org.jooq.Index;
-import org.jooq.OrderField;
-import org.jooq.impl.DSL;
-import org.jooq.impl.Internal;
-
 import orgarif.jooq.generated.tables.AppUserTable;
 import orgarif.jooq.generated.tables.MailLogTable;
 import orgarif.jooq.generated.tables.UserMailLogTable;
 import orgarif.jooq.generated.tables.UserSessionLogTable;
+
+import org.jooq.Index;
+import org.jooq.OrderField;
+import org.jooq.impl.DSL;
+import org.jooq.impl.Internal;
 
 
 /**

@@ -56,7 +56,7 @@ export const Navbar = () => {
         <Menu anchorEl={buttonElement.current} open={open} onClose={close}>
           {!userInfos && (
             <>
-              <MenuItem onClick={close}>
+              <MenuItem>
                 <RouteLink
                   route={{
                     name: 'LoginRoute'
@@ -65,7 +65,7 @@ export const Navbar = () => {
                   Login
                 </RouteLink>
               </MenuItem>
-              <MenuItem onClick={close}>
+              <MenuItem>
                 <RouteLink
                   route={{
                     name: 'RegisterRoute'
@@ -78,7 +78,7 @@ export const Navbar = () => {
           )}
           {userInfos && (
             <>
-              <MenuItem onClick={close}>
+              <MenuItem>
                 <RouteLink
                   route={{
                     name: 'AccountRoute'
@@ -88,7 +88,7 @@ export const Navbar = () => {
                 </RouteLink>
               </MenuItem>
               {userInfos.roles.includes('Admin') && (
-                <MenuItem onClick={close}>
+                <MenuItem>
                   <RouteLink
                     route={{
                       name: 'UsersManagementRoute'
@@ -98,7 +98,7 @@ export const Navbar = () => {
                   </RouteLink>
                 </MenuItem>
               )}
-              <MenuItem onClick={close}>
+              <MenuItem>
                 <LogoutButton />
               </MenuItem>
             </>

@@ -122,8 +122,8 @@ class CommandController(
             is AdminUpdateRolesCommand -> adminUpdateRolesCommandHandler
             is DevLoginCommand -> devLoginCommandHandler
             is LoginCommand -> loginCommandHandler
-            is UpdatePasswordCommand -> updatePasswordCommandHandler
             is RegisterCommand -> registerCommandHandler
+            is UpdatePasswordCommand -> updatePasswordCommandHandler
         }.let { @Suppress("UNCHECKED_CAST") (it as CommandHandler<Command, CommandResponse>) }
 
     // for admin commands, should return the affected user when there's one
@@ -131,8 +131,8 @@ class CommandController(
         when (command) {
             is DevLoginCommand,
             is LoginCommand,
-            is UpdatePasswordCommand,
-            is RegisterCommand -> null
+            is RegisterCommand,
+            is UpdatePasswordCommand -> null
             is AdminUpdateRolesCommand -> command.userId
         }
 }
