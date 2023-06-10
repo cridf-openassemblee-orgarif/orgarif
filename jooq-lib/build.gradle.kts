@@ -2,7 +2,7 @@ import org.jetbrains.kotlin.gradle.tasks.KotlinCompile
 
 plugins { kotlin("jvm") }
 
-val kotlinVersion = "1.7.21"
+val kotlinVersion = "1.8.21"
 
 tasks {
     withType<KotlinCompile> { kotlinOptions.jvmTarget = "17" }
@@ -29,9 +29,9 @@ dependencies {
 
     api("jooq-utils:jooq-utils:0.0.6-SNAPSHOT")
 
-    implementation("io.github.microutils:kotlin-logging:3.0.0")
-    implementation("ch.qos.logback:logback-classic:1.4.1")
-    implementation("org.yaml:snakeyaml:1.32")
+    implementation("io.github.microutils:kotlin-logging:3.0.5")
+    implementation("ch.qos.logback:logback-classic:1.4.7")
+    implementation("org.yaml:snakeyaml:2.0")
 
-    implementation("org.postgresql:postgresql:42.5.0")
+    implementation("org.postgresql:postgresql:42.5.4")
 }
