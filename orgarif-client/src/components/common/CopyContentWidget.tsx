@@ -4,7 +4,7 @@ import { pipe } from '../../utils/Pipe';
 import { NominalString } from '../../utils/nominal-class';
 import { css } from '@emotion/react';
 import { FileCopy } from '@mui/icons-material';
-import { useRef, useState } from 'react';
+import { useState } from 'react';
 
 const uuidClass = 'uuidClass-' + clientUid();
 const copyContainerClass = 'copyContainer-' + clientUid();
@@ -14,13 +14,20 @@ export const CopyContentWidget = (props: {
   text: string | NominalString<any>;
   limitChars?: number;
 }) => {
-  const inputElement = useRef<HTMLInputElement>(null);
   const [copyEffectId, setCopyEffectId] = useState(clientUid());
 
   const onCopyClick = () => {
-    inputElement.current!.focus();
-    inputElement.current!.select();
+    // this feature is actually coming from hell
+    // https://stackoverflow.com/questions/31593297/using-execcommand-javascript-to-copy-hidden-text-to-clipboard
+    const tempInput = document.createElement('input');
+    tempInput.style.position = 'absolute';
+    tempInput.style.left = '-1000px';
+    tempInput.style.top = '-1000px';
+    tempInput.value = props.text;
+    document.body.appendChild(tempInput);
+    tempInput.select();
     document.execCommand('copy');
+    document.body.removeChild(tempInput);
     setCopyEffectId(clientUid());
   };
   const display = pipe(props.text)
@@ -32,6 +39,7 @@ export const CopyContentWidget = (props: {
         display: inline-block;
         position: relative;
         cursor: pointer;
+
         &:hover {
           .${uuidClass} {
             opacity: 0.25;
@@ -44,23 +52,6 @@ export const CopyContentWidget = (props: {
       `}
       onClick={onCopyClick}
     >
-      <div
-        css={css`
-          // [doc] sans css de cette div + input, bugs graphiques au select dans onCopyClick()
-          opacity: 0;
-          overflow: hidden;
-        `}
-      >
-        <input
-          css={css`
-            position: absolute;
-            width: 0;
-          `}
-          ref={inputElement}
-          value={props.text}
-          readOnly
-        />
-      </div>
       <span className={uuidClass}>{display}</span>
       <span
         css={css`
