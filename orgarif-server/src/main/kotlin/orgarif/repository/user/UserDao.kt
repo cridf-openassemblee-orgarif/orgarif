@@ -10,9 +10,9 @@ import orgarif.domain.Language
 import orgarif.domain.Role
 import orgarif.domain.UserId
 import orgarif.error.MailAlreadyRegisteredException
-import orgarif.jooq.generated.Keys.APP_USER_MAIL_KEY
-import orgarif.jooq.generated.Tables.APP_USER
+import orgarif.jooq.generated.keys.APP_USER_MAIL_KEY
 import orgarif.jooq.generated.tables.records.AppUserRecord
+import orgarif.jooq.generated.tables.references.APP_USER
 import orgarif.utils.toTypeId
 
 @Repository
@@ -31,20 +31,20 @@ class UserDao(private val jooq: DSLContext) {
     }
 
     fun insert(r: Record, hashedPassword: HashedPassword) {
-        val jr =
-            AppUserRecord().apply {
-                id = r.id.rawId
-                mail = r.mail
-                password = hashedPassword.hash
-                displayName = r.displayName
-                language = r.language.name
-                roles = r.roles.map { it.name }.toTypedArray()
-                signupDate = r.signupDate
-                lastUpdate = r.lastUpdate
-            }
-
         try {
-            jooq.insertInto(APP_USER).set(jr).execute()
+            jooq
+                .insertInto(APP_USER)
+                .set(
+                    AppUserRecord(
+                        id = r.id.rawId,
+                        mail = r.mail,
+                        password = hashedPassword.hash,
+                        displayName = r.displayName,
+                        language = r.language.name,
+                        roles = r.roles.map { it.name }.toTypedArray(),
+                        signupDate = r.signupDate,
+                        lastUpdate = r.lastUpdate))
+                .execute()
         } catch (e: DuplicateKeyException) {
             handleDuplicateKeyException(e, r.mail)
         }
@@ -135,7 +135,7 @@ class UserDao(private val jooq: DSLContext) {
             mail = r.mail,
             displayName = r.displayName,
             language = Language.valueOf(r.language),
-            roles = r.roles.map { Role.valueOf(it) }.toSet(),
+            roles = r.roles.map { Role.valueOf(requireNotNull(it)) }.toSet(),
             signupDate = r.signupDate,
             lastUpdate = r.lastUpdate)
 }

@@ -37,7 +37,7 @@ tasks {
     }
 }
 
-sourceSets.getByName("main") { java.srcDir("src/generated/java") }
+sourceSets.getByName("main") { java.srcDir("src/generated/kotlin") }
 
 repositories {
     mavenCentral()
@@ -61,8 +61,6 @@ dependencies {
     implementation("com.github.jsqlparser:jsqlparser:4.6")
 
     implementation("org.postgresql:postgresql:42.5.4")
-
-    implementation("com.google.code.findbugs:jsr305:3.0.2")
 
     testImplementation("org.assertj:assertj-core:3.23.1")
     testImplementation("org.junit.jupiter:junit-jupiter-api:5.9.2")

@@ -7,8 +7,8 @@ import orgarif.domain.CommandLogId
 import orgarif.domain.DeploymentLogId
 import orgarif.domain.UserId
 import orgarif.domain.UserSessionId
-import orgarif.jooq.generated.Tables.COMMAND_LOG
 import orgarif.jooq.generated.tables.records.CommandLogRecord
+import orgarif.jooq.generated.tables.references.COMMAND_LOG
 import orgarif.utils.toTypeId
 
 @Repository
@@ -31,23 +31,25 @@ class CommandLogDao(private val jooq: DSLContext) {
     )
 
     fun insert(r: Record) {
-        val jr =
-            CommandLogRecord().apply {
-                id = r.id.rawId
-                userId = r.userId?.rawId
-                affectedUserId = r.affectedUserId?.rawId
-                deploymentLogId = r.deploymentLogId.rawId
-                commandClass = r.commandClass.name
-                jsonCommand = r.jsonCommand
-                ip = r.ip
-                userSessionId = r.userSessionId?.rawId
-                idsLog = r.idsLog
-                jsonResult = r.jsonResult
-                exceptionStackTrace = r.exceptionStackTrace
-                startDate = r.startDate
-                endDate = r.endDate
-            }
-        jooq.insertInto(COMMAND_LOG).set(jr).execute()
+        jooq
+            .insertInto(COMMAND_LOG)
+            .set(
+                CommandLogRecord(
+                    id = r.id.rawId,
+                    userId = r.userId?.rawId,
+                    affectedUserId = r.affectedUserId?.rawId,
+                    deploymentLogId = r.deploymentLogId.rawId,
+                    commandClass = r.commandClass.name,
+                    jsonCommand = r.jsonCommand,
+                    ip = r.ip,
+                    userSessionId = r.userSessionId?.rawId,
+                    idsLog = r.idsLog,
+                    jsonResult = r.jsonResult,
+                    exceptionStackTrace = r.exceptionStackTrace,
+                    startDate = r.startDate,
+                    endDate = r.endDate,
+                ))
+            .execute()
     }
 
     private fun map(r: CommandLogRecord) =

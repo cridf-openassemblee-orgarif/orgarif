@@ -8,8 +8,8 @@ import orgarif.domain.MimeType
 import orgarif.domain.UserFileData
 import orgarif.domain.UserFileId
 import orgarif.domain.UserId
-import orgarif.jooq.generated.Tables.USER_FILE
 import orgarif.jooq.generated.tables.records.UserFileRecord
+import orgarif.jooq.generated.tables.references.USER_FILE
 import orgarif.utils.toTypeId
 
 @Repository
@@ -35,17 +35,17 @@ class UserFileDao(private val jooq: DSLContext) {
     )
 
     fun insert(r: Record, bytes: ByteArray) {
-        // FIMENOW refactor proposition
-        val jr =
-            UserFileRecord().apply {
-                id = r.id.rawId
-                userId = r.userId.rawId
-                fileContent = bytes
-                contentType = r.contentType.type
-                originalFilename = r.originalFilename
-                uploadDate = r.uploadDate
-            }
-        jooq.insertInto(USER_FILE).set(jr).execute()
+        jooq
+            .insertInto(USER_FILE)
+            .set(
+                UserFileRecord(
+                    id = r.id.rawId,
+                    userId = r.userId.rawId,
+                    fileContent = bytes,
+                    contentType = r.contentType.type,
+                    originalFilename = r.originalFilename,
+                    uploadDate = r.uploadDate))
+            .execute()
     }
 
     fun fetchDataOrNull(id: UserFileId): UserFileData? =

@@ -4,8 +4,8 @@ import java.time.Instant
 import org.jooq.DSLContext
 import org.springframework.stereotype.Repository
 import orgarif.domain.UserId
-import orgarif.jooq.generated.Tables.MAGIC_LINK_TOKEN
 import orgarif.jooq.generated.tables.records.MagicLinkTokenRecord
+import orgarif.jooq.generated.tables.references.MAGIC_LINK_TOKEN
 import orgarif.utils.toTypeId
 
 @Repository
@@ -20,15 +20,16 @@ class MagicLinkTokenDao(private val jooq: DSLContext) {
     )
 
     fun insert(r: Record) {
-        val jr =
-            MagicLinkTokenRecord().apply {
-                token = r.token
-                userId = r.userId.rawId
-                validity = r.validity
-                creationDate = r.creationDate
-                lastUpdate = r.lastUpdate
-            }
-        jooq.insertInto(MAGIC_LINK_TOKEN).set(jr).execute()
+        jooq
+            .insertInto(MAGIC_LINK_TOKEN)
+            .set(
+                MagicLinkTokenRecord(
+                    token = r.token,
+                    userId = r.userId.rawId,
+                    validity = r.validity,
+                    creationDate = r.creationDate,
+                    lastUpdate = r.lastUpdate))
+            .execute()
     }
 
     fun fetchOrNull(magicToken: String): Record? =

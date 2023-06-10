@@ -2,7 +2,7 @@ package orgarif.service.utils
 
 internal class ObjectToPropertiesHelperTest {
 
-    fun assertEquals(expected: List<Pair<String, String>>, value: List<Pair<String, String>>) {
+    fun assertEquals(expected: Set<Pair<String, String>>, value: Set<Pair<String, String>>) {
         if (expected != value) {
             val diff1 = expected - value
             val diff2 = value - expected

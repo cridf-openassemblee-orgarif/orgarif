@@ -33,7 +33,7 @@ import orgarif.service.utils.TransactionIsolationService
 
 @RestController
 class QueryController(
-    private val userDao: UserDao,
+    private val transactionIsolationService: TransactionIsolationService,
     private val userSessionService: UserSessionService,
     private val getLastDeliberationsQueryHandler: GetLastDeliberationsQueryHandler,
     private val getOrganismeQueryHandler: GetOrganismeQueryHandler,
@@ -44,7 +44,6 @@ class QueryController(
     private val listOrganismesQueryHandler: ListOrganismesQueryHandler,
     private val searchDeliberationQueryHandler: SearchDeliberationQueryHandler,
     private val searchRepresentantsQueryHandler: SearchRepresentantsQueryHandler,
-    private val transactionIsolationService: TransactionIsolationService,
 ) {
 
     @GetMapping("/query")

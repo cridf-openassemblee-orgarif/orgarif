@@ -3,7 +3,6 @@ package orgarif.controller
 import jakarta.servlet.http.HttpServletRequest
 import jakarta.servlet.http.HttpServletResponse
 import java.time.Instant
-import mu.KotlinLogging
 import org.apache.commons.lang3.exception.ExceptionUtils
 import org.springframework.transaction.PlatformTransactionManager
 import org.springframework.security.web.csrf.CsrfToken
@@ -109,8 +108,9 @@ import orgarif.service.utils.random.RandomService
 class CommandController(
     private val commandLogDao: CommandLogDao,
     private val dateService: DateService,
-    private val randomService: RandomService,
     private val idLogService: IdLogService,
+    private val randomService: RandomService,
+    private val transactionIsolationService: TransactionIsolationService,
     private val userSessionService: UserSessionService,
     private val addDesignationCommandHandler: AddDesignationCommandHandler,
     private val addInstanceCommandHandler: AddInstanceCommandHandler,
@@ -162,10 +162,7 @@ class CommandController(
     private val updateSecteurStatusCommandHandler: UpdateSecteurStatusCommandHandler,
     private val updateTypeStructureLibelleCommandHandler: UpdateTypeStructureLibelleCommandHandler,
     private val updateTypeStructureStatusCommandHandler: UpdateTypeStructureStatusCommandHandler,
-    private val transactionIsolationService: TransactionIsolationService,
 ) {
-
-    private val logger = KotlinLogging.logger {}
 
     // TODO[tmpl][test] test these transactions & stacktrace logging !
     @PostMapping("/command")
