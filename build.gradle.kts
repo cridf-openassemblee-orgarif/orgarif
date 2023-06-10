@@ -32,7 +32,7 @@ tasks {
         dependsOn(
             ":clean",
             ":orgarif-client:build",
-            ":jooq-lib:build",
+            ":database-lib:build",
             ":orgarif-server:build",
             ":copyConfigurationFiles")
     }
