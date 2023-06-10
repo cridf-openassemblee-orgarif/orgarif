@@ -1,5 +1,4 @@
-import { Instant } from '../domain/datetime';
-import { NominalString } from '../utils/nominal-class';
+import { RequestError } from '../generated/error/exceptions';
 import { appContext } from './ApplicationContext';
 
 type RequestType = 'Get' | 'Post';
@@ -9,17 +8,6 @@ export const displayErrorMessage = 'DisplayError';
 export interface HttpResponse {
   status: number;
   body?: any;
-}
-
-type RequestErrorId = NominalString<'RequestErrorId'>;
-
-export interface RequestError {
-  id?: RequestErrorId;
-  status: number;
-  error: string;
-  message: string;
-  instant: Instant;
-  stackTrace?: any;
 }
 
 export class HttpService {
