@@ -6,8 +6,8 @@ import org.springframework.stereotype.Repository
 import orgarif.domain.DeploymentLogId
 import orgarif.domain.UserId
 import orgarif.domain.UserSessionId
-import orgarif.jooq.generated.Tables.USER_SESSION_LOG
 import orgarif.jooq.generated.tables.records.UserSessionLogRecord
+import orgarif.jooq.generated.tables.references.USER_SESSION_LOG
 import orgarif.utils.toTypeId
 
 // TODO[tmpl][user]: try to keep Spring id
@@ -24,16 +24,17 @@ class UserSessionLogDao(private val jooq: DSLContext) {
     )
 
     fun insert(r: Record) {
-        val jr =
-            UserSessionLogRecord().apply {
-                id = r.id.rawId
-                springSessionId = r.springSessionId
-                userId = r.userId.rawId
-                deploymentLogId = r.deploymentLogId.rawId
-                creationDate = r.creationDate
-                ip = r.ip
-            }
-        jooq.insertInto(USER_SESSION_LOG).set(jr).execute()
+        jooq
+            .insertInto(USER_SESSION_LOG)
+            .set(
+                UserSessionLogRecord(
+                    id = r.id.rawId,
+                    springSessionId = r.springSessionId,
+                    userId = r.userId.rawId,
+                    deploymentLogId = r.deploymentLogId.rawId,
+                    creationDate = r.creationDate,
+                    ip = r.ip))
+            .execute()
     }
 
     fun fetchIdsByUserId(userId: UserId): List<UserSessionId> =
@@ -42,5 +43,5 @@ class UserSessionLogDao(private val jooq: DSLContext) {
             .from(USER_SESSION_LOG)
             .where(USER_SESSION_LOG.USER_ID.equal(userId.rawId))
             .fetch()
-            .map { it.component1().toTypeId() }
+            .map { requireNotNull(it.component1()).toTypeId() }
 }

@@ -2,10 +2,9 @@ package orgarif.database.jooq
 
 import java.nio.file.Path
 import java.time.Instant
-import javax.annotation.Nonnull
-import javax.annotation.Nullable
 import kotlin.reflect.KClass
 import org.jooq.codegen.GeneratorStrategy
+import org.jooq.codegen.KotlinGenerator
 import org.jooq.meta.jaxb.Configuration
 import org.jooq.meta.jaxb.Database
 import org.jooq.meta.jaxb.ForcedType
@@ -38,6 +37,7 @@ object JooqConfiguration {
                     .withPassword(conf.password))
             .withGenerator(
                 Generator()
+                    .withName(KotlinGenerator::class.java.name)
                     .withDatabase(
                         Database()
                             .withName(PostgresDatabase::class.java.name)
@@ -80,11 +80,5 @@ object JooqConfiguration {
                                     .withDirectory(generatedCodePath.toFile().absolutePath))
                         }
                     }
-                    .withGenerate(
-                        Generate().apply {
-                            isNullableAnnotation = true
-                            nullableAnnotationType = Nullable::class.java.name
-                            isNonnullAnnotation = true
-                            nonnullAnnotationType = Nonnull::class.java.name
-                        }))
+                    .withGenerate(Generate().apply { isKotlinNotNullRecordAttributes = true }))
 }

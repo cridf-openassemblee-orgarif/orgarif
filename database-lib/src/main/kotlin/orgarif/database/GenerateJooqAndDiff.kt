@@ -53,7 +53,7 @@ object GenerateJooqAndDiff {
                 conf = generationDatabaseConfiguration,
                 excludeTables = setOf("spring_session", "spring_session_attributes"),
                 generatedPackageName = "orgarif.jooq",
-                generatedCodePath = projectDir.resolve("database-lib/src/generated/java"))
+                generatedCodePath = projectDir.resolve("database-lib/src/generated/kotlin"))
             // TODO[tmpl][doc] diff will fail if Config.runDatabase does not exist
             // (not very problematic but can be better)
             JooqGeneration.generateDiff(

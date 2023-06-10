@@ -79,6 +79,7 @@ dependencies {
     implementation("org.springframework.session:spring-session-jdbc")
 
     implementation("org.postgresql:postgresql:42.5.4")
+    implementation("org.jooq:jooq:3.18.3")
 
     // logs
     implementation("io.github.microutils:kotlin-logging:3.0.5")

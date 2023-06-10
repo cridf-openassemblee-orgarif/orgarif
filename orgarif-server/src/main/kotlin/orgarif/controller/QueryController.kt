@@ -14,19 +14,17 @@ import orgarif.query.Query
 import orgarif.query.QueryConfiguration
 import orgarif.query.QueryHandler
 import orgarif.query.QueryResponse
-import orgarif.repository.user.UserDao
 import orgarif.serialization.Serializer
 import orgarif.service.user.UserSessionService
 import orgarif.service.utils.TransactionIsolationService
 
 @RestController
 class QueryController(
-    private val userDao: UserDao,
+    private val transactionIsolationService: TransactionIsolationService,
     private val userSessionService: UserSessionService,
     private val getUserInfosQueryHandler: GetUserInfosQueryHandler,
     private val getUsersQueryHandler: GetUsersQueryHandler,
     private val isMailAlreadyTakenQueryHandler: IsMailAlreadyTakenQueryHandler,
-    private val transactionIsolationService: TransactionIsolationService,
 ) {
 
     @GetMapping("/query")
