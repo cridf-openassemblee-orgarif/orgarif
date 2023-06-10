@@ -29,11 +29,15 @@ object Configuration {
         if (host.endsWith(".com") && !allowRemoteHost) {
             throw RuntimeException("Warning run database operations on $host")
         }
+        val databaseName = config.getValue("database.name")
+        if ("prod" in databaseName) {
+            throw RuntimeException("Warning run database operations on $databaseName")
+        }
         return DatabaseConfiguration(
             DatabaseConfiguration.Driver.psql,
             host,
             config.getValue("database.port").toInt(),
-            config.getValue("database.name"),
+            databaseName,
             config.getValue("database.user"),
             config["database.password"],
             setOf("public"))
