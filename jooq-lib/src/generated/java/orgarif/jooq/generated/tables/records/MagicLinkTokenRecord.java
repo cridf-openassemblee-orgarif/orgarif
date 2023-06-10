@@ -285,5 +285,6 @@ public class MagicLinkTokenRecord extends UpdatableRecordImpl<MagicLinkTokenReco
         setValidity(validity);
         setCreationDate(creationDate);
         setLastUpdate(lastUpdate);
+        resetChangedOnNotNull();
     }
 }

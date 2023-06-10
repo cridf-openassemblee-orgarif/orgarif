@@ -7,22 +7,26 @@ package orgarif.jooq.generated.tables;
 import orgarif.jooq.generated.Keys;
 import orgarif.jooq.generated.PublicTable;
 import orgarif.jooq.generated.tables.records.MagicLinkTokenRecord;
+import orgarif.jooqlib.jooq.converter.TimestampWithTimeZoneToInstantJooqConverter;
 
 import java.time.Instant;
 import java.util.Arrays;
 import java.util.List;
 import java.util.UUID;
+import java.util.function.Function;
 
 import javax.annotation.Nonnull;
-
-import jooqutils.jooq.TimestampWithTimeZoneToInstantConverter;
+import javax.annotation.Nullable;
 
 import org.jooq.Field;
 import org.jooq.ForeignKey;
+import org.jooq.Function5;
 import org.jooq.Name;
 import org.jooq.Record;
+import org.jooq.Records;
 import org.jooq.Row5;
 import org.jooq.Schema;
+import org.jooq.SelectField;
 import org.jooq.Table;
 import org.jooq.TableField;
 import org.jooq.TableOptions;
@@ -72,12 +76,12 @@ public class MagicLinkTokenTable extends TableImpl<MagicLinkTokenRecord> {
     /**
      * The column <code>public.magic_link_token.creation_date</code>.
      */
-    public final TableField<MagicLinkTokenRecord, Instant> CREATION_DATE = createField(DSL.name("creation_date"), SQLDataType.TIMESTAMPWITHTIMEZONE(6).nullable(false), this, "", new TimestampWithTimeZoneToInstantConverter());
+    public final TableField<MagicLinkTokenRecord, Instant> CREATION_DATE = createField(DSL.name("creation_date"), SQLDataType.TIMESTAMPWITHTIMEZONE(6).nullable(false), this, "", new TimestampWithTimeZoneToInstantJooqConverter());
 
     /**
      * The column <code>public.magic_link_token.last_update</code>.
      */
-    public final TableField<MagicLinkTokenRecord, Instant> LAST_UPDATE = createField(DSL.name("last_update"), SQLDataType.TIMESTAMPWITHTIMEZONE(6).nullable(false), this, "", new TimestampWithTimeZoneToInstantConverter());
+    public final TableField<MagicLinkTokenRecord, Instant> LAST_UPDATE = createField(DSL.name("last_update"), SQLDataType.TIMESTAMPWITHTIMEZONE(6).nullable(false), this, "", new TimestampWithTimeZoneToInstantJooqConverter());
 
     private MagicLinkTokenTable(Name alias, Table<MagicLinkTokenRecord> aliased) {
         this(alias, aliased, null);
@@ -113,9 +117,9 @@ public class MagicLinkTokenTable extends TableImpl<MagicLinkTokenRecord> {
     }
 
     @Override
-    @Nonnull
+    @Nullable
     public Schema getSchema() {
-        return PublicTable.PUBLIC;
+        return aliased() ? null : PublicTable.PUBLIC;
     }
 
     @Override
@@ -126,18 +130,15 @@ public class MagicLinkTokenTable extends TableImpl<MagicLinkTokenRecord> {
 
     @Override
     @Nonnull
-    public List<UniqueKey<MagicLinkTokenRecord>> getKeys() {
-        return Arrays.<UniqueKey<MagicLinkTokenRecord>>asList(Keys.MAGIC_LINK_TOKEN_PKEY);
-    }
-
-    @Override
-    @Nonnull
     public List<ForeignKey<MagicLinkTokenRecord, ?>> getReferences() {
-        return Arrays.<ForeignKey<MagicLinkTokenRecord, ?>>asList(Keys.MAGIC_LINK_TOKEN__MAGIC_LINK_TOKEN_USER_ID_FKEY);
+        return Arrays.asList(Keys.MAGIC_LINK_TOKEN__MAGIC_LINK_TOKEN_USER_ID_FKEY);
     }
 
     private transient AppUserTable _appUser;
 
+    /**
+     * Get the implicit join path to the <code>public.app_user</code> table.
+     */
     public AppUserTable appUser() {
         if (_appUser == null)
             _appUser = new AppUserTable(this, Keys.MAGIC_LINK_TOKEN__MAGIC_LINK_TOKEN_USER_ID_FKEY);
@@ -155,6 +156,12 @@ public class MagicLinkTokenTable extends TableImpl<MagicLinkTokenRecord> {
     @Nonnull
     public MagicLinkTokenTable as(Name alias) {
         return new MagicLinkTokenTable(alias, this);
+    }
+
+    @Override
+    @Nonnull
+    public MagicLinkTokenTable as(Table<?> alias) {
+        return new MagicLinkTokenTable(alias.getQualifiedName(), this);
     }
 
     /**
@@ -175,6 +182,15 @@ public class MagicLinkTokenTable extends TableImpl<MagicLinkTokenRecord> {
         return new MagicLinkTokenTable(name, null);
     }
 
+    /**
+     * Rename this table
+     */
+    @Override
+    @Nonnull
+    public MagicLinkTokenTable rename(Table<?> name) {
+        return new MagicLinkTokenTable(name.getQualifiedName(), null);
+    }
+
     // -------------------------------------------------------------------------
     // Row5 type methods
     // -------------------------------------------------------------------------
@@ -183,5 +199,20 @@ public class MagicLinkTokenTable extends TableImpl<MagicLinkTokenRecord> {
     @Nonnull
     public Row5<String, UUID, Boolean, Instant, Instant> fieldsRow() {
         return (Row5) super.fieldsRow();
+    }
+
+    /**
+     * Convenience mapping calling {@link SelectField#convertFrom(Function)}.
+     */
+    public <U> SelectField<U> mapping(Function5<? super String, ? super UUID, ? super Boolean, ? super Instant, ? super Instant, ? extends U> from) {
+        return convertFrom(Records.mapping(from));
+    }
+
+    /**
+     * Convenience mapping calling {@link SelectField#convertFrom(Class,
+     * Function)}.
+     */
+    public <U> SelectField<U> mapping(Class<U> toType, Function5<? super String, ? super UUID, ? super Boolean, ? super Instant, ? super Instant, ? extends U> from) {
+        return convertFrom(toType, Records.mapping(from));
     }
 }

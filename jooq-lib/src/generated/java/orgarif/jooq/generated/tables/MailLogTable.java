@@ -8,23 +8,27 @@ import orgarif.jooq.generated.Indexes;
 import orgarif.jooq.generated.Keys;
 import orgarif.jooq.generated.PublicTable;
 import orgarif.jooq.generated.tables.records.MailLogRecord;
+import orgarif.jooqlib.jooq.converter.TimestampWithTimeZoneToInstantJooqConverter;
 
 import java.time.Instant;
 import java.util.Arrays;
 import java.util.List;
 import java.util.UUID;
+import java.util.function.Function;
 
 import javax.annotation.Nonnull;
-
-import jooqutils.jooq.TimestampWithTimeZoneToInstantConverter;
+import javax.annotation.Nullable;
 
 import org.jooq.Field;
 import org.jooq.ForeignKey;
+import org.jooq.Function9;
 import org.jooq.Index;
 import org.jooq.Name;
 import org.jooq.Record;
+import org.jooq.Records;
 import org.jooq.Row9;
 import org.jooq.Schema;
+import org.jooq.SelectField;
 import org.jooq.Table;
 import org.jooq.TableField;
 import org.jooq.TableOptions;
@@ -99,7 +103,7 @@ public class MailLogTable extends TableImpl<MailLogRecord> {
     /**
      * The column <code>public.mail_log.date</code>.
      */
-    public final TableField<MailLogRecord, Instant> DATE = createField(DSL.name("date"), SQLDataType.TIMESTAMPWITHTIMEZONE(6).nullable(false), this, "", new TimestampWithTimeZoneToInstantConverter());
+    public final TableField<MailLogRecord, Instant> DATE = createField(DSL.name("date"), SQLDataType.TIMESTAMPWITHTIMEZONE(6).nullable(false), this, "", new TimestampWithTimeZoneToInstantJooqConverter());
 
     private MailLogTable(Name alias, Table<MailLogRecord> aliased) {
         this(alias, aliased, null);
@@ -135,15 +139,15 @@ public class MailLogTable extends TableImpl<MailLogRecord> {
     }
 
     @Override
-    @Nonnull
+    @Nullable
     public Schema getSchema() {
-        return PublicTable.PUBLIC;
+        return aliased() ? null : PublicTable.PUBLIC;
     }
 
     @Override
     @Nonnull
     public List<Index> getIndexes() {
-        return Arrays.<Index>asList(Indexes.MAIL_LOG_USER_ID_IDX);
+        return Arrays.asList(Indexes.MAIL_LOG_USER_ID_IDX);
     }
 
     @Override
@@ -154,18 +158,16 @@ public class MailLogTable extends TableImpl<MailLogRecord> {
 
     @Override
     @Nonnull
-    public List<UniqueKey<MailLogRecord>> getKeys() {
-        return Arrays.<UniqueKey<MailLogRecord>>asList(Keys.MAIL_LOG_PKEY);
-    }
-
-    @Override
-    @Nonnull
     public List<ForeignKey<MailLogRecord, ?>> getReferences() {
-        return Arrays.<ForeignKey<MailLogRecord, ?>>asList(Keys.MAIL_LOG__MAIL_LOG_DEPLOYMENT_LOG_ID_FKEY);
+        return Arrays.asList(Keys.MAIL_LOG__MAIL_LOG_DEPLOYMENT_LOG_ID_FKEY);
     }
 
     private transient DeploymentLogTable _deploymentLog;
 
+    /**
+     * Get the implicit join path to the <code>public.deployment_log</code>
+     * table.
+     */
     public DeploymentLogTable deploymentLog() {
         if (_deploymentLog == null)
             _deploymentLog = new DeploymentLogTable(this, Keys.MAIL_LOG__MAIL_LOG_DEPLOYMENT_LOG_ID_FKEY);
@@ -183,6 +185,12 @@ public class MailLogTable extends TableImpl<MailLogRecord> {
     @Nonnull
     public MailLogTable as(Name alias) {
         return new MailLogTable(alias, this);
+    }
+
+    @Override
+    @Nonnull
+    public MailLogTable as(Table<?> alias) {
+        return new MailLogTable(alias.getQualifiedName(), this);
     }
 
     /**
@@ -203,6 +211,15 @@ public class MailLogTable extends TableImpl<MailLogRecord> {
         return new MailLogTable(name, null);
     }
 
+    /**
+     * Rename this table
+     */
+    @Override
+    @Nonnull
+    public MailLogTable rename(Table<?> name) {
+        return new MailLogTable(name.getQualifiedName(), null);
+    }
+
     // -------------------------------------------------------------------------
     // Row9 type methods
     // -------------------------------------------------------------------------
@@ -211,5 +228,20 @@ public class MailLogTable extends TableImpl<MailLogRecord> {
     @Nonnull
     public Row9<UUID, UUID, UUID, String, String, String, String, String, Instant> fieldsRow() {
         return (Row9) super.fieldsRow();
+    }
+
+    /**
+     * Convenience mapping calling {@link SelectField#convertFrom(Function)}.
+     */
+    public <U> SelectField<U> mapping(Function9<? super UUID, ? super UUID, ? super UUID, ? super String, ? super String, ? super String, ? super String, ? super String, ? super Instant, ? extends U> from) {
+        return convertFrom(Records.mapping(from));
+    }
+
+    /**
+     * Convenience mapping calling {@link SelectField#convertFrom(Class,
+     * Function)}.
+     */
+    public <U> SelectField<U> mapping(Class<U> toType, Function9<? super UUID, ? super UUID, ? super UUID, ? super String, ? super String, ? super String, ? super String, ? super String, ? super Instant, ? extends U> from) {
+        return convertFrom(toType, Records.mapping(from));
     }
 }

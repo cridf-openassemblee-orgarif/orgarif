@@ -93,7 +93,7 @@ public class PublicTable extends SchemaImpl {
     @Override
     @Nonnull
     public final List<Table<?>> getTables() {
-        return Arrays.<Table<?>>asList(
+        return Arrays.asList(
             AppUserTable.APP_USER,
             CommandLogTable.COMMAND_LOG,
             DeploymentLogTable.DEPLOYMENT_LOG,
@@ -101,6 +101,7 @@ public class PublicTable extends SchemaImpl {
             MailLogTable.MAIL_LOG,
             UserFileTable.USER_FILE,
             UserMailLogTable.USER_MAIL_LOG,
-            UserSessionLogTable.USER_SESSION_LOG);
+            UserSessionLogTable.USER_SESSION_LOG
+        );
     }
 }

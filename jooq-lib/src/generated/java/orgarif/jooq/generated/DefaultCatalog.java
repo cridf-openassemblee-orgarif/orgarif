@@ -9,6 +9,7 @@ import java.util.List;
 
 import javax.annotation.Nonnull;
 
+import org.jooq.Constants;
 import org.jooq.Schema;
 import org.jooq.impl.CatalogImpl;
 
@@ -41,7 +42,16 @@ public class DefaultCatalog extends CatalogImpl {
     @Override
     @Nonnull
     public final List<Schema> getSchemas() {
-        return Arrays.<Schema>asList(
-            PublicTable.PUBLIC);
+        return Arrays.asList(
+            PublicTable.PUBLIC
+        );
     }
+
+    /**
+     * A reference to the 3.18 minor release of the code generator. If this
+     * doesn't compile, it's because the runtime library uses an older minor
+     * release, namely: 3.18. You can turn off the generation of this reference
+     * by specifying /configuration/generator/generate/jooqVersionReference
+     */
+    private static final String REQUIRE_RUNTIME_JOOQ_VERSION = Constants.VERSION_3_18;
 }

@@ -411,5 +411,6 @@ public class AppUserRecord extends UpdatableRecordImpl<AppUserRecord> implements
         setRoles(roles);
         setSignupDate(signupDate);
         setLastUpdate(lastUpdate);
+        resetChangedOnNotNull();
     }
 }

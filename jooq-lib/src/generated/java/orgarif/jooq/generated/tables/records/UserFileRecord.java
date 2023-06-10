@@ -327,5 +327,6 @@ public class UserFileRecord extends UpdatableRecordImpl<UserFileRecord> implemen
         setContentType(contentType);
         setOriginalFilename(originalFilename);
         setUploadDate(uploadDate);
+        resetChangedOnNotNull();
     }
 }

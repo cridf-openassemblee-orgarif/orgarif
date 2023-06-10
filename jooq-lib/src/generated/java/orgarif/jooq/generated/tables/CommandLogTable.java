@@ -7,22 +7,26 @@ package orgarif.jooq.generated.tables;
 import orgarif.jooq.generated.Keys;
 import orgarif.jooq.generated.PublicTable;
 import orgarif.jooq.generated.tables.records.CommandLogRecord;
+import orgarif.jooqlib.jooq.converter.TimestampWithTimeZoneToInstantJooqConverter;
 
 import java.time.Instant;
 import java.util.Arrays;
 import java.util.List;
 import java.util.UUID;
+import java.util.function.Function;
 
 import javax.annotation.Nonnull;
-
-import jooqutils.jooq.TimestampWithTimeZoneToInstantConverter;
+import javax.annotation.Nullable;
 
 import org.jooq.Field;
 import org.jooq.ForeignKey;
+import org.jooq.Function13;
 import org.jooq.Name;
 import org.jooq.Record;
+import org.jooq.Records;
 import org.jooq.Row13;
 import org.jooq.Schema;
+import org.jooq.SelectField;
 import org.jooq.Table;
 import org.jooq.TableField;
 import org.jooq.TableOptions;
@@ -112,12 +116,12 @@ public class CommandLogTable extends TableImpl<CommandLogRecord> {
     /**
      * The column <code>public.command_log.start_date</code>.
      */
-    public final TableField<CommandLogRecord, Instant> START_DATE = createField(DSL.name("start_date"), SQLDataType.TIMESTAMPWITHTIMEZONE(6).nullable(false), this, "", new TimestampWithTimeZoneToInstantConverter());
+    public final TableField<CommandLogRecord, Instant> START_DATE = createField(DSL.name("start_date"), SQLDataType.TIMESTAMPWITHTIMEZONE(6).nullable(false), this, "", new TimestampWithTimeZoneToInstantJooqConverter());
 
     /**
      * The column <code>public.command_log.end_date</code>.
      */
-    public final TableField<CommandLogRecord, Instant> END_DATE = createField(DSL.name("end_date"), SQLDataType.TIMESTAMPWITHTIMEZONE(6).nullable(false), this, "", new TimestampWithTimeZoneToInstantConverter());
+    public final TableField<CommandLogRecord, Instant> END_DATE = createField(DSL.name("end_date"), SQLDataType.TIMESTAMPWITHTIMEZONE(6).nullable(false), this, "", new TimestampWithTimeZoneToInstantJooqConverter());
 
     private CommandLogTable(Name alias, Table<CommandLogRecord> aliased) {
         this(alias, aliased, null);
@@ -153,9 +157,9 @@ public class CommandLogTable extends TableImpl<CommandLogRecord> {
     }
 
     @Override
-    @Nonnull
+    @Nullable
     public Schema getSchema() {
-        return PublicTable.PUBLIC;
+        return aliased() ? null : PublicTable.PUBLIC;
     }
 
     @Override
@@ -166,18 +170,16 @@ public class CommandLogTable extends TableImpl<CommandLogRecord> {
 
     @Override
     @Nonnull
-    public List<UniqueKey<CommandLogRecord>> getKeys() {
-        return Arrays.<UniqueKey<CommandLogRecord>>asList(Keys.COMMAND_LOG_PKEY);
-    }
-
-    @Override
-    @Nonnull
     public List<ForeignKey<CommandLogRecord, ?>> getReferences() {
-        return Arrays.<ForeignKey<CommandLogRecord, ?>>asList(Keys.COMMAND_LOG__COMMAND_LOG_DEPLOYMENT_LOG_ID_FKEY);
+        return Arrays.asList(Keys.COMMAND_LOG__COMMAND_LOG_DEPLOYMENT_LOG_ID_FKEY);
     }
 
     private transient DeploymentLogTable _deploymentLog;
 
+    /**
+     * Get the implicit join path to the <code>public.deployment_log</code>
+     * table.
+     */
     public DeploymentLogTable deploymentLog() {
         if (_deploymentLog == null)
             _deploymentLog = new DeploymentLogTable(this, Keys.COMMAND_LOG__COMMAND_LOG_DEPLOYMENT_LOG_ID_FKEY);
@@ -195,6 +197,12 @@ public class CommandLogTable extends TableImpl<CommandLogRecord> {
     @Nonnull
     public CommandLogTable as(Name alias) {
         return new CommandLogTable(alias, this);
+    }
+
+    @Override
+    @Nonnull
+    public CommandLogTable as(Table<?> alias) {
+        return new CommandLogTable(alias.getQualifiedName(), this);
     }
 
     /**
@@ -215,6 +223,15 @@ public class CommandLogTable extends TableImpl<CommandLogRecord> {
         return new CommandLogTable(name, null);
     }
 
+    /**
+     * Rename this table
+     */
+    @Override
+    @Nonnull
+    public CommandLogTable rename(Table<?> name) {
+        return new CommandLogTable(name.getQualifiedName(), null);
+    }
+
     // -------------------------------------------------------------------------
     // Row13 type methods
     // -------------------------------------------------------------------------
@@ -223,5 +240,20 @@ public class CommandLogTable extends TableImpl<CommandLogRecord> {
     @Nonnull
     public Row13<UUID, UUID, UUID, UUID, String, String, String, UUID, String, String, String, Instant, Instant> fieldsRow() {
         return (Row13) super.fieldsRow();
+    }
+
+    /**
+     * Convenience mapping calling {@link SelectField#convertFrom(Function)}.
+     */
+    public <U> SelectField<U> mapping(Function13<? super UUID, ? super UUID, ? super UUID, ? super UUID, ? super String, ? super String, ? super String, ? super UUID, ? super String, ? super String, ? super String, ? super Instant, ? super Instant, ? extends U> from) {
+        return convertFrom(Records.mapping(from));
+    }
+
+    /**
+     * Convenience mapping calling {@link SelectField#convertFrom(Class,
+     * Function)}.
+     */
+    public <U> SelectField<U> mapping(Class<U> toType, Function13<? super UUID, ? super UUID, ? super UUID, ? super UUID, ? super String, ? super String, ? super String, ? super UUID, ? super String, ? super String, ? super String, ? super Instant, ? super Instant, ? extends U> from) {
+        return convertFrom(toType, Records.mapping(from));
     }
 }

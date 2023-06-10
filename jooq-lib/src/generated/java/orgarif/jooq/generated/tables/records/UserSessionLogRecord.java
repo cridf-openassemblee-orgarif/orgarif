@@ -327,5 +327,6 @@ public class UserSessionLogRecord extends UpdatableRecordImpl<UserSessionLogReco
         setDeploymentLogId(deploymentLogId);
         setCreationDate(creationDate);
         setIp(ip);
+        resetChangedOnNotNull();
     }
 }

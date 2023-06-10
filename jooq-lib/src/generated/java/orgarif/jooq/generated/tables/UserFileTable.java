@@ -7,22 +7,26 @@ package orgarif.jooq.generated.tables;
 import orgarif.jooq.generated.Keys;
 import orgarif.jooq.generated.PublicTable;
 import orgarif.jooq.generated.tables.records.UserFileRecord;
+import orgarif.jooqlib.jooq.converter.TimestampWithTimeZoneToInstantJooqConverter;
 
 import java.time.Instant;
 import java.util.Arrays;
 import java.util.List;
 import java.util.UUID;
+import java.util.function.Function;
 
 import javax.annotation.Nonnull;
-
-import jooqutils.jooq.TimestampWithTimeZoneToInstantConverter;
+import javax.annotation.Nullable;
 
 import org.jooq.Field;
 import org.jooq.ForeignKey;
+import org.jooq.Function6;
 import org.jooq.Name;
 import org.jooq.Record;
+import org.jooq.Records;
 import org.jooq.Row6;
 import org.jooq.Schema;
+import org.jooq.SelectField;
 import org.jooq.Table;
 import org.jooq.TableField;
 import org.jooq.TableOptions;
@@ -82,7 +86,7 @@ public class UserFileTable extends TableImpl<UserFileRecord> {
     /**
      * The column <code>public.user_file.upload_date</code>.
      */
-    public final TableField<UserFileRecord, Instant> UPLOAD_DATE = createField(DSL.name("upload_date"), SQLDataType.TIMESTAMPWITHTIMEZONE(6).nullable(false), this, "", new TimestampWithTimeZoneToInstantConverter());
+    public final TableField<UserFileRecord, Instant> UPLOAD_DATE = createField(DSL.name("upload_date"), SQLDataType.TIMESTAMPWITHTIMEZONE(6).nullable(false), this, "", new TimestampWithTimeZoneToInstantJooqConverter());
 
     private UserFileTable(Name alias, Table<UserFileRecord> aliased) {
         this(alias, aliased, null);
@@ -118,9 +122,9 @@ public class UserFileTable extends TableImpl<UserFileRecord> {
     }
 
     @Override
-    @Nonnull
+    @Nullable
     public Schema getSchema() {
-        return PublicTable.PUBLIC;
+        return aliased() ? null : PublicTable.PUBLIC;
     }
 
     @Override
@@ -131,18 +135,15 @@ public class UserFileTable extends TableImpl<UserFileRecord> {
 
     @Override
     @Nonnull
-    public List<UniqueKey<UserFileRecord>> getKeys() {
-        return Arrays.<UniqueKey<UserFileRecord>>asList(Keys.USER_FILE_PKEY);
-    }
-
-    @Override
-    @Nonnull
     public List<ForeignKey<UserFileRecord, ?>> getReferences() {
-        return Arrays.<ForeignKey<UserFileRecord, ?>>asList(Keys.USER_FILE__USER_FILE_USER_ID_FKEY);
+        return Arrays.asList(Keys.USER_FILE__USER_FILE_USER_ID_FKEY);
     }
 
     private transient AppUserTable _appUser;
 
+    /**
+     * Get the implicit join path to the <code>public.app_user</code> table.
+     */
     public AppUserTable appUser() {
         if (_appUser == null)
             _appUser = new AppUserTable(this, Keys.USER_FILE__USER_FILE_USER_ID_FKEY);
@@ -160,6 +161,12 @@ public class UserFileTable extends TableImpl<UserFileRecord> {
     @Nonnull
     public UserFileTable as(Name alias) {
         return new UserFileTable(alias, this);
+    }
+
+    @Override
+    @Nonnull
+    public UserFileTable as(Table<?> alias) {
+        return new UserFileTable(alias.getQualifiedName(), this);
     }
 
     /**
@@ -180,6 +187,15 @@ public class UserFileTable extends TableImpl<UserFileRecord> {
         return new UserFileTable(name, null);
     }
 
+    /**
+     * Rename this table
+     */
+    @Override
+    @Nonnull
+    public UserFileTable rename(Table<?> name) {
+        return new UserFileTable(name.getQualifiedName(), null);
+    }
+
     // -------------------------------------------------------------------------
     // Row6 type methods
     // -------------------------------------------------------------------------
@@ -188,5 +204,20 @@ public class UserFileTable extends TableImpl<UserFileRecord> {
     @Nonnull
     public Row6<UUID, UUID, byte[], String, String, Instant> fieldsRow() {
         return (Row6) super.fieldsRow();
+    }
+
+    /**
+     * Convenience mapping calling {@link SelectField#convertFrom(Function)}.
+     */
+    public <U> SelectField<U> mapping(Function6<? super UUID, ? super UUID, ? super byte[], ? super String, ? super String, ? super Instant, ? extends U> from) {
+        return convertFrom(Records.mapping(from));
+    }
+
+    /**
+     * Convenience mapping calling {@link SelectField#convertFrom(Class,
+     * Function)}.
+     */
+    public <U> SelectField<U> mapping(Class<U> toType, Function6<? super UUID, ? super UUID, ? super byte[], ? super String, ? super String, ? super Instant, ? extends U> from) {
+        return convertFrom(toType, Records.mapping(from));
     }
 }

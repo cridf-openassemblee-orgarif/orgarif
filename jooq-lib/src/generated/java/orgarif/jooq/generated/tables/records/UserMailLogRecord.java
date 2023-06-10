@@ -285,5 +285,6 @@ public class UserMailLogRecord extends UpdatableRecordImpl<UserMailLogRecord> im
         setMail(mail);
         setType(type);
         setCreationDate(creationDate);
+        resetChangedOnNotNull();
     }
 }

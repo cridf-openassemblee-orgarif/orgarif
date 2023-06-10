@@ -286,5 +286,6 @@ public class DeploymentLogRecord extends UpdatableRecordImpl<DeploymentLogRecord
         setSystemZoneId(systemZoneId);
         setStartupDate(startupDate);
         setShutdownDate(shutdownDate);
+        resetChangedOnNotNull();
     }
 }

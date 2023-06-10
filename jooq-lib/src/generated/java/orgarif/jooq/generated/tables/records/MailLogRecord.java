@@ -453,5 +453,6 @@ public class MailLogRecord extends UpdatableRecordImpl<MailLogRecord> implements
         setSubject(subject);
         setContent(content);
         setDate(date);
+        resetChangedOnNotNull();
     }
 }
