@@ -62,8 +62,7 @@ export const EditLienDeliberationCommentComponent = (props: {
               >
                 <LoadingButton
                   onClick={() =>
-                    appContext
-                      .commandService()
+                    appContext.commandService
                       .send({
                         objectType: 'UpdateLienDeliberationCommentCommand',
                         id: props.lienDeliberation.id,
@@ -90,8 +89,7 @@ export const EditLienDeliberationCommentComponent = (props: {
               >
                 <ConfirmButton
                   onConfirm={() =>
-                    appContext
-                      .commandService()
+                    appContext.commandService
                       .send({
                         objectType: 'UpdateLienDeliberationStatusCommand',
                         id: props.lienDeliberation.id,

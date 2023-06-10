@@ -17,8 +17,7 @@ import { useRecoilState } from 'recoil';
 export const EditDepartementsView = () => {
   const [categories, setCategories] = useRecoilState(state.categories);
   const addDepartement = (libelle: string, code: string) =>
-    appContext
-      .commandService()
+    appContext.commandService
       .send<CreateDepartementCommandResponse>({
         objectType: 'CreateDepartementCommand',
         libelle,
@@ -44,8 +43,7 @@ export const EditDepartementsView = () => {
     libelle: string,
     code: string
   ) =>
-    appContext
-      .commandService()
+    appContext.commandService
       .send({
         objectType: 'UpdateDepartementCommand',
         id: departementId,
@@ -63,8 +61,7 @@ export const EditDepartementsView = () => {
         })
       );
   const onUpdateStatus = (id: DepartementId, status: ItemStatus) =>
-    appContext
-      .commandService()
+    appContext.commandService
       .send({ objectType: 'UpdateDepartementStatusCommand', id, status })
       .then(() =>
         setCategories({

@@ -27,8 +27,7 @@ const DesignationPanel = (props: {
     props.designation.endDate
   );
   const submit = () => {
-    return appContext
-      .commandService()
+    return appContext.commandService
       .send({
         objectType: 'UpdateDesignationDatesCommand',
         designationId: props.designation.id,
@@ -108,8 +107,7 @@ const SuppressionPanel = (props: {
           cancelButton="Annuler"
           color="error"
           onConfirm={() =>
-            appContext
-              .commandService()
+            appContext.commandService
               .send({
                 objectType: 'UpdateDesignationStatusCommand',
                 id: props.designation.id,

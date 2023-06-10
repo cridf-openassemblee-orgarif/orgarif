@@ -33,8 +33,7 @@ export const EditOrganismeView = ({ route }: { route: EditOrganismeRoute }) => {
     setOrganisme(undefined);
     setLoading('Loading');
     const exec = async () => {
-      const organisme = await appContext
-        .queryService()
+      const organisme = await appContext.queryService
         .send<GetOrganismeQueryResponse>({
           objectType: 'GetOrganismeQuery',
           id: route.id

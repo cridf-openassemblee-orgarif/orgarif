@@ -35,8 +35,7 @@ export const CreateDeliberationDialog = (props: {
       return Promise.resolve();
     }
     setDateMandatory(false);
-    return appContext
-      .commandService()
+    return appContext.commandService
       .send<CreateDeliberationCommandResponse>({
         objectType: 'CreateDeliberationCommand',
         libelle,

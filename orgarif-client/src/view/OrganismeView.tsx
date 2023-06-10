@@ -18,8 +18,7 @@ export const OrganismeView = (props: { route: EditOrganismeRoute }) => {
   const [error, setError] = useState(false);
 
   useEffect(() => {
-    appContext
-      .queryService()
+    appContext.queryService
       .send<GetOrganismeQueryResponse>({
         objectType: 'GetOrganismeQuery',
         id: props.route.id

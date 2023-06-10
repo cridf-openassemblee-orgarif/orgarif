@@ -3,7 +3,6 @@ import { SharedConstants } from '../../../../../constants';
 import { RepresentantDto } from '../../../../../generated/domain/organisme';
 import { SearchRepresentantsQueryResponse } from '../../../../../generated/query/queries';
 import { appContext } from '../../../../../services/ApplicationContext';
-import { space } from '../../../../common/component-utils';
 import {
   AlreadySet,
   AutocompleteInput
@@ -21,8 +20,7 @@ export const SelectRepresentantInput = (props: {
     input: string
   ): Promise<[(RepresentantDto | string)[], AlreadySet]> => {
     if (input.length >= SharedConstants.searchLengthLimit) {
-      return appContext
-        .queryService()
+      return appContext.queryService
         .send<SearchRepresentantsQueryResponse>({
           objectType: 'SearchRepresentantsQuery',
           searchToken: input

@@ -22,8 +22,7 @@ export const UserEditPasswordDialogButton = (props: { userId: UserId }) => {
   const close = () => setOpen(false);
   const save = (dto: PasswordFormInput) => {
     setUpdateLoading('Loading');
-    return appContext
-      .commandService()
+    return appContext.commandService
       .send({
         objectType: 'AdminUpdatePasswordCommand',
         userId: props.userId,

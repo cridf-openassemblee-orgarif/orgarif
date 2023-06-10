@@ -6,7 +6,6 @@ import { appContext } from '../../services/ApplicationContext';
 import { state } from '../../state/state';
 import { assertUnreachable } from '../../utils';
 import { MainContainer } from '../containers/MainContainer';
-import { RouteLink } from '../routing/RouteLink';
 import { RegisterForm, RegisterFormInput } from './RegisterForm';
 import { css } from '@emotion/react';
 import * as React from 'react';

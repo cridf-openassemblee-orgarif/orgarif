@@ -49,8 +49,7 @@ export const OrganismesTable = () => {
 
   useEffect(() => {
     setLoading('Loading');
-    appContext
-      .queryService()
+    appContext.queryService
       .send<ListOrganismesQueryResponse>({
         objectType: 'ListOrganismesQuery',
         ...filters,

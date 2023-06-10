@@ -15,8 +15,7 @@ import { useRecoilState } from 'recoil';
 export const EditNatureJuridiquesView = () => {
   const [categories, setCategories] = useRecoilState(state.categories);
   const addNatureJuridique = (libelle: string) =>
-    appContext
-      .commandService()
+    appContext.commandService
       .send<CreateNatureJuridiqueCommandResponse>({
         objectType: 'CreateNatureJuridiqueCommand',
         libelle
@@ -39,8 +38,7 @@ export const EditNatureJuridiquesView = () => {
     natureJuridiqueId: NatureJuridiqueId,
     libelle: string
   ) =>
-    appContext
-      .commandService()
+    appContext.commandService
       .send({
         objectType: 'UpdateNatureJuridiqueLibelleCommand',
         id: natureJuridiqueId,
@@ -57,8 +55,7 @@ export const EditNatureJuridiquesView = () => {
         })
       );
   const onUpdateStatus = (id: NatureJuridiqueId, status: ItemStatus) =>
-    appContext
-      .commandService()
+    appContext.commandService
       .send({ objectType: 'UpdateNatureJuridiqueStatusCommand', id, status })
       .then(() =>
         setCategories({

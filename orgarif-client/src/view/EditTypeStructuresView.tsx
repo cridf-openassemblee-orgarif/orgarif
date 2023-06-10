@@ -15,8 +15,7 @@ import { useRecoilState } from 'recoil';
 export const EditTypeStructuresView = () => {
   const [categories, setCategories] = useRecoilState(state.categories);
   const addTypeStructure = (libelle: string) =>
-    appContext
-      .commandService()
+    appContext.commandService
       .send<CreateTypeStructureCommandResponse>({
         objectType: 'CreateTypeStructureCommand',
         libelle
@@ -39,8 +38,7 @@ export const EditTypeStructuresView = () => {
     typeStructureId: TypeStructureId,
     libelle: string
   ) =>
-    appContext
-      .commandService()
+    appContext.commandService
       .send({
         objectType: 'UpdateTypeStructureLibelleCommand',
         id: typeStructureId,
@@ -57,8 +55,7 @@ export const EditTypeStructuresView = () => {
         })
       );
   const onUpdateStatus = (id: TypeStructureId, status: ItemStatus) =>
-    appContext
-      .commandService()
+    appContext.commandService
       .send({ objectType: 'UpdateTypeStructureStatusCommand', id, status })
       .then(() =>
         setCategories({

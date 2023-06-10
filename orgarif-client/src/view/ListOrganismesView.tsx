@@ -14,8 +14,7 @@ export const ListOrganismesView = (props: { route: EditOrganismeRoute }) => {
   const [organismes, setOrganismes] = useState<OrganismeListDto[]>([]);
 
   useEffect(() => {
-    appContext
-      .queryService()
+    appContext.queryService
       .send<ListAllOrganismesQueryResponse>({
         objectType: 'ListAllOrganismesQuery'
       })

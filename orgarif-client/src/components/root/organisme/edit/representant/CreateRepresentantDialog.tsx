@@ -39,8 +39,7 @@ export const CreateRepresentantDialog = (props: {
     setNom(nom);
   }, [props.nomComplet]);
   const onSubmit = () =>
-    appContext
-      .commandService()
+    appContext.commandService
       .send<CreateRepresentantCommandResponse>({
         objectType: 'CreateRepresentantCommand',
         prenom,

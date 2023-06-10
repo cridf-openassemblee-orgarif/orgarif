@@ -23,8 +23,7 @@ export const SelectDeliberationInput = (props: {
   onCreate: (libelle: string) => void;
 }) => {
   const initialSuggestions = () =>
-    appContext
-      .queryService()
+    appContext.queryService
       .send<GetLastDeliberationsQueryResponse>({
         objectType: 'GetLastDeliberationsQuery'
       })
@@ -35,8 +34,7 @@ export const SelectDeliberationInput = (props: {
     input: string
   ): Promise<[(DeliberationDto | string)[], AlreadySet]> => {
     if (input.length >= SharedConstants.searchLengthLimit) {
-      return appContext
-        .queryService()
+      return appContext.queryService
         .send<SearchDeliberationQueryResponse>({
           objectType: 'SearchDeliberationQuery',
           searchToken: input

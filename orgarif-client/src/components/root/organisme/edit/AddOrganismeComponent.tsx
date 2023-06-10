@@ -81,8 +81,7 @@ export const AddOrganismeComponent = () => {
                 setDisplayError(true);
                 return;
               }
-              appContext
-                .commandService()
+              appContext.commandService
                 .send<CreateOrganismeCommandResponse>({
                   objectType: 'CreateOrganismeCommand',
                   nom

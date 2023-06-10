@@ -15,8 +15,7 @@ import { useRecoilState } from 'recoil';
 export const EditSecteursView = () => {
   const [categories, setCategories] = useRecoilState(state.categories);
   const addSecteur = (libelle: string) =>
-    appContext
-      .commandService()
+    appContext.commandService
       .send<CreateSecteurCommandResponse>({
         objectType: 'CreateSecteurCommand',
         libelle
@@ -29,8 +28,7 @@ export const EditSecteursView = () => {
         });
       });
   const updateSecteur = (secteurId: SecteurId, libelle: string) =>
-    appContext
-      .commandService()
+    appContext.commandService
       .send({
         objectType: 'UpdateSecteurLibelleCommand',
         id: secteurId,
@@ -47,8 +45,7 @@ export const EditSecteursView = () => {
         })
       );
   const onUpdateStatus = (id: SecteurId, status: ItemStatus) =>
-    appContext
-      .commandService()
+    appContext.commandService
       .send({
         objectType: 'UpdateSecteurStatusCommand',
         id,
