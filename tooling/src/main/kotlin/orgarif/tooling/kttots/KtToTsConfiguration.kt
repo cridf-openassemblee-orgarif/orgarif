@@ -12,6 +12,7 @@ data class KtToTsConfiguration(
     val srcDirectory: Path,
     // TODO naming directory with isn't a Path
     val generatedDirectory: String,
+    // TODO bad naming
     val dropPackage: String,
     // for classes from the jdk that will be "emulated" in js
     // => Duration, LocalDate, etc...
