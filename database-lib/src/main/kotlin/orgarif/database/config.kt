@@ -31,7 +31,7 @@ val psqlDatabaseConfiguration: PsqlDatabaseConfiguration by lazy {
             port = config.getValue("database.port").toInt(),
             databaseName = databaseName,
             user = config.getValue("database.user"),
-            password = config["database.password"],
+            password = config.getValueOrNull("database.password"),
             schema = "public")
     }
     val additionalConfig =
