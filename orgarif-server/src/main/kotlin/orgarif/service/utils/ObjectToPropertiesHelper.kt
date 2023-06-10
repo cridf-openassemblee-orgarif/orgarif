@@ -9,12 +9,12 @@ import orgarif.utils.stringUuid
 
 object ObjectToPropertiesHelper {
 
-    fun defaultExclusions(value: Any, path: String) =
+    private fun defaultExclusions(value: Any, path: String) =
         when (value) {
             else -> emptyList<String>()
         }.map { "$path.$it" }
 
-    fun transform(
+    private fun transform(
         value: Any?,
         path: String,
         forcedExclusions: List<String>? = null,

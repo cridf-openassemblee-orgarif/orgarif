@@ -9,7 +9,7 @@ import java.time.format.DateTimeFormatter
 class LocalDateSerializer : StdSerializer<LocalDate>(LocalDate::class.java) {
 
     companion object {
-        val formatter = DateTimeFormatter.ISO_LOCAL_DATE
+        val formatter: DateTimeFormatter = DateTimeFormatter.ISO_LOCAL_DATE
     }
 
     override fun serialize(value: LocalDate, gen: JsonGenerator, provider: SerializerProvider) =

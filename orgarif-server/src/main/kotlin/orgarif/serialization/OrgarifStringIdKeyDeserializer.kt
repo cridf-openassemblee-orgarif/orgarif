@@ -5,7 +5,7 @@ import com.fasterxml.jackson.databind.KeyDeserializer
 import kotlin.reflect.KClass
 import orgarif.domain.OrgarifStringId
 
-class OrgarifStringIdKeyDeserializer<T : OrgarifStringId>(val orgarifStringId: KClass<T>) :
+class OrgarifStringIdKeyDeserializer<T : OrgarifStringId>(private val orgarifStringId: KClass<T>) :
     KeyDeserializer() {
 
     override fun deserializeKey(key: String, ctxt: DeserializationContext?) =
