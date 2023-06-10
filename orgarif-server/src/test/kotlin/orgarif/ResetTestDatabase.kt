@@ -1,8 +1,8 @@
 package orgarif
 
-import orgarif.jooqlib.ResetDatabase
-import orgarif.jooqlib.psqlDatabaseConfiguration
-import orgarif.jooqlib.utils.SpringLikeYamlConfigUtils
+import orgarif.database.ResetDatabase
+import orgarif.database.psqlDatabaseConfiguration
+import orgarif.database.utils.SpringLikeYamlConfigUtils
 
 object ResetTestDatabase {
 

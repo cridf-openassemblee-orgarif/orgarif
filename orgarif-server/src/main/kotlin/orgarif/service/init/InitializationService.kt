@@ -8,10 +8,10 @@ import org.springframework.beans.factory.annotation.Value
 import org.springframework.core.env.Environment
 import org.springframework.core.task.TaskExecutor
 import org.springframework.stereotype.Service
+import orgarif.database.ResetDatabase
+import orgarif.database.domain.PsqlDatabaseConfiguration
+import orgarif.database.psqlDatabaseConfiguration
 import orgarif.domain.ApplicationEnvironment
-import orgarif.jooqlib.ResetDatabase
-import orgarif.jooqlib.domain.PsqlDatabaseConfiguration
-import orgarif.jooqlib.psqlDatabaseConfiguration
 import orgarif.repository.log.DeploymentLogDao
 import orgarif.service.ElusSynchronizationService
 import orgarif.service.utils.ApplicationInstance

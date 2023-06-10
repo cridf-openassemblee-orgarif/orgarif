@@ -62,7 +62,7 @@ ksp {
 }
 
 dependencies {
-    implementation(project(":jooq-lib"))
+    implementation(project(":database-lib"))
     implementation(project(":kt-to-ts-annotations"))
 
     // kotlin
