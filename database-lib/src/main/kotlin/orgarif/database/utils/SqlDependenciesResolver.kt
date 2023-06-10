@@ -79,12 +79,12 @@ object SqlDependenciesResolver {
             }
             .forEach { foreignKey ->
                 if (Table(foreignKey.table.name) !in map.keys) {
-                    throw IllegalStateException(
+                    throw IllegalArgumentException(
                         "Table ${tableChain.last()} references ${foreignKey.table.name} which isn't described.")
                 }
                 if (Table(foreignKey.table.name) == tableChain.first()) {
                     val chain = tableChain.map { it.name }.joinToString(" -> ")
-                    throw IllegalStateException(
+                    throw IllegalArgumentException(
                         "Cyclic reference $chain -> ${foreignKey.table.name}. " +
                             "Think about using an 'ALTER TABLE [...] ADD FOREIGN KEY [...]' query.")
                 }
@@ -112,7 +112,7 @@ object SqlDependenciesResolver {
         } else {
             if (resolve.isEmpty()) {
                 val missing = parseResults.map { it.table } - resolvedTables
-                throw IllegalStateException("Missing $missing")
+                throw RuntimeException("Missing $missing")
             }
             resolve + doResolveSql(parseResults, newResolvedTables)
         }
