@@ -622,5 +622,6 @@ public class CommandLogRecord extends UpdatableRecordImpl<CommandLogRecord> impl
         setExceptionStackTrace(exceptionStackTrace);
         setStartDate(startDate);
         setEndDate(endDate);
+        resetChangedOnNotNull();
     }
 }

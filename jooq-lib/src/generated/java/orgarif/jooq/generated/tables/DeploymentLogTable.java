@@ -7,22 +7,24 @@ package orgarif.jooq.generated.tables;
 import orgarif.jooq.generated.Keys;
 import orgarif.jooq.generated.PublicTable;
 import orgarif.jooq.generated.tables.records.DeploymentLogRecord;
+import orgarif.jooqlib.jooq.converter.TimestampWithTimeZoneToInstantJooqConverter;
 
 import java.time.Instant;
-import java.util.Arrays;
-import java.util.List;
 import java.util.UUID;
+import java.util.function.Function;
 
 import javax.annotation.Nonnull;
-
-import jooqutils.jooq.TimestampWithTimeZoneToInstantConverter;
+import javax.annotation.Nullable;
 
 import org.jooq.Field;
 import org.jooq.ForeignKey;
+import org.jooq.Function5;
 import org.jooq.Name;
 import org.jooq.Record;
+import org.jooq.Records;
 import org.jooq.Row5;
 import org.jooq.Schema;
+import org.jooq.SelectField;
 import org.jooq.Table;
 import org.jooq.TableField;
 import org.jooq.TableOptions;
@@ -72,12 +74,12 @@ public class DeploymentLogTable extends TableImpl<DeploymentLogRecord> {
     /**
      * The column <code>public.deployment_log.startup_date</code>.
      */
-    public final TableField<DeploymentLogRecord, Instant> STARTUP_DATE = createField(DSL.name("startup_date"), SQLDataType.TIMESTAMPWITHTIMEZONE(6).nullable(false), this, "", new TimestampWithTimeZoneToInstantConverter());
+    public final TableField<DeploymentLogRecord, Instant> STARTUP_DATE = createField(DSL.name("startup_date"), SQLDataType.TIMESTAMPWITHTIMEZONE(6).nullable(false), this, "", new TimestampWithTimeZoneToInstantJooqConverter());
 
     /**
      * The column <code>public.deployment_log.shutdown_date</code>.
      */
-    public final TableField<DeploymentLogRecord, Instant> SHUTDOWN_DATE = createField(DSL.name("shutdown_date"), SQLDataType.TIMESTAMPWITHTIMEZONE(6), this, "", new TimestampWithTimeZoneToInstantConverter());
+    public final TableField<DeploymentLogRecord, Instant> SHUTDOWN_DATE = createField(DSL.name("shutdown_date"), SQLDataType.TIMESTAMPWITHTIMEZONE(6), this, "", new TimestampWithTimeZoneToInstantJooqConverter());
 
     private DeploymentLogTable(Name alias, Table<DeploymentLogRecord> aliased) {
         this(alias, aliased, null);
@@ -113,21 +115,15 @@ public class DeploymentLogTable extends TableImpl<DeploymentLogRecord> {
     }
 
     @Override
-    @Nonnull
+    @Nullable
     public Schema getSchema() {
-        return PublicTable.PUBLIC;
+        return aliased() ? null : PublicTable.PUBLIC;
     }
 
     @Override
     @Nonnull
     public UniqueKey<DeploymentLogRecord> getPrimaryKey() {
         return Keys.DEPLOYMENT_LOG_PKEY;
-    }
-
-    @Override
-    @Nonnull
-    public List<UniqueKey<DeploymentLogRecord>> getKeys() {
-        return Arrays.<UniqueKey<DeploymentLogRecord>>asList(Keys.DEPLOYMENT_LOG_PKEY);
     }
 
     @Override
@@ -140,6 +136,12 @@ public class DeploymentLogTable extends TableImpl<DeploymentLogRecord> {
     @Nonnull
     public DeploymentLogTable as(Name alias) {
         return new DeploymentLogTable(alias, this);
+    }
+
+    @Override
+    @Nonnull
+    public DeploymentLogTable as(Table<?> alias) {
+        return new DeploymentLogTable(alias.getQualifiedName(), this);
     }
 
     /**
@@ -160,6 +162,15 @@ public class DeploymentLogTable extends TableImpl<DeploymentLogRecord> {
         return new DeploymentLogTable(name, null);
     }
 
+    /**
+     * Rename this table
+     */
+    @Override
+    @Nonnull
+    public DeploymentLogTable rename(Table<?> name) {
+        return new DeploymentLogTable(name.getQualifiedName(), null);
+    }
+
     // -------------------------------------------------------------------------
     // Row5 type methods
     // -------------------------------------------------------------------------
@@ -168,5 +179,20 @@ public class DeploymentLogTable extends TableImpl<DeploymentLogRecord> {
     @Nonnull
     public Row5<UUID, String, String, Instant, Instant> fieldsRow() {
         return (Row5) super.fieldsRow();
+    }
+
+    /**
+     * Convenience mapping calling {@link SelectField#convertFrom(Function)}.
+     */
+    public <U> SelectField<U> mapping(Function5<? super UUID, ? super String, ? super String, ? super Instant, ? super Instant, ? extends U> from) {
+        return convertFrom(Records.mapping(from));
+    }
+
+    /**
+     * Convenience mapping calling {@link SelectField#convertFrom(Class,
+     * Function)}.
+     */
+    public <U> SelectField<U> mapping(Class<U> toType, Function5<? super UUID, ? super String, ? super String, ? super Instant, ? super Instant, ? extends U> from) {
+        return convertFrom(toType, Records.mapping(from));
     }
 }

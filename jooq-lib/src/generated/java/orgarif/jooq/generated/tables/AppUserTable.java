@@ -8,23 +8,27 @@ import orgarif.jooq.generated.Indexes;
 import orgarif.jooq.generated.Keys;
 import orgarif.jooq.generated.PublicTable;
 import orgarif.jooq.generated.tables.records.AppUserRecord;
+import orgarif.jooqlib.jooq.converter.TimestampWithTimeZoneToInstantJooqConverter;
 
 import java.time.Instant;
 import java.util.Arrays;
 import java.util.List;
 import java.util.UUID;
+import java.util.function.Function;
 
 import javax.annotation.Nonnull;
-
-import jooqutils.jooq.TimestampWithTimeZoneToInstantConverter;
+import javax.annotation.Nullable;
 
 import org.jooq.Field;
 import org.jooq.ForeignKey;
+import org.jooq.Function8;
 import org.jooq.Index;
 import org.jooq.Name;
 import org.jooq.Record;
+import org.jooq.Records;
 import org.jooq.Row8;
 import org.jooq.Schema;
+import org.jooq.SelectField;
 import org.jooq.Table;
 import org.jooq.TableField;
 import org.jooq.TableOptions;
@@ -84,17 +88,17 @@ public class AppUserTable extends TableImpl<AppUserRecord> {
     /**
      * The column <code>public.app_user.roles</code>.
      */
-    public final TableField<AppUserRecord, String[]> ROLES = createField(DSL.name("roles"), SQLDataType.VARCHAR(255).getArrayDataType(), this, "");
+    public final TableField<AppUserRecord, String[]> ROLES = createField(DSL.name("roles"), SQLDataType.VARCHAR(255).nullable(false).array(), this, "");
 
     /**
      * The column <code>public.app_user.signup_date</code>.
      */
-    public final TableField<AppUserRecord, Instant> SIGNUP_DATE = createField(DSL.name("signup_date"), SQLDataType.TIMESTAMPWITHTIMEZONE(6).nullable(false), this, "", new TimestampWithTimeZoneToInstantConverter());
+    public final TableField<AppUserRecord, Instant> SIGNUP_DATE = createField(DSL.name("signup_date"), SQLDataType.TIMESTAMPWITHTIMEZONE(6).nullable(false), this, "", new TimestampWithTimeZoneToInstantJooqConverter());
 
     /**
      * The column <code>public.app_user.last_update</code>.
      */
-    public final TableField<AppUserRecord, Instant> LAST_UPDATE = createField(DSL.name("last_update"), SQLDataType.TIMESTAMPWITHTIMEZONE(6).nullable(false), this, "", new TimestampWithTimeZoneToInstantConverter());
+    public final TableField<AppUserRecord, Instant> LAST_UPDATE = createField(DSL.name("last_update"), SQLDataType.TIMESTAMPWITHTIMEZONE(6).nullable(false), this, "", new TimestampWithTimeZoneToInstantJooqConverter());
 
     private AppUserTable(Name alias, Table<AppUserRecord> aliased) {
         this(alias, aliased, null);
@@ -130,15 +134,15 @@ public class AppUserTable extends TableImpl<AppUserRecord> {
     }
 
     @Override
-    @Nonnull
+    @Nullable
     public Schema getSchema() {
-        return PublicTable.PUBLIC;
+        return aliased() ? null : PublicTable.PUBLIC;
     }
 
     @Override
     @Nonnull
     public List<Index> getIndexes() {
-        return Arrays.<Index>asList(Indexes.APP_USER_MAIL_IDX);
+        return Arrays.asList(Indexes.APP_USER_MAIL_IDX);
     }
 
     @Override
@@ -149,8 +153,8 @@ public class AppUserTable extends TableImpl<AppUserRecord> {
 
     @Override
     @Nonnull
-    public List<UniqueKey<AppUserRecord>> getKeys() {
-        return Arrays.<UniqueKey<AppUserRecord>>asList(Keys.APP_USER_PKEY, Keys.APP_USER_MAIL_KEY);
+    public List<UniqueKey<AppUserRecord>> getUniqueKeys() {
+        return Arrays.asList(Keys.APP_USER_MAIL_KEY);
     }
 
     @Override
@@ -163,6 +167,12 @@ public class AppUserTable extends TableImpl<AppUserRecord> {
     @Nonnull
     public AppUserTable as(Name alias) {
         return new AppUserTable(alias, this);
+    }
+
+    @Override
+    @Nonnull
+    public AppUserTable as(Table<?> alias) {
+        return new AppUserTable(alias.getQualifiedName(), this);
     }
 
     /**
@@ -183,6 +193,15 @@ public class AppUserTable extends TableImpl<AppUserRecord> {
         return new AppUserTable(name, null);
     }
 
+    /**
+     * Rename this table
+     */
+    @Override
+    @Nonnull
+    public AppUserTable rename(Table<?> name) {
+        return new AppUserTable(name.getQualifiedName(), null);
+    }
+
     // -------------------------------------------------------------------------
     // Row8 type methods
     // -------------------------------------------------------------------------
@@ -191,5 +210,20 @@ public class AppUserTable extends TableImpl<AppUserRecord> {
     @Nonnull
     public Row8<UUID, String, String, String, String, String[], Instant, Instant> fieldsRow() {
         return (Row8) super.fieldsRow();
+    }
+
+    /**
+     * Convenience mapping calling {@link SelectField#convertFrom(Function)}.
+     */
+    public <U> SelectField<U> mapping(Function8<? super UUID, ? super String, ? super String, ? super String, ? super String, ? super String[], ? super Instant, ? super Instant, ? extends U> from) {
+        return convertFrom(Records.mapping(from));
+    }
+
+    /**
+     * Convenience mapping calling {@link SelectField#convertFrom(Class,
+     * Function)}.
+     */
+    public <U> SelectField<U> mapping(Class<U> toType, Function8<? super UUID, ? super String, ? super String, ? super String, ? super String, ? super String[], ? super Instant, ? super Instant, ? extends U> from) {
+        return convertFrom(toType, Records.mapping(from));
     }
 }
