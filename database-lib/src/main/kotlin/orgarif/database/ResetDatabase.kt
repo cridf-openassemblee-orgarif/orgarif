@@ -70,6 +70,7 @@ object ResetDatabase {
                 .toFile()
                 .walk()
                 .filter { it.extension == "sql" }
+                .sortedBy { it.name }
                 .map { Files.readString(it.toPath()) }
                 .toList()
         sqlQueries.forEach { jooq.execute(it) }
