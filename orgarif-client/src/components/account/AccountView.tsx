@@ -7,8 +7,7 @@ import * as React from 'react';
 
 export const AccountView = () => {
   const onSubmit = (dto: PasswordFormInput) =>
-    appContext
-      .commandService()
+    appContext.commandService
       .send({
         objectType: 'UpdatePasswordCommand',
         password: dto.password

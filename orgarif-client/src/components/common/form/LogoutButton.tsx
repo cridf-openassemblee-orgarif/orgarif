@@ -17,8 +17,8 @@ export const LogoutButton = () => {
     >
       <input
         type="hidden"
-        name={appContext.csrfTokenService().inputName}
-        value={appContext.csrfTokenService().token}
+        name={appContext.csrfTokenService.inputName}
+        value={appContext.csrfTokenService.token}
       />
       <LoadingStateButton loadingState={loading} type="submit" variant="text">
         Logout

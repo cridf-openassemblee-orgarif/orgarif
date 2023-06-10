@@ -34,8 +34,7 @@ export const RegisterForm = (props: {
     event: ChangeEvent<HTMLInputElement | HTMLTextAreaElement>
   ) => {
     const mail = event.target.value;
-    appContext
-      .queryService()
+    appContext.queryService
       .send<IsMailAlreadyTakenQueryResponse>({
         objectType: 'IsMailAlreadyTakenQuery',
         mail
