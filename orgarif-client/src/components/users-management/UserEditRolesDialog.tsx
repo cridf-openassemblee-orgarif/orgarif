@@ -126,7 +126,6 @@ export const UserEditRolesDialog = (props: {
                 </WarningMessage>
               )}
             {userInfos &&
-              loggedInUserInfos.id === userInfos.id &&
               !roles.includes('User') &&
               roles.includes('Admin') && (
                 <WarningMessage>
