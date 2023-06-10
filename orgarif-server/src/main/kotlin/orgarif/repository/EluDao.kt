@@ -5,8 +5,8 @@ import org.jooq.DSLContext
 import org.springframework.stereotype.Repository
 import orgarif.domain.Civilite
 import orgarif.domain.EluId
-import orgarif.jooq.generated.Tables.ELU
 import orgarif.jooq.generated.tables.records.EluRecord
+import orgarif.jooq.generated.tables.references.ELU
 import orgarif.utils.toTypeId
 
 @Repository
@@ -26,20 +26,21 @@ class EluDao(val jooq: DSLContext) {
     )
 
     fun insert(r: Record) {
-        val record =
-            EluRecord().apply {
-                id = r.id.rawId
-                civilite = r.civilite.name
-                prenom = r.prenom
-                nom = r.nom
-                groupePolitique = r.groupePolitique
-                groupePolitiqueCourt = r.groupePolitiqueCourt
-                imageUrl = r.imageUrl
-                actif = r.actif
-                creationDate = r.creationDate
-                lastModificationDate = r.lastModificationDate
-            }
-        jooq.insertInto(ELU).set(record).execute()
+        jooq
+            .insertInto(ELU)
+            .set(
+                EluRecord(
+                    id = r.id.rawId,
+                    civilite = r.civilite.name,
+                    prenom = r.prenom,
+                    nom = r.nom,
+                    groupePolitique = r.groupePolitique,
+                    groupePolitiqueCourt = r.groupePolitiqueCourt,
+                    imageUrl = r.imageUrl,
+                    actif = r.actif,
+                    creationDate = r.creationDate,
+                    lastModificationDate = r.lastModificationDate))
+            .execute()
     }
 
     fun update(
@@ -53,18 +54,18 @@ class EluDao(val jooq: DSLContext) {
         actif: Boolean,
         lastModificationDate: Instant
     ) {
-        val record =
-            EluRecord().also {
-                it.civilite = civilite.name
-                it.prenom = prenom
-                it.nom = nom
-                it.groupePolitique = groupePolitique
-                it.groupePolitiqueCourt = groupePolitiqueCourt
-                it.imageUrl = imageUrl
-                it.actif = actif
-                it.lastModificationDate = lastModificationDate
-            }
-        jooq.update(ELU).set(record).where(ELU.ID.equal(id.rawId)).execute()
+        jooq
+            .update(ELU)
+            .set(ELU.CIVILITE, civilite.name)
+            .set(ELU.PRENOM, prenom)
+            .set(ELU.NOM, nom)
+            .set(ELU.GROUPE_POLITIQUE, groupePolitique)
+            .set(ELU.GROUPE_POLITIQUE_COURT, groupePolitiqueCourt)
+            .set(ELU.IMAGE_URL, imageUrl)
+            .set(ELU.ACTIF, actif)
+            .set(ELU.LAST_MODIFICATION_DATE, lastModificationDate)
+            .where(ELU.ID.equal(id.rawId))
+            .execute()
     }
 
     fun fetch(id: EluId) =

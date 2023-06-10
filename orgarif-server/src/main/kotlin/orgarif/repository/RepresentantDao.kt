@@ -5,8 +5,8 @@ import org.jooq.DSLContext
 import org.springframework.stereotype.Repository
 import orgarif.domain.EluId
 import orgarif.domain.RepresentantId
-import orgarif.jooq.generated.Tables.REPRESENTANT
 import orgarif.jooq.generated.tables.records.RepresentantRecord
+import orgarif.jooq.generated.tables.references.REPRESENTANT
 import orgarif.utils.OrgarifStringUtils
 import orgarif.utils.toTypeId
 
@@ -23,32 +23,29 @@ class RepresentantDao(val jooq: DSLContext) {
     )
 
     fun insert(r: Record) {
-        val record =
-            RepresentantRecord().apply {
-                id = r.id.rawId
-                eluId = r.eluId?.rawId
-                prenom = r.prenom
-                nom = r.nom
-                searchPrenom = OrgarifStringUtils.cleanForSearch(r.prenom)
-                searchNom = OrgarifStringUtils.cleanForSearch(r.nom)
-                creationDate = r.creationDate
-                lastModificationDate = r.lastModificationDate
-            }
-        jooq.insertInto(REPRESENTANT).set(record).execute()
+        jooq
+            .insertInto(REPRESENTANT)
+            .set(
+                RepresentantRecord(
+                    id = r.id.rawId,
+                    eluId = r.eluId?.rawId,
+                    prenom = r.prenom,
+                    nom = r.nom,
+                    searchPrenom = OrgarifStringUtils.cleanForSearch(r.prenom),
+                    searchNom = OrgarifStringUtils.cleanForSearch(r.nom),
+                    creationDate = r.creationDate,
+                    lastModificationDate = r.lastModificationDate))
+            .execute()
     }
 
     fun updateByEluId(eluId: EluId, prenom: String, nom: String, lastModificationDate: Instant) {
-        val record =
-            RepresentantRecord().also {
-                it.prenom = prenom
-                it.nom = nom
-                it.searchPrenom = OrgarifStringUtils.cleanForSearch(prenom)
-                it.searchNom = OrgarifStringUtils.cleanForSearch(nom)
-                it.lastModificationDate = lastModificationDate
-            }
         jooq
             .update(REPRESENTANT)
-            .set(record)
+            .set(REPRESENTANT.PRENOM, prenom)
+            .set(REPRESENTANT.NOM, nom)
+            .set(REPRESENTANT.SEARCH_PRENOM, OrgarifStringUtils.cleanForSearch(prenom))
+            .set(REPRESENTANT.SEARCH_NOM, OrgarifStringUtils.cleanForSearch(nom))
+            .set(REPRESENTANT.LAST_MODIFICATION_DATE, lastModificationDate)
             .where(REPRESENTANT.ELU_ID.equal(eluId.rawId))
             .execute()
     }

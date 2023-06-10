@@ -6,8 +6,8 @@ import org.springframework.stereotype.Repository
 import orgarif.domain.InstanceId
 import orgarif.domain.ItemStatus
 import orgarif.domain.OrganismeId
-import orgarif.jooq.generated.Tables.INSTANCE
 import orgarif.jooq.generated.tables.records.InstanceRecord
+import orgarif.jooq.generated.tables.references.INSTANCE
 import orgarif.utils.toTypeId
 
 @Repository
@@ -25,18 +25,19 @@ class InstanceDao(val jooq: DSLContext) {
     )
 
     fun insert(r: Record) {
-        val record =
-            InstanceRecord().apply {
-                id = r.id.rawId
-                nom = r.nom
-                organismeId = r.organismeId.rawId
-                nombreRepresentants = r.nombreRepresentants
-                presenceSuppleants = r.presenceSuppleants
-                status = r.status.name
-                creationDate = r.creationDate
-                lastModificationDate = r.lastModificationDate
-            }
-        jooq.insertInto(INSTANCE).set(record).execute()
+        jooq
+            .insertInto(INSTANCE)
+            .set(
+                InstanceRecord(
+                    id = r.id.rawId,
+                    nom = r.nom,
+                    organismeId = r.organismeId.rawId,
+                    nombreRepresentants = r.nombreRepresentants,
+                    presenceSuppleants = r.presenceSuppleants,
+                    status = r.status.name,
+                    creationDate = r.creationDate,
+                    lastModificationDate = r.lastModificationDate))
+            .execute()
     }
 
     fun fetchOrNull(id: InstanceId) =

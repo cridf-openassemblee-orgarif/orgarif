@@ -10,8 +10,8 @@ import orgarif.domain.InstanceId
 import orgarif.domain.ItemStatus
 import orgarif.domain.OrganismeId
 import orgarif.domain.RepresentantId
-import orgarif.jooq.generated.Tables.DESIGNATION
 import orgarif.jooq.generated.tables.records.DesignationRecord
+import orgarif.jooq.generated.tables.references.DESIGNATION
 import orgarif.utils.toTypeId
 
 @Repository
@@ -32,21 +32,22 @@ class DesignationDao(val jooq: DSLContext) {
     )
 
     fun insert(r: Record) {
-        val record =
-            DesignationRecord().apply {
-                id = r.id.rawId
-                representantId = r.representantId.rawId
-                organismeId = r.organismeId.rawId
-                instanceId = r.instanceId?.rawId
-                type = r.type.name
-                position = r.position
-                startDate = r.startDate
-                endDate = r.endDate
-                status = r.status.name
-                creationDate = r.creationDate
-                lastModificationDate = r.lastModificationDate
-            }
-        jooq.insertInto(DESIGNATION).set(record).execute()
+        jooq
+            .insertInto(DESIGNATION)
+            .set(
+                DesignationRecord(
+                    id = r.id.rawId,
+                    representantId = r.representantId.rawId,
+                    organismeId = r.organismeId.rawId,
+                    instanceId = r.instanceId?.rawId,
+                    type = r.type.name,
+                    position = r.position,
+                    startDate = r.startDate,
+                    endDate = r.endDate,
+                    status = r.status.name,
+                    creationDate = r.creationDate,
+                    lastModificationDate = r.lastModificationDate))
+            .execute()
     }
 
     fun fetch(id: DesignationId) =

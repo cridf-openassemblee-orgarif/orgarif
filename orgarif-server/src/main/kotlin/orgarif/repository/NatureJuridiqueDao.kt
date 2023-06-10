@@ -5,8 +5,8 @@ import org.jooq.DSLContext
 import org.springframework.stereotype.Repository
 import orgarif.domain.ItemStatus
 import orgarif.domain.NatureJuridiqueId
-import orgarif.jooq.generated.Tables.NATURE_JURIDIQUE
 import orgarif.jooq.generated.tables.records.NatureJuridiqueRecord
+import orgarif.jooq.generated.tables.references.NATURE_JURIDIQUE
 import orgarif.utils.toTypeId
 
 @Repository
@@ -21,15 +21,16 @@ class NatureJuridiqueDao(val jooq: DSLContext) {
     )
 
     fun insert(r: Record) {
-        val record =
-            NatureJuridiqueRecord().apply {
-                id = r.id.rawId
-                libelle = r.libelle
-                status = r.status.name
-                creationDate = r.creationDate
-                lastModificationDate = r.lastModificationDate
-            }
-        jooq.insertInto(NATURE_JURIDIQUE).set(record).execute()
+        jooq
+            .insertInto(NATURE_JURIDIQUE)
+            .set(
+                NatureJuridiqueRecord(
+                    id = r.id.rawId,
+                    libelle = r.libelle,
+                    status = r.status.name,
+                    creationDate = r.creationDate,
+                    lastModificationDate = r.lastModificationDate))
+            .execute()
     }
 
     fun fetchAll() = jooq.selectFrom(NATURE_JURIDIQUE).fetch().map(this::map)

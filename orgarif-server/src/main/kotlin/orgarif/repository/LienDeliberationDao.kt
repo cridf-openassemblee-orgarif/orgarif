@@ -8,8 +8,8 @@ import orgarif.domain.InstanceId
 import orgarif.domain.ItemStatus
 import orgarif.domain.LienDeliberationId
 import orgarif.domain.OrganismeId
-import orgarif.jooq.generated.Tables.LIEN_DELIBERATION
 import orgarif.jooq.generated.tables.records.LienDeliberationRecord
+import orgarif.jooq.generated.tables.references.LIEN_DELIBERATION
 import orgarif.utils.toTypeId
 
 @Repository
@@ -27,18 +27,19 @@ class LienDeliberationDao(val jooq: DSLContext) {
     )
 
     fun insert(r: Record) {
-        val record =
-            LienDeliberationRecord().apply {
-                id = r.id.rawId
-                organismeId = r.organismeId.rawId
-                instanceId = r.instanceId?.rawId
-                deliberationId = r.deliberationId.rawId
-                comment = r.comment
-                status = r.status.name
-                creationDate = r.creationDate
-                lastModificationDate = r.lastModificationDate
-            }
-        jooq.insertInto(LIEN_DELIBERATION).set(record).execute()
+        jooq
+            .insertInto(LIEN_DELIBERATION)
+            .set(
+                LienDeliberationRecord(
+                    id = r.id.rawId,
+                    organismeId = r.organismeId.rawId,
+                    instanceId = r.instanceId?.rawId,
+                    deliberationId = r.deliberationId.rawId,
+                    comment = r.comment,
+                    status = r.status.name,
+                    creationDate = r.creationDate,
+                    lastModificationDate = r.lastModificationDate))
+            .execute()
     }
 
     fun updateComment(id: LienDeliberationId, comment: String?, modificationDate: Instant) {

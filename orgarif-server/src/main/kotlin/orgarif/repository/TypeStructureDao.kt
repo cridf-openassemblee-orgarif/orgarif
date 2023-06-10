@@ -5,8 +5,8 @@ import org.jooq.DSLContext
 import org.springframework.stereotype.Repository
 import orgarif.domain.ItemStatus
 import orgarif.domain.TypeStructureId
-import orgarif.jooq.generated.Tables.TYPE_STRUCTURE
 import orgarif.jooq.generated.tables.records.TypeStructureRecord
+import orgarif.jooq.generated.tables.references.TYPE_STRUCTURE
 import orgarif.utils.toTypeId
 
 @Repository
@@ -21,15 +21,16 @@ class TypeStructureDao(val jooq: DSLContext) {
     )
 
     fun insert(r: Record) {
-        val record =
-            TypeStructureRecord().apply {
-                id = r.id.rawId
-                libelle = r.libelle
-                status = r.status.name
-                creationDate = r.creationDate
-                lastModificationDate = r.lastModificationDate
-            }
-        jooq.insertInto(TYPE_STRUCTURE).set(record).execute()
+        jooq
+            .insertInto(TYPE_STRUCTURE)
+            .set(
+                TypeStructureRecord(
+                    id = r.id.rawId,
+                    libelle = r.libelle,
+                    status = r.status.name,
+                    creationDate = r.creationDate,
+                    lastModificationDate = r.lastModificationDate))
+            .execute()
     }
 
     fun fetchAll() = jooq.selectFrom(TYPE_STRUCTURE).fetch().map(this::map)

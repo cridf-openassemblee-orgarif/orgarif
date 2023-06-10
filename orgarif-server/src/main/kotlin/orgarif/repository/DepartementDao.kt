@@ -5,8 +5,8 @@ import org.jooq.DSLContext
 import org.springframework.stereotype.Repository
 import orgarif.domain.DepartementId
 import orgarif.domain.ItemStatus
-import orgarif.jooq.generated.Tables.DEPARTEMENT
 import orgarif.jooq.generated.tables.records.DepartementRecord
+import orgarif.jooq.generated.tables.references.DEPARTEMENT
 import orgarif.utils.toTypeId
 
 @Repository
@@ -22,16 +22,17 @@ class DepartementDao(val jooq: DSLContext) {
     )
 
     fun insert(r: Record) {
-        val record =
-            DepartementRecord().apply {
-                id = r.id.rawId
-                libelle = r.libelle
-                code = r.code
-                status = r.status.name
-                creationDate = r.creationDate
-                lastModificationDate = r.lastModificationDate
-            }
-        jooq.insertInto(DEPARTEMENT).set(record).execute()
+        jooq
+            .insertInto(DEPARTEMENT)
+            .set(
+                DepartementRecord(
+                    id = r.id.rawId,
+                    libelle = r.libelle,
+                    code = r.code,
+                    status = r.status.name,
+                    creationDate = r.creationDate,
+                    lastModificationDate = r.lastModificationDate))
+            .execute()
     }
 
     fun fetchAll() = jooq.selectFrom(DEPARTEMENT).fetch().map(this::map)

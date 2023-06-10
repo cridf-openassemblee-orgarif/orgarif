@@ -9,8 +9,8 @@ import orgarif.domain.NatureJuridiqueId
 import orgarif.domain.OrganismeId
 import orgarif.domain.SecteurId
 import orgarif.domain.TypeStructureId
-import orgarif.jooq.generated.Tables.ORGANISME
 import orgarif.jooq.generated.tables.records.OrganismeRecord
+import orgarif.jooq.generated.tables.references.ORGANISME
 import orgarif.utils.toTypeId
 
 @Repository
@@ -31,21 +31,22 @@ class OrganismeDao(val jooq: DSLContext) {
     )
 
     fun insert(r: Record) {
-        val record =
-            OrganismeRecord().apply {
-                id = r.id.rawId
-                nom = r.nom
-                departementId = r.departementId?.rawId
-                natureJuridiqueId = r.natureJuridiqueId?.rawId
-                secteurId = r.secteurId?.rawId
-                typeStructureId = r.typeStructureId?.rawId
-                nombreRepresentants = r.nombreRepresentants
-                presenceSuppleants = r.presenceSuppleants
-                status = r.status.name
-                creationDate = r.creationDate
-                lastModificationDate = r.lastModificationDate
-            }
-        jooq.insertInto(ORGANISME).set(record).execute()
+        jooq
+            .insertInto(ORGANISME)
+            .set(
+                OrganismeRecord(
+                    id = r.id.rawId,
+                    nom = r.nom,
+                    departementId = r.departementId?.rawId,
+                    natureJuridiqueId = r.natureJuridiqueId?.rawId,
+                    secteurId = r.secteurId?.rawId,
+                    typeStructureId = r.typeStructureId?.rawId,
+                    nombreRepresentants = r.nombreRepresentants,
+                    presenceSuppleants = r.presenceSuppleants,
+                    status = r.status.name,
+                    creationDate = r.creationDate,
+                    lastModificationDate = r.lastModificationDate))
+            .execute()
     }
 
     fun fetchOrNull(id: OrganismeId) =

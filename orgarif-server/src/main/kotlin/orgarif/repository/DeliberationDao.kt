@@ -6,8 +6,8 @@ import org.jooq.DSLContext
 import org.springframework.stereotype.Repository
 import orgarif.domain.DeliberationId
 import orgarif.domain.ItemStatus
-import orgarif.jooq.generated.Tables.DELIBERATION
 import orgarif.jooq.generated.tables.records.DeliberationRecord
+import orgarif.jooq.generated.tables.references.DELIBERATION
 import orgarif.utils.OrgarifStringUtils
 import orgarif.utils.toTypeId
 
@@ -24,17 +24,18 @@ class DeliberationDao(val jooq: DSLContext) {
     )
 
     fun insert(r: Record) {
-        val record =
-            DeliberationRecord().apply {
-                id = r.id.rawId
-                libelle = r.libelle
-                searchLibelle = OrgarifStringUtils.cleanForSearch(r.libelle)
-                deliberationDate = r.deliberationDate
-                status = r.status.name
-                creationDate = r.creationDate
-                lastModificationDate = r.lastModificationDate
-            }
-        jooq.insertInto(DELIBERATION).set(record).execute()
+        jooq
+            .insertInto(DELIBERATION)
+            .set(
+                DeliberationRecord(
+                    id = r.id.rawId,
+                    libelle = r.libelle,
+                    searchLibelle = OrgarifStringUtils.cleanForSearch(r.libelle),
+                    deliberationDate = r.deliberationDate,
+                    status = r.status.name,
+                    creationDate = r.creationDate,
+                    lastModificationDate = r.lastModificationDate))
+            .execute()
     }
 
     fun fetch(id: DeliberationId) =

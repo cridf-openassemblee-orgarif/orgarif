@@ -4,8 +4,8 @@ import org.jooq.DSLContext
 import org.springframework.stereotype.Repository
 import orgarif.domain.ItemStatus
 import orgarif.domain.OrganismeId
-import orgarif.jooq.generated.Tables.DELIBERATION
-import orgarif.jooq.generated.Tables.LIEN_DELIBERATION
+import orgarif.jooq.generated.tables.references.DELIBERATION
+import orgarif.jooq.generated.tables.references.LIEN_DELIBERATION
 
 @Repository
 class DeliberationAdvancedDao(
