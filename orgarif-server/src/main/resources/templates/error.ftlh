@@ -10,8 +10,7 @@
     <p>${requestError.error?no_esc}</p>
     <p>${requestError.message?no_esc}</p>
     <p>Date : ${requestError.instant?no_esc}</p>
-    <p>Application error, with id : <i>${requestErrorIdAsString?no_esc}</i></p>
-    <#if stackTrace??><pre>${stackTrace?no_esc}</pre></#if>
+    <p>Application error, with id : <i>${requestErrorId?no_esc}</i></p>
 </div>
 </body>
 </html>

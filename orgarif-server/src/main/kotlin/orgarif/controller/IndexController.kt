@@ -1,7 +1,5 @@
 package orgarif.controller
 
-import freemarker.ext.beans.BeansWrapperBuilder
-import freemarker.template.Configuration
 import java.io.File
 import java.net.URLEncoder
 import java.nio.file.Files
@@ -32,11 +30,6 @@ class IndexController(
 
     companion object {
         const val magicTokenParameterName = "magicToken"
-
-        val statics =
-            BeansWrapperBuilder(Configuration.DEFAULT_INCOMPATIBLE_IMPROVEMENTS)
-                .build()
-                .staticModels
 
         fun extractDomain(url: String) =
             url.substring(url.indexOf("://") + 3).let {
@@ -96,7 +89,6 @@ class IndexController(
         mav.model["gitRevisionLabel"] = ApplicationInstance.gitRevisionLabel
         mav.model["jsAssets"] = jsAssets(request)
         mav.model["cssAssets"] = cssAssets
-        mav.model["statics"] = statics
         mav.viewName = "index"
         return mav
     }
