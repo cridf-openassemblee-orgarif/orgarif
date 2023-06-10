@@ -121,9 +121,8 @@ class ApplicationExceptionHandler(
         val mav = ModelAndView()
         response.status = requestError.status
         val returnHtml =
-            request.getHeader("Accept")?.let { accept ->
-                htmlMimeTypes.filter { it in accept }.isNotEmpty()
-            } == true
+            request.getHeader("Accept")?.let { accept -> htmlMimeTypes.any { it in accept } }
+                ?: false
         if (returnHtml) {
             mav.model["requestErrorId"] = requestError.id.stringUuid()
             mav.model["requestError"] = requestError
