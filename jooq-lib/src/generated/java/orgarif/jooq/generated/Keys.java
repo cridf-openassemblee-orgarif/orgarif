@@ -4,12 +4,6 @@
 package orgarif.jooq.generated;
 
 
-import org.jooq.ForeignKey;
-import org.jooq.TableField;
-import org.jooq.UniqueKey;
-import org.jooq.impl.DSL;
-import org.jooq.impl.Internal;
-
 import orgarif.jooq.generated.tables.AppUserTable;
 import orgarif.jooq.generated.tables.CommandLogTable;
 import orgarif.jooq.generated.tables.DeliberationTable;
@@ -48,6 +42,12 @@ import orgarif.jooq.generated.tables.records.TypeStructureRecord;
 import orgarif.jooq.generated.tables.records.UserFileRecord;
 import orgarif.jooq.generated.tables.records.UserMailLogRecord;
 import orgarif.jooq.generated.tables.records.UserSessionLogRecord;
+
+import org.jooq.ForeignKey;
+import org.jooq.TableField;
+import org.jooq.UniqueKey;
+import org.jooq.impl.DSL;
+import org.jooq.impl.Internal;
 
 
 /**
