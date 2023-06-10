@@ -43,8 +43,7 @@ export const UserDetailDialog = (props: { userId: UserId | undefined }) => {
       // keep after if (props.userId) for dialog disappearing animation
       setUserInfos(undefined);
       setLoading('Loading');
-      appContext
-        .queryService()
+      appContext.queryService
         .send<GetUserInfosQueryResponse>({
           objectType: 'GetUserInfosQuery',
           userId: props.userId

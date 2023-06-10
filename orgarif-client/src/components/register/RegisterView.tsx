@@ -17,8 +17,7 @@ export const RegisterView = () => {
   const [userInfos, setUserInfos] = useRecoilState(state.userInfos);
   const [registerResult, setRegisterResult] = useState<RegisterResult>();
   const register = (input: RegisterFormInput) =>
-    appContext
-      .commandService()
+    appContext.commandService
       .send<RegisterCommandResponse>({
         objectType: 'RegisterCommand',
         ...input
@@ -29,7 +28,7 @@ export const RegisterView = () => {
             if (!r.userinfos) {
               throw Errors._db434940();
             }
-            appContext.csrfTokenService().refreshToken();
+            appContext.csrfTokenService.refreshToken();
             setUserInfos(r.userinfos);
             break;
           case 'MailAlreadyExists':

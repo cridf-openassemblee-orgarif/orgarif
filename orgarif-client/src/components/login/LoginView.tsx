@@ -21,12 +21,11 @@ export const LoginView = () => {
   const [userInfos, setUserInfos] = useRecoilState(state.userInfos);
   const [loginResult, setLoginResult] = useState<LoginResult>();
   const connect = (userInfos: UserInfos) => {
-    appContext.csrfTokenService().refreshToken();
+    appContext.csrfTokenService.refreshToken();
     setUserInfos(userInfos);
   };
   const login = (input: LoginFormInput) =>
-    appContext
-      .commandService()
+    appContext.commandService
       .send<LoginCommandResponse>({
         objectType: 'LoginCommand',
         ...input
@@ -48,8 +47,7 @@ export const LoginView = () => {
         }
       });
   const devLogin = (username: string) =>
-    appContext
-      .commandService()
+    appContext.commandService
       .send<DevLoginCommandResponse>({
         objectType: 'DevLoginCommand',
         username

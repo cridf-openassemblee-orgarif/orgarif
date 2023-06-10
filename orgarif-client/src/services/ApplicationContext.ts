@@ -1,49 +1,40 @@
 import { CommandService } from './CommandService';
 import { CsrfTokenService } from './CsrfTokenService';
 import { HttpService } from './HttpService';
-import { NotificationService } from './NotificationService';
 import { QueryService } from './QueryService';
 
 class ApplicationContext {
-  private csrfTokenServiceInstance?: CsrfTokenService;
-  public csrfTokenService = () => {
-    if (!this.csrfTokenServiceInstance) {
-      this.csrfTokenServiceInstance = new CsrfTokenService();
+  private _csrfTokenService?: CsrfTokenService;
+  get csrfTokenService() {
+    if (!this._csrfTokenService) {
+      this._csrfTokenService = new CsrfTokenService();
     }
-    return this.csrfTokenServiceInstance;
-  };
+    return this._csrfTokenService;
+  }
 
-  private httpServiceInstance?: HttpService;
-  public httpService = () => {
-    if (!this.httpServiceInstance) {
-      this.httpServiceInstance = new HttpService();
+  private _httpService?: HttpService;
+  get httpService() {
+    if (!this._httpService) {
+      this._httpService = new HttpService();
     }
-    return this.httpServiceInstance;
-  };
+    return this._httpService;
+  }
 
-  private notificationServiceInstance?: NotificationService;
-  public notificationService = () => {
-    if (!this.notificationServiceInstance) {
-      this.notificationServiceInstance = new NotificationService();
+  private _queryService?: QueryService;
+  get queryService() {
+    if (!this._queryService) {
+      this._queryService = new QueryService();
     }
-    return this.notificationServiceInstance;
-  };
+    return this._queryService;
+  }
 
-  private queryServiceInstance?: QueryService;
-  public queryService = () => {
-    if (!this.queryServiceInstance) {
-      this.queryServiceInstance = new QueryService();
+  private _commandService?: CommandService;
+  get commandService() {
+    if (!this._commandService) {
+      this._commandService = new CommandService();
     }
-    return this.queryServiceInstance;
-  };
-
-  private commandServiceInstance?: CommandService;
-  public commandService = () => {
-    if (!this.commandServiceInstance) {
-      this.commandServiceInstance = new CommandService();
-    }
-    return this.commandServiceInstance;
-  };
+    return this._commandService;
+  }
 }
 
 export const appContext = new ApplicationContext();

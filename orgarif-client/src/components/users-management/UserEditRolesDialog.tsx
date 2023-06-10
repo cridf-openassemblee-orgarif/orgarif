@@ -48,8 +48,7 @@ export const UserEditRolesDialog = (props: {
       setUserInfos(undefined);
       setRoles([]);
       setQueryLoading('Loading');
-      appContext
-        .queryService()
+      appContext.queryService
         .send<GetUserInfosQueryResponse>({
           objectType: 'GetUserInfosQuery',
           userId: props.userId
@@ -75,8 +74,7 @@ export const UserEditRolesDialog = (props: {
     }
     if (roles !== userInfos.roles) {
       setUpdateLoading('Loading');
-      appContext
-        .commandService()
+      appContext.commandService
         .send({
           objectType: 'AdminUpdateRolesCommand',
           userId: props.userId,

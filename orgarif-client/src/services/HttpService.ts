@@ -42,8 +42,7 @@ export class HttpService {
       headers: {
         Accept: 'application/json',
         'Content-Type': 'application/json',
-        [appContext.csrfTokenService().header]:
-          appContext.csrfTokenService().token
+        [appContext.csrfTokenService.header]: appContext.csrfTokenService.token
       },
       credentials: this.credentials
     };

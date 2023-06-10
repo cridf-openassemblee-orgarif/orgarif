@@ -20,8 +20,8 @@ export const LogoutButton = () => {
     >
       <input
         type="hidden"
-        name={appContext.csrfTokenService().inputName}
-        value={appContext.csrfTokenService().token}
+        name={appContext.csrfTokenService.inputName}
+        value={appContext.csrfTokenService.token}
       />
       <SignOut size={36} />
       <LoadingStateButton

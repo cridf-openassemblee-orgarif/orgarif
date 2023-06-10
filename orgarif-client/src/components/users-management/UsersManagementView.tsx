@@ -39,8 +39,7 @@ export const UsersManagementView = (props: {
     ]);
   useEffect(() => {
     setLoading('Loading');
-    appContext
-      .queryService()
+    appContext.queryService
       .send<GetUsersQueryResponse>({
         objectType: 'GetUsersQuery'
       })
