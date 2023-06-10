@@ -64,7 +64,7 @@ class UserFileDao(private val jooq: DSLContext) {
             .toList()
             .map { mapReference(it) }
 
-    fun count(): Int = jooq.selectCount().from(USER_FILE).fetchSingle().let { it.value1() }
+    fun count(): Int = jooq.selectCount().from(USER_FILE).fetchSingle().value1()
 
     fun mapData(record: Record): UserFileData {
         val r = record.into(UserFileRecord::class.java)

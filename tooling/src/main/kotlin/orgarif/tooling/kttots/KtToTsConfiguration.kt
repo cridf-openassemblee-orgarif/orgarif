@@ -47,8 +47,7 @@ data class KtToTsConfiguration(
                         }
                     }
                         ?: emptyMap(),
-                nominalStringMappings =
-                    options["ktToTs:nominalStringMappings"]?.let { it.split("|").toSet() }
+                nominalStringMappings = options["ktToTs:nominalStringMappings"]?.split("|")?.toSet()
                         ?: emptySet(),
                 nominalStringImport = options["ktToTs:nominalStringImport"],
                 // TODO[tmpl]
