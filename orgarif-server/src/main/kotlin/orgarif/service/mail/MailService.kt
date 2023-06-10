@@ -113,7 +113,7 @@ class MailService(
         val jsonData: String
     )
 
-    data class Attachment(val filename: String, val content: ByteArray, val contentType: MimeType)
+    class Attachment(val filename: String, val content: ByteArray, val contentType: MimeType)
 
     fun sendMail(
         senderName: String,
