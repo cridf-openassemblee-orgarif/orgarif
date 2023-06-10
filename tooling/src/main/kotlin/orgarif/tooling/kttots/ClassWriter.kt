@@ -29,7 +29,7 @@ object ClassWriter {
                     // TODO[tmpl] filtering on properties existence should be done at initial
                     // selection => or not for sealed
                     val properties =
-                        d.declarations.mapNotNull { it as? KSPropertyDeclaration }.toList()
+                        d.declarations.filterIsInstance<KSPropertyDeclaration>().toList()
                     if (properties.isNotEmpty() || parentIsSealedClass) {
                         // TODO[tmpl] about class which are not data classes
                         sb.appendLine("export interface ${className(d)} {")
@@ -37,18 +37,16 @@ object ClassWriter {
                             // TODO[tmpl] depends on the jackson annotation
                             sb.appendLine("  objectType: '${className(d)}';")
                         }
-                        d.declarations
-                            .mapNotNull { it as? KSPropertyDeclaration }
-                            .forEach {
-                                val nullableMark =
-                                    when (it.type.resolve().nullability) {
-                                        Nullability.NULLABLE -> "?"
-                                        Nullability.NOT_NULL,
-                                        Nullability.PLATFORM -> ""
-                                    }
-                                sb.appendLine(
-                                    "  ${it.simpleName.asString()}$nullableMark: ${propertyClassName(it.type, mappings).name};")
-                            }
+                        d.declarations.filterIsInstance<KSPropertyDeclaration>().forEach {
+                            val nullableMark =
+                                when (it.type.resolve().nullability) {
+                                    Nullability.NULLABLE -> "?"
+                                    Nullability.NOT_NULL,
+                                    Nullability.PLATFORM -> ""
+                                }
+                            sb.appendLine(
+                                "  ${it.simpleName.asString()}$nullableMark: ${propertyClassName(it.type, mappings).name};")
+                        }
                         sb.appendLine("}")
                         sb.appendLine("")
                     } else {

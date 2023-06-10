@@ -64,7 +64,7 @@ object ClassParser {
             d.declarations
                 //                .mapNotNull { (it as?
                 // KSPropertyDeclaration)?.type?.resolve()?.declaration }
-                .mapNotNull { it as? KSPropertyDeclaration }
+                .filterIsInstance<KSPropertyDeclaration>()
                 .flatMap { mapDependencies(it.type, mappings) }
                 //                .map { it.resolve() }
                 //                .filterIsInstance<KSClassDeclaration>()
