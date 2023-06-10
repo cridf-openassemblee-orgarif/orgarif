@@ -10,5 +10,5 @@ class UuidSerializer : StdSerializer<UUID>(UUID::class.java) {
 
     // TODO[tmpl][serialization] handle all the null cases ?
     override fun serialize(value: UUID?, gen: JsonGenerator, provider: SerializerProvider) =
-        gen.writeString(value?.let { it.stringUuid() } ?: "null")
+        gen.writeString(value?.stringUuid() ?: "null")
 }
