@@ -1,12 +1,12 @@
 package orgarif.repository.user
 
+import java.time.Instant
 import org.jooq.DSLContext
-import org.jooq.Record
+import org.jooq.Record as JooqRecord
 import org.springframework.stereotype.Repository
 import orgarif.domain.MimeType
 import orgarif.domain.UserFileData
 import orgarif.domain.UserFileId
-import orgarif.domain.UserFileReference
 import orgarif.domain.UserId
 import orgarif.jooq.generated.Tables.USER_FILE
 import orgarif.jooq.generated.tables.records.UserFileRecord
@@ -26,14 +26,22 @@ class UserFileDao(private val jooq: DSLContext) {
         }
     }
 
-    fun insert(r: UserFileReference, bytes: ByteArray) {
+    data class Record(
+        val id: UserFileId,
+        val userId: UserId,
+        val contentType: MimeType,
+        val originalFilename: String,
+        val uploadDate: Instant
+    )
+
+    fun insert(r: Record, bytes: ByteArray) {
         // FIMENOW refactor proposition
         val jr =
             UserFileRecord().apply {
                 id = r.id.rawId
                 userId = r.userId.rawId
                 fileContent = bytes
-                contentType = r.contentType.fullType
+                contentType = r.contentType.type
                 originalFilename = r.originalFilename
                 uploadDate = r.uploadDate
             }
@@ -48,35 +56,34 @@ class UserFileDao(private val jooq: DSLContext) {
             .fetchOne()
             ?.let { mapData(it.into(USER_FILE)) }
 
-    fun fetchReferenceOrNull(id: UserFileId): UserFileReference? =
+    fun fetchReferenceOrNull(id: UserFileId): Record? =
         jooq
             .select(nonDataFields)
             .from(USER_FILE)
             .where(USER_FILE.ID.equal(id.rawId))
             .fetchOne()
-            ?.let { mapReference(it) }
+            ?.let { mapRecord(it) }
 
-    fun fetchReferencesByUserId(userId: UserId): List<UserFileReference> =
+    fun fetchReferencesByUserId(userId: UserId): List<Record> =
         jooq
             .select(nonDataFields)
             .from(USER_FILE)
             .where(USER_FILE.USER_ID.equal(userId.rawId))
             .toList()
-            .map { mapReference(it) }
+            .map { mapRecord(it.into(UserFileRecord::class.java)) }
 
     fun count(): Int = jooq.selectCount().from(USER_FILE).fetchSingle().value1()
 
-    fun mapData(record: Record): UserFileData {
-        val r = record.into(UserFileRecord::class.java)
-        return UserFileData(r.contentType, r.fileContent)
+    fun mapData(r: UserFileRecord): UserFileData {
+        return UserFileData(MimeType(r.contentType), r.fileContent)
     }
 
-    fun mapReference(record: Record): UserFileReference {
-        val r = record.into(UserFileRecord::class.java)
-        return UserFileReference(
+    fun mapRecord(raw: JooqRecord): Record {
+        val r = raw.into(UserFileRecord::class.java)
+        return Record(
             id = r.id.toTypeId(),
             userId = r.userId.toTypeId(),
-            contentType = MimeType.of(r.contentType),
+            contentType = MimeType(r.contentType),
             originalFilename = r.originalFilename,
             uploadDate = r.uploadDate)
     }

@@ -95,7 +95,7 @@ class ApplicationExceptionHandler(
             mav.model["requestError"] = requestError
             mav.viewName = "error"
         } else {
-            response.contentType = MimeType.JSON.fullType
+            response.contentType = MimeType.ApplicationJson.type
             // write in the buffer with
             // objectMapper.writeValue(response.outputStream, requestErrorNode)
             // is buggy...

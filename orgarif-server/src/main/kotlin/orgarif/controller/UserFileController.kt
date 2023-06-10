@@ -21,7 +21,7 @@ class UserFileController(private val userFileDao: UserFileDao) {
         val userFile =
             userFileDao.fetchDataOrNull(userFileId) ?: return ResponseEntity(HttpStatus.NOT_FOUND)
         val headers = HttpHeaders()
-        headers.contentType = MediaType.parseMediaType(userFile.contentType)
+        headers.contentType = MediaType.parseMediaType(userFile.contentType.type)
         return ResponseEntity.ok().headers(headers).body(userFile.file)
     }
 }
