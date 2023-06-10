@@ -1,9 +1,10 @@
 package orgarif.domain
 
 import java.util.UUID
+import orgarif.utils.uuid
 
 object TestIds {
-    val emptyUuid0 = UUID.fromString("00000000-0000-0000-0000-000000000000")
+    val emptyUuid0 = "00000000000000000000000000000000".uuid()
 
     val sampleStringId = "my-string-id -------"
 }
