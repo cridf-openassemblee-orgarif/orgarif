@@ -34,12 +34,12 @@ object Configuration {
             throw RuntimeException("Warning run database operations on $databaseName")
         }
         return DatabaseConfiguration(
-            DatabaseConfiguration.Driver.psql,
-            host,
-            config.getValue("database.port").toInt(),
-            databaseName,
-            config.getValue("database.user"),
-            config["database.password"],
-            setOf("public"))
+            driver = DatabaseConfiguration.Driver.psql,
+            host = host,
+            port = config.getValue("database.port").toInt(),
+            databaseName = databaseName,
+            user = config.getValue("database.user"),
+            password = config["database.password"],
+            schemas = setOf("public"))
     }
 }

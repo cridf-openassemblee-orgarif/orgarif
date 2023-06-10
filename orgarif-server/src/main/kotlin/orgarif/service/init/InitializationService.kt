@@ -34,13 +34,13 @@ class InitializationService(
 
     val databaseConfiguration by lazy {
         DatabaseConfiguration(
-            DatabaseConfiguration.Driver.psql,
-            databaseHost,
-            databasePort,
-            databaseName,
-            databaseUser,
-            databasePassword,
-            Configuration.configuration.schemas)
+            driver = DatabaseConfiguration.Driver.psql,
+            host = databaseHost,
+            port = databasePort,
+            databaseName = databaseName,
+            user = databaseUser,
+            password = databasePassword,
+            schemas = Configuration.configuration.schemas)
     }
 
     init {
