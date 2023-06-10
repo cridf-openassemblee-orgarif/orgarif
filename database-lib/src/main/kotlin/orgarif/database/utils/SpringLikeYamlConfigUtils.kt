@@ -3,25 +3,41 @@ package orgarif.database.utils
 import java.io.InputStream
 import java.time.ZoneId
 import java.time.format.DateTimeFormatter
-import java.util.Date
+import java.util.*
 import org.yaml.snakeyaml.Yaml
 
 object SpringLikeYamlConfigUtils {
 
     private val parisZoneId = ZoneId.of("Europe/Paris")
 
-    fun yamlFilesToMap(vararg files: InputStream): Map<String, String> =
-        yamlFilesToPairs(*files)
-            .mapNotNull { pair -> pair.second?.let { pair.first to it } }
-            .toMap()
+    /**
+     * We want a Map of potential null values, because we want to use getValue ; if a value is null,
+     * it must have been defined null. Nullity should not be the result of the absence of the asked
+     * key
+     */
+    class ConfigMap(val map: Map<String, String?>) : Map<String, String?> by map {
 
-    // [doc] we can debug with this one
-    fun yamlFilesToMapComplete(vararg files: InputStream): Map<String, String?> =
-        yamlFilesToPairs(*files).toMap()
+        @Deprecated(
+            level = DeprecationLevel.ERROR,
+            message = "Always use getValue on ConfigMap",
+            replaceWith = ReplaceWith("getValue()"))
+        override fun get(key: String): Nothing = throw UnsupportedOperationException()
 
-    private fun yamlFilesToPairs(vararg files: InputStream): List<Pair<String, String?>> =
-        files
-            .map { String(it.readAllBytes()) }
+        /** Throws if missing key in configuration, throws if value is null */
+        fun getValue(key: String): String =
+            requireNotNull(map.getValue(key)) { "Value for key \"$key\" is null" }
+
+        /** Throws if missing key in configuration */
+        fun getValueOrNull(key: String): String? = map.getValue(key)
+    }
+
+    fun yamlFilesToMap(vararg files: InputStream): ConfigMap =
+        yamlToMap(*files.map { String(it.readAllBytes()) }.toTypedArray())
+
+    fun yamlToMap(vararg yamls: String): ConfigMap = ConfigMap(yamlFilesToPairs(*yamls).toMap())
+
+    private fun yamlFilesToPairs(vararg yamls: String): List<Pair<String, String?>> =
+        yamls
             .map { Yaml().load<Map<String, Any>>(it) }
             .flatMap { flattenConf(it) }
             // we want to delete the duplicates
@@ -42,23 +58,22 @@ object SpringLikeYamlConfigUtils {
                         ?.ifEmpty { null }
             }
 
-    private fun flattenConf(map: Map<String, Any>): List<Pair<String, String?>> =
+    private fun flattenConf(map: Map<String, Any?>): List<Pair<String, String?>> =
         map.keys.flatMap { key ->
-            val value = map.getValue(key)
-            when (value) {
-                // TODO[tmpl] null or not here ?? (if use getValue is useless)
+            when (val value = map.getValue(key)) {
                 null -> listOf(key to null)
                 is Boolean,
                 is Int,
                 is Long,
                 is String -> listOf(key to "$value")
-                is Map<*, *> ->
-                    flattenConf(value as Map<String, Any>).map {
-                        (key + "." + it.first) to it.second
-                    }
+                is Map<*, *> -> {
+                    @Suppress("UNCHECKED_CAST") val m = value as Map<String, Any?>
+                    flattenConf(m).map { (key + "." + it.first) to it.second }
+                }
                 is Date ->
                     listOf(
                         key to
+                            // TODO test / remove
                             DateTimeFormatter.ISO_LOCAL_DATE.format(
                                 value.toInstant().atZone(parisZoneId).toLocalDate()))
                 else -> listOf(key to "$value")
