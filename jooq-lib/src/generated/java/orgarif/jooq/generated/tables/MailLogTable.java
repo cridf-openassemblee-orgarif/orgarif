@@ -23,7 +23,7 @@ import org.jooq.ForeignKey;
 import org.jooq.Index;
 import org.jooq.Name;
 import org.jooq.Record;
-import org.jooq.Row10;
+import org.jooq.Row9;
 import org.jooq.Schema;
 import org.jooq.Table;
 import org.jooq.TableField;
@@ -65,11 +65,6 @@ public class MailLogTable extends TableImpl<MailLogRecord> {
      * The column <code>public.mail_log.deployment_log_id</code>.
      */
     public final TableField<MailLogRecord, UUID> DEPLOYMENT_LOG_ID = createField(DSL.name("deployment_log_id"), SQLDataType.UUID.nullable(false), this, "");
-
-    /**
-     * The column <code>public.mail_log.recipient_type</code>.
-     */
-    public final TableField<MailLogRecord, String> RECIPIENT_TYPE = createField(DSL.name("recipient_type"), SQLDataType.VARCHAR(255).nullable(false), this, "");
 
     /**
      * The column <code>public.mail_log.user_id</code>.
@@ -209,12 +204,12 @@ public class MailLogTable extends TableImpl<MailLogRecord> {
     }
 
     // -------------------------------------------------------------------------
-    // Row10 type methods
+    // Row9 type methods
     // -------------------------------------------------------------------------
 
     @Override
     @Nonnull
-    public Row10<UUID, UUID, String, UUID, String, String, String, String, String, Instant> fieldsRow() {
-        return (Row10) super.fieldsRow();
+    public Row9<UUID, UUID, UUID, String, String, String, String, String, Instant> fieldsRow() {
+        return (Row9) super.fieldsRow();
     }
 }
