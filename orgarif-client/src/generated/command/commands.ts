@@ -32,7 +32,7 @@ export interface DevLoginCommand {
 
 export interface DevLoginCommandResponse {
   objectType: 'DevLoginCommandResponse';
-  userinfos: UserInfos;
+  userInfos: UserInfos;
 }
 
 export interface LoginCommand {
@@ -44,7 +44,7 @@ export interface LoginCommand {
 export interface LoginCommandResponse {
   objectType: 'LoginCommandResponse';
   result: LoginResult;
-  userinfos?: UserInfos;
+  userInfos?: UserInfos;
 }
 
 export interface UpdatePasswordCommand {
@@ -62,5 +62,5 @@ export interface RegisterCommand {
 export interface RegisterCommandResponse {
   objectType: 'RegisterCommandResponse';
   result: RegisterResult;
-  userinfos?: UserInfos;
+  userInfos?: UserInfos;
 }
