@@ -5,7 +5,7 @@ import org.springframework.core.convert.converter.Converter
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken
 import org.springframework.security.core.context.SecurityContextImpl
 import orgarif.domain.Session
-import orgarif.serialization.Serializer.deserialize
+import orgarif.serialization.Serializer
 
 class JsonDeserializingService : Converter<ByteArray, Any> {
 
@@ -21,7 +21,7 @@ class JsonDeserializingService : Converter<ByteArray, Any> {
                     "Couldn't convert to string ${Arrays.toString(source)}", e)
             }
         return try {
-            val session = deserialize<Session>(json)
+            val session = Serializer.deserialize<Session>(json)
             SecurityContextImpl().apply {
                 authentication = UsernamePasswordAuthenticationToken(session, null, null)
             }

@@ -7,7 +7,9 @@ import mu.KotlinLogging
 import org.springframework.security.authentication.AnonymousAuthenticationToken
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken
 import org.springframework.security.core.context.SecurityContextHolder
+import org.springframework.security.web.context.HttpSessionSecurityContextRepository
 import org.springframework.security.web.csrf.CookieCsrfTokenRepository
+import org.springframework.security.web.csrf.XorCsrfTokenRequestAttributeHandler
 import org.springframework.stereotype.Service
 import orgarif.domain.Role
 import orgarif.domain.Session
@@ -23,11 +25,12 @@ import orgarif.service.utils.random.RandomService
 
 @Service
 class UserSessionService(
+    private val securityContextRepository: HttpSessionSecurityContextRepository,
     private val cookieCsrfTokenRepository: CookieCsrfTokenRepository,
-    private val userDao: UserDao,
     private val userSessionLogDao: UserSessionLogDao,
     private val dateService: DateService,
-    private val randomService: RandomService
+    private val randomService: RandomService,
+    private val xorCsrfTokenRequestAttributeHandler: XorCsrfTokenRequestAttributeHandler,
 ) {
 
     val logger = KotlinLogging.logger {}
@@ -57,10 +60,16 @@ class UserSessionService(
 
         val userSession = UserSession(sessionId, user.id, user.roles)
         val springAuthentication = UsernamePasswordAuthenticationToken(userSession, null, null)
-        SecurityContextHolder.getContext().authentication = springAuthentication
+        SecurityContextHolder.getContext().let {
+            it.authentication = springAuthentication
+            securityContextRepository.saveContext(it, request, response)
+        }
 
-        val csrfToken = cookieCsrfTokenRepository.generateToken(request)
-        cookieCsrfTokenRepository.saveToken(csrfToken, request, response)
+        cookieCsrfTokenRepository.generateToken(request).let { token ->
+            cookieCsrfTokenRepository.saveToken(token, request, response)
+            // [doc] we need to manually ask for the "XorCsrfToken"
+            xorCsrfTokenRequestAttributeHandler.handle(request, response) { token }
+        }
     }
 
     fun isAuthenticated() =
@@ -91,6 +100,7 @@ class UserSessionService(
         SecurityContextHolder.getContext().authentication.principal.let {
             when (it) {
                 // [doc] allows UserSession object evolution without breaking existing sessions
+                // & then securityContextRepository.saveContext()
                 is Session -> convert(it).session
                 // TODO[tmpl][secu] do 403 if anonymousUser
                 is AnonymousAuthenticationToken -> throw AppErrors.NotConnectedUser()

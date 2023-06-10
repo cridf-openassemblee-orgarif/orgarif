@@ -4,7 +4,7 @@ import org.springframework.core.convert.converter.Converter
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken
 import org.springframework.security.core.context.SecurityContextImpl
 import orgarif.domain.Session
-import orgarif.serialization.Serializer.serialize
+import orgarif.serialization.Serializer
 
 class JsonSerializingService : Converter<Any, ByteArray> {
 
@@ -12,7 +12,7 @@ class JsonSerializingService : Converter<Any, ByteArray> {
         if (source is SecurityContextImpl &&
             source.authentication is UsernamePasswordAuthenticationToken) {
             if (source.authentication.principal is Session) {
-                serialize(source.authentication.principal).toByteArray()
+                Serializer.serialize(source.authentication.principal).toByteArray()
             } else {
                 throw IllegalArgumentException(
                     "Unexpected session: ${source.authentication.principal}")

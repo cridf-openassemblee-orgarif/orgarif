@@ -1,8 +1,8 @@
 package orgarif.config
 
+import jakarta.servlet.ServletContext
 import java.time.Duration
 import java.time.temporal.ChronoUnit
-import javax.servlet.ServletContext
 import mu.KotlinLogging
 import org.springframework.boot.web.servlet.ServletContextInitializer
 import org.springframework.context.annotation.Configuration
@@ -25,7 +25,7 @@ class WebConfiguration(private val env: Environment) : WebMvcConfigurer, Servlet
             .setCachePeriod(cacheTimeToLive.seconds.toInt())
     }
 
-    override fun onStartup(servletContext: ServletContext) {
+    override fun onStartup(servletContext: ServletContext?) {
         if (env.activeProfiles.isNotEmpty()) {
             val activeProfiles = env.activeProfiles.joinToString(", ")
             logger.info { "Web application configuration, using profiles: $activeProfiles" }
