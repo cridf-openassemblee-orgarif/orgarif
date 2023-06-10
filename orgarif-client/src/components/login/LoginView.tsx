@@ -23,7 +23,6 @@ export const LoginView = () => {
   const [loginResult, setLoginResult] = useState<LoginResult>();
   const goTo = useGoTo();
   const connect = (userInfos: UserInfos) => {
-    appContext.csrfTokenService.refreshToken();
     setUserInfos(userInfos);
     goTo(
       { name: 'RootRoute' },
