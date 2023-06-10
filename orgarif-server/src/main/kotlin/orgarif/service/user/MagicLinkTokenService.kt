@@ -1,11 +1,11 @@
 package orgarif.service.user
 
+import jakarta.servlet.http.HttpServletRequest
+import jakarta.servlet.http.HttpServletResponse
 import java.math.BigInteger
 import java.security.SecureRandom
 import java.time.Duration
 import java.time.temporal.ChronoUnit
-import javax.servlet.http.HttpServletRequest
-import javax.servlet.http.HttpServletResponse
 import mu.KotlinLogging
 import org.springframework.stereotype.Service
 import orgarif.domain.UserId

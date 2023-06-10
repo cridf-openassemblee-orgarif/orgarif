@@ -1,6 +1,6 @@
 package orgarif.service.init
 
-import javax.annotation.PreDestroy
+import jakarta.annotation.PreDestroy
 import mu.KotlinLogging
 import org.springframework.stereotype.Service
 import orgarif.repository.log.DeploymentLogDao

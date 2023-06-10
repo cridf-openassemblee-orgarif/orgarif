@@ -1,8 +1,6 @@
 package orgarif.error
 
 import com.fasterxml.jackson.databind.JsonMappingException
-import freemarker.ext.beans.BeansWrapperBuilder
-import freemarker.template.Configuration
 import javax.servlet.http.HttpServletResponse
 import mu.KotlinLogging
 import org.apache.tomcat.util.http.fileupload.impl.SizeLimitExceededException

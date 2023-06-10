@@ -1,6 +1,6 @@
 package orgarif.error
 
-import javax.servlet.http.HttpServletRequest
+import jakarta.servlet.http.HttpServletRequest
 import org.springframework.web.servlet.mvc.method.annotation.ExceptionHandlerExceptionResolver
 
 // doesn't catch Spring "internal" exceptions: 401, 403...
