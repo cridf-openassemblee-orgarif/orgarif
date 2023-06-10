@@ -1,16 +1,16 @@
 package orgarif.query
 
 import com.fasterxml.jackson.annotation.JsonTypeInfo
-import kttots.Shared
+import kt2ts.annotation.GenerateTypescript
 import orgarif.domain.UserId
 import orgarif.domain.UserInfos
 
-@Shared
+@GenerateTypescript
 @JsonTypeInfo(
     use = JsonTypeInfo.Id.NAME, include = JsonTypeInfo.As.PROPERTY, property = "objectType")
 sealed class Query
 
-@Shared sealed class QueryResponse
+@GenerateTypescript sealed class QueryResponse
 
 data class GetUserInfosQuery(val userId: UserId) : Query()
 

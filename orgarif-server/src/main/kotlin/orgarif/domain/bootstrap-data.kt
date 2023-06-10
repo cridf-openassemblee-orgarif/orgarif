@@ -1,8 +1,8 @@
 package orgarif.domain
 
-import kttots.Shared
+import kt2ts.annotation.GenerateTypescript
 
 // TODO[tmpl][user] naming start / initial / boot / launch / base Infos ?
 // ConnectedUserInfos (logged is bad wording btw)
-@Shared
+@GenerateTypescript
 data class ApplicationBootstrapData(val env: ApplicationEnvironment, val userInfos: UserInfos?)

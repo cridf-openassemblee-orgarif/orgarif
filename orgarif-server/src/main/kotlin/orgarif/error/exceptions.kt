@@ -1,12 +1,12 @@
 package orgarif.error
 
 import java.time.Instant
-import kttots.Shared
+import kt2ts.annotation.GenerateTypescript
 import org.slf4j.event.Level
 import orgarif.domain.OrgarifId
 import orgarif.domain.RequestErrorId
 
-@Shared
+@GenerateTypescript
 data class RequestError(
     val id: RequestErrorId,
     val status: Int,

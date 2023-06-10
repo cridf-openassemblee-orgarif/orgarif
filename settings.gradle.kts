@@ -1,6 +1,6 @@
 rootProject.name = "orgarif"
 
-include("database-lib", "orgarif-client", "orgarif-server", "tooling", "kt-to-ts-annotations")
+include("database-lib", "orgarif-client", "orgarif-server")
 
 pluginManagement {
     repositories {
