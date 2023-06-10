@@ -46,7 +46,7 @@ class IndexController(
         File(System.getProperty("user.dir") + "/asset-manifest.json")
             .let { Files.readString(it.toPath()) }
             .let { JSONObject(it ?: throw RuntimeException()) }
-            .let { it.getJSONArray("entrypoints") }
+            .getJSONArray("entrypoints")
             .map { "/$it" }
     }
 
