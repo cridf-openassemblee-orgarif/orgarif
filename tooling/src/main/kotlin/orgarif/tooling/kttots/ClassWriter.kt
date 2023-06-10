@@ -34,6 +34,7 @@ object ClassWriter {
                         // TODO[tmpl] about class which are not data classes
                         sb.appendLine("export interface ${className(d)} {")
                         if (parentIsSealedClass) {
+                            // TODO[tmpl] depends on the jackson annotation
                             sb.appendLine("  objectType: '${className(d)}';")
                         }
                         d.declarations
@@ -88,6 +89,7 @@ object ClassWriter {
                         // the moment
                         if (parentIsSealedClass) {
                             sb.appendLine("export interface ${className(d)} {")
+                            // TODO[tmpl] depends on the jackson annotation
                             sb.appendLine("  objectType: '${className(d)}';")
                             sb.appendLine("}")
                             sb.appendLine("")
