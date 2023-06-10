@@ -1,16 +1,13 @@
 package orgarif.database.utils
 
 import java.io.InputStream
-import java.time.ZoneId
-import java.time.format.DateTimeFormatter
-import java.util.*
 import org.yaml.snakeyaml.Yaml
 
 object SpringLikeYamlConfigUtils {
 
-    private val parisZoneId = ZoneId.of("Europe/Paris")
-
     /**
+     * Config here is String only to simplify the code. It's far from perfect though.
+     *
      * We want a Map of potential null values, because we want to use getValue ; if a value is null,
      * it must have been defined null. Nullity should not be the result of the absence of the asked
      * key
@@ -31,27 +28,27 @@ object SpringLikeYamlConfigUtils {
         fun getValueOrNull(key: String): String? = map.getValue(key)
     }
 
-    fun yamlFilesToMap(vararg files: InputStream): ConfigMap =
-        yamlToMap(*files.map { String(it.readAllBytes()) }.toTypedArray())
+    fun yamlFilesToMap(vararg file: InputStream): ConfigMap =
+        yamlToMap(*file.map { String(it.readAllBytes()) }.toTypedArray())
 
-    fun yamlToMap(vararg yamls: String): ConfigMap = ConfigMap(yamlFilesToPairs(*yamls).toMap())
+    fun yamlToMap(vararg yaml: String): ConfigMap = ConfigMap(yamlFilesToPairs(*yaml).toMap())
 
-    private fun yamlFilesToPairs(vararg yamls: String): List<Pair<String, String?>> =
-        yamls
+    private fun yamlFilesToPairs(vararg yaml: String): List<Pair<String, String?>> =
+        yaml
             .map { Yaml().load<Map<String, Any>>(it) }
             .flatMap { flattenConf(it) }
             // we want to delete the duplicates
-            // but distinct() will keep the first item for each key, and we want the last
+            // but distinct() will keep the first item for each key, and we want the last,
             // so we reverse, distinct, and re-reverse
             .reversed()
             // toMap() would have removed the duplicates, but with distinct we're sure of the order
             .distinct()
             .reversed()
             // replace system env vars
-            .map {
-                it.first to
+            .map { (key, value) ->
+                key to
                     // TODO[tmpl] write tests (with 2 vars in string, with missing var...)
-                    it.second
+                    value
                         ?.replace("\\$\\{[^}]*}".toRegex()) {
                             System.getenv(it.value.drop(2).dropLast(1)) ?: ""
                         }
@@ -70,13 +67,8 @@ object SpringLikeYamlConfigUtils {
                     @Suppress("UNCHECKED_CAST") val m = value as Map<String, Any?>
                     flattenConf(m).map { (key + "." + it.first) to it.second }
                 }
-                is Date ->
-                    listOf(
-                        key to
-                            // TODO test / remove
-                            DateTimeFormatter.ISO_LOCAL_DATE.format(
-                                value.toInstant().atZone(parisZoneId).toLocalDate()))
-                else -> listOf(key to "$value")
+                // TODO or just return listOf(key to "$value") ?
+                else -> throw NotImplementedError("Not implemented type : ${value::class}")
             }
         }
 }

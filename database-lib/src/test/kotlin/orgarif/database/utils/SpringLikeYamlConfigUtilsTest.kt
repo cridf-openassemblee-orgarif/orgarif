@@ -10,8 +10,14 @@ internal class SpringLikeYamlConfigUtilsTest {
             """
 test:
   hi:
-    """
-                .trimIndent())
+changeMeIfYouCan: value 1
+    """,
+            "changeMeIfYouCan: value 2".trimIndent())
+
+    @Test
+    fun `second value erases first value`() {
+        assertEquals("value 2", configMap.getValue("changeMeIfYouCan"))
+    }
 
     @Test
     fun `check null value`() {
