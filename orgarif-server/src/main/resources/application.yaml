@@ -1,3 +1,4 @@
+context.initializer.classes: orgarif.config.ApplicationBeans
 spring:
   main.banner-mode: off
   jooq.sql-dialect: Postgres
@@ -10,6 +11,7 @@ spring:
     url: jdbc:postgresql://${database.host}:${database.port}/${database.name}
     username: ${database.user}
     password: ${database.password}
+  freemarker.expose-request-attributes: true
 server:
   port: 8080
   error.whitelabel.enabled: true

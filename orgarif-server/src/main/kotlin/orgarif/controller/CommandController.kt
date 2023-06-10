@@ -6,6 +6,7 @@ import java.time.Instant
 import mu.KotlinLogging
 import org.apache.commons.lang3.exception.ExceptionUtils
 import org.springframework.transaction.PlatformTransactionManager
+import org.springframework.security.web.csrf.CsrfToken
 import org.springframework.web.bind.annotation.PostMapping
 import org.springframework.web.bind.annotation.RequestBody
 import org.springframework.web.bind.annotation.RestController
@@ -227,6 +228,12 @@ class CommandController(
             throw e
         } finally {
             idLogService.clean()
+            // [doc] CSRF token is updated by XorCsrfTokenRequestAttributeHandler.handle()
+            // this code permits to update the token in the front
+            (request.getAttribute("_csrf") as? CsrfToken)?.let {
+                response.setHeader(it.headerName, it.token)
+            }
+                ?: throw RuntimeException()
         }
     }
 

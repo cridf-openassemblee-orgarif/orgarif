@@ -8,9 +8,7 @@ import org.springframework.boot.autoconfigure.web.servlet.WebMvcRegistrations
 import org.springframework.boot.web.embedded.tomcat.TomcatServletWebServerFactory
 import org.springframework.context.annotation.Bean
 import org.springframework.context.annotation.Configuration
-import org.springframework.context.support.ConversionServiceFactoryBean
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder
-import org.springframework.security.web.csrf.CookieCsrfTokenRepository
 import org.springframework.web.servlet.mvc.method.annotation.ExceptionHandlerExceptionResolver
 import orgarif.error.ApplicationExceptionHandlerExceptionResolver
 
@@ -27,8 +25,6 @@ class ApplicationConfiguration {
         }
 
     @Bean fun passwordEncoder() = BCryptPasswordEncoder()
-
-    @Bean fun cookieCsrfTokenRepository() = CookieCsrfTokenRepository.withHttpOnlyFalse()
 
     @Bean
     fun tomcatServletWebServerFactory(): TomcatServletWebServerFactory {
@@ -52,12 +48,5 @@ class ApplicationConfiguration {
                 }
             })
         return factory
-    }
-
-    @Bean
-    fun conversionService(): ConversionServiceFactoryBean {
-        val bean = ConversionServiceFactoryBean()
-        bean.setConverters(setOf(JsonSerializingService(), JsonDeserializingService()))
-        return bean
     }
 }

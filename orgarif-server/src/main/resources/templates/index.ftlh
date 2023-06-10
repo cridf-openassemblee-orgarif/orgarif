@@ -7,6 +7,7 @@
 <#include "header.ftlh">
 <script>
     <#if bootstrapData??>var bootstrapData = ${bootstrapData?no_esc};</#if>
+    var csrfToken = "${_csrf.token}";
 </script>
 <#list cssAssets as cssAsset>
 <link href="${cssAsset?no_esc}" rel="stylesheet">

@@ -23,8 +23,6 @@
     <logger name="orgarif.error.ApplicationExceptionHandlerExceptionResolver" level="WARN"/>
     <!-- Spring noise -->
     <logger name="org.spring.aop.framework.CglibAopProxy" level="INFO"/>
-    <!-- Spring noise - check [d8bc54] -->
-    <logger name="org.springframework.security.config.annotation.web.builders.WebSecurity" level="ERROR"/>
     <!-- Hide starvation warn (happens a lot when the computer is in sleep mode) -->
     <logger name="com.zaxxer.hikari.pool.HikariPool" level="ERROR"/>
 </configuration>

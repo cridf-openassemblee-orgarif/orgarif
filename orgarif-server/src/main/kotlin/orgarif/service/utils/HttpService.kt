@@ -55,7 +55,7 @@ class HttpService(private val okHttpClient: OkHttpClient) {
                 header(Header.Accept.header, jsonMediaType.toString())
                 header(Header.ContentType.header, jsonMediaType.toString())
                 headers.forEach { header(it.first.header, it.second) }
-                method(method.name, body)
+                method(method.name(), body)
             }
             .build()
             .let { okHttpClient.newCall(it) }

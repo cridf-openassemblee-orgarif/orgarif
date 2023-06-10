@@ -20,9 +20,8 @@ class SafeSessionRepository(private val repository: FindByIndexNameSessionReposi
             repository.findById(id)
         } catch (e: Exception) {
             if (ApplicationInstance.env == ApplicationEnvironment.Dev) {
-                // TODO[tmpl][user] better mess
                 throw IllegalArgumentException(
-                    "WARNING session deserialization problem - please prevent it for production", e)
+                    "[FIX BEFORE GO TO PROD] Session code update : deserialization problem", e)
             } else {
                 logger.error { "Deleting session $id" }
                 deleteById(id)
@@ -35,9 +34,8 @@ class SafeSessionRepository(private val repository: FindByIndexNameSessionReposi
             repository.save(session)
         } catch (e: Exception) {
             if (ApplicationInstance.env == ApplicationEnvironment.Dev) {
-                // TODO[tmpl][user] better mess
                 throw IllegalArgumentException(
-                    "WARNING session deserialization problem - please prevent it for production", e)
+                    "[FIX BEFORE GO TO PROD] Session code update : serialization problem", e)
             } else {
                 logger.error { "Deleting session ${session.id}" }
                 deleteById(session.id)
