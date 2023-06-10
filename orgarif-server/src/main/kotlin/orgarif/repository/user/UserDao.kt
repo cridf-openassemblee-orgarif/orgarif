@@ -1,7 +1,7 @@
 package orgarif.repository.user
 
 import java.time.Instant
-import java.util.stream.Stream
+import kotlin.streams.asSequence
 import org.jooq.DSLContext
 import org.springframework.dao.DuplicateKeyException
 import org.springframework.stereotype.Repository
@@ -126,7 +126,8 @@ class UserDao(private val jooq: DSLContext) {
             ?.value1()
             .let { requireNotNull(it) { "$id" } }
 
-    fun streamAll(): Stream<Record> = jooq.selectFrom(APP_USER).stream().map(this::map)
+    fun streamAll(): Sequence<Record> =
+        jooq.selectFrom(APP_USER).stream().asSequence().map(this::map)
 
     fun map(r: AppUserRecord) =
         Record(
