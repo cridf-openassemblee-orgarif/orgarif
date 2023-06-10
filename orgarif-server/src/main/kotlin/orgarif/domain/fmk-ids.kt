@@ -1,15 +1,16 @@
 package orgarif.domain
 
 import java.util.UUID
-import orgarif.utils.OrgarifStringUtils
+import orgarif.utils.stringUuid
 
 interface OrgarifId<T> {
     val rawId: T
 }
 
 abstract class OrgarifUuidId : OrgarifId<UUID> {
-    final override fun toString() =
-        "${javaClass.simpleName}(${OrgarifStringUtils.serializeUuid(rawId)})"
+    final override fun toString() = "${javaClass.simpleName}(${stringUuid()})"
+
+    fun stringUuid() = rawId.stringUuid()
 }
 
 abstract class OrgarifStringId : OrgarifId<String> {

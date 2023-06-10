@@ -20,7 +20,6 @@ import orgarif.serialization.Serializer.serialize
 import orgarif.service.user.MagicLinkTokenService
 import orgarif.service.user.UserSessionService
 import orgarif.service.utils.ApplicationInstance
-import orgarif.utils.OrgarifStringUtils
 
 @Controller
 class IndexController(
@@ -93,8 +92,7 @@ class IndexController(
             } else null
         mav.model["bootstrapData"] =
             serialize(ApplicationBootstrapData(ApplicationInstance.env, userInfos))
-        mav.model["deploymentId"] =
-            OrgarifStringUtils.serializeUuid(ApplicationInstance.deploymentLogId.rawId)
+        mav.model["deploymentId"] = ApplicationInstance.deploymentLogId.stringUuid()
         mav.model["gitRevisionLabel"] = ApplicationInstance.gitRevisionLabel
         mav.model["jsAssets"] = jsAssets(request)
         mav.model["cssAssets"] = cssAssets

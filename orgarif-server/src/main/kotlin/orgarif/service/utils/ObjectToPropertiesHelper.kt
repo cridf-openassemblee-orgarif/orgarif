@@ -5,7 +5,7 @@ import java.time.LocalTime
 import java.time.ZoneId
 import java.util.UUID
 import org.jetbrains.annotations.TestOnly
-import orgarif.utils.OrgarifStringUtils
+import orgarif.utils.stringUuid
 
 object ObjectToPropertiesHelper {
 
@@ -33,7 +33,7 @@ object ObjectToPropertiesHelper {
             is LocalDate,
             is LocalTime,
             is ZoneId -> listOf(path to value.toString())
-            is UUID -> listOf(path to OrgarifStringUtils.serializeUuid(value))
+            is UUID -> listOf(path to value.stringUuid())
             is List<*> ->
                 value
                     .mapIndexed { index, value ->

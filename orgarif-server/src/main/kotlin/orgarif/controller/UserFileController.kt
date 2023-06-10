@@ -9,7 +9,6 @@ import org.springframework.web.bind.annotation.GetMapping
 import org.springframework.web.bind.annotation.PathVariable
 import orgarif.domain.UserFileId
 import orgarif.repository.user.UserFileDao
-import orgarif.utils.OrgarifStringUtils
 import orgarif.utils.toTypeId
 
 @Controller
@@ -18,7 +17,7 @@ class UserFileController(private val userFileDao: UserFileDao) {
     @GetMapping("/user-file/{id}")
     fun getUserFile(@PathVariable id: String): ResponseEntity<ByteArray> {
         // TODO[tmpl][secu]
-        val userFileId = OrgarifStringUtils.deserializeUuid(id).toTypeId<UserFileId>()
+        val userFileId = id.toTypeId<UserFileId>()
         val userFile =
             userFileDao.fetchDataOrNull(userFileId) ?: return ResponseEntity(HttpStatus.NOT_FOUND)
         val headers = HttpHeaders()
