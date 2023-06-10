@@ -1,6 +1,7 @@
 package orgarif.database.utils
 
 import org.junit.jupiter.api.Assertions.assertEquals
+import org.junit.jupiter.api.Assertions.assertThrows
 import org.junit.jupiter.api.Test
 
 internal class SqlDependenciesResolverTest {
@@ -52,7 +53,9 @@ ALTER TABLE app_user ADD FOREIGN KEY(file) REFERENCES user_file(id);
 CREATE INDEX ON app_user (mail);
         """
                 .trimIndent(),
-            SqlDependenciesResolver.resolveSql(listOf(userSql, userFileSql)))
+            SqlDependenciesResolver.resolveSql(listOf(userSql, userFileSql))
+                .joinToString(separator = "\n")
+                .trim())
     }
 
     @Test
@@ -84,6 +87,32 @@ CREATE TABLE test3
     FOREIGN KEY (test_id) REFERENCES test1 (id)
 );
 """
-        SqlDependenciesResolver.resolveSql(listOf(sql1, sql2, sql3))
+        val thrown =
+            assertThrows(IllegalArgumentException::class.java) {
+                SqlDependenciesResolver.resolveSql(listOf(sql1, sql2, sql3))
+            }
+        assertEquals(
+            "Cyclic reference test1 -> test2 -> test3 -> test1. " +
+                "Think about using an 'ALTER TABLE [...] ADD FOREIGN KEY [...]' query.",
+            thrown.message)
+    }
+
+    @Test
+    fun `test missing dependency`() {
+        val sql1 =
+            """
+CREATE TABLE test1
+(
+    id UUID PRIMARY KEY,
+    test_id UUID,
+    FOREIGN KEY (test_id) REFERENCES test2 (id)
+);
+"""
+        val thrown =
+            assertThrows(IllegalArgumentException::class.java) {
+                SqlDependenciesResolver.resolveSql(listOf(sql1))
+            }
+        assertEquals(
+            "Table Table(name=test1) references test2 which isn't described.", thrown.message)
     }
 }
