@@ -117,8 +117,7 @@ class IndexController(
         mav.model["bootstrapData"] =
             serialize(
                 ApplicationBootstrapData(ApplicationInstance.env, sigerUrl, userInfos, categories))
-        mav.model["deploymentId"] =
-            ApplicationInstance.deploymentLogId.stringUuid()
+        mav.model["deploymentId"] = ApplicationInstance.deploymentLogId.stringUuid()
         mav.model["gitRevisionLabel"] = ApplicationInstance.gitRevisionLabel
         mav.model["jsAssets"] = jsAssets(request)
         mav.model["cssAssets"] = cssAssets

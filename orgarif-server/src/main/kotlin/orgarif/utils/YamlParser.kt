@@ -1,8 +1,6 @@
 package orgarif.utils
 
-import com.google.common.io.CharStreams
 import java.io.InputStream
-import java.io.InputStreamReader
 import java.time.ZoneId
 import org.yaml.snakeyaml.Yaml
 
@@ -21,7 +19,7 @@ object YamlParser {
 
     private fun yamlFilesToPairs(vararg files: InputStream): List<Pair<String, String?>> =
         files
-            .map { CharStreams.toString(InputStreamReader(it, Charsets.UTF_8)) }
+            .map { String(it.readAllBytes()) }
             .map { Yaml().load<Map<String, Any>>(it) }
             .flatMap { flattenConf(it) }
             // we want to delete the duplicates

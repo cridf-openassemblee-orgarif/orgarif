@@ -2,6 +2,7 @@ package orgarif.command
 
 import com.fasterxml.jackson.annotation.JsonTypeInfo
 import java.time.LocalDate
+import kt2ts.annotation.GenerateTypescript
 import orgarif.domain.DeliberationId
 import orgarif.domain.DepartementId
 import orgarif.domain.DesignationId
@@ -9,7 +10,6 @@ import orgarif.domain.DesignationType
 import orgarif.domain.InstanceId
 import orgarif.domain.ItemStatus
 import orgarif.domain.LienDeliberationId
-import kt2ts.annotation.GenerateTypescript
 import orgarif.domain.LoginResult
 import orgarif.domain.NatureJuridiqueId
 import orgarif.domain.OrganismeId

@@ -1,7 +1,7 @@
 package orgarif.error
 
 import com.fasterxml.jackson.databind.JsonMappingException
-import javax.servlet.http.HttpServletResponse
+import jakarta.servlet.http.HttpServletResponse
 import mu.KotlinLogging
 import org.apache.tomcat.util.http.fileupload.impl.SizeLimitExceededException
 import org.springframework.web.bind.annotation.ControllerAdvice
@@ -38,7 +38,8 @@ class ApplicationExceptionHandler(
         // TODO[tmpl][secu] handle exceptions
         // log userid, mail, ip
         val id = randomService.id<RequestErrorId>()
-        val subCause = exception.cause?.cause
+        val cause = exception.cause
+        val subCause = cause?.cause
         when {
             subCause is SizeLimitExceededException -> {
                 // TODO[tmpl][secu] in practice what happens with user null ?
@@ -76,20 +77,13 @@ class ApplicationExceptionHandler(
                                 // pas clair
                                 // (2020-33-33 vs 33/33/2020)
                                 "La date n'est pas valide.",
-                                dateService.now(),
-                                readableStackTrace))
+                                dateService.now()))
                     }
                     else -> {
                         return render(
                             request,
                             response,
-                            RequestError(
-                                id,
-                                500,
-                                "Erreur",
-                                "Erreur inconnue",
-                                dateService.now(),
-                                readableStackTrace))
+                            RequestError(id, 500, "Erreur", "Erreur inconnue", dateService.now()))
                     }
                 }
             }

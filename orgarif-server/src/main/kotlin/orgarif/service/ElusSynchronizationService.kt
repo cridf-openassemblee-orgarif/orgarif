@@ -13,7 +13,6 @@ import orgarif.serialization.Serializer
 import orgarif.service.utils.DateService
 import orgarif.service.utils.HttpService
 import orgarif.service.utils.random.RandomService
-import orgarif.utils.OrgarifStringUtils.deserializeUuid
 import orgarif.utils.toTypeId
 
 @Service
@@ -88,7 +87,7 @@ class ElusSynchronizationService(
                         null -> Civilite.Mme
                     }
                 EluDao.Record(
-                    id = deserializeUuid(r.uid).toTypeId(),
+                    id = r.uid.toTypeId(),
                     civilite = civilite,
                     prenom = r.prenom?.trim() ?: "",
                     nom = r.nom?.trim() ?: "",

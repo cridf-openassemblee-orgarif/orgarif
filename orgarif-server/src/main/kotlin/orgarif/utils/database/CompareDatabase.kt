@@ -1,14 +1,18 @@
 package orgarif.utils.database
 
-import com.google.common.io.Files
+import java.nio.file.Files
+import kotlin.io.path.ExperimentalPathApi
+import kotlin.io.path.absolutePathString
+import kotlin.io.path.deleteRecursively
 import orgarif.utils.ShellRunner
 import orgarif.utils.replaceRecurvice
 
+@OptIn(ExperimentalPathApi::class)
 object CompareDatabase {
     fun compare(env: String, database: CloudDatabasesConfiguration.Database) {
         val tempDb = "orgarif-$env-schema-comparison"
         // doesn't work as simply with psql -c ""
-        val tempDir = Files.createTempDir()
+        val tempDir = Files.createTempDirectory(tempDb)
         val schemaFile = tempDir.resolve("schema.sql")
         val pgquarrelConf = tempDir.resolve("pgquarrel-config.properties")
         fun compare() {
@@ -29,10 +33,11 @@ object CompareDatabase {
             }
             ShellRunner.run("createdb $tempDb")
             Files.write(
-                schemaResult.output.joinToString(separator = "\n").toByteArray(Charsets.UTF_8),
-                schemaFile)
-            ShellRunner.run("psql -d $tempDb < ${schemaFile.absolutePath}")
+                schemaFile,
+                schemaResult.output.joinToString(separator = "\n").toByteArray(Charsets.UTF_8))
+            ShellRunner.run("psql -d $tempDb < ${schemaFile.absolutePathString()}")
             Files.write(
+                pgquarrelConf,
                 """
 [target]
 host = localhost
@@ -49,9 +54,8 @@ user = ${System.getProperty("user.name")}
 no-password = true
         """
                     .trimIndent()
-                    .toByteArray(Charsets.UTF_8),
-                pgquarrelConf)
-            val r = ShellRunner.run("pgquarrel -c ${pgquarrelConf.absolutePath}")
+                    .toByteArray(Charsets.UTF_8))
+            val r = ShellRunner.run("pgquarrel -c ${pgquarrelConf.absolutePathString()}")
             r.output
                 .filter { !it.startsWith("DROP FUNCTION ") }
                 .filter { !it.startsWith("DROP TYPE ") }

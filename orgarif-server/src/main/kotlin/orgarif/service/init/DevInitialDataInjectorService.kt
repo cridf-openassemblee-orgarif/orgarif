@@ -28,7 +28,7 @@ import orgarif.service.user.UserService
 import orgarif.service.utils.DateService
 import orgarif.service.utils.TransactionIsolationService
 import orgarif.service.utils.random.RandomService
-import orgarif.utils.OrgarifStringUtils
+import orgarif.utils.toTypeId
 
 @Service
 // TODO[tmpl] naming fake / sample
@@ -51,14 +51,10 @@ class DevInitialDataInjectorService(
     private val userService: UserService,
     private val transactionIsolationService: TransactionIsolationService,
 ) {
-    val fakeOrganismeId =
-        OrganismeId(OrgarifStringUtils.deserializeUuid("ddf9d23e60294a8b823162f014a53968"))
-    val fakeOrganismeId2 =
-        OrganismeId(OrgarifStringUtils.deserializeUuid("ced8c29ba05b4ceca05f5104b9c84e28"))
-    val fakeInstanceId1 =
-        InstanceId(OrgarifStringUtils.deserializeUuid("88a344859a574d789f92462779ca7f8f"))
-    val fakeInstanceId2 =
-        InstanceId(OrgarifStringUtils.deserializeUuid("a68887ef582440bf8a525dbbad22f1f5"))
+    val fakeOrganismeId = "ddf9d23e60294a8b823162f014a53968".toTypeId<OrganismeId>()
+    val fakeOrganismeId2 = "ced8c29ba05b4ceca05f5104b9c84e28".toTypeId<OrganismeId>()
+    val fakeInstanceId1 = "88a344859a574d789f92462779ca7f8f".toTypeId<InstanceId>()
+    val fakeInstanceId2 = "a68887ef582440bf8a525dbbad22f1f5".toTypeId<InstanceId>()
     val nombreRepresentants = 3
     val deliberationIncrement = AtomicInteger(0)
 

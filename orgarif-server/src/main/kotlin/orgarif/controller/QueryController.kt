@@ -26,7 +26,6 @@ import orgarif.query.SearchDeliberationQuery
 import orgarif.query.SearchDeliberationQueryHandler
 import orgarif.query.SearchRepresentantsQuery
 import orgarif.query.SearchRepresentantsQueryHandler
-import orgarif.repository.user.UserDao
 import orgarif.serialization.Serializer
 import orgarif.service.user.UserSessionService
 import orgarif.service.utils.TransactionIsolationService

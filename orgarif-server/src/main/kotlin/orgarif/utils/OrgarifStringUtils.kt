@@ -9,5 +9,4 @@ object OrgarifStringUtils {
     fun removeAccents(value: String) = StringUtils.stripAccents(value)
 
     fun cleanForSearch(value: String) = removeAccents(value).replace("-", " ").lowercase()
-
 }

@@ -4,7 +4,6 @@ import jakarta.servlet.http.HttpServletRequest
 import jakarta.servlet.http.HttpServletResponse
 import java.time.Instant
 import org.apache.commons.lang3.exception.ExceptionUtils
-import org.springframework.transaction.PlatformTransactionManager
 import org.springframework.security.web.csrf.CsrfToken
 import org.springframework.web.bind.annotation.PostMapping
 import org.springframework.web.bind.annotation.RequestBody
@@ -16,6 +15,7 @@ import orgarif.command.AddInstanceCommandHandler
 import orgarif.command.AddLienDeliberationCommand
 import orgarif.command.AddLienDeliberationCommandHandler
 import orgarif.command.AdminUpdatePasswordCommand
+import orgarif.command.AdminUpdatePasswordCommandHandler
 import orgarif.command.AdminUpdateRolesCommand
 import orgarif.command.AdminUpdateRolesCommandHandler
 import orgarif.command.Command
@@ -84,7 +84,6 @@ import orgarif.command.UpdateOrganismeStatusCommandHandler
 import orgarif.command.UpdateOrganismeTypeStructureCommand
 import orgarif.command.UpdateOrganismeTypeStructureCommandHandler
 import orgarif.command.UpdatePasswordCommand
-import orgarif.command.AdminUpdatePasswordCommandHandler
 import orgarif.command.UpdatePasswordCommandHandler
 import orgarif.command.UpdateSecteurLibelleCommand
 import orgarif.command.UpdateSecteurLibelleCommandHandler
