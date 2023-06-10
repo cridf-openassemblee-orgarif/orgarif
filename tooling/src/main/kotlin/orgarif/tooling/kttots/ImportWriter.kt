@@ -10,7 +10,8 @@ object ImportWriter {
             ksFile.packageName
                 .asString()
                 .replace(conf.dropPackage, "")
-                .replace("..", ".")
+                // TODO what ??
+                //                .replace("..", ".")
                 .replace(".", "/")
                 .removePrefix("/")
         val file = ksFile.fileName.removeSuffix(".kt")

@@ -10,9 +10,12 @@ import com.google.devtools.ksp.symbol.KSFile
 import com.google.devtools.ksp.symbol.KSPropertyDeclaration
 import com.google.devtools.ksp.validate
 import java.nio.file.Files
+import java.nio.file.Paths
 import java.time.LocalDateTime
 import kotlin.io.path.absolutePathString
 import kotlin.io.path.createDirectories
+import kotlin.io.path.exists
+import kotlin.io.path.pathString
 import kttots.Shared
 import orgarif.tooling.kttots.ClassMapper
 import orgarif.tooling.kttots.ClassParser
@@ -53,6 +56,9 @@ class KtToTsSymbolProcessor(
         modifiedFiles: List<KSFile>,
         startTime: Long
     ) {
+        if (symbols.isEmpty()) {
+            return
+        }
         val configuration = KtToTsConfiguration.init(options)
         val debugReport = if (configuration.debugFile != null) StringBuilder() else null
         debugReport?.appendLine("<html><body><pre>")
@@ -70,18 +76,17 @@ class KtToTsSymbolProcessor(
         //                declaration.accept(visitor, acc)
         //            }
         val parsingResult =
-            symbols.fold(emptySet<ClassParser.Parsed>()) { acc, declaration ->
-                ClassParser.parse(declaration.asStarProjectedType(), acc, configuration.mappings)
-            }
+            symbols
+                .fold(emptySet<ClassParser.Parsed>()) { acc, declaration ->
+                    ClassParser.parse(
+                        declaration.asStarProjectedType(), acc, configuration.mappings)
+                }
+                .filter { it.file in modifiedFiles }
         debugReport?.apply {
             appendLine("<h1>Class list (${parsingResult.size} items)</h1>")
             parsingResult.forEach { appendLine(it.type.declaration.simpleName.asString()) }
         }
-        val filesSelection =
-            parsingResult
-                .mapNotNull { it.type.declaration.containingFile }
-                .toSet()
-                .intersect(modifiedFiles.toSet())
+        val filesSelection = parsingResult.mapNotNull { it.type.declaration.containingFile }.toSet()
         debugReport?.apply {
             appendLine("<h1>Files list (${filesSelection.size} items)</h1>")
             filesSelection.forEach { appendLine(it.filePath) }
@@ -94,7 +99,7 @@ class KtToTsSymbolProcessor(
             appendLine("<h1>Temp dir </h1>")
             appendLine("${tempDir.absolutePathString()}")
         }
-        val resultFiles =
+        val result =
             filesSelection
                 .map { ksFile ->
                     val fileDeclarations =
@@ -178,7 +183,8 @@ class KtToTsSymbolProcessor(
         // debugReport.appendLine("${it.qualifiedName?.asString()}")
         // }
         //        }
-        resultFiles.forEach {
+        result.forEach {
+            // works if packages are ok
             val destination =
                 configuration.srcDirectory.resolve(kotlinToTsFile(it.first, configuration))
             destination.parent.createDirectories()
@@ -196,6 +202,36 @@ class KtToTsSymbolProcessor(
                 "mv",
                 it.second.absolutePathString(),
                 destination.absolutePathString())
+        }
+        // Delete generated files which does not exist anymore in Kotlin
+        // TODO shoul not be here ! if no modif for kotlin compiler, we must do this check
+        // => we won't be able to with no modifiedFile =s
+        configuration.srcDirectory.resolve(configuration.generatedDirectory).let {
+            debugReport?.appendLine("<h1>Removed files</h1>")
+            val kotlinSrc =
+                Paths.get(
+                    modifiedFiles.first().let {
+                        it.filePath
+                            .dropLastWhile { it != '/' }
+                            .dropLast(it.packageName.asString().length + 1)
+                    })
+            it.toFile().walk().forEach {
+                if (it.extension == "ts") {
+                    val relativeFilePath =
+                        it.absolutePath.let {
+                            it.drop(configuration.srcDirectory.pathString.length + 1)
+                                .drop(configuration.generatedDirectory.length + 1)
+                        }
+                    val kotlinFilePath =
+                        kotlinSrc
+                            .resolve(configuration.dropPackage.replace(".", "/"))
+                            .resolve(relativeFilePath.dropLastWhile { it != '.' } + "kt")
+                    if (!kotlinFilePath.exists()) {
+                        debugReport?.appendLine(it.absolutePath)
+                        it.delete()
+                    }
+                }
+            }
         }
         debugReport?.appendLine("<h1>Report</h1>")
         debugReport?.appendLine("Finished generation ${LocalDateTime.now()}")
