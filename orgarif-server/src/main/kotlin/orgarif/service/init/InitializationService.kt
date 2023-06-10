@@ -44,9 +44,7 @@ class InitializationService(
             databaseName,
             databaseUser,
             databasePassword,
-            Configuration.configuration.schemas,
-            Configuration.configuration.executablesPath,
-            null)
+            Configuration.configuration.schemas)
     }
 
     init {

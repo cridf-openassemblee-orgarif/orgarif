@@ -36,8 +36,6 @@ object Configuration {
             config.getValue("database.name"),
             config.getValue("database.user"),
             config["database.password"],
-            setOf("public"),
-            "/usr/local/bin",
-            config["pgquarrel"])
+            setOf("public"))
     }
 }
