@@ -69,12 +69,6 @@ class ApplicationErrorController(
         return applicationExceptionHandler.render(
             request,
             response,
-            RequestError(
-                errorId,
-                status,
-                error,
-                errorMap["message"] as String,
-                date.toInstant(),
-                ReadableStackTrace(exception)))
+            RequestError(errorId, status, error, errorMap["message"] as String, date.toInstant()))
     }
 }

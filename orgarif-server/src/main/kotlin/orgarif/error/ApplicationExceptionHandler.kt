@@ -11,14 +11,10 @@ import org.springframework.web.bind.annotation.ExceptionHandler
 import org.springframework.web.context.request.WebRequest
 import org.springframework.web.servlet.ModelAndView
 import org.springframework.web.servlet.view.json.MappingJackson2JsonView
-import orgarif.config.ApplicationConstants
-import orgarif.domain.ApplicationEnvironment
 import orgarif.domain.MimeType
 import orgarif.domain.RequestErrorId
-import orgarif.domain.Role
 import orgarif.serialization.Serializer
 import orgarif.service.user.UserSessionService
-import orgarif.service.utils.ApplicationInstance
 import orgarif.service.utils.DateService
 import orgarif.service.utils.random.RandomService
 
@@ -31,8 +27,9 @@ class ApplicationExceptionHandler(
 
     private val logger = KotlinLogging.logger {}
 
-    val statics =
-        BeansWrapperBuilder(Configuration.DEFAULT_INCOMPATIBLE_IMPROVEMENTS).build().staticModels
+    companion object {
+        val htmlMimeTypes = setOf("text/html", "application/xhtml+xml", "application/xml")
+    }
 
     @ExceptionHandler(Exception::class)
     fun defaultErrorHandler(
@@ -43,15 +40,7 @@ class ApplicationExceptionHandler(
         // TODO[tmpl][secu] handle exceptions
         // log userid, mail, ip
         val id = randomService.id<RequestErrorId>()
-        val readableStackTrace =
-            if (ApplicationInstance.env == ApplicationEnvironment.Dev ||
-                userSessionService.hasRole(Role.Admin)) {
-                ReadableStackTrace(exception)
-            } else {
-                null
-            }
-        val cause = exception.cause
-        val subCause = cause?.cause
+        val subCause = exception.cause?.cause
         when {
             subCause is SizeLimitExceededException -> {
                 // TODO[tmpl][secu] in practice what happens with user null ?
@@ -64,12 +53,7 @@ class ApplicationExceptionHandler(
                     request,
                     response,
                     RequestError(
-                        id,
-                        500,
-                        "Error",
-                        "File exceeds max authorized size",
-                        dateService.now(),
-                        readableStackTrace))
+                        id, 500, "Error", "File exceeds max authorized size", dateService.now()))
             }
             exception is DisplayMessageException -> {
                 // TODO[tmpl][secu] this "DisplayError" is used on front
@@ -78,12 +62,7 @@ class ApplicationExceptionHandler(
                     request,
                     response,
                     RequestError(
-                        id,
-                        500,
-                        "DisplayError",
-                        exception.displayMessage,
-                        dateService.now(),
-                        readableStackTrace))
+                        id, 500, "DisplayError", exception.displayMessage, dateService.now()))
             }
             exception is JsonMappingException -> {
                 when (cause) {
@@ -129,8 +108,7 @@ class ApplicationExceptionHandler(
                 return render(
                     request,
                     response,
-                    RequestError(
-                        id, 500, "Error", "Unknown error", dateService.now(), readableStackTrace))
+                    RequestError(id, 500, "Error", "Unknown error", dateService.now()))
             }
         }
     }
@@ -142,31 +120,21 @@ class ApplicationExceptionHandler(
     ): ModelAndView {
         val mav = ModelAndView()
         response.status = requestError.status
-        val stackTrace = requestError.stackTrace
-        // TODO[tmpl][secu] reliable ?
-        if (request.getHeader("Content-Type") == MimeType.JSON.fullType) {
+        val returnHtml =
+            request.getHeader("Accept")?.let { accept ->
+                htmlMimeTypes.filter { it in accept }.isNotEmpty()
+            } == true
+        if (returnHtml) {
+            mav.model["requestErrorId"] = requestError.id.stringUuid()
+            mav.model["requestError"] = requestError
+            mav.viewName = "error"
+        } else {
             response.contentType = MimeType.JSON.fullType
             // write in the buffer with
             // objectMapper.writeValue(response.outputStream, requestErrorNode)
             // is buggy...
             mav.view = MappingJackson2JsonView(Serializer.objectMapper)
-            mav.model["errorId"] = requestError.id
-            mav.model["status"] = requestError.status
-            mav.model["error"] = requestError.error
-            mav.model["message"] = requestError.message
-            mav.model["instant"] = requestError.instant
-            if (stackTrace != null) {
-                mav.model["stackTrace"] = stackTrace
-            }
-        } else {
-            mav.model["requestErrorIdAsString"] = requestError.id.stringUuid()
             mav.model["requestError"] = requestError
-            if (ApplicationInstance.env == ApplicationEnvironment.Dev && stackTrace != null) {
-                mav.model[ApplicationConstants.springMvcModelKeyStackTrace] =
-                    stackTrace.toReadableString()
-            }
-            mav.model["statics"] = statics
-            mav.viewName = "error"
         }
         return mav
     }
