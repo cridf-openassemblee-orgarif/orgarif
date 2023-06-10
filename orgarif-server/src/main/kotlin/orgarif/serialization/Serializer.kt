@@ -21,7 +21,7 @@ import orgarif.domain.SerializeAsString
 
 object Serializer {
 
-    val idsPackage = OrgarifId::class.java.packageName
+    private val idsPackage = OrgarifId::class.java.packageName
 
     private val reflections by lazy { Reflections(idsPackage) }
 
@@ -34,7 +34,7 @@ object Serializer {
     fun <T> deserialize(json: String, objectClass: Class<T>): T =
         objectMapper.readValue(json, objectClass)
 
-    fun configure(objectMapper: ObjectMapper) {
+    private fun configure(objectMapper: ObjectMapper) {
         val module =
             SimpleModule().apply {
                 addSerializer(InstantSerializer())
@@ -79,55 +79,59 @@ object Serializer {
         objectMapper.setSerializationInclusion(JsonInclude.Include.NON_NULL)
     }
 
-    fun addAllOrgarifStringIdsDeserializers(module: SimpleModule) {
-        fun <T : OrgarifStringId> addDeserializer(module: SimpleModule, idKclass: KClass<T>) {
-            module.addDeserializer(idKclass.java, OrgarifStringIdDeserializer(idKclass))
-            module.addKeyDeserializer(idKclass.java, OrgarifStringIdKeyDeserializer(idKclass))
+    private fun addAllOrgarifStringIdsDeserializers(module: SimpleModule) {
+        fun <T : OrgarifStringId> addDeserializer(module: SimpleModule, idKClass: KClass<T>) {
+            module.addDeserializer(idKClass.java, OrgarifStringIdDeserializer(idKClass))
+            module.addKeyDeserializer(idKClass.java, OrgarifStringIdKeyDeserializer(idKClass))
         }
 
         val idClasses: Set<Class<out OrgarifStringId>> =
             reflections.getSubTypesOf(OrgarifStringId::class.java)
         idClasses.forEach {
+            @Suppress("UNCHECKED_CAST")
             addDeserializer(module, Reflection.createKotlinClass(it) as KClass<out OrgarifStringId>)
         }
     }
 
-    fun addAllOrgarifUuidIdsDeserializers(module: SimpleModule) {
-        fun <T : OrgarifUuidId> addDeserializer(module: SimpleModule, idKclass: KClass<T>) {
-            module.addDeserializer(idKclass.java, OrgarifUuidIdDeserializer(idKclass))
-            module.addKeyDeserializer(idKclass.java, OrgarifUuidIdKeyDeserializer(idKclass))
+    private fun addAllOrgarifUuidIdsDeserializers(module: SimpleModule) {
+        fun <T : OrgarifUuidId> addDeserializer(module: SimpleModule, idKClass: KClass<T>) {
+            module.addDeserializer(idKClass.java, OrgarifUuidIdDeserializer(idKClass))
+            module.addKeyDeserializer(idKClass.java, OrgarifUuidIdKeyDeserializer(idKClass))
         }
 
         val idClasses: Set<Class<out OrgarifUuidId>> =
             reflections.getSubTypesOf(OrgarifUuidId::class.java)
         idClasses.forEach {
+            @Suppress("UNCHECKED_CAST")
             addDeserializer(module, Reflection.createKotlinClass(it) as KClass<out OrgarifUuidId>)
         }
     }
 
-    fun addAllOrgarifSecurityStringDeserializers(module: SimpleModule) {
-        fun <T : OrgarifSecurityString> addDeserializer(module: SimpleModule, idKclass: KClass<T>) {
-            module.addDeserializer(idKclass.java, OrgarifSecurityStringDeserializer(idKclass))
-            module.addKeyDeserializer(idKclass.java, OrgarifSecurityStringKeyDeserializer(idKclass))
+    private fun addAllOrgarifSecurityStringDeserializers(module: SimpleModule) {
+        fun <T : OrgarifSecurityString> addDeserializer(module: SimpleModule, idKClass: KClass<T>) {
+            module.addDeserializer(idKClass.java, OrgarifSecurityStringDeserializer(idKClass))
+            module.addKeyDeserializer(idKClass.java, OrgarifSecurityStringKeyDeserializer(idKClass))
         }
 
         val idClasses: Set<Class<out OrgarifSecurityString>> =
             reflections.getSubTypesOf(OrgarifSecurityString::class.java)
         idClasses.forEach {
+            @Suppress("UNCHECKED_CAST")
             addDeserializer(
                 module, Reflection.createKotlinClass(it) as KClass<out OrgarifSecurityString>)
         }
     }
 
-    fun addAllSerializeAsStringDeserializers(module: SimpleModule) {
-        fun <T : SerializeAsString> addDeserializer(module: SimpleModule, idKclass: KClass<T>) {
-            module.addDeserializer(idKclass.java, SerializeAsStringDeserializer(idKclass))
-            module.addKeyDeserializer(idKclass.java, SerializeAsStringKeyDeserializer(idKclass))
+    private fun addAllSerializeAsStringDeserializers(module: SimpleModule) {
+        fun <T : SerializeAsString> addDeserializer(module: SimpleModule, idKClass: KClass<T>) {
+            module.addDeserializer(idKClass.java, SerializeAsStringDeserializer(idKClass))
+            module.addKeyDeserializer(idKClass.java, SerializeAsStringKeyDeserializer(idKClass))
         }
 
         val idClasses: Set<Class<out SerializeAsString>> =
             reflections.getSubTypesOf(SerializeAsString::class.java)
         idClasses.forEach {
+            @Suppress("UNCHECKED_CAST")
             addDeserializer(
                 module, Reflection.createKotlinClass(it) as KClass<out SerializeAsString>)
         }

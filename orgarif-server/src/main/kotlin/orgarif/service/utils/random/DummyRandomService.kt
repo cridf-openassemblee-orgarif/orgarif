@@ -5,16 +5,16 @@ import orgarif.utils.uuid
 
 class DummyRandomService(idLogService: IdLogService? = null) : RandomService(idLogService) {
 
-    val uuids by lazy {
+    private val uuids by lazy {
         javaClass.classLoader.getResource("test-uuids").readText().split("\n").map { it.uuid() }
     }
 
-    val stringIds by lazy {
+    private val stringIds by lazy {
         javaClass.classLoader.getResource("test-string-ids").readText().split("\n")
     }
 
-    val uuidsCursor = AtomicInteger(0)
-    val stringIdCursor = AtomicInteger(0)
+    private val uuidsCursor = AtomicInteger(0)
+    private val stringIdCursor = AtomicInteger(0)
 
     override fun uuid() =
         uuids.getOrNull(uuidsCursor.getAndIncrement())
