@@ -1,14 +1,12 @@
 package orgarif.service.utils.random
 
 import java.util.concurrent.atomic.AtomicInteger
-import orgarif.utils.OrgarifStringUtils
+import orgarif.utils.uuid
 
 class DummyRandomService(idLogService: IdLogService? = null) : RandomService(idLogService) {
 
     val uuids by lazy {
-        javaClass.classLoader.getResource("test-uuids").readText().split("\n").map {
-            OrgarifStringUtils.deserializeUuid(it)
-        }
+        javaClass.classLoader.getResource("test-uuids").readText().split("\n").map { it.uuid() }
     }
 
     val stringIds by lazy {

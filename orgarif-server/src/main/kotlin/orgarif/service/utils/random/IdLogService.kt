@@ -2,7 +2,7 @@ package orgarif.service.utils.random
 
 import java.util.UUID
 import orgarif.domain.OrgarifId
-import orgarif.utils.OrgarifStringUtils
+import orgarif.utils.stringUuid
 
 class IdLogService {
 
@@ -40,7 +40,7 @@ class IdLogService {
                 val rawIdString =
                     it.rawId.let {
                         when (it) {
-                            is UUID -> OrgarifStringUtils.serializeUuid(it)
+                            is UUID -> it.stringUuid()
                             else -> it.toString()
                         }
                     }

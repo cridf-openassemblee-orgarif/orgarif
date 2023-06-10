@@ -17,8 +17,8 @@ import orgarif.domain.TestSerializeAsString
 import orgarif.domain.TestStringId
 import orgarif.domain.TestUuidId
 import orgarif.service.utils.random.DummyRandomService
-import orgarif.utils.OrgarifStringUtils
 import orgarif.utils.OrgarifStringUtils.filteredPassword
+import orgarif.utils.uuid
 
 // TODO[tmpl] test maps keys
 internal class SerializerTest {
@@ -67,7 +67,7 @@ internal class SerializerTest {
                 randomService.securityString(TestStringId.length),
                 LocalDate.of(2021, 9, 17),
                 PlainStringPassword("mon mot de passe secret"),
-                OrgarifStringUtils.deserializeUuid("a8f088f151794107a30b1eaaa6519c98"),
+                "a8f088f151794107a30b1eaaa6519c98".uuid(),
                 ZoneId.of("Europe/Paris"))
         println(Serializer.serialize(s))
         val expectedJson =

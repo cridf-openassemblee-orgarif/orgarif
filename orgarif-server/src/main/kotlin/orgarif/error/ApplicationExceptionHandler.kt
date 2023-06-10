@@ -21,7 +21,6 @@ import orgarif.service.user.UserSessionService
 import orgarif.service.utils.ApplicationInstance
 import orgarif.service.utils.DateService
 import orgarif.service.utils.random.RandomService
-import orgarif.utils.OrgarifStringUtils
 
 @ControllerAdvice
 class ApplicationExceptionHandler(
@@ -160,8 +159,7 @@ class ApplicationExceptionHandler(
                 mav.model["stackTrace"] = stackTrace
             }
         } else {
-            mav.model["requestErrorIdAsString"] =
-                OrgarifStringUtils.serializeUuid(requestError.id.rawId)
+            mav.model["requestErrorIdAsString"] = requestError.id.stringUuid()
             mav.model["requestError"] = requestError
             if (ApplicationInstance.env == ApplicationEnvironment.Dev && stackTrace != null) {
                 mav.model[ApplicationConstants.springMvcModelKeyStackTrace] =
