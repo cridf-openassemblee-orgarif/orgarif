@@ -24,7 +24,11 @@ object ShellRunner {
         val builder =
             ProcessBuilder().apply {
                 environment().apply {
-                    val addToPath = listOf("/usr/local/bin", "/opt/homebrew/opt/postgresql@15/bin/")
+                    val addToPath =
+                        listOf(
+                            "/usr/local/bin",
+                            "/opt/homebrew/opt/postgresql@15/bin/",
+                            "/opt/homebrew/bin/")
                     put("PATH", "${get("PATH")}:${addToPath.joinToString(separator = ":")}")
                 }
                 if (directory != null) {
