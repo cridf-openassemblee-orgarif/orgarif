@@ -15,9 +15,9 @@ assets:
 #---------------------------------------------------------------------------
 mailjet:
   url: https://api.mailjet.com/v3.1/send
-  api-key:
-  secret-key:
+  apiKey:
+  secretKey:
 #---------------------------------------------------------------------------
-remote-controller:
-  expected-secu: ${REMOTE_CONTROLLER_EXPECTED_SECU}
+remoteController:
+  expectedSecu: ${REMOTE_CONTROLLER_EXPECTED_SECU}
 #---------------------------------------------------------------------------

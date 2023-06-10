@@ -19,7 +19,7 @@ import orgarif.service.user.UserSessionService
 @RestController
 @RequestMapping(remoteRoute)
 class RemoteController(
-    @Value("\${remote-controller.expected-secu}") private val expectedSecu: String,
+    @Value("\${remoteController.expectedSecu}") private val expectedSecu: String,
     private val jooq: DSLContext,
     private val sessionRepository: SafeSessionRepository,
     private val userSessionService: UserSessionService,

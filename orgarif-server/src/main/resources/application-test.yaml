@@ -13,9 +13,9 @@ assets:
   webpackDevHost:
 #---------------------------------------------------------------------------
 mailjet:
-  api-key:
-  secret-key:
+  apiKey:
+  secretKey:
 #---------------------------------------------------------------------------
-remote-controller:
-  expected-secu: remote-secu
+remoteController:
+  expectedSecu: remote-secu
 #---------------------------------------------------------------------------

@@ -17,8 +17,8 @@ import orgarif.service.utils.HttpService
 @Service
 class DebugMailService(
     @Value("\${mailjet.url}") private val url: Uri,
-    @Value("\${mailjet.api-key}") private val apiKey: String,
-    @Value("\${mailjet.secret-key}") private val secretKey: String,
+    @Value("\${mailjet.apiKey}") private val apiKey: String,
+    @Value("\${mailjet.secretKey}") private val secretKey: String,
     @Value("\${mail.devLogSender}") private val devLogSenderMail: String,
     @Value("\${mail.devDestination}") private val devDestinationMail: String,
     private val httpService: HttpService,

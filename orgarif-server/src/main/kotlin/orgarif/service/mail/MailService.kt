@@ -30,8 +30,8 @@ import orgarif.service.utils.random.RandomService
 @Service
 class MailService(
     @Value("\${mailjet.url}") private val url: Uri,
-    @Value("\${mailjet.api-key}") private val apiKey: String,
-    @Value("\${mailjet.secret-key}") private val secretKey: String,
+    @Value("\${mailjet.apiKey}") private val apiKey: String,
+    @Value("\${mailjet.secretKey}") private val secretKey: String,
     @Value("\${mail.devLogSender}") private val devLogSenderMail: String,
     private val httpService: HttpService,
     private val mailLogDao: MailLogDao,
