@@ -20,12 +20,14 @@ export const asNominalString = <T extends NominalString<any>>(value: string) =>
 export const asNominalNumber = <T extends NominalNumber<any>>(value: number) =>
   value as unknown as T;
 
-export class Dict<K extends NominalItem | string, T> {
+type DictKey = NominalItem | string;
+
+export class Dict<K extends DictKey, T> {
   private _typeGuardKey!: K;
   private _typeGuardValue!: T;
 }
 
-export const dict = <K extends NominalItem | string, T>(
+export const dict = <K extends DictKey, T>(
   pairs: [K, T][] = []
 ): Dict<K, T> => {
   const d = {} as Dict<K, T>;
@@ -36,17 +38,14 @@ export const dict = <K extends NominalItem | string, T>(
   return d;
 };
 
-export const get = <K extends NominalItem | string, T>(
+export const get = <K extends DictKey, T>(
   dict: Dict<K, T>,
   key: K
 ): T | undefined =>
   // @ts-ignore
   dict[key];
 
-export const getValue = <K extends NominalItem | string, T>(
-  dict: Dict<K, T>,
-  key: K
-): T => {
+export const getValue = <K extends DictKey, T>(dict: Dict<K, T>, key: K): T => {
   const r = get(dict, key);
   if (!r) {
     throw new Error(`Could not find item ${key}`);
@@ -54,7 +53,7 @@ export const getValue = <K extends NominalItem | string, T>(
   return r;
 };
 
-export const set = <K extends NominalItem | string, T>(
+export const set = <K extends DictKey, T>(
   dict: Dict<K, T>,
   key: K,
   value: T
@@ -65,7 +64,7 @@ export const set = <K extends NominalItem | string, T>(
   return newDict;
 };
 
-export const setMutable = <K extends NominalItem | string, T>(
+export const setMutable = <K extends DictKey, T>(
   dict: Dict<K, T>,
   key: K,
   value: T
@@ -74,27 +73,16 @@ export const setMutable = <K extends NominalItem | string, T>(
   dict[key] = value;
 };
 
-export const dictKeys = <K extends NominalItem | string, T>(dict: Dict<K, T>) =>
+export const dictKeys = <K extends DictKey, T>(dict: Dict<K, T>) =>
   Object.keys(dict) as unknown as K[];
 
-export const dictValues = <K extends NominalItem | string, T>(
-  dict: Dict<K, T>
-) => Object.values(dict) as T[];
+export const dictValues = <K extends DictKey, T>(dict: Dict<K, T>) =>
+  Object.values(dict) as T[];
 
-export const dictEntries = <K extends NominalItem | string, T>(
-  dict: Dict<K, T>
-) => Object.entries(dict) as unknown as [K, T][];
+export const dictEntries = <K extends DictKey, T>(dict: Dict<K, T>) =>
+  Object.entries(dict) as unknown as [K, T][];
 
-// FIXME[tmpl] remove usage for an immutable deleteItem
-export const deleteItemOld = <K extends NominalItem | string, T>(
-  dict: Dict<K, T>,
-  key: K
-) => {
-  // @ts-ignore
-  delete dict[key];
-};
-
-export const deleteFromDict = <K extends NominalItem | string, T>(
+export const deleteFromDict = <K extends DictKey, T>(
   dict: Dict<K, T>,
   ...keys: K[]
 ): Dict<K, T> => {
@@ -106,9 +94,8 @@ export const deleteFromDict = <K extends NominalItem | string, T>(
   return newDict;
 };
 
-export const mergeDicts = <K extends NominalItem | string, T>(
-  ...dicts: Dict<K, T>[]
-) => {
+// TODO[tmpl][doc] last is prioritary
+export const mergeDicts = <K extends DictKey, T>(...dicts: Dict<K, T>[]) => {
   const d = dict<K, T>();
   dicts.forEach(d => {
     dictEntries(d).forEach(p => {
@@ -118,7 +105,7 @@ export const mergeDicts = <K extends NominalItem | string, T>(
   return d;
 };
 
-export const associateBy = <K extends NominalItem | string, T>(
+export const associateBy = <K extends DictKey, T>(
   a: T[],
   key: (i: T) => K
 ): Dict<K, T> => {
@@ -127,7 +114,7 @@ export const associateBy = <K extends NominalItem | string, T>(
   return d;
 };
 
-export const groupBy = <K extends NominalItem | string, T>(
+export const groupBy = <K extends DictKey, T>(
   a: T[],
   key: (i: T) => K
 ): Dict<K, T[]> => {
