@@ -28,7 +28,6 @@ export const RegisterView = () => {
             if (!r.userinfos) {
               throw Errors._db434940();
             }
-            appContext.csrfTokenService.refreshToken();
             setUserInfos(r.userinfos);
             break;
           case 'MailAlreadyExists':

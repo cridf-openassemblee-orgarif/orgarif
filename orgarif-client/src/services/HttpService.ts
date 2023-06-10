@@ -7,6 +7,7 @@ export const displayErrorMessage = 'DisplayError';
 
 export interface HttpResponse {
   status: number;
+  headers: Headers;
   body?: any;
 }
 
@@ -55,6 +56,7 @@ export class HttpService {
         if (response.ok) {
           return response.text().then(t => ({
             status: response.status,
+            headers: response.headers,
             body: t !== '' ? JSON.parse(t) : undefined
           }));
         } else {

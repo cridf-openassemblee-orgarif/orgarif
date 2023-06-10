@@ -21,7 +21,6 @@ export const LoginView = () => {
   const [userInfos, setUserInfos] = useRecoilState(state.userInfos);
   const [loginResult, setLoginResult] = useState<LoginResult>();
   const connect = (userInfos: UserInfos) => {
-    appContext.csrfTokenService.refreshToken();
     setUserInfos(userInfos);
   };
   const login = (input: LoginFormInput) =>

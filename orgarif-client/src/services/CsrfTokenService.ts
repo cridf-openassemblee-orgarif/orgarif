@@ -1,22 +1,25 @@
 import { Errors } from '../errors';
-import { getCookie } from '../utils';
-
-const cookieName = 'XSRF-TOKEN';
 
 export class CsrfTokenService {
   public header = 'X-XSRF-TOKEN';
   public inputName = '_csrf';
-  public token!: string;
+  private _token?: string;
 
-  constructor() {
-    this.refreshToken();
-  }
-
-  public refreshToken() {
-    const token = getCookie(cookieName);
-    if (!token) {
-      throw Errors._166ac42d();
+  get token() {
+    if (!this._token) {
+      this._token = csrfToken;
+      if (!this._token) {
+        throw Errors._166ac42d();
+      }
     }
-    this.token = token;
+    return this._token;
   }
+
+  updateToken = (headers: Headers) => {
+    const token = headers.get(this.header);
+    if (!token) {
+      throw Errors._79ced190();
+    }
+    this._token = token;
+  };
 }
