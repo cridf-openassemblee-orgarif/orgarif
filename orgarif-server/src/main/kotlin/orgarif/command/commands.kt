@@ -2,7 +2,6 @@ package orgarif.command
 
 import com.fasterxml.jackson.annotation.JsonTypeInfo
 import java.time.LocalDate
-import kttots.Shared
 import orgarif.domain.DeliberationId
 import orgarif.domain.DepartementId
 import orgarif.domain.DesignationId
@@ -10,6 +9,7 @@ import orgarif.domain.DesignationType
 import orgarif.domain.InstanceId
 import orgarif.domain.ItemStatus
 import orgarif.domain.LienDeliberationId
+import kt2ts.annotation.GenerateTypescript
 import orgarif.domain.LoginResult
 import orgarif.domain.NatureJuridiqueId
 import orgarif.domain.OrganismeId
@@ -22,12 +22,12 @@ import orgarif.domain.TypeStructureId
 import orgarif.domain.UserId
 import orgarif.domain.UserInfos
 
-@Shared
+@GenerateTypescript
 @JsonTypeInfo(
     use = JsonTypeInfo.Id.NAME, include = JsonTypeInfo.As.PROPERTY, property = "objectType")
 sealed class Command
 
-@Shared sealed class CommandResponse
+@GenerateTypescript sealed class CommandResponse
 
 object EmptyCommandResponse : CommandResponse()
 

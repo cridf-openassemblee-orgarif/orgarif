@@ -1,7 +1,6 @@
 package orgarif.query
 
 import com.fasterxml.jackson.annotation.JsonTypeInfo
-import kttots.Shared
 import orgarif.domain.DeliberationDto
 import orgarif.domain.DepartementId
 import orgarif.domain.NatureJuridiqueId
@@ -11,15 +10,16 @@ import orgarif.domain.OrganismeListDto
 import orgarif.domain.RepresentantDto
 import orgarif.domain.SecteurId
 import orgarif.domain.TypeStructureId
+import kt2ts.annotation.GenerateTypescript
 import orgarif.domain.UserId
 import orgarif.domain.UserInfos
 
-@Shared
+@GenerateTypescript
 @JsonTypeInfo(
     use = JsonTypeInfo.Id.NAME, include = JsonTypeInfo.As.PROPERTY, property = "objectType")
 sealed class Query
 
-@Shared sealed class QueryResponse
+@GenerateTypescript sealed class QueryResponse
 
 class GetLastDeliberationsQuery : Query()
 

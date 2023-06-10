@@ -1,6 +1,6 @@
 package orgarif.domain
 
-import kttots.Shared
+import kt2ts.annotation.GenerateTypescript
 
 data class Departement(
     val id: DepartementId,
@@ -24,7 +24,7 @@ data class OrganismeCategories(
 
 // TODO[tmpl][user] naming start / initial / boot / launch / base Infos ?
 // ConnectedUserInfos (logged is bad wording btw)
-@Shared
+@GenerateTypescript
 data class ApplicationBootstrapData(
     val env: ApplicationEnvironment,
     val sigerUrl: Uri,
