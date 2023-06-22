@@ -18,6 +18,3 @@ mailjet:
   apiKey:
   secretKey:
 #---------------------------------------------------------------------------
-remoteController:
-  expectedSecu: ${REMOTE_CONTROLLER_EXPECTED_SECU}
-#---------------------------------------------------------------------------

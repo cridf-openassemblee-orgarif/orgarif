@@ -1,47 +1,30 @@
-package orgarif.controller
+package orgarif.command
 
-import mu.KotlinLogging
 import org.jooq.DSLContext
-import org.springframework.beans.factory.annotation.Value
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken
 import org.springframework.security.core.context.SecurityContextImpl
 import org.springframework.security.web.context.HttpSessionSecurityContextRepository
-import org.springframework.web.bind.annotation.PostMapping
-import org.springframework.web.bind.annotation.RequestMapping
-import org.springframework.web.bind.annotation.RequestParam
-import org.springframework.web.bind.annotation.RestController
+import org.springframework.stereotype.Service
 import orgarif.config.SafeSessionRepository
-import orgarif.controller.RemoteController.Companion.remoteRoute
-import orgarif.domain.Session as OrgarifSession
+import orgarif.domain.Session
 import orgarif.service.user.UserService
 import orgarif.service.user.UserSessionService
 
-@RestController
-@RequestMapping(remoteRoute)
-class RemoteController(
-    @Value("\${remoteController.expectedSecu}") private val expectedSecu: String,
+@Service
+class AdminUpdateSessionsCommandHandler(
     private val jooq: DSLContext,
     private val sessionRepository: SafeSessionRepository,
-    private val userSessionService: UserSessionService,
     private val userService: UserService,
-) {
+    private val userSessionService: UserSessionService,
+) : CommandHandler.Handler<AdminUpdateSessions, EmptyCommandResponse>() {
 
-    val logger = KotlinLogging.logger {}
-
-    companion object {
-        const val remoteRoute = "/remote"
+    override fun handle(command: AdminUpdateSessions): EmptyCommandResponse {
+        updateSessions()
+        return EmptyCommandResponse
     }
 
-    private fun checkSecu(secu: String) {
-        if (secu != expectedSecu) {
-            throw IllegalArgumentException("missing secu")
-        }
-    }
-
-    @PostMapping("/update-sessions")
-    fun updateSessions(@RequestParam secu: String) =
+    fun updateSessions() =
         synchronized(this) {
-            checkSecu(secu)
             jooq.connection { connection ->
                 val sessionIds =
                     connection.createStatement().use {
@@ -56,7 +39,7 @@ class RemoteController(
                                 HttpSessionSecurityContextRepository.SPRING_SECURITY_CONTEXT_KEY)
                         val conversion =
                             ((context.authentication as UsernamePasswordAuthenticationToken)
-                                    .principal as OrgarifSession)
+                                    .principal as Session)
                                 .let { userSessionService.convert(it) }
                         if (conversion.needsUpdate) {
                             userService.updateSession(session, conversion.session)

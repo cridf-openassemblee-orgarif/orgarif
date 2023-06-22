@@ -20,6 +20,8 @@ object EmptyCommandResponse : CommandResponse()
 
 data class AdminUpdateRolesCommand(val userId: UserId, val roles: Set<Role>) : Command()
 
+class AdminUpdateSessions : Command()
+
 data class DevLoginCommand(val username: String) : Command()
 
 data class DevLoginCommandResponse(val userInfos: UserInfos) : CommandResponse()

@@ -10,7 +10,6 @@ import org.springframework.security.web.AuthenticationEntryPoint
 import org.springframework.security.web.DefaultSecurityFilterChain
 import org.springframework.security.web.authentication.logout.LogoutSuccessHandler
 import org.springframework.security.web.csrf.CookieCsrfTokenRepository
-import orgarif.controller.RemoteController
 import orgarif.domain.Uri
 
 @Configuration
@@ -24,10 +23,7 @@ class SecurityConfiguration(
     @Bean
     fun filterChain(http: HttpSecurity): DefaultSecurityFilterChain {
         http.invoke {
-            csrf {
-                csrfTokenRepository = cookieCsrfTokenRepository
-                ignoringRequestMatchers(RemoteController.remoteRoute + "/**")
-            }
+            csrf { csrfTokenRepository = cookieCsrfTokenRepository }
             exceptionHandling {
                 // [doc] disable Spring default login page
                 authenticationEntryPoint = AuthenticationEntryPoint { _, response, _ ->

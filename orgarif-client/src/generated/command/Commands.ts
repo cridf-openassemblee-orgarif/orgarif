@@ -4,6 +4,7 @@ import { LoginResult, RegisterResult, Role, UserInfos } from '../domain/User';
 
 export type Command =
   | AdminUpdateRolesCommand
+  | AdminUpdateSessions
   | DevLoginCommand
   | LoginCommand
   | RegisterCommand
@@ -23,6 +24,10 @@ export interface AdminUpdateRolesCommand {
   objectType: 'AdminUpdateRolesCommand';
   userId: UserId;
   roles: Role[];
+}
+
+export interface AdminUpdateSessions {
+  objectType: 'AdminUpdateSessions';
 }
 
 export interface DevLoginCommand {
