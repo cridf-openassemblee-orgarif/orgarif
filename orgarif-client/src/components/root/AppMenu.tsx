@@ -49,7 +49,7 @@ export const AppMenu = () => {
         {!userInfos && (
           <MenuItem>
             <RouteLink
-              css={css`
+              addCss={css`
                 display: flex;
                 flex-direction: row;
                 align-items: center;

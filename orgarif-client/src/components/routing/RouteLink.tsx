@@ -1,7 +1,6 @@
 /** @jsxImportSource @emotion/react */
 import { EmotionStyles } from '../../interfaces';
 import { state } from '../../state/state';
-import { assertUnreachable, extractEmotionCss } from '../../utils';
 import { emptyFilters } from '../../utils/filters';
 import { assertUnreachable } from '../../utils';
 import { getValue } from '../../utils/nominal-class';

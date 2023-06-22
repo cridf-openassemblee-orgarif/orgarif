@@ -45,7 +45,7 @@ export default function SigninDialog() {
         type="submit"
         variant="text"
         onClick={handleClickOpen}
-        css={css`
+        addCss={css`
           color: ${colors.dark};
           padding-right: 1em;
           text-transform: capitalize;

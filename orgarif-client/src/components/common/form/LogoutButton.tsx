@@ -28,7 +28,7 @@ export const LogoutButton = () => {
         loadingState={loading}
         type="submit"
         variant="text"
-        css={css`
+        addCss={css`
           color: ${colors.dark};
           padding-right: 1em;
           text-transform: capitalize;
