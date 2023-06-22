@@ -2,6 +2,7 @@
 import { state } from '../../state/state';
 import { RouteLink } from '../routing/RouteLink';
 import { colors } from '../styles/vars';
+import { t } from './Navbar.i18n';
 import { LogoutButton } from './form/LogoutButton';
 import { css } from '@emotion/react';
 import { Menu as MenuIcon } from '@mui/icons-material';
@@ -37,7 +38,7 @@ export const Navbar = () => {
           name: 'RootRoute'
         }}
       >
-        Orgarif
+        {t.Orgarif()}
       </RouteLink>
       <div
         css={css`
@@ -62,7 +63,7 @@ export const Navbar = () => {
                     name: 'LoginRoute'
                   }}
                 >
-                  Login
+                  {t.Login()}
                 </RouteLink>
               </MenuItem>
               <MenuItem>
@@ -71,7 +72,7 @@ export const Navbar = () => {
                     name: 'RegisterRoute'
                   }}
                 >
-                  Register
+                  {t.Register()}
                 </RouteLink>
               </MenuItem>
             </>
@@ -84,7 +85,7 @@ export const Navbar = () => {
                     name: 'AccountRoute'
                   }}
                 >
-                  Account
+                  {t.Account()}
                 </RouteLink>
               </MenuItem>
               {userInfos.roles.includes('Admin') && (
@@ -95,7 +96,7 @@ export const Navbar = () => {
                         name: 'UsersManagementRoute'
                       }}
                     >
-                      Users management
+                      {t.UsersManagement()}
                     </RouteLink>
                   </MenuItem>
                   <MenuItem>
@@ -104,7 +105,7 @@ export const Navbar = () => {
                         name: 'AdminManualCommandRoute'
                       }}
                     >
-                      Manual commands
+                      {t.ManualCommands()}
                     </RouteLink>
                   </MenuItem>
                 </>

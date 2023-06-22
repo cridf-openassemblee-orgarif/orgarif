@@ -1,6 +1,7 @@
 /** @jsxImportSource @emotion/react */
 import { LoadingState } from '../../interfaces';
 import { LoadingButton, LoadingStateButton } from '../common/LoadingButton';
+import { t } from './ComponentsDemonstration.i18n';
 import { css } from '@emotion/react';
 import { Add } from '@mui/icons-material';
 import * as React from 'react';
@@ -28,13 +29,13 @@ export const ComponentsDemonstration = () => {
   } as any;
   return (
     <>
-      <h1>Components demonstration</h1>
+      <h1>{t.ComponentsDemonstration()}</h1>
       <div
         css={css`
           margin: 20px;
         `}
       >
-        <LoadingButton {...props}>test</LoadingButton>
+        <LoadingButton {...props}>{t.test()}</LoadingButton>
       </div>
       <div
         css={css`
@@ -42,7 +43,7 @@ export const ComponentsDemonstration = () => {
         `}
       >
         <LoadingStateButton {...props} loadingState={loading}>
-          test
+          {t.test2()}
         </LoadingStateButton>
       </div>
     </>

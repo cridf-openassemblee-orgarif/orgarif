@@ -7,6 +7,7 @@ import { appContext } from '../../services/ApplicationContext';
 import { CopyContentWidget } from '../common/CopyContentWidget';
 import { RouteLink } from '../routing/RouteLink';
 import { useGoTo } from '../routing/routing-utils';
+import { t } from './UserDetailDialog.i18n';
 import { RoleChip } from './UsersManagementTable';
 import { css } from '@emotion/react';
 import { ExpandMore as ExpandMoreIcon } from '@mui/icons-material';
@@ -62,7 +63,7 @@ export const UserDetailDialog = (props: { userId: UserId | undefined }) => {
       fullWidth={true}
       scroll="body"
     >
-      <DialogTitle>User details</DialogTitle>
+      <DialogTitle>{t.UserDetails()}</DialogTitle>
       <DialogContent>
         <DialogContentText>
           {loading === 'Loading' && (
@@ -80,8 +81,8 @@ export const UserDetailDialog = (props: { userId: UserId | undefined }) => {
                 <Table>
                   <TableHead>
                     <TableRow>
-                      <TableCell>Field</TableCell>
-                      <TableCell align="left">Value</TableCell>
+                      <TableCell>{t.Field()}</TableCell>
+                      <TableCell align="left">{t.Value()}</TableCell>
                       <TableCell />
                     </TableRow>
                   </TableHead>
@@ -95,7 +96,7 @@ export const UserDetailDialog = (props: { userId: UserId | undefined }) => {
                       `}
                     >
                       <TableCell component="th" scope="row">
-                        id
+                        {t.id()}
                       </TableCell>
                       <TableCell align="left">
                         <CopyContentWidget text={userInfos.id} />
@@ -111,7 +112,7 @@ export const UserDetailDialog = (props: { userId: UserId | undefined }) => {
                       `}
                     >
                       <TableCell component="th" scope="row">
-                        mail
+                        {t.mail()}
                       </TableCell>
                       <TableCell align="left">
                         <CopyContentWidget text={userInfos.mail} />
@@ -127,7 +128,7 @@ export const UserDetailDialog = (props: { userId: UserId | undefined }) => {
                       `}
                     >
                       <TableCell component="th" scope="row">
-                        displayName
+                        {t.displayName()}
                       </TableCell>
                       <TableCell align="left">
                         {userInfos.displayName}
@@ -143,7 +144,7 @@ export const UserDetailDialog = (props: { userId: UserId | undefined }) => {
                       `}
                     >
                       <TableCell component="th" scope="row">
-                        roles
+                        {t.roles()}
                       </TableCell>
                       <TableCell align="left">
                         {userInfos.roles.map(r => (
@@ -159,7 +160,7 @@ export const UserDetailDialog = (props: { userId: UserId | undefined }) => {
                             userId: userInfos.id
                           }}
                         >
-                          Edit
+                          {t.Edit()}
                         </RouteLink>
                       </TableCell>
                     </TableRow>
@@ -173,7 +174,7 @@ export const UserDetailDialog = (props: { userId: UserId | undefined }) => {
               >
                 <Accordion>
                   <AccordionSummary expandIcon={<ExpandMoreIcon />}>
-                    Raw JSON
+                    {t.RawJson()}
                   </AccordionSummary>
                   <AccordionDetails>
                     <pre>{JSON.stringify(userInfos, null, 2)}</pre>
@@ -185,7 +186,7 @@ export const UserDetailDialog = (props: { userId: UserId | undefined }) => {
         </DialogContentText>
       </DialogContent>
       <DialogActions>
-        <Button onClick={close}>close</Button>
+        <Button onClick={close}>{t.Close()}</Button>
       </DialogActions>
     </Dialog>
   );

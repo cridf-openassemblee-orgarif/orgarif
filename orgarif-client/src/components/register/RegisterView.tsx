@@ -7,6 +7,7 @@ import { state } from '../../state/state';
 import { assertUnreachable } from '../../utils';
 import { MainContainer } from '../containers/MainContainer';
 import { RegisterForm, RegisterFormInput } from './RegisterForm';
+import { t } from './RegisterView.i18n';
 import { css } from '@emotion/react';
 import * as React from 'react';
 import { useState } from 'react';
@@ -49,7 +50,7 @@ export const RegisterView = () => {
             text-align: center;
           `}
         >
-          Register
+          {t.Register()}
         </h1>
         <div
           css={css`
@@ -68,7 +69,7 @@ export const RegisterView = () => {
                 text-align: center;
               `}
             >
-              You're logged in
+              {t.YouAreLoggedIn()}
             </div>
           )}
         </div>

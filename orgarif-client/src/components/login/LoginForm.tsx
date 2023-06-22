@@ -5,6 +5,7 @@ import { asNominalString } from '../../utils/nominal-class';
 import { LoadingStateButton } from '../common/LoadingButton';
 import { ControlledPasswordInput } from '../common/form/ControlledPasswordInput';
 import { ControlledTextInput } from '../common/form/ControlledTextInput';
+import { t } from './LoginForm.i18n';
 import { css } from '@emotion/react';
 import * as React from 'react';
 import { useState } from 'react';
@@ -49,7 +50,7 @@ export const LoginForm = (props: {
       >
         <ControlledTextInput
           name="mail"
-          label="Email"
+          label={t.Email()}
           control={control}
           errors={errors}
         />
@@ -61,13 +62,13 @@ export const LoginForm = (props: {
       >
         <ControlledPasswordInput
           name="password"
-          label="Password"
+          label={t.Password()}
           control={control}
           errors={errors}
         />
       </div>
       <LoadingStateButton loadingState={loading} type="submit">
-        Login
+        {t.Login()}
       </LoadingStateButton>
     </form>
   );

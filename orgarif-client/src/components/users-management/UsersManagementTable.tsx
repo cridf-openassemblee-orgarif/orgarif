@@ -5,6 +5,7 @@ import { LoadingState } from '../../interfaces';
 import { CopyContentWidget } from '../common/CopyContentWidget';
 import { RouteLink } from '../routing/RouteLink';
 import { colors } from '../styles/vars';
+import { t } from './UsersManagementTable.i18n';
 import { css } from '@emotion/react';
 import { DataGrid, GridColDef, GridRenderCellParams } from '@mui/x-data-grid';
 import * as React from 'react';
@@ -29,7 +30,7 @@ export const UsersManagementTable = (props: {
   const columns: GridColDef[] = [
     {
       field: 'id',
-      headerName: 'User id',
+      headerName: t.UserId(),
       renderCell: (p: GridRenderCellParams<UserInfos>) => (
         <CopyContentWidget text={p.row.id} limitChars={adminIdDisplayChars} />
       ),
@@ -40,7 +41,7 @@ export const UsersManagementTable = (props: {
     },
     {
       field: 'email',
-      headerName: 'Email',
+      headerName: t.Email(),
       renderCell: (p: GridRenderCellParams<UserInfos>) => (
         <CopyContentWidget text={p.row.mail} />
       ),
@@ -50,7 +51,7 @@ export const UsersManagementTable = (props: {
     },
     {
       field: 'displayName',
-      headerName: 'Display name',
+      headerName: t.DisplayName(),
       renderCell: (p: GridRenderCellParams<UserInfos>) => (
         <div>{p.row.displayName}</div>
       ),
@@ -60,7 +61,7 @@ export const UsersManagementTable = (props: {
     },
     {
       field: 'roles',
-      headerName: 'Roles',
+      headerName: t.Roles(),
       renderCell: (p: GridRenderCellParams<UserInfos>) => (
         <div>
           {p.row.roles.map(r => (
@@ -84,7 +85,7 @@ export const UsersManagementTable = (props: {
             userId: p.row.id
           }}
         >
-          Details
+          {t.Details()}
         </RouteLink>
       ),
       flex: 1,

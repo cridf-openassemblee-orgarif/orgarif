@@ -12,6 +12,7 @@ import { space } from '../common/component-utils';
 import { MainContainer } from '../containers/MainContainer';
 import { useGoTo } from '../routing/routing-utils';
 import { LoginForm, LoginFormInput } from './LoginForm';
+import { t } from './LoginView.i18n';
 import { css } from '@emotion/react';
 import Button from '@mui/material/Button';
 import * as React from 'react';
@@ -73,7 +74,7 @@ export const LoginView = () => {
             text-align: center;
           `}
         >
-          Login
+          {t.Login()}
         </h1>
         <div>
           {loginResult !== 'LoggedIn' && !userInfos && (
@@ -85,9 +86,10 @@ export const LoginView = () => {
                 margin-top: 20px;
               `}
             >
-              dev user authent :{space}
-              <Button onClick={() => devLogin('user')}>user</Button>
-              <Button onClick={() => devLogin('admin')}>admin</Button>
+              {t.devUserAuthent()}
+              {space}
+              <Button onClick={() => devLogin('user')}>{t.user()}</Button>
+              <Button onClick={() => devLogin('admin')}>{t.admin()}</Button>
             </div>
           )}
           {userInfos && (
@@ -96,7 +98,7 @@ export const LoginView = () => {
                 text-align: center;
               `}
             >
-              You're logged in
+              {t.YouAreLoggedIn()}
             </div>
           )}
           {loginResult && (
@@ -111,9 +113,9 @@ export const LoginView = () => {
                   case 'LoggedIn':
                     return null;
                   case 'MailNotFound':
-                    return <div>User not found</div>;
+                    return <div>{t.UserNotFound()}</div>;
                   case 'BadPassword':
-                    return <div>Bad password</div>;
+                    return <div>{t.BadPassword()}</div>;
                   default:
                     assertUnreachable(loginResult);
                 }

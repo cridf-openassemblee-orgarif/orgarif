@@ -1,4 +1,5 @@
 /** @jsxImportSource @emotion/react */
+import { t } from './ControlledPasswordInput.i18n';
 import { Visibility, VisibilityOff } from '@mui/icons-material';
 import { TextField } from '@mui/material';
 import IconButton from '@mui/material/IconButton';
@@ -43,14 +44,14 @@ export const ControlledPasswordInput = <
           type={showPassword ? 'text' : 'password'}
           helperText={
             props.errors[props.name] && !props.hideErrorMessage
-              ? 'Mandatory field'
+              ? t.MandatoryField()
               : undefined
           }
           InputProps={{
             endAdornment: (
               <InputAdornment position="end">
                 <IconButton
-                  aria-label="toggle password visibility"
+                  aria-label={t.togglePasswordVisibility()}
                   onClick={toggleShowPassword}
                   onMouseDown={handleMouseDownPassword}
                   edge="end"

@@ -10,6 +10,7 @@ import { state } from '../../state/state';
 import { LoadingStateButton } from '../common/LoadingButton';
 import { useGoTo } from '../routing/routing-utils';
 import { colors } from '../styles/vars';
+import { t } from './UserEditRolesDialog.i18n';
 import { css } from '@emotion/react';
 import { Warning as WarningIcon } from '@mui/icons-material';
 import {
@@ -95,7 +96,7 @@ export const UserEditRolesDialog = (props: {
       fullWidth={true}
       scroll="body"
     >
-      <DialogTitle>Edit user roles</DialogTitle>
+      <DialogTitle>{t.EditUserRoles()}</DialogTitle>
       <DialogContent>
         <DialogContentText>
           {queryLoading === 'Loading' && (
@@ -119,27 +120,20 @@ export const UserEditRolesDialog = (props: {
             {userInfos &&
               loggedInUserInfos.id === userInfos.id &&
               !roles.includes('Admin') && (
-                <WarningMessage>
-                  By removing your Admin role you instantly won't have admin
-                  rights anymore, and will not be able to get the Admin role
-                  back.
-                </WarningMessage>
+                <WarningMessage>{t.WarningAdmin()}</WarningMessage>
               )}
             {userInfos &&
               !roles.includes('User') &&
               roles.includes('Admin') && (
-                <WarningMessage>
-                  Admin role is supposed to be paired with User role, you will
-                  encounter bugs otherwise.
-                </WarningMessage>
+                <WarningMessage>{t.WarningAdminWithNoUser()}</WarningMessage>
               )}
           </div>
         </DialogContentText>
       </DialogContent>
       <DialogActions>
-        <Button onClick={close}>close</Button>
+        <Button onClick={close}>{t.Close()}</Button>
         <LoadingStateButton loadingState={updateLoading} onClick={save}>
-          Save
+          {t.Save()}
         </LoadingStateButton>
       </DialogActions>
     </Dialog>

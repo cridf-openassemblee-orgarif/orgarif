@@ -3,6 +3,7 @@ import { state } from '../../state/state';
 import { MainContainer } from '../containers/MainContainer';
 import { RouteLink } from '../routing/RouteLink';
 import { ComponentsDemonstration } from './ComponentsDemonstration';
+import { t } from './RootView.i18n';
 import { RouteLinkDemonstration } from './RouteLinkDemonstration';
 import * as React from 'react';
 import { useRecoilState } from 'recoil';
@@ -17,10 +18,10 @@ export const RootView = () => {
             name: 'LoginRoute'
           }}
         >
-          Login
+          {t.Login()}
         </RouteLink>
       )}
-      {userInfos && <div>You're connected</div>}
+      {userInfos && <div>{t.YouAreConnected()}</div>}
       <ComponentsDemonstration />
       <RouteLinkDemonstration />
     </MainContainer>

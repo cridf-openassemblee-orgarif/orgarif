@@ -3,6 +3,7 @@ import { ClientUid } from '../../domain/client-ids';
 import { PlainStringPassword } from '../../generated/domain/Security';
 import { asNominalString } from '../../utils/nominal-class';
 import { ControlledPasswordInput } from '../common/form/ControlledPasswordInput';
+import { t } from './PasswordForm.i18n';
 import { css } from '@emotion/react';
 import * as React from 'react';
 import { useForm } from 'react-hook-form';
@@ -40,7 +41,7 @@ export const PasswordForm = (props: {
       >
         <ControlledPasswordInput
           name="password"
-          label="New password"
+          label={t.NewPassword()}
           control={control}
           errors={errors}
         />

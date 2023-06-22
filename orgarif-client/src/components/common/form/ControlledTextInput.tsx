@@ -1,3 +1,4 @@
+import { t } from './ControlledTextInput.i18n';
 import { TextField } from '@mui/material';
 import * as React from 'react';
 import { ChangeEvent } from 'react';
@@ -55,7 +56,7 @@ export const ControlledTextInput = <
           autoFocus={props.autoFocus}
           helperText={
             props.errors[props.name] && !props.hideErrorMessage
-              ? 'Mandatory field'
+              ? t.MandatoryField()
               : undefined
           }
           InputLabelProps={shrinkLabel ? { shrink: true } : undefined}

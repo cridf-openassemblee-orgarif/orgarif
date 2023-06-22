@@ -1,6 +1,7 @@
 /** @jsxImportSource @emotion/react */
 import { MatchRouteLink, RouteLink } from '../routing/RouteLink';
 import { colors } from '../styles/vars';
+import { t } from './RouteLinkDemonstration.i18n';
 import { css } from '@emotion/react';
 import * as React from 'react';
 
@@ -20,7 +21,7 @@ const styles = {
 export const RouteLinkDemonstration = () => {
   return (
     <>
-      <h1>RouteLink demonstration</h1>
+      <h1>{t.RouteLinkDemonstration()}</h1>
       <div
         css={css`
           display: flex;

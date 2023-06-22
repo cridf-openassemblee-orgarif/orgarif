@@ -2,6 +2,7 @@
 import { LoadingState } from '../../../interfaces';
 import { appContext } from '../../../services/ApplicationContext';
 import { LoadingStateButton } from '../LoadingButton';
+import { t } from './LogoutButton.i18n';
 import * as React from 'react';
 import { useState } from 'react';
 
@@ -21,7 +22,7 @@ export const LogoutButton = () => {
         value={appContext.csrfTokenService.token}
       />
       <LoadingStateButton loadingState={loading} type="submit" variant="text">
-        Logout
+        {t.Logout()}
       </LoadingStateButton>
     </form>
   );

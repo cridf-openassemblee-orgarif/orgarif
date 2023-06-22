@@ -3,6 +3,7 @@ import { LoadingState } from '../../interfaces';
 import { clientUid } from '../../utils';
 import { LoadingStateButton } from '../common/LoadingButton';
 import { PasswordForm, PasswordFormInput } from './PasswordForm';
+import { t } from './UpdatePasswordDialogButton.i18n';
 import {
   Button,
   Dialog,
@@ -30,7 +31,7 @@ export const UpdatePasswordDialogButton = (props: {
   const formId = clientUid();
   return (
     <>
-      <Button onClick={() => setOpen(true)}>Update password</Button>
+      <Button onClick={() => setOpen(true)}>{t.UpdatePassword()}</Button>
       <Dialog
         open={open}
         onClose={close}
@@ -38,16 +39,16 @@ export const UpdatePasswordDialogButton = (props: {
         fullWidth={true}
         scroll="body"
       >
-        <DialogTitle>Update password</DialogTitle>
+        <DialogTitle>{t.UpdatePassword2()}</DialogTitle>
         <DialogContent>
           <DialogContentText>
             <PasswordForm formId={formId} onSubmit={onSubmit} />
           </DialogContentText>
         </DialogContent>
         <DialogActions>
-          <Button onClick={close}>close</Button>
+          <Button onClick={close}>{t.Close()}</Button>
           <LoadingStateButton formId={formId} loadingState={updateLoading}>
-            Save
+            {t.Save()}
           </LoadingStateButton>
         </DialogActions>
       </Dialog>

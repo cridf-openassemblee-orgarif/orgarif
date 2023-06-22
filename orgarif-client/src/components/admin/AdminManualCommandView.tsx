@@ -3,6 +3,7 @@ import { AdminUpdateSessions } from '../../generated/command/Commands';
 import { RequestError } from '../../generated/error/Exceptions';
 import { appContext } from '../../services/ApplicationContext';
 import { MainContainer } from '../containers/MainContainer';
+import { t } from './AdminManualCommandView.i18n';
 import { css } from '@emotion/react';
 import { useSnackbar } from 'notistack';
 import * as React from 'react';
@@ -22,13 +23,13 @@ export const AdminManualCommandView = () => {
   const handleCommand = async () => {
     const textCommand = commandTextArea.current?.value;
     if (!textCommand) {
-      enqueueSnackbar('No command.', {
+      enqueueSnackbar(t.NoCommand(), {
         variant: 'error'
       });
       return;
     }
     if (textCommand === previousSubmitedValue) {
-      enqueueSnackbar('Command already handled.', {
+      enqueueSnackbar(t.CommandAlreadyHandled(), {
         variant: 'error'
       });
       return;
@@ -37,7 +38,7 @@ export const AdminManualCommandView = () => {
     try {
       command = JSON.parse(textCommand);
     } catch (e) {
-      enqueueSnackbar('Invalid JSON.', {
+      enqueueSnackbar(t.InvalidJson(), {
         variant: 'error'
       });
       return;
@@ -65,7 +66,7 @@ export const AdminManualCommandView = () => {
           setCommandResults(results);
         })
         .catch((e: RequestError) =>
-          enqueueSnackbar('Server error : ' + e.id, {
+          enqueueSnackbar(t.ServerError() + e.id, {
             variant: 'error'
           })
         );
@@ -101,7 +102,7 @@ export const AdminManualCommandView = () => {
             flex: 1;
           `}
         >
-          <h1>Command :</h1>
+          <h1>{t.Command()}</h1>
           <textarea
             ref={commandTextArea}
             rows={16}
@@ -110,19 +111,19 @@ export const AdminManualCommandView = () => {
             `}
           />
           <br />
-          <button onClick={handleCommand}>handleCommand</button>
+          <button onClick={handleCommand}>{t.HandleCommand()}</button>
           {okCommandCount !== undefined && totalCommandCount !== undefined && (
             <p
               css={css`
                 font-weight: bold;
               `}
             >
-              {okCommandCount} / {totalCommandCount} ok
+              {okCommandCount} / {totalCommandCount} {t.ok()}
             </p>
           )}
           {commandResults.length !== 0 && (
             <>
-              <h3>Results :</h3>
+              <h3>{t.Results()}</h3>
               {commandResults.map(r => (
                 <p>
                   <pre>{JSON.stringify(r, null, 2)}</pre>
@@ -136,8 +137,8 @@ export const AdminManualCommandView = () => {
             flex: 1;
           `}
         >
-          <h2>Commands</h2>
-          <h3>Update sessions</h3>
+          <h2>{t.Commands()}</h2>
+          <h3>{t.UpdateSessions()}</h3>
           <pre>{JSON.stringify(sampleAdminUpdateSessions, null, 2)}</pre>
         </div>
         <div
@@ -145,11 +146,8 @@ export const AdminManualCommandView = () => {
             flex: 1;
           `}
         >
-          <h2>"Batch" commands</h2>
-          <p>
-            Commands can be sent in group (they are sent & handled one by one to
-            the backend)
-          </p>
+          <h2>{t.BatchCommands()}</h2>
+          <p>{t.CommandsCanBeSentInGroup()}</p>
           <pre>
             {JSON.stringify(
               [sampleAdminUpdateSessions, sampleAdminUpdateSessions],

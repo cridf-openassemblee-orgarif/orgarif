@@ -12,6 +12,7 @@ import {
 import { UserDetailDialog } from './UserDetailDialog';
 import { UserEditRolesDialog } from './UserEditRolesDialog';
 import { UsersManagementTable } from './UsersManagementTable';
+import { t } from './UsersManagementView.i18n';
 import { css } from '@emotion/react';
 import { useSnackbar } from 'notistack';
 import * as React from 'react';
@@ -49,7 +50,7 @@ export const UsersManagementView = (props: {
       })
       .catch(() => {
         setLoading('Error');
-        enqueueSnackbar('An error occured while retrieving data.', {
+        enqueueSnackbar(t.AnErrorOccurredWhileRetrievingData(), {
           variant: 'error'
         });
       });
@@ -71,7 +72,7 @@ export const UsersManagementView = (props: {
           height: 100%;
         `}
       >
-        <h1>Users management</h1>
+        <h1>{t.UsersManagement()}</h1>
         <UsersManagementTable users={users} loading={loading} />
         <UserDetailDialog userId={displayDetailsUserId} />
         <UserEditRolesDialog

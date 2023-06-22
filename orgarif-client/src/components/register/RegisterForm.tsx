@@ -8,6 +8,7 @@ import { LoadingStateButton } from '../common/LoadingButton';
 import { ControlledPasswordInput } from '../common/form/ControlledPasswordInput';
 import { ControlledTextInput } from '../common/form/ControlledTextInput';
 import { colors } from '../styles/vars';
+import { t } from './RegisterForm.i18n';
 import { css } from '@emotion/react';
 import * as React from 'react';
 import { ChangeEvent, useState } from 'react';
@@ -70,7 +71,7 @@ export const RegisterForm = (props: {
       >
         <ControlledTextInput
           name="mail"
-          label="Email"
+          label={t.Email()}
           onChange={checkMailAvailability}
           control={control}
           errors={errors}
@@ -84,7 +85,7 @@ export const RegisterForm = (props: {
             font-weight: bold;
           `}
         >
-          Email is already taken
+          {t.EmailIsAlreadyTaken()}
         </div>
       )}
       <div
@@ -94,7 +95,7 @@ export const RegisterForm = (props: {
       >
         <ControlledPasswordInput
           name="password"
-          label="Password"
+          label={t.Password()}
           control={control}
           errors={errors}
         />
@@ -106,13 +107,13 @@ export const RegisterForm = (props: {
       >
         <ControlledTextInput
           name="displayName"
-          label="Display name"
+          label={t.DisplayName()}
           control={control}
           errors={errors}
         />
       </div>
       <LoadingStateButton loadingState={loading} type="submit">
-        Register
+        {t.Register()}
       </LoadingStateButton>
     </form>
   );
