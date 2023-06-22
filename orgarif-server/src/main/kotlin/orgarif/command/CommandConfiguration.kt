@@ -13,6 +13,7 @@ object CommandConfiguration {
             is AddLienDeliberationCommand -> User
             is AdminUpdatePasswordCommand -> Admin
             is AdminUpdateRolesCommand -> Admin
+            is AdminUpdateSessions -> Admin
             is CreateDeliberationCommand -> User
             is CreateDepartementCommand -> User
             is CreateNatureJuridiqueCommand -> User

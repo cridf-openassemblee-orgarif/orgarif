@@ -18,6 +18,8 @@ import orgarif.command.AdminUpdatePasswordCommand
 import orgarif.command.AdminUpdatePasswordCommandHandler
 import orgarif.command.AdminUpdateRolesCommand
 import orgarif.command.AdminUpdateRolesCommandHandler
+import orgarif.command.AdminUpdateSessions
+import orgarif.command.AdminUpdateSessionsCommandHandler
 import orgarif.command.Command
 import orgarif.command.CommandConfiguration
 import orgarif.command.CommandHandler
@@ -116,6 +118,7 @@ class CommandController(
     private val addLienDeliberationCommandHandler: AddLienDeliberationCommandHandler,
     private val adminUpdatePasswordCommandHandler: AdminUpdatePasswordCommandHandler,
     private val adminUpdateRolesCommandHandler: AdminUpdateRolesCommandHandler,
+    private val adminUpdateSessionsCommandHandler: AdminUpdateSessionsCommandHandler,
     private val createDeliberationCommandHandler: CreateDeliberationCommandHandler,
     private val createDepartementCommandHandler: CreateDepartementCommandHandler,
     private val createNatureJuridiqueCommandHandler: CreateNatureJuridiqueCommandHandler,
@@ -241,8 +244,9 @@ class CommandController(
             is AddDesignationCommand -> addDesignationCommandHandler
             is AddInstanceCommand -> addInstanceCommandHandler
             is AddLienDeliberationCommand -> addLienDeliberationCommandHandler
-            is AdminUpdateRolesCommand -> adminUpdateRolesCommandHandler
             is AdminUpdatePasswordCommand -> adminUpdatePasswordCommandHandler
+            is AdminUpdateRolesCommand -> adminUpdateRolesCommandHandler
+            is AdminUpdateSessions -> adminUpdateSessionsCommandHandler
             is CreateDeliberationCommand -> createDeliberationCommandHandler
             is CreateDepartementCommand -> createDepartementCommandHandler
             is CreateNatureJuridiqueCommand -> createNatureJuridiqueCommandHandler
@@ -291,6 +295,7 @@ class CommandController(
             is AddDesignationCommand,
             is AddInstanceCommand,
             is AddLienDeliberationCommand,
+            is AdminUpdateSessions,
             is CreateDeliberationCommand,
             is CreateDepartementCommand,
             is CreateNatureJuridiqueCommand,
@@ -326,7 +331,7 @@ class CommandController(
             is UpdateSecteurStatusCommand,
             is UpdateTypeStructureLibelleCommand,
             is UpdateTypeStructureStatusCommand -> null
-            is AdminUpdateRolesCommand -> command.userId
             is AdminUpdatePasswordCommand -> command.userId
+            is AdminUpdateRolesCommand -> command.userId
         }
 }

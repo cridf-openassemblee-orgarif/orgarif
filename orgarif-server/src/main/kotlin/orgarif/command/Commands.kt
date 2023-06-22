@@ -65,6 +65,8 @@ data class AdminUpdatePasswordCommand(val userId: UserId, val password: PlainStr
 
 data class AdminUpdateRolesCommand(val userId: UserId, val roles: Set<Role>) : Command()
 
+class AdminUpdateSessions : Command()
+
 data class CreateDeliberationCommand(val libelle: String, val deliberationDate: LocalDate) :
     Command()
 

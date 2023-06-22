@@ -18,6 +18,4 @@ mailjet:
   secretKey:
 #---------------------------------------------------------------------------
 sigerUrl: https://siger.mlorber.net
-remoteController:
-  expectedSecu: ${REMOTE_CONTROLLER_EXPECTED_SECU}
 #---------------------------------------------------------------------------
