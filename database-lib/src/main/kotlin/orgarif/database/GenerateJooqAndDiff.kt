@@ -2,7 +2,10 @@ package orgarif.database
 
 import java.nio.file.Paths
 import mu.KotlinLogging
-import orgarif.database.jooq.JooqGeneration
+import org.jooq.codegen.GenerationTool
+import orgarif.database.jooq.JooqConfiguration
+import orgarif.database.jooq.JooqGeneratorStrategy
+import orgarif.database.utils.PgQuarrelUtils
 import orgarif.database.utils.ShellRunner
 
 fun main() {
@@ -50,14 +53,16 @@ object GenerateJooqAndDiff {
         try {
             ResetDatabase.resetDatabaseSchema(generationDatabaseConfiguration, insertData = false)
             logger.info { "Generate Jooq code" }
-            JooqGeneration.generateJooq(
-                conf = generationDatabaseConfiguration,
-                excludeTables = setOf("spring_session", "spring_session_attributes"),
-                generatedPackageName = "orgarif.jooq",
-                generatedCodePath = projectDir.resolve("database-lib/src/generated/kotlin"))
+            GenerationTool.generate(
+                JooqConfiguration.generateConfiguration(
+                    conf = generationDatabaseConfiguration,
+                    excludeTables = setOf("spring_session", "spring_session_attributes"),
+                    generatedPackageName = "orgarif.jooq",
+                    generatedCodePath = projectDir.resolve("database-lib/src/generated/kotlin"),
+                    generatorStrategyClass = JooqGeneratorStrategy::class))
             // TODO[tmpl][doc] diff will fail if Config.runDatabase does not exist
             // (not very problematic but can be better)
-            JooqGeneration.generateDiff(
+            PgQuarrelUtils.generateDiff(
                 psqlDatabaseConfiguration, generationDatabaseConfiguration, buildDir)
             ResetDatabase.resetDatabaseSchema(psqlDatabaseConfiguration, insertData = true)
             logger.info { "Format codebase" }

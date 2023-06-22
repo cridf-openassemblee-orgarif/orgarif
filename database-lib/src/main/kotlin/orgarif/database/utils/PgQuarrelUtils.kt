@@ -1,4 +1,4 @@
-package orgarif.database.jooq
+package orgarif.database.utils
 
 import java.nio.file.Files
 import java.nio.file.Path
@@ -13,11 +13,9 @@ import java.time.temporal.ChronoField.MONTH_OF_YEAR
 import java.time.temporal.ChronoField.SECOND_OF_MINUTE
 import java.time.temporal.ChronoField.YEAR
 import mu.KotlinLogging
-import org.jooq.codegen.GenerationTool
 import orgarif.database.domain.PsqlDatabaseConfiguration
-import orgarif.database.utils.ShellRunner
 
-object JooqGeneration {
+object PgQuarrelUtils {
 
     private val logger = KotlinLogging.logger {}
 
@@ -36,21 +34,6 @@ object JooqGeneration {
             .appendValue(SECOND_OF_MINUTE, 2)
             .optionalStart()
             .toFormatter()
-    }
-
-    fun generateJooq(
-        conf: PsqlDatabaseConfiguration,
-        excludeTables: Set<String> = emptySet(),
-        generatedPackageName: String,
-        generatedCodePath: Path
-    ) {
-        GenerationTool.generate(
-            JooqConfiguration.generateConfiguration(
-                conf = conf,
-                excludeTables = excludeTables,
-                generatedPackageName = generatedPackageName,
-                generatedCodePath = generatedCodePath,
-                generatorStrategyClass = JooqGeneratorStrategy::class))
     }
 
     fun generateDiff(
