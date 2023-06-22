@@ -1,7 +1,11 @@
 /** @jsxImportSource @emotion/react */
-import { AdminUpdateSessions } from '../../generated/command/Commands';
+import {
+  AdminUpdateSessions,
+  CommandResponse
+} from '../../generated/command/Commands';
 import { RequestError } from '../../generated/error/Exceptions';
 import { appContext } from '../../services/ApplicationContext';
+import { assertUnreachable } from '../../utils';
 import { MainContainer } from '../containers/MainContainer';
 import { t } from './AdminManualCommandView.i18n';
 import { css } from '@emotion/react';
@@ -11,6 +15,20 @@ import { useRef, useState } from 'react';
 
 const sampleAdminUpdateSessions: AdminUpdateSessions = {
   objectType: 'AdminUpdateSessions'
+};
+
+/** Should explain data in the response */
+const docResponse = (response: CommandResponse) => {
+  const objectType = response.objectType;
+  switch (objectType) {
+    case 'EmptyCommandResponse':
+    case 'DevLoginCommandResponse':
+    case 'LoginCommandResponse':
+    case 'RegisterCommandResponse':
+      return <>{t.Result()}</>;
+    default:
+      assertUnreachable(objectType);
+  }
 };
 
 export const AdminManualCommandView = () => {
@@ -78,6 +96,7 @@ export const AdminManualCommandView = () => {
       <div
         css={css`
           display: flex;
+
           & > div {
             margin: 0 5px;
           }
@@ -121,16 +140,12 @@ export const AdminManualCommandView = () => {
               {okCommandCount} / {totalCommandCount} {t.ok()}
             </p>
           )}
-          {commandResults.length !== 0 && (
-            <>
-              <h3>{t.Results()}</h3>
-              {commandResults.map(r => (
-                <p>
-                  <pre>{JSON.stringify(r, null, 2)}</pre>
-                </p>
-              ))}
-            </>
-          )}
+          {commandResults.map(r => (
+            <p>
+              <h3>{docResponse(r)}</h3>
+              <pre>{JSON.stringify(r, null, 2)}</pre>
+            </p>
+          ))}
         </div>
         <div
           css={css`
