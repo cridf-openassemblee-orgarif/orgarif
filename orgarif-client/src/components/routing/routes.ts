@@ -10,6 +10,7 @@ import { EditTypeStructuresView } from '../../view/EditTypeStructuresView';
 import { ListOrganismesView } from '../../view/ListOrganismesView';
 import { OrganismeView } from '../../view/OrganismeView';
 import { AccountView } from '../account/AccountView';
+import { AdminManualCommandView } from '../admin/AdminManualCommandView';
 import { LoginView } from '../login/LoginView';
 import { RegisterView } from '../register/RegisterView';
 import { RootView } from '../root/RootView';
@@ -19,6 +20,7 @@ import { FunctionComponent } from 'react';
 // TODO[tmpl] secure that "name" can't be a route parameter
 export type ApplicationRoute =
   | AccountRoute
+  | AdminManualCommandRoute
   | EditDepartementsRoute
   | EditNatureJuridiquesRoute
   | EditOrganismeRoute
@@ -49,6 +51,12 @@ export const routes: ApplicationRouteProps<any>[] = [
     path: '/edition-departements',
     component: EditDepartementsView,
     role: 'User'
+  },
+  {
+    name: 'AdminManualCommandRoute',
+    path: '/admin/manual-command',
+    component: AdminManualCommandView,
+    role: 'Admin'
   },
   {
     name: 'EditNatureJuridiquesRoute',
@@ -136,6 +144,10 @@ export const routePathMap: Dict<ApplicationRoute['name'], string> = dict(
 
 interface AccountRoute {
   name: 'AccountRoute';
+}
+
+interface AdminManualCommandRoute {
+  name: 'AdminManualCommandRoute';
 }
 
 interface EditDepartementsRoute {
