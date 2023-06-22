@@ -64,6 +64,14 @@ fun UUID.stringUuid(): String =
 
 // 29d902e1c2344e54b3058b7a885a560e -> UUID(29d902e1-c234-4e54-b305-8b7a885a560e)
 fun String.uuid(): UUID =
-    UUID.fromString(
-        "${substring(0, 8)}-${substring(8, 12)}-${substring(12, 16)}-" +
-            "${substring(16, 20)}-${substring(20, 32)}")
+    if (length == 32) {
+        UUID.fromString(
+            "${substring(0, 8)}-${substring(8, 12)}-${substring(12, 16)}-" +
+                "${substring(16, 20)}-${substring(20, 32)}")
+    } else if (length == 36) {
+        UUID.fromString(
+            "${substring(0, 8)}-${substring(9, 13)}-${substring(14, 18)}-" +
+                "${substring(19, 23)}-${substring(24, 36)}")
+    } else {
+        throw IllegalArgumentException(this)
+    }
