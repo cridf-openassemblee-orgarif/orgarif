@@ -102,7 +102,7 @@ export const UsersManagementTable = (props: {
       autoPageSize={true}
       css={css`
         .MuiDataGrid-row {
-          &:nth-child(odd) {
+          &:nth-of-type(odd) {
             background-color: ${colors.clearGrey2};
           }
 
