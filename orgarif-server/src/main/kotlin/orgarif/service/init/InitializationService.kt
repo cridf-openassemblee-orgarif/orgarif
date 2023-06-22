@@ -50,7 +50,8 @@ class InitializationService(
         TimeZone.setDefault(TimeZone.getTimeZone("UTC"))
         Locale.setDefault(Locale.ENGLISH)
         when (ApplicationInstance.env) {
-            ApplicationEnvironment.Dev -> {
+            ApplicationEnvironment.Dev,
+            ApplicationEnvironment.Test -> {
                 if (databaseIsEmpty(dataSource)) {
                     ResetDatabase.resetDatabaseSchema(databaseConfiguration, insertInitialData)
                 }
@@ -64,9 +65,6 @@ class InitializationService(
                         devInitialDataInjectorService.injectDesignations()
                     }
                 }
-            }
-            ApplicationEnvironment.Test -> {
-                ResetDatabase.resetDatabaseSchema(databaseConfiguration, insertInitialData)
             }
             ApplicationEnvironment.Staging,
             ApplicationEnvironment.Prod -> {
