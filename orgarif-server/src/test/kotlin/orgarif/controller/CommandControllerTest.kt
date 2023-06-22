@@ -17,8 +17,7 @@ internal class CommandControllerTest {
             "password": "password"
         }
         """
-        val cmd = Serializer.deserialize<LoginCommand>(json)
-
+        Serializer.deserialize<LoginCommand>(json)
         Serializer.deserialize<Command>(json)
     }
 }
