@@ -30,7 +30,7 @@ export const UsersManagementTable = (props: {
     {
       field: 'id',
       headerName: 'User id',
-      renderCell: (p: GridRenderCellParams<void, UserInfos>) => (
+      renderCell: (p: GridRenderCellParams<UserInfos>) => (
         <CopyContentWidget text={p.row.id} limitChars={adminIdDisplayChars} />
       ),
       flex: 1,
@@ -41,7 +41,7 @@ export const UsersManagementTable = (props: {
     {
       field: 'email',
       headerName: 'Email',
-      renderCell: (p: GridRenderCellParams<void, UserInfos>) => (
+      renderCell: (p: GridRenderCellParams<UserInfos>) => (
         <CopyContentWidget text={p.row.mail} />
       ),
       flex: 1,
@@ -51,7 +51,7 @@ export const UsersManagementTable = (props: {
     {
       field: 'displayName',
       headerName: 'Nom affiché',
-      renderCell: (p: GridRenderCellParams<void, UserInfos>) => (
+      renderCell: (p: GridRenderCellParams<UserInfos>) => (
         <div>{p.row.displayName}</div>
       ),
       flex: 1,
@@ -61,7 +61,7 @@ export const UsersManagementTable = (props: {
     {
       field: 'roles',
       headerName: 'Roles',
-      renderCell: (p: GridRenderCellParams<void, UserInfos>) => (
+      renderCell: (p: GridRenderCellParams<UserInfos>) => (
         <div>
           {p.row.roles.map(r => (
             <RoleChip role={r} />
@@ -75,7 +75,7 @@ export const UsersManagementTable = (props: {
     {
       field: 'details',
       headerName: '',
-      renderCell: (p: GridRenderCellParams<void, UserInfos>) => (
+      renderCell: (p: GridRenderCellParams<UserInfos>) => (
         <RouteLink
           element="Button"
           variant="outlined"
@@ -99,7 +99,6 @@ export const UsersManagementTable = (props: {
       getRowId={(c: UserInfos) => c.id}
       columns={columns}
       loading={props.loading === 'Loading'}
-      error={props.loading === 'Error' ? true : undefined}
       autoPageSize={true}
       css={css`
         .MuiDataGrid-row {
