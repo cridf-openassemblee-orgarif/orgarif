@@ -8,11 +8,11 @@ val jooqVersion = "3.18.4"
 tasks {
     withType<KotlinCompile> { kotlinOptions.jvmTarget = "17" }
     register<JavaExec>("generateJooq") {
-        main = "orgarif.database.GenerateJooqAndDiffKt"
+        mainClass.set("orgarif.database.GenerateJooqAndDiffKt")
         classpath = sourceSets["main"].runtimeClasspath
     }
     register<JavaExec>("resetDatabase") {
-        main = "orgarif.database.ResetDatabaseKt"
+        mainClass.set("orgarif.database.ResetDatabaseKt")
         classpath = sourceSets["main"].runtimeClasspath
     }
     test {
