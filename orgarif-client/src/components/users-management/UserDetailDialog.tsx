@@ -148,7 +148,7 @@ export const UserDetailDialog = (props: { userId: UserId | undefined }) => {
                       </TableCell>
                       <TableCell align="left">
                         {userInfos.roles.map(r => (
-                          <RoleChip role={r} />
+                          <RoleChip key={r} role={r} />
                         ))}
                       </TableCell>
                       <TableCell align="left">
