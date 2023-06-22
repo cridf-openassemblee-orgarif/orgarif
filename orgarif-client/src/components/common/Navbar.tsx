@@ -29,7 +29,7 @@ export const Navbar = () => {
       `}
     >
       <RouteLink
-        css={css`
+        addCss={css`
           color: ${colors.white};
           text-decoration: none;
           text-transform: uppercase;

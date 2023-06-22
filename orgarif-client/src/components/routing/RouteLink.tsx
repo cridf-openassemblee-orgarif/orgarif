@@ -1,10 +1,10 @@
 /** @jsxImportSource @emotion/react */
 import { EmotionStyles } from '../../interfaces';
-import { assertUnreachable, extractEmotionCss } from '../../utils';
+import { assertUnreachable } from '../../utils';
 import { getValue } from '../../utils/nominal-class';
 import { ApplicationRoute, routePathMap } from './routes';
 import { buildPath } from './routing-utils';
-import { css, cx } from '@emotion/css';
+import { css } from '@emotion/react';
 import { Button, ButtonTypeMap } from '@mui/material';
 import * as React from 'react';
 import { PropsWithChildren } from 'react';
@@ -17,15 +17,15 @@ const RouteLinkBase = (
     route: ApplicationRoute;
     doesMatch: boolean;
     variant?: ButtonTypeMap['props']['variant'];
+    addCss?: EmotionStyles;
     activeCss?: EmotionStyles;
     element?: 'Link' | 'Button';
-    className?: string;
   }>
 ) => {
   const properties = {
     to: buildPath(props.route),
     variant: props.variant ?? 'outlined',
-    className: cx(
+    css: css([
       css`
         font-weight: ${props.doesMatch ? 'bold' : 'normal'};
         text-decoration: ${props.doesMatch ? 'underline' : 'none'};
@@ -33,11 +33,9 @@ const RouteLinkBase = (
           text-decoration: underline;
         }
       `,
-      props.className,
-      css`
-        ${props.doesMatch ? props.activeCss : undefined}
-      `
-    )
+      props.addCss,
+      props.doesMatch ? props.activeCss : undefined
+    ])
   };
   const element = props.element ?? linkDefaultElement;
   // FIXME pb active css passe avant css, pas bon !
@@ -60,7 +58,7 @@ export const RouteLink = (
     route: ApplicationRoute;
     // TODO only available for Button ? buttonVariant ?
     variant?: ButtonTypeMap['props']['variant'];
-    css?: EmotionStyles;
+    addCss?: EmotionStyles;
     activeCss?: EmotionStyles;
     element?: 'Link' | 'Button';
   }>
@@ -69,9 +67,9 @@ export const RouteLink = (
     route={props.route}
     doesMatch={false}
     variant={props.variant}
+    addCss={props.addCss}
     activeCss={props.activeCss}
     element={props.element}
-    {...extractEmotionCss(props)}
   >
     {props.children}
   </RouteLinkBase>
@@ -82,7 +80,7 @@ export const MatchRouteLink = (
     route: ApplicationRoute;
     matchModel: 'FullMatch' | 'PartialMatch';
     variant?: ButtonTypeMap['props']['variant'];
-    css?: EmotionStyles;
+    addCss?: EmotionStyles;
     activeCss?: EmotionStyles;
     element?: 'Link' | 'Button';
   }>
@@ -97,9 +95,9 @@ export const MatchRouteLink = (
       route={props.route}
       doesMatch={!!match}
       variant={props.variant}
+      addCss={props.addCss}
       activeCss={props.activeCss}
       element={props.element}
-      {...extractEmotionCss(props)}
     >
       {props.children}
     </RouteLinkBase>

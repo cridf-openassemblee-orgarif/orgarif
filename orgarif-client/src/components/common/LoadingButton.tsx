@@ -1,7 +1,7 @@
 /** @jsxImportSource @emotion/react */
 import { ClientUid } from '../../domain/client-ids';
 import { EmotionStyles, LoadingState } from '../../interfaces';
-import { assertUnreachable, extractEmotionCss } from '../../utils';
+import { assertUnreachable } from '../../utils';
 import { css } from '@emotion/react';
 import { Button, CircularProgress } from '@mui/material';
 import { ButtonTypeMap } from '@mui/material/Button/Button';
@@ -51,7 +51,7 @@ const LoadingButtonBase = (
     type?: 'submit';
     variant?: ButtonTypeMap['props']['variant'];
     startIcon?: ReactElement;
-    css?: EmotionStyles;
+    addCss?: EmotionStyles;
     formId?: ClientUid;
   }>
 ) => (
@@ -70,8 +70,8 @@ const LoadingButtonBase = (
         : undefined
     }
     disabled={props.loadingState === 'Loading'}
+    css={props.addCss}
     form={props.formId}
-    {...extractEmotionCss(props)}
   >
     <ButtonContent loadingState={props.loadingState}>
       {props.children}
@@ -85,7 +85,7 @@ export const LoadingButton = (
     type?: 'submit';
     variant?: ButtonTypeMap['props']['variant'];
     startIcon?: ReactElement;
-    css?: EmotionStyles;
+    addCss?: EmotionStyles;
   }>
 ) => {
   const [loading, setLoading] = useState<LoadingState>('Idle');
@@ -102,7 +102,7 @@ export const LoadingButton = (
       type={props.type}
       variant={props.variant}
       startIcon={props.startIcon}
-      {...extractEmotionCss(props)}
+      addCss={props.addCss}
     >
       {props.children}
     </LoadingButtonBase>
@@ -116,7 +116,7 @@ export const LoadingStateButton = (
     type?: 'submit';
     variant?: ButtonTypeMap['props']['variant'];
     startIcon?: ReactElement;
-    css?: EmotionStyles;
+    addCss?: EmotionStyles;
     formId?: ClientUid;
   }>
 ) => (
@@ -126,8 +126,8 @@ export const LoadingStateButton = (
     type={props.type}
     variant={props.variant}
     startIcon={props.startIcon}
+    addCss={props.addCss}
     formId={props.formId}
-    {...extractEmotionCss(props)}
   >
     {props.children}
   </LoadingButtonBase>
