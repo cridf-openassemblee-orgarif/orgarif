@@ -1,5 +1,5 @@
 /** @jsxImportSource @emotion/react */
-import { UserId } from '../../generated/domain/FmkIds';
+import { UserId } from '../../generated/domain/Ids';
 import { UserInfos } from '../../generated/domain/User';
 import { GetUserInfosQueryResponse } from '../../generated/query/Queries';
 import { LoadingState } from '../../interfaces';

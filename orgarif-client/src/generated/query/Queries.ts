@@ -1,4 +1,4 @@
-import { UserId } from '../domain/FmkIds';
+import { UserId } from '../domain/Ids';
 import { UserInfos } from '../domain/User';
 
 export type Query = GetUserInfosQuery | GetUsersQuery | IsMailAlreadyTakenQuery;

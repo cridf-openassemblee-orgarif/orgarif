@@ -1,4 +1,4 @@
-import { UserId } from '../domain/FmkIds';
+import { UserId } from '../domain/Ids';
 import { PlainStringPassword } from '../domain/Security';
 import { LoginResult, RegisterResult, Role, UserInfos } from '../domain/User';
 

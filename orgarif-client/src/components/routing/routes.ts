@@ -1,4 +1,4 @@
-import { UserId } from '../../generated/domain/FmkIds';
+import { UserId } from '../../generated/domain/Ids';
 import { Role } from '../../generated/domain/User';
 import { dict, Dict, flatMap } from '../../utils/nominal-class';
 import { AccountView } from '../account/AccountView';
