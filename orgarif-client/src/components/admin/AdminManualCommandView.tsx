@@ -5,7 +5,6 @@ import {
 } from '../../generated/command/Commands';
 import { RequestError } from '../../generated/error/Exceptions';
 import { appContext } from '../../services/ApplicationContext';
-import { assertUnreachable } from '../../utils';
 import { MainContainer } from '../containers/MainContainer';
 import { css } from '@emotion/react';
 import { useSnackbar } from 'notistack';
@@ -20,13 +19,8 @@ const sampleAdminUpdateSessions: AdminUpdateSessions = {
 const docResponse = (response: CommandResponse) => {
   const objectType = response.objectType;
   switch (objectType) {
-    case 'EmptyCommandResponse':
-    case 'DevLoginCommandResponse':
-    case 'LoginCommandResponse':
-    case 'RegisterCommandResponse':
-      return <>Résultat</>;
     default:
-      assertUnreachable(objectType);
+      return <>Résultat :</>;
   }
 };
 
