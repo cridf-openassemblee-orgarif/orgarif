@@ -38,14 +38,9 @@ tasks {
 repositories {
     mavenLocal()
     mavenCentral()
-    // TODO keep ?
-    maven("https://repo.spring.io/milestone")
-    maven("https://repo.spring.io/snapshot")
-    // TODO keep ?
-    gradlePluginPortal()
 }
 
-configurations.all { exclude("junit") }
+configurations.all { exclude(group = "junit", module = "junit") }
 
 ksp {
     arg("kt2ts:clientDirectory", "$rootDir/orgarif-client")
@@ -78,7 +73,6 @@ dependencies {
 
     // kt2ts
     implementation("io.github.kt2ts:kt2ts-annotation:1.0.0")
-    implementation("io.github.kt2ts:kt2ts-ksp-generator:0.0.1")
     ksp("io.github.kt2ts:kt2ts-ksp-generator:0.0.1")
 
     // database
