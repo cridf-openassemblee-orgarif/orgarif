@@ -2,6 +2,7 @@ import { UserId } from '../../generated/domain/Ids';
 import { Role } from '../../generated/domain/User';
 import { dict, Dict, flatMap } from '../../utils/nominal-class';
 import { AccountView } from '../account/AccountView';
+import { AdminManualCommandView } from '../admin/AdminManualCommandView';
 import { LoginView } from '../login/LoginView';
 import { RegisterView } from '../register/RegisterView';
 import { RootView } from '../root/RootView';
@@ -11,6 +12,7 @@ import { FunctionComponent } from 'react';
 // TODO[tmpl] secure that "name" can't be a route parameter
 export type ApplicationRoute =
   | AccountRoute
+  | AdminManualCommandRoute
   | LoginRoute
   | RegisterRoute
   | RootRoute
@@ -37,6 +39,12 @@ export const routes: ApplicationRouteProps<any>[] = [
     path: '/account',
     component: AccountView,
     role: 'User'
+  },
+  {
+    name: 'AdminManualCommandRoute',
+    path: '/admin/manual-command',
+    component: AdminManualCommandView,
+    role: 'Admin'
   },
   {
     name: 'LoginRoute',
@@ -105,6 +113,10 @@ export const routePathMap: Dict<ApplicationRoute['name'], string> = dict(
 
 interface AccountRoute {
   name: 'AccountRoute';
+}
+
+interface AdminManualCommandRoute {
+  name: 'AdminManualCommandRoute';
 }
 
 interface LoginRoute {

@@ -88,15 +88,26 @@ export const Navbar = () => {
                 </RouteLink>
               </MenuItem>
               {userInfos.roles.includes('Admin') && (
-                <MenuItem>
-                  <RouteLink
-                    route={{
-                      name: 'UsersManagementRoute'
-                    }}
-                  >
-                    Users management
-                  </RouteLink>
-                </MenuItem>
+                <>
+                  <MenuItem>
+                    <RouteLink
+                      route={{
+                        name: 'UsersManagementRoute'
+                      }}
+                    >
+                      Users management
+                    </RouteLink>
+                  </MenuItem>
+                  <MenuItem>
+                    <RouteLink
+                      route={{
+                        name: 'AdminManualCommandRoute'
+                      }}
+                    >
+                      Manual commands
+                    </RouteLink>
+                  </MenuItem>
+                </>
               )}
               <MenuItem>
                 <LogoutButton />
