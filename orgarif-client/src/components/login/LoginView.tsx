@@ -75,7 +75,7 @@ export const LoginView = () => {
         >
           Login
         </h1>
-        <div css={css``}>
+        <div>
           {loginResult !== 'LoggedIn' && !userInfos && (
             <LoginForm onSubmit={login} />
           )}
