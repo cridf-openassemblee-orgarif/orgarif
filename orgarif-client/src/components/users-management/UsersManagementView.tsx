@@ -1,6 +1,6 @@
 /** @jsxImportSource @emotion/react */
-import { UserInfos } from '../../generated/domain/user';
-import { GetUsersQueryResponse } from '../../generated/query/queries';
+import { UserInfos } from '../../generated/domain/User';
+import { GetUsersQueryResponse } from '../../generated/query/Queries';
 import { LoadingState } from '../../interfaces';
 import { appContext } from '../../services/ApplicationContext';
 import { MainContainer } from '../containers/MainContainer';

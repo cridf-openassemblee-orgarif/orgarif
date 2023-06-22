@@ -1,5 +1,5 @@
-import { UserId } from '../../generated/domain/fmk-ids';
-import { Role } from '../../generated/domain/user';
+import { UserId } from '../../generated/domain/FmkIds';
+import { Role } from '../../generated/domain/User';
 import { dict, Dict, flatMap } from '../../utils/nominal-class';
 import { AccountView } from '../account/AccountView';
 import { LoginView } from '../login/LoginView';

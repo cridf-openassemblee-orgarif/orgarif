@@ -1,4 +1,4 @@
-import { Query, QueryResponse } from '../generated/query/queries';
+import { Query, QueryResponse } from '../generated/query/Queries';
 import { appContext } from './ApplicationContext';
 
 export class QueryService {

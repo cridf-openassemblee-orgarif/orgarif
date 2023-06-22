@@ -1,9 +1,9 @@
 /** @jsxImportSource @emotion/react */
 import { roleEnumValues } from '../../domain/enums';
 import { Errors } from '../../errors';
-import { UserId } from '../../generated/domain/fmk-ids';
-import { Role, UserInfos } from '../../generated/domain/user';
-import { GetUserInfosQueryResponse } from '../../generated/query/queries';
+import { UserId } from '../../generated/domain/FmkIds';
+import { Role, UserInfos } from '../../generated/domain/User';
+import { GetUserInfosQueryResponse } from '../../generated/query/Queries';
 import { LoadingState } from '../../interfaces';
 import { appContext } from '../../services/ApplicationContext';
 import { state } from '../../state/state';
