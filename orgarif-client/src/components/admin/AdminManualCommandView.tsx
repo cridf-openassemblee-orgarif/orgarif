@@ -5,7 +5,6 @@ import {
 } from '../../generated/command/Commands';
 import { RequestError } from '../../generated/error/Exceptions';
 import { appContext } from '../../services/ApplicationContext';
-import { assertUnreachable } from '../../utils';
 import { MainContainer } from '../containers/MainContainer';
 import { t } from './AdminManualCommandView.i18n';
 import { css } from '@emotion/react';
@@ -21,13 +20,8 @@ const sampleAdminUpdateSessions: AdminUpdateSessions = {
 const docResponse = (response: CommandResponse) => {
   const objectType = response.objectType;
   switch (objectType) {
-    case 'EmptyCommandResponse':
-    case 'DevLoginCommandResponse':
-    case 'LoginCommandResponse':
-    case 'RegisterCommandResponse':
-      return <>{t.Result()}</>;
     default:
-      assertUnreachable(objectType);
+      return <>{t.Result()}</>;
   }
 };
 
