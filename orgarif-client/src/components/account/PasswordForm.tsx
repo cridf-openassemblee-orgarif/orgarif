@@ -1,6 +1,6 @@
 /** @jsxImportSource @emotion/react */
 import { ClientUid } from '../../domain/client-ids';
-import { PlainStringPassword } from '../../generated/domain/security';
+import { PlainStringPassword } from '../../generated/domain/Security';
 import { asNominalString } from '../../utils/nominal-class';
 import { ControlledPasswordInput } from '../common/form/ControlledPasswordInput';
 import { css } from '@emotion/react';

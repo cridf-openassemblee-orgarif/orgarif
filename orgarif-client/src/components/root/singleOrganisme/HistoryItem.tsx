@@ -1,6 +1,6 @@
 /** @jsxImportSource @emotion/react */
-import { DeliberationId } from '../../../generated/domain/ids';
-import { DeliberationDto } from '../../../generated/domain/organisme';
+import { DeliberationId } from '../../../generated/domain/Ids';
+import { DeliberationDto } from '../../../generated/domain/Organisme';
 import { formatLocaleDate } from '../../../simple-fr';
 import { breakpoints } from '../../styles/breakpoints';
 import { colors } from '../../styles/colors';

@@ -3,8 +3,8 @@ import {
   DepartementId,
   OrganismeId,
   TypeStructureId
-} from '../../generated/domain/ids';
-import { ListOrganismesQueryResponse } from '../../generated/query/queries';
+} from '../../generated/domain/Ids';
+import { ListOrganismesQueryResponse } from '../../generated/query/Queries';
 import { Edit } from '../../icon/collection/Edit';
 import { LoadingState } from '../../interfaces';
 import { appContext } from '../../services/ApplicationContext';

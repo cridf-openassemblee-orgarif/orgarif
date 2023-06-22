@@ -5,13 +5,13 @@ import {
   InstanceId,
   OrganismeId,
   RepresentantId
-} from '../../../../generated/domain/ids';
+} from '../../../../generated/domain/Ids';
 import {
   DesignationDto,
   DesignationType,
   LienDeliberationDto,
   OrganismeDto
-} from '../../../../generated/domain/organisme';
+} from '../../../../generated/domain/Organisme';
 import { organismeActions } from '../../../../utils/organisme-utils';
 import { breakpoints } from '../../../styles/breakpoints';
 import { colors } from '../../../styles/colors';

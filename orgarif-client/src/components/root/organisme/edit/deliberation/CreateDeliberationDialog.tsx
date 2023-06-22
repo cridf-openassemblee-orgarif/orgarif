@@ -1,7 +1,7 @@
 /** @jsxImportSource @emotion/react */
 import { LocalDate } from '../../../../../domain/datetime';
-import { CreateDeliberationCommandResponse } from '../../../../../generated/command/commands';
-import { DeliberationDto } from '../../../../../generated/domain/organisme';
+import { CreateDeliberationCommandResponse } from '../../../../../generated/command/Commands';
+import { DeliberationDto } from '../../../../../generated/domain/Organisme';
 import { appContext } from '../../../../../services/ApplicationContext';
 import { stringToLocalDate } from '../../../../../utils';
 import { LoadingButton } from '../../../../common/LoadingButton';

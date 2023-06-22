@@ -1,5 +1,5 @@
 /** @jsxImportSource @emotion/react */
-import { CreateOrganismeCommandResponse } from '../../../../generated/command/commands';
+import { CreateOrganismeCommandResponse } from '../../../../generated/command/Commands';
 import { appContext } from '../../../../services/ApplicationContext';
 import { TextInput } from '../../../common/form/TextInput';
 import { useGoTo } from '../../../routing/routing-utils';

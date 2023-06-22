@@ -1,6 +1,6 @@
 /** @jsxImportSource @emotion/react */
 import { adminIdDisplayChars } from '../../domain/admin';
-import { Role, UserInfos } from '../../generated/domain/user';
+import { Role, UserInfos } from '../../generated/domain/User';
 import { LoadingState } from '../../interfaces';
 import { CopyContentWidget } from '../common/CopyContentWidget';
 import { RouteLink } from '../routing/RouteLink';

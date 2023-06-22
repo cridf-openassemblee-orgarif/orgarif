@@ -3,13 +3,13 @@ import { Category, CategoryId } from '../../../domain/category';
 import {
   Departement,
   OrganismeCategories
-} from '../../../generated/domain/bootstrap-data';
+} from '../../../generated/domain/BootstrapData';
 import {
   DepartementId,
   NatureJuridiqueId,
   SecteurId,
   TypeStructureId
-} from '../../../generated/domain/ids';
+} from '../../../generated/domain/Ids';
 import { state } from '../../../state/state';
 import { assertUnreachable } from '../../../utils';
 import { distinct } from '../../../utils/collections';

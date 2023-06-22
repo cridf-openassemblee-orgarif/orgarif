@@ -1,4 +1,4 @@
-import { Command, CommandResponse } from '../generated/command/commands';
+import { Command, CommandResponse } from '../generated/command/Commands';
 import { appContext } from './ApplicationContext';
 
 export class CommandService {

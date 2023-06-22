@@ -1,5 +1,5 @@
 /** @jsxImportSource @emotion/react */
-import { LienDeliberationDto } from '../../../../../generated/domain/organisme';
+import { LienDeliberationDto } from '../../../../../generated/domain/Organisme';
 import { appContext } from '../../../../../services/ApplicationContext';
 import { LoadingButton } from '../../../../common/LoadingButton';
 import { ConfirmButton } from '../../../../common/form/ConfirmButton';

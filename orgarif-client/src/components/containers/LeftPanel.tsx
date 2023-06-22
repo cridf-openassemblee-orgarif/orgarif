@@ -1,5 +1,5 @@
 /** @jsxImportSource @emotion/react */
-import { OrganismeDto } from '../../generated/domain/organisme';
+import { OrganismeDto } from '../../generated/domain/Organisme';
 import { Edit } from '../../icon/collection/Edit';
 import { Share } from '../../icon/collection/Share';
 import { state } from '../../state/state';

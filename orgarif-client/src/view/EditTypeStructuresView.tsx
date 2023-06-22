@@ -1,10 +1,10 @@
 /** @jsxImportSource @emotion/react */
 import { MainContainer } from '../components/containers/MainContainer';
 import { EditCategoriesComponent } from '../components/root/category/EditCategoriesComponent';
-import { CreateTypeStructureCommandResponse } from '../generated/command/commands';
-import { TypeStructure } from '../generated/domain/bootstrap-data';
-import { TypeStructureId } from '../generated/domain/ids';
-import { ItemStatus } from '../generated/domain/organisme';
+import { CreateTypeStructureCommandResponse } from '../generated/command/Commands';
+import { TypeStructure } from '../generated/domain/BootstrapData';
+import { TypeStructureId } from '../generated/domain/Ids';
+import { ItemStatus } from '../generated/domain/Organisme';
 import { appContext } from '../services/ApplicationContext';
 import { state } from '../state/state';
 import { sortCategory } from '../utils/filters';

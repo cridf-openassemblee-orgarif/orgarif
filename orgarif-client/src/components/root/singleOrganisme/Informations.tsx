@@ -1,5 +1,5 @@
 /** @jsxImportSource @emotion/react */
-import { OrganismeDto } from '../../../generated/domain/organisme';
+import { OrganismeDto } from '../../../generated/domain/Organisme';
 import { Departement } from '../../../icon/collection/Departement';
 import { Localite } from '../../../icon/collection/Localite';
 import { NatureJuridique } from '../../../icon/collection/NatureJuridique';

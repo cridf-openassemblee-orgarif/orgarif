@@ -1,6 +1,6 @@
 /** @jsxImportSource @emotion/react */
 import { Category, CategoryId } from '../../../domain/category';
-import { ItemStatus } from '../../../generated/domain/organisme';
+import { ItemStatus } from '../../../generated/domain/Organisme';
 import { assertUnreachable, clientUid } from '../../../utils';
 import { NominalString } from '../../../utils/nominal-class';
 import { LoadingButton } from '../../common/LoadingButton';

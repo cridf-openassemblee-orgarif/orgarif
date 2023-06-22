@@ -1,13 +1,13 @@
-import { Uri } from './Uri';
-import { ApplicationEnvironment } from './application';
+import { ApplicationEnvironment } from './Application';
 import {
   DepartementId,
   NatureJuridiqueId,
   SecteurId,
   TypeStructureId
-} from './ids';
-import { ItemStatus } from './organisme';
-import { UserInfos } from './user';
+} from './Ids';
+import { ItemStatus } from './Organisme';
+import { Uri } from './Uri';
+import { UserInfos } from './User';
 
 export interface Departement {
   id: DepartementId;

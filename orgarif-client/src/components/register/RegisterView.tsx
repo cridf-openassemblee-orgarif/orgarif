@@ -1,7 +1,7 @@
 /** @jsxImportSource @emotion/react */
 import { Errors } from '../../errors';
-import { RegisterCommandResponse } from '../../generated/command/commands';
-import { RegisterResult } from '../../generated/domain/user';
+import { RegisterCommandResponse } from '../../generated/command/Commands';
+import { RegisterResult } from '../../generated/domain/User';
 import { appContext } from '../../services/ApplicationContext';
 import { state } from '../../state/state';
 import { assertUnreachable } from '../../utils';

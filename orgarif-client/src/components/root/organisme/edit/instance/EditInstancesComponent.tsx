@@ -4,12 +4,12 @@ import {
   DeliberationId,
   InstanceId,
   RepresentantId
-} from '../../../../../generated/domain/ids';
+} from '../../../../../generated/domain/Ids';
 import {
   DesignationType,
   InstanceDto,
   ItemStatus
-} from '../../../../../generated/domain/organisme';
+} from '../../../../../generated/domain/Organisme';
 import { EditNomComponent } from '../EditNomComponent';
 import { RepresentantsDeliberationsBlock } from '../EditOrganismeComponent';
 import { css } from '@emotion/react';

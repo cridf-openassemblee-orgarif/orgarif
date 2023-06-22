@@ -1,6 +1,6 @@
 /** @jsxImportSource @emotion/react */
 import { LocalDate } from '../../../../../domain/datetime';
-import { DesignationDto } from '../../../../../generated/domain/organisme';
+import { DesignationDto } from '../../../../../generated/domain/Organisme';
 import { appContext } from '../../../../../services/ApplicationContext';
 import { asNominalString } from '../../../../../utils/nominal-class';
 import { LoadingButton } from '../../../../common/LoadingButton';

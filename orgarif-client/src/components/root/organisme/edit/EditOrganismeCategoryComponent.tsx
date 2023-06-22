@@ -5,7 +5,7 @@ import {
   NatureJuridiqueId,
   SecteurId,
   TypeStructureId
-} from '../../../../generated/domain/ids';
+} from '../../../../generated/domain/Ids';
 import { state } from '../../../../state/state';
 import { Dict } from '../../../../utils/nominal-class';
 import { SelectInput, SelectOption } from '../../../common/form/SelectInput';

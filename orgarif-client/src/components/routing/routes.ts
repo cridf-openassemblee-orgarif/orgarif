@@ -1,6 +1,6 @@
-import { UserId } from '../../generated/domain/fmk-ids';
-import { OrganismeId } from '../../generated/domain/ids';
-import { Role } from '../../generated/domain/user';
+import { UserId } from '../../generated/domain/FmkIds';
+import { OrganismeId } from '../../generated/domain/Ids';
+import { Role } from '../../generated/domain/User';
 import { dict, Dict, flatMap } from '../../utils/nominal-class';
 import { EditDepartementsView } from '../../view/EditDepartementsView';
 import { EditNatureJuridiquesView } from '../../view/EditNatureJuridiquesView';

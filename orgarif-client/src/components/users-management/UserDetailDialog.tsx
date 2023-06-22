@@ -1,7 +1,7 @@
 /** @jsxImportSource @emotion/react */
-import { UserId } from '../../generated/domain/fmk-ids';
-import { UserInfos } from '../../generated/domain/user';
-import { GetUserInfosQueryResponse } from '../../generated/query/queries';
+import { UserId } from '../../generated/domain/FmkIds';
+import { UserInfos } from '../../generated/domain/User';
+import { GetUserInfosQueryResponse } from '../../generated/query/Queries';
 import { LoadingState } from '../../interfaces';
 import { appContext } from '../../services/ApplicationContext';
 import { CopyContentWidget } from '../common/CopyContentWidget';

@@ -11,7 +11,7 @@ import {
   RepresentantId,
   SecteurId,
   TypeStructureId
-} from './ids';
+} from './Ids';
 
 export type ItemStatus = 'live' | 'archive' | 'trash';
 

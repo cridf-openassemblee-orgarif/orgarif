@@ -1,5 +1,5 @@
 import { LocalDate } from '../../domain/datetime';
-import { UserId } from '../domain/fmk-ids';
+import { UserId } from '../domain/FmkIds';
 import {
   DeliberationId,
   DepartementId,
@@ -11,10 +11,10 @@ import {
   RepresentantId,
   SecteurId,
   TypeStructureId
-} from '../domain/ids';
-import { DesignationType, ItemStatus } from '../domain/organisme';
-import { PlainStringPassword } from '../domain/security';
-import { LoginResult, RegisterResult, Role, UserInfos } from '../domain/user';
+} from '../domain/Ids';
+import { DesignationType, ItemStatus } from '../domain/Organisme';
+import { PlainStringPassword } from '../domain/Security';
+import { LoginResult, RegisterResult, Role, UserInfos } from '../domain/User';
 
 export type Command =
   | AddDesignationCommand

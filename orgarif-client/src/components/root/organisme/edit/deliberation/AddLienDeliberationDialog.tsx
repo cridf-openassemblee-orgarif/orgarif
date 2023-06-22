@@ -1,6 +1,6 @@
 /** @jsxImportSource @emotion/react */
-import { DeliberationId } from '../../../../../generated/domain/ids';
-import { DeliberationDto } from '../../../../../generated/domain/organisme';
+import { DeliberationId } from '../../../../../generated/domain/Ids';
+import { DeliberationDto } from '../../../../../generated/domain/Organisme';
 import { LoadingButton } from '../../../../common/LoadingButton';
 import { TextInput } from '../../../../common/form/TextInput';
 import { colors } from '../../../../styles/colors';

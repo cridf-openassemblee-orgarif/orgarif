@@ -1,5 +1,5 @@
 /** @jsxImportSource @emotion/react */
-import { DesignationDto } from '../../../generated/domain/organisme';
+import { DesignationDto } from '../../../generated/domain/Organisme';
 import { Representant } from '../../../icon/collection/Representant';
 import { breakpoints } from '../../styles/breakpoints';
 import { colors } from '../../styles/colors';

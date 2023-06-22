@@ -1,18 +1,18 @@
-import { UserId } from '../domain/fmk-ids';
+import { UserId } from '../domain/FmkIds';
 import {
   DepartementId,
   NatureJuridiqueId,
   OrganismeId,
   SecteurId,
   TypeStructureId
-} from '../domain/ids';
+} from '../domain/Ids';
 import {
   DeliberationDto,
   OrganismeDto,
   OrganismeListDto,
   RepresentantDto
-} from '../domain/organisme';
-import { UserInfos } from '../domain/user';
+} from '../domain/Organisme';
+import { UserInfos } from '../domain/User';
 
 export type Query =
   | GetLastDeliberationsQuery

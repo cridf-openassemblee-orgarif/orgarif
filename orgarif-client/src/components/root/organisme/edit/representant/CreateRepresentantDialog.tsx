@@ -1,6 +1,6 @@
 /** @jsxImportSource @emotion/react */
-import { CreateRepresentantCommandResponse } from '../../../../../generated/command/commands';
-import { RepresentantDto } from '../../../../../generated/domain/organisme';
+import { CreateRepresentantCommandResponse } from '../../../../../generated/command/Commands';
+import { RepresentantDto } from '../../../../../generated/domain/Organisme';
 import { appContext } from '../../../../../services/ApplicationContext';
 import { LoadingButton } from '../../../../common/LoadingButton';
 import { TextInput } from '../../../../common/form/TextInput';

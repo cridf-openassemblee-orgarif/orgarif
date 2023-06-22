@@ -1,5 +1,5 @@
 /** @jsxImportSource @emotion/react */
-import { OrganismeCategories } from '../../../generated/domain/bootstrap-data';
+import { OrganismeCategories } from '../../../generated/domain/BootstrapData';
 import { getCategoryLabel } from './FilterSection';
 import { css } from '@emotion/react';
 import { Box, Chip } from '@mui/material';

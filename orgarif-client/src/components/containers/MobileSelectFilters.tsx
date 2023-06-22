@@ -1,6 +1,6 @@
 /** @jsxImportSource @emotion/react */
 import { Category, CategoryId } from '../../domain/category';
-import { OrganismeCategories } from '../../generated/domain/bootstrap-data';
+import { OrganismeCategories } from '../../generated/domain/BootstrapData';
 import { state } from '../../state/state';
 import { Dict, getValue } from '../../utils/nominal-class';
 import {

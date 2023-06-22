@@ -1,10 +1,10 @@
 /** @jsxImportSource @emotion/react */
 import { MainContainer } from '../components/containers/MainContainer';
 import { EditCategoriesComponent } from '../components/root/category/EditCategoriesComponent';
-import { CreateNatureJuridiqueCommandResponse } from '../generated/command/commands';
-import { NatureJuridique } from '../generated/domain/bootstrap-data';
-import { NatureJuridiqueId } from '../generated/domain/ids';
-import { ItemStatus } from '../generated/domain/organisme';
+import { CreateNatureJuridiqueCommandResponse } from '../generated/command/Commands';
+import { NatureJuridique } from '../generated/domain/BootstrapData';
+import { NatureJuridiqueId } from '../generated/domain/Ids';
+import { ItemStatus } from '../generated/domain/Organisme';
 import { appContext } from '../services/ApplicationContext';
 import { state } from '../state/state';
 import { sortCategory } from '../utils/filters';
