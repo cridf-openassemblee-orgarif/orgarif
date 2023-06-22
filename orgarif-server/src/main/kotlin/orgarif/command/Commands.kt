@@ -27,7 +27,10 @@ import orgarif.domain.UserInfos
     use = JsonTypeInfo.Id.NAME, include = JsonTypeInfo.As.PROPERTY, property = "objectType")
 sealed class Command
 
-@GenerateTypescript sealed class CommandResponse
+@GenerateTypescript
+@JsonTypeInfo(
+    use = JsonTypeInfo.Id.NAME, include = JsonTypeInfo.As.PROPERTY, property = "objectType")
+sealed class CommandResponse
 
 object EmptyCommandResponse : CommandResponse()
 
