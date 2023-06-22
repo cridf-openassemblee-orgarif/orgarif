@@ -56,64 +56,64 @@ export const Navbar = () => {
         </IconButton>
         <Menu anchorEl={buttonElement.current} open={open} onClose={close}>
           {!userInfos && (
-            <>
-              <MenuItem>
-                <RouteLink
-                  route={{
-                    name: 'LoginRoute'
-                  }}
-                >
-                  {t.Login()}
-                </RouteLink>
-              </MenuItem>
-              <MenuItem>
-                <RouteLink
-                  route={{
-                    name: 'RegisterRoute'
-                  }}
-                >
-                  {t.Register()}
-                </RouteLink>
-              </MenuItem>
-            </>
+            <MenuItem>
+              <RouteLink
+                route={{
+                  name: 'LoginRoute'
+                }}
+              >
+                {t.Login()}
+              </RouteLink>
+            </MenuItem>
+          )}
+          {!userInfos && (
+            <MenuItem>
+              <RouteLink
+                route={{
+                  name: 'RegisterRoute'
+                }}
+              >
+                {t.Register()}
+              </RouteLink>
+            </MenuItem>
           )}
           {userInfos && (
-            <>
-              <MenuItem>
-                <RouteLink
-                  route={{
-                    name: 'AccountRoute'
-                  }}
-                >
-                  {t.Account()}
-                </RouteLink>
-              </MenuItem>
-              {userInfos.roles.includes('Admin') && (
-                <>
-                  <MenuItem>
-                    <RouteLink
-                      route={{
-                        name: 'UsersManagementRoute'
-                      }}
-                    >
-                      {t.UsersManagement()}
-                    </RouteLink>
-                  </MenuItem>
-                  <MenuItem>
-                    <RouteLink
-                      route={{
-                        name: 'AdminManualCommandRoute'
-                      }}
-                    >
-                      {t.ManualCommands()}
-                    </RouteLink>
-                  </MenuItem>
-                </>
-              )}
-              <MenuItem>
-                <LogoutButton />
-              </MenuItem>
-            </>
+            <MenuItem>
+              <RouteLink
+                route={{
+                  name: 'AccountRoute'
+                }}
+              >
+                {t.Account()}
+              </RouteLink>
+            </MenuItem>
+          )}
+          {userInfos && userInfos.roles.includes('Admin') && (
+            <MenuItem>
+              <RouteLink
+                route={{
+                  name: 'UsersManagementRoute'
+                }}
+              >
+                {t.UsersManagement()}
+              </RouteLink>
+            </MenuItem>
+          )}
+          {userInfos && userInfos.roles.includes('Admin') && (
+            <MenuItem>
+              <RouteLink
+                route={{
+                  name: 'AdminManualCommandRoute'
+                }}
+              >
+                {t.ManualCommands()}
+              </RouteLink>
+            </MenuItem>
+          )}
+          {userInfos && (
+            <MenuItem>
+              <LogoutButton />
+            </MenuItem>
           )}
         </Menu>
       </div>
