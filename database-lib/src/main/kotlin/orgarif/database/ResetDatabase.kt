@@ -82,14 +82,16 @@ object ResetDatabase {
 
     private fun insertInitialData(configuration: PsqlDatabaseConfiguration) {
         logger.info { "Insert initial data, using directory: $sqlInsertFilesDir" }
-        val sqlQueries =
+        val sqlFiles =
             sqlInsertFilesDir
                 .toFile()
                 .walk()
                 .filter { it.extension == "sql" }
-                .map { Files.readString(it.toPath()) }
                 .toList()
-        sqlQueries.forEach { sql ->
+                .sortedBy { it.name }
+        sqlFiles.forEach { sqlFile ->
+            logger.info { "Inject ${sqlFile.name}" }
+            val sql = Files.readString(sqlFile.toPath())
             DatasourcePool.get(configuration).connection.createStatement().use { it.execute(sql) }
         }
     }
