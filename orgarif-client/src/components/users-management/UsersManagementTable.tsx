@@ -65,7 +65,7 @@ export const UsersManagementTable = (props: {
       renderCell: (p: GridRenderCellParams<UserInfos>) => (
         <div>
           {p.row.roles.map(r => (
-            <RoleChip role={r} />
+            <RoleChip key={r} role={r} />
           ))}
         </div>
       ),

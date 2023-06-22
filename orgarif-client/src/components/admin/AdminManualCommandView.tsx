@@ -134,8 +134,8 @@ export const AdminManualCommandView = () => {
               {okCommandCount} / {totalCommandCount} {t.ok()}
             </p>
           )}
-          {commandResults.map(r => (
-            <p>
+          {commandResults.map((r, i) => (
+            <p key={i}>
               <h3>{docResponse(r)}</h3>
               <pre>{JSON.stringify(r, null, 2)}</pre>
             </p>
