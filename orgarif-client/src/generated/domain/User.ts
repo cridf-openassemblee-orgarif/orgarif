@@ -1,4 +1,4 @@
-import { UserId } from './FmkIds';
+import { UserId } from './Ids';
 
 export type Role = 'User' | 'Admin';
 

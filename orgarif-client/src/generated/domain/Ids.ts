@@ -18,6 +18,10 @@ export type OrganismeId = NominalString<'OrganismeId'>;
 
 export type RepresentantId = NominalString<'RepresentantId'>;
 
+export type RequestErrorId = NominalString<'RequestErrorId'>;
+
 export type SecteurId = NominalString<'SecteurId'>;
 
 export type TypeStructureId = NominalString<'TypeStructureId'>;
+
+export type UserId = NominalString<'UserId'>;

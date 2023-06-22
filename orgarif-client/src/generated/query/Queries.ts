@@ -1,10 +1,10 @@
-import { UserId } from '../domain/FmkIds';
 import {
   DepartementId,
   NatureJuridiqueId,
   OrganismeId,
   SecteurId,
-  TypeStructureId
+  TypeStructureId,
+  UserId
 } from '../domain/Ids';
 import {
   DeliberationDto,

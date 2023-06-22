@@ -1,5 +1,4 @@
 import { LocalDate } from '../../domain/datetime';
-import { UserId } from '../domain/FmkIds';
 import {
   DeliberationId,
   DepartementId,
@@ -10,7 +9,8 @@ import {
   OrganismeId,
   RepresentantId,
   SecteurId,
-  TypeStructureId
+  TypeStructureId,
+  UserId
 } from '../domain/Ids';
 import { DesignationType, ItemStatus } from '../domain/Organisme';
 import { PlainStringPassword } from '../domain/Security';
