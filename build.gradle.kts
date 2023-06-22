@@ -44,10 +44,7 @@ tasks {
         from("orgarif-client/build/static") { into("static/") }
         val shortGitRevision by lazy { "git log -1 --pretty=%h".runCommand() }
         val gitRevision by lazy { "git rev-parse HEAD".runCommand() }
-        from("orgarif-server/src/main/resources") {
-            include("*.yaml", "*.xml", "*.properties")
-            filter { it.replace("GRADLE_BUILD_GIT_REVISION", shortGitRevision) }
-        }
+        from("orgarif-server/src/main/resources") { include("*.yaml", "*.xml", "*.properties") }
         into("build")
         doLast {
             val buildPropertiesFile by extra("${rootProject.buildDir}/build.properties")
