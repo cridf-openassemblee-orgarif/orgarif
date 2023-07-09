@@ -113,7 +113,6 @@ class IndexController(
                 secteurDao.fetchAll().map { Secteur(it.id, it.libelle, it.status) },
                 typeStructureDao.fetchAll().map { TypeStructure(it.id, it.libelle, it.status) },
             )
-        val elus = eluDao.fetchAll()
         mav.model["bootstrapData"] =
             serialize(
                 ApplicationBootstrapData(ApplicationInstance.env, sigerUrl, userInfos, categories))
