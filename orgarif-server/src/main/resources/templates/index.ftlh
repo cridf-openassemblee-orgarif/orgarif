@@ -6,8 +6,8 @@
 <!-- ${deploymentId?no_esc} -->
 <#include "header.ftlh">
 <script>
-    var bootstrapData = ${bootstrapData?no_esc};
     var csrfToken = "${_csrf.token}";
+    var bootstrapData = ${bootstrapData?no_esc};
 </script>
 <#list cssAssets as cssAsset>
 <link href="${cssAsset?no_esc}" rel="stylesheet">
