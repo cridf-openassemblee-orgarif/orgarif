@@ -81,7 +81,7 @@ class UserService(
                     randomService.id(), user.id, dirtyMail, AuthLogType.DirtyMail, now))
         }
         notificationService.notify(
-            "${user.mail} just suscribed.", NotificationService.Channel.NewUser)
+            "${user.mail} just subscribed.", NotificationService.Channel.NewUser)
         return user
     }
 
