@@ -16,24 +16,8 @@ class OrgarifApplication {
         val logger = KotlinLogging.logger {}
 
         var runningApplication = false
-            get() = field
-            private set(value) {
-                field = value
-            }
 
-        @JvmStatic
-        fun main(args: Array<String>) {
-            runningApplication = true
-            val lowercaseEnv = ApplicationInstance.env.name.lowercase()
-            logger.info { "Environment is [$lowercaseEnv]" }
-            System.setProperty("logging.config", "classpath:logback-webapp-$lowercaseEnv.xml")
-            val app = SpringApplication(OrgarifApplication::class.java)
-            app.setDefaultProperties(
-                mapOf("spring.profiles.default" to springProfile(lowercaseEnv)))
-            app.run(*args)
-        }
-
-        private fun springProfile(lowercaseEnv: String) =
+        fun springProfile(lowercaseEnv: String) =
             if (ApplicationInstance.env == ApplicationEnvironment.Dev) {
                 val userProfile = lowercaseEnv + "-" + System.getProperty("user.name")
                 "$lowercaseEnv,$userProfile"
@@ -41,4 +25,15 @@ class OrgarifApplication {
                 lowercaseEnv
             }
     }
+}
+
+fun main(args: Array<String>) {
+    OrgarifApplication.runningApplication = true
+    val lowercaseEnv = ApplicationInstance.env.name.lowercase()
+    OrgarifApplication.logger.info { "Environment is [$lowercaseEnv]" }
+    System.setProperty("logging.config", "classpath:logback-webapp-$lowercaseEnv.xml")
+    val app = SpringApplication(OrgarifApplication::class.java)
+    app.setDefaultProperties(
+        mapOf("spring.profiles.default" to OrgarifApplication.springProfile(lowercaseEnv)))
+    app.run(*args)
 }
