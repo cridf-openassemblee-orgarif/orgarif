@@ -16,7 +16,7 @@ data class GetUserInfosQuery(val userId: UserId) : Query()
 
 data class GetUserInfosQueryResponse(val userInfos: UserInfos?) : QueryResponse()
 
-class GetUsersQuery : Query()
+data object GetUsersQuery : Query()
 
 data class GetUsersQueryResponse(val users: List<UserInfos>) : QueryResponse()
 
