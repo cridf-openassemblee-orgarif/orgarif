@@ -21,7 +21,7 @@ sealed class Query
 
 @GenerateTypescript sealed class QueryResponse
 
-class GetLastDeliberationsQuery : Query()
+data object GetLastDeliberationsQuery : Query()
 
 data class GetLastDeliberationsQueryResponse(val results: List<DeliberationDto>) : QueryResponse()
 
@@ -41,7 +41,7 @@ data class IsMailAlreadyTakenQuery(val mail: String) : Query()
 
 data class IsMailAlreadyTakenQueryResponse(val alreadyTaken: Boolean) : QueryResponse()
 
-class ListAllOrganismesQuery : Query()
+data object ListAllOrganismesQuery : Query()
 
 data class ListAllOrganismesQueryResponse(
     val organismes: List<OrganismeListDto>,
