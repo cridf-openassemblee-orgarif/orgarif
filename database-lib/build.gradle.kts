@@ -2,7 +2,7 @@ import org.jetbrains.kotlin.gradle.tasks.KotlinCompile
 
 plugins { kotlin("jvm") }
 
-val kotlinVersion = "1.8.21"
+val kotlinVersion = "1.9.0"
 val jooqVersion = "3.18.4"
 
 tasks {
