@@ -8,7 +8,7 @@ spring:
       max-request-size: 10MB
   datasource:
     driver-class-name: org.postgresql.Driver
-    url: jdbc:postgresql://${database.host}:${database.port}/${database.name}
+    url: ${database.protocol}://${database.host}:${database.port}/${database.name}
     username: ${database.user}
     password: ${database.password}
   freemarker.expose-request-attributes: true

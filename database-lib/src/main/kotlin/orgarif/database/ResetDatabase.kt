@@ -1,18 +1,26 @@
 package orgarif.database
 
 import java.nio.file.Files
+import java.sql.Connection
+import java.sql.DriverManager
 import mu.KotlinLogging
+import org.jooq.DSLContext
+import org.jooq.impl.DSL
 import orgarif.database.GenerateJooqAndDiff.sqlInitiateSchemaResultFile
 import orgarif.database.GenerateJooqAndDiff.sqlInsertFilesDir
 import orgarif.database.GenerateJooqAndDiff.sqlSchemaFilesDir
 import orgarif.database.domain.PsqlDatabaseConfiguration
-import orgarif.database.utils.DatasourcePool
-import orgarif.database.utils.ShellRunner
+import orgarif.database.utils.DatabaseUtils
 import orgarif.database.utils.SqlDependenciesResolver
 
 fun main() {
     System.setProperty("logback.configurationFile", "logback-database-lib.xml")
-    ResetDatabase.resetDatabaseSchema(psqlDatabaseConfiguration, insertData = true)
+    DatabaseUtils.createDatabaseIfNeeded(psqlDatabaseConfiguration)
+    DriverManager.getConnection(
+            psqlDatabaseConfiguration.jdbcUrl(),
+            psqlDatabaseConfiguration.user,
+            psqlDatabaseConfiguration.password)
+        .use { ResetDatabase.resetDatabaseSchema(it, insertData = true) }
     ResetDatabase.logger.info {
         "[OK] reset database \"${psqlDatabaseConfiguration.databaseName}\""
     }
@@ -22,48 +30,24 @@ object ResetDatabase {
     // [doc] generated directory can be deleted if there is a problem
     internal val logger = KotlinLogging.logger {}
 
-    fun resetDatabaseSchema(configuration: PsqlDatabaseConfiguration, insertData: Boolean) {
+    fun resetDatabaseSchema(connection: Connection, insertData: Boolean) {
         logger.info {
-            "Reset database \"${configuration.databaseName}\", using directory: $sqlSchemaFilesDir"
+            "Reset schema \"${PsqlDatabaseConfiguration.schema}\", using directory: $sqlSchemaFilesDir"
         }
-        createDatabase(configuration, fails = false)
-        cleanSchema(configuration)
-        initializeSchema(configuration)
+        val jooq = DSL.using(connection)
+        cleanSchema(jooq, PsqlDatabaseConfiguration.schema)
+        initializeSchema(jooq, PsqlDatabaseConfiguration.schema)
         if (insertData) {
-            insertInitialData(psqlDatabaseConfiguration)
+            insertInitialData(jooq)
         }
     }
 
-    fun dropDatabase(configuration: PsqlDatabaseConfiguration) {
-        logger.info { "Drop database \"${configuration.databaseName}\"" }
-        ShellRunner.run("dropdb", configuration.databaseName).let {
-            if (it.result != 0) {
-                throw RuntimeException(
-                    "Could not dropdb : ${it.result}\n${it.errorOutput.joinToString(separator = "\n")}")
-            }
-        }
+    private fun cleanSchema(jooq: DSLContext, schema: String) {
+        jooq.dropSchema(schema).cascade().execute()
+        jooq.createSchema(schema).execute()
     }
 
-    private fun createDatabase(configuration: PsqlDatabaseConfiguration, fails: Boolean) {
-        logger.info { "Create database \"${configuration.databaseName}\"" }
-        ShellRunner.run("createdb", configuration.databaseName).let {
-            if (fails && it.result != 0) {
-                throw RuntimeException(
-                    "Could not createdb : ${it.result}\n${it.errorOutput.joinToString(separator = "\n")}")
-            }
-        }
-    }
-
-    private fun cleanSchema(configuration: PsqlDatabaseConfiguration) {
-        logger.info { "Clean database \"${configuration.databaseName}\"" }
-        DatasourcePool.get(configuration).connection.createStatement().use {
-            it.execute("DROP SCHEMA ${configuration.schema} CASCADE;")
-            it.execute("CREATE SCHEMA ${configuration.schema};")
-        }
-    }
-
-    private fun initializeSchema(configuration: PsqlDatabaseConfiguration) {
-        logger.info { "Initialize database schema \"${configuration.databaseName}\"" }
+    private fun initializeSchema(jooq: DSLContext, schema: String) {
         val sqlQueries =
             sqlSchemaFilesDir
                 .toFile()
@@ -72,27 +56,22 @@ object ResetDatabase {
                 .map { Files.readString(it.toPath()) }
                 .toList()
         val resolved = SqlDependenciesResolver.resolveSql(sqlQueries)
+        jooq.transaction { _ -> resolved.forEach { jooq.execute(it) } }
+
         val initScript =
             "BEGIN TRANSACTION;\n" + resolved.joinToString(separator = "\n") + "COMMIT;"
-        DatasourcePool.get(configuration).connection.createStatement().use {
-            it.execute(initScript)
-        }
         Files.write(sqlInitiateSchemaResultFile, initScript.toByteArray())
     }
 
-    private fun insertInitialData(configuration: PsqlDatabaseConfiguration) {
+    private fun insertInitialData(jooq: DSLContext) {
         logger.info { "Insert initial data, using directory: $sqlInsertFilesDir" }
-        val sqlFiles =
+        val sqlQueries =
             sqlInsertFilesDir
                 .toFile()
                 .walk()
                 .filter { it.extension == "sql" }
+                .map { Files.readString(it.toPath()) }
                 .toList()
-                .sortedBy { it.name }
-        sqlFiles.forEach { sqlFile ->
-            logger.info { "Inject ${sqlFile.name}" }
-            val sql = Files.readString(sqlFile.toPath())
-            DatasourcePool.get(configuration).connection.createStatement().use { it.execute(sql) }
-        }
+        sqlQueries.forEach { jooq.execute(it) }
     }
 }

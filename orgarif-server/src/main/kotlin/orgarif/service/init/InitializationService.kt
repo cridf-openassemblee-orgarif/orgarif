@@ -8,8 +8,6 @@ import org.springframework.beans.factory.annotation.Value
 import org.springframework.core.env.Environment
 import org.springframework.stereotype.Service
 import orgarif.database.ResetDatabase
-import orgarif.database.domain.PsqlDatabaseConfiguration
-import orgarif.database.psqlDatabaseConfiguration
 import orgarif.domain.ApplicationEnvironment
 import orgarif.repository.log.DeploymentLogDao
 import orgarif.service.utils.ApplicationInstance
@@ -20,27 +18,12 @@ class InitializationService(
     dataSource: DataSource,
     devInitialDataInjectorService: DevInitialDataInjectorService,
     deploymentLogDao: DeploymentLogDao,
-    @Value("\${database.host}") private val databaseHost: String,
-    @Value("\${database.port}") private val databasePort: Int,
-    @Value("\${database.name}") private val databaseName: String,
-    @Value("\${database.user}") private val databaseUser: String,
-    @Value("\${database.password}") private val databasePassword: String,
     @Value("\${insertInitialData}") private val insertInitialData: Boolean,
     private val dateService: DateService,
     private val environment: Environment,
 ) {
 
     private val logger = KotlinLogging.logger {}
-
-    val databaseConfiguration by lazy {
-        PsqlDatabaseConfiguration(
-            host = databaseHost,
-            port = databasePort,
-            databaseName = databaseName,
-            user = databaseUser,
-            password = databasePassword,
-            schema = psqlDatabaseConfiguration.schema)
-    }
 
     init {
         TimeZone.setDefault(TimeZone.getTimeZone("UTC"))
@@ -49,7 +32,9 @@ class InitializationService(
             ApplicationEnvironment.Dev,
             ApplicationEnvironment.Test -> {
                 if (databaseIsEmpty(dataSource)) {
-                    ResetDatabase.resetDatabaseSchema(databaseConfiguration, insertInitialData)
+                    dataSource.connection.use { c ->
+                        ResetDatabase.resetDatabaseSchema(c, insertInitialData)
+                    }
                 }
                 if (insertInitialData) {
                     devInitialDataInjectorService.initiateDevData()

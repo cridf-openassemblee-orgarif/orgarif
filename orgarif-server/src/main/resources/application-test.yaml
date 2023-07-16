@@ -1,11 +1,15 @@
 app.url:
 #---------------------------------------------------------------------------
+spring:
+  datasource:
+    driver-class-name: org.testcontainers.jdbc.ContainerDatabaseDriver
 database:
-  host: localhost
-  port: 5432
-  name: orgarif-test
-  user: mlo
-  password:
+  host:
+  port: 0
+  name: orgarif
+  user: test
+  password: test
+  protocol: jdbc:tc:postgresql:15
 #---------------------------------------------------------------------------
 assets:
   useBuildFiles: false

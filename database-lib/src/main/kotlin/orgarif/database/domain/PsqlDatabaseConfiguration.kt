@@ -6,7 +6,11 @@ data class PsqlDatabaseConfiguration(
     val databaseName: String,
     val user: String,
     val password: String?,
-    val schema: String
+    val protocol: String
 ) {
-    fun jdbcUrl() = "jdbc:postgresql://${host}/${databaseName}"
+    fun jdbcUrl() = "$protocol://$host:$port/$databaseName"
+
+    companion object {
+        const val schema = "public"
+    }
 }
