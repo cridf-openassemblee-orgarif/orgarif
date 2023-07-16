@@ -21,7 +21,7 @@ const docResponse = (response: CommandResponse) => {
   const objectType = response.objectType;
   switch (objectType) {
     default:
-      return <>{t.Result()}</>;
+      return t.Result();
   }
 };
 
@@ -124,7 +124,7 @@ export const AdminManualCommandView = () => {
             `}
           />
           <br />
-          <button onClick={handleCommand}>{t.HandleCommand()}</button>
+          <button onClick={handleCommand}>{t.SendCommand()}</button>
           {okCommandCount !== undefined && totalCommandCount !== undefined && (
             <p
               css={css`
