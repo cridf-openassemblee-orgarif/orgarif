@@ -8,7 +8,11 @@ import org.springframework.context.support.GenericApplicationContext
 import org.springframework.context.support.beans
 import org.springframework.core.convert.support.GenericConversionService
 import org.springframework.scheduling.concurrent.ThreadPoolTaskExecutor
+import org.springframework.security.config.annotation.web.builders.HttpSecurity
+import org.springframework.security.config.annotation.web.invoke
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder
+import org.springframework.security.web.AuthenticationEntryPoint
+import org.springframework.security.web.authentication.logout.LogoutSuccessHandler
 import org.springframework.security.web.context.HttpSessionSecurityContextRepository
 import org.springframework.security.web.csrf.CookieCsrfTokenRepository
 import org.springframework.security.web.csrf.XorCsrfTokenRequestAttributeHandler
@@ -70,6 +74,37 @@ class ApplicationBeans : ApplicationContextInitializer<GenericApplicationContext
                     })
         }
         bean { TomcatServletWebServerFactory().apply { addContextValves(TomcatValve()) } }
+        bean {
+            val http = ref<HttpSecurity>()
+            http.invoke {
+                csrf { csrfTokenRepository = CookieCsrfTokenRepository.withHttpOnlyFalse() }
+                exceptionHandling {
+                    // [doc] disable Spring default login page
+                    authenticationEntryPoint = AuthenticationEntryPoint { _, response, _ ->
+                        response.sendError(403, "Access Denied")
+                    }
+                }
+                httpBasic { disable() }
+                logout {
+                    logoutUrl = Routes.logout
+                    logoutSuccessHandler = LogoutSuccessHandler { _, response, _ ->
+                        response.status = 200
+                        response.sendRedirect("/")
+                    }
+                    permitAll()
+                }
+                headers {
+                    frameOptions {
+                        // [doc] forbid connection inside frame
+                        disable()
+                        // [doc] forbid rendering inside frame
+                        deny = true
+                    }
+                }
+                authorizeHttpRequests { authorize(anyRequest, permitAll) }
+            }
+            http.build()
+        }
     }
 
     override fun initialize(context: GenericApplicationContext) = beans.initialize(context)
