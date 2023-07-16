@@ -65,7 +65,11 @@ const renderRoutes = (
   routes.map(route => {
     const path = parentPath + route.path;
     return (
-      <Route path={path} element={<RouteComponent {...route} />}>
+      <Route
+        key={route.name}
+        path={path}
+        element={<RouteComponent {...route} />}
+      >
         {route.rootSubComponent && (
           <Route
             index
