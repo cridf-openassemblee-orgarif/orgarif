@@ -38,6 +38,7 @@ tasks {
 repositories {
     mavenLocal()
     mavenCentral()
+    maven("https://repo.spring.io/milestone")
 }
 
 configurations.all { exclude(group = "junit", module = "junit") }
