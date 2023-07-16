@@ -11,6 +11,7 @@ database:
   name: orgarif
   user: ${USER}
   password:
+  protocol: jdbc:postgresql
 #---------------------------------------------------------------------------
 assets:
   useBuildFiles: false

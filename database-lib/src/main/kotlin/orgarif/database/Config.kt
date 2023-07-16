@@ -32,7 +32,7 @@ val psqlDatabaseConfiguration: PsqlDatabaseConfiguration by lazy {
             databaseName = databaseName,
             user = config.getValue("database.user"),
             password = config.getValueOrNull("database.password"),
-            schema = "public")
+            protocol = config.getValue("database.protocol"))
     }
     val additionalConfig =
         System.getenv("ORGARIF_DEV_ADDITIONAL_CONFIG") ?: ("dev-" + System.getenv("USER"))

@@ -43,7 +43,9 @@ object JooqConfiguration {
                             .withName(PostgresDatabase::class.java.name)
                             .withIncludes(".*")
                             .withExcludes(excludeTables.joinToString(separator = "|"))
-                            .withSchemata(SchemaMappingType().withInputSchema(conf.schema))
+                            .withSchemata(
+                                SchemaMappingType()
+                                    .withInputSchema(PsqlDatabaseConfiguration.schema))
                             .apply {
                                 val timeStampForcedType =
                                     ForcedType().apply {

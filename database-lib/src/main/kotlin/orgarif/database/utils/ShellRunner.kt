@@ -27,8 +27,9 @@ object ShellRunner {
                     val addToPath =
                         listOf(
                             "/usr/local/bin",
-                            "/opt/homebrew/opt/postgresql@15/bin/",
-                            "/opt/homebrew/bin/")
+                            "/opt/homebrew/opt/postgresql@15/bin",
+                            "/usr/local/opt/postgresql@15/bin",
+                            "/opt/homebrew/bin")
                     put("PATH", "${get("PATH")}:${addToPath.joinToString(separator = ":")}")
                 }
                 if (directory != null) {

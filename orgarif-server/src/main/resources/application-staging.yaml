@@ -6,6 +6,7 @@ database:
   name: ${POSTGRESQL_ADDON_DB}
   user: ${POSTGRESQL_ADDON_USER}
   password: ${POSTGRESQL_ADDON_PASSWORD}
+  protocol: jdbc:postgresql
 spring:
   datasource:
     tomcat:

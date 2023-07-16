@@ -41,6 +41,9 @@ object PgQuarrelUtils {
         diffConf: PsqlDatabaseConfiguration,
         destinationPath: Path
     ) {
+        logger.info {
+            "Generate pgquarrel diff between ${conf.databaseName} and ${diffConf.databaseName}"
+        }
         // TODO
         if (!conf.password.isNullOrEmpty() || !diffConf.password.isNullOrEmpty()) {
             logger.error { "Can't handle passwords with pgquarrel yet" }
@@ -59,10 +62,15 @@ object PgQuarrelUtils {
                 "--target-dbname=${conf.databaseName}",
                 "--target-user=${conf.user}",
                 "--target-no-password")
-        val diff = commandResult.output.fold("") { acc, s -> acc + "\n" + s }
-        val file = destinationPath.resolve("diff_" + formatter.format(LocalDateTime.now()) + ".sql")
-        logger.info { "Writing diff to $file" }
-        file.toFile().parentFile.mkdirs()
-        Files.write(file, diff.toByteArray(Charsets.UTF_8))
+        if (commandResult.result == 0) {
+            val diff = commandResult.output.fold("") { acc, s -> acc + "\n" + s }
+            val file =
+                destinationPath.resolve("diff_" + formatter.format(LocalDateTime.now()) + ".sql")
+            logger.info { "Writing diff to $file" }
+            file.toFile().parentFile.mkdirs()
+            Files.write(file, diff.toByteArray(Charsets.UTF_8))
+        } else {
+            logger.error { "Diff failed" }
+        }
     }
 }

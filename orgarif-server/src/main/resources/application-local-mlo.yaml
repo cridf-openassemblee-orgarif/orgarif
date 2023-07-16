@@ -1,6 +1,7 @@
 database:
   user: mlo
   password:
+  protocol: jdbc:postgresql
 assets.useBuildFiles: true
 mail:
   devDestination: mp.lorber+log-orgarif@gmail.com
