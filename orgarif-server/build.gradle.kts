@@ -11,6 +11,8 @@ plugins {
 
 val kotlinVersion = "1.9.0"
 
+springBoot { mainClass.set("orgarif.OrgarifApplicationKt") }
+
 tasks {
     withType<KotlinCompile> { kotlinOptions.jvmTarget = "17" }
     test {
