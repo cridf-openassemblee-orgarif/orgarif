@@ -1,17 +1,21 @@
 package orgarif.config
 
 import okhttp3.OkHttpClient
+import org.springframework.boot.autoconfigure.web.servlet.WebMvcRegistrations
+import org.springframework.boot.web.embedded.tomcat.TomcatServletWebServerFactory
 import org.springframework.context.ApplicationContextInitializer
 import org.springframework.context.support.GenericApplicationContext
 import org.springframework.context.support.beans
 import org.springframework.core.convert.support.GenericConversionService
 import org.springframework.scheduling.concurrent.ThreadPoolTaskExecutor
+import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder
 import org.springframework.security.web.context.HttpSessionSecurityContextRepository
 import org.springframework.security.web.csrf.CookieCsrfTokenRepository
 import org.springframework.security.web.csrf.XorCsrfTokenRequestAttributeHandler
 import org.springframework.session.FindByIndexNameSessionRepository
 import org.springframework.session.Session
 import org.springframework.session.jdbc.JdbcIndexedSessionRepository
+import orgarif.error.ApplicationExceptionHandlerExceptionResolver
 import orgarif.serialization.Serializer
 import orgarif.service.utils.ApplicationTaskExecutor
 import orgarif.service.utils.random.IdLogService
@@ -37,6 +41,13 @@ class ApplicationBeans : ApplicationContextInitializer<GenericApplicationContext
         bean<CookieCsrfTokenRepository>()
         bean<HttpSessionSecurityContextRepository>()
         bean<XorCsrfTokenRequestAttributeHandler>()
+        bean<BCryptPasswordEncoder>(isPrimary = true)
+        bean {
+            object : WebMvcRegistrations {
+                override fun getExceptionHandlerExceptionResolver() =
+                    ApplicationExceptionHandlerExceptionResolver()
+            }
+        }
         bean(isPrimary = true) {
             SafeSessionRepository(
                 JdbcIndexedSessionRepository(ref(), ref())
@@ -58,6 +69,7 @@ class ApplicationBeans : ApplicationContextInitializer<GenericApplicationContext
                         it as FindByIndexNameSessionRepository<Session>
                     })
         }
+        bean { TomcatServletWebServerFactory().apply { addContextValves(TomcatValve()) } }
     }
 
     override fun initialize(context: GenericApplicationContext) = beans.initialize(context)
