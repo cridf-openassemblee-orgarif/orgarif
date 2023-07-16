@@ -6,7 +6,7 @@
 <!-- ${deploymentId?no_esc} -->
 <#include "header.ftlh">
 <script>
-    <#if bootstrapData??>var bootstrapData = ${bootstrapData?no_esc};</#if>
+    var bootstrapData = ${bootstrapData?no_esc};
     var csrfToken = "${_csrf.token}";
 </script>
 <#list cssAssets as cssAsset>
