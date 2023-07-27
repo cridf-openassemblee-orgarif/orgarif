@@ -4,7 +4,7 @@ database:
   password: docker-psql-password
 # TODO[tmpl] param docker compose
 mail:
-  devDestination: mp.lorber+log-orgarif@gmail.com
+  devDestination:
 pgquarrel:
 assets:
   webpackDevPort: 3300

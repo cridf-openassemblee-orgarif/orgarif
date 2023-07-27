@@ -2,6 +2,6 @@ database:
   user: mathieu
   password:
 mail:
-  devDestination: mp.lorber+log-orgarif@gmail.com
+  devDestination:
 pgquarrel:
 sigerUrl: https://siger.mlorber.net

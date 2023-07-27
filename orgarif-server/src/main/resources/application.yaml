@@ -20,8 +20,8 @@ server:
 insertInitialData: false
 #---------------------------------------------------------------------------
 mail:
-  devLogSender: mp.lorber+log-orgarif@gmail.com
-  devDestination: mp.lorber+log-orgarif@gmail.com
+  devLogSender:
+  devDestination:
 #---------------------------------------------------------------------------
 assets.webpackDevHost:
 #---------------------------------------------------------------------------

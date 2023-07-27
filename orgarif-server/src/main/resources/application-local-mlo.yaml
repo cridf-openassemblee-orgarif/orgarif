@@ -4,4 +4,4 @@ database:
   protocol: jdbc:postgresql
 assets.useBuildFiles: true
 mail:
-  devDestination: mp.lorber+log-orgarif@gmail.com
+  devDestination:
