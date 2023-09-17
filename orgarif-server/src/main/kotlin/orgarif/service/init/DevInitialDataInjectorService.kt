@@ -1,5 +1,9 @@
 package orgarif.service.init
 
+import com.fasterxml.jackson.annotation.JsonInclude
+import com.fasterxml.jackson.databind.DeserializationFeature
+import com.fasterxml.jackson.databind.ObjectMapper
+import com.fasterxml.jackson.module.kotlin.registerKotlinModule
 import java.time.LocalDate
 import java.util.concurrent.atomic.AtomicInteger
 import org.springframework.beans.factory.annotation.Value
@@ -24,6 +28,7 @@ import orgarif.repository.RepresentantDao
 import orgarif.repository.SecteurDao
 import orgarif.repository.TypeStructureDao
 import orgarif.repository.user.UserDao
+import orgarif.service.mail.MailService
 import orgarif.service.user.UserService
 import orgarif.service.utils.DateService
 import orgarif.service.utils.TransactionIsolationService
@@ -383,10 +388,8 @@ class DevInitialDataInjectorService(
         }
 
     fun devUserMail(username: String): String {
-        // FIXME[tmpl] double + if some + in conf (which is the case...) !
-        val arobaseIndex = developerDestinationMail.indexOf('@')
-        val mailPrefix = developerDestinationMail.substring(0, arobaseIndex)
-        val mailSuffix = developerDestinationMail.substring(arobaseIndex)
-        return "$mailPrefix+$username$mailSuffix"
+        val (mailPrefix, mailSuffix) = MailService.extractMailPrefixSuffix(developerDestinationMail)
+        // not a problem if there's multiple '+'
+        return "$mailPrefix+$username@$mailSuffix"
     }
 }

@@ -7,6 +7,7 @@ import com.fasterxml.jackson.databind.cfg.MapperConfig
 import com.fasterxml.jackson.databind.introspect.AnnotatedField
 import com.fasterxml.jackson.databind.introspect.AnnotatedMethod
 import java.util.Base64
+import kotlin.math.min
 import mu.KotlinLogging
 import okhttp3.Credentials
 import org.springframework.beans.factory.annotation.Value
@@ -47,6 +48,13 @@ class MailService(
                 propertyNamingStrategy = MyPropertyNamingStrategy()
                 enable(SerializationFeature.INDENT_OUTPUT)
             }
+        }
+
+        fun extractMailPrefixSuffix(mail: String): Pair<String, String> {
+            val arobaseLimit = mail.indexOf('@').let { if (it != -1) it else mail.length }
+            val plusLimit = mail.indexOf('+').let { if (it != -1) it else mail.length }
+            return mail.substring(0, min(arobaseLimit, plusLimit)) to
+                mail.substring(min(arobaseLimit + 1, mail.length))
         }
     }
 
