@@ -1,5 +1,10 @@
 package orgarif.service
 
+import com.fasterxml.jackson.annotation.JsonInclude
+import com.fasterxml.jackson.databind.DeserializationFeature
+import com.fasterxml.jackson.databind.ObjectMapper
+import com.fasterxml.jackson.module.kotlin.readValue
+import com.fasterxml.jackson.module.kotlin.registerKotlinModule
 import mu.KotlinLogging
 import org.springframework.beans.factory.annotation.Value
 import org.springframework.http.HttpMethod
@@ -9,7 +14,6 @@ import orgarif.domain.Civilite
 import orgarif.domain.Uri
 import orgarif.repository.EluDao
 import orgarif.repository.RepresentantDao
-import orgarif.serialization.Serializer
 import orgarif.service.utils.DateService
 import orgarif.service.utils.HttpService
 import orgarif.service.utils.random.RandomService
@@ -28,8 +32,15 @@ class ElusSynchronizationService(
     private val logger = KotlinLogging.logger {}
 
     companion object {
-        val apiUrl = "api/publicdata/v2/elus"
+        val apiUrl = "api/publicdata/v2/elus-aggregats"
     }
+
+    val objectMapper: ObjectMapper =
+        ObjectMapper().apply {
+            registerKotlinModule()
+            setSerializationInclusion(JsonInclude.Include.NON_NULL)
+            configure(DeserializationFeature.FAIL_ON_UNKNOWN_PROPERTIES, false)
+        }
 
     enum class OpenassembleeCivilite {
         M,
@@ -37,16 +48,22 @@ class ElusSynchronizationService(
     }
 
     data class OpenassembleeElu(
-        val id: String,
+        val id: Long,
         val uid: String,
         val civilite: OpenassembleeCivilite?,
         val nom: String?,
         val prenom: String?,
-        val groupePolitique: String?,
-        val groupePolitiqueCourt: String?,
+        val appartenancesGroupePolitique: List<ApiAppartenanceGroupePolitique>,
         val image: String?,
-        val actif: Boolean
-    )
+        val actif: Boolean,
+    ) {
+
+        data class ApiAppartenanceGroupePolitique(
+            val nomGroupePolitique: String?,
+            val nomCourtGroupePolitique: String?,
+            val actif: Boolean,
+        )
+    }
 
     data class Data(val elus: List<OpenassembleeElu>)
 
@@ -77,8 +94,8 @@ class ElusSynchronizationService(
     // FIXME transaction
     private fun handleElusJson(elusJons: String) {
         val now = dateService.now()
-        val data = Serializer.deserialize<Data>(elusJons)
-        val newElus =
+        val data = objectMapper.readValue<Data>(elusJons)
+        val openassembleeElus =
             data.elus.map { r ->
                 val civilite =
                     when (r.civilite) {
@@ -91,8 +108,20 @@ class ElusSynchronizationService(
                     civilite = civilite,
                     prenom = r.prenom?.trim() ?: "",
                     nom = r.nom?.trim() ?: "",
-                    groupePolitique = r.groupePolitique?.trim() ?: "",
-                    groupePolitiqueCourt = r.groupePolitiqueCourt?.trim() ?: "",
+                    groupePolitique =
+                        r.appartenancesGroupePolitique
+                            .filter { it.actif }
+                            .lastOrNull()
+                            ?.nomGroupePolitique
+                            ?.trim()
+                            ?: "",
+                    groupePolitiqueCourt =
+                        r.appartenancesGroupePolitique
+                            .filter { it.actif }
+                            .lastOrNull()
+                            ?.nomCourtGroupePolitique
+                            ?.trim()
+                            ?: "",
                     imageUrl = r.image,
                     actif = r.actif,
                     creationDate = now,
@@ -100,7 +129,7 @@ class ElusSynchronizationService(
             }
         val existingElus = eluDao.fetchAll().associateBy { it.id }
         val r =
-            newElus
+            openassembleeElus
                 .map { newElu ->
                     val existing = existingElus[newElu.id]
                     if (existing == null) {
