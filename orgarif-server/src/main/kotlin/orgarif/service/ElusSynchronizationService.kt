@@ -79,7 +79,7 @@ class ElusSynchronizationService(
                     return
                 }
             } catch (e: Exception) {
-                logger.error { "Could not synchronize élus." }
+                logger.error(e) { "Could not synchronize élus." }
                 return
             }
         handleElusJson(elusJons)
