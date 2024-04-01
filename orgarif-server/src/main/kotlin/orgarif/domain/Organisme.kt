@@ -1,7 +1,9 @@
 package orgarif.domain
 
 import java.time.LocalDate
+import orgarif.repository.EluDao
 import orgarif.repository.OrganismeDao
+import orgarif.repository.RepresentantDao
 
 enum class ItemStatus {
     live,
@@ -31,7 +33,21 @@ data class RepresentantDto(
     val groupePolitiqueCourt: String?,
     val imageUrl: String?,
     val eluActif: Boolean?
-)
+) {
+    companion object {
+        fun from(r: RepresentantDao.Record, elu: EluDao.Record?) =
+            RepresentantDto(
+                r.id,
+                elu?.id,
+                elu?.civilite?.name,
+                r.prenom,
+                r.nom,
+                elu?.groupePolitique,
+                elu?.groupePolitiqueCourt,
+                elu?.imageUrl,
+                elu?.actif)
+    }
+}
 
 data class DeliberationDto(
     val id: DeliberationId,
@@ -64,9 +80,11 @@ data class OrganismeListDto(
     val secteurId: SecteurId?,
     val typeStructureId: TypeStructureId?
 ) {
-    constructor(
-        r: OrganismeDao.Record
-    ) : this(r.id, r.nom, r.departementId, r.natureJuridiqueId, r.secteurId, r.typeStructureId)
+    companion object {
+        fun from(r: OrganismeDao.Record) =
+            OrganismeListDto(
+                r.id, r.nom, r.departementId, r.natureJuridiqueId, r.secteurId, r.typeStructureId)
+    }
 }
 
 data class OrganismeDto(

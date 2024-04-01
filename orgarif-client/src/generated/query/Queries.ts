@@ -2,6 +2,7 @@ import {
   DepartementId,
   NatureJuridiqueId,
   OrganismeId,
+  RepresentantId,
   SecteurId,
   TypeStructureId,
   UserId
@@ -17,6 +18,8 @@ import { UserInfos } from '../domain/User';
 export type Query =
   | GetLastDeliberationsQuery
   | GetOrganismeQuery
+  | GetRepresentantDetailsQuery
+  | GetRepresentantsQuery
   | GetUserInfosQuery
   | GetUsersQuery
   | IsMailAlreadyTakenQuery
@@ -28,6 +31,8 @@ export type Query =
 export type QueryResponse =
   | GetLastDeliberationsQueryResponse
   | GetOrganismeQueryResponse
+  | GetRepresentantDetailsQueryResponse
+  | GetRepresentantsQueryResponse
   | GetUserInfosQueryResponse
   | GetUsersQueryResponse
   | IsMailAlreadyTakenQueryResponse
@@ -53,6 +58,26 @@ export interface GetOrganismeQuery {
 export interface GetOrganismeQueryResponse {
   objectType: 'GetOrganismeQueryResponse';
   organisme: OrganismeDto;
+}
+
+export interface GetRepresentantDetailsQuery {
+  objectType: 'GetRepresentantDetailsQuery';
+  id: RepresentantId;
+}
+
+export interface GetRepresentantDetailsQueryResponse {
+  objectType: 'GetRepresentantDetailsQueryResponse';
+  representant: RepresentantDto;
+  organismes: OrganismeListDto[];
+}
+
+export interface GetRepresentantsQuery {
+  objectType: 'GetRepresentantsQuery';
+}
+
+export interface GetRepresentantsQueryResponse {
+  objectType: 'GetRepresentantsQueryResponse';
+  representants: RepresentantDto[];
 }
 
 export interface GetUserInfosQuery {

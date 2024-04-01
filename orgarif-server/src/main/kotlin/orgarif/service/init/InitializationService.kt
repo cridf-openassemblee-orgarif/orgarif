@@ -62,9 +62,7 @@ class InitializationService(
                         "env \"${ApplicationInstance.env}\", " +
                         "deployment id ${ApplicationInstance.deploymentLogId}"
                 }
-                taskExecutor.execute {
-                    elusSynchronizationService.synchronize()
-                }
+                taskExecutor.execute { elusSynchronizationService.synchronize() }
             }
         }
         deploymentLogDao.insert(

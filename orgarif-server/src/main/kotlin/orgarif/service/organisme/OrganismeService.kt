@@ -107,16 +107,7 @@ class OrganismeService(
                 .associateBy { it.id }
         return representants.map {
             val elu = it.eluId?.let { elus.getValue(it) }
-            RepresentantDto(
-                it.id,
-                elu?.id,
-                elu?.civilite?.name,
-                it.prenom,
-                it.nom,
-                elu?.groupePolitique,
-                elu?.groupePolitiqueCourt,
-                elu?.imageUrl,
-                elu?.actif)
+            RepresentantDto.from(it, elu)
         }
     }
 }

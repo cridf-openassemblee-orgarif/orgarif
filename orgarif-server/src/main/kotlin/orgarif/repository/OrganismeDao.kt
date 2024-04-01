@@ -54,6 +54,14 @@ class OrganismeDao(val jooq: DSLContext) {
 
     fun fetch(id: OrganismeId) = fetchOrNull(id) ?: throw IllegalArgumentException("$id")
 
+    fun fetch(ids: Set<OrganismeId>): List<Record> =
+        jooq
+            .selectFrom(ORGANISME)
+            .where(ORGANISME.ID.`in`(ids.map { it.rawId }))
+            .orderBy(ORGANISME.NOM)
+            .fetch()
+            .map(this::map)
+
     fun fetchAll(status: ItemStatus): List<Record> =
         jooq
             .selectFrom(ORGANISME)

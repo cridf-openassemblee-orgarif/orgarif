@@ -1,8 +1,8 @@
 /** @jsxImportSource @emotion/react */
 import { EmotionStyles } from '../../interfaces';
 import { state } from '../../state/state';
-import { emptyFilters } from '../../utils/filters';
 import { assertUnreachable } from '../../utils';
+import { emptyFilters } from '../../utils/filters';
 import { getValue } from '../../utils/nominal-class';
 import { ApplicationRoute, routePathMap } from './routes';
 import { buildPath } from './routing-utils';
@@ -40,8 +40,8 @@ const RouteLinkBase = (
           text-decoration: underline;
         }
       `,
-        props.addCss,
-        props.doesMatch ? props.activeCss : undefined
+      props.addCss,
+      props.doesMatch ? props.activeCss : undefined
     ]),
     onClick: props.removeFilters
       ? () => {

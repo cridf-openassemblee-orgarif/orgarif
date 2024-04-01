@@ -57,6 +57,14 @@ class DesignationDao(val jooq: DSLContext) {
             .fetchOne()
             ?.let(this::map)
 
+    fun fetchByRepresentantIdAndStatus(representantId: RepresentantId, status: ItemStatus) =
+        jooq
+            .selectFrom(DESIGNATION)
+            .where(DESIGNATION.REPRESENTANT_ID.equal(representantId.rawId))
+            .and(DESIGNATION.STATUS.equal(status.name))
+            .fetch()
+            .map(this::map)
+
     fun fetchByOrganismeIdEndDateAndStatus(
         organismeId: OrganismeId,
         endDate: LocalDate?,

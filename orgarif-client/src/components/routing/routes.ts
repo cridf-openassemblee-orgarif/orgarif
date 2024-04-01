@@ -1,4 +1,4 @@
-import { OrganismeId } from '../../generated/domain/Ids';
+import { OrganismeId, RepresentantId } from '../../generated/domain/Ids';
 import { UserId } from '../../generated/domain/Ids';
 import { Role } from '../../generated/domain/User';
 import { dict, Dict, flatMap } from '../../utils/nominal-class';
@@ -9,6 +9,8 @@ import { EditSecteursView } from '../../view/EditSecteursView';
 import { EditTypeStructuresView } from '../../view/EditTypeStructuresView';
 import { ListOrganismesView } from '../../view/ListOrganismesView';
 import { OrganismeView } from '../../view/OrganismeView';
+import { RepresentantDetailsView } from '../../view/representant-details/RepresentantDetailsView';
+import { RepresentantsView } from '../../view/representants/RepresentantsView';
 import { AccountView } from '../account/AccountView';
 import { AdminManualCommandView } from '../admin/AdminManualCommandView';
 import { LoginView } from '../login/LoginView';
@@ -30,6 +32,8 @@ export type ApplicationRoute =
   | LoginRoute
   | OrganismeRoute
   | RegisterRoute
+  | RepresentantDetailsRoute
+  | RepresentantsRoute
   | RootRoute
   | UsersManagementRoute
   | UsersManagementUserEditRolesRoute
@@ -101,6 +105,16 @@ export const routes: ApplicationRouteProps<any>[] = [
     name: 'RegisterRoute',
     path: '/register',
     component: RegisterView
+  },
+  {
+    name: 'RepresentantDetailsRoute',
+    path: '/representants/:id',
+    component: RepresentantDetailsView
+  },
+  {
+    name: 'RepresentantsRoute',
+    path: '/representants',
+    component: RepresentantsView
   },
   {
     name: 'RootRoute',
@@ -186,6 +200,15 @@ interface OrganismeRoute {
 
 interface RegisterRoute {
   name: 'RegisterRoute';
+}
+
+export interface RepresentantDetailsRoute {
+  name: 'RepresentantDetailsRoute';
+  id: RepresentantId;
+}
+
+interface RepresentantsRoute {
+  name: 'RepresentantsRoute';
 }
 
 interface RootRoute {

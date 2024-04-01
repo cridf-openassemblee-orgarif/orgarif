@@ -9,6 +9,7 @@ import orgarif.domain.OrganismeDto
 import orgarif.domain.OrganismeId
 import orgarif.domain.OrganismeListDto
 import orgarif.domain.RepresentantDto
+import orgarif.domain.RepresentantId
 import orgarif.domain.SecteurId
 import orgarif.domain.TypeStructureId
 import orgarif.domain.UserId
@@ -28,6 +29,18 @@ data class GetLastDeliberationsQueryResponse(val results: List<DeliberationDto>)
 data class GetOrganismeQuery(val id: OrganismeId) : Query()
 
 data class GetOrganismeQueryResponse(val organisme: OrganismeDto) : QueryResponse()
+
+data class GetRepresentantDetailsQuery(val id: RepresentantId) : Query()
+
+data class GetRepresentantDetailsQueryResponse(
+    val representant: RepresentantDto,
+    val organismes: List<OrganismeListDto>
+) : QueryResponse()
+
+data object GetRepresentantsQuery : Query()
+
+data class GetRepresentantsQueryResponse(val representants: List<RepresentantDto>) :
+    QueryResponse()
 
 data class GetUserInfosQuery(val userId: UserId) : Query()
 

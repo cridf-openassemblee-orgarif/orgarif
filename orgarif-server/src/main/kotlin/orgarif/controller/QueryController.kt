@@ -8,6 +8,10 @@ import orgarif.query.GetLastDeliberationsQuery
 import orgarif.query.GetLastDeliberationsQueryHandler
 import orgarif.query.GetOrganismeQuery
 import orgarif.query.GetOrganismeQueryHandler
+import orgarif.query.GetRepresentantDetailsQuery
+import orgarif.query.GetRepresentantDetailsQueryHandler
+import orgarif.query.GetRepresentantsQuery
+import orgarif.query.GetRepresentantsQueryHandler
 import orgarif.query.GetUserInfosQuery
 import orgarif.query.GetUserInfosQueryHandler
 import orgarif.query.GetUsersQuery
@@ -36,6 +40,8 @@ class QueryController(
     private val userSessionService: UserSessionService,
     private val getLastDeliberationsQueryHandler: GetLastDeliberationsQueryHandler,
     private val getOrganismeQueryHandler: GetOrganismeQueryHandler,
+    private val getRepresentantDetailsQueryHandler: GetRepresentantDetailsQueryHandler,
+    private val getRepresentantsQueryHandler: GetRepresentantsQueryHandler,
     private val getUserInfosQueryHandler: GetUserInfosQueryHandler,
     private val getUsersQueryHandler: GetUsersQueryHandler,
     private val isMailAlreadyTakenQueryHandler: IsMailAlreadyTakenQueryHandler,
@@ -61,6 +67,8 @@ class QueryController(
         when (query) {
             is GetLastDeliberationsQuery -> getLastDeliberationsQueryHandler
             is GetOrganismeQuery -> getOrganismeQueryHandler
+            is GetRepresentantDetailsQuery -> getRepresentantDetailsQueryHandler
+            GetRepresentantsQuery -> getRepresentantsQueryHandler
             is GetUserInfosQuery -> getUserInfosQueryHandler
             is GetUsersQuery -> getUsersQueryHandler
             is IsMailAlreadyTakenQuery -> isMailAlreadyTakenQueryHandler
