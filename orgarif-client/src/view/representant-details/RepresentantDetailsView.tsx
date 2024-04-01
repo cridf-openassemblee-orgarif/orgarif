@@ -55,6 +55,11 @@ export const RepresentantDetailsView = (props: {
                     name: 'EditOrganismeRoute',
                     id: o.id
                   }}
+                  addCss={css`
+                    &:hover {
+                      text-decoration: underline !important;
+                    }
+                  `}
                 >
                   {o.nom}
                 </RouteLink>

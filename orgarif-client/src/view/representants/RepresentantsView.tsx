@@ -40,6 +40,11 @@ export const RepresentantsView = () => {
                 name: 'RepresentantDetailsRoute',
                 id: r.id
               }}
+              addCss={css`
+                &:hover {
+                  text-decoration: underline !important;
+                }
+              `}
             >
               {r.civilite} {r.prenom} {r.nom}
               {r.eluId && (
