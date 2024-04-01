@@ -16,5 +16,6 @@ CREATE TABLE designation
     FOREIGN KEY (instance_id) REFERENCES instance (id)
 );
 
+CREATE INDEX ON designation (representant_id);
 CREATE INDEX ON designation (organisme_id);
 CREATE INDEX ON designation (instance_id);
