@@ -37,6 +37,12 @@ val DESIGNATION_ORGANISME_ID_IDX: Index =
         DesignationTable.DESIGNATION,
         arrayOf(DesignationTable.DESIGNATION.ORGANISME_ID),
         false)
+val DESIGNATION_REPRESENTANT_ID_IDX: Index =
+    Internal.createIndex(
+        DSL.name("designation_representant_id_idx"),
+        DesignationTable.DESIGNATION,
+        arrayOf(DesignationTable.DESIGNATION.REPRESENTANT_ID),
+        false)
 val INSTANCE_ORGANISME_ID_IDX: Index =
     Internal.createIndex(
         DSL.name("instance_organisme_id_idx"),

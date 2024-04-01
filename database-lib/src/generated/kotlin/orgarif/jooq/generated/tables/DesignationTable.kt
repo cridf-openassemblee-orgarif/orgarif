@@ -28,6 +28,7 @@ import orgarif.database.jooq.converter.TimestampWithTimeZoneToInstantJooqConvert
 import orgarif.jooq.generated.PublicTable
 import orgarif.jooq.generated.indexes.DESIGNATION_INSTANCE_ID_IDX
 import orgarif.jooq.generated.indexes.DESIGNATION_ORGANISME_ID_IDX
+import orgarif.jooq.generated.indexes.DESIGNATION_REPRESENTANT_ID_IDX
 import orgarif.jooq.generated.keys.DESIGNATION_PKEY
 import orgarif.jooq.generated.keys.DESIGNATION__DESIGNATION_INSTANCE_ID_FKEY
 import orgarif.jooq.generated.keys.DESIGNATION__DESIGNATION_ORGANISME_ID_FKEY
@@ -140,7 +141,10 @@ open class DesignationTable(
     ) : this(Internal.createPathAlias(child, key), child, key, DESIGNATION, null)
     override fun getSchema(): Schema? = if (aliased()) null else PublicTable.PUBLIC
     override fun getIndexes(): List<Index> =
-        listOf(DESIGNATION_INSTANCE_ID_IDX, DESIGNATION_ORGANISME_ID_IDX)
+        listOf(
+            DESIGNATION_INSTANCE_ID_IDX,
+            DESIGNATION_ORGANISME_ID_IDX,
+            DESIGNATION_REPRESENTANT_ID_IDX)
     override fun getPrimaryKey(): UniqueKey<DesignationRecord> = DESIGNATION_PKEY
     override fun getReferences(): List<ForeignKey<DesignationRecord, *>> =
         listOf(
