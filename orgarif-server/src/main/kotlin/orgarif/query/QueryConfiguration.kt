@@ -10,8 +10,8 @@ object QueryConfiguration {
         when (query) {
             is GetLastDeliberationsQuery -> User
             is GetOrganismeQuery -> null
-            is GetRepresentantDetailsQuery -> Admin
-            GetRepresentantsQuery -> Admin
+            is GetRepresentantDetailsQuery -> User
+            GetRepresentantsQuery -> User
             is GetUserInfosQuery -> Admin
             is GetUsersQuery -> Admin
             is IsMailAlreadyTakenQuery -> null

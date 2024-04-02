@@ -86,27 +86,25 @@ export const AppMenu = () => {
                 Gérer le compte
               </RouteLink>
             </MenuItem>
+            <MenuItem>
+              <RouteLink
+                route={{
+                  name: 'RepresentantsRoute'
+                }}
+              >
+                Liste des représentants
+              </RouteLink>
+            </MenuItem>
             {userInfos.roles.includes('Admin') && (
-              <>
-                <MenuItem>
-                  <RouteLink
-                    route={{
-                      name: 'UsersManagementRoute'
-                    }}
-                  >
-                    Gestion des utilisateurs
-                  </RouteLink>
-                </MenuItem>
-                <MenuItem>
-                  <RouteLink
-                    route={{
-                      name: 'RepresentantsRoute'
-                    }}
-                  >
-                    Liste des représentants
-                  </RouteLink>
-                </MenuItem>
-              </>
+              <MenuItem>
+                <RouteLink
+                  route={{
+                    name: 'UsersManagementRoute'
+                  }}
+                >
+                  Gestion des utilisateurs
+                </RouteLink>
+              </MenuItem>
             )}
             <MenuItem>
               <LogoutButton />
