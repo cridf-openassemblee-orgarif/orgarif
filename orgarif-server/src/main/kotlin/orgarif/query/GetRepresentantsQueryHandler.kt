@@ -17,6 +17,14 @@ class GetRepresentantsQueryHandler(val representantDao: RepresentantDao, val elu
                 .let { eluDao.fetch(it.toSet()) }
                 .associateBy { it.id }
         return GetRepresentantsQueryResponse(
-            representants.sortedBy { it.nom }.map { RepresentantDto.from(it, elus[it.eluId]) })
+            representants
+                .sortedBy { it.nom }
+                .map { it to elus[it.eluId] }
+                .filter {
+                    // si le représentant est élu, il doit être actif
+                    val elu = it.second
+                    elu == null || elu.actif
+                }
+                .map { RepresentantDto.from(it.first, it.second) })
     }
 }
