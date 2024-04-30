@@ -53,6 +53,11 @@ class InitializationService(
             }
             ApplicationEnvironment.Staging,
             ApplicationEnvironment.Prod -> {
+                if (databaseIsEmpty(dataSource)) {
+                    dataSource.connection.use { c ->
+                        ResetDatabase.resetDatabaseSchema(c, insertInitialData)
+                    }
+                }
                 if (insertInitialData) {
                     throw IllegalArgumentException(
                         "Inconsistent configuration, insertInitialData should be false on ${ApplicationInstance.env}")
