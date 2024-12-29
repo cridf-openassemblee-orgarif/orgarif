@@ -13,6 +13,7 @@ import {
 } from '../generated/domain/Ids';
 import { OrganismeListDto } from '../generated/domain/Organisme';
 import { UserInfos } from '../generated/domain/User';
+import { RecordUtils } from '../utils/RecordUtils';
 import {
   buildHash,
   extractFilters,
@@ -21,7 +22,6 @@ import {
   sortCategory,
   sortDepartements
 } from '../utils/filters';
-import { dict, Dict } from '../utils/nominal-class';
 import { isMobile } from '../utils/viewport-utils';
 import { atom, selector } from 'recoil';
 
@@ -40,10 +40,12 @@ export const state = {
       typeStructures: sortCategory([...bootstrapData.categories.typeStructures])
     }
   }),
-  departementsById: selector<Dict<DepartementId, Departement>>({
+  departementsById: selector<Record<DepartementId, Departement>>({
     key: 'departementsById',
-    get: ({ get }): Dict<DepartementId, Departement> =>
-      dict(get(state.categories).departements.map(n => [n.id, n]))
+    get: ({ get }): Record<DepartementId, Departement> =>
+      RecordUtils.fromEntries(
+        get(state.categories).departements.map(n => [n.id, n])
+      ) as Record<DepartementId, Departement>
   }),
   displayLandingPage: selector({
     key: 'displayLandingPage',
@@ -69,10 +71,12 @@ export const state = {
     key: 'forceListOrganisme',
     default: false
   }),
-  natureJuridiquesById: selector<Dict<NatureJuridiqueId, NatureJuridique>>({
+  natureJuridiquesById: selector<Record<NatureJuridiqueId, NatureJuridique>>({
     key: 'natureJuridiquesById',
-    get: ({ get }): Dict<NatureJuridiqueId, NatureJuridique> =>
-      dict(get(state.categories).natureJuridiques.map(n => [n.id, n]))
+    get: ({ get }): Record<NatureJuridiqueId, NatureJuridique> =>
+      RecordUtils.fromEntries(
+        get(state.categories).natureJuridiques.map(n => [n.id, n])
+      ) as Record<NatureJuridiqueId, NatureJuridique>
   }),
   organismeCategories: atom<OrganismeCategories>({
     key: 'organismeCategories',
@@ -82,15 +86,19 @@ export const state = {
     key: 'organismes',
     default: []
   }),
-  secteursById: selector<Dict<SecteurId, Secteur>>({
+  secteursById: selector<Record<SecteurId, Secteur>>({
     key: 'secteursById',
-    get: ({ get }): Dict<SecteurId, Secteur> =>
-      dict(get(state.categories).secteurs.map(s => [s.id, s]))
+    get: ({ get }): Record<SecteurId, Secteur> =>
+      RecordUtils.fromEntries(
+        get(state.categories).secteurs.map(s => [s.id, s])
+      ) as Record<SecteurId, Secteur>
   }),
-  typeStructuresById: selector<Dict<TypeStructureId, TypeStructure>>({
+  typeStructuresById: selector<Record<TypeStructureId, TypeStructure>>({
     key: 'typeStructuresById',
-    get: ({ get }): Dict<TypeStructureId, TypeStructure> =>
-      dict(get(state.categories).typeStructures.map(t => [t.id, t]))
+    get: ({ get }): Record<TypeStructureId, TypeStructure> =>
+      RecordUtils.fromEntries(
+        get(state.categories).typeStructures.map(t => [t.id, t])
+      ) as Record<TypeStructureId, TypeStructure>
   }),
   userInfos: atom<UserInfos>({
     key: 'userInfos',

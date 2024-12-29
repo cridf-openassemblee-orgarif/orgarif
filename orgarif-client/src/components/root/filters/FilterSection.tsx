@@ -14,7 +14,7 @@ import { state } from '../../../state/state';
 import { assertUnreachable } from '../../../utils';
 import { distinct } from '../../../utils/collections';
 import { Filters } from '../../../utils/filters';
-import { asNominalString } from '../../../utils/nominal-class';
+import { nominal } from '../../../utils/nominal-class';
 import { EmptyFiltersSection } from './EmptyFiltersSection';
 import { FilterChip } from './FilterChip';
 import * as React from 'react';
@@ -95,7 +95,7 @@ const extractCategoryLabelAndTooltip: FilterLabelAndTooltip = (
   // extract the value between parentheses to display the abbreviation.
   const regExp = /\((.*?)\)/;
   const r = regExp.exec(c.libelle);
-  return r && r.length > 1 ? [r[1], c.libelle] : [c.libelle, undefined];
+  return r && r.length > 1 ? [r[1]!, c.libelle] : [c.libelle, undefined];
 };
 
 const extractDepartementLabelAndTooltip: FilterLabelAndTooltip = ((
@@ -140,7 +140,7 @@ export const FilterSection = (props: {
       {categoryList &&
         categoryList.map(c => {
           const [label, tooltipLabel] = categoryLabelAndTooltip(c);
-          const active = filterList.includes(asNominalString(c.id));
+          const active = filterList.includes(nominal(c.id));
           return (
             <FilterChip
               key={c.id}

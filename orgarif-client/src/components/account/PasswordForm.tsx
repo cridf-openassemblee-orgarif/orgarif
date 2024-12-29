@@ -1,7 +1,7 @@
 /** @jsxImportSource @emotion/react */
 import { ClientUid } from '../../domain/client-ids';
 import { PlainStringPassword } from '../../generated/domain/Security';
-import { asNominalString } from '../../utils/nominal-class';
+import { nominal } from '../../utils/nominal-class';
 import { ControlledPasswordInput } from '../common/form/ControlledPasswordInput';
 import { css } from '@emotion/react';
 import * as React from 'react';
@@ -29,7 +29,7 @@ export const PasswordForm = (props: {
       id={props.formId}
       onSubmit={handleSubmit(input =>
         props.onSubmit({
-          password: asNominalString(input.password)
+          password: nominal(input.password)
         })
       )}
     >

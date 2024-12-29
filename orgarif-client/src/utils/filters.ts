@@ -7,7 +7,7 @@ import {
   TypeStructureId
 } from '../generated/domain/Ids';
 import { compareByNumber, compareByString } from '../utils';
-import { asNominalString } from './nominal-class';
+import { nominal } from '../utils/nominal-class';
 
 export const sortDepartements = (d: Departement[]) =>
   d.sort(compareByNumber(i => parseInt(i.code) || 0));
@@ -45,22 +45,22 @@ export const extractFilters = (): Filters => {
       params
         .get('departements')
         ?.split(',')
-        .map(id => asNominalString<DepartementId>(id)) ?? [],
+        .map(id => nominal<DepartementId>(id)) ?? [],
     natureJuridiqueIds:
       params
         .get('natureJuridiques')
         ?.split(',')
-        .map(id => asNominalString<NatureJuridiqueId>(id)) ?? [],
+        .map(id => nominal<NatureJuridiqueId>(id)) ?? [],
     secteurIds:
       params
         .get('secteurs')
         ?.split(',')
-        .map(id => asNominalString<SecteurId>(id)) ?? [],
+        .map(id => nominal<SecteurId>(id)) ?? [],
     typeStructureIds:
       params
         .get('typeStructures')
         ?.split(',')
-        .map(id => asNominalString<TypeStructureId>(id)) ?? []
+        .map(id => nominal<TypeStructureId>(id)) ?? []
   };
 };
 

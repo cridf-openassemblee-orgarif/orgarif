@@ -2,7 +2,7 @@
 import { Category, CategoryId } from '../../domain/category';
 import { OrganismeCategories } from '../../generated/domain/BootstrapData';
 import { state } from '../../state/state';
-import { Dict, getValue } from '../../utils/nominal-class';
+import { RecordUtils } from '../../utils/RecordUtils';
 import {
   getCategoryLabel,
   getFilterList,
@@ -23,7 +23,7 @@ import { useRecoilState, useRecoilValue } from 'recoil';
 
 export const MobileSelectFilters = (props: {
   category: keyof OrganismeCategories;
-  categoryMap: Dict<CategoryId, Category>;
+  categoryMap: Record<CategoryId, Category>;
 }) => {
   const categories = useRecoilValue(state.categories);
   const [filters, setFilters] = useRecoilState(state.filters);
@@ -74,7 +74,7 @@ export const MobileSelectFilters = (props: {
           return (
             <Box sx={{ display: 'flex', flexWrap: 'wrap', gap: 0.5 }}>
               {categoryIds.map(categoryId => {
-                const c = getValue(props.categoryMap, categoryId);
+                const c = RecordUtils.getValue(props.categoryMap, categoryId);
                 const label = c.libelle + ('code' in c ? ` (${c.code})` : '');
                 return <StyledChip key={c.id} label={label} />;
               })}

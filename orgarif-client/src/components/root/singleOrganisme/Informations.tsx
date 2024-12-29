@@ -5,7 +5,6 @@ import { Localite } from '../../../icon/collection/Localite';
 import { NatureJuridique } from '../../../icon/collection/NatureJuridique';
 import { Secteur } from '../../../icon/collection/Secteur';
 import { state } from '../../../state/state';
-import { get } from '../../../utils/nominal-class';
 import { isMobile } from '../../../utils/viewport-utils';
 import { css } from '@emotion/react';
 import { Chip, Typography } from '@mui/material';
@@ -22,13 +21,13 @@ export const Informations = (props: { data: OrganismeDto }) => {
   const natureJuridiquesById = useRecoilValue(state.natureJuridiquesById);
 
   const dept = props.data.departementId
-    ? get(departementsById, props.data.departementId)
+    ? departementsById[props.data.departementId]
     : undefined;
   const sect = props.data.secteurId
-    ? get(secteursById, props.data.secteurId)
+    ? secteursById[props.data.secteurId]
     : undefined;
   const nJ = props.data.natureJuridiqueId
-    ? get(natureJuridiquesById, props.data.natureJuridiqueId)
+    ? natureJuridiquesById[props.data.natureJuridiqueId]
     : undefined;
 
   return (

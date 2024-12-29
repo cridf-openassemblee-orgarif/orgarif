@@ -1,6 +1,6 @@
 import { ClientUid } from './domain/client-ids';
 import { LocalDate } from './domain/datetime';
-import { asNominalString } from './utils/nominal-class';
+import { nominal } from './utils/nominal-class';
 
 export function assertUnreachable(x: never): never {
   throw new Error(`Expected unreachable code ! Value: "${JSON.stringify(x)}"`);
@@ -8,7 +8,7 @@ export function assertUnreachable(x: never): never {
 
 let uniqueIdIndex = 0;
 export const clientUid = () =>
-  asNominalString<ClientUid>('ClientUid_' + uniqueIdIndex++);
+  nominal<ClientUid>('ClientUid_' + uniqueIdIndex++);
 
 export const compareByLocalDate =
   <T>(l: (o: T) => LocalDate) =>
@@ -36,7 +36,7 @@ export const stringToLocalDate = (value: string): LocalDate | undefined => {
   if (value === '') {
     return undefined;
   }
-  return asNominalString(value);
+  return nominal(value);
 };
 
 export const capitalizeFirstLetter = (value: string) =>

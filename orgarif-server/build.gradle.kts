@@ -76,7 +76,7 @@ dependencies {
 
     // kt2ts
     implementation("io.github.kt2ts:kt2ts-annotation:1.0.0")
-    ksp("io.github.kt2ts:kt2ts-ksp-generator:0.0.1")
+    ksp("io.github.kt2ts:kt2ts-ksp-generator:0.0.10")
 
     // database
     implementation("org.postgresql:postgresql:42.5.4")

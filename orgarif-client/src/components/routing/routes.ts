@@ -1,7 +1,10 @@
-import { OrganismeId, RepresentantId } from '../../generated/domain/Ids';
-import { UserId } from '../../generated/domain/Ids';
+import {
+  OrganismeId,
+  RepresentantId,
+  UserId
+} from '../../generated/domain/Ids';
 import { Role } from '../../generated/domain/User';
-import { dict, Dict } from '../../utils/nominal-class';
+import { RecordUtils } from '../../utils/RecordUtils';
 import { EditDepartementsView } from '../../view/EditDepartementsView';
 import { EditNatureJuridiquesView } from '../../view/EditNatureJuridiquesView';
 import { EditOrganismeView } from '../../view/EditOrganismeView';
@@ -152,9 +155,11 @@ const flattenRoute = (
   ];
 };
 
-export const routePathMap: Dict<ApplicationRoute['name'], string> = dict(
-  routes.flatMap(r => flattenRoute('', r))
-);
+export const routePathMap: Record<ApplicationRoute['name'], string> =
+  RecordUtils.fromEntries(routes.flatMap(r => flattenRoute('', r))) as Record<
+    ApplicationRoute['name'],
+    string
+  >;
 
 interface AccountRoute {
   name: 'AccountRoute';

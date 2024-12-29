@@ -3,7 +3,6 @@ import { EmotionStyles } from '../../interfaces';
 import { state } from '../../state/state';
 import { assertUnreachable } from '../../utils';
 import { emptyFilters } from '../../utils/filters';
-import { getValue } from '../../utils/nominal-class';
 import { ApplicationRoute, routePathMap } from './routes';
 import { buildPath } from './routing-utils';
 import { css } from '@emotion/react';
@@ -101,7 +100,7 @@ export const MatchRouteLink = (
   }>
 ) => {
   const match = useMatch({
-    path: getValue(routePathMap, props.route.name),
+    path: routePathMap[props.route.name],
     end: props.matchModel === 'FullMatch'
   });
   // FIXME check css works

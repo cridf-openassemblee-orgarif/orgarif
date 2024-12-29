@@ -9,7 +9,8 @@ import { Edit } from '../../icon/collection/Edit';
 import { LoadingState } from '../../interfaces';
 import { appContext } from '../../services/ApplicationContext';
 import { state } from '../../state/state';
-import { asNominalString, getValue } from '../../utils/nominal-class';
+import { RecordUtils } from '../../utils/RecordUtils';
+import { nominal } from '../../utils/nominal-class';
 import { isMobile } from '../../utils/viewport-utils';
 import { RouteLink } from '../routing/RouteLink';
 import { breakpoints } from '../styles/breakpoints';
@@ -170,7 +171,7 @@ const TypeStructureRow = (props: { id: TypeStructureId | undefined }) => {
   if (!props.id) {
     return <></>;
   }
-  const typeStructure = getValue(t, props.id);
+  const typeStructure = RecordUtils.getValue(t, props.id);
   return (
     <span style={{ overflow: 'hidden', textOverflow: 'ellipsis' }}>
       {typeStructure?.libelle ?? '-'}
@@ -183,7 +184,7 @@ const DepartementRow = (props: { id: DepartementId | undefined }) => {
   if (!props.id) {
     return <></>;
   }
-  const departement = getValue(d, props.id);
+  const departement = RecordUtils.getValue(d, props.id);
   return <>{`${departement?.libelle ?? ''} - ${departement?.code ?? ''}`}</>;
 };
 
@@ -202,7 +203,7 @@ export const EditOrganismeLink = (props: { organismeId: OrganismeId }) => (
 );
 const EditRow = (props: { id: GridRowId }) => {
   const userInfos = useRecoilValue(state.userInfos);
-  const organismeId = asNominalString<OrganismeId>(props.id as string);
+  const organismeId = nominal<OrganismeId>(props.id as string);
   if (!userInfos) {
     return <></>;
   }

@@ -7,7 +7,6 @@ import {
   TypeStructureId
 } from '../../../../generated/domain/Ids';
 import { state } from '../../../../state/state';
-import { Dict } from '../../../../utils/nominal-class';
 import { SelectInput, SelectOption } from '../../../common/form/SelectInput';
 import { colors } from '../../../styles/colors';
 import { editCommonClasses } from './EditOrganismeComponent';
@@ -21,7 +20,7 @@ const EditOrganismeCategoryComponent = <
 >(props: {
   label: string;
   categoryList: C[];
-  categoryById: Dict<Id, C>;
+  categoryById: Record<Id, C>;
   currentId: Id | undefined;
   onChange: (id: Id | undefined) => void;
 }) => {

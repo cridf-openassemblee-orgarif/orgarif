@@ -2,7 +2,7 @@
 import { LocalDate } from '../../../../../domain/datetime';
 import { DesignationDto } from '../../../../../generated/domain/Organisme';
 import { appContext } from '../../../../../services/ApplicationContext';
-import { asNominalString } from '../../../../../utils/nominal-class';
+import { nominal } from '../../../../../utils/nominal-class';
 import { LoadingButton } from '../../../../common/LoadingButton';
 import { ConfirmButton } from '../../../../common/form/ConfirmButton';
 import { TabPanel, TabsContainer } from '../../../../common/form/TabsContainer';
@@ -50,7 +50,7 @@ const DesignationPanel = (props: {
           onChange={e =>
             setStartDate(
               e.currentTarget.value
-                ? asNominalString<LocalDate>(e.currentTarget.value)
+                ? nominal<LocalDate>(e.currentTarget.value)
                 : undefined
             )
           }
@@ -65,7 +65,7 @@ const DesignationPanel = (props: {
           onChange={e =>
             setEndDate(
               e.currentTarget.value
-                ? asNominalString<LocalDate>(e.currentTarget.value)
+                ? nominal<LocalDate>(e.currentTarget.value)
                 : undefined
             )
           }

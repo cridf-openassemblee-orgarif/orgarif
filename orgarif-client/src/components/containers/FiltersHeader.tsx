@@ -2,8 +2,9 @@
 import { Category, CategoryId } from '../../domain/category';
 import { OrganismeCategories } from '../../generated/domain/BootstrapData';
 import { state } from '../../state/state';
+import { RecordUtils } from '../../utils/RecordUtils';
 import { filtersIsEmpty } from '../../utils/filters';
-import { asNominalString, Dict, getValue } from '../../utils/nominal-class';
+import { nominal } from '../../utils/nominal-class';
 import { isMobile } from '../../utils/viewport-utils';
 import { DeleteFiltersDialog } from '../root/filters/DeleteFiltersDialog';
 import {
@@ -57,14 +58,14 @@ export const FiltersHeader = (props: { displayActiveFilters: boolean }) => {
 
 const CategoryChips = (props: {
   category: keyof OrganismeCategories;
-  categoryMap: Dict<CategoryId, Category>;
+  categoryMap: Record<CategoryId, Category>;
 }) => {
   const [filters, setFilters] = useRecoilState(state.filters);
   const filterList = getFilterList(filters, props.category);
   return (
     <>
       {filterList.map(id => {
-        const c = getValue(props.categoryMap, id);
+        const c = RecordUtils.getValue(props.categoryMap, id);
         const categoryLabelAndTooltip = getCategoryLabelAndTooltip(
           props.category
         );
@@ -81,7 +82,7 @@ const CategoryChips = (props: {
                 filters,
                 setFilters,
                 props.category,
-                [...filterList].filter(i => i !== asNominalString(c.id))
+                [...filterList].filter(i => i !== nominal(c.id))
               )
             }
             css={css`

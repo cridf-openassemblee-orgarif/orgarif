@@ -1,12 +1,12 @@
 import { state } from '../../state/state';
+import { RecordUtils } from '../../utils/RecordUtils';
 import { buildHash, Filters } from '../../utils/filters';
-import { getValue } from '../../utils/nominal-class';
 import { ApplicationRoute, routePathMap } from './routes';
 import { useLocation, useNavigate } from 'react-router-dom';
 import { useRecoilValue } from 'recoil';
 
 export const buildPath = (route: ApplicationRoute, filters: Filters) => {
-  let path = getValue(routePathMap, route.name);
+  let path = RecordUtils.getValue(routePathMap, route.name);
   Object.keys(route)
     .filter(k => k !== 'name')
     .forEach((k: string) => {

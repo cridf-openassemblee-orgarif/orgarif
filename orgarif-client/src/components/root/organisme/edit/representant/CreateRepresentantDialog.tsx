@@ -12,15 +12,17 @@ import DialogContent from '@mui/material/DialogContent';
 import * as React from 'react';
 import { useEffect, useState } from 'react';
 
-const extractPrenomNom = (nomComplet: string) => {
+const extractPrenomNom = (
+  nomComplet: string
+): { prenom: string; nom: string } => {
   const parts = nomComplet.split(' ');
   if (parts.length > 1) {
-    const prenom = parts[0];
+    const prenom = parts[0]!;
     parts.shift();
     const nom = parts.join(' ');
     return { prenom, nom };
   } else {
-    return { prenom: parts[0], nom: '' };
+    return { prenom: parts[0]!, nom: '' };
   }
 };
 

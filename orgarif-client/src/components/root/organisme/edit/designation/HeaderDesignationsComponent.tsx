@@ -1,7 +1,7 @@
 /** @jsxImportSource @emotion/react */
 import { BooleanAsNominalString } from '../../../../../domain/boolean';
 import { Errors } from '../../../../../errors';
-import { asNominalString } from '../../../../../utils/nominal-class';
+import { nominal } from '../../../../../utils/nominal-class';
 import { NumberInput } from '../../../../common/form/NumberInput';
 import { SelectInput } from '../../../../common/form/SelectInput';
 import { colors } from '../../../../styles/colors';
@@ -57,17 +57,17 @@ export const HeaderDesignationsComponent = (props: {
         </div>
         <div css={classes.suppleantsBlock}>
           <SelectInput
-            initialValue={asNominalString<BooleanAsNominalString>(
+            initialValue={nominal<BooleanAsNominalString>(
               props.presenceSuppleants ? 'true' : 'false'
             )}
             label="Suppléants"
             options={[
               {
-                value: asNominalString<BooleanAsNominalString>('true'),
+                value: nominal<BooleanAsNominalString>('true'),
                 label: 'avec'
               },
               {
-                value: asNominalString<BooleanAsNominalString>('false'),
+                value: nominal<BooleanAsNominalString>('false'),
                 label: 'sans'
               }
             ]}
@@ -76,8 +76,7 @@ export const HeaderDesignationsComponent = (props: {
                 throw Errors._d2070152();
               }
               props.onPresenceSuppleantsChange(
-                presenceSuppleants ===
-                  asNominalString<BooleanAsNominalString>('true')
+                presenceSuppleants === nominal<BooleanAsNominalString>('true')
               );
             }}
           />
