@@ -1,5 +1,5 @@
 import { Instant } from '../../domain/datetime';
-import { RequestErrorId } from '../domain/Ids';
+import { RequestErrorId } from '../domain/Ids.generated';
 
 export interface RequestError {
   id: RequestErrorId;

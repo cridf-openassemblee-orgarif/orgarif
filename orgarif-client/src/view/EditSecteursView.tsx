@@ -1,10 +1,10 @@
 /** @jsxImportSource @emotion/react */
 import { MainContainer } from '../components/containers/MainContainer';
 import { EditCategoriesComponent } from '../components/root/category/EditCategoriesComponent';
-import { CreateSecteurCommandResponse } from '../generated/command/Commands';
-import { Secteur } from '../generated/domain/BootstrapData';
-import { SecteurId } from '../generated/domain/Ids';
-import { ItemStatus } from '../generated/domain/Organisme';
+import { CreateSecteurCommandResponse } from '../generated/command/Commands.generated';
+import { Secteur } from '../generated/domain/BootstrapData.generated';
+import { SecteurId } from '../generated/domain/Ids.generated';
+import { ItemStatus } from '../generated/domain/Organisme.generated';
 import { appContext } from '../services/ApplicationContext';
 import { state } from '../state/state';
 import { sortCategory } from '../utils/filters';

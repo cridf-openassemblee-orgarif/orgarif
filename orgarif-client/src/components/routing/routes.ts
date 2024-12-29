@@ -2,8 +2,8 @@ import {
   OrganismeId,
   RepresentantId,
   UserId
-} from '../../generated/domain/Ids';
-import { Role } from '../../generated/domain/User';
+} from '../../generated/domain/Ids.generated';
+import { Role } from '../../generated/domain/User.generated';
 import { RecordUtils } from '../../utils/RecordUtils';
 import { EditDepartementsView } from '../../view/EditDepartementsView';
 import { EditNatureJuridiquesView } from '../../view/EditNatureJuridiquesView';

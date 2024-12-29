@@ -4,15 +4,15 @@ import {
   OrganismeCategories,
   Secteur,
   TypeStructure
-} from '../generated/domain/BootstrapData';
+} from '../generated/domain/BootstrapData.generated';
 import {
   DepartementId,
   NatureJuridiqueId,
   SecteurId,
   TypeStructureId
-} from '../generated/domain/Ids';
-import { OrganismeListDto } from '../generated/domain/Organisme';
-import { UserInfos } from '../generated/domain/User';
+} from '../generated/domain/Ids.generated';
+import { OrganismeListDto } from '../generated/domain/Organisme.generated';
+import { UserInfos } from '../generated/domain/User.generated';
 import { RecordUtils } from '../utils/RecordUtils';
 import {
   buildHash,

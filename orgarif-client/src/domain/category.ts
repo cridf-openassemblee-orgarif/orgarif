@@ -3,13 +3,13 @@ import {
   NatureJuridique,
   Secteur,
   TypeStructure
-} from '../generated/domain/BootstrapData';
+} from '../generated/domain/BootstrapData.generated';
 import {
   DepartementId,
   NatureJuridiqueId,
   SecteurId,
   TypeStructureId
-} from '../generated/domain/Ids';
+} from '../generated/domain/Ids.generated';
 
 export type CategoryId =
   | DepartementId

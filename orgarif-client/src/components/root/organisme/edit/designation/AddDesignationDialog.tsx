@@ -1,7 +1,7 @@
 /** @jsxImportSource @emotion/react */
 import { LocalDate } from '../../../../../domain/datetime';
-import { RepresentantId } from '../../../../../generated/domain/Ids';
-import { RepresentantDto } from '../../../../../generated/domain/Organisme';
+import { RepresentantId } from '../../../../../generated/domain/Ids.generated';
+import { RepresentantDto } from '../../../../../generated/domain/Organisme.generated';
 import { capitalizeFirstLetter, stringToLocalDate } from '../../../../../utils';
 import { LoadingButton } from '../../../../common/LoadingButton';
 import { TextInput } from '../../../../common/form/TextInput';

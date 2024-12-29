@@ -1,7 +1,7 @@
 /** @jsxImportSource @emotion/react */
 import { LocalDate } from '../../../../../domain/datetime';
-import { RepresentantId } from '../../../../../generated/domain/Ids';
-import { DesignationDto } from '../../../../../generated/domain/Organisme';
+import { RepresentantId } from '../../../../../generated/domain/Ids.generated';
+import { DesignationDto } from '../../../../../generated/domain/Organisme.generated';
 import { formatLocaleDate } from '../../../../../simple-fr';
 import { clientUid } from '../../../../../utils';
 import { space } from '../../../../common/component-utils';

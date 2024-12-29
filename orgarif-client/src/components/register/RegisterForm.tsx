@@ -1,6 +1,6 @@
 /** @jsxImportSource @emotion/react */
-import { PlainStringPassword } from '../../generated/domain/Security';
-import { IsMailAlreadyTakenQueryResponse } from '../../generated/query/Queries';
+import { PlainStringPassword } from '../../generated/domain/Security.generated';
+import { IsMailAlreadyTakenQueryResponse } from '../../generated/query/Queries.generated';
 import { LoadingState } from '../../interfaces';
 import { appContext } from '../../services/ApplicationContext';
 import { nominal } from '../../utils/nominal-class';

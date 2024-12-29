@@ -3,8 +3,8 @@ import { Errors } from '../../errors';
 import {
   DevLoginCommandResponse,
   LoginCommandResponse
-} from '../../generated/command/Commands';
-import { LoginResult, UserInfos } from '../../generated/domain/User';
+} from '../../generated/command/Commands.generated';
+import { LoginResult, UserInfos } from '../../generated/domain/User.generated';
 import { appContext } from '../../services/ApplicationContext';
 import { state } from '../../state/state';
 import { assertUnreachable } from '../../utils';

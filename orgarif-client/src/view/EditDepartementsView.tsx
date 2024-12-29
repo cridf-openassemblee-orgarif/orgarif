@@ -2,10 +2,10 @@
 import { MainContainer } from '../components/containers/MainContainer';
 import { EditCategoriesComponent } from '../components/root/category/EditCategoriesComponent';
 import { Errors } from '../errors';
-import { CreateDepartementCommandResponse } from '../generated/command/Commands';
-import { Departement } from '../generated/domain/BootstrapData';
-import { DepartementId } from '../generated/domain/Ids';
-import { ItemStatus } from '../generated/domain/Organisme';
+import { CreateDepartementCommandResponse } from '../generated/command/Commands.generated';
+import { Departement } from '../generated/domain/BootstrapData.generated';
+import { DepartementId } from '../generated/domain/Ids.generated';
+import { ItemStatus } from '../generated/domain/Organisme.generated';
 import { appContext } from '../services/ApplicationContext';
 import { state } from '../state/state';
 import { sortDepartements } from '../utils/filters';

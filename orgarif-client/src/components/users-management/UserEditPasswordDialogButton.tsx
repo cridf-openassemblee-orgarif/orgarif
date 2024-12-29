@@ -1,5 +1,5 @@
 /** @jsxImportSource @emotion/react */
-import { UserId } from '../../generated/domain/Ids';
+import { UserId } from '../../generated/domain/Ids.generated';
 import { LoadingState } from '../../interfaces';
 import { appContext } from '../../services/ApplicationContext';
 import { clientUid } from '../../utils';

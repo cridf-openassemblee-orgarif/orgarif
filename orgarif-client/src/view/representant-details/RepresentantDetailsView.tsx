@@ -6,8 +6,8 @@ import { colors } from '../../components/styles/colors';
 import {
   OrganismeListDto,
   RepresentantDto
-} from '../../generated/domain/Organisme';
-import { GetRepresentantDetailsQueryResponse } from '../../generated/query/Queries';
+} from '../../generated/domain/Organisme.generated';
+import { GetRepresentantDetailsQueryResponse } from '../../generated/query/Queries.generated';
 import { appContext } from '../../services/ApplicationContext';
 import { css } from '@emotion/react';
 import { ArrowBackIos } from '@mui/icons-material';

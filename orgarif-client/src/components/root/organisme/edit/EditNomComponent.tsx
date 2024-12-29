@@ -1,5 +1,5 @@
 /** @jsxImportSource @emotion/react */
-import { ItemStatus } from '../../../../generated/domain/Organisme';
+import { ItemStatus } from '../../../../generated/domain/Organisme.generated';
 import { assertUnreachable, clientUid } from '../../../../utils';
 import { space } from '../../../common/component-utils';
 import { ConfirmButton } from '../../../common/form/ConfirmButton';

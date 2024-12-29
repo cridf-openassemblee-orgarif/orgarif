@@ -2,8 +2,8 @@
 import { MainContainer } from '../../components/containers/MainContainer';
 import { RouteLink } from '../../components/routing/RouteLink';
 import { colors } from '../../components/styles/colors';
-import { RepresentantDto } from '../../generated/domain/Organisme';
-import { GetRepresentantsQueryResponse } from '../../generated/query/Queries';
+import { RepresentantDto } from '../../generated/domain/Organisme.generated';
+import { GetRepresentantsQueryResponse } from '../../generated/query/Queries.generated';
 import { appContext } from '../../services/ApplicationContext';
 import { assertUnreachable } from '../../utils';
 import { css } from '@emotion/react';

@@ -4,11 +4,11 @@ import {
   InstanceId,
   OrganismeId,
   RepresentantId
-} from '../../../../../generated/domain/Ids';
+} from '../../../../../generated/domain/Ids.generated';
 import {
   DesignationDto,
   DesignationType
-} from '../../../../../generated/domain/Organisme';
+} from '../../../../../generated/domain/Organisme.generated';
 import { colors } from '../../../../styles/colors';
 import { editCommonClasses } from '../EditOrganismeComponent';
 import { EditDesignationListItem } from './EditDesignationListItem';

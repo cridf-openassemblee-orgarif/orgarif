@@ -11,10 +11,15 @@ import {
   SecteurId,
   TypeStructureId,
   UserId
-} from '../domain/Ids';
-import { DesignationType, ItemStatus } from '../domain/Organisme';
-import { PlainStringPassword } from '../domain/Security';
-import { LoginResult, RegisterResult, Role, UserInfos } from '../domain/User';
+} from '../domain/Ids.generated';
+import { DesignationType, ItemStatus } from '../domain/Organisme.generated';
+import { PlainStringPassword } from '../domain/Security.generated';
+import {
+  LoginResult,
+  RegisterResult,
+  Role,
+  UserInfos
+} from '../domain/User.generated';
 
 export type Command =
   | AddDesignationCommand

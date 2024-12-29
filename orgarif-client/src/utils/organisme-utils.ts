@@ -1,5 +1,5 @@
 import { LocalDate } from '../domain/datetime';
-import { AddInstanceCommandResponse } from '../generated/command/Commands';
+import { AddInstanceCommandResponse } from '../generated/command/Commands.generated';
 import {
   DeliberationId,
   DepartementId,
@@ -8,14 +8,14 @@ import {
   RepresentantId,
   SecteurId,
   TypeStructureId
-} from '../generated/domain/Ids';
+} from '../generated/domain/Ids.generated';
 import {
   DesignationType,
   InstanceDto,
   ItemStatus,
   OrganismeDto
-} from '../generated/domain/Organisme';
-import { GetOrganismeQueryResponse } from '../generated/query/Queries';
+} from '../generated/domain/Organisme.generated';
+import { GetOrganismeQueryResponse } from '../generated/query/Queries.generated';
 import { appContext } from '../services/ApplicationContext';
 
 // TODO naming utils, actions...

@@ -1,4 +1,4 @@
-import { UserId } from './Ids';
+import { UserId } from './Ids.generated';
 
 export type Role = 'User' | 'Admin';
 

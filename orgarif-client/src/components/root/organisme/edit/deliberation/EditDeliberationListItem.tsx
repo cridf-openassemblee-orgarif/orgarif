@@ -1,5 +1,5 @@
 /** @jsxImportSource @emotion/react */
-import { LienDeliberationDto } from '../../../../../generated/domain/Organisme';
+import { LienDeliberationDto } from '../../../../../generated/domain/Organisme.generated';
 import { formatLocaleDate } from '../../../../../simple-fr';
 import { clientUid } from '../../../../../utils';
 import { space } from '../../../../common/component-utils';

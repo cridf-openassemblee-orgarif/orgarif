@@ -2,8 +2,8 @@
 import {
   AdminUpdateSessions,
   CommandResponse
-} from '../../generated/command/Commands';
-import { RequestError } from '../../generated/error/Exceptions';
+} from '../../generated/command/Commands.generated';
+import { RequestError } from '../../generated/error/Exceptions.generated';
 import { appContext } from '../../services/ApplicationContext';
 import { MainContainer } from '../containers/MainContainer';
 import { css } from '@emotion/react';

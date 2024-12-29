@@ -6,14 +6,14 @@ import {
   SecteurId,
   TypeStructureId,
   UserId
-} from '../domain/Ids';
+} from '../domain/Ids.generated';
 import {
   DeliberationDto,
   OrganismeDto,
   OrganismeListDto,
   RepresentantDto
-} from '../domain/Organisme';
-import { UserInfos } from '../domain/User';
+} from '../domain/Organisme.generated';
+import { UserInfos } from '../domain/User.generated';
 
 export type Query =
   | GetLastDeliberationsQuery

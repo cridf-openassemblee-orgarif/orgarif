@@ -1,4 +1,4 @@
-import { RequestError } from '../generated/error/Exceptions';
+import { RequestError } from '../generated/error/Exceptions.generated';
 import { appContext } from './ApplicationContext';
 
 type RequestType = 'Get' | 'Post';

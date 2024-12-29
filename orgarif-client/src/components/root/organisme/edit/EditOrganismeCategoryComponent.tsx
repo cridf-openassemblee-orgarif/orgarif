@@ -5,7 +5,7 @@ import {
   NatureJuridiqueId,
   SecteurId,
   TypeStructureId
-} from '../../../../generated/domain/Ids';
+} from '../../../../generated/domain/Ids.generated';
 import { state } from '../../../../state/state';
 import { SelectInput, SelectOption } from '../../../common/form/SelectInput';
 import { colors } from '../../../styles/colors';

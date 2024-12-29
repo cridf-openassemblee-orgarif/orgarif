@@ -1,6 +1,6 @@
 /** @jsxImportSource @emotion/react */
-import { DeliberationId } from '../../../../../generated/domain/Ids';
-import { LienDeliberationDto } from '../../../../../generated/domain/Organisme';
+import { DeliberationId } from '../../../../../generated/domain/Ids.generated';
+import { LienDeliberationDto } from '../../../../../generated/domain/Organisme.generated';
 import { colors } from '../../../../styles/colors';
 import { editCommonClasses } from '../EditOrganismeComponent';
 import { AddLienDeliberationDialog } from './AddLienDeliberationDialog';

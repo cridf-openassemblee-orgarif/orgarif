@@ -1,9 +1,9 @@
 /** @jsxImportSource @emotion/react */
-import { DeliberationId } from '../../generated/domain/Ids';
+import { DeliberationId } from '../../generated/domain/Ids.generated';
 import {
   DeliberationDto,
   OrganismeDto
-} from '../../generated/domain/Organisme';
+} from '../../generated/domain/Organisme.generated';
 import useEventListener from '../../hooks/useEventListener';
 import { isMobile } from '../../utils/viewport-utils';
 import { HistoryItem } from '../root/singleOrganisme/HistoryItem';

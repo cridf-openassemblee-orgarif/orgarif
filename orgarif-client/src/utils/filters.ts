@@ -1,11 +1,11 @@
 import { Category } from '../domain/category';
-import { Departement } from '../generated/domain/BootstrapData';
+import { Departement } from '../generated/domain/BootstrapData.generated';
 import {
   DepartementId,
   NatureJuridiqueId,
   SecteurId,
   TypeStructureId
-} from '../generated/domain/Ids';
+} from '../generated/domain/Ids.generated';
 import { compareByNumber, compareByString } from '../utils';
 import { nominal } from '../utils/nominal-class';
 

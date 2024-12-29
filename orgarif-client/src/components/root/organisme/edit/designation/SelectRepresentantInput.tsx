@@ -1,7 +1,7 @@
 /** @jsxImportSource @emotion/react */
 import { SharedConstants } from '../../../../../constants';
-import { RepresentantDto } from '../../../../../generated/domain/Organisme';
-import { SearchRepresentantsQueryResponse } from '../../../../../generated/query/Queries';
+import { RepresentantDto } from '../../../../../generated/domain/Organisme.generated';
+import { SearchRepresentantsQueryResponse } from '../../../../../generated/query/Queries.generated';
 import { appContext } from '../../../../../services/ApplicationContext';
 import {
   AlreadySet,

@@ -41,6 +41,7 @@ repositories {
     mavenLocal()
     mavenCentral()
     maven("https://repo.spring.io/milestone")
+    maven("https://mlorber.net/maven_repo")
 }
 
 configurations.all { exclude(group = "junit", module = "junit") }
@@ -56,6 +57,8 @@ ksp {
                 "orgarif.domain.OrgarifId",
                 "orgarif.domain.PlainStringPassword")
             .joinToString(separator = "|"))
+    arg("kt2ts:prettierDependencyInstall", "yarn")
+    arg("kt2ts:prettierBinary", "node_modules/prettier/bin-prettier.js")
     arg("kt2ts:nominalStringImport", "utils/nominal-class.ts")
     arg("kt2ts:debugFile", "$rootDir/orgarif-client/build/debug-generation.html")
 }

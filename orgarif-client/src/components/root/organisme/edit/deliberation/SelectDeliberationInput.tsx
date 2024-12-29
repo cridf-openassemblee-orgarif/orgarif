@@ -1,11 +1,11 @@
 /** @jsxImportSource @emotion/react */
 import { SharedConstants } from '../../../../../constants';
-import { DeliberationId } from '../../../../../generated/domain/Ids';
-import { DeliberationDto } from '../../../../../generated/domain/Organisme';
+import { DeliberationId } from '../../../../../generated/domain/Ids.generated';
+import { DeliberationDto } from '../../../../../generated/domain/Organisme.generated';
 import {
   GetLastDeliberationsQueryResponse,
   SearchDeliberationQueryResponse
-} from '../../../../../generated/query/Queries';
+} from '../../../../../generated/query/Queries.generated';
 import { appContext } from '../../../../../services/ApplicationContext';
 import { formatLocaleDate } from '../../../../../simple-fr';
 import { space } from '../../../../common/component-utils';

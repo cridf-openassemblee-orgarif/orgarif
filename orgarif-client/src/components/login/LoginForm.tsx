@@ -1,5 +1,5 @@
 /** @jsxImportSource @emotion/react */
-import { PlainStringPassword } from '../../generated/domain/Security';
+import { PlainStringPassword } from '../../generated/domain/Security.generated';
 import { LoadingState } from '../../interfaces';
 import { nominal } from '../../utils/nominal-class';
 import { LoadingStateButton } from '../common/LoadingButton';
