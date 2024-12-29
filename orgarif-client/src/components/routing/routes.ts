@@ -1,7 +1,7 @@
 import { OrganismeId, RepresentantId } from '../../generated/domain/Ids';
 import { UserId } from '../../generated/domain/Ids';
 import { Role } from '../../generated/domain/User';
-import { dict, Dict, flatMap } from '../../utils/nominal-class';
+import { dict, Dict } from '../../utils/nominal-class';
 import { EditDepartementsView } from '../../view/EditDepartementsView';
 import { EditNatureJuridiquesView } from '../../view/EditNatureJuridiquesView';
 import { EditOrganismeView } from '../../view/EditOrganismeView';
@@ -144,16 +144,16 @@ export const routes: ApplicationRouteProps<any>[] = [
 const flattenRoute = (
   rootPath: string,
   r: ApplicationRouteProps<any>
-): [string, string][] => {
+): [ApplicationRoute['name'], string][] => {
   const path = rootPath + r.path;
   return [
     [r.name, path],
-    ...(r.subRoutes ? flatMap(r.subRoutes, r => flattenRoute(path, r)) : [])
+    ...(r.subRoutes ?? []).flatMap(r => flattenRoute(path, r))
   ];
 };
 
 export const routePathMap: Dict<ApplicationRoute['name'], string> = dict(
-  flatMap(routes, r => flattenRoute('', r))
+  routes.flatMap(r => flattenRoute('', r))
 );
 
 interface AccountRoute {

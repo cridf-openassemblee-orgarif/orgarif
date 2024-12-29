@@ -130,6 +130,3 @@ export const groupBy = <K extends DictKey, T>(
   });
   return map;
 };
-
-export const flatMap = <T, R>(a: T[], lambda: (o: T, i: number) => R) =>
-  Array.prototype.concat.apply([], a.map(lambda));
